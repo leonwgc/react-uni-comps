@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    // Ensure that Babel can safely transpile files in the TypeScript project
+    "isolatedModules": true,
+    "jsx": "react",
+    "module": "ESNext",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strictNullChecks": false,
+    "outDir": "types",
+    "lib": ["es2015", "DOM", "es2015.promise", "ESNext"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["lib", "node_modules", "demo"]
+}
