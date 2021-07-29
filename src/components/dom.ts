@@ -1,6 +1,6 @@
 let flexGapSupported: boolean;
 
-export const detectFlexGapSupported = () => {
+export const detectFlexGapSupported = (): boolean => {
   if (flexGapSupported !== undefined) {
     return flexGapSupported;
   }
