@@ -7,12 +7,16 @@ var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
 var Styled = require('styled-components');
 var reactIs = require('react-is');
+var useInViewport = require('react-use-lib/es/useInViewport');
+var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var Styled__default = /*#__PURE__*/_interopDefaultLegacy(Styled);
+var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
+var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -472,5 +476,58 @@ var Space = function Space(props) {
   }, nodes));
 };
 
+var getClassName = function getClassName(state, c) {
+  if (state === 'entering' || state === 'entered') {
+    return 'to';
+  } else {
+    return c ? 'from' : 'to'; //exited
+  }
+}; // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
+
+
+var TransitionElement = function TransitionElement(_ref) {
+  var children = _ref.children,
+      _ref$duration = _ref.duration,
+      duration = _ref$duration === void 0 ? 200 : _ref$duration,
+      _ref$timingFunc = _ref.timingFunc,
+      timingFunc = _ref$timingFunc === void 0 ? 'ease-in-out' : _ref$timingFunc,
+      _ref$delay = _ref.delay,
+      delay = _ref$delay === void 0 ? 0 : _ref$delay,
+      _ref$once = _ref.once,
+      once = _ref$once === void 0 ? false : _ref$once;
+  var ref = React.useRef();
+  var ls = React.useRef(true);
+  var isInViewport = useInViewport__default['default'](ref);
+
+  var _ref2 = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _ref2$className = _ref2.className,
+      className = _ref2$className === void 0 ? '' : _ref2$className,
+      _ref2$style = _ref2.style,
+      style = _ref2$style === void 0 ? {} : _ref2$style;
+
+  var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
+    transition: "all ".concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms")
+  });
+
+  useUpdateEffect__default['default'](function () {
+    if (once) {
+      ls.current = false;
+    }
+  }, [isInViewport, once]);
+  return /*#__PURE__*/React__default['default'].createElement("span", {
+    ref: ref
+  }, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
+    "in": isInViewport && ls.current,
+    appear: true,
+    timeout: 200
+  }, function (state) {
+    return /*#__PURE__*/React__default['default'].cloneElement(children, {
+      className: "".concat(className, " ").concat(getClassName(state, ls.current)),
+      style: newStyle
+    });
+  }));
+};
+
 exports.Popup = Popup;
 exports.Space = Space;
+exports.TransitionElement = TransitionElement;
