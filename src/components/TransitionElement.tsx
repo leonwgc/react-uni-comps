@@ -6,6 +6,7 @@ import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 export type Props = {
   children: React.ReactElement;
   duration?: number;
+  transitionProp?: string;
   timingFunc?: string;
   delay?: number;
   fromClass: 'from'; // 初始class
@@ -25,6 +26,7 @@ const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
 const TransitionElement: React.FC<Props> = ({
   children,
   duration = 200,
+  transitionProp = 'all',
   timingFunc = 'ease-in-out',
   delay = 0,
   once = false,
@@ -35,7 +37,10 @@ const TransitionElement: React.FC<Props> = ({
   const ls = useRef(true);
   const isInViewport = useInViewport(ref);
   const { className = '', style = {} } = children?.props || {};
-  const newStyle = { ...style, transition: `all ${duration}ms ${timingFunc} ${delay}ms` };
+  const newStyle = {
+    ...style,
+    transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
+  };
 
   useUpdateEffect(() => {
     if (once) {
