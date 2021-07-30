@@ -19,11 +19,19 @@ import { Transition } from 'react-transition-group';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 
-var getClassName = function getClassName(state, c) {
+var getClassName = function getClassName(state, c, fromClass, toClass) {
+  if (fromClass === void 0) {
+    fromClass = 'from';
+  }
+
+  if (toClass === void 0) {
+    toClass = 'to';
+  }
+
   if (state === 'entering' || state === 'entered') {
-    return 'to';
+    return toClass;
   } else {
-    return c ? 'from' : 'to'; //exited
+    return c ? fromClass : toClass; //exited
   }
 }; // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
 
@@ -37,16 +45,20 @@ var TransitionElement = function TransitionElement(_a) {
       _d = _a.delay,
       delay = _d === void 0 ? 0 : _d,
       _e = _a.once,
-      once = _e === void 0 ? false : _e;
+      once = _e === void 0 ? false : _e,
+      _f = _a.fromClass,
+      fromClass = _f === void 0 ? 'from' : _f,
+      _g = _a.toClass,
+      toClass = _g === void 0 ? 'to' : _g;
   var ref = useRef();
   var ls = useRef(true);
   var isInViewport = useInViewport(ref);
 
-  var _f = (children === null || children === void 0 ? void 0 : children.props) || {},
-      _g = _f.className,
-      className = _g === void 0 ? '' : _g,
-      _h = _f.style,
-      style = _h === void 0 ? {} : _h;
+  var _h = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _j = _h.className,
+      className = _j === void 0 ? '' : _j,
+      _k = _h.style,
+      style = _k === void 0 ? {} : _k;
 
   var newStyle = __assign(__assign({}, style), {
     transition: "all " + duration + "ms " + timingFunc + " " + delay + "ms"
@@ -65,7 +77,7 @@ var TransitionElement = function TransitionElement(_a) {
     timeout: 200
   }, function (state) {
     return /*#__PURE__*/React.cloneElement(children, {
-      className: className + " " + getClassName(state, ls.current),
+      className: className + " " + getClassName(state, ls.current, fromClass, toClass),
       style: newStyle
     });
   }));

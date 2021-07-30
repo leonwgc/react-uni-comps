@@ -8,14 +8,16 @@ export type Props = {
   duration?: number;
   timingFunc?: string;
   delay?: number;
+  fromClass: 'from'; // 初始class
+  toClass: 'to'; // 结束class
   once?: boolean; // 默认从第一次载入/不可见到可见会执行动画 | once=true 只会第一次载入执行动画
 };
 
-const getClassName = (state, c) => {
+const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
   if (state === 'entering' || state === 'entered') {
-    return 'to';
+    return toClass;
   } else {
-    return c ? 'from' : 'to'; //exited
+    return c ? fromClass : toClass; //exited
   }
 };
 
@@ -26,6 +28,8 @@ const TransitionElement: React.FC<Props> = ({
   timingFunc = 'ease-in-out',
   delay = 0,
   once = false,
+  fromClass = 'from',
+  toClass = 'to',
 }) => {
   const ref = useRef();
   const ls = useRef(true);
@@ -44,7 +48,7 @@ const TransitionElement: React.FC<Props> = ({
       <Transition in={isInViewport && ls.current} appear timeout={200}>
         {(state) =>
           React.cloneElement(children, {
-            className: `${className} ${getClassName(state, ls.current)}`,
+            className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
             style: newStyle,
           })
         }

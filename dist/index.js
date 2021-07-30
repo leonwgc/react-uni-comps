@@ -477,10 +477,13 @@ var Space = function Space(props) {
 };
 
 var getClassName = function getClassName(state, c) {
+  var fromClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'from';
+  var toClass = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'to';
+
   if (state === 'entering' || state === 'entered') {
-    return 'to';
+    return toClass;
   } else {
-    return c ? 'from' : 'to'; //exited
+    return c ? fromClass : toClass; //exited
   }
 }; // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
 
@@ -494,7 +497,11 @@ var TransitionElement = function TransitionElement(_ref) {
       _ref$delay = _ref.delay,
       delay = _ref$delay === void 0 ? 0 : _ref$delay,
       _ref$once = _ref.once,
-      once = _ref$once === void 0 ? false : _ref$once;
+      once = _ref$once === void 0 ? false : _ref$once,
+      _ref$fromClass = _ref.fromClass,
+      fromClass = _ref$fromClass === void 0 ? 'from' : _ref$fromClass,
+      _ref$toClass = _ref.toClass,
+      toClass = _ref$toClass === void 0 ? 'to' : _ref$toClass;
   var ref = React.useRef();
   var ls = React.useRef(true);
   var isInViewport = useInViewport__default['default'](ref);
@@ -522,7 +529,7 @@ var TransitionElement = function TransitionElement(_ref) {
     timeout: 200
   }, function (state) {
     return /*#__PURE__*/React__default['default'].cloneElement(children, {
-      className: "".concat(className, " ").concat(getClassName(state, ls.current)),
+      className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
       style: newStyle
     });
   }));
