@@ -25,11 +25,11 @@ const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
 // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
 const TransitionElement: React.FC<Props> = ({
   children,
-  duration = 200,
+  duration = 240,
   transitionProp = 'all',
-  timingFunc = 'ease-in-out',
+  timingFunc = 'ease-out',
   delay = 0,
-  once = false,
+  once = true,
   fromClass = 'from',
   toClass = 'to',
 }) => {
@@ -43,14 +43,12 @@ const TransitionElement: React.FC<Props> = ({
   };
 
   useUpdateEffect(() => {
-    if (once) {
-      ls.current = false;
-    }
+    ls.current = !once;
   }, [isInViewport, once]);
 
   return (
     <span ref={ref}>
-      <Transition in={isInViewport && ls.current} appear timeout={200}>
+      <Transition in={isInViewport && ls.current} appear timeout={duration}>
         {(state) =>
           React.cloneElement(children, {
             className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
