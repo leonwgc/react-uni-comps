@@ -535,6 +535,41 @@ var TransitionElement = function TransitionElement(_ref) {
   }));
 };
 
+var AnimationElement = function AnimationElement(_ref) {
+  var children = _ref.children,
+      _ref$duration = _ref.duration,
+      duration = _ref$duration === void 0 ? 3000 : _ref$duration,
+      _ref$name = _ref.name,
+      name = _ref$name === void 0 ? '' : _ref$name,
+      _ref$timingFunc = _ref.timingFunc,
+      timingFunc = _ref$timingFunc === void 0 ? 'ease' : _ref$timingFunc,
+      _ref$delay = _ref.delay,
+      delay = _ref$delay === void 0 ? 0 : _ref$delay,
+      _ref$direction = _ref.direction,
+      direction = _ref$direction === void 0 ? 'normal' : _ref$direction,
+      _ref$iterationCount = _ref.iterationCount,
+      iterationCount = _ref$iterationCount === void 0 ? 'infinite' : _ref$iterationCount,
+      _ref$fillMode = _ref.fillMode,
+      fillMode = _ref$fillMode === void 0 ? 'none' : _ref$fillMode;
+  var ref = React.useRef();
+  var isInViewport = useInViewport__default['default'](ref);
+
+  var _ref2 = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _ref2$style = _ref2.style,
+      style = _ref2$style === void 0 ? {} : _ref2$style;
+
+  var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
+    animation: "".concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
+  });
+
+  return /*#__PURE__*/React__default['default'].createElement("span", {
+    ref: ref
+  }, /*#__PURE__*/React__default['default'].cloneElement(children, {
+    style: newStyle
+  }));
+};
+
+exports.AnimationElement = AnimationElement;
 exports.Popup = Popup;
 exports.Space = Space;
 exports.TransitionElement = TransitionElement;
