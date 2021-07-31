@@ -491,13 +491,15 @@ var getClassName = function getClassName(state, c) {
 var TransitionElement = function TransitionElement(_ref) {
   var children = _ref.children,
       _ref$duration = _ref.duration,
-      duration = _ref$duration === void 0 ? 200 : _ref$duration,
+      duration = _ref$duration === void 0 ? 240 : _ref$duration,
+      _ref$transitionProp = _ref.transitionProp,
+      transitionProp = _ref$transitionProp === void 0 ? 'all' : _ref$transitionProp,
       _ref$timingFunc = _ref.timingFunc,
-      timingFunc = _ref$timingFunc === void 0 ? 'ease-in-out' : _ref$timingFunc,
+      timingFunc = _ref$timingFunc === void 0 ? 'ease-out' : _ref$timingFunc,
       _ref$delay = _ref.delay,
       delay = _ref$delay === void 0 ? 0 : _ref$delay,
       _ref$once = _ref.once,
-      once = _ref$once === void 0 ? false : _ref$once,
+      once = _ref$once === void 0 ? true : _ref$once,
       _ref$fromClass = _ref.fromClass,
       fromClass = _ref$fromClass === void 0 ? 'from' : _ref$fromClass,
       _ref$toClass = _ref.toClass,
@@ -513,20 +515,18 @@ var TransitionElement = function TransitionElement(_ref) {
       style = _ref2$style === void 0 ? {} : _ref2$style;
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    transition: "all ".concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms")
+    transition: "".concat(transitionProp, " ").concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms")
   });
 
   useUpdateEffect__default['default'](function () {
-    if (once) {
-      ls.current = false;
-    }
+    ls.current = !once;
   }, [isInViewport, once]);
   return /*#__PURE__*/React__default['default'].createElement("span", {
     ref: ref
   }, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": isInViewport && ls.current,
     appear: true,
-    timeout: 200
+    timeout: duration
   }, function (state) {
     return /*#__PURE__*/React__default['default'].cloneElement(children, {
       className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
