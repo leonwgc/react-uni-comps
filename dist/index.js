@@ -577,7 +577,101 @@ var AnimationElement = function AnimationElement(_ref) {
   }));
 };
 
+var _excluded$1 = ["width", "height", "children"],
+    _excluded2 = ["style"];
+
+var LazyLoadElement = function LazyLoadElement(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$1);
+
+  var ref = React.useRef();
+  var isInViewport = useInViewport__default['default'](ref);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      ready = _useState2[0],
+      setReady = _useState2[1];
+
+  React.useEffect(function () {
+    if (isInViewport && !ready) {
+      setReady(true);
+    }
+  }, [isInViewport, ready]);
+
+  var style = props.style,
+      otherProps = _objectWithoutProperties(props, _excluded2);
+
+  var newStyle = !ready ? _objectSpread2({
+    display: 'inline-block',
+    width: width,
+    height: height
+  }, style) : style;
+  return !ready ? /*#__PURE__*/React__default['default'].createElement("span", _extends({
+    ref: ref,
+    style: newStyle
+  }, otherProps)) : React__default['default'].Children.only(children);
+};
+
+var _excluded$2 = ["width", "height", "src"],
+    _excluded2$1 = ["style"];
+
+var LazyLoadImage = function LazyLoadImage(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      src = _ref.src,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var ref = React.useRef();
+  var isInViewport = useInViewport__default['default'](ref);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      ready = _useState2[0],
+      setReady = _useState2[1];
+
+  var _useState3 = React.useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loaded = _useState4[0],
+      setLoaded = _useState4[1];
+
+  React.useEffect(function () {
+    if (isInViewport && !ready) {
+      setReady(true);
+    }
+  }, [isInViewport, ready]);
+
+  var style = props.style,
+      otherProps = _objectWithoutProperties(props, _excluded2$1);
+
+  var newStyle = !ready || !loaded ? _objectSpread2({
+    display: 'inline-block',
+    filter: "blur(2px)",
+    width: width,
+    height: height
+  }, style) : style;
+
+  var onImageLoaded = function onImageLoaded() {
+    setLoaded(true);
+  };
+
+  return !ready ? /*#__PURE__*/React__default['default'].createElement("span", _extends({
+    ref: ref,
+    style: newStyle
+  }, otherProps)) : /*#__PURE__*/React__default['default'].createElement("img", _extends({
+    ref: ref,
+    onLoad: onImageLoaded,
+    width: width,
+    height: height,
+    src: src,
+    style: newStyle
+  }, otherProps));
+};
+
 exports.AnimationElement = AnimationElement;
+exports.LazyLoadElement = LazyLoadElement;
+exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
 exports.Space = Space;
 exports.TransitionElement = TransitionElement;
