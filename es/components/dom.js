@@ -4,6 +4,10 @@ export var detectFlexGapSupported = function detectFlexGapSupported() {
     return flexGapSupported;
   }
 
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
   var flex = document.createElement('div');
   flex.style.display = 'flex';
   flex.style.flexDirection = 'column';

@@ -5,6 +5,10 @@ export const detectFlexGapSupported = (): boolean => {
     return flexGapSupported;
   }
 
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
   const flex = document.createElement('div');
   flex.style.display = 'flex';
   flex.style.flexDirection = 'column';

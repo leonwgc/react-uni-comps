@@ -202,6 +202,10 @@ var detectFlexGapSupported = function detectFlexGapSupported() {
     return flexGapSupported;
   }
 
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
   var flex = document.createElement('div');
   flex.style.display = 'flex';
   flex.style.flexDirection = 'column';
@@ -384,9 +388,13 @@ var SpaceContext = /*#__PURE__*/React.createContext({
   verticalSize: 0,
   supportFlexGap: false
 });
+var flexDirectionMap = {
+  horizontal: 'row',
+  vertical: 'column'
+};
 var StyledSpace = Styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  flex-direction: ", ";\n  align-items: ", ";\n"])), function (_ref3) {
   var direction = _ref3.direction;
-  return direction;
+  return flexDirectionMap[direction];
 }, function (_ref4) {
   var align = _ref4.align;
   return align;

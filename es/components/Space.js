@@ -96,9 +96,13 @@ var SpaceContext = /*#__PURE__*/React.createContext({
   verticalSize: 0,
   supportFlexGap: false
 });
+var flexDirectionMap = {
+  horizontal: 'row',
+  vertical: 'column'
+};
 var StyledSpace = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  flex-direction: ", ";\n  align-items: ", ";\n"], ["\n  display: inline-flex;\n  flex-direction: ", ";\n  align-items: ", ";\n"])), function (_a) {
   var direction = _a.direction;
-  return direction;
+  return flexDirectionMap[direction];
 }, function (_a) {
   var align = _a.align;
   return align;

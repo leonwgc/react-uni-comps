@@ -72,6 +72,11 @@ const SpaceContext = React.createContext({
   supportFlexGap: false,
 });
 
+const flexDirectionMap = {
+  horizontal: 'row',
+  vertical: 'column',
+};
+
 export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   style?: React.CSSProperties;
@@ -87,7 +92,7 @@ const StyledSpace = styled.div<{
   direction: 'horizontal' | 'vertical';
 }>`
   display: inline-flex;
-  flex-direction: ${({ direction }) => direction};
+  flex-direction: ${({ direction }) => flexDirectionMap[direction]};
   align-items: ${({ align }) => align};
 `;
 
@@ -133,7 +138,7 @@ const Space: React.FC<SpaceProps> = (props) => {
         split={split}
         wrap={wrap}
       >
-        {child as React.ReactNode}
+        {child}
       </SpaceItem>
     );
     /* eslint-enable */
