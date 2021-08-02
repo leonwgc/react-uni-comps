@@ -7,7 +7,6 @@ export type Props = {
   width?: string | number;
   height?: string | number;
   src: string; // actual src
-  dataSrc: string; // placeholder src
   [p: string]: any;
 };
 

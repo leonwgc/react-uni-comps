@@ -9,11 +9,11 @@ yarn add react-uni-comps
 
 ##### components
 
-1. TransitionElement
-2. AnimationElement
-3. Popup
-4. Space
-5. LazyLoadElement
-6. LazyLoadImage
+1. TransitionElement (组件加载/show/hide transition动画)
+2. AnimationElement(对子组件执行动画,属性参照css animation)
+3. Popup (弹出)
+4. Space (参考 antd Space)
+5. LazyLoadElement （懒加载子组件）
+6. LazyLoadImage (替换img,懒加载图片)
 
 to be continued ..

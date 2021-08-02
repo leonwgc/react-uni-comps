@@ -27,28 +27,10 @@ var __assign = this && this.__assign || function () {
 };
 
 import React, { useRef } from 'react';
-import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Styled from 'styled-components';
-import { offset } from './dom';
-var mousePosition;
-
-var getClickPosition = function getClickPosition(e) {
-  mousePosition = {
-    x: e.pageX,
-    y: e.pageY
-  };
-  setTimeout(function () {
-    mousePosition = null;
-  }, 100);
-};
-
-if (typeof window !== 'undefined' && window.document && window.document.documentElement) {
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
-
-var StyledMask = Styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\ntransition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"], ["\ntransition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"])), function (props) {
+var StyledMask = Styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    transition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"], ["\n    transition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"])), function (props) {
   return props.duration;
 });
 var StyledWrapper = Styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n position: fixed;\n transition: all ", "ms ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n\n  &.entering,&.entered{\n    transform: translate(0, 0);\n  }\n\n  &.exiting,&.exited{\n    opacity:0;\n  }\n\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position:absolute;\n    top:50%;\n    left:50%;\n      transform:translate(-50%,-50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform:translate(-50%,-50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform:translate(-50%,-50%) scale(0.2);\n    opacity: 0;\n  }\n"], ["\n position: fixed;\n transition: all ", "ms ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n\n  &.entering,&.entered{\n    transform: translate(0, 0);\n  }\n\n  &.exiting,&.exited{\n    opacity:0;\n  }\n\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position:absolute;\n    top:50%;\n    left:50%;\n      transform:translate(-50%,-50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform:translate(-50%,-50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform:translate(-50%,-50%) scale(0.2);\n    opacity: 0;\n  }\n"])), function (props) {
@@ -86,13 +68,6 @@ var Popup = function Popup(_a) {
     }
   };
 
-  useEffect(function () {
-    if (mousePosition) {
-      var wrapEl = wrapRef.current;
-      var p = offset(wrapEl);
-      wrapEl.style.transformOrigin = mousePosition.x - p.left + "px " + (mousePosition.y - p.top) + "px";
-    }
-  }, [visible]);
   return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(Transition, {
     in: visible,
     timeout: duration

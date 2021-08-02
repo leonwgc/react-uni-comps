@@ -1,29 +1,10 @@
 import React, { useRef } from 'react';
-import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Styled from 'styled-components';
-import { offset } from './dom';
-
-let mousePosition: { x: number; y: number } | null;
-
-const getClickPosition = (e: MouseEvent) => {
-  mousePosition = {
-    x: e.pageX,
-    y: e.pageY,
-  };
-
-  setTimeout(() => {
-    mousePosition = null;
-  }, 100);
-};
-
-if (typeof window !== 'undefined' && window.document && window.document.documentElement) {
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
 
 const StyledMask = Styled.div<{ duration: number }>`
-transition: opacity ${(props) => props.duration}ms ease-in-out 20ms;
+    transition: opacity ${(props) => props.duration}ms ease-in-out 20ms;
     position: fixed;
     left: 0;
     top: 0;
@@ -159,14 +140,6 @@ const Popup: React.FC<Props> = ({
       onMaskClick();
     }
   };
-
-  useEffect(() => {
-    if (mousePosition) {
-      const wrapEl = wrapRef.current as HTMLElement;
-      const p = offset(wrapEl);
-      wrapEl.style.transformOrigin = `${mousePosition.x - p.left}px ${mousePosition.y - p.top}px`;
-    }
-  }, [visible]);
 
   return ReactDOM.createPortal(
     <Transition in={visible} timeout={duration}>

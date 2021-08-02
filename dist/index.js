@@ -196,61 +196,8 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var flexGapSupported;
-var detectFlexGapSupported = function detectFlexGapSupported() {
-  if (flexGapSupported !== undefined) {
-    return flexGapSupported;
-  }
-
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  var flex = document.createElement('div');
-  flex.style.display = 'flex';
-  flex.style.flexDirection = 'column';
-  flex.style.rowGap = '1px';
-  flex.appendChild(document.createElement('div'));
-  flex.appendChild(document.createElement('div'));
-  document.body.appendChild(flex);
-  flexGapSupported = flex.scrollHeight === 1;
-  document.body.removeChild(flex);
-  return flexGapSupported;
-};
-var offset = function offset(el) {
-  var top = 0;
-  var left = 0;
-
-  while (el) {
-    top += el.offsetTop;
-    left += el.offsetLeft;
-    el = el.offsetParent;
-  }
-
-  return {
-    top: top,
-    left: left
-  };
-};
-
 var _templateObject, _templateObject2;
-var mousePosition;
-
-var getClickPosition = function getClickPosition(e) {
-  mousePosition = {
-    x: e.pageX,
-    y: e.pageY
-  };
-  setTimeout(function () {
-    mousePosition = null;
-  }, 100);
-};
-
-if (typeof window !== 'undefined' && window.document && window.document.documentElement) {
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
-
-var StyledMask = Styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\ntransition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"])), function (props) {
+var StyledMask = Styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    transition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"])), function (props) {
   return props.duration;
 });
 var StyledWrapper = Styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n position: fixed;\n transition: all ", "ms ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n\n  &.entering,&.entered{\n    transform: translate(0, 0);\n  }\n\n  &.exiting,&.exited{\n    opacity:0;\n  }\n\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position:absolute;\n    top:50%;\n    left:50%;\n      transform:translate(-50%,-50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform:translate(-50%,-50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform:translate(-50%,-50%) scale(0.2);\n    opacity: 0;\n  }\n"])), function (props) {
@@ -288,15 +235,6 @@ var Popup = function Popup(_ref) {
     }
   };
 
-  React.useEffect(function () {
-    if (mousePosition) {
-      var wrapEl = wrapRef.current;
-
-      var _p = offset(wrapEl);
-
-      wrapEl.style.transformOrigin = "".concat(mousePosition.x - _p.left, "px ").concat(mousePosition.y - _p.top, "px");
-    }
-  }, [visible]);
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
     timeout: duration
@@ -331,6 +269,28 @@ function toArray(children) {
   });
   return ret;
 }
+
+var flexGapSupported;
+var detectFlexGapSupported = function detectFlexGapSupported() {
+  if (flexGapSupported !== undefined) {
+    return flexGapSupported;
+  }
+
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  var flex = document.createElement('div');
+  flex.style.display = 'flex';
+  flex.style.flexDirection = 'column';
+  flex.style.rowGap = '1px';
+  flex.appendChild(document.createElement('div'));
+  flex.appendChild(document.createElement('div'));
+  document.body.appendChild(flex);
+  flexGapSupported = flex.scrollHeight === 1;
+  document.body.removeChild(flex);
+  return flexGapSupported;
+};
 
 var _excluded = ["size", "align", "className", "children", "direction", "split", "style", "wrap"];
 
