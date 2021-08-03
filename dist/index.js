@@ -489,18 +489,42 @@ var TransitionElement = function TransitionElement(_ref) {
   useUpdateEffect__default['default'](function () {
     ls.current = !once;
   }, [isInViewport, once]);
-  return /*#__PURE__*/React__default['default'].createElement("span", {
-    ref: ref
-  }, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-    "in": isInViewport && ls.current,
-    appear: true,
-    timeout: duration
-  }, function (state) {
-    return /*#__PURE__*/React__default['default'].cloneElement(children, {
-      className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
-      style: newStyle
+  var count = React__default['default'].Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement can have only one children');
+  }
+
+  var type = children.type;
+
+  if (typeof type === 'string') {
+    // html element
+    return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
+      "in": isInViewport && ls.current,
+      appear: true,
+      timeout: duration
+    }, function (state) {
+      return /*#__PURE__*/React__default['default'].cloneElement(children, {
+        ref: ref,
+        className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
+        style: newStyle
+      });
     });
-  }));
+  } else {
+    // comp
+    return /*#__PURE__*/React__default['default'].createElement("span", {
+      ref: ref
+    }, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
+      "in": isInViewport && ls.current,
+      appear: true,
+      timeout: duration
+    }, function (state) {
+      return /*#__PURE__*/React__default['default'].cloneElement(children, {
+        className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
+        style: newStyle
+      });
+    }));
+  }
 };
 
 var AnimationElement = function AnimationElement(_ref) {

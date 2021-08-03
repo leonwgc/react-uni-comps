@@ -46,18 +46,42 @@ const TransitionElement: React.FC<Props> = ({
     ls.current = !once;
   }, [isInViewport, once]);
 
-  return (
-    <span ref={ref}>
+  const count = React.Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement can have only one children');
+  }
+
+  const { type } = children;
+
+  if (typeof type === 'string') {
+    // html element
+    return (
       <Transition in={isInViewport && ls.current} appear timeout={duration}>
         {(state) =>
           React.cloneElement(children, {
+            ref,
             className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
             style: newStyle,
           })
         }
       </Transition>
-    </span>
-  );
+    );
+  } else {
+    // comp
+    return (
+      <span ref={ref}>
+        <Transition in={isInViewport && ls.current} appear timeout={duration}>
+          {(state) =>
+            React.cloneElement(children, {
+              className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
+              style: newStyle,
+            })
+          }
+        </Transition>
+      </span>
+    );
+  }
 };
 
 export default TransitionElement;
