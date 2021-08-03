@@ -554,11 +554,26 @@ var AnimationElement = function AnimationElement(_ref) {
     animation: "".concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
   });
 
-  return /*#__PURE__*/React__default['default'].createElement("span", {
-    ref: ref
-  }, /*#__PURE__*/React__default['default'].cloneElement(children, {
-    style: newStyle
-  }));
+  var count = React__default['default'].Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement can have only one children');
+  }
+
+  var type = children.type;
+
+  if (typeof type === 'string') {
+    return /*#__PURE__*/React__default['default'].cloneElement(children, {
+      ref: ref,
+      style: newStyle
+    });
+  } else {
+    return /*#__PURE__*/React__default['default'].createElement("span", {
+      ref: ref
+    }, /*#__PURE__*/React__default['default'].cloneElement(children, {
+      style: newStyle
+    }));
+  }
 };
 
 var _excluded$1 = ["width", "height", "children"],

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
 export type Props = {
@@ -32,13 +32,28 @@ const AnimationElement: React.FC<Props> = ({
     } ${name}`,
   };
 
-  return (
-    <span ref={ref}>
-      {React.cloneElement(children, {
-        style: newStyle,
-      })}
-    </span>
-  );
+  const count = React.Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement can have only one children');
+  }
+
+  const { type } = children;
+
+  if (typeof type === 'string') {
+    return React.cloneElement(children, {
+      ref,
+      style: newStyle,
+    });
+  } else {
+    return (
+      <span ref={ref}>
+        {React.cloneElement(children, {
+          style: newStyle,
+        })}
+      </span>
+    );
+  }
 };
 
 export default AnimationElement;

@@ -42,11 +42,26 @@ var AnimationElement = function AnimationElement(_a) {
     animation: duration + "ms " + timingFunc + " " + delay + "ms " + iterationCount + " " + direction + " " + fillMode + " " + (isInViewport ? 'running' : 'paused') + " " + name
   });
 
-  return /*#__PURE__*/React.createElement("span", {
-    ref: ref
-  }, /*#__PURE__*/React.cloneElement(children, {
-    style: newStyle
-  }));
+  var count = React.Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement can have only one children');
+  }
+
+  var type = children.type;
+
+  if (typeof type === 'string') {
+    return /*#__PURE__*/React.cloneElement(children, {
+      ref: ref,
+      style: newStyle
+    });
+  } else {
+    return /*#__PURE__*/React.createElement("span", {
+      ref: ref
+    }, /*#__PURE__*/React.cloneElement(children, {
+      style: newStyle
+    }));
+  }
 };
 
 export default AnimationElement;
