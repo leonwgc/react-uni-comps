@@ -5926,10 +5926,10 @@ react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-use-lib@~1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/react-use-lib/-/react-use-lib-1.0.2.tgz#c7c581dce5856c467f96adf9e6659c99f66fc2f6"
-  integrity sha512-NnUSzO5ipP+y3ffhwDLzhpu042PX15YqPN4v3jAIgqKTc1g0ZVKOfV1LMopJX+mkWXEvgtsraJH0MSczyY02qg==
+react-use-lib@~1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/react-use-lib/-/react-use-lib-1.0.5.tgz#d65271d3d1f5bf1abb9ba059c32983ddfb32c418"
+  integrity sha512-ez5vw6g5Y8ooTekNS1vQCJkVoaRJEHuF/sshgIXtfUkRDUFb5bM78pzHq0SiybzX//qJqyRexXIM2o/cm2pFmA==
   dependencies:
     animate.css "^4.1.1"
     intersection-observer "^0.12.0"
