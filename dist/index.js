@@ -557,7 +557,7 @@ var AnimationElement = function AnimationElement(_ref) {
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
-    throw new Error('TransitionElement can have only one children');
+    throw new Error('AnimationElement can have only one children');
   }
 
   var type = children.type;

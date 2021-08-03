@@ -35,7 +35,7 @@ const AnimationElement: React.FC<Props> = ({
   const count = React.Children.count(children);
 
   if (count > 1) {
-    throw new Error('TransitionElement can have only one children');
+    throw new Error('AnimationElement can have only one children');
   }
 
   const { type } = children;
