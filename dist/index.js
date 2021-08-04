@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
-var Styled = require('styled-components');
+var styled = require('styled-components');
 var reactIs = require('react-is');
 var useInViewport = require('react-use-lib/es/useInViewport');
 var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
@@ -15,7 +15,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
-var Styled__default = /*#__PURE__*/_interopDefaultLegacy(Styled);
+var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
@@ -199,18 +199,16 @@ function _nonIterableRest() {
 }
 
 var _templateObject, _templateObject2;
-var StyledMask = Styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    transition: opacity ", "ms ease-in-out 20ms;\n    position: fixed;\n    left: 0;\n    top: 0;\n    bottom: 0;\n    right: 0;\n\n    &.entering ,&.entered{\n      background-color: rgba(0, 0, 0, 0.35);\n      opacity: 1;\n    }\n\n    &.exiting,&.exited{\n      opacity: 0;\n      z-index: -1;\n    }\n"])), function (props) {
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  transition: opacity ", "ms ease-out 20ms;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n\n  &.entering,\n  &.entered {\n    background-color: rgba(0, 0, 0, 0.35);\n    opacity: 1;\n  }\n\n  &.exiting,\n  &.exited {\n    opacity: 0;\n    z-index: -1;\n  }\n"])), function (props) {
   return props.duration;
 });
-var StyledWrapper = Styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n position: fixed;\n transition: all ", "ms ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n\n  &.entering,&.entered{\n    transform: translate(0, 0);\n  }\n\n  &.exiting,&.exited{\n    opacity:0;\n  }\n\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position:absolute;\n    top:50%;\n    left:50%;\n      transform:translate(-50%,-50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform:translate(-50%,-50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform:translate(-50%,-50%) scale(0.2);\n    opacity: 0;\n  }\n"])), function (props) {
+var StyledWrapper = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: fixed;\n  transition: all ", "ms ease-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transform: translate(0, 0);\n  }\n\n  &.exiting,\n  &.exited {\n    opacity: 0;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform: translate(-50%, -50%) scale(0.2);\n    opacity: 0;\n  }\n"])), function (props) {
   return props.duration;
 });
 
 var Popup = function Popup(_ref) {
   var children = _ref.children,
       visible = _ref.visible,
-      _ref$width = _ref.width,
-      width = _ref$width === void 0 ? '100%' : _ref$width,
       _ref$showMask = _ref.showMask,
       showMask = _ref$showMask === void 0 ? true : _ref$showMask,
       _ref$onMaskClick = _ref.onMaskClick,
@@ -224,12 +222,10 @@ var Popup = function Popup(_ref) {
     return document.body;
   } : _ref$mountContainer,
       _ref$style = _ref.style,
-      style = _ref$style === void 0 ? {} : _ref$style;
+      style = _ref$style === void 0 ? {} : _ref$style,
+      _ref$className = _ref.className,
+      className = _ref$className === void 0 ? '' : _ref$className;
   var wrapRef = React.useRef();
-
-  var popStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    width: width
-  });
 
   var clickMask = function clickMask(e) {
     if (e.target === e.currentTarget && typeof onMaskClick === 'function') {
@@ -237,6 +233,9 @@ var Popup = function Popup(_ref) {
     }
   };
 
+  React.useEffect(function () {
+    document.body.style.overflow = visible ? 'hidden' : '';
+  }, [visible]);
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
     timeout: duration
@@ -248,8 +247,8 @@ var Popup = function Popup(_ref) {
     }) : null, /*#__PURE__*/React__default['default'].createElement(StyledWrapper, {
       ref: wrapRef,
       duration: duration,
-      style: popStyle,
-      className: "".concat(position, " ").concat(status, " ").concat(position, "-").concat(status)
+      style: style,
+      className: "react-uni-comps-popup ".concat(className, " ").concat(position, " ").concat(status, " ").concat(position, "-").concat(status)
     }, children));
   }), mountContainer());
 };
@@ -354,7 +353,7 @@ var flexDirectionMap = {
   horizontal: 'row',
   vertical: 'column'
 };
-var StyledSpace = Styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  flex-direction: ", ";\n  align-items: ", ";\n"])), function (_ref3) {
+var StyledSpace = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  flex-direction: ", ";\n  align-items: ", ";\n"])), function (_ref3) {
   var direction = _ref3.direction;
   return flexDirectionMap[direction];
 }, function (_ref4) {

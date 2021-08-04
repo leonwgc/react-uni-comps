@@ -1,45 +1,47 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
-import Styled from 'styled-components';
+import styled from 'styled-components';
 
-const StyledMask = Styled.div<{ duration: number }>`
-    transition: opacity ${(props) => props.duration}ms ease-in-out 20ms;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
+const StyledMask = styled.div<{ duration: number }>`
+  transition: opacity ${(props) => props.duration}ms ease-out 20ms;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
 
-    &.entering ,&.entered{
-      background-color: rgba(0, 0, 0, 0.35);
-      opacity: 1;
-    }
+  &.entering,
+  &.entered {
+    background-color: rgba(0, 0, 0, 0.35);
+    opacity: 1;
+  }
 
-    &.exiting,&.exited{
-      opacity: 0;
-      z-index: -1;
-    }
+  &.exiting,
+  &.exited {
+    opacity: 0;
+    z-index: -1;
+  }
 `;
 
-const StyledWrapper = Styled.div<{ duration: number }>`
- position: fixed;
- transition: all ${(props) => props.duration}ms ease-in-out;
+const StyledWrapper = styled.div<{ duration: number }>`
+  position: fixed;
+  transition: all ${(props) => props.duration}ms ease-out;
   // bottom
   &.bottom {
     left: 0;
     bottom: 0;
   }
 
-
-  &.entering,&.entered{
+  &.entering,
+  &.entered {
     transform: translate(0, 0);
   }
 
-  &.exiting,&.exited{
-    opacity:0;
+  &.exiting,
+  &.exited {
+    opacity: 0;
   }
-
 
   &.bottom-exited,
   &.bottom-exiting {
@@ -53,7 +55,6 @@ const StyledWrapper = Styled.div<{ duration: number }>`
     bottom: 0;
   }
 
-
   &.left-exited,
   &.left-exiting {
     transform: translate(-100%, 0);
@@ -65,7 +66,6 @@ const StyledWrapper = Styled.div<{ duration: number }>`
     top: 0;
     bottom: 0;
   }
-
 
   &.right-exited,
   &.right-exiting {
@@ -79,7 +79,6 @@ const StyledWrapper = Styled.div<{ duration: number }>`
     right: 0;
   }
 
-
   &.top-exited,
   &.top-exiting {
     transform: translate(0, -100%);
@@ -87,59 +86,58 @@ const StyledWrapper = Styled.div<{ duration: number }>`
 
   //center
   &.center {
-    position:absolute;
-    top:50%;
-    left:50%;
-      transform:translate(-50%,-50%) scale(1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
   }
   &.center-entering,
   &.center-entered {
-    transform:translate(-50%,-50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
 
   &.center-exited,
   &.center-exiting {
-    transform:translate(-50%,-50%) scale(0.2);
+    transform: translate(-50%, -50%) scale(0.2);
     opacity: 0;
   }
 `;
 
 export type Props = {
   visible?: boolean;
-  width?: string | number;
   showMask?: boolean;
   onMaskClick?: () => void;
   position: 'top' | 'bottom' | 'left' | 'center' | 'right';
   duration?: number;
   mountContainer?: () => HTMLElement;
   children?: React.ReactNode;
-  [p: string]: unknown;
+  style?: React.CSSProperties; // wrapper style
+  className?: string; // wrapper className
 };
 
 const Popup: React.FC<Props> = ({
   children,
   visible,
-  width = '100%',
   showMask = true,
   onMaskClick = null,
   position = 'bottom',
   duration = 240,
   mountContainer = () => document.body,
   style = {},
+  className = '',
 }) => {
   const wrapRef = useRef();
-
-  const popStyle = {
-    ...(style as React.CSSProperties),
-    width,
-  };
 
   const clickMask = (e) => {
     if (e.target === e.currentTarget && typeof onMaskClick === 'function') {
       onMaskClick();
     }
   };
+
+  useEffect(() => {
+    document.body.style.overflow = visible ? 'hidden' : '';
+  }, [visible]);
 
   return ReactDOM.createPortal(
     <Transition in={visible} timeout={duration}>
@@ -151,8 +149,8 @@ const Popup: React.FC<Props> = ({
           <StyledWrapper
             ref={wrapRef}
             duration={duration}
-            style={popStyle}
-            className={`${position} ${status} ${position}-${status}`}
+            style={style}
+            className={`react-uni-comps-popup ${className} ${position} ${status} ${position}-${status}`}
           >
             {children}
           </StyledWrapper>

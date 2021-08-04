@@ -114,25 +114,59 @@ const StyledBird = styled.span`
 ```js
 // types
 export declare type Props = {
-    visible?: boolean;
-    width?: string | number;
-    showMask?: boolean;
-    onMaskClick?: () => void;
-    position: 'top' | 'bottom' | 'left' | 'center' | 'right';
-    duration?: number;
-    mountContainer?: () => HTMLElement;
+    visible?: boolean; // 是否可见
+    showMask?: boolean; // 是否显示灰色遮罩,默认显示
+    onMaskClick?: () => void; // 遮罩点击handler
+    position: 'top' | 'bottom' | 'left' | 'center' | 'right'; // 显示位置 ,左右可以模拟drawer , 中间模拟 dialog，上下模拟 message/popup
+    duration?: number; // 过渡动画时长ms
+    mountContainer?: () => HTMLElement; // 载入容器，默认document.body
     children?: React.ReactNode;
-    [p: string]: unknown;
+    style?: React.CSSProperties;  // 容器样式
+    className?: string; // 容器class
 };
 declare const Popup: React.FC<Props>;
 ```
 
 ```js
-<Popup position="center" width={500} visible={visible} onMaskClick={() => setVisible(false)}>
-  <div style={{ border: '1px solid blue' }}>
-    <p>hello,world</p>
+// 中间弹出，模拟弹框
+<Popup
+  position="center"
+  style={{ width: 500, height: 200, backgroundColor: '#fff' }}
+  visible={visible}
+  onMaskClick={() => setVisible(false)}
+>
+  <div
+    style={{
+      display: 'flex',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    hello,world
   </div>
 </Popup>
+
+// 右侧弹出， 模拟drawer
+
+ <Popup
+        position="right"
+        className="right-panel"
+        visible={visible}
+        onMaskClick={() => setVisible(false)}
+      >
+        <Pullup
+          className="pull-wrapper"
+          style={{ width: '100%', height: 'calc(100vh - 60px)', border: 'none' }}
+          dataList={list}
+          fetchData={fetchData}
+          hasMoreData={hasMoreData}
+          spinner={<Spin />}
+          dataRender={(data) => {
+            return <div className="item">list {data}</div>;
+          }}
+        ></Pullup>
+      </Popup>
 ```
 
 4. Space (参考 antd Space)
