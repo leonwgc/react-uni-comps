@@ -4,3 +4,4 @@ export { default as TransitionElement } from './components/TransitionElement';
 export { default as AnimationElement } from './components/AnimationElement';
 export { default as LazyLoadElement } from './components/LazyLoadElement';
 export { default as LazyLoadImage } from './components/LazyLoadImage';
+export { default as Pullup } from './components/Pullup';

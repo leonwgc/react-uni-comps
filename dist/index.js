@@ -9,6 +9,7 @@ var Styled = require('styled-components');
 var reactIs = require('react-is');
 var useInViewport = require('react-use-lib/es/useInViewport');
 var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
+var usePrevious = require('react-use-lib/es/usePrevious');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -17,6 +18,7 @@ var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var Styled__default = /*#__PURE__*/_interopDefaultLegacy(Styled);
 var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect);
+var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -668,9 +670,74 @@ var LazyLoadImage = function LazyLoadImage(_ref) {
   }, otherProps));
 };
 
+var _excluded$3 = ["dataList", "dataRender", "fetchData", "spinner", "endText", "hasMoreData", "footerStyle"];
+
+var footerRender = function footerRender(isLoading, hasMoreData, spinner, endText, footerStyle) {
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    style: _objectSpread2({
+      height: 40,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }, footerStyle)
+  }, isLoading ? spinner : !hasMoreData ? endText : null);
+};
+
+var Pullup = function Pullup(_ref) {
+  var _ref$dataList = _ref.dataList,
+      dataList = _ref$dataList === void 0 ? [] : _ref$dataList,
+      _ref$dataRender = _ref.dataRender,
+      dataRender = _ref$dataRender === void 0 ? function () {
+    return null;
+  } : _ref$dataRender,
+      fetchData = _ref.fetchData,
+      _ref$spinner = _ref.spinner,
+      spinner = _ref$spinner === void 0 ? '加载中...' : _ref$spinner,
+      _ref$endText = _ref.endText,
+      endText = _ref$endText === void 0 ? '我是有底线的~' : _ref$endText,
+      _ref$hasMoreData = _ref.hasMoreData,
+      hasMoreData = _ref$hasMoreData === void 0 ? true : _ref$hasMoreData,
+      footerStyle = _ref.footerStyle,
+      otherProps = _objectWithoutProperties(_ref, _excluded$3);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isLoading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var ref = React.useRef();
+  var wrapRef = React.useRef();
+  var isAtBottom = useInViewport__default['default'](ref, wrapRef);
+  var lastIsAtBottom = usePrevious__default['default'](isAtBottom);
+  var style = otherProps.style,
+      className = otherProps.className;
+  React.useEffect(function () {
+    if (!isLoading && isAtBottom && hasMoreData && !lastIsAtBottom) {
+      setLoading(true);
+      fetchData().then(function () {
+        setLoading(false);
+      })["catch"](function () {
+        setLoading(false);
+      });
+    }
+  }, [isLoading, isAtBottom, hasMoreData, setLoading, fetchData, lastIsAtBottom]);
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: className,
+    style: style,
+    ref: wrapRef
+  }, dataList.map(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
+      key: idx
+    }, dataRender(item, idx));
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: ref
+  }, footerRender(isLoading, hasMoreData, spinner, endText, footerStyle)));
+};
+
 exports.AnimationElement = AnimationElement;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
+exports.Pullup = Pullup;
 exports.Space = Space;
 exports.TransitionElement = TransitionElement;
