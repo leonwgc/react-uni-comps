@@ -9,10 +9,10 @@ yarn add react-uni-comps
 
 ##### components
 
-1. TransitionElement (组件加载/show/hide transition动画)
+1. TransitionElement (组件加载/show/hide transition 动画)
 
 ```js
-// type def 
+// type def
 export declare type Props = {
     children: React.ReactElement;
     duration?: number;
@@ -27,7 +27,7 @@ declare const TransitionElement: React.FC<Props>;
 ```
 
 ```js
- // css 
+ // css
   .test {
   width: 100px;
   height: 100px;
@@ -48,10 +48,11 @@ declare const TransitionElement: React.FC<Props>;
      <div className="test"></div>
   </TransitionElement>
 ```
-2. AnimationElement(对子组件执行动画,属性参照css animation)
+
+2. AnimationElement(对子组件执行动画,属性参照 css animation)
 
 ```js
-// types 
+// types
 export declare type Props = {
     children: React.ReactElement;
     duration?: number;
@@ -65,7 +66,7 @@ export declare type Props = {
 declare const AnimationElement: React.FC<Props>;
 ```
 
-```js      
+```js
 // css
 const StyledBird = styled.span`
   background: url(${bird});
@@ -102,15 +103,16 @@ const StyledBird = styled.span`
           hello,world
         </Button>
       </AnimationElement>
-      
+
       <AnimationElement duration={2000} timingFunc="linear" name="fly">
         <StyledBird></StyledBird>
       </AnimationElement>
 ```
+
 3. Popup (弹出)
 
 ```js
-// types 
+// types
 export declare type Props = {
     visible?: boolean;
     width?: string | number;
@@ -126,18 +128,19 @@ declare const Popup: React.FC<Props>;
 ```
 
 ```js
- <Popup position="center" width={500} visible={visible} onMaskClick={() => setVisible(false)}>
-        <div style={{ border: '1px solid blue' }}>
-          <p>hello,world</p>
-        </div>
-      </Popup>
+<Popup position="center" width={500} visible={visible} onMaskClick={() => setVisible(false)}>
+  <div style={{ border: '1px solid blue' }}>
+    <p>hello,world</p>
+  </div>
+</Popup>
 ```
+
 4. Space (参考 antd Space)
 
 5. LazyLoadElement（懒加载子组件）
 
 ```js
-// types 
+// types
 export declare type Props = {
     children: React.ReactElement;
     width?: string | number;
@@ -148,24 +151,93 @@ declare const LazyLoadElement: React.FC<Props>;
 ```
 
 ```js
- <Space direction="vertical" size={16}>
-      {arr.map((item, k) => (
-        <LazyLoadElement key={k} width={400} height={200}>
-          <img
-            width={400}
-            height={200}
-            src={
-              k % 2 == 0
-                ? 'https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF'
-                : 'https://t7.baidu.com/it/u=2582370511,530426427&fm=193&f=GIF'
-            }
-          ></img>
-        </LazyLoadElement>
-      ))}
-    </Space>
+<Space direction="vertical" size={16}>
+  {arr.map((item, k) => (
+    <LazyLoadElement key={k} width={400} height={200}>
+      <img
+        width={400}
+        height={200}
+        src={
+          k % 2 == 0
+            ? 'https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF'
+            : 'https://t7.baidu.com/it/u=2582370511,530426427&fm=193&f=GIF'
+        }
+      ></img>
+    </LazyLoadElement>
+  ))}
+</Space>
 ```
-6. LazyLoadImage (当做img标签使用,懒加载图片)
 
+6. LazyLoadImage (当做 img 标签使用,懒加载图片)
 
+7. Pullup (滚动加载)
 
-to be continued ..
+```js
+// types
+export declare type Props = {
+    dataList: Array<unknown>; // 数组数据
+    dataRender: (data: unknown, index: number) => React.ReactNode; // 每一项数据渲染
+    fetchData: () => Promise<unknown>; // ajax 请求获取数据 ,第一次加载/加载到容器底部调用
+    hasMoreData: boolean; // 是否还有更多数据
+    spinner?: React.ReactNode; // ajax 拉数据时，底部显示的loading提示
+    endText?: React.ReactNode; // 拉到底部 没有更多数据显示的文字提示
+    style?: React.CSSProperties; // 滚动容器样式, 请设置overflow-y:scroll,height
+    className?: string; // 滚动容器类名
+    footerStyle?: React.CSSProperties; // footer 样式
+};
+declare const Pullup: React.FC<Props>;
+```
+
+```js
+const App = () => {
+  const [list, setList] = useState([]);
+  const [hasMoreData, sethasMoreData] = useState(true); //是否还有数据没加载
+  const ref = useRef(0);
+
+  const fetchData = () => {
+    return new Promise((resolve) => {
+      var ar = [];
+      for (var i = 0; i < pageSize; i++) {
+        ar.push(ref.current * pageSize + i + 1);
+      }
+      setTimeout(() => {
+        setList((d) => d.concat(ar));
+        ref.current++;
+
+        if (ref.current > 6) {
+          sethasMoreData(false); // 模拟没有更多数据
+        }
+        resolve();
+      }, 100);
+    });
+  };
+
+  return (
+    <Space>
+      <Pullup
+        className="pull-wrapper"
+        dataList={list}
+        fetchData={fetchData}
+        hasMoreData={hasMoreData}
+        spinner={<Spin />}
+        dataRender={(data) => {
+          return <div className="item">list {data}</div>;
+        }}
+      ></Pullup>
+      <Pullup
+        style={{ height: '100vh', marginLeft: 100 }}
+        className="pull-wrapper"
+        dataList={list}
+        endText="没有更多数据了!"
+        fetchData={fetchData}
+        hasMoreData={hasMoreData}
+        spinner={<Spin />}
+        footerStyle={{ height: 100 }}
+        dataRender={(data, index) => {
+          return <div className="item">list {index + 1}</div>;
+        }}
+      ></Pullup>
+    </Space>
+  );
+};
+```
