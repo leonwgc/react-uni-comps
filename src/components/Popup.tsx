@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
-const StyledMask = styled.div<{ duration: number }>`
-  transition: opacity ${(props) => props.duration}ms ease-out 20ms;
+const StyledMask = styled.div`
+  transition: opacity 600ms linear;
   position: fixed;
   left: 0;
   top: 0;
@@ -13,11 +13,13 @@ const StyledMask = styled.div<{ duration: number }>`
 
   &.entering,
   &.entered {
+    opacity: 1;
     background-color: rgba(0, 0, 0, 0.35);
   }
 
   &.exiting,
   &.exited {
+    opacity: 0;
     z-index: -1;
   }
 `;
@@ -33,16 +35,13 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   &.entering,
   &.entered {
+    transition-timing-function: ease-in;
     transform: translate(0, 0);
-  }
-
-  &.exiting,
-  &.exited {
-    opacity: 0;
   }
 
   &.bottom-exited,
   &.bottom-exiting {
+    transition-timing-function: ease-out;
     transform: translate(0, 100%);
   }
 
@@ -141,9 +140,7 @@ const Popup: React.FC<Props> = ({
     <Transition in={visible} timeout={duration}>
       {(status) => (
         <div>
-          {showMask ? (
-            <StyledMask duration={duration} className={status} onClick={clickMask}></StyledMask>
-          ) : null}
+          {showMask ? <StyledMask className={status} onClick={clickMask}></StyledMask> : null}
           <StyledWrapper
             ref={wrapRef}
             duration={duration}
