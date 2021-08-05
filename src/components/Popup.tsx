@@ -14,12 +14,10 @@ const StyledMask = styled.div<{ duration: number }>`
   &.entering,
   &.entered {
     background-color: rgba(0, 0, 0, 0.35);
-    opacity: 1;
   }
 
   &.exiting,
   &.exited {
-    opacity: 0;
     z-index: -1;
   }
 `;
