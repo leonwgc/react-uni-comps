@@ -99,7 +99,7 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   &.center-exited,
   &.center-exiting {
-    transform: translate(-50%, -50%) scale(0.2);
+    transform: translate(-50%, -50%) scale(0);
     opacity: 0;
   }
 `;
