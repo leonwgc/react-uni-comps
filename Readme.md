@@ -275,3 +275,33 @@ const App = () => {
   );
 };
 ```
+
+8. HairLineBox (一像素边框容器)
+
+```js
+  // types
+  export declare type Position = 'top' | 'right' | 'bottom' | 'left';
+  export declare type Props = {
+      position: Position; // 边框位置
+      color: string; // 线条颜色
+  };
+  declare const HairLineBox: React.FC<Props>;
+```
+
+模拟移动端输入框
+
+```js
+<HairLineBox>
+  <input
+    placeholder="请输入姓名"
+    style={{
+      height: 44,
+      lineHeight: 44,
+      border: 'none',
+      outline: 'none',
+      display: 'block',
+      width: '100%',
+    }}
+  ></input>
+</HairLineBox>
+```
