@@ -754,6 +754,45 @@ var HairLineBox = function HairLineBox(_ref3) {
   }, props));
 };
 
+// 等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁
+var WaitLoading = function WaitLoading(_ref) {
+  var _ref$wait = _ref.wait,
+      wait = _ref$wait === void 0 ? 600 : _ref$wait,
+      _ref$visible = _ref.visible,
+      visible = _ref$visible === void 0 ? false : _ref$visible,
+      children = _ref.children;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      show = _useState2[0],
+      setShow = _useState2[1];
+
+  var ref = React.useRef();
+  React.useEffect(function () {
+    if (visible) {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      ref.current = window.setTimeout(function () {
+        setShow(true);
+      }, wait);
+    } else {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      setShow(false);
+    }
+
+    return function () {
+      setShow(false);
+      clearTimeout(ref.current);
+    };
+  }, [visible, wait]);
+  return show ? React__default['default'].Children.only(children) : null;
+};
+
 exports.AnimationElement = AnimationElement;
 exports.HairLineBox = HairLineBox;
 exports.LazyLoadElement = LazyLoadElement;
@@ -762,3 +801,4 @@ exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.Space = Space;
 exports.TransitionElement = TransitionElement;
+exports.WaitLoading = WaitLoading;
