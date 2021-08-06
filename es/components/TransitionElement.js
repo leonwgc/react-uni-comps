@@ -33,7 +33,8 @@ var getClassName = function getClassName(state, c, fromClass, toClass) {
   } else {
     return c ? fromClass : toClass; //exited
   }
-}; // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
+};
+/** 给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画 */
 
 
 var TransitionElement = function TransitionElement(_a) {

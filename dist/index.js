@@ -204,6 +204,7 @@ var StyledWrapper = styled__default['default'].div(_templateObject2 || (_templat
   return props.duration;
 });
 
+/** 弹框，可以从上，下，左，右，中间弹出 */
 var Popup = function Popup(_ref) {
   var children = _ref.children,
       visible = _ref.visible,
@@ -293,7 +294,6 @@ var detectFlexGapSupported = function detectFlexGapSupported() {
 var _excluded = ["size", "align", "className", "children", "direction", "split", "style", "wrap"];
 
 var _templateObject$1;
-//#region types
 
 //#endregion
 function SpaceItem(_ref) {
@@ -357,6 +357,7 @@ var StyledSpace = styled__default['default'].div(_templateObject$1 || (_template
   var align = _ref4.align;
   return align;
 });
+/** 间距容器,参考 https://ant.design/components/space-cn/ */
 
 var Space = function Space(props) {
   var _props$size = props.size,
@@ -451,7 +452,8 @@ var getClassName = function getClassName(state, c) {
   } else {
     return c ? fromClass : toClass; //exited
   }
-}; // 子元素会分别添加from/to class， from代表初始状态，to代表动画最终状态
+};
+/** 给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画 */
 
 
 var TransitionElement = function TransitionElement(_ref) {
@@ -525,6 +527,7 @@ var TransitionElement = function TransitionElement(_ref) {
   }
 };
 
+/** 子元素进入视口应用animation动画,不在视口则停止动画 */
 var AnimationElement = function AnimationElement(_ref) {
   var children = _ref.children,
       _ref$duration = _ref.duration,
@@ -577,6 +580,7 @@ var AnimationElement = function AnimationElement(_ref) {
 var _excluded$1 = ["width", "height", "children"],
     _excluded2 = ["style"];
 
+/** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 var LazyLoadElement = function LazyLoadElement(_ref) {
   var width = _ref.width,
       height = _ref.height,
@@ -614,6 +618,7 @@ var LazyLoadElement = function LazyLoadElement(_ref) {
 var _excluded$2 = ["width", "height", "src"],
     _excluded2$1 = ["style"];
 
+/** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 var LazyLoadImage = function LazyLoadImage(_ref) {
   var width = _ref.width,
       height = _ref.height,
@@ -678,6 +683,8 @@ var footerRender = function footerRender(isLoading, hasMoreData, spinner, endTex
     }, footerStyle)
   }, isLoading ? spinner : !hasMoreData ? endText : null);
 };
+/** 上滑加载更多数据 */
+
 
 var Pullup = function Pullup(_ref) {
   var _ref$dataList = _ref.dataList,
@@ -733,6 +740,8 @@ var Pullup = function Pullup(_ref) {
 var _excluded$4 = ["position", "color"];
 
 var _templateObject$2;
+/** 显示1px的边 */
+
 var StyledDiv = styled__default['default'].div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n  position: relative;\n  &:after {\n    content: '';\n    pointer-events: none;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    ", ": 1px solid ", ";\n\n    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n      width: 200%;\n      height: 200%;\n      transform: scale(0.5);\n      transform-origin: 0 0;\n    }\n  }\n"])), function (_ref) {
   var position = _ref.position;
   return 'border-' + position;
@@ -740,6 +749,7 @@ var StyledDiv = styled__default['default'].div(_templateObject$2 || (_templateOb
   var color = _ref2.color;
   return color;
 });
+/** 包含1px的边的容器div */
 
 var HairLineBox = function HairLineBox(_ref3) {
   var _ref3$position = _ref3.position,
@@ -754,7 +764,7 @@ var HairLineBox = function HairLineBox(_ref3) {
   }, props));
 };
 
-// 等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁
+/**  等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁 */
 var WaitLoading = function WaitLoading(_ref) {
   var _ref$wait = _ref.wait,
       wait = _ref$wait === void 0 ? 600 : _ref$wait,

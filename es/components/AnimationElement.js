@@ -16,6 +16,7 @@ var __assign = this && this.__assign || function () {
 
 import React, { useRef } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
+/** 子元素进入视口应用animation动画,不在视口则停止动画 */
 
 var AnimationElement = function AnimationElement(_a) {
   var children = _a.children,

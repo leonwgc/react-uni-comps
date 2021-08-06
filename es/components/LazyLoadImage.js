@@ -27,10 +27,9 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
+/** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 
 var LazyLoadImage = function LazyLoadImage(_a) {
   var width = _a.width,

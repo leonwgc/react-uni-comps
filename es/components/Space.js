@@ -107,6 +107,7 @@ var StyledSpace = styled.div(templateObject_1 || (templateObject_1 = __makeTempl
   var align = _a.align;
   return align;
 });
+/** 间距容器,参考 https://ant.design/components/space-cn/ */
 
 var Space = function Space(props) {
   var _a = props.size,

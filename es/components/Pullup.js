@@ -41,6 +41,8 @@ var footerRender = function footerRender(isLoading, hasMoreData, spinner, endTex
     }, footerStyle)
   }, isLoading ? spinner : !hasMoreData ? endText : null);
 };
+/** 上滑加载更多数据 */
+
 
 var Pullup = function Pullup(_a) {
   var _b = _a.dataList,

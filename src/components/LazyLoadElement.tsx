@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
 export type Props = {
-  children: React.ReactElement;
-  width?: string | number;
-  height?: string | number;
-  [p: string]: any;
+  children: React.ReactElement /** 需要lazyload的组件 */;
+  width?: string | number /** placeholder 宽度 */;
+  height?: string | number /** placeholder 高度 */;
+  style?: React.CSSProperties /** placeholder 样式 */;
+  [p: string]: unknown;
 };
 
+/** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 const LazyLoadElement: React.FC<Props> = ({ width, height, children, ...props }) => {
   const ref = useRef();
   const isInViewport = useInViewport(ref);

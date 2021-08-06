@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+/** 显示1px的边 */
 export type Position = 'top' | 'right' | 'bottom' | 'left';
 
 export type Props = {
-  position: Position;
-  color: string;
+  position: Position /** 显示1px的边，默认为 bottom 底部 */;
+  color: string /** 1px边的颜色,默认 #dcdcdc 浅灰色 */;
 };
 
 const StyledDiv = styled.div<{ position: Position; color: string }>`
@@ -29,6 +30,7 @@ const StyledDiv = styled.div<{ position: Position; color: string }>`
   }
 `;
 
+/** 包含1px的边的容器div */
 const HairLineBox: React.FC<Props> = ({ position = 'bottom', color = '#dcdcdc', ...props }) => {
   return <StyledDiv position={position} color={color} {...props}></StyledDiv>;
 };

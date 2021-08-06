@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'; // 等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁
+import React, { useEffect, useState, useRef } from 'react';
+/**  等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁 */
 
 var WaitLoading = function WaitLoading(_a) {
   var _b = _a.wait,

@@ -48,6 +48,7 @@ var StyledDiv = styled.div(templateObject_1 || (templateObject_1 = __makeTemplat
   var color = _a.color;
   return color;
 });
+/** 包含1px的边的容器div */
 
 var HairLineBox = function HairLineBox(_a) {
   var _b = _a.position,
