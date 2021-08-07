@@ -50,7 +50,7 @@ declare const TransitionElement: React.FC<Props>;
   </TransitionElement>
 ```
 
-#### 2. AnimationElement(元素进入视口应用animation动画,不在视口则停止动画,属性参照 css animation)
+#### 2. AnimationElement(元素进入视口应用 animation 动画,不在视口则停止动画,属性参照 css animation)
 
 ```js
 // types
@@ -190,7 +190,7 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
 declare const Space: React.FC<SpaceProps>;
 ```
 
-#### 5. LazyLoadElement（懒加载组件,在视口才渲染children,不在则显示占位元素）
+#### 5. LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 
 ```js
 // types
@@ -223,7 +223,7 @@ declare const LazyLoadElement: React.FC<Props>;
 </Space>
 ```
 
-#### 6. LazyLoadImage (懒加载图片，当做img标签使用, 在视口才加载图片)
+#### 6. LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
 
 ```js
 // types
@@ -305,7 +305,7 @@ const App = () => {
 };
 ```
 
-#### 8. HairLineBox (包含1px的边的容器div)
+#### 8. HairLineBox (包含 1px 的边的容器 div)
 
 ```js
   // types
@@ -365,6 +365,27 @@ const [loading, setLoading] = useState(false);
     <Spin />
   </div>
 </WaitLoading>;
+```
+
+#### 10. Spinner (加载中)
+
+```js
+// types
+export declare type Props = {
+    size: number /** 圈圈大小,应用到font-size,默认16 */;
+    color: string /** 圈圈颜色,默认 #606060 */;
+};
+/** Spinner 加载中 */
+declare const Spinner: React.FC<Props>;
+```
+
+```js
+ <Spinner></Spinner>
+ <Spinner size={32}></Spinner>
+ <Spinner color="red"></Spinner>
+ <Spinner color="red" size={48}></Spinner>
+ <Spinner color="#004bcc"></Spinner>
+ <Spinner color="#004bcc" size={48}></Spinner>
 ```
 
 持续其他组件...
