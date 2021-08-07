@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
 const StyledMask = styled.div`
-  transition: opacity 600ms linear;
+  transition: opacity 0.3s ease;
   position: fixed;
   left: 0;
   top: 0;
@@ -14,7 +14,7 @@ const StyledMask = styled.div`
   &.entering,
   &.entered {
     opacity: 1;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   &.exiting,
@@ -26,7 +26,7 @@ const StyledMask = styled.div`
 
 const StyledWrapper = styled.div<{ duration: number }>`
   position: fixed;
-  transition: all ${(props) => props.duration}ms ease-out;
+  transition: transform ${(props) => props.duration}ms ease;
   // bottom
   &.bottom {
     left: 0;
@@ -35,13 +35,11 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   &.entering,
   &.entered {
-    transition-timing-function: ease-in;
     transform: translate(0, 0);
   }
 
   &.bottom-exited,
   &.bottom-exiting {
-    transition-timing-function: ease-out;
     transform: translate(0, 100%);
   }
 
@@ -86,18 +84,16 @@ const StyledWrapper = styled.div<{ duration: number }>`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%);
   }
   &.center-entering,
   &.center-entered {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+    display: '';
   }
 
   &.center-exited,
   &.center-exiting {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
+    display: none;
   }
 `;
 
