@@ -84,11 +84,27 @@ const StyledWrapper = styled.div<{ duration: number }>`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transition: none;
+  }
+
+  @keyframes showUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.618);
+    }
+    90% {
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(1.01);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
   }
   &.center-entering,
   &.center-entered {
     display: '';
+    animation: showUp ease ${(props) => props.duration}ms forwards;
   }
 
   &.center-exited,
