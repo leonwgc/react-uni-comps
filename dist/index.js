@@ -199,8 +199,8 @@ function _nonIterableRest() {
 }
 
 var _templateObject, _templateObject2;
-var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  transition: opacity 600ms linear;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n\n  &.entering,\n  &.entered {\n    opacity: 1;\n    background-color: rgba(0, 0, 0, 0.35);\n  }\n\n  &.exiting,\n  &.exited {\n    opacity: 0;\n    z-index: -1;\n  }\n"])));
-var StyledWrapper = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: fixed;\n  transition: all ", "ms ease-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-in;\n    transform: translate(0, 0);\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transition-timing-function: ease-out;\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%) scale(1);\n  }\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    transform: translate(-50%, -50%) scale(0);\n    opacity: 0;\n  }\n"])), function (props) {
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  transition: opacity 0.3s ease;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n\n  &.entering,\n  &.entered {\n    opacity: 1;\n    background-color: rgba(0, 0, 0, 0.5);\n  }\n\n  &.exiting,\n  &.exited {\n    opacity: 0;\n    z-index: -1;\n  }\n"])));
+var StyledWrapper = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: fixed;\n  transition: transform ", "ms ease;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transform: translate(0, 0);\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n  &.center-entering,\n  &.center-entered {\n    display: '';\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    display: none;\n  }\n"])), function (props) {
   return props.duration;
 });
 
@@ -803,6 +803,25 @@ var WaitLoading = function WaitLoading(_ref) {
   return show ? React__default['default'].Children.only(children) : null;
 };
 
+var _templateObject$3;
+var StyledLoading = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  font-size: ", "px;\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  color: ", ";\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])), function (props) {
+  return props.size;
+}, function (props) {
+  return props.color;
+});
+/** Spinner 加载中 */
+
+var Spinner = function Spinner(_ref) {
+  var _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 16 : _ref$size,
+      _ref$color = _ref.color,
+      color = _ref$color === void 0 ? '#606060' : _ref$color;
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
+    size: size,
+    color: color
+  });
+};
+
 exports.AnimationElement = AnimationElement;
 exports.HairLineBox = HairLineBox;
 exports.LazyLoadElement = LazyLoadElement;
@@ -810,5 +829,6 @@ exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.Space = Space;
+exports.Spinner = Spinner;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
