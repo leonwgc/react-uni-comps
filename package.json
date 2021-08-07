@@ -1,6 +1,6 @@
 {
   "name": "react-uni-comps",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "pc和mobile端通用组件集合",
   "keywords": [
     "react"
@@ -16,8 +16,7 @@
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "type": "tsc",
-    "build": "father-build",
+    "build": "father-build && tsc",
     "dev": "father-build --watch",
     "pub": "bash pub.sh"
   },
