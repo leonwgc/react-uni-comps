@@ -22,6 +22,10 @@ const StyledMask = styled.div`
     opacity: 0;
     z-index: -1;
   }
+
+  &.exited {
+    visibility: hidden;
+  }
 `;
 
 const StyledWrapper = styled.div<{ duration: number }>`
