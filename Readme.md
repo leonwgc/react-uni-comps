@@ -337,7 +337,7 @@ declare const HairLineBox: React.FC<Props>;
 </HairLineBox>
 ```
 
-#### 9. 延时显示 Loading/Spinner (防止闪烁)
+#### 9. WaitLoading (延时显示 Loading/Spinner 防止闪烁)
 
 ```js
 export declare type Props = {
