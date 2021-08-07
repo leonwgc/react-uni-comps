@@ -35,7 +35,12 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   &.entering,
   &.entered {
-    transform: translate(0, 0);
+    transform: none;
+    visibility: visible;
+  }
+
+  &.exited {
+    visibility: hidden;
   }
 
   &.bottom-exited,
