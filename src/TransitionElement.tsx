@@ -52,10 +52,8 @@ const TransitionElement: React.FC<Props> = ({
     throw new Error('TransitionElement can have only one children');
   }
 
-  const { type } = children;
-
-  if (typeof type === 'string') {
-    // html element
+  // chidren 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement
+  if (React.isValidElement(children)) {
     return (
       <Transition in={isInViewport && ls.current} appear timeout={duration}>
         {(state) =>
@@ -68,19 +66,8 @@ const TransitionElement: React.FC<Props> = ({
       </Transition>
     );
   } else {
-    // comp
-    return (
-      <span ref={ref}>
-        <Transition in={isInViewport && ls.current} appear timeout={duration}>
-          {(state) =>
-            React.cloneElement(children, {
-              className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
-              style: newStyle,
-            })
-          }
-        </Transition>
-      </span>
-    );
+    // console.warn('TransitionElement:children must be ReactElement');
+    return children;
   }
 };
 

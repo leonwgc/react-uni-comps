@@ -495,12 +495,10 @@ var TransitionElement = function TransitionElement(_ref) {
 
   if (count > 1) {
     throw new Error('TransitionElement can have only one children');
-  }
+  } // chidren 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement
 
-  var type = children.type;
 
-  if (typeof type === 'string') {
-    // html element
+  if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
       "in": isInViewport && ls.current,
       appear: true,
@@ -513,40 +511,32 @@ var TransitionElement = function TransitionElement(_ref) {
       });
     });
   } else {
-    // comp
-    return /*#__PURE__*/React__default['default'].createElement("span", {
-      ref: ref
-    }, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-      "in": isInViewport && ls.current,
-      appear: true,
-      timeout: duration
-    }, function (state) {
-      return /*#__PURE__*/React__default['default'].cloneElement(children, {
-        className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
-        style: newStyle
-      });
-    }));
+    // console.warn('TransitionElement:children must be ReactElement');
+    return children;
   }
 };
 
-/** 子元素进入视口应用animation动画,不在视口则停止动画 */
+/** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 var AnimationElement = function AnimationElement(_ref) {
   var children = _ref.children,
       _ref$duration = _ref.duration,
-      duration = _ref$duration === void 0 ? 3000 : _ref$duration,
+      duration = _ref$duration === void 0 ? '1s' : _ref$duration,
       _ref$name = _ref.name,
-      name = _ref$name === void 0 ? '' : _ref$name,
+      name = _ref$name === void 0 ? 'none' : _ref$name,
       _ref$timingFunc = _ref.timingFunc,
       timingFunc = _ref$timingFunc === void 0 ? 'ease' : _ref$timingFunc,
       _ref$delay = _ref.delay,
-      delay = _ref$delay === void 0 ? 0 : _ref$delay,
+      delay = _ref$delay === void 0 ? '0s' : _ref$delay,
       _ref$direction = _ref.direction,
       direction = _ref$direction === void 0 ? 'normal' : _ref$direction,
       _ref$iterationCount = _ref.iterationCount,
-      iterationCount = _ref$iterationCount === void 0 ? 'infinite' : _ref$iterationCount,
+      iterationCount = _ref$iterationCount === void 0 ? 1 : _ref$iterationCount,
       _ref$fillMode = _ref.fillMode,
-      fillMode = _ref$fillMode === void 0 ? 'none' : _ref$fillMode;
+      fillMode = _ref$fillMode === void 0 ? 'backwards' : _ref$fillMode,
+      _ref$once = _ref.once,
+      once = _ref$once === void 0 ? true : _ref$once;
   var ref = React.useRef();
+  var vRef = React.useRef();
   var isInViewport = useInViewport__default['default'](ref);
 
   var _ref2 = (children === null || children === void 0 ? void 0 : children.props) || {},
@@ -554,28 +544,49 @@ var AnimationElement = function AnimationElement(_ref) {
       style = _ref2$style === void 0 ? {} : _ref2$style;
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    animation: "".concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
+    animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " running ").concat(name)
   });
 
+  React.useEffect(function () {
+    if (ref.current) {
+      var dom = ref.current;
+
+      if (typeof dom.style.animation === 'string') {
+        dom.addEventListener('animationend', function () {
+          dom.style.animationName = 'none';
+        });
+      } else if (typeof dom.style.webkitAnimation === 'string') {
+        dom.addEventListener('webkitAnimationEnd', function () {
+          dom.style.webkitAnimationName = 'none';
+        });
+      }
+    }
+  }, []);
+  React.useEffect(function () {
+    if (ref.current) {
+      var dom = ref.current;
+
+      if (!vRef.current && isInViewport && !once) {
+        dom.style.webkitAnimationName = name;
+        dom.style.animationName = name;
+      }
+
+      vRef.current = isInViewport;
+    }
+  }, [isInViewport, name, once]);
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
-    throw new Error('AnimationElement can have only one children');
+    throw new Error('AnimationElement can have only one ReactElement children');
   }
 
-  var type = children.type;
-
-  if (typeof type === 'string') {
+  if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].cloneElement(children, {
       ref: ref,
       style: newStyle
     });
   } else {
-    return /*#__PURE__*/React__default['default'].createElement("span", {
-      ref: ref
-    }, /*#__PURE__*/React__default['default'].cloneElement(children, {
-      style: newStyle
-    }));
+    return children;
   }
 };
 

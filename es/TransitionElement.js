@@ -74,12 +74,10 @@ var TransitionElement = function TransitionElement(_a) {
 
   if (count > 1) {
     throw new Error('TransitionElement can have only one children');
-  }
+  } // chidren 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement
 
-  var type = children.type;
 
-  if (typeof type === 'string') {
-    // html element
+  if ( /*#__PURE__*/React.isValidElement(children)) {
     return /*#__PURE__*/React.createElement(Transition, {
       in: isInViewport && ls.current,
       appear: true,
@@ -92,19 +90,8 @@ var TransitionElement = function TransitionElement(_a) {
       });
     });
   } else {
-    // comp
-    return /*#__PURE__*/React.createElement("span", {
-      ref: ref
-    }, /*#__PURE__*/React.createElement(Transition, {
-      in: isInViewport && ls.current,
-      appear: true,
-      timeout: duration
-    }, function (state) {
-      return /*#__PURE__*/React.cloneElement(children, {
-        className: className + " " + getClassName(state, ls.current, fromClass, toClass),
-        style: newStyle
-      });
-    }));
+    // console.warn('TransitionElement:children must be ReactElement');
+    return children;
   }
 };
 
