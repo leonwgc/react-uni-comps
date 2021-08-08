@@ -1,4 +1,4 @@
-pc 和 h5 通用组件集合,只包含结构和行为封装，不定义任何样式.
+pc 和 h5 通用组件集合,只包含结构和行为封装，不定义样式.
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com) 安装
 
@@ -7,18 +7,18 @@ npm install react-uni-comps
 yarn add react-uni-comps
 ```
 
-### 组件
+### 组件说明
 
 #### 1. TransitionElement (给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画)
 
 ```js
-// type def
+// type
 export declare type Props = {
     children: React.ReactElement /** 应用transition动画的元素 */;
-    duration?: number /** transition动画的时间 */;
+    duration?: number /** transition动画的时间,单位ms */;
     transitionProp?: string /** transition动画prop */;
     timingFunc?: string /** transition动画的时间函数 */;
-    delay?: number /** transition动画延时时间 */;
+    delay?: number /** transition动画延时时间 ,单位ms*/;
     fromClass: 'from' /** transition动画开始执行的类名，默认会给元素加上from class,可以自定义类名 */;
     toClass: 'to' /** transition动画执行结束的类名，默认会给元素加上to class,可以自定义类名 */;
     once?: boolean /** 默认从第一次载入并可见/不可见到可见会执行动画 | once=true 只会第一次载入执行动画 | once=false 元素从不可见到可见状态就会执行过渡动画*/;
@@ -28,48 +28,156 @@ declare const TransitionElement: React.FC<Props>;
 ```
 
 ```js
- // css
-  .test {
-  width: 100px;
+import React, { useState } from 'react';
+import {TransitionElement} from 'react-uni-comps';
+import styled from 'styled-components';
+import { Switch,Space } from 'antd';
+
+const StyledDiv = styled.div`
   height: 100px;
-  background-color: blue;
+  background-color: red;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &.from {
-    opacity: 0;
-    transform: translate3d(200%, 0, 0);
-  }
   &.to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+    width: 300px !important;
   }
-}
+`;
 
-// js 元素加载可见后执行 from到to 的样式过渡效果
-  <TransitionElement duration={400}>
-     <div className="test"></div>
-  </TransitionElement>
+const StyledButton = styled.div`
+  transform: scale(1, 1);
+  transition: transform 0.3s ease, color 0.25s linear;
+  width: 130px;
+  height: 40px;
+  display: inline-block;
+  cursor: pointer;
+  background: #39a0ff;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  line-height: 40px;
+  color: rgb(0, 0, 0);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    transition: transform 0.25s linear;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    z-index: -1;
+    background: #bbb;
+  }
+
+  &:hover,
+  &.to {
+    transform: scale(1.05, 1.05);
+    color: #fff;
+
+    &::after {
+      transform: translateY(-100%);
+    }
+  }
+`;
+
+const Tansition = () => {
+  let arr = Array.from(new Array(20), (v, k) => k + 1);
+  const [once, setOnce] = useState(true);
+
+  return (
+    <div>
+      <Space>
+        <TransitionElement duration={100}>
+          <StyledButton>One</StyledButton>
+        </TransitionElement>
+
+        <StyledButton>Two</StyledButton>
+
+        <TransitionElement duration={100}>Three</TransitionElement>
+      </Space>
+      <div>
+        <Space>
+          <Switch defaultChecked onChange={setOnce} />
+          once
+        </Space>
+      </div>
+      {arr.map((item, k) => (
+        <TransitionElement key={k} once={once}>
+          <StyledDiv style={{ width: k * 10 }}>{item}</StyledDiv>
+        </TransitionElement>
+      ))}
+    </div>
+  );
+};
+
+export default Tansition;
+
 ```
 
-#### 2. AnimationElement(元素进入视口应用 animation 动画,不在视口则停止动画,属性参照 css animation)
+#### 2. AnimationElement(元素应用animation动画,属性参照 css animation,也可以和animate.css配合使用,参考 https://animate.style/#usage  using `@keyframes`)
 
 ```js
 // types
 export declare type Props = {
-    children: React.ReactElement /** 应用animation动画的元素 */;
-    duration?: number /** animation动画的持续时间 */;
-    name: string /** animation动画 keyframe name */;
-    timingFunc?: string /** animation动画 animation-timing-function*/;
-    direction?: string /** animation动画 animation-direction */;
-    delay?: number /** animation动画animation-delay*/;
-    fillMode?: string /** animation动画animation-fill-mode */;
-    iterationCount?: string | number /** animation动画 animation-iteration-count */;
+    children: React.ReactElement /** 应用动画的元素 */;
+    duration?: string /** animation动画的持续时间,默认1s */;
+    name: string /** animation动画 keyframe name, 默认none无动画 */;
+    timingFunc?: string /** animation动画 animation-timing-function,默认 ease */;
+    direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' /** animation动画 animation-direction ，默认 normal*/;
+    delay?: string /** animation动画animation-delay， 默认0s */;
+    fillMode?: 'none' | 'forwards' | 'backwards' | 'both' /** animation动画animation-fill-mode, 默认 backwards */;
+    iterationCount?: 'infinite' | number /** animation动画 animation-iteration-count */;
+    once?: boolean /** 默认从第一次载入并可见/不可见到可见会执行动画 | once=true 只会第一次载入执行动画 | once=false 元素从不可见到可见状态就会执行过渡动画*/;
 };
-/** 子元素进入视口应用animation动画,不在视口则停止动画 */
+/** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 declare const AnimationElement: React.FC<Props>;
 ```
 
 ```js
-// css
+import React from 'react';
+import {AnimationElement} from 'react-uni-comps';
+import styled from 'styled-components';
+import { Button,Space } from 'antd';
+import 'animate.css';
+import bird from './images/bird.png';
+
+const StyledDiv = styled.div`
+  height: 100px;
+  width: 100px;
+  background-color: red;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @keyframes move {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(45deg);
+    }
+    50% {
+      transform: rotate(90deg);
+    }
+
+    75% {
+      transform: rotate(135deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+`;
+
 const StyledBird = styled.span`
   background: url(${bird});
   background-size: 100% 100%;
@@ -99,16 +207,68 @@ const StyledBird = styled.span`
   }
 `;
 
-// js
- <AnimationElement duration={400} timingFunc="ease-out" name="move" fillMode="forwards">
+const Animation = () => {
+  let arr = Array.from(new Array(20), (v, k) => k + 1);
+
+  return (
+    <Space size={64} wrap>
+      {arr.map((item, k) => (
+        <AnimationElement
+          key={k}
+          name="move"
+          duration="4s"
+          fillMode="both"
+          iterationCount="infinite"
+        >
+          <StyledDiv>{item}</StyledDiv>
+        </AnimationElement>
+      ))}
+      <AnimationElement
+        duration="400ms"
+        timingFunc="ease-out"
+        name="move"
+        iterationCount="infinite"
+        fillMode="forwards"
+      >
         <Button type="primary" size="large">
           hello,world
         </Button>
       </AnimationElement>
-
-      <AnimationElement duration={2000} timingFunc="linear" name="fly">
+      <AnimationElement duration="2s" iterationCount="infinite" timingFunc="linear" name="fly">
         <StyledBird></StyledBird>
       </AnimationElement>
+
+      <AnimationElement
+        name="fadeInLeft"
+        once={false}
+        duration="600ms"
+        timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
+      >
+        <Button type="primary">hello,wgc</Button>
+      </AnimationElement>
+      <AnimationElement
+        name="fadeInLeft" // defined in animate.css 
+        duration="600ms"
+        delay="1s"
+        timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
+      >
+        <div style={{ display: 'inline-block', width: 100, height: 100, border: '1px solid red' }}>
+          hello
+        </div>
+      </AnimationElement>
+      <AnimationElement
+        name="fadeInLeft"
+        duration="600ms"
+        delay="1s"
+        timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
+      >
+        txt no effect
+      </AnimationElement>
+    </Space>
+  );
+};
+
+export default Animation;
 ```
 
 #### 3. Popup (弹框，可以从上，下，左，右，中间弹出)
@@ -190,7 +350,7 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
 declare const Space: React.FC<SpaceProps>;
 ```
 
-#### 5. LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
+#### 5. LazyLoadElement（懒加载组件,在视口才渲染children,不在则显示占位元素）
 
 ```js
 // types
@@ -223,7 +383,7 @@ declare const LazyLoadElement: React.FC<Props>;
 </Space>
 ```
 
-#### 6. LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
+#### 6. LazyLoadImage (懒加载图片，当做img标签使用, 在视口才加载图片)
 
 ```js
 // types
@@ -305,7 +465,7 @@ const App = () => {
 };
 ```
 
-#### 8. HairLineBox (包含 1px 的边的容器 div)
+#### 8. HairLineBox (包含1px的边的容器div)
 
 ```js
   // types
@@ -337,7 +497,7 @@ declare const HairLineBox: React.FC<Props>;
 </HairLineBox>
 ```
 
-#### 9. WaitLoading (延时显示 Loading/Spinner 防止闪烁)
+#### 9.WaitLoading (延时显示 Loading/Spinner 防止闪烁)
 
 ```js
 export declare type Props = {
@@ -365,27 +525,6 @@ const [loading, setLoading] = useState(false);
     <Spin />
   </div>
 </WaitLoading>;
-```
-
-#### 10. Spinner (加载中)
-
-```js
-// types
-export declare type Props = {
-    size: number /** 圈圈大小,应用到font-size,默认16 */;
-    color: string /** 圈圈颜色,默认 #606060 */;
-};
-/** Spinner 加载中 */
-declare const Spinner: React.FC<Props>;
-```
-
-```js
- <Spinner></Spinner>
- <Spinner size={32}></Spinner>
- <Spinner color="red"></Spinner>
- <Spinner color="red" size={48}></Spinner>
- <Spinner color="#004bcc"></Spinner>
- <Spinner color="#004bcc" size={48}></Spinner>
 ```
 
 持续其他组件...
