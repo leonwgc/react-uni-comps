@@ -90,7 +90,7 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   //center
   &.center {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transition: none;
