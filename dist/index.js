@@ -757,7 +757,7 @@ var _templateObject$2;
 
 var StyledDiv = styled__default['default'].div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n  position: relative;\n  &:after {\n    content: '';\n    pointer-events: none;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    ", ": 1px solid ", ";\n\n    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n      width: 200%;\n      height: 200%;\n      transform: scale(0.5);\n      transform-origin: 0 0;\n    }\n  }\n"])), function (_ref) {
   var position = _ref.position;
-  return 'border-' + position;
+  return "border".concat(position === 'all' ? '' : '-' + position);
 }, function (_ref2) {
   var color = _ref2.color;
   return color;
