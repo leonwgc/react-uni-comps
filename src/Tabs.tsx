@@ -94,7 +94,7 @@ type TabsProp = {
   lineWidth?: number | string /** 下划线宽度 */;
   themeColor?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
   wrapClass?: string /** tab最外层div class, 默认ruc-tabs */;
-  children: typeof Tab[];
+  children: React.ReactElement[];
   defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
 };
 
@@ -103,7 +103,7 @@ const isValidtTabElement = (el) => {
 };
 
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
-  children: children,
+  children,
   themeColor = '#1890ff',
   lineWidth = '100%',
   wrapClass = 'ruc-tabs',
@@ -117,7 +117,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     <ThemeProvider theme={{ color: themeColor }}>
       <div className={wrapClass}>
         <StyledTabHeaderWrap className={`${wrapClass}-header-wrap`}>
-          {React.Children.map(children, (child, index) => {
+          {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { title = '', disabled = false } = child.props as TabProp;
               const itemCls = classNames({ active: index === activeIndex, disabled: disabled });
@@ -146,7 +146,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
           </StyledLine>
         </StyledTabHeaderWrap>
         <StyledTabContentWrap className={`${wrapClass}-content-wrap`}>
-          {React.Children.map(children, (child, index) => {
+          {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { children } = child.props as TabProp;
               const style: React.CSSProperties = {};
