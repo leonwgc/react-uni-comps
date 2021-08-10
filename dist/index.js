@@ -10,6 +10,7 @@ var reactIs = require('react-is');
 var useInViewport = require('react-use-lib/es/useInViewport');
 var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
 var usePrevious = require('react-use-lib/es/usePrevious');
+var classNames = require('classnames');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -19,6 +20,7 @@ var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
+var classNames__default = /*#__PURE__*/_interopDefaultLegacy(classNames);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -835,6 +837,113 @@ var Spinner = function Spinner(_ref) {
   });
 };
 
+var _templateObject$4, _templateObject2$1, _templateObject3, _templateObject4;
+var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  &::-webkit-scrollbar {\n    display: none;\n  }\n  &:after {\n    content: '';\n    pointer-events: none;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    border-bottom: 1px solid #dcdcdc;\n\n    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n      width: 200%;\n      height: 200%;\n      transform: scale(0.5);\n      transform-origin: 0 0;\n    }\n  }\n"])));
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1 0;\n  font-size: 16px;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: #bcbcbc;\n  }\n"])), function (props) {
+  return props.theme.color;
+});
+var StyledLine = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  width: ", ";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  transition: transform 0.3s ease;\n  transform: translate3d(", ", 0px, 0px);\n  display: flex;\n  justify-content: center;\n  > .line {\n    width: ", ";\n    background-color: ", ";\n    height: ", "px;\n  }\n"])), function (props) {
+  return props.itemWidth;
+}, function (props) {
+  return props.activeIndex * 100 + '%';
+}, function (props) {
+  return typeof props.lineWidth === 'number' ? props.lineWidth + 'px' : props.lineWidth;
+}, function (props) {
+  return props.theme.color;
+}, function (props) {
+  return props.height;
+});
+var StyledTabContentWrap = styled__default['default'].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  overflow: hidden;\n"])));
+
+var Tab = function Tab(_ref) {
+  var children = _ref.children;
+  return children;
+};
+
+var isValidtTabElement = function isValidtTabElement(el) {
+  return /*#__PURE__*/React__default['default'].isValidElement(el) && el.type === Tab;
+};
+
+var Tabs = function Tabs(_ref2) {
+  var children = _ref2.children,
+      _ref2$themeColor = _ref2.themeColor,
+      themeColor = _ref2$themeColor === void 0 ? '#1890ff' : _ref2$themeColor,
+      _ref2$lineWidth = _ref2.lineWidth,
+      lineWidth = _ref2$lineWidth === void 0 ? '100%' : _ref2$lineWidth,
+      _ref2$wrapClass = _ref2.wrapClass,
+      wrapClass = _ref2$wrapClass === void 0 ? 'ruc-tabs' : _ref2$wrapClass,
+      _ref2$defaultIndex = _ref2.defaultIndex,
+      defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex;
+
+  var _useState = React.useState(defaultIndex),
+      _useState2 = _slicedToArray(_useState, 2),
+      activeIndex = _useState2[0],
+      setActiveIndex = _useState2[1];
+
+  var len = React__default['default'].Children.count(children);
+  var itemWidth = 100 / len + '%';
+  return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
+    theme: {
+      color: themeColor
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: wrapClass
+  }, /*#__PURE__*/React__default['default'].createElement(StyledTabHeaderWrap, {
+    className: "".concat(wrapClass, "-header-wrap")
+  }, React__default['default'].Children.map(children, function (child, index) {
+    if (isValidtTabElement(child)) {
+      var _ref3 = child.props,
+          _ref3$title = _ref3.title,
+          title = _ref3$title === void 0 ? '' : _ref3$title,
+          _ref3$disabled = _ref3.disabled,
+          disabled = _ref3$disabled === void 0 ? false : _ref3$disabled;
+      var itemCls = classNames__default['default']({
+        active: index === activeIndex,
+        disabled: disabled
+      });
+      return /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
+        key: index,
+        className: itemCls,
+        onClick: function onClick() {
+          if (!disabled) {
+            setActiveIndex(index);
+          }
+        }
+      }, title);
+    }
+  }), /*#__PURE__*/React__default['default'].createElement(StyledLine, {
+    itemWidth: itemWidth,
+    lineWidth: lineWidth,
+    height: 2,
+    activeIndex: activeIndex
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "line"
+  }))), /*#__PURE__*/React__default['default'].createElement(StyledTabContentWrap, {
+    className: "".concat(wrapClass, "-content-wrap")
+  }, React__default['default'].Children.map(children, function (child, index) {
+    if (isValidtTabElement(child)) {
+      var _ref4 = child.props,
+          _children = _ref4.children;
+      var style = {};
+
+      if (index !== activeIndex) {
+        style.display = 'none';
+      }
+
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        key: index,
+        style: style
+      }, _children);
+    } else {
+      throw new Error('Tabs can only contain Tab element');
+    }
+  }))));
+};
+/** Tab直接子元素 */
+
+
+Tabs.Tab = Tab;
+
 exports.AnimationElement = AnimationElement;
 exports.HairLineBox = HairLineBox;
 exports.LazyLoadElement = LazyLoadElement;
@@ -843,5 +952,6 @@ exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.Space = Space;
 exports.Spinner = Spinner;
+exports.Tabs = Tabs;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
