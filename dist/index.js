@@ -837,6 +837,8 @@ var Spinner = function Spinner(_ref) {
   });
 };
 
+var _excluded$5 = ["children", "themeColor", "lineWidth", "defaultIndex"];
+
 var _templateObject$4, _templateObject2$1, _templateObject3, _templateObject4;
 var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  &::-webkit-scrollbar {\n    display: none;\n  }\n  &:after {\n    content: '';\n    pointer-events: none;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    border-bottom: 1px solid #dcdcdc;\n\n    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n      width: 200%;\n      height: 200%;\n      transform: scale(0.5);\n      transform-origin: 0 0;\n    }\n  }\n"])));
 var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1 0;\n  font-size: 16px;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: #bcbcbc;\n  }\n"])), function (props) {
@@ -870,10 +872,9 @@ var Tabs = function Tabs(_ref2) {
       themeColor = _ref2$themeColor === void 0 ? '#1890ff' : _ref2$themeColor,
       _ref2$lineWidth = _ref2.lineWidth,
       lineWidth = _ref2$lineWidth === void 0 ? '100%' : _ref2$lineWidth,
-      _ref2$wrapClass = _ref2.wrapClass,
-      wrapClass = _ref2$wrapClass === void 0 ? 'ruc-tabs' : _ref2$wrapClass,
       _ref2$defaultIndex = _ref2.defaultIndex,
-      defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex;
+      defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex,
+      otherProps = _objectWithoutProperties(_ref2, _excluded$5);
 
   var _useState = React.useState(defaultIndex),
       _useState2 = _slicedToArray(_useState, 2),
@@ -886,10 +887,8 @@ var Tabs = function Tabs(_ref2) {
     theme: {
       color: themeColor
     }
-  }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: wrapClass
-  }, /*#__PURE__*/React__default['default'].createElement(StyledTabHeaderWrap, {
-    className: "".concat(wrapClass, "-header-wrap")
+  }, /*#__PURE__*/React__default['default'].createElement("div", otherProps, /*#__PURE__*/React__default['default'].createElement(StyledTabHeaderWrap, {
+    className: "tab-header-wrap"
   }, React__default['default'].Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _ref3 = child.props,
@@ -897,7 +896,7 @@ var Tabs = function Tabs(_ref2) {
           title = _ref3$title === void 0 ? '' : _ref3$title,
           _ref3$disabled = _ref3.disabled,
           disabled = _ref3$disabled === void 0 ? false : _ref3$disabled;
-      var itemCls = classNames__default['default']({
+      var itemCls = classNames__default['default']('tab-header-item', {
         active: index === activeIndex,
         disabled: disabled
       });
@@ -919,7 +918,7 @@ var Tabs = function Tabs(_ref2) {
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "line"
   }))), /*#__PURE__*/React__default['default'].createElement(StyledTabContentWrap, {
-    className: "".concat(wrapClass, "-content-wrap")
+    className: "tab-content-wrap"
   }, React__default['default'].Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _ref4 = child.props,

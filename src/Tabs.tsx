@@ -93,10 +93,10 @@ const Tab: React.FC<TabProp> = ({ children }) => {
 type TabsProp = {
   lineWidth?: number | string /** 下划线宽度 */;
   themeColor?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
-  wrapClass?: string /** tab最外层div class, 默认ruc-tabs */;
   children: React.ReactElement[];
   defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
-};
+  [p: string]: unknown;
+} & React.HTMLAttributes<HTMLElement>;
 
 const isValidtTabElement = (el) => {
   return React.isValidElement(el) && el.type === Tab;
@@ -106,8 +106,8 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
   themeColor = '#1890ff',
   lineWidth = '100%',
-  wrapClass = 'ruc-tabs',
   defaultIndex = 0,
+  ...otherProps
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const len = React.Children.count(children);
@@ -115,12 +115,15 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 
   return (
     <ThemeProvider theme={{ color: themeColor }}>
-      <div className={wrapClass}>
-        <StyledTabHeaderWrap className={`${wrapClass}-header-wrap`}>
+      <div {...otherProps}>
+        <StyledTabHeaderWrap className={`tab-header-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { title = '', disabled = false } = child.props as TabProp;
-              const itemCls = classNames({ active: index === activeIndex, disabled: disabled });
+              const itemCls = classNames('tab-header-item', {
+                active: index === activeIndex,
+                disabled: disabled,
+              });
               return (
                 <StyledTabHeadItem
                   key={index}
@@ -145,7 +148,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             <div className="line" />
           </StyledLine>
         </StyledTabHeaderWrap>
-        <StyledTabContentWrap className={`${wrapClass}-content-wrap`}>
+        <StyledTabContentWrap className={`tab-content-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { children } = child.props as TabProp;
