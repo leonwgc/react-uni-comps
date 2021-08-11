@@ -644,4 +644,43 @@ declare const Tabs: React.FC<TabsProp> & {
       </Tabs>
 ```
 
+#### 12.Cell（列表项，多用于移动端,可以和 input/textarea 组合使用）
+
+```js
+// types
+export declare type Props = {
+    label?: React.ReactNode /** 标题 */;
+    content?: React.ReactNode /** 内容 */;
+};
+/** 列表项，通常用于移动端 */
+declare const Cell: React.FC<Props>;
+```
+
+```js
+ // usage
+ const [v, setV] = useState('');
+
+     <Cell label="姓名" content="汪guochao"></Cell>
+        <Cell label="username">
+          <input type="text" placeholder="username" />
+        </Cell>
+        <Cell label="antd输入框">
+          <Input placeholder="antd输入框" />
+          <QuestionCircleOutlined />
+        </Cell>
+        <Cell label="邮箱地址">
+          <Input placeholder="邮箱地址" />
+          @126.com
+        </Cell>
+        <Cell label="多行文本">
+          <textarea
+            placeholder="多行文本"
+            maxLength={60}
+            value={v}
+            onChange={(e) => setV(e.target.value)}
+          />
+          <span>{v.length}/60</span>
+        </Cell>
+```
+
 持续其他组件...
