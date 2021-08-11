@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const StyledTabHeaderWrap = styled.div`
   display: flex;
@@ -9,25 +9,9 @@ const StyledTabHeaderWrap = styled.div`
   margin: 0;
   padding: 0;
   overflow-x: scroll;
+  border-bottom: 1px solid #e8e8e8;
   &::-webkit-scrollbar {
     display: none;
-  }
-  &:after {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    border-bottom: 1px solid #dcdcdc;
-
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-      width: 200%;
-      height: 200%;
-      transform: scale(0.5);
-      transform-origin: 0 0;
-    }
   }
 `;
 
@@ -43,6 +27,8 @@ const StyledTabHeadItem = styled.div`
   justify-content: center;
   color: #000000d9;
   font-size: 14px;
+  min-width: 60px;
+  user-select: none;
 
   &.active {
     color: ${(props) => props.theme.color};
@@ -120,7 +106,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { title = '', disabled = false } = child.props as TabProp;
-              const itemCls = classNames('tab-header-item', {
+              const itemCls = clsx('tab-header-item', {
                 active: index === activeIndex,
                 disabled: disabled,
               });
