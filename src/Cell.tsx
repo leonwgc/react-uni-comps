@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HairLineBox from './HairLineBox';
+import clsx from 'clsx';
 
 export type Props = {
   label?: React.ReactNode /** 标题 */;
@@ -26,6 +27,11 @@ const StyledCell = styled.div`
     margin-right: 12px;
     text-align: left;
     word-wrap: break-word;
+
+    &.not-edit-mode {
+      width: auto;
+      flex: 1;
+    }
   }
   .cell__value {
     flex: 1;
@@ -79,14 +85,15 @@ const Cell: React.FC<Props> = ({ label, content, lineColor = '#dcdcdc', children
   if (content && children) {
     throw new Error(`don't set content and children at the same time`);
   }
+
+  const titleClsx = clsx('cell__title', { 'not-edit-mode': content });
+
   return (
     <HairLineBox color={lineColor}>
       <StyledCell>
-        <div className="cell__title">
-          <span>{label}</span>
-        </div>
+        <div className={titleClsx}>{label}</div>
         <div className="cell__value">
-          <span>{content}</span>
+          {content}
           {children ? <div className="field__body">{children}</div> : null}
         </div>
       </StyledCell>
