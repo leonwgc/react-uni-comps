@@ -5,6 +5,7 @@ import HairLineBox from './HairLineBox';
 export type Props = {
   label?: React.ReactNode /** 标题 */;
   content?: React.ReactNode /** 内容 */;
+  lineColor?: string /** 底部线条颜色,默认#dcdcdc,不想要线条，设置为透明 */;
 };
 
 const StyledCell = styled.div`
@@ -74,12 +75,12 @@ const StyledCell = styled.div`
 `;
 
 /** 列表项，通常用于移动端 */
-const Cell: React.FC<Props> = ({ label, content, children }) => {
+const Cell: React.FC<Props> = ({ label, content, lineColor = '#dcdcdc', children }) => {
   if (content && children) {
     throw new Error(`don't set content and children at the same time`);
   }
   return (
-    <HairLineBox>
+    <HairLineBox color={lineColor}>
       <StyledCell>
         <div className="cell__title">
           <span>{label}</span>
