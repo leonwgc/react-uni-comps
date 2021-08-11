@@ -51,7 +51,7 @@ const StyledCell = styled.div`
         color: #323233;
         line-height: inherit;
         text-align: left;
-        background-color: none;
+        background-color: transparent;
         border: 0;
         resize: none;
         outline: none;
