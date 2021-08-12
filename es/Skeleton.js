@@ -63,20 +63,23 @@ var Skeleton = function Skeleton(props) {
       loading = props.loading,
       other = __rest(props, ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"]);
 
-  if (row < 2) {
-    throw new Error('row必须设置>=2,默认4');
+  if (row < 1) {
+    throw new Error('row必须设置>=1,默认4');
   }
 
   var rowWidthAr = [];
 
   if (Array.isArray(rowWidth)) {
-    while (rowWidth.length < row) {
-      rowWidth.push('100%');
-    }
+    if (row <= rowWidth.length) {
+      rowWidthAr = rowWidth.slice(0, row);
+    } else {
+      while (rowWidth.length < row) {
+        rowWidth.push('100%');
+      }
 
-    rowWidthAr = rowWidth;
+      rowWidthAr = rowWidth;
+    }
   } else {
-    //
     rowWidthAr = Array.from(new Array(row), function () {
       return rowWidth;
     });

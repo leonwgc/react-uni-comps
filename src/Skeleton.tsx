@@ -8,7 +8,7 @@ import clsx from 'clsx';
 export type Props = {
   children: React.ReactNode /** loading结束渲染的元素 */;
   animate?: boolean /** 是否显示动画效果，默认显示 */;
-  row: number /** 几行，默认4行, 最小2行 */;
+  row: number /** 几行，默认4行, 最小1行 */;
   rowWidth:
     | string
     | string[] /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */;
@@ -58,19 +58,22 @@ const Skeleton = (props: Props): React.ReactNode => {
     ...other
   } = props;
 
-  if (row < 2) {
-    throw new Error('row必须设置>=2,默认4');
+  if (row < 1) {
+    throw new Error('row必须设置>=1,默认4');
   }
 
   let rowWidthAr = [];
 
   if (Array.isArray(rowWidth)) {
-    while (rowWidth.length < row) {
-      rowWidth.push('100%');
+    if (row <= rowWidth.length) {
+      rowWidthAr = rowWidth.slice(0, row);
+    } else {
+      while (rowWidth.length < row) {
+        rowWidth.push('100%');
+      }
+      rowWidthAr = rowWidth;
     }
-    rowWidthAr = rowWidth;
   } else {
-    //
     rowWidthAr = Array.from(new Array(row), () => rowWidth);
   }
   const { className = '', ...rest } = other;
