@@ -972,6 +972,126 @@ var Cell = function Cell(_ref) {
   }, children) : null)));
 };
 
+var _excluded$6 = ["animate", "width", "height", "shape"],
+    _excluded2$2 = ["style", "className"];
+
+var _templateObject$6;
+var StyledSkeletonBase = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"])));
+/** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
+
+var SkeletonBase = function SkeletonBase(props) {
+  var _props$animate = props.animate,
+      animate = _props$animate === void 0 ? true : _props$animate,
+      width = props.width,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 16 : _props$height,
+      _props$shape = props.shape,
+      shape = _props$shape === void 0 ? 'rect' : _props$shape,
+      other = _objectWithoutProperties(props, _excluded$6);
+
+  var _other$style = other.style,
+      style = _other$style === void 0 ? {} : _other$style,
+      _other$className = other.className,
+      className = _other$className === void 0 ? '' : _other$className,
+      rest = _objectWithoutProperties(other, _excluded2$2);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({
+    className: clsx__default['default']('uc-skeleton', shape, {
+      pulse: animate
+    }, className),
+    style: _objectSpread2({
+      width: width,
+      height: height
+    }, style)
+  }, rest));
+};
+
+var _excluded$7 = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
+    _excluded2$3 = ["className"];
+
+var _templateObject$7;
+
+var StyledSkeleton = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  .uc-skeleton {\n    &:not(:first-child) {\n      margin-top: 12px;\n    }\n\n    &:nth-child(2) {\n      margin-top: 20px;\n    }\n  }\n\n  &.avatar {\n    display: flex;\n\n    > .avatar {\n      flex: none;\n    }\n\n    > .rows {\n      flex: 1;\n      margin-left: 16px;\n      padding-top: 8px;\n    }\n  }\n"])));
+/** 骨架屏 */
+
+var Skeleton = function Skeleton(props) {
+  var _props$animate = props.animate,
+      animate = _props$animate === void 0 ? true : _props$animate,
+      _props$row = props.row,
+      row = _props$row === void 0 ? 4 : _props$row,
+      _props$rowWidth = props.rowWidth,
+      rowWidth = _props$rowWidth === void 0 ? ['40%', '100%', '100%', '60%'] : _props$rowWidth,
+      _props$rowHeight = props.rowHeight,
+      rowHeight = _props$rowHeight === void 0 ? 16 : _props$rowHeight,
+      _props$avatar = props.avatar,
+      avatar = _props$avatar === void 0 ? false : _props$avatar,
+      _props$avatarSize = props.avatarSize,
+      avatarSize = _props$avatarSize === void 0 ? 32 : _props$avatarSize,
+      children = props.children,
+      loading = props.loading,
+      other = _objectWithoutProperties(props, _excluded$7);
+
+  if (row < 2) {
+    throw new Error('row必须设置>=2,默认4');
+  }
+
+  var rowWidthAr = [];
+
+  if (Array.isArray(rowWidth)) {
+    while (rowWidth.length < row) {
+      rowWidth.push('100%');
+    }
+
+    rowWidthAr = rowWidth;
+  } else {
+    //
+    rowWidthAr = Array.from(new Array(row), function () {
+      return rowWidth;
+    });
+  }
+
+  var _other$className = other.className,
+      className = _other$className === void 0 ? '' : _other$className,
+      rest = _objectWithoutProperties(other, _excluded2$3);
+
+  return loading ? avatar ? /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({
+    className: clsx__default['default']({
+      avatar: avatar
+    }, className)
+  }, rest), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
+    animate: animate,
+    shape: "circle",
+    className: "avatar",
+    width: avatarSize,
+    height: avatarSize
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "rows"
+  }, rowWidthAr.map(function (v, idx) {
+    return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
+      animate: animate,
+      key: idx,
+      shape: "rect",
+      width: v,
+      height: rowHeight
+    });
+  }))) : /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({
+    style: {
+      display: 'block'
+    },
+    className: clsx__default['default']({
+      avatar: avatar
+    }, className)
+  }, rest), rowWidthAr.map(function (v, idx) {
+    return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
+      animate: animate,
+      key: idx,
+      shape: "rect",
+      width: v,
+      height: rowHeight
+    });
+  })) : children;
+};
+
 exports.AnimationElement = AnimationElement;
 exports.Cell = Cell;
 exports.HairLineBox = HairLineBox;
@@ -979,6 +1099,8 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
+exports.Skeleton = Skeleton;
+exports.SkeletonBase = SkeletonBase;
 exports.Space = Space;
 exports.Spinner = Spinner;
 exports.Tabs = Tabs;

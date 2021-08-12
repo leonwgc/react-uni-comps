@@ -10,3 +10,5 @@ export { default as WaitLoading } from './WaitLoading';
 export { default as Spinner } from './Spinner';
 export { default as Tabs } from './Tabs';
 export { default as Cell } from './Cell';
+export { default as Skeleton } from './Skeleton';
+export { default as SkeletonBase } from './SkeletonBase';
