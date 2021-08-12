@@ -6,7 +6,7 @@ import clsx from 'clsx';
 // ref to : https://vant-contrib.gitee.io/vant/#/en-US/skeleton
 
 export type Props = {
-  children: React.ReactNode;
+  children: React.ReactNode /** loading结束渲染的元素 */;
   animate?: boolean /** 是否显示动画效果，默认显示 */;
   row: number /** 几行，默认4行, 最小2行 */;
   rowWidth:

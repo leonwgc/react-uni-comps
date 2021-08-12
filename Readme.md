@@ -683,4 +683,77 @@ declare const Cell: React.FC<Props>;
         </Cell>
 ```
 
+#### 13. Skeleton（骨架屏）
+
+```js
+// types
+export declare type Props = {
+    children: React.ReactNode;/** loading结束渲染的元素 */;
+    animate?: boolean /** 是否显示动画效果，默认显示 */;
+    row: number /** 几行，默认4行, 最小2行 */;
+    rowWidth: string | string[] /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */;
+    rowHeight: number /** 矩形条高度,默认16px*/;
+    avatar?: boolean /** 是否显示头像，默认不显示 */;
+    avatarSize?: number /** 头像大小，默认32px */;
+    loading?: boolean /** loading为true显示骨架，false则显示子元素*/;
+} & React.HTMLAttributes<HTMLElement>;
+/** 骨架屏 */
+declare const Skeleton: (props: Props) => React.ReactNode;
+```
+
+```js
+// usage
+import React from 'react';
+import styled from 'styled-components';
+import { Switch, Avatar, Image } from 'antd';
+import { Skeleton } from 'react-uni-comps';
+import { useState } from 'react';
+
+const StyledContent = styled.div`
+  padding: 20px;
+
+  .article {
+    margin-top: 20px;
+    display: flex;
+    .l {
+      flex: 0;
+    }
+    .r {
+      flex: 1;
+      margin-left: 16px;
+      padding-top: 8px;
+    }
+  }
+`;
+
+export default function SkeletonDemo() {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <StyledContent>
+      <div>
+        <Switch checked={loading} onChange={setLoading}></Switch> loading
+      </div>
+
+      <Skeleton avatar loading={loading} className="article">
+        <div className="article">
+          <div className="l">
+            <Avatar
+              src={<Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+            />
+          </div>
+          <div className="r">
+            <div> 自 2017 年以来，暴雪的每月平均活跃用户基数从 4600 万降至 2600 万</div>
+            <div>
+              最近几周，许多《魔兽世界》的玩家离开游戏转而加入《最终幻想 14》，这使得《最终幻想
+              14》打破了 Steam 最高同时在线人数的记录。
+            </div>
+          </div>
+        </div>
+      </Skeleton>
+    </StyledContent>
+  );
+}
+```
+
 持续其他组件...
