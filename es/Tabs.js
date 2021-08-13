@@ -76,7 +76,8 @@ var Tabs = function Tabs(_a) {
       lineWidth = _c === void 0 ? '100%' : _c,
       _d = _a.defaultIndex,
       defaultIndex = _d === void 0 ? 0 : _d,
-      otherProps = __rest(_a, ["children", "themeColor", "lineWidth", "defaultIndex"]);
+      onIndexChange = _a.onIndexChange,
+      otherProps = __rest(_a, ["children", "themeColor", "lineWidth", "defaultIndex", "onIndexChange"]);
 
   var _e = useState(defaultIndex),
       activeIndex = _e[0],
@@ -107,6 +108,10 @@ var Tabs = function Tabs(_a) {
         onClick: function onClick() {
           if (!disabled_1) {
             setActiveIndex(index);
+
+            if (typeof onIndexChange === 'function') {
+              onIndexChange(index);
+            }
           }
         }
       }, title);

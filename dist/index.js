@@ -837,7 +837,7 @@ var Spinner = function Spinner(_ref) {
   });
 };
 
-var _excluded$5 = ["children", "themeColor", "lineWidth", "defaultIndex"];
+var _excluded$5 = ["children", "themeColor", "lineWidth", "defaultIndex", "onIndexChange"];
 
 var _templateObject$4, _templateObject2$1, _templateObject3, _templateObject4;
 var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid #e8e8e8;\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"])));
@@ -874,6 +874,7 @@ var Tabs = function Tabs(_ref2) {
       lineWidth = _ref2$lineWidth === void 0 ? '100%' : _ref2$lineWidth,
       _ref2$defaultIndex = _ref2.defaultIndex,
       defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex,
+      onIndexChange = _ref2.onIndexChange,
       otherProps = _objectWithoutProperties(_ref2, _excluded$5);
 
   var _useState = React.useState(defaultIndex),
@@ -906,6 +907,10 @@ var Tabs = function Tabs(_ref2) {
         onClick: function onClick() {
           if (!disabled) {
             setActiveIndex(index);
+
+            if (typeof onIndexChange === 'function') {
+              onIndexChange(index);
+            }
           }
         }
       }, title);

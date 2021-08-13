@@ -10,6 +10,7 @@ declare type TabsProp = {
     themeColor?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
     children: React.ReactElement[];
     defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
+    onIndexChange?: (index: number) => void /** index变化时触发的回调函数 */;
     [p: string]: unknown;
 } & React.HTMLAttributes<HTMLElement>;
 declare const Tabs: React.FC<TabsProp> & {
