@@ -1100,8 +1100,101 @@ var Skeleton = function Skeleton(props) {
   })) : children;
 };
 
+var border = '#d9d9d9';
+var disabled = 'rgba(0, 0, 0, 0.25)';
+
+var _templateObject$8, _templateObject2$2;
+var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    color: ", ";\n    cursor: not-allowed;\n  }\n"])), disabled);
+var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &::before {\n    transform: rotate(45deg);\n    opacity: 0;\n    transition: transform 0.3s ease;\n    content: '';\n    width: calc(", "px / 3.5);\n    height: calc(", "px / 2);\n    border: calc(", "px / 9) solid ", ";\n    border-top: 0;\n    border-left: 0;\n    margin-top: calc(", "px / -12);\n    margin-left: calc(", "px / ", ");\n    transition: all 0.2s ease;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n    &::before {\n      transform: rotate(45deg);\n      opacity: 1;\n      border-color: #fff;\n    }\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n  }\n"])), function (_ref) {
+  var size = _ref.size;
+  return size;
+}, function (_ref2) {
+  var size = _ref2.size;
+  return size;
+}, border, function (_ref3) {
+  var borderRadius = _ref3.borderRadius;
+  return borderRadius;
+}, function (_ref4) {
+  var color = _ref4.color;
+  return color;
+}, function (_ref5) {
+  var size = _ref5.size;
+  return size;
+}, function (_ref6) {
+  var size = _ref6.size;
+  return size;
+}, function (_ref7) {
+  var size = _ref7.size;
+  return size;
+}, function (_ref8) {
+  var color = _ref8.color;
+  return color;
+}, function (_ref9) {
+  var size = _ref9.size;
+  return size;
+}, function (_ref10) {
+  var size = _ref10.size;
+  return size;
+}, function (_ref11) {
+  var size = _ref11.size;
+  return size;
+}, function (_ref12) {
+  var color = _ref12.color;
+  return color;
+}, function (_ref13) {
+  var color = _ref13.color;
+  return color;
+}, disabled, disabled);
+/** Checkbox, Radiobox带checked状态的 */
+
+var Checkbox = function Checkbox(props) {
+  var _props$color = props.color,
+      color = _props$color === void 0 ? '#004bcc' : _props$color,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 18 : _props$size,
+      _props$borderRadius = props.borderRadius,
+      borderRadius = _props$borderRadius === void 0 ? '2px' : _props$borderRadius,
+      onChange = props.onChange,
+      defaultChecked = props.defaultChecked,
+      checked = props.checked,
+      disabled = props.disabled,
+      children = props.children;
+
+  var _useState = React.useState(function () {
+    return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      _checked = _useState2[0],
+      _setChecked = _useState2[1];
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledCheckboxWrapper, {
+    className: clsx__default['default']('uc-checkbox', {
+      disabled: disabled
+    }),
+    onClick: function onClick() {
+      if (disabled) return;
+
+      if (typeof onChange === 'function') {
+        onChange(!_checked);
+      }
+
+      _setChecked(!_checked);
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(StyledCheckbox, {
+    className: clsx__default['default']({
+      checked: _checked,
+      disabled: disabled
+    }),
+    borderRadius: borderRadius,
+    size: size,
+    disabled: disabled,
+    color: color
+  }), children ? /*#__PURE__*/React__default['default'].createElement("span", null, children) : null);
+};
+
 exports.AnimationElement = AnimationElement;
 exports.Cell = Cell;
+exports.Checkbox = Checkbox;
 exports.HairLineBox = HairLineBox;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
