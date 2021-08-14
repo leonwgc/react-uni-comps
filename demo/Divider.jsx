@@ -48,6 +48,8 @@ export default function App() {
           <a href="#">Link</a>
           <Divider type="vertical" />
           <a href="#">Link</a>
+          <Divider type="vertical" color="red" />
+          <a href="#">Link</a>
         </>
       </div>
     </StyledContent>
