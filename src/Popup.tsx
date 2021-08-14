@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
 const StyledMask = styled.div`
-  transition: opacity 0.15s linear;
+  transition: opacity 220ms ease;
   position: fixed;
   left: 0;
   top: 0;
@@ -30,7 +30,7 @@ const StyledMask = styled.div`
 
 const StyledWrapper = styled.div<{ duration: number }>`
   position: fixed;
-  transition: transform ${(props) => props.duration}ms ease-in-out;
+  transition: transform ${(props) => props.duration}ms ease;
   // bottom
   &.bottom {
     left: 0;
@@ -39,8 +39,13 @@ const StyledWrapper = styled.div<{ duration: number }>`
 
   &.entering,
   &.entered {
+    transition-timing-function: ease-out;
     transform: none;
     visibility: visible;
+  }
+
+  &.exiting {
+    transition-timing-function: ease-in;
   }
 
   &.exited {
@@ -132,7 +137,7 @@ export type Props = {
     | 'left'
     | 'center'
     | 'right' /** 弹框弹出位置，从上，下，左，右，中间 弹出 */;
-  duration?: number /** 弹出动画时间，默认300ms */;
+  duration?: number /** 弹出动画时间，默认280ms */;
   mountContainer?: () => HTMLElement /** 弹框mount位置，默认为document.body */;
   children?: React.ReactNode /** 弹框里面的内容 */;
   style?: React.CSSProperties /** 弹框style */;
@@ -146,7 +151,7 @@ const Popup: React.FC<Props> = ({
   showMask = true,
   onMaskClick = null,
   position = 'bottom',
-  duration = 300,
+  duration = 280,
   mountContainer = () => document.body,
   style = {},
   className = '',

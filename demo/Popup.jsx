@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, Space, Popup, HairLineBox, Button } from 'react-uni-comps';
+import { Space, Popup, HairLineBox, Button } from 'react-uni-comps';
 import './Popup.less';
 
 export default function App() {
@@ -12,12 +12,6 @@ export default function App() {
     <div className="app">
       <Space wrap>
         <Button onClick={() => setB(true)}>show bottom</Button>
-        <Spinner></Spinner>
-        <Spinner size={32}></Spinner>
-        <Spinner color="red"></Spinner>
-        <Spinner color="red" size={48}></Spinner>
-        <Spinner color="#004bcc"></Spinner>
-        <Spinner color="#004bcc" size={48}></Spinner>
         <Button onClick={() => setC(true)}>show center</Button>
         <Button onClick={() => setL(true)}>show left</Button>
         <Button onClick={() => setT(true)}>show top</Button>
