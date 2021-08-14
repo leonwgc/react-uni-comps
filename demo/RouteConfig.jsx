@@ -53,6 +53,10 @@ const routes = [
     path: '/switch',
     component: lazy(() => import('./Switch')),
   },
+  {
+    path: '/errorBoudary',
+    component: lazy(() => import('./ErrorBoudary')),
+  }
 ];
 
 export default routes;
