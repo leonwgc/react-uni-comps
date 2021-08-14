@@ -48,7 +48,7 @@ export default function App() {
           <a href="#">Link</a>
           <Divider type="vertical" />
           <a href="#">Link</a>
-          <Divider type="vertical" color="red" />
+          <Divider type="vertical" color="red" style={{ margin: '0 20px' }} />
           <a href="#">Link</a>
         </>
       </div>
