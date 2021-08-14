@@ -7,6 +7,10 @@ import './Tab.less';
 
 const StyledContent = styled.div`
   padding: 20px;
+
+  button {
+    margin: 8px 0;
+  }
 `;
 
 export default function App() {
@@ -22,11 +26,12 @@ export default function App() {
         <Button type="primary" onClick={() => console.log(1)}>
           hello
         </Button>
+        <Button color="#ff4d4f">danger color</Button>
         <Button type="primary" height={40}>
           hello
         </Button>
-        <Button type="primary" color="#FF2929">
-          hello
+        <Button type="primary" color="#ff4d4f">
+          danger
         </Button>
         <Button type="default" dashed>
           hello
@@ -65,9 +70,14 @@ export default function App() {
         <Button block style={{ marginBottom: 10 }}>
           hello
         </Button>
-        <Button type="primary" block>
+        <Button type="primary" block style={{ marginBottom: 10 }}>
           hello
         </Button>
+        <Button type="primary" color="#00bc8d" block height={40}>
+          dr
+        </Button>
+        <Button block height={40} color="gray" type="primary"></Button>
+        <Button block height={80}></Button>
       </div>
     </StyledContent>
   );
