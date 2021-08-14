@@ -1,0 +1,29 @@
+.pull-wrapper {
+  width: 300px;
+  display: inline-block;
+  height: 400px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #ccc;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .item {
+    padding: 10px 0;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+  }
+}
+.right-panel {
+  background-color: #fff;
+  width: 300px;
+  padding: 20px;
+}
+
+.wait-loading {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -13,3 +13,4 @@ export { default as Cell } from './Cell';
 export { default as Skeleton } from './Skeleton';
 export { default as SkeletonBase } from './SkeletonBase';
 export { default as Checkbox } from './Checkbox';
+export { default as Button } from './Button';
