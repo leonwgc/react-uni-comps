@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, Space, Popup, HairLineBox, Tabs, Button } from 'react-uni-comps';
+import { Spinner, Space, Popup, HairLineBox, Button } from 'react-uni-comps';
 import './Popup.less';
 
 export default function App() {
@@ -39,31 +39,6 @@ export default function App() {
           }}
         ></input>
       </HairLineBox>
-
-      <div style={{ width: 500 }}>
-        <Tabs lineWidth={'50px'}>
-          <Tabs.Tab title="title1">content1</Tabs.Tab>
-          <Tabs.Tab title="title2">content2</Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <Space wrap>
-              <Button onClick={() => setB(true)}>show bottom</Button>
-              <Spinner></Spinner>
-              <Spinner size={32}></Spinner>
-              <Spinner color="red"></Spinner>
-              <Spinner color="red" size={48}></Spinner>
-              <Spinner color="#004bcc"></Spinner>
-              <Spinner color="#004bcc" size={48}></Spinner>
-              <Button onClick={() => setC(true)}>show center</Button>
-              <Button onClick={() => setL(true)}>show left</Button>
-              <Button onClick={() => setT(true)}>show top</Button>
-            </Space>
-          </Tabs.Tab>
-          <Tabs.Tab title={<Spinner></Spinner>}>content4</Tabs.Tab>
-          <Tabs.Tab title="title5">content5</Tabs.Tab>
-          <Tabs.Tab title="title6">content4</Tabs.Tab>
-          <Tabs.Tab title="title7">content5</Tabs.Tab>
-        </Tabs>
-      </div>
 
       <Popup
         position="bottom"

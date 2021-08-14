@@ -13,6 +13,9 @@ export type Props = {
   children?: React.ReactNode;
   href?: string;
   className?: string;
+  height?: number /** 高度，默认32px */;
+  circle?: boolean /** 圆形按钮 */;
+  dashed?: boolean /** 虚线边 */;
 };
 
 const StyledButton = styled.button`
@@ -38,7 +41,7 @@ const StyledButton = styled.button`
   transition: all 0.3s ease;
   user-select: none;
   touch-action: manipulation;
-  padding: 4px 15px;
+  padding: 4px 16px;
   font-size: 14px;
   border-radius: 2px;
   border: 1px solid transparent;
@@ -64,6 +67,14 @@ const StyledButton = styled.button`
   &.block {
     display: flex;
   }
+  &.circle {
+    min-width: 32px;
+    padding: 0;
+    border-radius: 50%;
+  }
+  &.dashed {
+    border-style: dashed;
+  }
 `;
 
 /** 按钮 */
@@ -74,7 +85,11 @@ const Button = (props: Props): React.ReactElement => {
     disabled,
     block,
     className = '',
+    style = {},
     children,
+    height = 32,
+    circle = false,
+    dashed = false,
     ...rest
   } = props;
 
@@ -83,7 +98,13 @@ const Button = (props: Props): React.ReactElement => {
   return (
     <StyledButton
       color={themeColor}
-      className={clsx('uc-btn', type, { disabled: disabled, block: block }, className)}
+      style={{ ...style, height }}
+      className={clsx(
+        'uc-btn',
+        type,
+        { disabled: disabled, block: block, circle: circle, dashed: dashed },
+        className
+      )}
       {...rest}
     >
       {children}

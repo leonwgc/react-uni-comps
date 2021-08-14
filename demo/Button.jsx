@@ -12,26 +12,48 @@ const StyledContent = styled.div`
 export default function App() {
   return (
     <StyledContent>
-      <Space>
+      <Space wrap>
         <Button>hello</Button>
+        <Button height={40}>hello</Button>
         <Button type="primary">hello</Button>
+        <Button type="primary" height={40}>
+          hello
+        </Button>
         <Button type="primary" color="#FF2929">
           hello
         </Button>
-        <Button type="default" style={{ borderStyle: 'dashed' }}>
+        <Button type="default" dashed>
+          hello
+        </Button>
+        <Button type="default" dashed>
           hello
         </Button>
 
-        <Button type="default" style={{ borderRadius: '50%', width: 40, height: 40 }}>
+        <Button type="default" circle>
+          <SearchOutlined />
+        </Button>
+
+        <Button>
+          <SearchOutlined />
+        </Button>
+        <Button type="primary">
+          <Space>
+            <SearchOutlined /> 搜索
+          </Space>
+        </Button>
+        <Button>
+          <Space>
+            <SearchOutlined /> 搜索
+          </Space>
+        </Button>
+
+        <Button color="#00bc8d">hello</Button>
+        <Button color="#00bc8d" dashed>
           hello
         </Button>
-        <Button type="primary" style={{ borderRadius: '50%', width: 32, height: 32 }}>
-          <SearchOutlined />
+        <Button color="#00bc8d" dashed height={60}>
+          hello
         </Button>
-        <Button style={{ borderRadius: '50%', width: 32, height: 32 }}>
-          <SearchOutlined />
-        </Button>
-        <Button color="#00bc8d">hello</Button>
       </Space>
     </StyledContent>
   );
