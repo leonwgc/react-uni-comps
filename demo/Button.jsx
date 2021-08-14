@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Space, Button } from 'react-uni-comps';
 import { SearchOutlined } from '@ant-design/icons';
-import 'animate.css';
-import './Tab.less';
 
 const StyledContent = styled.div`
   padding: 20px;

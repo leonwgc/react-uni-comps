@@ -49,6 +49,10 @@ const routes = [
     path: '/spinner',
     component: lazy(() => import('./Spinner')),
   },
+  {
+    path: '/switch',
+    component: lazy(() => import('./Switch')),
+  },
 ];
 
 export default routes;
