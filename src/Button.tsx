@@ -5,6 +5,7 @@ import * as colors from './colors';
 import Color from 'color';
 
 export type Props = {
+  type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
   color?: string /** 线框/背景颜色 */;
   disabled?: boolean;
   style?: React.CSSProperties;
@@ -15,7 +16,6 @@ export type Props = {
   height?: number /** 高度，默认32px */;
   circle?: boolean /** 圆形按钮 */;
   dashed?: boolean /** 虚线边 */;
-  type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
 } & HTMLAttributes<HTMLButtonElement>;
 
@@ -77,16 +77,12 @@ const StyledButton = styled.button`
     border-style: dashed;
   }
 
-  &.disabled {
+  &.disabled,
+  &.disabled:hover {
     background-color: #f5f5f5;
     border-color: ${colors.border};
     cursor: not-allowed;
     color: rgba(0, 0, 0, 0.38);
-    :hover {
-      background-color: #f5f5f5;
-      border-color: ${colors.border};
-      color: rgba(0, 0, 0, 0.38);
-    }
   }
 `;
 
