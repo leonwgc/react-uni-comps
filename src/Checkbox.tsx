@@ -82,7 +82,7 @@ const StyledCheckbox = styled.div<{
 `;
 
 /** Checkbox, Radiobox带checked状态的 */
-const Checkbox = (props: Props) => {
+const Checkbox = (props: Props): React.ReactNode => {
   const {
     color = '#004bcc',
     size = 18,
