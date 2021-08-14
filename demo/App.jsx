@@ -7,6 +7,7 @@ import routes from './RouteConfig';
 import { Spin } from 'antd';
 import 'dayjs/locale/zh-cn';
 import dayjs from 'dayjs';
+import { ThemeProvider } from 'styled-components';
 import './App.less';
 
 dayjs.locale('zh-cn');
@@ -16,21 +17,23 @@ const Routes = () => {
   return (
     <Provider store={store}>
       <ConfigProvider locale={zhCN}>
-        <Router history={history}>
-          <Suspense fallback={<Spin />}>
-            <Switch>
-              {routes.map((route, idx) => (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  exact={route.exact}
-                  component={route.component}
-                />
-              ))}
-              <Route render={() => <div>page not found</div>} />
-            </Switch>
-          </Suspense>
-        </Router>
+        <ThemeProvider theme={{ color: 'red' }}>
+          <Router history={history}>
+            <Suspense fallback={<Spin />}>
+              <Switch>
+                {routes.map((route, idx) => (
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.component}
+                  />
+                ))}
+                <Route render={() => <div>page not found</div>} />
+              </Switch>
+            </Suspense>
+          </Router>
+        </ThemeProvider>
       </ConfigProvider>
     </Provider>
   );

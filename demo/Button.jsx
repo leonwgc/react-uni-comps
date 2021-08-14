@@ -13,9 +13,15 @@ export default function App() {
   return (
     <StyledContent>
       <Space wrap>
-        <Button>hello</Button>
-        <Button height={40}>hello</Button>
-        <Button type="primary">hello</Button>
+        <Button disabled onClick={() => console.log(1)}>
+          hello
+        </Button>
+        <Button disabled type="primary" onClick={() => console.log(1)}>
+          hello
+        </Button>
+        <Button type="primary" onClick={() => console.log(1)}>
+          hello
+        </Button>
         <Button type="primary" height={40}>
           hello
         </Button>
@@ -55,6 +61,14 @@ export default function App() {
           hello
         </Button>
       </Space>
+      <div>
+        <Button block style={{ marginBottom: 10 }}>
+          hello
+        </Button>
+        <Button type="primary" block>
+          hello
+        </Button>
+      </div>
     </StyledContent>
   );
 }
