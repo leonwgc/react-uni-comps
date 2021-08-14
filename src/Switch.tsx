@@ -14,7 +14,7 @@ export type Props = {
   className?: string;
 } & HTMLAttributes<HTMLElement>;
 
-const StyledSwitch = styled.button<HTMLAttributes<HTMLButtonElement>>`
+const StyledSwitch = styled.button`
   position: relative;
   box-sizing: border-box;
   width: 44px;
