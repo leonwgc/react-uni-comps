@@ -29,8 +29,8 @@ export default function App() {
       </p>
       <Divider dashed>Hello</Divider>
       <Divider color="#004bcc">Hello</Divider>
-      <Divider orientation="left">Hello</Divider>
-      <Divider orientation="right">Hello</Divider>
+      <Divider textPosition="left">Hello left</Divider>
+      <Divider textPosition="right">Hello right</Divider>
       <Divider>
         <span style={{ fontWeight: 500, fontSize: 16 }}>Hello</span>
       </Divider>

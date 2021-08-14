@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 export type Props = {
   type?: 'horizontal' | 'vertical';
-  orientation?: 'left' | 'right' | 'center';
+  textPosition?: 'left' | 'right' | 'center';
   className?: string;
   children?: React.ReactNode;
   dashed?: boolean;
@@ -45,6 +45,9 @@ const StyledDivider = styled.div`
     .inner-text {
       display: inline-block;
       padding: 0 1em;
+      white-space: nowrap;
+      margin: 16px 0;
+      text-align: center;
     }
 
     &::before,
@@ -96,7 +99,7 @@ const StyledDivider = styled.div`
 const Divider = (props: Props): React.ReactNode => {
   const {
     type = 'horizontal',
-    orientation = 'center',
+    textPosition = 'center',
     className,
     dashed,
     color = 'rgba(0, 0, 0, 0.06)',
@@ -109,7 +112,7 @@ const Divider = (props: Props): React.ReactNode => {
   return (
     <StyledDivider
       color={color}
-      className={clsx('uc-divider', type, hasText ? orientation : '', className, {
+      className={clsx('uc-divider', type, hasText ? textPosition : '', className, {
         dashed: dashed,
         text: hasText,
       })}
