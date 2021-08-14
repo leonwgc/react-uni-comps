@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Space, Checkbox } from 'antd';
+import { Space, Checkbox } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   padding: 20px;
