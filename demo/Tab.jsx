@@ -15,6 +15,15 @@ export default function App() {
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
       </Tabs>
+      <Tabs
+        defaultIndex={1}
+        color="#00bc8d"
+        lineWidth={50}
+        onIndexChange={(index) => console.log(index)}
+      >
+        <Tabs.Tab title="title1"></Tabs.Tab>
+        <Tabs.Tab title="title2"></Tabs.Tab>
+      </Tabs>
       <Tabs lineWidth={40} themeColor="#004bcc" style={{ marginTop: 30 }}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>

@@ -94,6 +94,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   lineWidth = '100%',
   defaultIndex = 0,
   onIndexChange,
+  className,
   ...otherProps
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
@@ -102,12 +103,12 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 
   return (
     <ThemeProvider theme={{ color: color }}>
-      <div {...otherProps}>
-        <StyledTabHeaderWrap className={`tab-header-wrap`}>
+      <div {...otherProps} className={clsx('uc-tabs', className)}>
+        <StyledTabHeaderWrap className={`uc-tabs-header-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { title = '', disabled = false } = child.props as TabProp;
-              const itemCls = clsx('tab-header-item', {
+              const itemCls = clsx('uc-tabs-header-item', {
                 active: index === activeIndex,
                 disabled: disabled,
               });
@@ -138,7 +139,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             <div className="line" />
           </StyledLine>
         </StyledTabHeaderWrap>
-        <StyledTabContentWrap className={`tab-content-wrap`}>
+        <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { children } = child.props as TabProp;
