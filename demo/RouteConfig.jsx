@@ -56,7 +56,11 @@ const routes = [
   {
     path: '/errorBoudary',
     component: lazy(() => import('./ErrorBoudary')),
-  }
+  },
+  {
+    path: '/divider',
+    component: lazy(() => import('./Divider')),
+  },
 ];
 
 export default routes;
