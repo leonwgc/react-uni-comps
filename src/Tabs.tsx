@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import * as colors from './colors';
 import clsx from 'clsx';
+
+type TabsProp = {
+  lineWidth?: number | string /** 下划线宽度 */;
+  color?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
+  children: React.ReactElement[];
+  defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
+  onIndexChange?: (index: number) => void /** index变化时触发的回调函数 */;
+} & React.HTMLAttributes<HTMLElement>;
+
+type TabProp = {
+  disabled?: boolean;
+  title: React.ReactNode;
+  children: React.ReactElement;
+};
 
 const StyledTabHeaderWrap = styled.div`
   display: flex;
@@ -17,7 +32,6 @@ const StyledTabHeaderWrap = styled.div`
 
 const StyledTabHeadItem = styled.div`
   flex: 1 0;
-  font-size: 16px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -27,7 +41,7 @@ const StyledTabHeadItem = styled.div`
   justify-content: center;
   color: #000000d9;
   font-size: 14px;
-  min-width: 60px;
+  min-width: 56px;
   user-select: none;
 
   &.active {
@@ -36,7 +50,7 @@ const StyledTabHeadItem = styled.div`
   }
   &.disabled {
     cursor: not-allowed;
-    color: #bcbcbc;
+    color: ${colors.disabled};
   }
 `;
 
@@ -66,24 +80,9 @@ const StyledTabContentWrap = styled.div`
   overflow: hidden;
 `;
 
-type TabProp = {
-  disabled?: boolean;
-  title: React.ReactNode;
-  children: React.ReactElement;
-};
-
 const Tab: React.FC<TabProp> = ({ children }) => {
   return children;
 };
-
-type TabsProp = {
-  lineWidth?: number | string /** 下划线宽度 */;
-  themeColor?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
-  children: React.ReactElement[];
-  defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
-  onIndexChange?: (index: number) => void /** index变化时触发的回调函数 */;
-  [p: string]: unknown;
-} & React.HTMLAttributes<HTMLElement>;
 
 const isValidtTabElement = (el) => {
   return React.isValidElement(el) && el.type === Tab;
@@ -91,7 +90,7 @@ const isValidtTabElement = (el) => {
 
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
-  themeColor = '#1890ff',
+  color = colors.primary,
   lineWidth = '100%',
   defaultIndex = 0,
   onIndexChange,
@@ -102,7 +101,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   const itemWidth = 100 / len + '%';
 
   return (
-    <ThemeProvider theme={{ color: themeColor }}>
+    <ThemeProvider theme={{ color: color }}>
       <div {...otherProps}>
         <StyledTabHeaderWrap className={`tab-header-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
