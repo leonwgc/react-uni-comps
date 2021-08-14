@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { border, disabled } from './colors';
+import * as colors from './colors';
 
 export type Props = {
   size?: number /** 默认18 */;
@@ -25,7 +25,7 @@ const StyledCheckboxWrapper = styled.div`
   }
 
   &.disabled {
-    color: ${disabled};
+    color: ${colors.disabledText};
     cursor: not-allowed;
   }
 `;
@@ -41,7 +41,7 @@ const StyledCheckbox = styled.div<{
   justify-content: center;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  border: 1px solid ${border};
+  border: 1px solid ${colors.border};
   border-radius: ${({ borderRadius }) => borderRadius};
   background: #fff;
   transition: all 0.3s ease;
@@ -76,15 +76,20 @@ const StyledCheckbox = styled.div<{
   }
 
   &.disabled {
-    background-color: ${disabled};
-    border-color: ${disabled};
+    background-color: ${colors.disabledBg};
+    border-color: ${colors.border};
+    opacity: 0.4;
+
+    &::before {
+      border-color: ${colors.border};
+    }
   }
 `;
 
 /** Checkbox, Radiobox带checked状态的 */
 const Checkbox = (props: Props): React.ReactNode => {
   const {
-    color = '#004bcc',
+    color = colors.primary,
     size = 18,
     borderRadius = '2px',
     onChange,

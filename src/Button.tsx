@@ -79,10 +79,10 @@ const StyledButton = styled.button`
 
   &.disabled,
   &.disabled:hover {
-    background-color: #f5f5f5;
+    background-color: ${colors.disabledBg};
     border-color: ${colors.border};
     cursor: not-allowed;
-    color: rgba(0, 0, 0, 0.38);
+    color: ${colors.disabledText};
   }
 `;
 
@@ -103,7 +103,7 @@ const Button = (props: Props): React.ReactElement => {
     ...rest
   } = props;
 
-  const themeColor = disabled ? colors.disabled : color;
+  const themeColor = disabled ? colors.disabledText : color;
 
   return (
     <StyledButton

@@ -37,7 +37,7 @@ export default function App() {
         <Checkbox defaultChecked onChange={console.log} />
         <Checkbox />
         <Checkbox color="red" />
-        <Checkbox size={32} />
+        <Checkbox size={32} defaultChecked color="#ff4d4f" />
         <Checkbox borderRadius="50%" size={60} defaultChecked />
         <Checkbox borderRadius="50%" color="red" size={32} defaultChecked disabled>
           love u

@@ -50,7 +50,7 @@ const StyledTabHeadItem = styled.div`
   }
   &.disabled {
     cursor: not-allowed;
-    color: ${colors.disabled};
+    color: ${colors.disabledText};
   }
 `;
 
