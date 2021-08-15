@@ -16,6 +16,8 @@ export type Props = {
   height?: number /** 高度，默认32px */;
   circle?: boolean /** 圆形按钮 */;
   dashed?: boolean /** 虚线边 */;
+  danger?: boolean /** 设置危险按钮 */;
+  ghost?: boolean /** 是否幽灵按钮 */;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
 } & HTMLAttributes<HTMLButtonElement>;
 
@@ -64,6 +66,13 @@ const StyledButton = styled.button`
     &:hover {
       background-color: ${({ color }) => Color(color).lighten(0.16).hex()};
     }
+
+    &.ghost,
+    &.ghost:hover {
+      background-color: transparent;
+      border-color: ${({ color }) => color};
+      color: ${({ color }) => color};
+    }
   }
   &.block {
     width: 100%;
@@ -84,6 +93,12 @@ const StyledButton = styled.button`
     cursor: not-allowed;
     color: ${colors.disabledText};
   }
+  &.ghost,
+  &.ghost:hover {
+    background-color: transparent;
+    border-color: ${colors.border};
+    color: ${colors.border};
+  }
 `;
 
 /** 按钮 */
@@ -100,10 +115,12 @@ const Button = (props: Props): React.ReactElement => {
     htmlType,
     circle,
     dashed,
+    danger,
+    ghost,
     ...rest
   } = props;
 
-  const themeColor = disabled ? colors.disabledText : color;
+  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
 
   return (
     <StyledButton
@@ -119,6 +136,7 @@ const Button = (props: Props): React.ReactElement => {
           block: block,
           circle: circle,
           dashed: dashed,
+          ghost: ghost,
         },
         className
       )}

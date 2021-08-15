@@ -24,11 +24,16 @@ export default function App() {
         <Button type="primary" onClick={() => console.log(1)}>
           hello
         </Button>
-        <Button color="#ff4d4f">danger color</Button>
+
+        <Button danger>danger default</Button>
+        <Button danger type="primary">
+          danger primary
+        </Button>
         <Button type="primary" height={40}>
           hello
         </Button>
-        <Button type="primary" color="#ff4d4f">
+
+        <Button type="primary" color="#ff4d4f" disabled>
           danger
         </Button>
         <Button type="default" dashed>
@@ -76,6 +81,25 @@ export default function App() {
         </Button>
         <Button block height={40} color="gray" type="primary"></Button>
         <Button block height={80}></Button>
+      </div>
+      <div style={{ background: '#333' }}>
+        <Button block type="primary" ghost color="#00bc8d">
+          hello
+        </Button>
+        <Button ghost> hello</Button>
+        <Button ghost block>
+          hello
+        </Button>
+        <Button ghost block type="primary">
+          hello
+        </Button>
+        <Button ghost block type="primary" danger>
+          danger primary
+        </Button>
+
+        <Button ghost block danger>
+          danger default
+        </Button>
       </div>
     </StyledContent>
   );
