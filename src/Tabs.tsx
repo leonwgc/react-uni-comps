@@ -24,7 +24,7 @@ const StyledTabHeaderWrap = styled.div`
   margin: 0;
   padding: 0;
   overflow-x: scroll;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid ${colors.border};
   &::-webkit-scrollbar {
     display: none;
   }
