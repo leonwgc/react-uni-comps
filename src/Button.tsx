@@ -13,7 +13,6 @@ export type Props = {
   children?: React.ReactNode;
   href?: string;
   className?: string;
-  height?: number /** 高度，默认32px */;
   circle?: boolean /** 圆形按钮 */;
   dashed?: boolean /** 虚线边 */;
   danger?: boolean /** 设置危险按钮 */;
@@ -48,6 +47,7 @@ const StyledButton = styled.button`
   font-size: 14px;
   border-radius: 2px;
   border: 1px solid transparent;
+  height: 32px;
 
   &.default {
     background-color: #fff;
@@ -109,9 +109,7 @@ const Button = (props: Props): React.ReactElement => {
     disabled,
     block,
     className,
-    style = {},
     children,
-    height = 32,
     htmlType,
     circle,
     dashed,
@@ -125,7 +123,6 @@ const Button = (props: Props): React.ReactElement => {
   return (
     <StyledButton
       color={themeColor}
-      style={{ ...style, height }}
       disabled={disabled}
       type={htmlType}
       className={clsx(

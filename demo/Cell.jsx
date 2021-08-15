@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Input, Checkbox, Switch, Button } from 'antd';
+import { Input } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Space, Cell } from 'react-uni-comps';
+import { Space, Cell, Button, Checkbox, Switch } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   padding: 20px;
@@ -61,20 +61,11 @@ export default function App() {
       <Cell
         label={<div style={{ width: 200 }}>Set as the default contact</div>}
         content={<Switch />}
-        lineColor="red"
+        lineColor="#00bd8d"
       ></Cell>
-      <Cell
-        content={
-          <Space>
-            <div>
-              <Switch /> on/off
-            </div>
-            <Button type="primary" shape="round" style={{ width: 120 }}>
-              submit
-            </Button>
-          </Space>
-        }
-      ></Cell>
+      <Button type="primary" block style={{ marginTop: 32, height: 44 }}>
+        submit
+      </Button>
     </StyledContent>
   );
 }
