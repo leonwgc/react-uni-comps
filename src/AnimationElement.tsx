@@ -45,15 +45,12 @@ const AnimationElement: React.FC<Props> = ({
   useEffect(() => {
     if (ref.current) {
       const dom = ref.current as HTMLElement;
-      if (typeof dom.style.animation === 'string') {
-        dom.addEventListener('animationend', () => {
-          dom.style.animationName = 'none';
-        });
-      } else if (typeof dom.style.webkitAnimation === 'string') {
-        dom.addEventListener('webkitAnimationEnd', () => {
-          dom.style.webkitAnimationName = 'none';
-        });
-      }
+      dom.addEventListener('animationend', () => {
+        dom.style.animationName = 'none';
+      });
+      dom.addEventListener('webkitAnimationEnd', () => {
+        dom.style.webkitAnimationName = 'none';
+      });
     }
   }, []);
 
