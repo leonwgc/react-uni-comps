@@ -82,7 +82,7 @@ export default function App() {
         <Button block style={{ height: 40 }} color="gray" type="primary"></Button>
         <Button block style={{ height: 80 }}></Button>
       </div>
-      <div style={{ background: '#333' }}>
+      <div style={{ background: '#333', padding: 16 }}>
         <Button block type="primary" ghost color="#00bc8d">
           hello
         </Button>

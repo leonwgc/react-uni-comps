@@ -4,7 +4,8 @@ import * as colors from './colors';
 import clsx from 'clsx';
 
 type TabsProp = {
-  lineWidth?: number | string /** 下划线宽度 */;
+  underline?: boolean /** 是否有下划线,默认true*/;
+  underlineWidth?: string /** 下划线宽度,默认100% */;
   color?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
   children: React.ReactElement[];
   defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
@@ -30,7 +31,11 @@ const StyledTabHeaderWrap = styled.div`
   }
 `;
 
-const StyledTabHeadItem = styled.div`
+const StyledTabHeadItem = styled.div<{
+  activeIndex?: number;
+  count?: number;
+  underlineWidth?: string;
+}>`
   flex: 1 0;
   overflow: hidden;
   white-space: nowrap;
@@ -43,6 +48,7 @@ const StyledTabHeadItem = styled.div`
   font-size: 14px;
   min-width: 56px;
   user-select: none;
+  /* transition: all 0.3s ease-in-out; */
 
   &.active {
     color: ${(props) => props.theme.color};
@@ -52,27 +58,23 @@ const StyledTabHeadItem = styled.div`
     cursor: not-allowed;
     color: ${colors.disabledText};
   }
-`;
 
-const StyledLine = styled.div<{
-  lineWidth: string | number;
-  itemWidth: string;
-  height: number;
-  activeIndex: number;
-}>`
-  width: ${(props) => props.itemWidth};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transition: transform 0.3s ease;
-  transform: translate3d(${(props) => props.activeIndex * 100 + '%'}, 0px, 0px);
-  display: flex;
-  justify-content: center;
-  > .line {
-    width: ${(props) =>
-      typeof props.lineWidth === 'number' ? props.lineWidth + 'px' : props.lineWidth};
-    background-color: ${(props) => props.theme.color};
-    height: ${(props) => props.height}px;
+  &.uc-tabs-header-item {
+    &.uc-tabs-header-line {
+      position: relative;
+      background-color: transparent !important;
+      transition: transform 0.3s ease;
+      transform: translate3d(${(props) => (props.activeIndex - props.count) * 100 + '%'}, 0px, 0px);
+
+      &::after {
+        content: ' ';
+        position: absolute;
+        bottom: 0;
+        width: ${(props) => props.underlineWidth};
+        height: 2px;
+        background-color: ${(props) => props.theme.color};
+      }
+    }
   }
 `;
 
@@ -91,15 +93,15 @@ const isValidtTabElement = (el) => {
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
   color = colors.primary,
-  lineWidth = '100%',
+  underlineWidth = '100%',
   defaultIndex = 0,
+  underline = true,
   onIndexChange,
   className,
   ...otherProps
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
-  const len = React.Children.count(children);
-  const itemWidth = 100 / len + '%';
+  const count = React.Children.count(children);
 
   return (
     <ThemeProvider theme={{ color: color }}>
@@ -107,17 +109,16 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
         <StyledTabHeaderWrap className={`uc-tabs-header-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
-              const { title = '', disabled = false } = child.props as TabProp;
-              const itemCls = clsx('uc-tabs-header-item', {
-                active: index === activeIndex,
-                disabled: disabled,
-              });
+              const { title = '', disabled } = child.props as TabProp;
               return (
                 <StyledTabHeadItem
                   key={index}
-                  className={itemCls}
+                  className={clsx('uc-tabs-header-item', {
+                    active: index === activeIndex,
+                    disabled: disabled,
+                  })}
                   onClick={() => {
-                    if (!disabled) {
+                    if (!disabled && index !== activeIndex) {
                       setActiveIndex(index);
                       if (typeof onIndexChange === 'function') {
                         onIndexChange(index);
@@ -130,14 +131,14 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
               );
             }
           })}
-          <StyledLine
-            itemWidth={itemWidth}
-            lineWidth={lineWidth}
-            height={2}
-            activeIndex={activeIndex}
-          >
-            <div className="line" />
-          </StyledLine>
+          {underline ? (
+            <StyledTabHeadItem
+              className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
+              count={count}
+              underlineWidth={underlineWidth}
+              activeIndex={activeIndex}
+            />
+          ) : null}
         </StyledTabHeaderWrap>
         <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
