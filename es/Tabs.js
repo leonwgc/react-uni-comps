@@ -41,23 +41,19 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import * as colors from './colors';
 import clsx from 'clsx';
-var StyledTabHeaderWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid #e8e8e8;\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"], ["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid #e8e8e8;\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"])));
-var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1 0;\n  font-size: 16px;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 60px;\n  user-select: none;\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: #bcbcbc;\n  }\n"], ["\n  flex: 1 0;\n  font-size: 16px;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 60px;\n  user-select: none;\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: #bcbcbc;\n  }\n"])), function (props) {
+var StyledTabHeaderWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"], ["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"])), colors.border);
+var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n  /* transition: all 0.3s ease-in-out; */\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n      }\n    }\n  }\n"], ["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n  /* transition: all 0.3s ease-in-out; */\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n      }\n    }\n  }\n"])), function (props) {
+  return props.theme.color;
+}, colors.disabledText, function (props) {
+  return (props.activeIndex - props.count) * 100 + '%';
+}, function (props) {
+  return props.underlineWidth;
+}, function (props) {
   return props.theme.color;
 });
-var StyledLine = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: ", ";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  transition: transform 0.3s ease;\n  transform: translate3d(", ", 0px, 0px);\n  display: flex;\n  justify-content: center;\n  > .line {\n    width: ", ";\n    background-color: ", ";\n    height: ", "px;\n  }\n"], ["\n  width: ", ";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  transition: transform 0.3s ease;\n  transform: translate3d(", ", 0px, 0px);\n  display: flex;\n  justify-content: center;\n  > .line {\n    width: ", ";\n    background-color: ", ";\n    height: ", "px;\n  }\n"])), function (props) {
-  return props.itemWidth;
-}, function (props) {
-  return props.activeIndex * 100 + '%';
-}, function (props) {
-  return typeof props.lineWidth === 'number' ? props.lineWidth + 'px' : props.lineWidth;
-}, function (props) {
-  return props.theme.color;
-}, function (props) {
-  return props.height;
-});
-var StyledTabContentWrap = styled.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  overflow: hidden;\n"], ["\n  overflow: hidden;\n"])));
+var StyledTabContentWrap = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  overflow: hidden;\n"], ["\n  overflow: hidden;\n"])));
 
 var Tab = function Tab(_a) {
   var children = _a.children;
@@ -70,43 +66,45 @@ var isValidtTabElement = function isValidtTabElement(el) {
 
 var Tabs = function Tabs(_a) {
   var children = _a.children,
-      _b = _a.themeColor,
-      themeColor = _b === void 0 ? '#1890ff' : _b,
-      _c = _a.lineWidth,
-      lineWidth = _c === void 0 ? '100%' : _c,
+      _b = _a.color,
+      color = _b === void 0 ? colors.primary : _b,
+      _c = _a.underlineWidth,
+      underlineWidth = _c === void 0 ? '100%' : _c,
       _d = _a.defaultIndex,
       defaultIndex = _d === void 0 ? 0 : _d,
+      _e = _a.underline,
+      underline = _e === void 0 ? true : _e,
       onIndexChange = _a.onIndexChange,
-      otherProps = __rest(_a, ["children", "themeColor", "lineWidth", "defaultIndex", "onIndexChange"]);
+      className = _a.className,
+      otherProps = __rest(_a, ["children", "color", "underlineWidth", "defaultIndex", "underline", "onIndexChange", "className"]);
 
-  var _e = useState(defaultIndex),
-      activeIndex = _e[0],
-      setActiveIndex = _e[1];
+  var _f = useState(defaultIndex),
+      activeIndex = _f[0],
+      setActiveIndex = _f[1];
 
-  var len = React.Children.count(children);
-  var itemWidth = 100 / len + '%';
+  var count = React.Children.count(children);
   return /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: {
-      color: themeColor
+      color: color
     }
-  }, /*#__PURE__*/React.createElement("div", __assign({}, otherProps), /*#__PURE__*/React.createElement(StyledTabHeaderWrap, {
-    className: "tab-header-wrap"
+  }, /*#__PURE__*/React.createElement("div", __assign({}, otherProps, {
+    className: clsx('uc-tabs', className)
+  }), /*#__PURE__*/React.createElement(StyledTabHeaderWrap, {
+    className: "uc-tabs-header-wrap"
   }, React.Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _a = child.props,
           _b = _a.title,
           title = _b === void 0 ? '' : _b,
-          _c = _a.disabled,
-          disabled_1 = _c === void 0 ? false : _c;
-      var itemCls = clsx('tab-header-item', {
-        active: index === activeIndex,
-        disabled: disabled_1
-      });
+          disabled_1 = _a.disabled;
       return /*#__PURE__*/React.createElement(StyledTabHeadItem, {
         key: index,
-        className: itemCls,
+        className: clsx('uc-tabs-header-item', {
+          active: index === activeIndex,
+          disabled: disabled_1
+        }),
         onClick: function onClick() {
-          if (!disabled_1) {
+          if (!disabled_1 && index !== activeIndex) {
             setActiveIndex(index);
 
             if (typeof onIndexChange === 'function') {
@@ -116,15 +114,13 @@ var Tabs = function Tabs(_a) {
         }
       }, title);
     }
-  }), /*#__PURE__*/React.createElement(StyledLine, {
-    itemWidth: itemWidth,
-    lineWidth: lineWidth,
-    height: 2,
+  }), underline ? /*#__PURE__*/React.createElement(StyledTabHeadItem, {
+    className: clsx('uc-tabs-header-item', 'uc-tabs-header-line'),
+    count: count,
+    underlineWidth: underlineWidth,
     activeIndex: activeIndex
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "line"
-  }))), /*#__PURE__*/React.createElement(StyledTabContentWrap, {
-    className: "tab-content-wrap"
+  }) : null), /*#__PURE__*/React.createElement(StyledTabContentWrap, {
+    className: "uc-tabs-content-wrap"
   }, React.Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var children_1 = child.props.children;
@@ -148,4 +144,4 @@ var Tabs = function Tabs(_a) {
 
 Tabs.Tab = Tab;
 export default Tabs;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
+var templateObject_1, templateObject_2, templateObject_3;

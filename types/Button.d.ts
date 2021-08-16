@@ -8,9 +8,10 @@ export declare type Props = {
     children?: React.ReactNode;
     href?: string;
     className?: string;
-    height?: number /** 高度，默认32px */;
     circle?: boolean /** 圆形按钮 */;
     dashed?: boolean /** 虚线边 */;
+    danger?: boolean /** 设置危险按钮 */;
+    ghost?: boolean /** 是否幽灵按钮 */;
     htmlType?: 'submit' | 'reset' | 'button' | undefined;
 } & HTMLAttributes<HTMLButtonElement>;
 /** 按钮 */

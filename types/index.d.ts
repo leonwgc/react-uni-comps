@@ -15,3 +15,5 @@ export { default as SkeletonBase } from './SkeletonBase';
 export { default as Checkbox } from './Checkbox';
 export { default as Button } from './Button';
 export { default as Switch } from './Switch';
+export { default as ErrorBoundary } from './ErrorBoudary';
+export { default as Divider } from './Divider';
