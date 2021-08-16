@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Switch, Avatar, Image } from 'antd';
-import { Skeleton } from 'react-uni-comps';
+import { Avatar, Image } from 'antd';
+import { Skeleton, Switch, Space } from 'react-uni-comps';
 
 const StyledContent = styled.div`
-  padding: 20px;
-
   .article {
     margin-top: 20px;
     display: flex;
@@ -31,9 +29,9 @@ export default function SkeletonDemo() {
 
   return (
     <StyledContent>
-      <div>
-        <Switch checked={loading} onChange={setLoading}></Switch> loading
-      </div>
+      <Space>
+        <Switch checked={loading} onChange={setLoading}></Switch>loading
+      </Space>
 
       <Skeleton
         avatar

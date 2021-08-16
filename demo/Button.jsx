@@ -4,8 +4,6 @@ import { Space, Button } from 'react-uni-comps';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`
-  padding: 20px;
-
   button {
     margin: 8px 0;
   }

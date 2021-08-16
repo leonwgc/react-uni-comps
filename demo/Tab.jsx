@@ -9,7 +9,6 @@ const StyledContent = styled.div`
 `;
 
 const StyledTabs = styled(Tabs)`
-  width: 260px;
   display: inline-block;
 
   .uc-tabs-header-wrap {
@@ -36,20 +35,6 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const StyledTabs1 = styled(Tabs)`
-  display: block;
-
-  .uc-tabs-header-wrap {
-    .uc-tabs-header-item {
-      background-color: #fff;
-      color: #999;
-      display: inline-flex;
-      width: 80px;
-      /* flex: none; */
-    }
-  }
-`;
-
 export default function App() {
   return (
     <div classNameName="app">
@@ -59,17 +44,7 @@ export default function App() {
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <StyledTabs1
-        underlineWidth="50px"
-        defaultIndex={1}
-        onIndexChange={(index) => console.log(index)}
-      >
-        <Tabs.Tab title="title1"></Tabs.Tab>
-        <Tabs.Tab title="title2"></Tabs.Tab>
-        <Tabs.Tab title="title3"></Tabs.Tab>
-      </StyledTabs1>
-
-      <Tabs underline={false} defaultIndex={1} onIndexChange={(index) => console.log(index)}>
+      <Tabs onIndexChange={(index) => console.log(index)}>
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
         <Tabs.Tab title="title3"></Tabs.Tab>
@@ -78,6 +53,7 @@ export default function App() {
       <Tabs defaultIndex={1} underlineWidth="40px" onIndexChange={(index) => console.log(index)}>
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
+        <Tabs.Tab title="title3"></Tabs.Tab>
       </Tabs>
 
       <Tabs

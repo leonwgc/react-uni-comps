@@ -4,8 +4,6 @@ import { Space, Switch } from 'react-uni-comps';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`
-  padding: 20px;
-
   div {
     margin: 8px 0;
   }

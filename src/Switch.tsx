@@ -37,6 +37,7 @@ const StyledSwitch = styled.button`
   text-decoration: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
 
   &::after {
     background-color: #fff;

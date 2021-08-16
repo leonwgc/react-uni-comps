@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { Space, Checkbox } from 'react-uni-comps';
 
 const StyledContent = styled.div`
-  padding: 20px;
-
   .article {
     margin-top: 20px;
     display: flex;

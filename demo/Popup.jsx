@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Space, Popup, HairLineBox, Button } from 'react-uni-comps';
-import './Popup.less';
 
 export default function App() {
   const [b, setB] = useState(false);
@@ -9,7 +8,7 @@ export default function App() {
   const [t, setT] = useState(false);
 
   return (
-    <div className="app">
+    <div>
       <Space wrap>
         <Button onClick={() => setB(true)}>show bottom</Button>
         <Button onClick={() => setC(true)}>show center</Button>

@@ -2,13 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Divider } from 'react-uni-comps';
 
-const StyledContent = styled.div`
-  padding: 20px;
-`;
-
 export default function App() {
   return (
-    <StyledContent>
+    <div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi
         ista probare, quae sunt a te dicta? Refert tamen, quo modo.
@@ -52,6 +48,6 @@ export default function App() {
           <a href="#">Link</a>
         </>
       </div>
-    </StyledContent>
+    </div>
   );
 }

@@ -4,10 +4,6 @@ import { Input } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Space, Cell, Button, Checkbox, Switch } from 'react-uni-comps';
 
-const StyledContent = styled.div`
-  padding: 20px;
-`;
-
 export default function App() {
   const [v, setV] = useState('');
   const ref = useRef();
@@ -20,7 +16,7 @@ export default function App() {
   });
 
   return (
-    <StyledContent>
+    <div>
       <Cell label="姓名" content="汪guochao"></Cell>
       <Cell label="username">
         <input type="text" placeholder="username" />
@@ -66,6 +62,6 @@ export default function App() {
       <Button type="primary" block style={{ marginTop: 32, height: 44 }}>
         submit
       </Button>
-    </StyledContent>
+    </div>
   );
 }
