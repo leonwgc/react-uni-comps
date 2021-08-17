@@ -123,7 +123,7 @@ const Pullup = (props: Props): React.ReactNode => {
       <div
         className="uc-pullup-line"
         ref={ref}
-        style={{ visibility: 'visible', height: 1, background: 'red' }}
+        style={{ visibility: 'hidden', height: 1, background: 'transparent' }}
       ></div>
     </StyledPullupWrapper>
   );

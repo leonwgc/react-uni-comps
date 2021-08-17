@@ -4,7 +4,7 @@ import { Pullup, Popup, WaitLoading, Space, Button } from 'react-uni-comps';
 import './Pullup.less';
 
 // 第一次加载数据应该撑满容器， 否则无效
-const pageSize = 6;
+const pageSize = 10;
 
 const App = () => {
   const [list, setList] = useState([]);
@@ -37,7 +37,7 @@ const App = () => {
   return (
     <>
       <Space>
-        <Pullup
+        {/* <Pullup
           className="pull-wrapper"
           dataList={list}
           fetchData={fetchData}
@@ -45,21 +45,19 @@ const App = () => {
           dataRender={(data) => {
             return <div className="item">list {data}</div>;
           }}
-        ></Pullup>
+        ></Pullup> */}
 
-        {/* <Pullup
-          style={{ height: '100vh', marginLeft: 100 }}
+        <Pullup
+          style={{ height: '100vh', width: '100vw' }}
           className="pull-wrapper"
           dataList={list}
-          endText="没有更多数据了!"
+          finishedText="没有更多数据了!"
           fetchData={fetchData}
-          isEnd={isEnd}
-          loadingText={<Spin />}
-          footerStyle={{ height: 100 }}
+          finished={finished}
           dataRender={(data, index) => {
             return <div className="item">list {index + 1}</div>;
           }}
-        ></Pullup> */}
+        ></Pullup>
       </Space>
 
       <WaitLoading visible={loading}>
