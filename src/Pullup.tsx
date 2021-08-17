@@ -4,9 +4,20 @@ import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
 import { useUpdateEffect } from 'react-use-lib';
+import styled from 'styled-components';
+import clsx from 'clsx';
+
+const StyledPullupWrapper = styled.div`
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 // check isInViewport in vertical direction
-function isInViewport(el, container: HTMLElement) {
+function isInViewport(el: HTMLElement, container: HTMLElement) {
   const { top, bottom } = el.getBoundingClientRect();
   if (!container) {
     return bottom >= 0 && top < window.innerHeight;
@@ -49,31 +60,32 @@ const footerRender = (
 };
 
 /** 上滑加载更多数据 */
-const Pullup: React.FC<Props> = ({
-  dataList = [],
-  dataRender = () => null,
-  fetchData,
-  loadingText = (
-    <Space>
-      <Spinner />
-      加载中
-    </Space>
-  ),
-  finishedText = '我是有底线的~',
-  finished = false,
-  ...otherProps
-}) => {
+const Pullup = (props: Props): React.ReactNode => {
+  const {
+    dataList = [],
+    dataRender = () => null,
+    fetchData,
+    loadingText = (
+      <Space>
+        <Spinner />
+        加载中
+      </Space>
+    ),
+    finishedText = '我是有底线的~',
+    finished = false,
+    ...otherProps
+  } = props;
+
   const [loading, setLoading] = useState(false);
   const ref = useRef();
   const wrapRef = useRef();
   const itemListRef = useRef();
-  const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 20px 0px' });
+  const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 0px 0px' });
   const lastIsAtBottom = usePrevious(isAtBottom);
   const { style, className } = otherProps;
 
   useUpdateEffect(() => {
     if (!loading && isInViewport(ref.current, wrapRef.current)) {
-      console.log('updated check in');
       setLoading(true);
       fetchData()
         .then(() => {
@@ -82,8 +94,6 @@ const Pullup: React.FC<Props> = ({
         .catch(() => {
           setLoading(false);
         });
-    } else {
-      console.log('updated check passed');
     }
   }, [loading]);
 
@@ -101,15 +111,21 @@ const Pullup: React.FC<Props> = ({
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
 
   return (
-    <div className={className} style={style} ref={wrapRef}>
-      <div ref={itemListRef}>
+    <StyledPullupWrapper className={clsx('uc-pullup', className)} style={style} ref={wrapRef}>
+      <div className="uc-pullup-body" ref={itemListRef}>
         {dataList.map((item, idx) => {
           return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
         })}
       </div>
-      <div>{footerRender(loading, finished, loadingText, finishedText)}</div>
-      <div ref={ref} style={{ visibility: 'visible', height: 1, background: 'red' }}></div>
-    </div>
+      <div className="uc-pullup-footer">
+        {footerRender(loading, finished, loadingText, finishedText)}
+      </div>
+      <div
+        className="uc-pullup-line"
+        ref={ref}
+        style={{ visibility: 'visible', height: 1, background: 'red' }}
+      ></div>
+    </StyledPullupWrapper>
   );
 };
 
