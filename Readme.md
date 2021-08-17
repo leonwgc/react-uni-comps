@@ -395,25 +395,32 @@ declare const LazyLoadImage: React.FC<Props>;
 
 ```js
 // types
+import React from 'react';
 export declare type Props = {
     dataList: Array<unknown> /** 数组数据 */;
     dataRender: (data: unknown, index: number) => React.ReactNode /** 数组数据项自定义render */;
     fetchData: () => Promise<unknown> /** ajax获取数据，返回Promise,当拉到底部，还有更多数据时调用 */;
-    hasMoreData: boolean /** 指示是否还有更多数据 */;
-    spinner?: React.ReactNode /** 加载中 spinner */;
-    endText?: React.ReactNode /** 拉到底部，没有更多数据时显示的文本 */;
+    finished: boolean /** 指示是否还有更多数据,true没有更多,false还有 */;
+    finishedText?: React.ReactNode /** 拉到底部，没有更多数据时显示的文本 */;
+    loadingText?: React.ReactNode /** 加载中提示 */;
     style?: React.CSSProperties /** 容器 style */;
     className?: string /** 容器 class */;
-    footerStyle?: React.CSSProperties /** 容器底部包含spinner/endText容器的style */;
 };
-/** 上滑加载更多数据 */
-declare const Pullup: React.FC<Props>;
+/** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
+declare const Pullup: (props: Props) => React.ReactNode;
+export default Pullup;
 ```
 
 ```js
+import React, { useState, useRef } from 'react';
+import { Pullup } from 'react-uni-comps';
+
+// 第一次加载数据应该撑满容器,否则会一直拉数据知道撑满
+const pageSize = 20;
+
 const App = () => {
   const [list, setList] = useState([]);
-  const [hasMoreData, sethasMoreData] = useState(true); //是否还有数据没加载
+  const [finished, setFinished] = useState(false);
   const ref = useRef(0);
 
   const fetchData = () => {
@@ -426,42 +433,36 @@ const App = () => {
         setList((d) => d.concat(ar));
         ref.current++;
 
-        if (ref.current > 6) {
-          sethasMoreData(false); // 模拟没有更多数据
+        console.log(ref.current);
+
+        if (ref.current > 5) {
+          setFinished(true);
         }
         resolve();
-      }, 100);
+      }, 900);
     });
   };
 
   return (
-    <Space>
-      <Pullup
-        className="pull-wrapper"
-        dataList={list}
-        fetchData={fetchData}
-        hasMoreData={hasMoreData}
-        spinner={<Spin />}
-        dataRender={(data) => {
-          return <div className="item">list {data}</div>;
-        }}
-      ></Pullup>
-      <Pullup
-        style={{ height: '100vh', marginLeft: 100 }}
-        className="pull-wrapper"
-        dataList={list}
-        endText="没有更多数据了!"
-        fetchData={fetchData}
-        hasMoreData={hasMoreData}
-        spinner={<Spin />}
-        footerStyle={{ height: 100 }}
-        dataRender={(data, index) => {
-          return <div className="item">list {index + 1}</div>;
-        }}
-      ></Pullup>
-    </Space>
+    <Pullup
+      style={{ height: '100vh', width: '100vw', border: 'none', margin: '-16px' }}
+      dataList={list}
+      finishedText="没有更多数据了!"
+      fetchData={fetchData}
+      finished={finished}
+      dataRender={(data, index) => {
+        return (
+          <div style={{ padding: '10px 0', borderBottom: '1px solid #e0e0e0' }}>
+            list {index + 1}
+          </div>
+        );
+      }}
+    ></Pullup>
   );
 };
+
+export default App;
+
 ```
 
 #### 8. HairLineBox (包含 1px 的边的容器 div)
