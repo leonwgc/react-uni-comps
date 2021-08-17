@@ -68,7 +68,7 @@ var StyledButton = styled.button(templateObject_1 || (templateObject_1 = __makeT
 }, colors.disabledBg, colors.border, colors.disabledText, colors.border, colors.border);
 /** 按钮 */
 
-var Button = function Button(props) {
+var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.color,
       color = _a === void 0 ? colors.primary : _a,
       _b = props.type,
@@ -86,6 +86,7 @@ var Button = function Button(props) {
 
   var themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
   return /*#__PURE__*/React.createElement(StyledButton, __assign({
+    ref: ref,
     color: themeColor,
     disabled: disabled,
     type: htmlType,
@@ -97,7 +98,7 @@ var Button = function Button(props) {
       ghost: ghost
     }, className)
   }, rest), children);
-};
-
+});
+Button.displayName = 'uc-button';
 export default Button;
 var templateObject_1;

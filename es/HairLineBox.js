@@ -50,18 +50,19 @@ var StyledDiv = styled.div(templateObject_1 || (templateObject_1 = __makeTemplat
 });
 /** 包含1px的边的容器div */
 
-var HairLineBox = function HairLineBox(_a) {
-  var _b = _a.position,
-      position = _b === void 0 ? 'bottom' : _b,
-      _c = _a.color,
-      color = _c === void 0 ? '#dcdcdc' : _c,
-      props = __rest(_a, ["position", "color"]);
+var HairLineBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var _a = props.position,
+      position = _a === void 0 ? 'bottom' : _a,
+      _b = props.color,
+      color = _b === void 0 ? '#dcdcdc' : _b,
+      rest = __rest(props, ["position", "color"]);
 
   return /*#__PURE__*/React.createElement(StyledDiv, __assign({
+    ref: ref,
     position: position,
     color: color
-  }, props));
-};
-
+  }, rest));
+});
+HairLineBox.displayName = 'uc-hairline-box';
 export default HairLineBox;
 var templateObject_1;

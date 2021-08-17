@@ -102,7 +102,7 @@ const StyledButton = styled.button`
 `;
 
 /** 按钮 */
-const Button = (props: Props): React.ReactElement => {
+const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
     color = colors.primary,
     type = 'default',
@@ -122,6 +122,7 @@ const Button = (props: Props): React.ReactElement => {
 
   return (
     <StyledButton
+      ref={ref}
       color={themeColor}
       disabled={disabled}
       type={htmlType}
@@ -142,6 +143,8 @@ const Button = (props: Props): React.ReactElement => {
       {children}
     </StyledButton>
   );
-};
+});
+
+Button.displayName = 'uc-button';
 
 export default Button;

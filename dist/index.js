@@ -904,18 +904,20 @@ var StyledDiv = styled__default['default'].div(_templateObject$4 || (_templateOb
 });
 /** 包含1px的边的容器div */
 
-var HairLineBox = function HairLineBox(_ref3) {
-  var _ref3$position = _ref3.position,
-      position = _ref3$position === void 0 ? 'bottom' : _ref3$position,
-      _ref3$color = _ref3.color,
-      color = _ref3$color === void 0 ? '#dcdcdc' : _ref3$color,
-      props = _objectWithoutProperties(_ref3, _excluded$4);
+var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$position = props.position,
+      position = _props$position === void 0 ? 'bottom' : _props$position,
+      _props$color = props.color,
+      color = _props$color === void 0 ? '#dcdcdc' : _props$color,
+      rest = _objectWithoutProperties(props, _excluded$4);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({
+    ref: ref,
     position: position,
     color: color
-  }, props));
-};
+  }, rest));
+});
+HairLineBox.displayName = 'uc-hairline-box';
 
 /**  等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁 */
 var WaitLoading = function WaitLoading(_ref) {
@@ -1339,7 +1341,7 @@ var StyledButton = styled__default['default'].button(_templateObject$a || (_temp
 }, disabledBg, border, disabledText, border, border);
 /** 按钮 */
 
-var Button = function Button(props) {
+var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$color = props.color,
       color = _props$color === void 0 ? primary : _props$color,
       _props$type = props.type,
@@ -1357,6 +1359,7 @@ var Button = function Button(props) {
 
   var themeColor = disabled ? disabledText : danger$1 ? danger : color;
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({
+    ref: ref,
     color: themeColor,
     disabled: disabled,
     type: htmlType,
@@ -1368,7 +1371,8 @@ var Button = function Button(props) {
       ghost: ghost
     }, className)
   }, rest), children);
-};
+});
+Button.displayName = 'uc-button';
 
 var _excluded$9 = ["color", "disabled", "checked", "defaultChecked", "className", "style", "onChange"];
 
