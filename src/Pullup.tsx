@@ -1,37 +1,49 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Spinner from './Spinner';
+import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
+import { useUpdateEffect } from 'react-use-lib';
+
+// check isInViewport in vertical direction
+function isInViewport(el, container: HTMLElement) {
+  const { top, bottom } = el.getBoundingClientRect();
+  if (!container) {
+    return bottom >= 0 && top < window.innerHeight;
+  } else {
+    const brc = container.getBoundingClientRect();
+
+    return bottom < brc.bottom && top > brc.top;
+  }
+}
 
 export type Props = {
   dataList: Array<unknown> /** 数组数据 */;
   dataRender: (data: unknown, index: number) => React.ReactNode /** 数组数据项自定义render */;
   fetchData: () => Promise<unknown> /** ajax获取数据，返回Promise,当拉到底部，还有更多数据时调用 */;
-  hasMoreData: boolean /** 指示是否还有更多数据 */;
-  spinner?: React.ReactNode /** 加载中 spinner */;
-  endText?: React.ReactNode /** 拉到底部，没有更多数据时显示的文本 */;
+  finished: boolean /** 指示是否还有更多数据,true到底没有更多,false还有 */;
+  finishedText?: React.ReactNode /** 拉到底部，没有更多数据时显示的文本 */;
+  loadingText?: React.ReactNode /** 加载中提示 */;
   style?: React.CSSProperties /** 容器 style */;
   className?: string /** 容器 class */;
-  footerStyle?: React.CSSProperties /** 容器底部包含spinner/endText容器的style */;
 };
 
 const footerRender = (
   isLoading: boolean,
-  hasMoreData: boolean,
-  spinner: React.ReactNode,
-  endText: React.ReactNode,
-  footerStyle: React.CSSProperties
+  finished: boolean,
+  loadingText: React.ReactNode,
+  finishedText: React.ReactNode
 ) => {
   return (
     <div
       style={{
-        height: 40,
+        padding: '8px 0',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        ...footerStyle,
       }}
     >
-      {isLoading ? spinner : !hasMoreData ? endText : null}
+      {isLoading ? loadingText : finished ? finishedText : null}
     </div>
   );
 };
@@ -41,21 +53,42 @@ const Pullup: React.FC<Props> = ({
   dataList = [],
   dataRender = () => null,
   fetchData,
-  spinner = '加载中...',
-  endText = '我是有底线的~',
-  hasMoreData = true,
-  footerStyle,
+  loadingText = (
+    <Space>
+      <Spinner />
+      加载中
+    </Space>
+  ),
+  finishedText = '我是有底线的~',
+  finished = false,
   ...otherProps
 }) => {
-  const [isLoading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const ref = useRef();
   const wrapRef = useRef();
-  const isAtBottom = useInViewport(ref, wrapRef);
+  const itemListRef = useRef();
+  const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 20px 0px' });
   const lastIsAtBottom = usePrevious(isAtBottom);
   const { style, className } = otherProps;
 
+  useUpdateEffect(() => {
+    if (!loading && isInViewport(ref.current, wrapRef.current)) {
+      console.log('updated check in');
+      setLoading(true);
+      fetchData()
+        .then(() => {
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      console.log('updated check passed');
+    }
+  }, [loading]);
+
   useEffect(() => {
-    if (!isLoading && isAtBottom && hasMoreData && !lastIsAtBottom) {
+    if (!loading && isAtBottom && !finished && !lastIsAtBottom) {
       setLoading(true);
       fetchData()
         .then(() => {
@@ -65,14 +98,17 @@ const Pullup: React.FC<Props> = ({
           setLoading(false);
         });
     }
-  }, [isLoading, isAtBottom, hasMoreData, setLoading, fetchData, lastIsAtBottom]);
+  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
 
   return (
     <div className={className} style={style} ref={wrapRef}>
-      {dataList.map((item, idx) => {
-        return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
-      })}
-      <div ref={ref}>{footerRender(isLoading, hasMoreData, spinner, endText, footerStyle)}</div>
+      <div ref={itemListRef}>
+        {dataList.map((item, idx) => {
+          return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
+        })}
+      </div>
+      <div>{footerRender(loading, finished, loadingText, finishedText)}</div>
+      <div ref={ref} style={{ visibility: 'visible', height: 1, background: 'red' }}></div>
     </div>
   );
 };

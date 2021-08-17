@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 export type Props = {
-  size: number /** 圈圈大小,应用到font-size,默认16 */;
-  color: string /** 圈圈颜色,默认 #606060 */;
+  size?: number /** 圈圈大小,应用到font-size,默认16 */;
+  color?: string /** 圈圈颜色,默认 #606060 */;
 };
 
 const StyledLoading = styled.div<{ size: number; color: string }>`
