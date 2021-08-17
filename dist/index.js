@@ -1105,7 +1105,7 @@ var _templateObject$7;
 var StyledSkeletonBase = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"])));
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
-var SkeletonBase = function SkeletonBase(props) {
+var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$animate = props.animate,
       animate = _props$animate === void 0 ? true : _props$animate,
       width = props.width,
@@ -1122,6 +1122,7 @@ var SkeletonBase = function SkeletonBase(props) {
       rest = _objectWithoutProperties(other, _excluded2$2);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({
+    ref: ref,
     className: clsx__default['default']('uc-skeleton', shape, {
       pulse: animate
     }, className),
@@ -1130,7 +1131,8 @@ var SkeletonBase = function SkeletonBase(props) {
       height: height
     }, style)
   }, rest));
-};
+});
+SkeletonBase.displayName = 'uc-skeleton-base';
 
 var _excluded$7 = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
     _excluded2$3 = ["className"];

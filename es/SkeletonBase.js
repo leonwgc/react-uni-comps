@@ -45,7 +45,7 @@ import clsx from 'clsx';
 var StyledSkeletonBase = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"], ["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"])));
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
-var SkeletonBase = function SkeletonBase(props) {
+var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.animate,
       animate = _a === void 0 ? true : _a,
       width = props.width,
@@ -62,6 +62,7 @@ var SkeletonBase = function SkeletonBase(props) {
       rest = __rest(other, ["style", "className"]);
 
   return /*#__PURE__*/React.createElement(StyledSkeletonBase, __assign({
+    ref: ref,
     className: clsx('uc-skeleton', shape, {
       pulse: animate
     }, className),
@@ -70,7 +71,7 @@ var SkeletonBase = function SkeletonBase(props) {
       height: height
     }, style)
   }, rest));
-};
-
+});
+SkeletonBase.displayName = 'uc-skeleton-base';
 export default SkeletonBase;
 var templateObject_1;
