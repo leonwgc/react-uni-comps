@@ -7,7 +7,7 @@ export type Props = {
   shape?: 'rect' | 'circle' /** 形状：默认 react */;
   height?: number | string /** 高度，默认16px */;
   width?: number | string /** 宽度 */;
-} & React.HTMLAttributes<HTMLElement>;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledSkeletonBase = styled.div`
   display: block;
@@ -40,17 +40,20 @@ const StyledSkeletonBase = styled.div`
 `;
 
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
-const SkeletonBase = (props: Props): React.ReactElement => {
+const SkeletonBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { animate = true, width, height = 16, shape = 'rect', ...other } = props;
   const { style = {}, className = '', ...rest } = other;
 
   return (
     <StyledSkeletonBase
+      ref={ref}
       className={clsx('uc-skeleton', shape, { pulse: animate }, className)}
       style={{ width, height, ...style }}
       {...rest}
-    ></StyledSkeletonBase>
+    />
   );
-};
+});
+
+SkeletonBase.displayName = 'uc-skeleton-base';
 
 export default SkeletonBase;
