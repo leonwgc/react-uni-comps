@@ -71,7 +71,7 @@ const Pullup = (props: Props): React.ReactNode => {
   const lastIsAtBottom = usePrevious(isAtBottom);
 
   useUpdateEffect(() => {
-    if (!loading && isInViewport(ref.current, wrapRef.current)) {
+    if (!loading && isInViewport(ref.current, wrapRef.current) && !finished) {
       setLoading(true);
       fetchData()
         .then(() => {
@@ -81,7 +81,7 @@ const Pullup = (props: Props): React.ReactNode => {
           setLoading(false);
         });
     }
-  }, [loading]);
+  }, [loading, finished]);
 
   useEffect(() => {
     if (!loading && isAtBottom && !finished && !lastIsAtBottom) {
