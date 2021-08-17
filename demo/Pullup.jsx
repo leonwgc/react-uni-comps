@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Spin } from 'antd';
-import { Pullup, Popup, WaitLoading, Space, Button } from 'react-uni-comps';
+import { Pullup, WaitLoading, Space } from 'react-uni-comps';
 import './Pullup.less';
 
-// 第一次加载数据应该撑满容器， 否则无效
+// 第一次加载数据应该撑满容器,否则会一直拉数据知道撑满
 const pageSize = 10;
 
 const App = () => {
