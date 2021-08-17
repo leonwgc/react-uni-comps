@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <StyledContent>
-      <Space>
+      <Space wrap>
         <Checkbox checked={checked} onChange={setChecked}>
           hello
         </Checkbox>
