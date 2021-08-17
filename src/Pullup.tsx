@@ -3,7 +3,7 @@ import Spinner from './Spinner';
 import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
-import { useUpdateEffect } from 'react-use-lib';
+import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
@@ -13,6 +13,13 @@ const StyledPullupWrapper = styled.div`
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  > .uc-pullup-footer {
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -32,34 +39,14 @@ export type Props = {
   dataList: Array<unknown> /** 数组数据 */;
   dataRender: (data: unknown, index: number) => React.ReactNode /** 数组数据项自定义render */;
   fetchData: () => Promise<unknown> /** ajax获取数据，返回Promise,当拉到底部，还有更多数据时调用 */;
-  finished: boolean /** 指示是否还有更多数据,true到底没有更多,false还有 */;
+  finished: boolean /** 指示是否还有更多数据,true没有更多,false还有 */;
   finishedText?: React.ReactNode /** 拉到底部，没有更多数据时显示的文本 */;
   loadingText?: React.ReactNode /** 加载中提示 */;
   style?: React.CSSProperties /** 容器 style */;
   className?: string /** 容器 class */;
 };
 
-const footerRender = (
-  isLoading: boolean,
-  finished: boolean,
-  loadingText: React.ReactNode,
-  finishedText: React.ReactNode
-) => {
-  return (
-    <div
-      style={{
-        padding: '8px 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      {isLoading ? loadingText : finished ? finishedText : null}
-    </div>
-  );
-};
-
-/** 上滑加载更多数据 */
+/** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
 const Pullup = (props: Props): React.ReactNode => {
   const {
     dataList = [],
@@ -68,21 +55,20 @@ const Pullup = (props: Props): React.ReactNode => {
     loadingText = (
       <Space>
         <Spinner />
-        加载中
+        加载中...
       </Space>
     ),
     finishedText = '我是有底线的~',
     finished = false,
-    ...otherProps
+    className,
+    ...restProps
   } = props;
 
   const [loading, setLoading] = useState(false);
   const ref = useRef();
   const wrapRef = useRef();
-  const itemListRef = useRef();
   const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 0px 0px' });
   const lastIsAtBottom = usePrevious(isAtBottom);
-  const { style, className } = otherProps;
 
   useUpdateEffect(() => {
     if (!loading && isInViewport(ref.current, wrapRef.current)) {
@@ -111,20 +97,15 @@ const Pullup = (props: Props): React.ReactNode => {
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
 
   return (
-    <StyledPullupWrapper className={clsx('uc-pullup', className)} style={style} ref={wrapRef}>
-      <div className="uc-pullup-body" ref={itemListRef}>
-        {dataList.map((item, idx) => {
-          return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
-        })}
-      </div>
+    <StyledPullupWrapper className={clsx('uc-pullup', className)} ref={wrapRef} {...restProps}>
+      {dataList.map((item, idx) => {
+        return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
+      })}
+
       <div className="uc-pullup-footer">
-        {footerRender(loading, finished, loadingText, finishedText)}
+        {loading ? loadingText : finished ? finishedText : null}
       </div>
-      <div
-        className="uc-pullup-line"
-        ref={ref}
-        style={{ visibility: 'hidden', height: 1, background: 'transparent' }}
-      ></div>
+      <div className="uc-pullup-line" ref={ref} style={{ visibility: 'hidden', height: 1 }}></div>
     </StyledPullupWrapper>
   );
 };

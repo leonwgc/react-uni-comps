@@ -55,16 +55,12 @@ var AnimationElement = function AnimationElement(_a) {
   useEffect(function () {
     if (ref.current) {
       var dom_1 = ref.current;
-
-      if (typeof dom_1.style.animation === 'string') {
-        dom_1.addEventListener('animationend', function () {
-          dom_1.style.animationName = 'none';
-        });
-      } else if (typeof dom_1.style.webkitAnimation === 'string') {
-        dom_1.addEventListener('webkitAnimationEnd', function () {
-          dom_1.style.webkitAnimationName = 'none';
-        });
-      }
+      dom_1.addEventListener('animationend', function () {
+        dom_1.style.animationName = 'none';
+      });
+      dom_1.addEventListener('webkitAnimationEnd', function () {
+        dom_1.style.webkitAnimationName = 'none';
+      });
     }
   }, []);
   useEffect(function () {

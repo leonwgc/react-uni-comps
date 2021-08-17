@@ -1,19 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { Spin } from 'antd';
-import { Pullup, WaitLoading, Space } from 'react-uni-comps';
+import { Pullup, Space } from 'react-uni-comps';
 import './Pullup.less';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据知道撑满
-const pageSize = 10;
+const pageSize = 20;
 
 const App = () => {
   const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
   const ref = useRef(0);
 
   const fetchData = () => {
-    setLoading(true);
     return new Promise((resolve) => {
       var ar = [];
       for (var i = 0; i < pageSize; i++) {
@@ -25,10 +22,9 @@ const App = () => {
 
         console.log(ref.current);
 
-        if (ref.current > 6) {
+        if (ref.current > 5) {
           setFinished(true);
         }
-        setLoading(false);
         resolve();
       }, 900);
     });
@@ -48,23 +44,20 @@ const App = () => {
         ></Pullup> */}
 
         <Pullup
-          style={{ height: '100vh', width: '100vw' }}
-          className="pull-wrapper"
+          style={{ height: '100vh', width: '100vw', border: 'none', margin: '16px 8px' }}
           dataList={list}
           finishedText="没有更多数据了!"
           fetchData={fetchData}
           finished={finished}
           dataRender={(data, index) => {
-            return <div className="item">list {index + 1}</div>;
+            return (
+              <div style={{ padding: '10px 0', borderBottom: '1px solid #e0e0e0' }}>
+                list {index + 1}
+              </div>
+            );
           }}
         ></Pullup>
       </Space>
-
-      <WaitLoading visible={loading}>
-        <div className="wait-loading">
-          <Spin></Spin>
-        </div>
-      </WaitLoading>
     </>
   );
 };
