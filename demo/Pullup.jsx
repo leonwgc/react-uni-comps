@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Pullup } from 'react-uni-comps';
 
-// 第一次加载数据应该撑满容器,否则会一直拉数据知道撑满
+// 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 20;
 
 const App = () => {
