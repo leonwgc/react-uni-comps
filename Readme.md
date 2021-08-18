@@ -757,4 +757,37 @@ export default function SkeletonDemo() {
 }
 ```
 
+#### 14. Button
+#### 15. Tabs 
+#### 16. Divider 
+
+#### 17. Checkbox 
+
+#### 18. ErrorBoudary 
+#### 19. Switch
+
+
+### 按需加载
+
+1. 搭配 babel-plugin-import 
+
+```js
+  plugins: [
+    [
+      'import',
+      {
+        libraryName: 'react-uni-comps',
+        libraryDirectory: 'es',
+        camel2DashComponentName: false,
+      },
+    ],
+  ],
+```
+
+2. 直接引用组件
+```js
+  import xxx from 'react-uni-comps/es/xxx'
+```
+
+
 持续其他组件...
