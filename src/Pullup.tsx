@@ -91,7 +91,6 @@ const Pullup = (props: Props): React.ReactNode => {
       {dataList.map((item, idx) => {
         return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
       })}
-
       <div className="uc-pullup-footer">
         {loading ? loadingText : finished ? finishedText : null}
       </div>
