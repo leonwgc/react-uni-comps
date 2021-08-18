@@ -807,7 +807,7 @@ var Spinner = function Spinner(_ref) {
 var _excluded$3 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className"];
 
 var _templateObject$3;
-var StyledPullupWrapper = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -851,18 +851,8 @@ var Pullup = function Pullup(props) {
     rootMargin: '0px 0px 0px 0px'
   });
   var lastIsAtBottom = usePrevious__default['default'](isAtBottom);
-  useUpdateEffect__default['default'](function () {
-    if (!loading && isInViewport(ref.current, wrapRef.current)) {
-      setLoading(true);
-      fetchData().then(function () {
-        setLoading(false);
-      })["catch"](function () {
-        setLoading(false);
-      });
-    }
-  }, [loading]);
   React.useEffect(function () {
-    if (!loading && isAtBottom && !finished && !lastIsAtBottom) {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(ref.current, wrapRef.current))) {
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
@@ -871,14 +861,16 @@ var Pullup = function Pullup(props) {
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledPullupWrapper, _extends({
-    className: clsx__default['default']('uc-pullup', className),
+  return /*#__PURE__*/React__default['default'].createElement(StyledPullupContainer, _extends({
+    className: clsx__default['default']('uc-pullup-container', className),
     ref: wrapRef
-  }, restProps), dataList.map(function (item, idx) {
+  }, restProps), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "uc-pullup-wrapper"
+  }, dataList.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
       key: idx
     }, dataRender(item, idx));
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
+  })), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-pullup-footer"
   }, loading ? loadingText : finished ? finishedText : null), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-pullup-line",

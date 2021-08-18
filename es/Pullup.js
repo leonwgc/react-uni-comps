@@ -44,10 +44,9 @@ import Spinner from './Spinner';
 import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledPullupWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _a = el.getBoundingClientRect(),
@@ -91,18 +90,8 @@ var Pullup = function Pullup(props) {
     rootMargin: '0px 0px 0px 0px'
   });
   var lastIsAtBottom = usePrevious(isAtBottom);
-  useUpdateEffect(function () {
-    if (!loading && isInViewport(ref.current, wrapRef.current)) {
-      setLoading(true);
-      fetchData().then(function () {
-        setLoading(false);
-      }).catch(function () {
-        setLoading(false);
-      });
-    }
-  }, [loading]);
   useEffect(function () {
-    if (!loading && isAtBottom && !finished && !lastIsAtBottom) {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(ref.current, wrapRef.current))) {
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
@@ -111,14 +100,16 @@ var Pullup = function Pullup(props) {
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
-  return /*#__PURE__*/React.createElement(StyledPullupWrapper, __assign({
-    className: clsx('uc-pullup', className),
+  return /*#__PURE__*/React.createElement(StyledPullupContainer, __assign({
+    className: clsx('uc-pullup-container', className),
     ref: wrapRef
-  }, restProps), dataList.map(function (item, idx) {
+  }, restProps), /*#__PURE__*/React.createElement("div", {
+    className: "uc-pullup-wrapper"
+  }, dataList.map(function (item, idx) {
     return /*#__PURE__*/React.createElement(React.Fragment, {
       key: idx
     }, dataRender(item, idx));
-  }), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
     className: "uc-pullup-footer"
   }, loading ? loadingText : finished ? finishedText : null), /*#__PURE__*/React.createElement("div", {
     className: "uc-pullup-line",
