@@ -3,7 +3,6 @@ import Spinner from './Spinner';
 import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
@@ -70,21 +69,12 @@ const Pullup = (props: Props): React.ReactNode => {
   const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 0px 0px' });
   const lastIsAtBottom = usePrevious(isAtBottom);
 
-  useUpdateEffect(() => {
-    if (!loading && isInViewport(ref.current, wrapRef.current) && !finished) {
-      setLoading(true);
-      fetchData()
-        .then(() => {
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    }
-  }, [loading, finished]);
-
   useEffect(() => {
-    if (!loading && isAtBottom && !finished && !lastIsAtBottom) {
+    if (
+      !loading &&
+      !finished &&
+      ((!lastIsAtBottom && isAtBottom) || isInViewport(ref.current, wrapRef.current))
+    ) {
       setLoading(true);
       fetchData()
         .then(() => {
