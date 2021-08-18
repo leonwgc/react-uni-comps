@@ -6,7 +6,7 @@ import usePrevious from 'react-use-lib/es/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-const StyledPullupWrapper = styled.div`
+const StyledPullupContainer = styled.div`
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 
@@ -87,15 +87,22 @@ const Pullup = (props: Props): React.ReactNode => {
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
 
   return (
-    <StyledPullupWrapper className={clsx('uc-pullup', className)} ref={wrapRef} {...restProps}>
-      {dataList.map((item, idx) => {
-        return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
-      })}
+    <StyledPullupContainer
+      className={clsx('uc-pullup-container', className)}
+      ref={wrapRef}
+      {...restProps}
+    >
+      <div className="uc-pullup-wrapper">
+        {dataList.map((item, idx) => {
+          return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
+        })}
+      </div>
+
       <div className="uc-pullup-footer">
         {loading ? loadingText : finished ? finishedText : null}
       </div>
       <div className="uc-pullup-line" ref={ref} style={{ visibility: 'hidden', height: 1 }}></div>
-    </StyledPullupWrapper>
+    </StyledPullupContainer>
   );
 };
 
