@@ -101,7 +101,7 @@ const Pullup = (props: Props): React.ReactNode => {
       <div className="uc-pullup-footer">
         {loading ? loadingText : finished ? finishedText : null}
       </div>
-      <div className="uc-pullup-line" ref={ref} style={{ visibility: 'hidden', height: 1 }}></div>
+      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={ref}></span>
     </StyledPullupContainer>
   );
 };
