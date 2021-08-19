@@ -18,3 +18,4 @@ export { default as Switch } from './Switch';
 export { default as ErrorBoundary } from './ErrorBoudary';
 export { default as Divider } from './Divider';
 export { default as FileInputTrigger } from './FileInputTrigger';
+export { default as Waypoint } from './Waypoint';

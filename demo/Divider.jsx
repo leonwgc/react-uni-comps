@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider } from 'react-uni-comps';
+import { Divider, Waypoint } from '../src';
 
 export default function App() {
   return (
@@ -38,6 +38,7 @@ export default function App() {
         ista probare, quae sunt a te dicta? Refert tamen, quo modo.
       </p>
       <div>
+        <Waypoint onEnter={() => console.log('entered')} onLeave={() => console.log('leaved')} />
         <>
           Text
           <Divider type="vertical" />
