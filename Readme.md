@@ -462,7 +462,6 @@ const App = () => {
 };
 
 export default App;
-
 ```
 
 #### 8. HairLineBox (包含 1px 的边的容器 div)
@@ -757,19 +756,25 @@ export default function SkeletonDemo() {
 }
 ```
 
-#### 14. Button
-#### 15. Tabs 
-#### 16. Divider 
+#### 14. Button (按钮)
 
-#### 17. Checkbox 
+#### 15. Tabs (选项卡切换)
 
-#### 18. ErrorBoudary 
-#### 19. Switch
+#### 16. Divider (分割线)
 
+#### 17. Checkbox (选择状态)
+
+#### 18. ErrorBoudary （错误边界）
+
+#### 19. Switch (开关)
+
+#### 20. Waypoint （可见/不可见指示）
+
+#### 21. FileInputTrigger (触发文件上传)
 
 ### 按需加载
 
-1. 搭配 babel-plugin-import 
+1. 搭配 babel-plugin-import
 
 ```js
   plugins: [
@@ -785,9 +790,9 @@ export default function SkeletonDemo() {
 ```
 
 2. 直接引用组件
-```js
-  import xxx from 'react-uni-comps/es/xxx'
-```
 
+```js
+import xxx from 'react-uni-comps/es/xxx';
+```
 
 持续其他组件...
