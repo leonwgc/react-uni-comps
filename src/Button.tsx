@@ -54,7 +54,7 @@ const StyledButton = styled.button`
     background-color: #fff;
     border-color: ${colors.border};
 
-    :hover {
+    ${isMobile() ? '&:active' : '&:hover'} {
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
     }
