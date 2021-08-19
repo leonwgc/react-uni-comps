@@ -35,3 +35,5 @@ export const offset = (el: HTMLElement | null): { top: number; left: number } =>
 
   return { top, left };
 };
+
+export const isBrowser = !!(typeof window !== 'undefined' && window);

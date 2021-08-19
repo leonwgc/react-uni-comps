@@ -7,11 +7,13 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 
 const StyledPullupContainer = styled.div`
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  &.div-scroll {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 
-  &::-webkit-scrollbar {
-    display: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   > .uc-pullup-footer {
@@ -30,7 +32,7 @@ function isInViewport(el: HTMLElement, container: HTMLElement) {
   } else {
     const brc = container.getBoundingClientRect();
 
-    return bottom < brc.bottom && top > brc.top;
+    return bottom <= brc.bottom && top >= brc.top;
   }
 }
 
@@ -43,6 +45,7 @@ export type Props = {
   loadingText?: React.ReactNode /** 加载中提示 */;
   style?: React.CSSProperties /** 容器 style */;
   className?: string /** 容器 class */;
+  useWindowScroll?: false /** 使用window滚动，默认false,使用div  */;
 };
 
 /** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
@@ -60,20 +63,22 @@ const Pullup = (props: Props): React.ReactNode => {
     finishedText = '我是有底线的~',
     finished = false,
     className,
+    useWindowScroll = false,
     ...restProps
   } = props;
 
   const [loading, setLoading] = useState(false);
   const ref = useRef();
   const wrapRef = useRef();
-  const isAtBottom = useInViewport(ref, wrapRef, { rootMargin: '0px 0px 0px 0px' });
+  const isAtBottom = useInViewport(ref, useWindowScroll ? null : wrapRef);
   const lastIsAtBottom = usePrevious(isAtBottom);
 
   useEffect(() => {
     if (
       !loading &&
       !finished &&
-      ((!lastIsAtBottom && isAtBottom) || isInViewport(ref.current, wrapRef.current))
+      ((!lastIsAtBottom && isAtBottom) ||
+        isInViewport(ref.current, useWindowScroll ? null : wrapRef.current))
     ) {
       setLoading(true);
       fetchData()
@@ -84,11 +89,11 @@ const Pullup = (props: Props): React.ReactNode => {
           setLoading(false);
         });
     }
-  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
+  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
 
   return (
     <StyledPullupContainer
-      className={clsx('uc-pullup-container', className)}
+      className={clsx('uc-pullup-container', className, { 'div-scroll': !useWindowScroll })}
       ref={wrapRef}
       {...restProps}
     >
@@ -97,11 +102,10 @@ const Pullup = (props: Props): React.ReactNode => {
           return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
         })}
       </div>
-
+      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={ref}></span>
       <div className="uc-pullup-footer">
         {loading ? loadingText : finished ? finishedText : null}
       </div>
-      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={ref}></span>
     </StyledPullupContainer>
   );
 };
