@@ -120,6 +120,7 @@ export default function App() {
       )}
 
       <FileInputTrigger
+        accept="image/*"
         onChange={(files) => {
           setFiles(files);
         }}

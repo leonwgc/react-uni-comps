@@ -8,6 +8,7 @@ export type Props = {
   onChange?: (files: FileList) => void;
   disabled?: false;
   multiple?: false;
+  capture?: 'user' | 'environment';
   style?: React.CSSProperties;
   className?: string;
 } & React.HTMLAttributes<HTMLInputElement>;
@@ -26,7 +27,7 @@ const StyledFileInputTrigger = styled.div`
 /** input file trigger */
 const FileInputTrigger = (props: Props): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>();
-  const { onChange, disabled, multiple, accept, children, className, ...rest } = props;
+  const { onChange, disabled, multiple, accept, capture, children, className, ...rest } = props;
 
   return (
     <StyledFileInputTrigger
@@ -43,6 +44,7 @@ const FileInputTrigger = (props: Props): React.ReactElement => {
         ref={inputRef}
         accept={accept}
         multiple={multiple}
+        capture={capture}
         disabled={disabled}
         onChange={(e) => {
           e.preventDefault();
