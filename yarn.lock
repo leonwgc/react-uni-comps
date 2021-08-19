@@ -11387,6 +11387,14 @@ xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/xdg-basedir/download/xdg-basedir-3.0.0.tgz?cache=0&sync_timestamp=1617611782885&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fxdg-basedir%2Fdownload%2Fxdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
 
+xhr-fetch-lib@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/xhr-fetch-lib/-/xhr-fetch-lib-1.2.1.tgz#1690f690e713ecb7cadb39984b7ed78c526b50ba"
+  integrity sha512-FauxpsGjqW47Pkr4p69bkc23hKEUF+VyLQzW0AMJehEtf46lN/E/+5tll4eG0rBXlFuy+n4RLKMXoilUAS3mcg==
+  dependencies:
+    json-bigint "^1.0.0"
+    qs "^6.10.1"
+
 xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.nlark.com/xtend/download/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"

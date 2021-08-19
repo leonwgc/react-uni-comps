@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Space, Switch, FileInputTrigger, Button } from '../src';
+import { Space, FileInputTrigger, Button } from '../src';
 import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import clsx from 'clsx';
+import { upload } from 'xhr-fetch-lib';
 import './Upload.less';
 
 function getBase64(file) {
@@ -59,8 +60,23 @@ export default function App() {
         <FileInputTrigger
           accept="images/*"
           onChange={(files) => {
-            console.log(files);
             setFiles(files);
+            const file = files[0];
+
+            upload(
+              'https://t-api.xxx.com/api/customer/v2/attach/upload4NoLogin',
+              {
+                storeType: 'I',
+                type: '29',
+                creator: 'system',
+              },
+              file
+            ).then(({ responseText }) => {
+              try {
+                const res = JSON.parse(responseText);
+                setUrl(res.result[0].href);
+              } catch (ex) {}
+            });
           }}
         >
           <StyledImageUpload>+</StyledImageUpload>
@@ -94,7 +110,6 @@ export default function App() {
           <FileInputTrigger
             accept="images/*"
             onChange={(files) => {
-              console.log(files);
               setFiles(files);
             }}
           >
@@ -103,6 +118,14 @@ export default function App() {
           <div>上传图片</div>
         </div>
       )}
+
+      <FileInputTrigger
+        onChange={(files) => {
+          setFiles(files);
+        }}
+      >
+        <Button type="primary">trigger upload</Button>
+      </FileInputTrigger>
     </Space>
   );
 }
