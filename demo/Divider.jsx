@@ -38,7 +38,13 @@ export default function App() {
         ista probare, quae sunt a te dicta? Refert tamen, quo modo.
       </p>
       <div>
-        <Waypoint onEnter={() => console.log('entered')} onLeave={() => console.log('leaved')} />
+        <Waypoint
+          onEnter={(el) => {
+            console.log('entered');
+            console.log(el.getBoundingClientRect());
+          }}
+          onLeave={() => console.log('leaved')}
+        />
         <>
           Text
           <Divider type="vertical" />

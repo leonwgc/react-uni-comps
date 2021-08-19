@@ -4,22 +4,22 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 
 export type Props = {
-  onEnter?: () => void;
-  onLeave?: () => void;
+  onEnter?: (el: HTMLSpanElement) => void;
+  onLeave?: (el: HTMLSpanElement) => void;
 };
 
 /** waypoint 路标 */
-const Waypoint = (props: Props): React.ReactNode => {
-  const ref = useRef<HTMLInputElement>();
+const Waypoint = (props: Props): React.ReactElement => {
+  const ref = useRef<HTMLSpanElement>();
   const visible = useInViewport(ref);
   const { onEnter, onLeave } = props;
 
   useEffect(() => {
     if (visible === true && typeof onEnter === 'function') {
-      onEnter();
+      onEnter(ref.current);
     }
     if (visible === false && typeof onLeave === 'function') {
-      onLeave();
+      onLeave(ref.current);
     }
   }, [visible, onEnter, onLeave]);
 
