@@ -8,6 +8,7 @@ export declare type Props = {
     loadingText?: React.ReactNode /** 加载中提示 */;
     style?: React.CSSProperties /** 容器 style */;
     className?: string /** 容器 class */;
+    useWindowScroll?: boolean /** 使用window滚动，默认true,设置为false请给Pullup组件加个固定高度  */;
 };
 /** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
 declare const Pullup: (props: Props) => React.ReactNode;

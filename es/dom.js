@@ -34,3 +34,7 @@ export var offset = function offset(el) {
     left: left
   };
 };
+export var isBrowser = !!(typeof window !== 'undefined' && window);
+export var isMobile = function isMobile() {
+  return /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+};

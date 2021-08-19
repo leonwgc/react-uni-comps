@@ -397,6 +397,9 @@ var detectFlexGapSupported = function detectFlexGapSupported() {
   document.body.removeChild(flex);
   return flexGapSupported;
 };
+var isMobile = function isMobile() {
+  return /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+};
 
 var _excluded = ["size", "align", "className", "children", "direction", "split", "style", "wrap"];
 
@@ -804,10 +807,10 @@ var Spinner = function Spinner(_ref) {
   });
 };
 
-var _excluded$3 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className"];
+var _excluded$3 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
 var _templateObject$3;
-var StyledPullupContainer = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  overflow-y: scroll;\n  -webkit-overflow-scrolling: touch;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  &.div-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -818,7 +821,7 @@ function isInViewport(el, container) {
     return bottom >= 0 && top < window.innerHeight;
   } else {
     var brc = container.getBoundingClientRect();
-    return bottom < brc.bottom && top > brc.top;
+    return bottom <= brc.bottom && top >= brc.top;
   }
 }
 
@@ -838,6 +841,8 @@ var Pullup = function Pullup(props) {
       _props$finished = props.finished,
       finished = _props$finished === void 0 ? false : _props$finished,
       className = props.className,
+      _props$useWindowScrol = props.useWindowScroll,
+      useWindowScroll = _props$useWindowScrol === void 0 ? true : _props$useWindowScrol,
       restProps = _objectWithoutProperties(props, _excluded$3);
 
   var _useState = React.useState(false),
@@ -847,12 +852,10 @@ var Pullup = function Pullup(props) {
 
   var ref = React.useRef();
   var wrapRef = React.useRef();
-  var isAtBottom = useInViewport__default['default'](ref, wrapRef, {
-    rootMargin: '0px 0px 0px 0px'
-  });
+  var isAtBottom = useInViewport__default['default'](ref, useWindowScroll ? null : wrapRef);
   var lastIsAtBottom = usePrevious__default['default'](isAtBottom);
   React.useEffect(function () {
-    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(ref.current, wrapRef.current))) {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(ref.current, useWindowScroll ? null : wrapRef.current))) {
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
@@ -860,9 +863,11 @@ var Pullup = function Pullup(props) {
         setLoading(false);
       });
     }
-  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom]);
+  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
   return /*#__PURE__*/React__default['default'].createElement(StyledPullupContainer, _extends({
-    className: clsx__default['default']('uc-pullup-container', className),
+    className: clsx__default['default']('uc-pullup-container', className, {
+      'div-scroll': !useWindowScroll
+    }),
     ref: wrapRef
   }, restProps), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-pullup-wrapper"
@@ -870,16 +875,15 @@ var Pullup = function Pullup(props) {
     return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
       key: idx
     }, dataRender(item, idx));
-  })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-pullup-footer"
-  }, loading ? loadingText : finished ? finishedText : null), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-pullup-line",
-    ref: ref,
+  })), /*#__PURE__*/React__default['default'].createElement("span", {
+    className: "uc-pullup-waypoint",
     style: {
-      visibility: 'hidden',
-      height: 1
-    }
-  }));
+      fontSize: 0
+    },
+    ref: ref
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "uc-pullup-footer"
+  }, loading ? loadingText : finished ? finishedText : null));
 };
 
 var _excluded$4 = ["position", "color"];
@@ -1309,7 +1313,7 @@ var Checkbox = function Checkbox(props) {
 var _excluded$8 = ["color", "type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
 var _templateObject$a;
-var StyledButton = styled__default['default'].button(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    &:hover {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, function (_ref) {
+var StyledButton = styled__default['default'].button(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
@@ -1321,7 +1325,7 @@ var StyledButton = styled__default['default'].button(_templateObject$a || (_temp
 }, function (_ref4) {
   var color = _ref4.color;
   return color;
-}, function (_ref5) {
+}, isMobile() ? '&:active' : '&:hover', function (_ref5) {
   var color = _ref5.color;
   return Color__default['default'](color).lighten(0.16).hex();
 }, function (_ref6) {
@@ -1501,12 +1505,84 @@ var Divider = function Divider(props) {
   }, children) : null);
 };
 
+var _excluded$b = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
+
+var _templateObject$d;
+var StyledFileInputTrigger = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
+/** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
+
+var FileInputTrigger = function FileInputTrigger(props) {
+  var inputRef = React.useRef();
+
+  var _onChange = props.onChange,
+      disabled = props.disabled,
+      multiple = props.multiple,
+      accept = props.accept,
+      capture = props.capture,
+      children = props.children,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$b);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({
+    onClick: function onClick() {
+      inputRef.current.value = '';
+      inputRef.current.click();
+    },
+    className: clsx__default['default']('uc-file-input-trigger', className, {
+      disabled: disabled
+    })
+  }, rest), /*#__PURE__*/React__default['default'].createElement("input", {
+    style: {
+      display: 'none'
+    },
+    type: "file",
+    ref: inputRef,
+    accept: accept,
+    multiple: multiple,
+    capture: capture,
+    disabled: disabled,
+    onChange: function onChange(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.target.files && typeof _onChange === 'function') {
+        _onChange(e.target.files);
+      }
+    }
+  }), children);
+};
+
+/** waypoint 路标 */
+var Waypoint = function Waypoint(props) {
+  var ref = React.useRef();
+  var visible = useInViewport__default['default'](ref);
+  var onEnter = props.onEnter,
+      onLeave = props.onLeave;
+  React.useEffect(function () {
+    if (visible === true && typeof onEnter === 'function') {
+      onEnter(ref.current);
+    }
+
+    if (visible === false && typeof onLeave === 'function') {
+      onLeave(ref.current);
+    }
+  }, [visible, onEnter, onLeave]);
+  return /*#__PURE__*/React__default['default'].createElement("span", {
+    "data-role": "waypoint",
+    style: {
+      fontSize: 0
+    },
+    ref: ref
+  });
+};
+
 exports.AnimationElement = AnimationElement;
 exports.Button = Button;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.Divider = Divider;
 exports.ErrorBoundary = ErrorBoundary;
+exports.FileInputTrigger = FileInputTrigger;
 exports.HairLineBox = HairLineBox;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
@@ -1520,3 +1596,4 @@ exports.Switch = Switch;
 exports.Tabs = Tabs;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
+exports.Waypoint = Waypoint;
