@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Pullup } from '../src';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
-const pageSize = 10;
+const pageSize = 30;
 
 const App = () => {
   const [list, setList] = useState([]);
@@ -31,7 +31,6 @@ const App = () => {
 
   return (
     <Pullup
-      useWindowScroll={true}
       // dom滚动需要设置高度
       // style={{ height: '80vh' }}
       dataList={list}

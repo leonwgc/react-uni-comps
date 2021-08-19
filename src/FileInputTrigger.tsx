@@ -24,7 +24,7 @@ const StyledFileInputTrigger = styled.div`
   }
 `;
 
-/** input file trigger */
+/** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
 const FileInputTrigger = (props: Props): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>();
   const { onChange, disabled, multiple, accept, capture, children, className, ...rest } = props;
