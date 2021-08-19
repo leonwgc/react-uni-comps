@@ -2,6 +2,7 @@ import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
+import { isMobile } from './dom';
 import Color from 'color';
 
 export type Props = {
@@ -63,7 +64,7 @@ const StyledButton = styled.button`
     border-color: ${({ color }) => color};
     color: #fff;
 
-    &:hover {
+    ${isMobile() ? '&:active' : '&:hover'} {
       background-color: ${({ color }) => Color(color).lighten(0.16).hex()};
     }
 
