@@ -61,6 +61,10 @@ const routes = [
     path: '/divider',
     component: lazy(() => import('./Divider')),
   },
+  {
+    path: '/upload',
+    component: lazy(() => import('./Upload')),
+  },
 ];
 
 export default routes;

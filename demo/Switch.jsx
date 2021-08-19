@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Space, Switch, Upload } from '../src';
+import { Space, Switch, FileInputTrigger } from '../src';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
@@ -44,7 +44,7 @@ export default function App() {
         <Switch disabled color="#00bc8d" defaultChecked />
       </Space>
 
-      <Upload
+      <FileInputTrigger
         accept="images/*"
         onChange={(files) => {
           console.log(files);
@@ -82,7 +82,7 @@ export default function App() {
           </div>
         ) : null}
         {files.length ? <img src={url} /> : <PlusOutlined />}
-      </Upload>
+      </FileInputTrigger>
     </StyledContent>
   );
 }

@@ -5,39 +5,36 @@ import { useRef } from 'react';
 
 export type Props = {
   accept?: string;
-  onChange: (files: FileList) => void;
-  disabled: false;
-  multiple: false;
+  onChange?: (files: FileList) => void;
+  disabled?: false;
+  multiple?: false;
   style?: React.CSSProperties;
   className?: string;
 } & React.HTMLAttributes<HTMLInputElement>;
 
-const StyledUploadContainer = styled.div`
+const StyledFileInputTrigger = styled.div`
   position: relative;
+  display: inline-block;
+  vertical-align: middle;
 
   &.disabled {
     opacity: 0.4;
     cursor: not-allowed;
   }
-
-  img {
-    max-width: 100%;
-    object-fit: contain;
-  }
 `;
 
-/** file upload */
-const Upload = (props: Props): React.ReactElement => {
+/** input file trigger */
+const FileInputTrigger = (props: Props): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>();
   const { onChange, disabled, multiple, accept, children, className, ...rest } = props;
 
   return (
-    <StyledUploadContainer
+    <StyledFileInputTrigger
       onClick={() => {
         inputRef.current.value = '';
         inputRef.current.click();
       }}
-      className={clsx(className, { disabled: disabled })}
+      className={clsx('uc-file-input-trigger', className, { disabled: disabled })}
       {...rest}
     >
       <input
@@ -56,8 +53,8 @@ const Upload = (props: Props): React.ReactElement => {
         }}
       />
       {children}
-    </StyledUploadContainer>
+    </StyledFileInputTrigger>
   );
 };
 
-export default Upload;
+export default FileInputTrigger;
