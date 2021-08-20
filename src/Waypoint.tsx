@@ -22,7 +22,7 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
     if (visible === false && typeof onLeave === 'function') {
       onLeave();
     }
-  }, [visible, onEnter, onLeave, spanRef]);
+  }, [visible, onEnter, onLeave]);
 
   return <span data-role="waypoint" style={{ fontSize: 0 }} ref={spanRef}></span>;
 });
