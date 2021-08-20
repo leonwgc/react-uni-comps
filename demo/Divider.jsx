@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Divider, Waypoint } from '../src';
 
 export default function App() {
+  const ref = useRef();
+
   return (
     <div>
       <p>
@@ -39,11 +41,14 @@ export default function App() {
       </p>
       <div>
         <Waypoint
-          onEnter={(el) => {
+          ref={ref}
+          onEnter={() => {
             console.log('entered');
-            console.log(el.getBoundingClientRect());
+            console.log(ref.current);
           }}
-          onLeave={() => console.log('leaved')}
+          onLeave={() => {
+            console.log('leaved');
+          }}
         />
         <>
           Text
