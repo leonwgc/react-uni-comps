@@ -65,6 +65,10 @@ const routes = [
     path: '/upload',
     component: lazy(() => import('./Upload')),
   },
+  {
+    path: '/waypoint',
+    component: lazy(() => import('./Waypoint')),
+  },
 ];
 
 export default routes;
