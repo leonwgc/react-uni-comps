@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
-import { useRef } from 'react';
-import { useEffect } from 'react';
 
 export type Props = {
   onVisible?: () => void /** 可见回调 */;
@@ -15,14 +13,17 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const visible = useInViewport(spanRef);
   const { onVisible, onInVisible } = props;
 
+  const vv = useRef(onVisible);
+  const vi = useRef(onInVisible);
+
   useEffect(() => {
-    if (visible === true && typeof onVisible === 'function') {
-      onVisible();
+    if (visible === true && typeof vv.current === 'function') {
+      vv.current();
     }
-    if (visible === false && typeof onInVisible === 'function') {
-      onInVisible();
+    if (visible === false && typeof vi.current === 'function') {
+      vi.current();
     }
-  }, [visible, onVisible, onInVisible]);
+  }, [visible]);
 
   return <span data-role="waypoint" style={{ fontSize: 0 }} ref={spanRef}></span>;
 });
