@@ -19,7 +19,9 @@ type Item = {
 };
 
 export type Props = {
-  color?: string /** hilight颜色 */;
+  /** hilight颜色 */
+  color?: string;
+  /** 数据 */
   data: Item[];
 };
 

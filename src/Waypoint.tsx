@@ -2,8 +2,10 @@ import React, { useRef, useEffect, HTMLAttributes } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
 export type Props = {
-  onVisible?: (el: HTMLElement) => void /** 可见回调 */;
-  onInVisible?: (el: HTMLElement) => void /** 不可见回调 */;
+  /** 可见回调 */
+  onVisible?: (el: HTMLElement) => void;
+  /** 不可见回调 */
+  onInVisible?: (el: HTMLElement) => void;
 } & HTMLAttributes<HTMLSpanElement>;
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
