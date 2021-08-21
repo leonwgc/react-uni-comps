@@ -4,25 +4,25 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 
 export type Props = {
-  onEnter?: () => void;
-  onLeave?: () => void;
+  onVisible?: () => void;
+  onHidden?: () => void;
 };
 
-/** waypoint 路标 */
+/** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onHidden回调 */
 const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const innerRef = useRef<HTMLElement>();
   const spanRef = ref || innerRef;
   const visible = useInViewport(spanRef);
-  const { onEnter, onLeave } = props;
+  const { onVisible, onHidden } = props;
 
   useEffect(() => {
-    if (visible === true && typeof onEnter === 'function') {
-      onEnter();
+    if (visible === true && typeof onVisible === 'function') {
+      onVisible();
     }
-    if (visible === false && typeof onLeave === 'function') {
-      onLeave();
+    if (visible === false && typeof onHidden === 'function') {
+      onHidden();
     }
-  }, [visible, onEnter, onLeave]);
+  }, [visible, onVisible, onHidden]);
 
   return <span data-role="waypoint" style={{ fontSize: 0 }} ref={spanRef}></span>;
 });
