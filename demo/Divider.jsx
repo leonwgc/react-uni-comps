@@ -30,7 +30,19 @@ export default function App() {
       <Divider textPosition="left">Hello left</Divider>
       <Divider textPosition="right">Hello right</Divider>
       <Divider>
-        <span style={{ fontWeight: 500, fontSize: 16 }}>Hello</span>
+        <span style={{ fontWeight: 500, fontSize: 16 }}>
+          Hello waypoint
+          <Waypoint
+            ref={ref}
+            onVisible={() => {
+              console.log('visible');
+              console.log(ref.current);
+            }}
+            onInVisible={() => {
+              console.log('not visible');
+            }}
+          />
+        </span>
       </Divider>
       <Divider dashed style={{ margin: '10px 0' }}>
         <span style={{ fontWeight: 500, fontSize: 16 }}>Hello</span>
@@ -40,16 +52,6 @@ export default function App() {
         ista probare, quae sunt a te dicta? Refert tamen, quo modo.
       </p>
       <div>
-        <Waypoint
-          ref={ref}
-          onEnter={() => {
-            console.log('entered');
-            console.log(ref.current);
-          }}
-          onLeave={() => {
-            console.log('leaved');
-          }}
-        />
         <>
           Text
           <Divider type="vertical" />
