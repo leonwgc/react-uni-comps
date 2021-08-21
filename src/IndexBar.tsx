@@ -23,6 +23,8 @@ export type Props = {
   color?: string;
   /** 数据 */
   data: Item[];
+  /** 点击数据项回调 */
+  onChange?: (item: Omit<Item, 'subItems'>) => void;
 };
 
 const StyledContainer = styled.div<{ color: string }>`
@@ -110,7 +112,8 @@ const renderItem = (
   index: number,
   activeIndex: number,
   setIndex,
-  containerRef: MutableRefObject<HTMLElement>
+  containerRef: MutableRefObject<HTMLElement>,
+  onChange
 ) => {
   const { label, subItems = [] } = item;
   return (
@@ -134,7 +137,16 @@ const renderItem = (
         />
       </dt>
       {subItems.map((item, idx) => (
-        <dt className="bar-item" key={idx} data-value={item.value}>
+        <dt
+          className="bar-item"
+          onClick={() => {
+            if (typeof onChange === 'function') {
+              onChange(item);
+            }
+          }}
+          key={idx}
+          data-value={item.value}
+        >
           {item.label}
         </dt>
       ))}
@@ -144,13 +156,13 @@ const renderItem = (
 
 /** 索引列表 */
 const IndexBar = (props: Props): React.ReactElement => {
-  const { data = [], color = colors.primary } = props;
+  const { data = [], color = colors.primary, onChange } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
 
   return (
     <StyledContainer className={clsx('uc-indexbar')} color={color} ref={ref}>
-      <dl>{data.map((item, idx) => renderItem(item, idx, index, setIndex, ref))}</dl>
+      <dl>{data.map((item, idx) => renderItem(item, idx, index, setIndex, ref, onChange))}</dl>
       <div className="uc-indexbar-side">
         {data.map((item, idx) => (
           <div
