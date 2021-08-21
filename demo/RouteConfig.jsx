@@ -69,6 +69,10 @@ const routes = [
     path: '/waypoint',
     component: lazy(() => import('./Waypoint')),
   },
+  {
+    path: '/indexBar',
+    component: lazy(() => import('./IndexBar')),
+  },
 ];
 
 export default routes;

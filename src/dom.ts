@@ -39,3 +39,30 @@ export const offset = (el: HTMLElement | null): { top: number; left: number } =>
 export const isBrowser = !!(typeof window !== 'undefined' && window);
 
 export const isMobile = (): boolean => /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+
+/**
+ *
+ * 判断是否支持某个css属性
+ * @param {string} prop
+ * @return {*}  {boolean}
+ */
+export const isSupportStyleProp = (prop: string): boolean => {
+  return prop && prop in document.documentElement.style;
+};
+/**
+ * 判断是否支持某个css属性的值，比如position: sticky
+ *
+ * @param {*} prop
+ * @param {*} value
+ * @return {*}
+ */
+export const isSupportStyleValue = (prop: string, value: string): boolean => {
+  if (isSupportStyleProp(prop)) {
+    const d = document.createElement('div');
+    d.style[prop] = value;
+
+    return !!d.style[prop];
+  }
+
+  return false;
+};
