@@ -73,6 +73,14 @@ const routes = [
     path: '/indexBar',
     component: lazy(() => import('./IndexBar')),
   },
+  {
+    path: '/slide',
+    component: lazy(() => import('./Slide')),
+  },
+  {
+    path: '/slide-full',
+    component: lazy(() => import('./SlideFull')),
+  },
 ];
 
 export default routes;
