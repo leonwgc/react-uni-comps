@@ -27,14 +27,13 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var innerRef = useRef();
-  var spanRef = ref || innerRef;
-  var visible = useInViewport(spanRef);
+  var wpRef = useRef();
+  var visible = useInViewport(wpRef);
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
@@ -43,20 +42,29 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var vv = useRef(onVisible);
   var vi = useRef(onInVisible);
   useEffect(function () {
+    vv.current = onVisible;
+  }, [onVisible]);
+  useEffect(function () {
+    vi.current = onInVisible;
+  }, [onInVisible]);
+  useEffect(function () {
     if (visible === true && typeof vv.current === 'function') {
-      vv.current(spanRef.current);
+      vv.current(wpRef.current);
     }
 
     if (visible === false && typeof vi.current === 'function') {
-      vi.current(spanRef.current);
+      vi.current(wpRef.current);
     }
-  }, [visible, spanRef]);
+  }, [visible]);
+  useImperativeHandle(ref, function () {
+    return wpRef.current;
+  });
   return /*#__PURE__*/React.createElement("span", __assign({
     "data-role": "waypoint",
     style: {
       fontSize: 0
     },
-    ref: spanRef
+    ref: wpRef
   }, rest));
 });
 Waypoint.displayName = 'uc-waypoint';

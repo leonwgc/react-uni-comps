@@ -1633,9 +1633,8 @@ var _excluded$c = ["onVisible", "onInVisible"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var innerRef = React.useRef();
-  var spanRef = ref || innerRef;
-  var visible = useInViewport__default['default'](spanRef);
+  var wpRef = React.useRef();
+  var visible = useInViewport__default['default'](wpRef);
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
@@ -1644,20 +1643,29 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var vv = React.useRef(onVisible);
   var vi = React.useRef(onInVisible);
   React.useEffect(function () {
+    vv.current = onVisible;
+  }, [onVisible]);
+  React.useEffect(function () {
+    vi.current = onInVisible;
+  }, [onInVisible]);
+  React.useEffect(function () {
     if (visible === true && typeof vv.current === 'function') {
-      vv.current(spanRef.current);
+      vv.current(wpRef.current);
     }
 
     if (visible === false && typeof vi.current === 'function') {
-      vi.current(spanRef.current);
+      vi.current(wpRef.current);
     }
-  }, [visible, spanRef]);
+  }, [visible]);
+  React.useImperativeHandle(ref, function () {
+    return wpRef.current;
+  });
   return /*#__PURE__*/React__default['default'].createElement("span", _extends({
     "data-role": "waypoint",
     style: {
       fontSize: 0
     },
-    ref: spanRef
+    ref: wpRef
   }, rest));
 });
 Waypoint.displayName = 'uc-waypoint';
@@ -1850,30 +1858,28 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
         onPageChangeRef.current(page["page".concat(scrollX ? 'X' : 'Y')]);
       }
     });
-
-    if (ref) {
-      ref.current = {
-        goToPage: function goToPage(pageIndex) {
-          if (scrollX) {
-            bsRef.current.goToPage(pageIndex, 0);
-          } else {
-            bsRef.current.goToPage(0, pageIndex);
-          }
-        },
-        prev: function prev() {
-          return bsRef.current.prev();
-        },
-        next: function next() {
-          return bsRef.current.next();
-        },
-        bs: bsRef.current
-      };
-    }
-
     return function () {
-      return bsRef.current.destroy();
+      bsRef.current.destroy();
     };
-  }, [slide, direction, setPageIndex, ref]);
+  }, [slide, direction, setPageIndex]);
+  React.useImperativeHandle(ref, function () {
+    return {
+      goToPage: function goToPage(pageIndex) {
+        if (direction === 'horizontal') {
+          bsRef.current.goToPage(pageIndex, 0);
+        } else {
+          bsRef.current.goToPage(0, pageIndex);
+        }
+      },
+      prev: function prev() {
+        return bsRef.current.prev();
+      },
+      next: function next() {
+        return bsRef.current.next();
+      },
+      bs: bsRef.current
+    };
+  });
 
   var dotRender = function dotRender() {
     if (!showDot) return null;

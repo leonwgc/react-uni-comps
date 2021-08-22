@@ -39,7 +39,7 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useImperativeHandle } from 'react';
 import BScroll from '@better-scroll/core';
 import SlidePlugin from '@better-scroll/slide';
 import styled from 'styled-components';
@@ -116,30 +116,28 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
         onPageChangeRef.current(page["page" + (scrollX ? 'X' : 'Y')]);
       }
     });
-
-    if (ref) {
-      ref.current = {
-        goToPage: function goToPage(pageIndex) {
-          if (scrollX) {
-            bsRef.current.goToPage(pageIndex, 0);
-          } else {
-            bsRef.current.goToPage(0, pageIndex);
-          }
-        },
-        prev: function prev() {
-          return bsRef.current.prev();
-        },
-        next: function next() {
-          return bsRef.current.next();
-        },
-        bs: bsRef.current
-      };
-    }
-
     return function () {
-      return bsRef.current.destroy();
+      bsRef.current.destroy();
     };
-  }, [slide, direction, setPageIndex, ref]);
+  }, [slide, direction, setPageIndex]);
+  useImperativeHandle(ref, function () {
+    return {
+      goToPage: function goToPage(pageIndex) {
+        if (direction === 'horizontal') {
+          bsRef.current.goToPage(pageIndex, 0);
+        } else {
+          bsRef.current.goToPage(0, pageIndex);
+        }
+      },
+      prev: function prev() {
+        return bsRef.current.prev();
+      },
+      next: function next() {
+        return bsRef.current.next();
+      },
+      bs: bsRef.current
+    };
+  });
 
   var dotRender = function dotRender() {
     if (!showDot) return null;
