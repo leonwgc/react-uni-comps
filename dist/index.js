@@ -1774,13 +1774,13 @@ var IndexBar = function IndexBar(props) {
 
 IndexBar.displayName = 'uc-indexbar';
 
-var _excluded$d = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "dotRender", "className", "height", "style"];
+var _excluded$d = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
 
 var _templateObject$f;
-var StyledSlide = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n"])));
+var StyledSlide = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 
 /**  Slide */
-var Slide = function Slide(props) {
+var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$autoplay = props.autoplay,
       autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
       _props$loop = props.loop,
@@ -1793,15 +1793,16 @@ var Slide = function Slide(props) {
       _props$interval = props.interval,
       interval = _props$interval === void 0 ? 3000 : _props$interval,
       children = props.children,
-      dotRender = props.dotRender,
       className = props.className,
       _props$height = props.height,
       height = _props$height === void 0 ? 160 : _props$height,
       style = props.style,
+      _props$showDot = props.showDot,
+      showDot = _props$showDot === void 0 ? true : _props$showDot,
       rest = _objectWithoutProperties(props, _excluded$d);
 
-  var ref = React.useRef();
-  var slideRef = React.useRef();
+  var containerRef = React.useRef();
+  var bsRef = React.useRef();
   var onPageChangeRef = React.useRef(onPageChange);
 
   var _useState = React.useState(defaultPageIndex),
@@ -1832,7 +1833,7 @@ var Slide = function Slide(props) {
     BScroll__default['default'].use(SlidePlugin__default['default']);
     var scrollX = direction === 'horizontal';
     var scrollY = !scrollX;
-    slideRef.current = new BScroll__default['default'](ref.current, {
+    bsRef.current = new BScroll__default['default'](containerRef.current, {
       click: true,
       scrollX: scrollX,
       scrollY: scrollY,
@@ -1841,24 +1842,61 @@ var Slide = function Slide(props) {
       bounce: false,
       probeType: 3
     });
-    slideRef.current.on('slideWillChange', function (page) {
+    bsRef.current.on('slideWillChange', function (page) {
       setPageIndex(page["page".concat(scrollX ? 'X' : 'Y')]);
     });
-    slideRef.current.on('slidePageChanged', function (page) {
+    bsRef.current.on('slidePageChanged', function (page) {
       if (typeof onPageChangeRef.current === 'function') {
         onPageChangeRef.current(page["page".concat(scrollX ? 'X' : 'Y')]);
       }
     });
+
+    if (ref) {
+      ref.current = {
+        goToPage: function goToPage(pageIndex) {
+          if (scrollX) {
+            bsRef.current.goToPage(pageIndex, 0);
+          } else {
+            bsRef.current.goToPage(0, pageIndex);
+          }
+        },
+        prev: function prev() {
+          return bsRef.current.prev();
+        },
+        next: function next() {
+          return bsRef.current.next();
+        },
+        bs: bsRef.current
+      };
+    }
+
     return function () {
-      return slideRef.current.destroy();
+      return bsRef.current.destroy();
     };
-  }, [slide, direction, setPageIndex]);
+  }, [slide, direction, setPageIndex, ref]);
+
+  var dotRender = function dotRender() {
+    if (!showDot) return null;
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('uc-slide-dot-wrapper', {
+        vertial: direction === 'vertical'
+      })
+    }, React__default['default'].Children.map(children, function (c, idx) {
+      return /*#__PURE__*/React__default['default'].createElement("span", {
+        key: idx,
+        className: clsx__default['default']('dot', {
+          active: pageIndex === idx
+        })
+      });
+    }));
+  };
+
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     className: clsx__default['default']('uc-slide', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     }),
-    ref: ref
+    ref: containerRef
   }, rest), /*#__PURE__*/React__default['default'].createElement("div", null, React__default['default'].Children.map(children, function (c, idx) {
     return /*#__PURE__*/React__default['default'].cloneElement(c, {
       key: idx,
@@ -1867,8 +1905,9 @@ var Slide = function Slide(props) {
         height: height
       })
     });
-  })), dotRender ? dotRender(pageIndex) : null);
-};
+  })), dotRender());
+});
+Slide.displayName = 'uc-slide';
 
 exports.AnimationElement = AnimationElement;
 exports.Button = Button;

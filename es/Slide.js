@@ -44,10 +44,10 @@ import BScroll from '@better-scroll/core';
 import SlidePlugin from '@better-scroll/slide';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n"])));
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 /**  Slide */
 
-var Slide = function Slide(props) {
+var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.autoplay,
       autoplay = _a === void 0 ? true : _a,
       _b = props.loop,
@@ -60,20 +60,21 @@ var Slide = function Slide(props) {
       _e = props.interval,
       interval = _e === void 0 ? 3000 : _e,
       children = props.children,
-      dotRender = props.dotRender,
       className = props.className,
       _f = props.height,
       height = _f === void 0 ? 160 : _f,
       style = props.style,
-      rest = __rest(props, ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "dotRender", "className", "height", "style"]);
+      _g = props.showDot,
+      showDot = _g === void 0 ? true : _g,
+      rest = __rest(props, ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"]);
 
-  var ref = useRef();
-  var slideRef = useRef();
+  var containerRef = useRef();
+  var bsRef = useRef();
   var onPageChangeRef = useRef(onPageChange);
 
-  var _g = useState(defaultPageIndex),
-      pageIndex = _g[0],
-      setPageIndex = _g[1];
+  var _h = useState(defaultPageIndex),
+      pageIndex = _h[0],
+      setPageIndex = _h[1];
 
   var slide = useMemo(function () {
     var scrollX = direction === 'horizontal';
@@ -98,7 +99,7 @@ var Slide = function Slide(props) {
     BScroll.use(SlidePlugin);
     var scrollX = direction === 'horizontal';
     var scrollY = !scrollX;
-    slideRef.current = new BScroll(ref.current, {
+    bsRef.current = new BScroll(containerRef.current, {
       click: true,
       scrollX: scrollX,
       scrollY: scrollY,
@@ -107,24 +108,61 @@ var Slide = function Slide(props) {
       bounce: false,
       probeType: 3
     });
-    slideRef.current.on('slideWillChange', function (page) {
+    bsRef.current.on('slideWillChange', function (page) {
       setPageIndex(page["page" + (scrollX ? 'X' : 'Y')]);
     });
-    slideRef.current.on('slidePageChanged', function (page) {
+    bsRef.current.on('slidePageChanged', function (page) {
       if (typeof onPageChangeRef.current === 'function') {
         onPageChangeRef.current(page["page" + (scrollX ? 'X' : 'Y')]);
       }
     });
+
+    if (ref) {
+      ref.current = {
+        goToPage: function goToPage(pageIndex) {
+          if (scrollX) {
+            bsRef.current.goToPage(pageIndex, 0);
+          } else {
+            bsRef.current.goToPage(0, pageIndex);
+          }
+        },
+        prev: function prev() {
+          return bsRef.current.prev();
+        },
+        next: function next() {
+          return bsRef.current.next();
+        },
+        bs: bsRef.current
+      };
+    }
+
     return function () {
-      return slideRef.current.destroy();
+      return bsRef.current.destroy();
     };
-  }, [slide, direction, setPageIndex]);
+  }, [slide, direction, setPageIndex, ref]);
+
+  var dotRender = function dotRender() {
+    if (!showDot) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      className: clsx('uc-slide-dot-wrapper', {
+        vertial: direction === 'vertical'
+      })
+    }, React.Children.map(children, function (c, idx) {
+      return /*#__PURE__*/React.createElement("span", {
+        key: idx,
+        className: clsx('dot', {
+          active: pageIndex === idx
+        })
+      });
+    }));
+  };
+
   return /*#__PURE__*/React.createElement(StyledSlide, __assign({
     className: clsx('uc-slide', className),
     style: __assign(__assign({}, style), {
       height: height
     }),
-    ref: ref
+    ref: containerRef
   }, rest), /*#__PURE__*/React.createElement("div", null, React.Children.map(children, function (c, idx) {
     return /*#__PURE__*/React.cloneElement(c, {
       key: idx,
@@ -133,8 +171,8 @@ var Slide = function Slide(props) {
         height: height
       })
     });
-  })), dotRender ? dotRender(pageIndex) : null);
-};
-
+  })), dotRender());
+});
+Slide.displayName = 'uc-slide';
 export default Slide;
 var templateObject_1;
