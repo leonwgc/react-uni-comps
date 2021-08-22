@@ -7,6 +7,7 @@ import './Slide.less';
 export default function App() {
   const [autoplay, setAutoplay] = useState(true);
   const [loop, setLoop] = useState(true);
+  const [dot, setDot] = useState(true);
   const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
 
@@ -18,21 +19,11 @@ export default function App() {
         autoplay
         <Switch checked={loop} onChange={setLoop} />
         loop
+        <Switch checked={dot} onChange={setDot} />
+        showDot
       </Space>
       <Divider>ex.1</Divider>
-      <Slide
-        loop={loop}
-        autoplay={autoplay}
-        ref={ref}
-        onPageChange={console.log}
-        dotRender={(pageIndex) => (
-          <div className="dots-wrapper">
-            {[1, 2, 3, 4].map((item, idx) => (
-              <span key={idx} className={clsx('dot', { active: pageIndex === idx })}></span>
-            ))}
-          </div>
-        )}
-      >
+      <Slide loop={loop} autoplay={autoplay} showDot={dot} ref={ref} onPageChange={console.log}>
         {ar.map((item, idx) => (
           <div
             key={idx}
@@ -56,18 +47,7 @@ export default function App() {
         <Button onClick={() => console.log(ref.current.bs)}>instance</Button>
       </Space>
       <Divider>ex.2</Divider>
-      <Slide
-        direction="vertical"
-        defaultPageIndex={2}
-        dotRender={(pageIndex) => (
-          <div className={clsx('dots-wrapper', 'v')}>
-            {[1, 2, 3, 4].map((item, idx) => (
-              <span key={idx} className={clsx('dot', { active: pageIndex === idx })}></span>
-            ))}
-          </div>
-        )}
-        style={{ marginTop: 30, height: 200 }}
-      >
+      <Slide direction="vertical" defaultPageIndex={2} style={{ marginTop: 30, height: 200 }}>
         {ar.map((item, idx) => (
           <div key={idx} className={clsx('slide-page', 'v')} style={{ background: item }}>
             page {item}
