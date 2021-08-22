@@ -31,7 +31,15 @@ export type Props = {
 };
 
 /**  Slide */
-const Slide = (props: Props): React.ReactElement => {
+const Slide = React.forwardRef<
+  {
+    goToPage: (pageIndex: number) => void;
+    prev: () => void;
+    next: () => void;
+    bs: BScroll;
+  },
+  Props
+>((props, ref) => {
   const {
     autoplay = true,
     loop = true,
@@ -46,8 +54,8 @@ const Slide = (props: Props): React.ReactElement => {
     style,
     ...rest
   } = props;
-  const ref = useRef();
-  const slideRef = useRef<BScroll>();
+  const containerRef = useRef();
+  const bsRef = useRef<BScroll>();
   const onPageChangeRef = useRef(onPageChange);
   const [pageIndex, setPageIndex] = useState(defaultPageIndex);
 
@@ -77,7 +85,7 @@ const Slide = (props: Props): React.ReactElement => {
     const scrollX = direction === 'horizontal';
     const scrollY = !scrollX;
 
-    slideRef.current = new BScroll(ref.current, {
+    bsRef.current = new BScroll(containerRef.current, {
       click: true,
       scrollX,
       scrollY,
@@ -87,28 +95,43 @@ const Slide = (props: Props): React.ReactElement => {
       probeType: 3,
     });
 
-    slideRef.current.on('slideWillChange', (page) => {
+    bsRef.current.on('slideWillChange', (page) => {
       setPageIndex(page[`page${scrollX ? 'X' : 'Y'}`]);
     });
 
-    slideRef.current.on('slidePageChanged', (page) => {
+    bsRef.current.on('slidePageChanged', (page) => {
       if (typeof onPageChangeRef.current === 'function') {
         onPageChangeRef.current(page[`page${scrollX ? 'X' : 'Y'}`]);
       }
     });
 
-    return () => slideRef.current.destroy();
-  }, [slide, direction, setPageIndex]);
+    if (ref) {
+      ref.current = {
+        goToPage: (pageIndex) => {
+          if (scrollX) {
+            bsRef.current.goToPage(pageIndex, 0);
+          } else {
+            bsRef.current.goToPage(0, pageIndex);
+          }
+        },
+        prev: () => bsRef.current.prev(),
+        next: () => bsRef.current.next(),
+        bs: bsRef.current,
+      };
+    }
+
+    return () => bsRef.current.destroy();
+  }, [slide, direction, setPageIndex, ref]);
 
   return (
     <StyledSlide
       className={clsx('uc-slide', className)}
       style={{ ...style, height }}
-      ref={ref}
+      ref={containerRef}
       {...rest}
     >
       <div>
-        {React.Children.map(children, (c, idx) =>
+        {React.Children.map(children, (c: React.ReactElement, idx) =>
           React.cloneElement(c, {
             key: idx,
             className: clsx(c.props.className, 'uc-slide-page'),
@@ -119,6 +142,8 @@ const Slide = (props: Props): React.ReactElement => {
       {dotRender ? dotRender(pageIndex) : null}
     </StyledSlide>
   );
-};
+});
+
+Slide.displayName = 'uc-slide';
 
 export default Slide;

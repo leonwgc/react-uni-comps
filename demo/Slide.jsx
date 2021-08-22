@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Spinner, Slide, Switch, Space, Divider } from '../src';
+import { Spinner, Slide, Switch, Space, Divider, Button } from '../src';
 import clsx from 'clsx';
 import './Slide.less';
 
 export default function App() {
   const [autoplay, setAutoplay] = useState(true);
   const [loop, setLoop] = useState(true);
-
+  const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
 
   return (
@@ -23,6 +23,7 @@ export default function App() {
       <Slide
         loop={loop}
         autoplay={autoplay}
+        ref={ref}
         onPageChange={console.log}
         dotRender={(pageIndex) => (
           <div className="dots-wrapper">
@@ -43,6 +44,17 @@ export default function App() {
           </div>
         ))}
       </Slide>
+      <Space style={{ marginTop: 20 }}>
+        <Button type="primary" onClick={() => ref.current.prev()}>
+          Prev
+        </Button>
+        <Button onClick={() => ref.current.goToPage(0)}>First</Button>
+        <Button onClick={() => ref.current.goToPage(ar.length - 1)}>Last</Button>
+        <Button type="primary" onClick={() => ref.current.next()}>
+          Next
+        </Button>
+        <Button onClick={() => console.log(ref.current.bs)}>instance</Button>
+      </Space>
       <Divider>ex.2</Divider>
       <Slide
         direction="vertical"
