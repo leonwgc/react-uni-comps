@@ -82,16 +82,15 @@ export type Props = {
   showDot?: boolean;
 };
 
+interface RefType {
+  goToPage: (pageIndex: number) => void;
+  prev: () => void;
+  next: () => void;
+  bs: BScroll;
+}
+
 /**  Slide */
-const Slide = React.forwardRef<
-  {
-    goToPage: (pageIndex: number) => void;
-    prev: () => void;
-    next: () => void;
-    bs: BScroll;
-  },
-  Props
->((props, ref) => {
+const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const {
     autoplay = true,
     loop = true,
@@ -114,7 +113,7 @@ const Slide = React.forwardRef<
   const slide = useMemo(() => {
     const scrollX = direction === 'horizontal';
 
-    const options: SlideConfig = {
+    const options: Partial<SlideConfig> = {
       autoplay,
       loop,
       threshold: 0.1,

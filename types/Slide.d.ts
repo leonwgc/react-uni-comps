@@ -21,11 +21,12 @@ export declare type Props = {
     /** 是否显示分页圆点 */
     showDot?: boolean;
 };
-/**  Slide */
-declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<{
+interface RefType {
     goToPage: (pageIndex: number) => void;
     prev: () => void;
     next: () => void;
     bs: BScroll;
-}>>;
+}
+/**  Slide */
+declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<RefType>>;
 export default Slide;
