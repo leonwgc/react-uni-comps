@@ -12,6 +12,8 @@ var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
 var usePrevious = require('react-use-lib/es/usePrevious');
 var clsx = require('clsx');
 var Color = require('color');
+var BScroll = require('@better-scroll/core');
+var SlidePlugin = require('@better-scroll/slide');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -23,6 +25,8 @@ var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffec
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var Color__default = /*#__PURE__*/_interopDefaultLegacy(Color);
+var BScroll__default = /*#__PURE__*/_interopDefaultLegacy(BScroll);
+var SlidePlugin__default = /*#__PURE__*/_interopDefaultLegacy(SlidePlugin);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -248,8 +252,20 @@ function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
 
 function _iterableToArrayLimit(arr, i) {
@@ -299,8 +315,69 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+
+  if (!it) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = it.call(o);
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
 }
 
 var _templateObject, _templateObject2;
@@ -1552,28 +1629,245 @@ var FileInputTrigger = function FileInputTrigger(props) {
   }), children);
 };
 
-/** waypoint 路标 */
-var Waypoint = function Waypoint(props) {
-  var ref = React.useRef();
-  var visible = useInViewport__default['default'](ref);
-  var onEnter = props.onEnter,
-      onLeave = props.onLeave;
+var _excluded$c = ["onVisible", "onInVisible"];
+
+/** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
+var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var innerRef = React.useRef();
+  var spanRef = ref || innerRef;
+  var visible = useInViewport__default['default'](spanRef);
+
+  var onVisible = props.onVisible,
+      onInVisible = props.onInVisible,
+      rest = _objectWithoutProperties(props, _excluded$c);
+
+  var vv = React.useRef(onVisible);
+  var vi = React.useRef(onInVisible);
   React.useEffect(function () {
-    if (visible === true && typeof onEnter === 'function') {
-      onEnter(ref.current);
+    if (visible === true && typeof vv.current === 'function') {
+      vv.current(spanRef.current);
     }
 
-    if (visible === false && typeof onLeave === 'function') {
-      onLeave(ref.current);
+    if (visible === false && typeof vi.current === 'function') {
+      vi.current(spanRef.current);
     }
-  }, [visible, onEnter, onLeave]);
-  return /*#__PURE__*/React__default['default'].createElement("span", {
+  }, [visible, spanRef]);
+  return /*#__PURE__*/React__default['default'].createElement("span", _extends({
     "data-role": "waypoint",
     style: {
       fontSize: 0
     },
+    ref: spanRef
+  }, rest));
+});
+Waypoint.displayName = 'uc-waypoint';
+
+var _templateObject$e;
+// if (isBrowser && isSupportStyleValue('position', 'sticky')) {
+//   isSupportSticky = true;
+// }
+
+var StyledContainer = styled__default['default'].div(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  .uc-indexbar-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexbar-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n\n      &.active {\n        color: ", ";\n      }\n    }\n  }\n\n  .bar-title {\n    /* position: sticky; */\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      color: ", ";\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), function (_ref) {
+  var color = _ref.color;
+  return color;
+}, function (_ref2) {
+  var color = _ref2.color;
+  return color;
+});
+
+var setActiveIndex = function setActiveIndex(containerRef, setIndex) {
+  var els = _toConsumableArray(containerRef.current.querySelectorAll('.wp'));
+
+  var _iterator = _createForOfIteratorHelper(els),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var el = _step.value;
+
+      if (el.dataset.visible === '1') {
+        setIndex(Number(el.dataset.index));
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+};
+
+var renderItem = function renderItem(item, index, activeIndex, setIndex, containerRef, onChange) {
+  var label = item.label,
+      _item$subItems = item.subItems,
+      subItems = _item$subItems === void 0 ? [] : _item$subItems;
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
+    key: index
+  }, /*#__PURE__*/React__default['default'].createElement("dt", {
+    id: "index-bar-" + index,
+    className: clsx__default['default']('bar-title', {
+      active: activeIndex === index
+    })
+  }, label, /*#__PURE__*/React__default['default'].createElement(Waypoint, {
+    className: "wp",
+    "data-index": index,
+    onVisible: function onVisible(p) {
+      p.dataset.visible = '1';
+      setActiveIndex(containerRef, setIndex);
+    },
+    onInVisible: function onInVisible(p) {
+      p.dataset.visible = '0';
+      setActiveIndex(containerRef, setIndex);
+    }
+  })), subItems.map(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement("dt", {
+      className: "bar-item",
+      onClick: function onClick() {
+        if (typeof onChange === 'function') {
+          onChange(item);
+        }
+      },
+      key: idx,
+      "data-value": item.value
+    }, item.label);
+  }));
+};
+/** 索引列表 */
+
+
+var IndexBar = function IndexBar(props) {
+  var _props$data = props.data,
+      data = _props$data === void 0 ? [] : _props$data,
+      _props$color = props.color,
+      color = _props$color === void 0 ? primary : _props$color,
+      onChange = props.onChange;
+  var ref = React.useRef();
+
+  var _useState = React.useState(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      index = _useState2[0],
+      setIndex = _useState2[1];
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledContainer, {
+    className: clsx__default['default']('uc-indexbar'),
+    color: color,
     ref: ref
-  });
+  }, /*#__PURE__*/React__default['default'].createElement("dl", null, data.map(function (item, idx) {
+    return renderItem(item, idx, index, setIndex, ref, onChange);
+  })), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "uc-indexbar-side"
+  }, data.map(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('uc-indexbar-side-item', {
+        active: idx === index
+      }),
+      key: idx,
+      onClick: function onClick() {
+        var el = ref.current.querySelector('#index-bar-' + idx);
+        el.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    }, item.label);
+  })));
+};
+
+IndexBar.displayName = 'uc-indexbar';
+
+var _excluded$d = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "dotRender", "className", "height", "style"];
+
+var _templateObject$f;
+var StyledSlide = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n"])));
+
+/**  Slide */
+var Slide = function Slide(props) {
+  var _props$autoplay = props.autoplay,
+      autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
+      _props$loop = props.loop,
+      loop = _props$loop === void 0 ? true : _props$loop,
+      _props$defaultPageInd = props.defaultPageIndex,
+      defaultPageIndex = _props$defaultPageInd === void 0 ? 0 : _props$defaultPageInd,
+      onPageChange = props.onPageChange,
+      _props$direction = props.direction,
+      direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
+      _props$interval = props.interval,
+      interval = _props$interval === void 0 ? 3000 : _props$interval,
+      children = props.children,
+      dotRender = props.dotRender,
+      className = props.className,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 160 : _props$height,
+      style = props.style,
+      rest = _objectWithoutProperties(props, _excluded$d);
+
+  var ref = React.useRef();
+  var slideRef = React.useRef();
+  var onPageChangeRef = React.useRef(onPageChange);
+
+  var _useState = React.useState(defaultPageIndex),
+      _useState2 = _slicedToArray(_useState, 2),
+      pageIndex = _useState2[0],
+      setPageIndex = _useState2[1];
+
+  var slide = React.useMemo(function () {
+    var scrollX = direction === 'horizontal';
+    var options = {
+      autoplay: autoplay,
+      loop: loop,
+      threshold: 0.1,
+      speed: 300,
+      listenFlick: true,
+      interval: interval
+    };
+
+    if (scrollX) {
+      options.startPageXIndex = defaultPageIndex;
+    } else {
+      options.startPageYIndex = defaultPageIndex;
+    }
+
+    return options;
+  }, [autoplay, interval, loop, direction, defaultPageIndex]);
+  React.useEffect(function () {
+    BScroll__default['default'].use(SlidePlugin__default['default']);
+    var scrollX = direction === 'horizontal';
+    var scrollY = !scrollX;
+    slideRef.current = new BScroll__default['default'](ref.current, {
+      click: true,
+      scrollX: scrollX,
+      scrollY: scrollY,
+      slide: slide,
+      momentum: false,
+      bounce: false,
+      probeType: 3
+    });
+    slideRef.current.on('slideWillChange', function (page) {
+      setPageIndex(page["page".concat(scrollX ? 'X' : 'Y')]);
+    });
+    slideRef.current.on('slidePageChanged', function (page) {
+      if (typeof onPageChangeRef.current === 'function') {
+        onPageChangeRef.current(page["page".concat(scrollX ? 'X' : 'Y')]);
+      }
+    });
+    return function () {
+      return slideRef.current.destroy();
+    };
+  }, [slide, direction, setPageIndex]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
+    className: clsx__default['default']('uc-slide', className),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      height: height
+    }),
+    ref: ref
+  }, rest), /*#__PURE__*/React__default['default'].createElement("div", null, React__default['default'].Children.map(children, function (c, idx) {
+    return /*#__PURE__*/React__default['default'].cloneElement(c, {
+      key: idx,
+      className: clsx__default['default'](c.props.className, 'uc-slide-page'),
+      style: _objectSpread2(_objectSpread2({}, c.props.style), {}, {
+        height: height
+      })
+    });
+  })), dotRender ? dotRender(pageIndex) : null);
 };
 
 exports.AnimationElement = AnimationElement;
@@ -1584,12 +1878,14 @@ exports.Divider = Divider;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.HairLineBox = HairLineBox;
+exports.IndexBar = IndexBar;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
+exports.Slide = Slide;
 exports.Space = Space;
 exports.Spinner = Spinner;
 exports.Switch = Switch;

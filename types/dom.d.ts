@@ -5,3 +5,18 @@ export declare const offset: (el: HTMLElement | null) => {
 };
 export declare const isBrowser: boolean;
 export declare const isMobile: () => boolean;
+/**
+ *
+ * 判断是否支持某个css属性
+ * @param {string} prop
+ * @return {*}  {boolean}
+ */
+export declare const isSupportStyleProp: (prop: string) => boolean;
+/**
+ * 判断是否支持某个css属性的值，比如position: sticky
+ *
+ * @param {*} prop
+ * @param {*} value
+ * @return {*}
+ */
+export declare const isSupportStyleValue: (prop: string, value: string) => boolean;

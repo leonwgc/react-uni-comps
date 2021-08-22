@@ -19,3 +19,5 @@ export { default as ErrorBoundary } from './ErrorBoudary';
 export { default as Divider } from './Divider';
 export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
+export { default as IndexBar } from './IndexBar';
+export { default as Slide } from './Slide';
