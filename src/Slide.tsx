@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useImperativeHandle } from 'react';
 import BScroll from '@better-scroll/core';
 import SlidePlugin, { SlideConfig } from '@better-scroll/slide';
 import styled from 'styled-components';
@@ -156,23 +156,23 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
       }
     });
 
-    if (ref) {
-      ref.current = {
-        goToPage: (pageIndex) => {
-          if (scrollX) {
-            bsRef.current.goToPage(pageIndex, 0);
-          } else {
-            bsRef.current.goToPage(0, pageIndex);
-          }
-        },
-        prev: () => bsRef.current.prev(),
-        next: () => bsRef.current.next(),
-        bs: bsRef.current,
-      };
-    }
+    return () => {
+      bsRef.current.destroy();
+    };
+  }, [slide, direction, setPageIndex]);
 
-    return () => bsRef.current.destroy();
-  }, [slide, direction, setPageIndex, ref]);
+  useImperativeHandle(ref, () => ({
+    goToPage: (pageIndex) => {
+      if (direction === 'horizontal') {
+        bsRef.current.goToPage(pageIndex, 0);
+      } else {
+        bsRef.current.goToPage(0, pageIndex);
+      }
+    },
+    prev: () => bsRef.current.prev(),
+    next: () => bsRef.current.next(),
+    bs: bsRef.current,
+  }));
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;

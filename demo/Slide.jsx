@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div className="app">
       <Divider>controls no.1</Divider>
-      <Space>
+      <Space wrap>
         <Switch checked={autoplay} onChange={setAutoplay} />
         autoplay
         <Switch checked={loop} onChange={setLoop} />

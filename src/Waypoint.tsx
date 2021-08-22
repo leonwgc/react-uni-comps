@@ -19,6 +19,14 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const vi = useRef(onInVisible);
 
   useEffect(() => {
+    vv.current = onVisible;
+  }, [onVisible]);
+
+  useEffect(() => {
+    vi.current = onInVisible;
+  }, [onInVisible]);
+
+  useEffect(() => {
     if (visible === true && typeof vv.current === 'function') {
       vv.current(spanRef.current);
     }
