@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import BScroll from '@better-scroll/core';
-import SlidePlugin from '@better-scroll/slide';
+import SlidePlugin, { SlideConfig } from '@better-scroll/slide';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
@@ -26,13 +26,17 @@ export type Props = {
   height?: number | string;
   className?: string;
   style?: React.CSSProperties;
+  loop?: boolean;
+  onPageChange?: (pageIndex: number) => void;
 };
 
 /**  Slide */
 const Slide = (props: Props): React.ReactElement => {
   const {
     autoplay = true,
+    loop = true,
     defaultPageIndex = 0,
+    onPageChange,
     direction = 'horizontal',
     interval = 3000,
     children,
@@ -44,7 +48,28 @@ const Slide = (props: Props): React.ReactElement => {
   } = props;
   const ref = useRef();
   const slideRef = useRef<BScroll>();
+  const onPageChangeRef = useRef(onPageChange);
   const [pageIndex, setPageIndex] = useState(defaultPageIndex);
+
+  const slide = useMemo(() => {
+    const scrollX = direction === 'horizontal';
+
+    const options: SlideConfig = {
+      autoplay,
+      loop,
+      threshold: 0.1,
+      speed: 300,
+      listenFlick: true,
+      interval,
+    };
+    if (scrollX) {
+      options.startPageXIndex = defaultPageIndex;
+    } else {
+      options.startPageYIndex = defaultPageIndex;
+    }
+
+    return options;
+  }, [autoplay, interval, loop, direction, defaultPageIndex]);
 
   useEffect(() => {
     BScroll.use(SlidePlugin);
@@ -52,22 +77,8 @@ const Slide = (props: Props): React.ReactElement => {
     const scrollX = direction === 'horizontal';
     const scrollY = !scrollX;
 
-    const slide = {
-      autoplay: autoplay,
-      loop: true,
-      threshold: 0.1,
-      speed: 300,
-      listenFlick: false,
-      interval,
-    };
-
-    if (scrollX) {
-      slide.startPageXIndex = pageIndex;
-    } else {
-      slide.startPageYIndex = pageIndex;
-    }
-
     slideRef.current = new BScroll(ref.current, {
+      click: true,
       scrollX,
       scrollY,
       slide,
@@ -79,7 +90,15 @@ const Slide = (props: Props): React.ReactElement => {
     slideRef.current.on('slideWillChange', (page) => {
       setPageIndex(page[`page${scrollX ? 'X' : 'Y'}`]);
     });
-  }, []);
+
+    slideRef.current.on('slidePageChanged', (page) => {
+      if (typeof onPageChangeRef.current === 'function') {
+        onPageChangeRef.current(page[`page${scrollX ? 'X' : 'Y'}`]);
+      }
+    });
+
+    return () => slideRef.current.destroy();
+  }, [slide, direction, setPageIndex]);
 
   return (
     <StyledSlide
