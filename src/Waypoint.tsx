@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, HTMLAttributes } from 'react';
+import React, { useRef, useEffect, HTMLAttributes, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
 export type Props = {
@@ -10,9 +10,8 @@ export type Props = {
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
-  const innerRef = useRef<HTMLElement>();
-  const spanRef = ref || innerRef;
-  const visible = useInViewport(spanRef);
+  const wpRef = useRef<HTMLElement>();
+  const visible = useInViewport(wpRef);
   const { onVisible, onInVisible, ...rest } = props;
 
   const vv = useRef(onVisible);
@@ -28,14 +27,16 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   useEffect(() => {
     if (visible === true && typeof vv.current === 'function') {
-      vv.current(spanRef.current);
+      vv.current(wpRef.current);
     }
     if (visible === false && typeof vi.current === 'function') {
-      vi.current(spanRef.current);
+      vi.current(wpRef.current);
     }
-  }, [visible, spanRef]);
+  }, [visible]);
 
-  return <span data-role="waypoint" style={{ fontSize: 0 }} ref={spanRef} {...rest}></span>;
+  useImperativeHandle(ref, () => wpRef.current);
+
+  return <span data-role="waypoint" style={{ fontSize: 0 }} ref={wpRef} {...rest}></span>;
 });
 
 Waypoint.displayName = 'uc-waypoint';
