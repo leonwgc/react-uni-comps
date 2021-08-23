@@ -67,5 +67,5 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: wpRef
   }, rest));
 });
-Waypoint.displayName = 'uc-waypoint';
+Waypoint.displayName = 'UC-Waypoint';
 export default Waypoint;

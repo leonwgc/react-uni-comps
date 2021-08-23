@@ -171,6 +171,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   })), dotRender());
 });
-Slide.displayName = 'uc-slide';
+Slide.displayName = 'UC-Slide';
 export default Slide;
 var templateObject_1;

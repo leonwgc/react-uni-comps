@@ -72,6 +72,6 @@ var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }, style)
   }, rest));
 });
-SkeletonBase.displayName = 'uc-skeleton-base';
+SkeletonBase.displayName = 'UC-SkeletonBase';
 export default SkeletonBase;
 var templateObject_1;

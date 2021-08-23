@@ -100,6 +100,6 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }, className)
   }, rest), children);
 });
-Button.displayName = 'uc-button';
+Button.displayName = 'UC-Button';
 export default Button;
 var templateObject_1;

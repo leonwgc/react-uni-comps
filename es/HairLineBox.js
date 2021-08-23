@@ -63,6 +63,6 @@ var HairLineBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
     color: color
   }, rest));
 });
-HairLineBox.displayName = 'uc-hairline-box';
+HairLineBox.displayName = 'UC-HairLineBox';
 export default HairLineBox;
 var templateObject_1;
