@@ -21,3 +21,5 @@ export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
 export { default as IndexList } from './IndexList';
 export { default as Slide } from './Slide';
+export { default as ScrollTop } from './ScrollTop';
+export * from './helper';

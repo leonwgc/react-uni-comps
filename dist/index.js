@@ -1915,6 +1915,87 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Slide.displayName = 'UC-Slide';
 
+/** ScrollTo top */
+var ScrollTop = function ScrollTop(props) {
+  var children = props.children;
+  var top = 0;
+  return /*#__PURE__*/React__default['default'].cloneElement(children, {
+    onClick: function onClick() {
+      var step = Math.abs(window.pageYOffset - top) / 20;
+
+      var cb = function cb() {
+        if (window.pageYOffset > top) {
+          window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
+          requestAnimationFrame(cb);
+        }
+      };
+
+      requestAnimationFrame(cb);
+    }
+  });
+};
+
+ScrollTop.displayName = 'UC-ScrollTop';
+
+var debounce = function debounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+  var timer = 0;
+  return function a() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var that = this;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+    }, timeout);
+  };
+};
+var throttle = function throttle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var start = 0;
+  var timer = 0;
+
+  var ensureExecute = function ensureExecute(now, args, that) {
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+      start = now;
+    }, timeout);
+  };
+
+  return function () {
+    var that = this;
+    var now = Date.now();
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    if (!start) {
+      start = now;
+      ensureExecute(now, args, that);
+      return;
+    }
+
+    if (now - start >= timeout) {
+      ensureExecute(now, args, that);
+      fn.apply(that, args);
+      start = now;
+    }
+  };
+};
+
 exports.AnimationElement = AnimationElement;
 exports.Button = Button;
 exports.Cell = Cell;
@@ -1928,6 +2009,7 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
+exports.ScrollTop = ScrollTop;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Slide = Slide;
@@ -1938,3 +2020,5 @@ exports.Tabs = Tabs;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
 exports.Waypoint = Waypoint;
+exports.debounce = debounce;
+exports.throttle = throttle;
