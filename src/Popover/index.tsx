@@ -11,14 +11,14 @@ import clsx from 'clsx';
 
 const StyledPopover = styled.div`
   position: absolute;
-  width: 240px;
   z-index: 1100;
   background: #fff;
   border-radius: 2px;
-  padding: 16px;
   box-shadow: 0px 0px 4px 0px ${theme.border}, 0px 2px 6px 0px ${theme.border};
 
   .uc-popover-content {
+    padding: 16px;
+    width: 240px;
   }
 
   .uc-popover-close-icon {
@@ -35,35 +35,22 @@ const StyledPopover = styled.div`
     background: #fff;
     transform: rotate(45deg);
   }
-
-  @keyframes pulse {
-    from {
-      box-shadow: 0 0 0 0 #4e83fd;
-    }
-    to {
-      box-shadow: 0 0 0 8px transparent;
-    }
-  }
-
-  // not used now
-  .uc-popover-hotspot {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    background-color: ${theme.primary};
-    animation: pulse 1s infinite;
-  }
 `;
 
 export interface Props {
-  placement?: keyof Placement;
+  /** 弹框位置,包含-的-后面指示arrow位置 */
+  placement?: Placement;
+  /** 触发元素 */
   children: React.ReactElement;
+  /** 弹框内容 */
   content: React.ReactNode;
+  /** 弹框是否显示 */
   visible?: boolean;
+  /** arrow是否显示 */
   arrow: boolean;
+  /** 关闭按钮是否显示 */
   closable: boolean;
+  /**  关闭回调 */
   onClose: () => void;
   className?: string;
 }

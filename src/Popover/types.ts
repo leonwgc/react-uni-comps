@@ -13,8 +13,7 @@ export type Placement =
   | 'left-bottom'
   | 'right-top'
   | 'right-bottom'
-  | keyof SinglePlacement
-  | string;
+  | SinglePlacement;
 
 export interface ITargetPos {
   left: number;

@@ -109,7 +109,7 @@ export default function App() {
   );
   return (
     <div className="app">
-      <Popover content={'hello,world'}>
+      <Popover content={'hello,world'} placement="bottom">
         <Button placement="top" style={{ margin: '100px' }}>
           hello
         </Button>
