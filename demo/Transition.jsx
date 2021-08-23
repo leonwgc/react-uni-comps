@@ -13,6 +13,8 @@ const StyledDiv = styled.div`
   align-items: center;
   justify-content: center;
 
+  transition: all 240ms ease-in-out;
+
   &.to {
     width: 300px !important;
   }

@@ -5,6 +5,7 @@ import { Placement } from './types';
 import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
 import styled from 'styled-components';
+import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
 
 // port from https://github.com/bytedance/guide and refactor
@@ -32,6 +33,14 @@ const StyledPopover = styled.div`
     height: 10px;
     background: inherit;
     transform: rotate(45deg);
+  }
+
+  transition: opacity 240ms linear;
+  &.from {
+    opacity: 0.62;
+  }
+  &.to {
+    opacity: 1;
   }
 `;
 
@@ -182,21 +191,23 @@ const Popover = (props: Props): React.ReactElement => {
     <>
       {React.cloneElement(children, { ref: childrenRef })}
       {ReactDOM.createPortal(
-        <StyledPopover
-          ref={popoverRef}
-          className={clsx(className, 'uc-popover')}
-          style={{ ...modalStyle, ...style }}
-          {...rest}
-        >
-          {/* arrow */}
-          {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+        <TransitionElement duration={240} ref={popoverRef}>
+          <StyledPopover
+            className={clsx(className, 'uc-popover')}
+            style={{ ...modalStyle, ...style }}
+            {...rest}
+          >
+            {/* arrow */}
+            {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-          {/* close */}
-          {closable && <SvgClose className={clsx('uc-popover-close')} onClick={onClose} />}
+            {/* close */}
+            {closable && <SvgClose className={clsx('uc-popover-close')} onClick={onClose} />}
 
-          {/** content */}
-          <div className={clsx('uc-popover-content')}>{content}</div>
-        </StyledPopover>,
+            {/** content */}
+
+            <div className={clsx('uc-popover-content')}>{content}</div>
+          </StyledPopover>
+        </TransitionElement>,
         document.body
       )}
     </>
