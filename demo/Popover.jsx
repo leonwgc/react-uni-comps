@@ -109,10 +109,15 @@ export default function App() {
   );
   return (
     <div className="app">
-      <Tooltip title={'hello,world'}>
-        <Button placement="top" style={{ margin: '100px' }}>
-          hello
-        </Button>
+      <Tooltip
+        title={
+          <div style={{ padding: 8, width: 160 }}>
+            modal的bottom-border紧贴内容的top-border，right-borders水平对齐
+          </div>
+        }
+        bgColor="#00bc8d"
+      >
+        <Button style={{ margin: '200px' }}>hello</Button>
       </Tooltip>
       <Space wrap direction="vertical">
         {Items.map((step) => {
@@ -121,6 +126,8 @@ export default function App() {
             <Popover
               placement={placement}
               visible={visible[placement]}
+              closable
+              onClose={() => setVisible({ [placement]: false })}
               content={
                 <div style={{ padding: 16, width: 260 }}>
                   <h5 style={{ fontSize: 16 }}>{title}</h5>

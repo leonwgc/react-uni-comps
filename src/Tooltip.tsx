@@ -1,34 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Popover } from '../src';
 import styled from 'styled-components';
 
-const StyleContent = styled.div`
+const StylePopover = styled(Popover)`
   color: #fff;
+  padding: 8px;
+
+  .uc-popover-arrow {
+    width: 6px;
+    height: 6px;
+    bottom: -3px !important;
+  }
 `;
 
 export type Props = {
   title?: React.ReactNode;
-  color?: string;
+  bgColor?: string;
   children: React.ReactElement;
 };
 
 /** Tooltip */
 const Tooltip = (props: Props): React.ReactElement => {
   const { title, bgColor = 'black', children } = props;
+  // 鼠标移到popover内容区，不关闭popover
+  const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
 
   return (
-    <Popover
-      style={{ padding: '8px', width: 'unset', background: bgColor }}
+    <StylePopover
+      className="uc-tooltip"
+      style={{ background: bgColor }}
       visible={visible}
+      onMouseEnter={() => {
+        if (ref.current) {
+          clearTimeout(ref.current);
+        }
+        setVisible(true);
+      }}
+      onMouseLeave={() => {
+        setTimeout(() => {
+          setVisible(false);
+        }, 300);
+      }}
       placement="top"
-      content={<StyleContent>{title}</StyleContent>}
+      content={title}
     >
       {React.cloneElement(children, {
         onMouseEnter: () => setVisible(true),
-        onMouseLeave: () => setVisible(false),
+        onMouseLeave: () => {
+          ref.current = window.setTimeout(() => {
+            setVisible(false);
+          }, 300);
+        },
       })}
-    </Popover>
+    </StylePopover>
   );
 };
 Tooltip.displayName = 'UC-Tooltip';

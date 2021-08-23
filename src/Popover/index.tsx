@@ -19,7 +19,7 @@ const StyledPopover = styled.div`
   .uc-popover-content {
   }
 
-  .uc-popover-close-icon {
+  .uc-popover-close {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -35,7 +35,7 @@ const StyledPopover = styled.div`
   }
 `;
 
-export interface Props {
+export type Props = {
   /** 弹框位置,包含-的-后面指示arrow位置 */
   placement?: Placement;
   /** 触发元素 */
@@ -53,7 +53,7 @@ export interface Props {
   /**  关闭回调 */
   onClose?: () => void;
   className?: string;
-}
+} & React.HTMLAttributes<HTMLElement>;
 
 const MARGIN = 12;
 
@@ -68,6 +68,7 @@ const Popover = (props: Props): React.ReactElement => {
     className,
     style,
     children,
+    ...rest
   } = props;
 
   const childrenRef = useRef();
@@ -95,7 +96,7 @@ const Popover = (props: Props): React.ReactElement => {
         placement,
         { x: 0, y: 0 } // offset
       );
-      const arrowStyle = getArrowStyle(modalEl, placement, false);
+      const arrowStyle = getArrowStyle(modalEl, placement, false, 12, 10);
 
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
@@ -185,12 +186,13 @@ const Popover = (props: Props): React.ReactElement => {
           ref={popoverRef}
           className={clsx(className, 'uc-popover')}
           style={{ ...modalStyle, ...style }}
+          {...rest}
         >
           {/* arrow */}
           {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
           {/* close */}
-          {closable && <SvgClose className={clsx('uc-popover-close-icon')} onClick={onClose} />}
+          {closable && <SvgClose className={clsx('uc-popover-close')} onClick={onClose} />}
 
           {/** content */}
           <div className={clsx('uc-popover-content')}>{content}</div>

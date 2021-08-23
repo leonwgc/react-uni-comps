@@ -7,10 +7,10 @@ export const getArrowStyle = (
   modalEl: Element,
   placement: Placement = 'bottom',
   mask = false,
-  margin = 12
+  margin = 12,
+  diagonalWidth = 10
 ): Record<string, string | number> => {
   const modalPos = modalEl.getBoundingClientRect();
-  const diagonalWidth = 10;
 
   const [firstPlacement, lastPlacement] = (placement as string).split('-') as SinglePlacement[];
 
