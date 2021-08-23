@@ -70,7 +70,7 @@ const routes = [
     component: lazy(() => import('./Waypoint')),
   },
   {
-    path: '/indexBar',
+    path: '/index-list',
     component: lazy(() => import('./IndexList')),
   },
   {
