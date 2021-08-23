@@ -776,6 +776,8 @@ export default function SkeletonDemo() {
 
 #### 23. Slide (轮播焦点图/全屏分页)
 
+#### 24. ScrollTop (平滑滚动到顶部)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import
