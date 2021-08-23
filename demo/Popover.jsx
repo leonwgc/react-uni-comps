@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Spinner, Space, Popover, Button } from '../src';
+import { Tooltip, Space, Popover, Button } from '../src';
 
 const places = [
   {
@@ -109,11 +109,11 @@ export default function App() {
   );
   return (
     <div className="app">
-      <Popover content={'hello,world'} placement="bottom">
+      <Tooltip title={'hello,world'}>
         <Button placement="top" style={{ margin: '100px' }}>
           hello
         </Button>
-      </Popover>
+      </Tooltip>
       <Space wrap direction="vertical">
         {Items.map((step) => {
           const { placement, title, content } = step;
@@ -122,7 +122,7 @@ export default function App() {
               placement={placement}
               visible={visible[placement]}
               content={
-                <div>
+                <div style={{ padding: 16, width: 260 }}>
                   <h5 style={{ fontSize: 16 }}>{title}</h5>
                   <p>{content}</p>
                 </div>

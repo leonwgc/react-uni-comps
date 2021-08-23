@@ -23,4 +23,5 @@ export { default as IndexList } from './IndexList';
 export { default as Slide } from './Slide';
 export { default as ScrollTop } from './ScrollTop';
 export { default as Popover } from './Popover';
+export { default as Tooltip } from './Tooltip';
 export * from './helper';

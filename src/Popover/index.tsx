@@ -17,8 +17,6 @@ const StyledPopover = styled.div`
   box-shadow: 0px 0px 4px 0px ${theme.border}, 0px 2px 6px 0px ${theme.border};
 
   .uc-popover-content {
-    padding: 16px;
-    width: 240px;
   }
 
   .uc-popover-close-icon {
@@ -32,7 +30,7 @@ const StyledPopover = styled.div`
     position: absolute;
     width: 10px;
     height: 10px;
-    background: #fff;
+    background: inherit;
     transform: rotate(45deg);
   }
 `;
@@ -43,15 +41,17 @@ export interface Props {
   /** 触发元素 */
   children: React.ReactElement;
   /** 弹框内容 */
-  content: React.ReactNode;
+  content?: React.ReactNode;
   /** 弹框是否显示 */
   visible?: boolean;
   /** arrow是否显示 */
-  arrow: boolean;
+  arrow?: boolean;
   /** 关闭按钮是否显示 */
-  closable: boolean;
+  closable?: boolean;
+  /** container style */
+  style?: React.CSSProperties;
   /**  关闭回调 */
-  onClose: () => void;
+  onClose?: () => void;
   className?: string;
 }
 
@@ -66,6 +66,7 @@ const Popover = (props: Props): React.ReactElement => {
     closable,
     onClose,
     className,
+    style,
     children,
   } = props;
 
@@ -183,7 +184,7 @@ const Popover = (props: Props): React.ReactElement => {
         <StyledPopover
           ref={popoverRef}
           className={clsx(className, 'uc-popover')}
-          style={modalStyle}
+          style={{ ...modalStyle, ...style }}
         >
           {/* arrow */}
           {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
