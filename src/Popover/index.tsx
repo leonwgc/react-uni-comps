@@ -7,6 +7,8 @@ import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from '.
 import styled from 'styled-components';
 import clsx from 'clsx';
 
+// port from https://github.com/bytedance/guide and refactor
+
 const StyledPopover = styled.div`
   position: absolute;
   width: 240px;
@@ -196,11 +198,13 @@ const Popover = (props: Props): React.ReactElement => {
           className={clsx(className, 'uc-popover')}
           style={modalStyle}
         >
-          {/* ARROW */}
+          {/* arrow */}
           {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-          {/* CLOSE BUTTON */}
+          {/* close */}
           {closable && <SvgClose className={clsx('uc-popover-close-icon')} onClick={onClose} />}
+
+          {/** content */}
           <div className={clsx('uc-popover-content')}>{content}</div>
         </StyledPopover>,
         document.body
