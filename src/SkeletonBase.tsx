@@ -54,6 +54,6 @@ const SkeletonBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-SkeletonBase.displayName = 'uc-skeleton-base';
+SkeletonBase.displayName = 'UC-SkeletonBase';
 
 export default SkeletonBase;

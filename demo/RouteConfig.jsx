@@ -71,7 +71,7 @@ const routes = [
   },
   {
     path: '/indexBar',
-    component: lazy(() => import('./IndexBar')),
+    component: lazy(() => import('./IndexList')),
   },
   {
     path: '/slide',

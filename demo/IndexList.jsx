@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Space, IndexBar } from '../src';
+import { Spinner, Space, IndexList } from '../src';
 
 export default function App() {
   const data = [
@@ -62,7 +62,7 @@ export default function App() {
   ];
   return (
     <div className="app">
-      <IndexBar data={data} color="#00bc8d" onChange={(item) => alert(item.value)} />
+      <IndexList data={data} color="#00bc8d" onChange={(item) => alert(item.value)} />
     </div>
   );
 }

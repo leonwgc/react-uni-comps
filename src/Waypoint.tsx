@@ -39,6 +39,6 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
   return <span data-role="waypoint" style={{ fontSize: 0 }} ref={wpRef} {...rest}></span>;
 });
 
-Waypoint.displayName = 'uc-waypoint';
+Waypoint.displayName = 'UC-Waypoint';
 
 export default Waypoint;

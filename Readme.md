@@ -772,7 +772,7 @@ export default function SkeletonDemo() {
 
 #### 21. FileInputTrigger (触发文件上传)
 
-#### 22. IndexBar (索引列表)
+#### 22. IndexList (索引列表)
 
 #### 23. Slide (轮播焦点图/全屏分页)
 

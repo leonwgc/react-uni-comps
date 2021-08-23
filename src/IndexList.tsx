@@ -53,7 +53,6 @@ const StyledContainer = styled.div<{ color: string }>`
   }
 
   .bar-title {
-    /* position: sticky; */
     top: 0;
     z-index: 1;
     box-sizing: border-box;
@@ -76,6 +75,7 @@ const StyledContainer = styled.div<{ color: string }>`
     font-size: 14px;
     background-color: #fff;
     position: relative;
+    margin: 0;
     &:after {
       content: '';
       pointer-events: none;
@@ -137,7 +137,7 @@ const renderItem = (
         />
       </dt>
       {subItems.map((item, idx) => (
-        <dt
+        <dd
           className="bar-item"
           onClick={() => {
             if (typeof onChange === 'function') {
@@ -148,14 +148,14 @@ const renderItem = (
           data-value={item.value}
         >
           {item.label}
-        </dt>
+        </dd>
       ))}
     </React.Fragment>
   );
 };
 
 /** 索引列表 */
-const IndexBar = (props: Props): React.ReactElement => {
+const IndexList = (props: Props): React.ReactElement => {
   const { data = [], color = colors.primary, onChange } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
@@ -181,6 +181,6 @@ const IndexBar = (props: Props): React.ReactElement => {
   );
 };
 
-IndexBar.displayName = 'uc-indexbar';
+IndexList.displayName = 'UC-IndexList';
 
-export default IndexBar;
+export default IndexList;

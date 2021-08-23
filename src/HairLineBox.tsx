@@ -38,5 +38,5 @@ const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   return <StyledDiv ref={ref} position={position} color={color} {...rest}></StyledDiv>;
 });
 
-HairLineBox.displayName = 'uc-hairline-box';
+HairLineBox.displayName = 'UC-HairLineBox';
 export default HairLineBox;
