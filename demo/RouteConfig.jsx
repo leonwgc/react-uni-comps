@@ -81,6 +81,10 @@ const routes = [
     path: '/slide-full',
     component: lazy(() => import('./SlideFull')),
   },
+  {
+    path: '/popover',
+    component: lazy(() => import('./Popover')),
+  },
 ];
 
 export default routes;
