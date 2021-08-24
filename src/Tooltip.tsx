@@ -2,16 +2,11 @@ import React, { useState, useRef } from 'react';
 import { Popover } from '../src';
 import styled from 'styled-components';
 import { Placement } from './Popover/types';
+import clsx from 'clsx';
 
 const StylePopover = styled(Popover)`
   color: #fff;
   padding: 8px;
-
-  .uc-popover-arrow {
-    width: 6px;
-    height: 6px;
-    bottom: -3px !important;
-  }
 `;
 
 export type Props = {
@@ -30,7 +25,7 @@ const Tooltip = (props: Props): React.ReactElement => {
 
   return (
     <StylePopover
-      className="uc-tooltip"
+      className={clsx('uc-tooltip')}
       style={{ background: bgColor }}
       visible={visible}
       onMouseEnter={() => {

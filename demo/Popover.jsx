@@ -117,7 +117,18 @@ export default function App() {
         }
         bgColor="#00bc8d"
       >
-        <Button style={{ margin: '200px' }}>hello</Button>
+        <Button style={{ margin: '200px 0 0 200px' }}>hello</Button>
+      </Tooltip>
+
+      <Tooltip
+        placement="right"
+        title={
+          <div style={{ padding: 8, width: 160 }}>
+            modal的bottom-border紧贴内容的top-border，right-borders水平对齐
+          </div>
+        }
+      >
+        <Button style={{ margin: 100 }}>hello</Button>
       </Tooltip>
       <Space wrap direction="vertical">
         {Items.map((step) => {
