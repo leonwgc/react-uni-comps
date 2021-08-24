@@ -124,7 +124,7 @@ const Popover = (props: Props): React.ReactElement => {
 
     const handleScroll = () => {
       const modalEl = popoverRef.current;
-      const anchorPos = anchorEl.getBoundingClientRect();
+      const anchorPos = (anchorEl as Element).getBoundingClientRect();
       const modalPos = (modalEl as Element).getBoundingClientRect();
       const scrollPos = scrollContainer.getBoundingClientRect();
 

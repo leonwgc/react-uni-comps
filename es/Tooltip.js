@@ -27,7 +27,7 @@ var __assign = this && this.__assign || function () {
 };
 
 import React, { useState, useRef } from 'react';
-import { Popover } from '../src';
+import Popover from './Popover/index';
 import styled from 'styled-components';
 import clsx from 'clsx';
 var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 8px;\n"], ["\n  color: #fff;\n  padding: 8px;\n"])));
@@ -49,22 +49,7 @@ var Tooltip = function Tooltip(props) {
       visible = _d[0],
       setVisible = _d[1];
 
-  var childProps = {
-    onMouseEnter: function onMouseEnter() {
-      return setVisible(true);
-    },
-    onMouseLeave: function onMouseLeave() {
-      ref.current = window.setTimeout(function () {
-        setVisible(false);
-      }, 300);
-    }
-  };
-  return /*#__PURE__*/React.createElement(StylePopover, {
-    className: clsx('uc-tooltip'),
-    style: {
-      background: bgColor
-    },
-    visible: visible,
+  var actionProps = {
     onMouseEnter: function onMouseEnter() {
       if (ref.current) {
         clearTimeout(ref.current);
@@ -73,14 +58,21 @@ var Tooltip = function Tooltip(props) {
       setVisible(true);
     },
     onMouseLeave: function onMouseLeave() {
-      setTimeout(function () {
+      ref.current = window.setTimeout(function () {
         setVisible(false);
       }, 300);
+    }
+  };
+  return /*#__PURE__*/React.createElement(StylePopover, __assign({
+    className: clsx('uc-tooltip'),
+    style: {
+      background: bgColor
     },
+    visible: visible,
     placement: placement,
     content: title,
     arrow: arrow
-  }, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, childProps) : /*#__PURE__*/React.createElement("span", __assign({}, childProps), children));
+  }, actionProps), /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, actionProps) : /*#__PURE__*/React.createElement("span", __assign({}, actionProps), children));
 };
 
 Tooltip.displayName = 'UC-Tooltip';

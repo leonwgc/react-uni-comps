@@ -2153,7 +2153,7 @@ var getParentNode = function getParentNode(node) {
   return (// If node is rooted at a custom element, meaning the node is part of a shadow DOM
     node.assignedSlot || // step into the shadow DOM of the parent of a slotted node
     node.parentNode || // DOM Element detected
-    node.host || // ShadowRoot detected
+    // node.host || // ShadowRoot detected
     getDocumentElement(node) // fallback
 
   );
@@ -2573,22 +2573,7 @@ var Tooltip = function Tooltip(props) {
       visible = _useState2[0],
       setVisible = _useState2[1];
 
-  var childProps = {
-    onMouseEnter: function onMouseEnter() {
-      return setVisible(true);
-    },
-    onMouseLeave: function onMouseLeave() {
-      ref.current = window.setTimeout(function () {
-        setVisible(false);
-      }, 300);
-    }
-  };
-  return /*#__PURE__*/React__default['default'].createElement(StylePopover, {
-    className: clsx__default['default']('uc-tooltip'),
-    style: {
-      background: bgColor
-    },
-    visible: visible,
+  var actionProps = {
     onMouseEnter: function onMouseEnter() {
       if (ref.current) {
         clearTimeout(ref.current);
@@ -2597,14 +2582,21 @@ var Tooltip = function Tooltip(props) {
       setVisible(true);
     },
     onMouseLeave: function onMouseLeave() {
-      setTimeout(function () {
+      ref.current = window.setTimeout(function () {
         setVisible(false);
       }, 300);
+    }
+  };
+  return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({
+    className: clsx__default['default']('uc-tooltip'),
+    style: {
+      background: bgColor
     },
+    visible: visible,
     placement: placement,
     content: title,
     arrow: arrow
-  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childProps) : /*#__PURE__*/React__default['default'].createElement("span", childProps, children));
+  }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, actionProps) : /*#__PURE__*/React__default['default'].createElement("span", actionProps, children));
 };
 
 Tooltip.displayName = 'UC-Tooltip';

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Popover } from '../src';
+import Popover from './Popover/index';
 import styled from 'styled-components';
 import { Placement } from './Popover/types';
 import clsx from 'clsx';
@@ -24,8 +24,13 @@ const Tooltip = (props: Props): React.ReactElement => {
   const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
 
-  const childProps = {
-    onMouseEnter: () => setVisible(true),
+  const actionProps = {
+    onMouseEnter: () => {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+      setVisible(true);
+    },
     onMouseLeave: () => {
       ref.current = window.setTimeout(() => {
         setVisible(false);
@@ -38,25 +43,15 @@ const Tooltip = (props: Props): React.ReactElement => {
       className={clsx('uc-tooltip')}
       style={{ background: bgColor }}
       visible={visible}
-      onMouseEnter={() => {
-        if (ref.current) {
-          clearTimeout(ref.current);
-        }
-        setVisible(true);
-      }}
-      onMouseLeave={() => {
-        setTimeout(() => {
-          setVisible(false);
-        }, 300);
-      }}
       placement={placement}
       content={title}
       arrow={arrow}
+      {...actionProps}
     >
       {React.isValidElement(children) ? (
-        React.cloneElement(children, childProps)
+        React.cloneElement(children, actionProps)
       ) : (
-        <span {...childProps}>{children}</span>
+        <span {...actionProps}>{children}</span>
       )}
     </StylePopover>
   );

@@ -41,7 +41,7 @@ export const getParentNode = (node: Element | null): (Node & ParentNode) | null 
     // If node is rooted at a custom element, meaning the node is part of a shadow DOM
     node.assignedSlot || // step into the shadow DOM of the parent of a slotted node
     node.parentNode || // DOM Element detected
-    node.host || // ShadowRoot detected
+    // node.host || // ShadowRoot detected
     getDocumentElement(node) // fallback
   );
 };
