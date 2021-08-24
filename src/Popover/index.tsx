@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import SvgClose from './Close';
+import Cross from './Cross';
 import { Placement } from './types';
 import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
@@ -201,7 +201,7 @@ const Popover = (props: Props): React.ReactElement => {
             {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
             {/* close */}
-            {closable && <SvgClose className={clsx('uc-popover-close')} onClick={onClose} />}
+            {closable && <Cross className={clsx('uc-popover-close')} onClick={onClose} />}
 
             {/** content */}
 

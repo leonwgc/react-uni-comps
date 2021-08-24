@@ -5,7 +5,7 @@ type CloseProps = {
   fill?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Close: React.FC<CloseProps> = ({ size = '16', fill = '#666', ...rest }) => (
+const Close: React.FC<CloseProps> = ({ size = 16, fill = '#999', ...rest }) => (
   <div {...rest}>
     <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
       <g>
