@@ -70,8 +70,6 @@ const Tansition = () => {
         </TransitionElement>
 
         <StyledButton>Two</StyledButton>
-
-        <TransitionElement duration={100}>Three</TransitionElement>
       </Space>
       <div>
         <Space>
