@@ -29,8 +29,8 @@ const StyledPopover = styled.div`
 
   .uc-popover-arrow {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
     background: inherit;
     transform: rotate(45deg);
   }
@@ -105,7 +105,7 @@ const Popover = (props: Props): React.ReactElement => {
         placement,
         { x: 0, y: 0 } // offset
       );
-      const arrowStyle = getArrowStyle(modalEl, placement, false, 12, 10);
+      const arrowStyle = getArrowStyle(modalEl, placement, false, 12);
 
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);

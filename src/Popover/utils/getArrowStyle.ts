@@ -8,7 +8,7 @@ export const getArrowStyle = (
   placement: Placement = 'bottom',
   mask = false,
   margin = 12,
-  diagonalWidth = 10
+  diagonalWidth = 6 // make it the same as arrow w/h
 ): Record<string, string | number> => {
   const modalPos = modalEl.getBoundingClientRect();
 
