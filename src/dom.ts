@@ -38,7 +38,8 @@ export const offset = (el: HTMLElement | null): { top: number; left: number } =>
 
 export const isBrowser = !!(typeof window !== 'undefined' && window);
 
-export const isMobile = (): boolean => /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+export const isMobile = (): boolean =>
+  isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 
 /**
  *

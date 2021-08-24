@@ -119,7 +119,7 @@ const Popover = (props: Props): React.ReactElement => {
         calculateStyle(anchorEl, scrollContainer);
       });
     };
-    const handleScroll = (): void => {
+    const handleScroll = () => {
       const modalEl = popoverRef.current;
       const anchorPos = anchorEl.getBoundingClientRect();
       const modalPos = (modalEl as Element).getBoundingClientRect();
@@ -191,7 +191,7 @@ const Popover = (props: Props): React.ReactElement => {
     <>
       {React.cloneElement(children, { ref: childrenRef })}
       {ReactDOM.createPortal(
-        <TransitionElement duration={240} ref={popoverRef}>
+        <TransitionElement ref={popoverRef}>
           <StyledPopover
             className={clsx(className, 'uc-popover')}
             style={{ ...modalStyle, ...style }}
