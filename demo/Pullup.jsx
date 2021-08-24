@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, Pullup, ScrollTop, throttle } from '../src';
+import React, { useState, useRef } from 'react';
+import { Button, Pullup, ScrollTop } from '../src';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
@@ -7,7 +7,6 @@ const pageSize = 30;
 const App = () => {
   const [list, setList] = useState([]);
   const [finished, setFinished] = useState(false);
-  const [y, setY] = useState(0);
   const ref = useRef(0);
 
   const fetchData = () => {
@@ -29,17 +28,6 @@ const App = () => {
       }, 900);
     });
   };
-  useEffect(() => {
-    const onScroll = throttle(() => {
-      console.log(window.pageYOffset);
-      setY(window.pageYOffset);
-    });
-    window.addEventListener('scroll', onScroll);
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
 
   return (
     <>
@@ -58,23 +46,21 @@ const App = () => {
           );
         }}
       ></Pullup>
-      {y > 50 ? (
-        <ScrollTop>
-          <Button
-            type="primary"
-            style={{
-              borderRadius: '100%',
-              width: 40,
-              height: 40,
-              position: 'fixed',
-              bottom: 20,
-              right: 20,
-            }}
-          >
-            top
-          </Button>
-        </ScrollTop>
-      ) : null}
+      <ScrollTop visibilityHeight={100}>
+        <Button
+          type="primary"
+          style={{
+            borderRadius: '100%',
+            width: 40,
+            height: 40,
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+          }}
+        >
+          top
+        </Button>
+      </ScrollTop>
     </>
   );
 };

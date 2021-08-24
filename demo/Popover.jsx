@@ -138,13 +138,14 @@ export default function App() {
       </div>
 
       <Space wrap direction="vertical">
-        {Items.map((step) => {
+        {Items.map((step, idx) => {
           const { placement, title, content } = step;
           return (
             <Popover
               placement={placement}
               visible={visible[placement]}
               closable
+              key={idx}
               onClose={() => setVisible({ [placement]: false })}
               content={
                 <div style={{ padding: 16, width: 260 }}>
