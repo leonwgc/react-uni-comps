@@ -137,28 +137,30 @@ export default function App() {
         </Tooltip>
       </div>
 
-      <Space wrap direction="vertical">
-        {Items.map((step, idx) => {
-          const { placement, title, content } = step;
-          return (
-            <Popover
-              placement={placement}
-              visible={visible[placement]}
-              closable
-              key={idx}
-              onClose={() => setVisible({ [placement]: false })}
-              content={
-                <div style={{ padding: 16, width: 260 }}>
-                  <h5 style={{ fontSize: 16 }}>{title}</h5>
-                  <p>{content}</p>
-                </div>
-              }
-            >
-              <Button onClick={() => handleClick(placement)}>{title}</Button>
-            </Popover>
-          );
-        })}
-      </Space>
+      <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
+        <Space wrap direction="vertical">
+          {Items.map((step, idx) => {
+            const { placement, title, content } = step;
+            return (
+              <Popover
+                placement={placement}
+                visible={visible[placement]}
+                closable
+                key={idx}
+                onClose={() => setVisible({ [placement]: false })}
+                content={
+                  <div style={{ padding: 16, width: 260 }}>
+                    <h5 style={{ fontSize: 16 }}>{title}</h5>
+                    <p>{content}</p>
+                  </div>
+                }
+              >
+                <Button onClick={() => handleClick(placement)}>{title}</Button>
+              </Popover>
+            );
+          })}
+        </Space>
+      </div>
     </div>
   );
 }
