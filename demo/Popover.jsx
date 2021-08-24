@@ -130,6 +130,13 @@ export default function App() {
       >
         <Button style={{ margin: 100 }}>hello</Button>
       </Tooltip>
+
+      <div style={{ margin: 20 }}>
+        <Tooltip title="hello,world" arrow={false}>
+          no-arrow hello
+        </Tooltip>
+      </div>
+
       <Space wrap direction="vertical">
         {Items.map((step) => {
           const { placement, title, content } = step;

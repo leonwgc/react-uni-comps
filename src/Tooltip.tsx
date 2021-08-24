@@ -11,6 +11,7 @@ const StylePopover = styled(Popover)`
 
 export type Props = {
   title?: React.ReactNode;
+  arrow?: boolean;
   bgColor?: string;
   placement?: Placement;
   children: React.ReactElement;
@@ -18,10 +19,19 @@ export type Props = {
 
 /** Tooltip */
 const Tooltip = (props: Props): React.ReactElement => {
-  const { title, bgColor = 'black', placement = 'top', children } = props;
+  const { title, bgColor = 'black', placement = 'top', arrow = true, children } = props;
   // 鼠标移到popover内容区，不关闭popover
   const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
+
+  const childProps = {
+    onMouseEnter: () => setVisible(true),
+    onMouseLeave: () => {
+      ref.current = window.setTimeout(() => {
+        setVisible(false);
+      }, 300);
+    },
+  };
 
   return (
     <StylePopover
@@ -41,15 +51,13 @@ const Tooltip = (props: Props): React.ReactElement => {
       }}
       placement={placement}
       content={title}
+      arrow={arrow}
     >
-      {React.cloneElement(children, {
-        onMouseEnter: () => setVisible(true),
-        onMouseLeave: () => {
-          ref.current = window.setTimeout(() => {
-            setVisible(false);
-          }, 300);
-        },
-      })}
+      {React.isValidElement(children) ? (
+        React.cloneElement(children, childProps)
+      ) : (
+        <span {...childProps}>{children}</span>
+      )}
     </StylePopover>
   );
 };
