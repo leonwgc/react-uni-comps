@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import Cross from './Cross';
+import Cross from '../Cross';
 import { Placement } from './types';
 import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
