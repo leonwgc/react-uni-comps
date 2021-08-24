@@ -1,4 +1,11 @@
 import React from 'react';
+/**
+ * 错误边界
+ *
+ * @export
+ * @class ErrorBoundary
+ * @extends {React.Component}
+ */
 export default class ErrorBoundary extends React.Component {
     state: {
         hasError: boolean;

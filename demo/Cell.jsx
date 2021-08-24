@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Space, Cell, Button, Checkbox, Switch } from 'react-uni-comps';
+import { Space, Cell, Button, Checkbox, Switch } from '../src';
 
 export default function App() {
   const [v, setV] = useState('');

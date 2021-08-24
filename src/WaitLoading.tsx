@@ -6,7 +6,7 @@ export type Props = {
   children: React.ReactElement /** spinner 子元素 */;
 };
 
-/**  等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁 */
+/**  等待wait毫秒如果visible是true才渲染子元素,包裹spinner可以防止spinner闪烁 */
 const WaitLoading: React.FC<Props> = ({ wait = 600, visible = false, children }) => {
   const [show, setShow] = useState(false);
   const ref = useRef<number>();

@@ -54,6 +54,12 @@ var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __mak
   return props.theme.color;
 });
 var StyledTabContentWrap = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  overflow: hidden;\n"], ["\n  overflow: hidden;\n"])));
+/**
+ *  选项卡项，放在Tabs里面
+ *
+ * @param {*} { children }
+ * @return {*}
+ */
 
 var Tab = function Tab(_a) {
   var children = _a.children;
@@ -63,6 +69,22 @@ var Tab = function Tab(_a) {
 var isValidtTabElement = function isValidtTabElement(el) {
   return /*#__PURE__*/React.isValidElement(el) && el.type === Tab;
 };
+/**
+ * 选项卡切换
+ *
+ * @param {*} {
+ *   children,
+ *   color = colors.primary,
+ *   underlineWidth = '100%',
+ *   defaultIndex = 0,
+ *   underline = true,
+ *   onIndexChange,
+ *   className,
+ *   ...otherProps
+ * }
+ * @return {*}
+ */
+
 
 var Tabs = function Tabs(_a) {
   var children = _a.children,

@@ -29,6 +29,13 @@ var __extends = this && this.__extends || function () {
 
 
 import React from 'react';
+/**
+ * 错误边界
+ *
+ * @export
+ * @class ErrorBoundary
+ * @extends {React.Component}
+ */
 
 var ErrorBoundary =
 /** @class */

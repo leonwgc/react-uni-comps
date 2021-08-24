@@ -89,7 +89,7 @@ interface RefType {
   bs: BScroll;
 }
 
-/**  Slide */
+/**  轮播焦点图/全屏分页 */
 const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const {
     autoplay = true,

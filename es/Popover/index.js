@@ -50,6 +50,12 @@ import clsx from 'clsx'; // port from https://github.com/bytedance/guide and ref
 
 var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  transition: opacity 240ms linear;\n  &.from {\n    opacity: 0.62;\n  }\n  &.to {\n    opacity: 1;\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  transition: opacity 240ms linear;\n  &.from {\n    opacity: 0.62;\n  }\n  &.to {\n    opacity: 1;\n  }\n"])), theme.border, theme.border);
 var MARGIN = 12;
+/**
+ * 点击/鼠标移入元素，弹出气泡式的卡片浮层
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
 
 var Popover = function Popover(props) {
   var _a = props.placement,

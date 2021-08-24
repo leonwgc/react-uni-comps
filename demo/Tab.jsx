@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner, AnimationElement, Tabs } from 'react-uni-comps';
+import { Spinner, AnimationElement, Tabs } from '../src';
 import 'animate.css';
 import './Tab.less';
 

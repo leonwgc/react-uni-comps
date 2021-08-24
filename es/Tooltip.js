@@ -31,7 +31,7 @@ import { Popover } from '../src';
 import styled from 'styled-components';
 import clsx from 'clsx';
 var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 8px;\n"], ["\n  color: #fff;\n  padding: 8px;\n"])));
-/** Tooltip */
+/** 文字提示 */
 
 var Tooltip = function Tooltip(props) {
   var title = props.title,

@@ -27,6 +27,6 @@ interface RefType {
     next: () => void;
     bs: BScroll;
 }
-/**  Slide */
+/**  轮播焦点图/全屏分页 */
 declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<RefType>>;
 export default Slide;

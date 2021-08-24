@@ -24,7 +24,7 @@ const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
   }
 };
 
-/** 子元素执行从from到to类名切换(过渡时间由duration定义) 定义这两个css类名，应用transition过渡 */
+/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
 const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { children, duration = 240, once = true, fromClass = 'from', toClass = 'to' } = props;
   const childrenRef = useRef();

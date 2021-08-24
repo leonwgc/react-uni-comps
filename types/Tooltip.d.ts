@@ -7,7 +7,7 @@ export declare type Props = {
     placement?: Placement;
     children: React.ReactElement;
 };
-/** Tooltip */
+/** 文字提示 */
 declare const Tooltip: {
     (props: Props): React.ReactElement;
     displayName: string;

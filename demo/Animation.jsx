@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimationElement, LazyLoadElement, Space, Button } from 'react-uni-comps';
+import { AnimationElement, LazyLoadElement, Space, Button } from '../src';
 import styled from 'styled-components';
 import 'animate.css';
 import bird from './images/bird.png';

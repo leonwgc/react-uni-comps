@@ -65,7 +65,12 @@ export type Props = {
 } & React.HTMLAttributes<HTMLElement>;
 
 const MARGIN = 12;
-
+/**
+ * 点击/鼠标移入元素，弹出气泡式的卡片浮层
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
 const Popover = (props: Props): React.ReactElement => {
   const {
     placement = 'bottom',

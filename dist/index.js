@@ -641,7 +641,7 @@ var getClassName = function getClassName(state, c) {
     return c ? fromClass : toClass; //exited
   }
 };
-/** 子元素执行从from到to类名切换(过渡时间由duration定义) 定义这两个css类名，应用transition过渡 */
+/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
 
 
 var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -995,7 +995,7 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 
-/**  等待了wait毫秒后，如果visible还是true才显示spinner, 防止spinner闪烁 */
+/**  等待wait毫秒如果visible是true才渲染子元素,包裹spinner可以防止spinner闪烁 */
 var WaitLoading = function WaitLoading(_ref) {
   var _ref$wait = _ref.wait,
       wait = _ref$wait === void 0 ? 600 : _ref$wait,
@@ -1055,6 +1055,12 @@ var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_t
   return props.theme.color;
 });
 var StyledTabContentWrap = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  overflow: hidden;\n"])));
+/**
+ *  选项卡项，放在Tabs里面
+ *
+ * @param {*} { children }
+ * @return {*} 
+ */
 
 var Tab = function Tab(_ref) {
   var children = _ref.children;
@@ -1064,6 +1070,22 @@ var Tab = function Tab(_ref) {
 var isValidtTabElement = function isValidtTabElement(el) {
   return /*#__PURE__*/React__default['default'].isValidElement(el) && el.type === Tab;
 };
+/**
+ * 选项卡切换
+ *
+ * @param {*} {
+ *   children,
+ *   color = colors.primary,
+ *   underlineWidth = '100%',
+ *   defaultIndex = 0,
+ *   underline = true,
+ *   onIndexChange,
+ *   className,
+ *   ...otherProps
+ * }
+ * @return {*}
+ */
+
 
 var Tabs = function Tabs(_ref2) {
   var children = _ref2.children,
@@ -1499,6 +1521,14 @@ var Switch = function Switch(props) {
   }, rest));
 };
 
+/**
+ * 错误边界
+ *
+ * @export
+ * @class ErrorBoundary
+ * @extends {React.Component}
+ */
+
 var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   _inherits(ErrorBoundary, _React$Component);
 
@@ -1790,7 +1820,7 @@ var _excluded$d = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "dire
 var _templateObject$f;
 var StyledSlide = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 
-/**  Slide */
+/**  轮播焦点图/全屏分页 */
 var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$autoplay = props.autoplay,
       autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
@@ -2396,6 +2426,12 @@ var _templateObject$g;
 
 var StyledPopover = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  transition: opacity 240ms linear;\n  &.from {\n    opacity: 0.62;\n  }\n  &.to {\n    opacity: 1;\n  }\n"])), border, border);
 var MARGIN$1 = 12;
+/**
+ * 点击/鼠标移入元素，弹出气泡式的卡片浮层
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
 
 var Popover = function Popover(props) {
   var _props$placement = props.placement,
@@ -2519,7 +2555,7 @@ var Popover = function Popover(props) {
 var _templateObject$h;
 var StylePopover = styled__default['default'](Popover)(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n"])));
 
-/** Tooltip */
+/** 文字提示 */
 var Tooltip = function Tooltip(props) {
   var title = props.title,
       _props$bgColor = props.bgColor,

@@ -17,7 +17,7 @@ export type Props = {
   children: React.ReactElement;
 };
 
-/** Tooltip */
+/** 文字提示 */
 const Tooltip = (props: Props): React.ReactElement => {
   const { title, bgColor = 'black', placement = 'top', arrow = true, children } = props;
   // 鼠标移到popover内容区，不关闭popover

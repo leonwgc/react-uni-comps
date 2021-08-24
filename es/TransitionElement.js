@@ -34,7 +34,7 @@ var getClassName = function getClassName(state, c, fromClass, toClass) {
     return c ? fromClass : toClass; //exited
   }
 };
-/** 子元素执行从from到to类名切换(过渡时间由duration定义) 定义这两个css类名，应用transition过渡 */
+/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
 
 
 var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {

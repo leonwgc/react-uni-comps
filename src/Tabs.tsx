@@ -81,7 +81,12 @@ const StyledTabHeadItem = styled.div<{
 const StyledTabContentWrap = styled.div`
   overflow: hidden;
 `;
-
+/**
+ *  选项卡项，放在Tabs里面
+ *
+ * @param {*} { children }
+ * @return {*} 
+ */
 const Tab: React.FC<TabProp> = ({ children }) => {
   return children;
 };
@@ -89,7 +94,21 @@ const Tab: React.FC<TabProp> = ({ children }) => {
 const isValidtTabElement = (el) => {
   return React.isValidElement(el) && el.type === Tab;
 };
-
+/**
+ * 选项卡切换
+ *
+ * @param {*} {
+ *   children,
+ *   color = colors.primary,
+ *   underlineWidth = '100%',
+ *   defaultIndex = 0,
+ *   underline = true,
+ *   onIndexChange,
+ *   className,
+ *   ...otherProps
+ * }
+ * @return {*}
+ */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
   color = colors.primary,

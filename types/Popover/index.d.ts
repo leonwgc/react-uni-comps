@@ -19,5 +19,11 @@ export declare type Props = {
     onClose?: () => void;
     className?: string;
 } & React.HTMLAttributes<HTMLElement>;
+/**
+ * 点击/鼠标移入元素，弹出气泡式的卡片浮层
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
 declare const Popover: (props: Props) => React.ReactElement;
 export default Popover;

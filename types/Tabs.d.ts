@@ -12,7 +12,28 @@ declare type TabProp = {
     title: React.ReactNode;
     children: React.ReactElement;
 };
+/**
+ *  选项卡项，放在Tabs里面
+ *
+ * @param {*} { children }
+ * @return {*}
+ */
 declare const Tab: React.FC<TabProp>;
+/**
+ * 选项卡切换
+ *
+ * @param {*} {
+ *   children,
+ *   color = colors.primary,
+ *   underlineWidth = '100%',
+ *   defaultIndex = 0,
+ *   underline = true,
+ *   onIndexChange,
+ *   className,
+ *   ...otherProps
+ * }
+ * @return {*}
+ */
 declare const Tabs: React.FC<TabsProp> & {
     Tab: typeof Tab;
 };
