@@ -14,7 +14,7 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import { Transition } from 'react-transition-group';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
@@ -34,37 +34,36 @@ var getClassName = function getClassName(state, c, fromClass, toClass) {
     return c ? fromClass : toClass; //exited
   }
 };
-/** 给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画 */
+/** 子元素执行从from到to类名切换(过渡时间由duration定义) 定义这两个css类名，应用transition过渡 */
 
 
-var TransitionElement = function TransitionElement(_a) {
-  var children = _a.children,
-      _b = _a.duration,
-      duration = _b === void 0 ? 240 : _b,
-      _c = _a.transitionProp,
-      transitionProp = _c === void 0 ? 'all' : _c,
-      _d = _a.timingFunc,
-      timingFunc = _d === void 0 ? 'ease-out' : _d,
-      _e = _a.delay,
-      delay = _e === void 0 ? 0 : _e,
-      _f = _a.once,
-      once = _f === void 0 ? true : _f,
-      _g = _a.fromClass,
-      fromClass = _g === void 0 ? 'from' : _g,
-      _h = _a.toClass,
-      toClass = _h === void 0 ? 'to' : _h;
-  var ref = useRef();
+var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var children = props.children,
+      _a = props.duration,
+      duration = _a === void 0 ? 240 : _a,
+      _b = props.once,
+      once = _b === void 0 ? true : _b,
+      _c = props.fromClass,
+      fromClass = _c === void 0 ? 'from' : _c,
+      _d = props.toClass,
+      toClass = _d === void 0 ? 'to' : _d;
+  var childrenRef = useRef();
   var ls = useRef(true);
-  var isInViewport = useInViewport(ref);
+  var isInViewport = useInViewport(childrenRef);
 
-  var _j = (children === null || children === void 0 ? void 0 : children.props) || {},
-      _k = _j.className,
-      className = _k === void 0 ? '' : _k,
-      _l = _j.style,
-      style = _l === void 0 ? {} : _l;
+  var _e = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _f = _e.className,
+      className = _f === void 0 ? '' : _f,
+      _g = _e.style,
+      style = _g === void 0 ? {} : _g;
+
+  useImperativeHandle(ref, function () {
+    return childrenRef.current;
+  });
 
   var newStyle = __assign(__assign({}, style), {
-    transition: transitionProp + " " + duration + "ms " + timingFunc + " " + delay + "ms"
+    //  transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
+    transitionDuration: duration + 'ms'
   });
 
   useUpdateEffect(function () {
@@ -74,8 +73,7 @@ var TransitionElement = function TransitionElement(_a) {
 
   if (count > 1) {
     throw new Error('TransitionElement can have only one children');
-  } // chidren 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement
-
+  }
 
   if ( /*#__PURE__*/React.isValidElement(children)) {
     return /*#__PURE__*/React.createElement(Transition, {
@@ -84,15 +82,18 @@ var TransitionElement = function TransitionElement(_a) {
       timeout: duration
     }, function (state) {
       return /*#__PURE__*/React.cloneElement(children, {
-        ref: ref,
+        ref: childrenRef,
         className: className + " " + getClassName(state, ls.current, fromClass, toClass),
         style: newStyle
       });
     });
   } else {
-    // console.warn('TransitionElement:children must be ReactElement');
+    if (process.env.NODE_ENV !== 'production') {
+      throw new Error('TransitionElement:children must be ReactElement');
+    }
+
     return children;
   }
-};
-
+});
+TransitionElement.displayName = 'UC-TransitionElement';
 export default TransitionElement;

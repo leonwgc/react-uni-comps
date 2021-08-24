@@ -36,7 +36,7 @@ export var offset = function offset(el) {
 };
 export var isBrowser = !!(typeof window !== 'undefined' && window);
 export var isMobile = function isMobile() {
-  return /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+  return isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 };
 /**
  *

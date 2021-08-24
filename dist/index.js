@@ -474,8 +474,9 @@ var detectFlexGapSupported = function detectFlexGapSupported() {
   document.body.removeChild(flex);
   return flexGapSupported;
 };
+var isBrowser = !!(typeof window !== 'undefined' && window);
 var isMobile = function isMobile() {
-  return /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+  return isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 };
 
 var _excluded = ["size", "align", "className", "children", "direction", "split", "style", "wrap"];
@@ -640,37 +641,36 @@ var getClassName = function getClassName(state, c) {
     return c ? fromClass : toClass; //exited
   }
 };
-/** 给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画 */
+/** 子元素执行从from到to类名切换(过渡时间由duration定义) 定义这两个css类名，应用transition过渡 */
 
 
-var TransitionElement = function TransitionElement(_ref) {
-  var children = _ref.children,
-      _ref$duration = _ref.duration,
-      duration = _ref$duration === void 0 ? 240 : _ref$duration,
-      _ref$transitionProp = _ref.transitionProp,
-      transitionProp = _ref$transitionProp === void 0 ? 'all' : _ref$transitionProp,
-      _ref$timingFunc = _ref.timingFunc,
-      timingFunc = _ref$timingFunc === void 0 ? 'ease-out' : _ref$timingFunc,
-      _ref$delay = _ref.delay,
-      delay = _ref$delay === void 0 ? 0 : _ref$delay,
-      _ref$once = _ref.once,
-      once = _ref$once === void 0 ? true : _ref$once,
-      _ref$fromClass = _ref.fromClass,
-      fromClass = _ref$fromClass === void 0 ? 'from' : _ref$fromClass,
-      _ref$toClass = _ref.toClass,
-      toClass = _ref$toClass === void 0 ? 'to' : _ref$toClass;
-  var ref = React.useRef();
+var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 240 : _props$duration,
+      _props$once = props.once,
+      once = _props$once === void 0 ? true : _props$once,
+      _props$fromClass = props.fromClass,
+      fromClass = _props$fromClass === void 0 ? 'from' : _props$fromClass,
+      _props$toClass = props.toClass,
+      toClass = _props$toClass === void 0 ? 'to' : _props$toClass;
+  var childrenRef = React.useRef();
   var ls = React.useRef(true);
-  var isInViewport = useInViewport__default['default'](ref);
+  var isInViewport = useInViewport__default['default'](childrenRef);
 
-  var _ref2 = (children === null || children === void 0 ? void 0 : children.props) || {},
-      _ref2$className = _ref2.className,
-      className = _ref2$className === void 0 ? '' : _ref2$className,
-      _ref2$style = _ref2.style,
-      style = _ref2$style === void 0 ? {} : _ref2$style;
+  var _ref = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _ref$className = _ref.className,
+      className = _ref$className === void 0 ? '' : _ref$className,
+      _ref$style = _ref.style,
+      style = _ref$style === void 0 ? {} : _ref$style;
+
+  React.useImperativeHandle(ref, function () {
+    return childrenRef.current;
+  });
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    transition: "".concat(transitionProp, " ").concat(duration, "ms ").concat(timingFunc, " ").concat(delay, "ms")
+    //  transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
+    transitionDuration: duration + 'ms'
   });
 
   useUpdateEffect__default['default'](function () {
@@ -680,8 +680,7 @@ var TransitionElement = function TransitionElement(_ref) {
 
   if (count > 1) {
     throw new Error('TransitionElement can have only one children');
-  } // chidren 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement
-
+  }
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
@@ -690,16 +689,20 @@ var TransitionElement = function TransitionElement(_ref) {
       timeout: duration
     }, function (state) {
       return /*#__PURE__*/React__default['default'].cloneElement(children, {
-        ref: ref,
+        ref: childrenRef,
         className: "".concat(className, " ").concat(getClassName(state, ls.current, fromClass, toClass)),
         style: newStyle
       });
     });
   } else {
-    // console.warn('TransitionElement:children must be ReactElement');
+    if (process.env.NODE_ENV !== 'production') {
+      throw new Error('TransitionElement:children must be ReactElement');
+    }
+
     return children;
   }
-};
+});
+TransitionElement.displayName = 'UC-TransitionElement';
 
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 var AnimationElement = function AnimationElement(_ref) {
@@ -1915,28 +1918,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Slide.displayName = 'UC-Slide';
 
-/** ScrollTo top */
-var ScrollTop = function ScrollTop(props) {
-  var children = props.children;
-  var top = 0;
-  return /*#__PURE__*/React__default['default'].cloneElement(children, {
-    onClick: function onClick() {
-      var step = Math.abs(window.pageYOffset - top) / 20;
-
-      var cb = function cb() {
-        if (window.pageYOffset > top) {
-          window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
-          requestAnimationFrame(cb);
-        }
-      };
-
-      requestAnimationFrame(cb);
-    }
-  });
-};
-
-ScrollTop.displayName = 'UC-ScrollTop';
-
 var debounce = function debounce(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
   var timer = 0;
@@ -1996,6 +1977,602 @@ var throttle = function throttle(fn) {
   };
 };
 
+/**
+ * windows回到顶部
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
+var ScrollTop = function ScrollTop(props) {
+  var children = props.children,
+      _props$visibilityHeig = props.visibilityHeight,
+      visibilityHeight = _props$visibilityHeig === void 0 ? 100 : _props$visibilityHeig;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      visible = _useState2[0],
+      setVisible = _useState2[1];
+
+  var top = 0;
+  React.useEffect(function () {
+    var onScroll = throttle(function () {
+      if (window.pageYOffset >= visibilityHeight) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    });
+    window.addEventListener('scroll', onScroll);
+    return function () {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [visibilityHeight]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
+      throw new Error('ScrollTop:children must be a valid react element');
+    }
+  }
+
+  return visible ? /*#__PURE__*/React__default['default'].cloneElement(children, {
+    onClick: function onClick() {
+      var _children$props$onCli, _children$props;
+
+      (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props);
+      var step = Math.abs(window.pageYOffset - top) / 20;
+
+      var cb = function cb() {
+        if (window.pageYOffset > top) {
+          window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
+          requestAnimationFrame(cb);
+        }
+      };
+
+      requestAnimationFrame(cb);
+    }
+  }) : null;
+};
+
+ScrollTop.displayName = 'UC-ScrollTop';
+
+var _excluded$e = ["size", "fill"];
+
+/** 用于关闭的 x */
+var Cross = function Cross(props) {
+  var _props$size = props.size,
+      size = _props$size === void 0 ? 16 : _props$size,
+      _props$fill = props.fill,
+      fill = _props$fill === void 0 ? '#999' : _props$fill,
+      rest = _objectWithoutProperties(props, _excluded$e);
+
+  return /*#__PURE__*/React__default['default'].createElement("div", rest, /*#__PURE__*/React__default['default'].createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 48 48",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React__default['default'].createElement("g", null, /*#__PURE__*/React__default['default'].createElement("g", null, /*#__PURE__*/React__default['default'].createElement("rect", {
+    fillOpacity: "0.01",
+    fill: "#FFFFFF",
+    x: "0",
+    y: "0",
+    width: "48",
+    height: "48",
+    strokeWidth: "4",
+    stroke: "none",
+    fillRule: "evenodd"
+  }), /*#__PURE__*/React__default['default'].createElement("path", {
+    d: "M14,14 L34,34",
+    stroke: fill,
+    strokeWidth: "4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    fill: "none",
+    fillRule: "evenodd"
+  }), /*#__PURE__*/React__default['default'].createElement("path", {
+    d: "M14,34 L34,14",
+    stroke: fill,
+    strokeWidth: "4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    fill: "none",
+    fillRule: "evenodd"
+  })))));
+};
+
+/**
+ * Get the window object using this function rather then simply use `window` because
+ * there are cases where the window object we are seeking to reference is not in
+ * the same window scope as the code we are running. (https://stackoverflow.com/a/37638629)
+ */
+var getWindow = function getWindow(node) {
+  // if node is not the window object
+  if (node.toString() !== '[object Window]') {
+    // get the top-level document object of the node, or null if node is a document.
+    var ownerDocument = node.ownerDocument; // get the window object associated with the document, or null if none is available.
+
+    return ownerDocument ? ownerDocument.defaultView || window : window;
+  }
+
+  return node;
+};
+var getDocument = function getDocument(node) {
+  return (isElement(node) ? node.ownerDocument : node.document) || window.document;
+};
+/* Get the Element that is the root element of the document which contains the node
+ * (for example, the <html> element for HTML documents).
+ */
+
+var getDocumentElement = function getDocumentElement(node) {
+  return getDocument(node).documentElement;
+};
+/* Get node's style info */
+
+var getComputedStyle = function getComputedStyle(node) {
+  return getWindow(node).getComputedStyle(node);
+};
+/* Get node's node name */
+
+var getNodeName = function getNodeName(node) {
+  return node ? (node.nodeName || '').toLowerCase() : '';
+};
+var getParentNode = function getParentNode(node) {
+  if (!node || getNodeName(node) === 'html') {
+    return node;
+  }
+
+  return (// If node is rooted at a custom element, meaning the node is part of a shadow DOM
+    node.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    node.parentNode || // DOM Element detected
+    node.host || // ShadowRoot detected
+    getDocumentElement(node) // fallback
+
+  );
+};
+/* Check if node is an Element or a customized Element */
+
+var isElement = function isElement(node) {
+  var OwnElement = getWindow(node).Element;
+  return node instanceof OwnElement || node instanceof Element;
+};
+/* Check if node is an HTMLElement or a customized HTMLElement */
+
+var isHTMLElement = function isHTMLElement(node) {
+  var OwnElement = getWindow(node).HTMLElement;
+  return node instanceof OwnElement || node instanceof HTMLElement;
+}; // Check if node is an HTMLElement or a customized HTMLElement
+
+var isTableElement = function isTableElement(node) {
+  return ['table', 'td', 'th'].indexOf(getNodeName(node)) >= 0;
+};
+
+/** Get the containing block for fixed positioned element as they don't have offsetParent */
+
+var getContainingBlock = function getContainingBlock(node, callback) {
+  callback === null || callback === void 0 ? void 0 : callback(node);
+  var currentNode = getParentNode(node);
+
+  while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
+    callback === null || callback === void 0 ? void 0 : callback(currentNode);
+    var css = getComputedStyle(currentNode);
+    /**
+     * If the position property is absolute or fixed,
+     * the containing block may also be formed by the
+     * edge of the padding box of the nearest ancestor
+     * element that has the following:
+     */
+
+    if (css.transform !== 'none' || css.perspective !== 'none' || css.willChange && css.willChange !== 'auto') {
+      return currentNode;
+    }
+
+    currentNode = getParentNode(currentNode);
+  }
+
+  return currentNode;
+};
+var getTrueOffsetParent = function getTrueOffsetParent(node) {
+  if (!isHTMLElement(node) || getComputedStyle(node).position === 'fixed') {
+    return null;
+  }
+  /**
+   *  If there is no positioned ancestor element, the nearest ancestor td, th,
+   *  table will be returned, or the body if there are no ancestor table elements either.
+   */
+
+
+  return node.offsetParent;
+};
+/**
+ * Gets the closest ancestor positioned element.
+ * Handles some edge cases, such as table ancestors and cross browser bugs.
+ */
+
+var getOffsetParent = function getOffsetParent(node, callback) {
+  var window = getWindow(node);
+  callback === null || callback === void 0 ? void 0 : callback(node);
+  var offsetParent = getTrueOffsetParent(node);
+  /* A Table element cannot be used as an offset parent,
+   * as a <div> cannot appear as a child of <table>.
+   */
+
+  while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === 'static') {
+    callback === null || callback === void 0 ? void 0 : callback(offsetParent);
+    offsetParent = getTrueOffsetParent(offsetParent);
+  }
+
+  return offsetParent || getContainingBlock(node, callback) || window;
+};
+var getOffsetTop = function getOffsetTop(node) {
+  var offsetTop = 0;
+  getOffsetParent(node, function (node) {
+    offsetTop += node.offsetTop;
+  });
+  return offsetTop;
+};
+
+var getScrollContainer = function getScrollContainer(node, callback) {
+  var currentNode = getParentNode(node);
+
+  while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
+    var css = getComputedStyle(currentNode);
+    var overflowY = css.overflowY;
+    var isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
+    callback === null || callback === void 0 ? void 0 : callback(currentNode);
+
+    if (isScrollable && currentNode.scrollHeight > currentNode.clientHeight) {
+      return currentNode;
+    }
+
+    currentNode = currentNode.parentNode;
+  }
+
+  return getDocumentElement(node);
+};
+
+var MARGIN = 12;
+
+/**
+ * 根据选择器所选元素、modal 的长宽、用户定义的 placement 和 offset，获取 modal 的位置
+ * Calculate the modal's position based on its anchor element, user-defined placement and offset
+ * @param {HTMLElement} modalEl
+ * @param {Element} anchorEl
+ * @param {Element} parentEl
+ * @param {string} placement
+ * @param {object} customOffset
+ */
+var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollContainer) {
+  var placement = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'bottom';
+  var customOffset = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {
+    x: 0,
+    y: 0
+  };
+  var modalPos = modalEl.getBoundingClientRect();
+  var anchorPos = anchorEl.getBoundingClientRect();
+  var parentPos = parentEl.getBoundingClientRect();
+  var scrollTop = scrollContainer.scrollTop;
+  var isParentBody = getNodeName(parentEl) === 'body';
+  var isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
+  var anchorOffsetTop = getOffsetTop(anchorEl);
+  var scrollY = isAnchorFixed ? anchorPos.top : isParentBody ? anchorPos.top + scrollTop : anchorOffsetTop;
+  /* The distance between the top of the offsetParent and the top of the anchor.
+   *
+   * We don't simply use anchorEl.offsetTop but the below code instead due to the following reason:
+   * for the cases with no mask, the anchorEl's should be positioned relative to the body rather than
+   * its real offsetParent.
+   */
+
+  var top = scrollY;
+  var bottom = anchorPos.height + scrollY;
+  var left = anchorPos.left - parentPos.left;
+  var width = anchorPos.width,
+      height = anchorPos.height;
+  var transform = {
+    'top': {
+      // modal放到内容的上面
+      top: top - modalPos.height - MARGIN,
+      left: left + width / 2 - modalPos.width / 2
+    },
+    'bottom': {
+      // modal放到内容的下面
+      top: bottom + MARGIN,
+      left: left + width / 2 - modalPos.width / 2
+    },
+    'left': {
+      // modal放到内容的左边
+      top: top + height / 2 - modalPos.height / 2,
+      left: left - modalPos.width - MARGIN
+    },
+    'right': {
+      // modal放到内容的右边
+      top: top + height / 2 - modalPos.height / 2,
+      left: left + width + MARGIN
+    },
+    'top-right': {
+      // modal的bottom-border紧贴内容的top-border，right-borders水平对齐
+      top: top - modalPos.height - MARGIN,
+      left: left + width - modalPos.width
+    },
+    'top-left': {
+      // modal的bottom-border紧贴内容的top-border，left-borders水平对齐
+      top: top - modalPos.height - MARGIN,
+      left: left
+    },
+    'bottom-right': {
+      // modal的top-border紧贴内容的bottom-border，right-borders水平对齐
+      top: bottom + MARGIN,
+      left: left + width - modalPos.width
+    },
+    'bottom-left': {
+      // modal的top-border紧贴内容的bottom-border，left-borders水平对齐
+      top: bottom + MARGIN,
+      left: left
+    },
+    'right-top': {
+      // modal的left-border紧贴内容的right-border，top-borders水平对齐
+      top: top,
+      left: left + width + MARGIN
+    },
+    'left-top': {
+      // modal的right-border紧贴内容的left-border，top-borders水平对齐
+      top: top,
+      left: left - modalPos.width - MARGIN
+    },
+    'right-bottom': {
+      // modal的left-border紧贴内容的right-border，bottom-borders水平对齐
+      top: bottom - modalPos.height,
+      left: left + width + MARGIN
+    },
+    'left-bottom': {
+      // modal的right-border紧贴内容的left-border，bottom-borders水平对齐
+      top: bottom - modalPos.height,
+      left: left - modalPos.width - MARGIN
+    }
+  };
+  var offset = {
+    x: customOffset.x || 0,
+    y: customOffset.y || 0
+  };
+  var position = transform[placement];
+  return {
+    position: isAnchorFixed ? 'fixed' : 'absolute',
+    top: position.top + offset.y,
+    left: position.left + offset.x
+  };
+};
+
+var getReversePosition = function getReversePosition(position) {
+  var map = {
+    bottom: 'top',
+    top: 'bottom',
+    left: 'right',
+    right: 'left'
+  };
+  return map[position];
+};
+
+var getArrowStyle = function getArrowStyle(modalEl) {
+  var placement = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'bottom';
+  var mask = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var margin = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 12;
+  var diagonalWidth = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 6;
+  var modalPos = modalEl.getBoundingClientRect();
+
+  var _ref = placement.split('-'),
+      _ref2 = _slicedToArray(_ref, 2),
+      firstPlacement = _ref2[0],
+      lastPlacement = _ref2[1];
+
+  var boxShadowmMap = {
+    top: "1px 1px 1px 0px ".concat(border),
+    right: "-1px 1px 1px 0px ".concat(border),
+    bottom: "-1px -1px 1px 0px ".concat(border),
+    left: "1px -1px 1px 0px ".concat(border)
+  };
+
+  var extraStyle = _defineProperty({
+    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement]
+  }, getReversePosition(firstPlacement), -diagonalWidth / 2);
+
+  if (!lastPlacement) {
+    var style = {};
+
+    if (['bottom', 'top'].includes(firstPlacement)) {
+      style['right'] = (modalPos.width - diagonalWidth) / 2;
+    }
+
+    if (['left', 'right'].includes(firstPlacement)) {
+      style['top'] = (modalPos.height - diagonalWidth) / 2;
+    }
+
+    return _objectSpread2(_objectSpread2({}, style), extraStyle);
+  } else {
+    return _objectSpread2(_defineProperty({}, lastPlacement, margin * 2), extraStyle);
+  }
+};
+
+var _excluded$f = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children"];
+
+var _templateObject$g;
+
+var StyledPopover = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  transition: opacity 240ms linear;\n  &.from {\n    opacity: 0.62;\n  }\n  &.to {\n    opacity: 1;\n  }\n"])), border, border);
+var MARGIN$1 = 12;
+
+var Popover = function Popover(props) {
+  var _props$placement = props.placement,
+      placement = _props$placement === void 0 ? 'bottom' : _props$placement,
+      content = props.content,
+      _props$arrow = props.arrow,
+      arrow = _props$arrow === void 0 ? true : _props$arrow,
+      visible = props.visible,
+      closable = props.closable,
+      onClose = props.onClose,
+      className = props.className,
+      style = props.style,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$f);
+
+  var childrenRef = React.useRef();
+  var popoverRef = React.useRef(null);
+  var resizeTimerRef = React.useRef(0);
+
+  var _useState = React.useState({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      modalStyle = _useState2[0],
+      setModalStyle = _useState2[1];
+
+  var _useState3 = React.useState({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      arrowStyle = _useState4[0],
+      setArrowStyle = _useState4[1];
+
+  React.useEffect(function () {
+    var anchorEl = childrenRef.current;
+    var scrollContainer = getScrollContainer(anchorEl);
+
+    var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
+      var modalEl = popoverRef.current;
+      var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, {
+        x: 0,
+        y: 0
+      } // offset
+      );
+      var arrowStyle = getArrowStyle(modalEl, placement, false, 12);
+      setModalStyle(modalStyle);
+      setArrowStyle(arrowStyle);
+    };
+
+    var handleResize = function handleResize() {
+      if (resizeTimerRef.current) {
+        window.cancelAnimationFrame(resizeTimerRef.current);
+      }
+
+      resizeTimerRef.current = window.requestAnimationFrame(function () {
+        calculateStyle(anchorEl, scrollContainer);
+      });
+    };
+
+    var handleScroll = function handleScroll() {
+      var modalEl = popoverRef.current;
+      var anchorPos = anchorEl.getBoundingClientRect();
+      var modalPos = modalEl.getBoundingClientRect();
+      var scrollPos = scrollContainer.getBoundingClientRect();
+      var isScrollContainerHtml = getNodeName(scrollContainer) === 'html';
+      /* scroll the scroll container to show the modal */
+
+      var visibleHeight = scrollContainer.clientHeight;
+      var scrollContainerTop = isScrollContainerHtml ? 0 : scrollPos.top;
+
+      if ( // Modal is below the viewport
+      anchorPos.top - scrollContainerTop + anchorPos.height + modalPos.height + MARGIN$1 >= visibleHeight || // Modal is above the viewport
+      anchorPos.top <= modalPos.height + MARGIN$1) {
+        // scrolls to a particular set of coordinates inside a given element.
+        scrollContainer.scrollTo({
+          left: 0,
+          top: scrollContainer.scrollTop + anchorPos.top - scrollContainerTop + anchorPos.height / 2 - visibleHeight / 2 + MARGIN$1,
+          behavior: 'smooth'
+        });
+      }
+
+      if (getNodeName(scrollContainer) === 'html') return;
+      var documentEl = document.documentElement;
+      /* scroll to show the scroll container */
+
+      if ( // Modal is below the viewport
+      scrollPos.top + scrollPos.height >= window.innerHeight || // Modal is above the viewport
+      scrollPos.bottom > scrollPos.height) {
+        // scrolls to a particular set of coordinates inside a given element.
+        documentEl.scrollTo({
+          left: 0,
+          top: documentEl.scrollTop + scrollPos.top + scrollPos.height / 2 - window.innerHeight / 2 + MARGIN$1,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    if (visible) {
+      handleScroll();
+      calculateStyle(anchorEl, scrollContainer);
+      window.addEventListener('resize', handleResize);
+      return function () {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [visible, placement]);
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: childrenRef
+  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
+    ref: popoverRef
+  }, /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
+    className: clsx__default['default'](className, 'uc-popover'),
+    style: _objectSpread2(_objectSpread2({}, modalStyle), style)
+  }, rest), arrow && /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default']('uc-popover-arrow'),
+    style: arrowStyle
+  }), closable && /*#__PURE__*/React__default['default'].createElement(Cross, {
+    className: clsx__default['default']('uc-popover-close'),
+    onClick: onClose
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('uc-popover-content')
+  }, content))), document.body) : null);
+};
+
+var _templateObject$h;
+var StylePopover = styled__default['default'](Popover)(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n"])));
+
+/** Tooltip */
+var Tooltip = function Tooltip(props) {
+  var title = props.title,
+      _props$bgColor = props.bgColor,
+      bgColor = _props$bgColor === void 0 ? 'black' : _props$bgColor,
+      _props$placement = props.placement,
+      placement = _props$placement === void 0 ? 'top' : _props$placement,
+      _props$arrow = props.arrow,
+      arrow = _props$arrow === void 0 ? true : _props$arrow,
+      children = props.children; // 鼠标移到popover内容区，不关闭popover
+
+  var ref = React.useRef(0);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      visible = _useState2[0],
+      setVisible = _useState2[1];
+
+  var childProps = {
+    onMouseEnter: function onMouseEnter() {
+      return setVisible(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      ref.current = window.setTimeout(function () {
+        setVisible(false);
+      }, 300);
+    }
+  };
+  return /*#__PURE__*/React__default['default'].createElement(StylePopover, {
+    className: clsx__default['default']('uc-tooltip'),
+    style: {
+      background: bgColor
+    },
+    visible: visible,
+    onMouseEnter: function onMouseEnter() {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      setVisible(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      setTimeout(function () {
+        setVisible(false);
+      }, 300);
+    },
+    placement: placement,
+    content: title,
+    arrow: arrow
+  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childProps) : /*#__PURE__*/React__default['default'].createElement("span", childProps, children));
+};
+
+Tooltip.displayName = 'UC-Tooltip';
+
 exports.AnimationElement = AnimationElement;
 exports.Button = Button;
 exports.Cell = Cell;
@@ -2007,6 +2584,7 @@ exports.HairLineBox = HairLineBox;
 exports.IndexList = IndexList;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
+exports.Popover = Popover;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.ScrollTop = ScrollTop;
@@ -2017,6 +2595,7 @@ exports.Space = Space;
 exports.Spinner = Spinner;
 exports.Switch = Switch;
 exports.Tabs = Tabs;
+exports.Tooltip = Tooltip;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
 exports.Waypoint = Waypoint;

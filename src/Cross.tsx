@@ -3,7 +3,7 @@ import React from 'react';
 type CrossProps = {
   size?: number;
   fill?: string;
-};
+} & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 /** 用于关闭的 x */
 const Cross = (props: CrossProps): React.ReactElement => {

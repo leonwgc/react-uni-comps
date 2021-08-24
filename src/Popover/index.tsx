@@ -81,7 +81,6 @@ const Popover = (props: Props): React.ReactElement => {
   } = props;
 
   const childrenRef = useRef();
-
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
 
@@ -92,10 +91,8 @@ const Popover = (props: Props): React.ReactElement => {
     const anchorEl = childrenRef.current;
     const scrollContainer = getScrollContainer(anchorEl);
 
-    const calculateStyle = (anchorEl, scrollContainer): void => {
+    const calculateStyle = (anchorEl, scrollContainer) => {
       const modalEl = popoverRef.current;
-
-      if (!modalEl || !anchorEl) return;
 
       const modalStyle = getModalStyle(
         modalEl,
@@ -119,6 +116,7 @@ const Popover = (props: Props): React.ReactElement => {
         calculateStyle(anchorEl, scrollContainer);
       });
     };
+
     const handleScroll = () => {
       const modalEl = popoverRef.current;
       const anchorPos = anchorEl.getBoundingClientRect();
@@ -187,32 +185,32 @@ const Popover = (props: Props): React.ReactElement => {
     }
   }, [visible, placement]);
 
-  return visible ? (
+  return (
     <>
       {React.cloneElement(children, { ref: childrenRef })}
-      {ReactDOM.createPortal(
-        <TransitionElement ref={popoverRef}>
-          <StyledPopover
-            className={clsx(className, 'uc-popover')}
-            style={{ ...modalStyle, ...style }}
-            {...rest}
-          >
-            {/* arrow */}
-            {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+      {visible
+        ? ReactDOM.createPortal(
+            <TransitionElement ref={popoverRef}>
+              <StyledPopover
+                className={clsx(className, 'uc-popover')}
+                style={{ ...modalStyle, ...style }}
+                {...rest}
+              >
+                {/* arrow */}
+                {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-            {/* close */}
-            {closable && <Cross className={clsx('uc-popover-close')} onClick={onClose} />}
+                {/* close */}
+                {closable && <Cross className={clsx('uc-popover-close')} onClick={onClose} />}
 
-            {/** content */}
+                {/** content */}
 
-            <div className={clsx('uc-popover-content')}>{content}</div>
-          </StyledPopover>
-        </TransitionElement>,
-        document.body
-      )}
+                <div className={clsx('uc-popover-content')}>{content}</div>
+              </StyledPopover>
+            </TransitionElement>,
+            document.body
+          )
+        : null}
     </>
-  ) : (
-    React.cloneElement(children, { ref: childrenRef })
   );
 };
 
