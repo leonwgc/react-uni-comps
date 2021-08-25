@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Image } from 'antd';
 import { Space, FileInputTrigger, Button } from '../src';
 import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import clsx from 'clsx';
@@ -15,30 +16,41 @@ function getBase64(file) {
   });
 }
 
+// company style
 const StyledImageUpload = styled.div`
-  display: inline-flex;
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 108px;
+  height: 108px;
+  background: #f5f5f5;
+  border-radius: 2px;
   border: 1px solid #e4e4e4;
-  justify-content: center;
-  align-items: center;
-  color: #999;
-  font-size: 24px;
   user-select: none;
+  cursor: pointer;
 
   img {
     max-width: 100%;
-    object-fit: contain;
+    object-fit: fill;
   }
 
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 16px;
-    transform: translate(50%, -50%);
-    cursor: pointer;
+  &.with-image {
+    border-style: dashed;
+
+    .change-image-trigger {
+      height: 24px;
+      line-height: 24px;
+      background-color: rgba(0, 0, 0, 0.55);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 108px;
+      color: #fff;
+      font-size: 12px;
+      bottom: -2px;
+    }
   }
 `;
 
@@ -79,46 +91,63 @@ export default function App() {
             });
           }}
         >
-          <StyledImageUpload>+</StyledImageUpload>
+          <StyledImageUpload>
+            <PlusOutlined
+              style={{ width: 20, height: 20, color: '#909399', fontSize: 20, marginTop: 25 }}
+            />
+            <div style={{ marginTop: 14, color: '#4d4d4d', fontSize: 14 }}>上传图片</div>
+          </StyledImageUpload>
         </FileInputTrigger>
       ) : (
         <StyledImageUpload>
+          <img src={url} />
           <CloseCircleOutlined
-            className="close"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              transform: 'translate(50%, -50%)',
+              zIndex: 10,
+            }}
             onClick={(e) => {
               e.stopPropagation();
               setFiles([]);
             }}
           />
-          <img src={url} />
         </StyledImageUpload>
       )}
 
+      {/* company style  */}
       {files.length ? (
-        <div className={clsx('upload1', 'img')}>
-          <CloseCircleOutlined
-            className="close"
-            onClick={(e) => {
-              e.stopPropagation();
-              setFiles([]);
-            }}
-          />
-          <img src={url} />
-        </div>
-      ) : (
-        <div className="upload1">
+        <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
+          <Image width={108} height={108} src={url} />
           <FileInputTrigger
             accept="images/*"
             onChange={(files) => {
               setFiles(files);
             }}
+            className="change-image-trigger"
           >
-            <PlusOutlined className="plus" />
+            更换图片
           </FileInputTrigger>
-          <div>上传图片</div>
-        </div>
+        </StyledImageUpload>
+      ) : (
+        <FileInputTrigger
+          accept="images/*"
+          onChange={(files) => {
+            setFiles(files);
+          }}
+        >
+          <StyledImageUpload>
+            <PlusOutlined
+              style={{ width: 20, height: 20, color: '#909399', fontSize: 20, marginTop: 25 }}
+            />
+            <div style={{ marginTop: 14, color: '#4d4d4d', fontSize: 14 }}>上传图片</div>
+          </StyledImageUpload>
+        </FileInputTrigger>
       )}
 
+      {/* trigger from outside */}
       <FileInputTrigger
         accept="image/*"
         onChange={(files) => {
