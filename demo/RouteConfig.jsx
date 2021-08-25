@@ -63,7 +63,7 @@ const routes = [
   },
   {
     path: '/upload',
-    component: lazy(() => import('./Upload')),
+    component: lazy(() => import('./ImageUpload')),
   },
   {
     path: '/waypoint',

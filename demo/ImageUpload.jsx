@@ -5,7 +5,6 @@ import { Space, FileInputTrigger, Button } from '../src';
 import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import clsx from 'clsx';
 import { upload } from 'xhr-fetch-lib';
-import './Upload.less';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
