@@ -26,7 +26,7 @@ const StyledCell = styled.div`
   line-height: 24px;
   background-color: #fff;
 
-  .cell__title {
+  .uc-cell-title {
     box-sizing: border-box;
     width: 6.2em;
     margin-right: 12px;
@@ -38,7 +38,7 @@ const StyledCell = styled.div`
       flex: 1;
     }
   }
-  .cell__value {
+  .uc-cell-value {
     flex: 1;
     position: relative;
     overflow: visible;
@@ -47,7 +47,7 @@ const StyledCell = styled.div`
     vertical-align: middle;
     word-wrap: break-word;
 
-    .field__body {
+    .uc-field-body {
       display: flex;
       align-items: center;
 
@@ -92,15 +92,15 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     throw new Error(`don't set content and children at the same time`);
   }
 
-  const titleClsx = clsx('cell__title', { 'not-edit-mode': content });
+  const titleClsx = clsx('uc-cell-title', { 'not-edit-mode': content });
 
   return (
     <HairLineBox color={lineColor}>
-      <StyledCell ref={ref} {...rest}>
+      <StyledCell ref={ref} className="uc-cell" {...rest}>
         <div className={titleClsx}>{label}</div>
-        <div className="cell__value">
+        <div className="uc-cell-value">
           {content}
-          {children ? <div className="field__body">{children}</div> : null}
+          {children ? <div className="uc-field-body">{children}</div> : null}
         </div>
       </StyledCell>
     </HairLineBox>
