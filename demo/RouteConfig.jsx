@@ -2,15 +2,20 @@ import { lazy } from 'react';
 
 const routes = [
   {
-    path: '/transition',
+    path: '/',
+    exact: true,
+    component: lazy(() => import('./All')),
+  },
+  {
+    path: '/TransitionElement',
     component: lazy(() => import('./Transition')),
   },
   {
-    path: '/animation',
+    path: '/AnimationElement',
     component: lazy(() => import('./Animation')),
   },
   {
-    path: '/images',
+    path: '/LazyloadImage',
     component: lazy(() => import('./LazyloadImage')),
   },
   {
@@ -18,75 +23,75 @@ const routes = [
     component: lazy(() => import('./LazyLoadElement')),
   },
   {
-    path: '/pullup',
+    path: '/Pullup',
     component: lazy(() => import('./Pullup')),
   },
   {
-    path: '/popup',
+    path: '/Popup',
     component: lazy(() => import('./Popup')),
   },
   {
-    path: '/tab',
+    path: '/Tab',
     component: lazy(() => import('./Tab')),
   },
   {
-    path: '/ske',
+    path: '/Skeleton',
     component: lazy(() => import('./SkeletonDemo')),
   },
   {
-    path: '/checkbox',
+    path: '/Checkbox',
     component: lazy(() => import('./Checkbox')),
   },
   {
-    path: '/cell',
+    path: '/Cell',
     component: lazy(() => import('./Cell')),
   },
   {
-    path: '/button',
+    path: '/Button',
     component: lazy(() => import('./Button')),
   },
   {
-    path: '/spinner',
+    path: '/Spinner',
     component: lazy(() => import('./Spinner')),
   },
   {
-    path: '/switch',
+    path: '/Switch',
     component: lazy(() => import('./Switch')),
   },
   {
-    path: '/errorBoudary',
+    path: '/ErrorBoudary',
     component: lazy(() => import('./ErrorBoudary')),
   },
   {
-    path: '/divider',
+    path: '/Divider',
     component: lazy(() => import('./Divider')),
   },
   {
-    path: '/upload',
+    path: '/ImageUpload',
     component: lazy(() => import('./ImageUpload')),
   },
   {
-    path: '/waypoint',
+    path: '/Waypoint',
     component: lazy(() => import('./Waypoint')),
   },
   {
-    path: '/index-list',
+    path: '/IndexList',
     component: lazy(() => import('./IndexList')),
   },
   {
-    path: '/slide',
+    path: '/Slide',
     component: lazy(() => import('./Slide')),
   },
   {
-    path: '/slide-full',
+    path: '/SlideFull',
     component: lazy(() => import('./SlideFull')),
   },
   {
-    path: '/popover',
+    path: '/Popover',
     component: lazy(() => import('./Popover')),
   },
   {
-    path: '/drag',
+    path: '/Drag',
     component: lazy(() => import('./Drag')),
   },
 ];
