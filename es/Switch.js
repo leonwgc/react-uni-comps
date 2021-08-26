@@ -42,7 +42,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import useThemeColor from './hooks/useThemeColor';
 var StyledSwitch = styled.button(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border-color: ", ";\n\n    &::after {\n      left: calc(100% - 18px - 2px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.4;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"], ["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border-color: ", ";\n\n    &::after {\n      left: calc(100% - 18px - 2px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.4;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (_a) {
   var color = _a.color;
   return color;
@@ -53,22 +53,22 @@ var StyledSwitch = styled.button(templateObject_1 || (templateObject_1 = __makeT
 /** 开关 */
 
 var Switch = function Switch(props) {
-  var _a = props.color,
-      color = _a === void 0 ? colors.primary : _a,
-      disabled = props.disabled,
+  var disabled = props.disabled,
       checked = props.checked,
       defaultChecked = props.defaultChecked,
       className = props.className,
-      _b = props.style,
-      style = _b === void 0 ? {} : _b,
+      _a = props.style,
+      style = _a === void 0 ? {} : _a,
       onChange = props.onChange,
-      rest = __rest(props, ["color", "disabled", "checked", "defaultChecked", "className", "style", "onChange"]);
+      rest = __rest(props, ["disabled", "checked", "defaultChecked", "className", "style", "onChange"]);
 
-  var _c = useState(function () {
+  var color = useThemeColor();
+
+  var _b = useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
   }),
-      _checked = _c[0],
-      _setChecked = _c[1];
+      _checked = _b[0],
+      _setChecked = _b[1];
 
   return /*#__PURE__*/React.createElement(StyledSwitch, __assign({
     color: color,

@@ -868,6 +868,33 @@ var LazyLoadImage = function LazyLoadImage(_ref) {
   }, otherProps));
 };
 
+var border = '#e0e0e0';
+var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
+
+var disabledBg = '#f5f5f5';
+var primary = '#004bcc';
+var danger = '#ff4d4f';
+
+/**
+ *  获得主题色,主题色优先,没有配置，则取colors定义的主题色
+ *
+ * @export
+ * @param {string} fallbackColor
+ * @return {*}  {string}
+ */
+
+function useThemeColor() {
+  var fallbackColor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : primary;
+  var theme = React.useContext(styled.ThemeContext);
+  var color = fallbackColor;
+
+  if (typeof theme.color === 'string') {
+    color = theme.color;
+  }
+
+  return color;
+}
+
 var _templateObject$2;
 var StyledLoading = styled__default['default'].div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  font-size: ", "px;\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  color: ", ";\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])), function (props) {
   return props.size;
@@ -876,21 +903,25 @@ var StyledLoading = styled__default['default'].div(_templateObject$2 || (_templa
 });
 /** Spinner 加载中 */
 
-var Spinner = function Spinner(_ref) {
+var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
   var _ref$size = _ref.size,
       size = _ref$size === void 0 ? 16 : _ref$size,
-      _ref$color = _ref.color,
-      color = _ref$color === void 0 ? '#606060' : _ref$color;
+      color = _ref.color;
+
+  var _color = useThemeColor();
+
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
+    ref: ref,
     size: size,
-    color: color
+    color: color || _color
   });
-};
+});
+Spinner.displayName = 'UC-Spinner';
 
 var _excluded$3 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
 var _templateObject$3;
-var StyledPullupContainer = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  &.div-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 8px 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  &.div-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 10px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -915,9 +946,11 @@ var Pullup = function Pullup(props) {
   } : _props$dataRender,
       fetchData = props.fetchData,
       _props$loadingText = props.loadingText,
-      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spinner, null), "\u52A0\u8F7D\u4E2D...") : _props$loadingText,
+      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spinner, {
+    color: "#909090"
+  }), "\u52A0\u8F7D\u4E2D") : _props$loadingText,
       _props$finishedText = props.finishedText,
-      finishedText = _props$finishedText === void 0 ? '我是有底线的~' : _props$finishedText,
+      finishedText = _props$finishedText === void 0 ? '我是有底线的' : _props$finishedText,
       _props$finished = props.finished,
       finished = _props$finished === void 0 ? false : _props$finished,
       className = props.className,
@@ -1034,14 +1067,7 @@ var WaitLoading = function WaitLoading(_ref) {
   return show ? React__default['default'].Children.only(children) : null;
 };
 
-var border = '#e0e0e0';
-var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
-
-var disabledBg = '#f5f5f5';
-var primary = '#004bcc';
-var danger = '#ff4d4f';
-
-var _excluded$5 = ["children", "color", "underlineWidth", "defaultIndex", "underline", "onIndexChange", "className"];
+var _excluded$5 = ["children", "underlineWidth", "defaultIndex", "underline", "onIndexChange", "className"];
 
 var _templateObject$5, _templateObject2$1, _templateObject3;
 var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"])), border);
@@ -1059,7 +1085,7 @@ var StyledTabContentWrap = styled__default['default'].div(_templateObject3 || (_
  *  选项卡项，放在Tabs里面
  *
  * @param {*} { children }
- * @return {*} 
+ * @return {*}
  */
 
 var Tab = function Tab(_ref) {
@@ -1089,8 +1115,6 @@ var isValidtTabElement = function isValidtTabElement(el) {
 
 var Tabs = function Tabs(_ref2) {
   var children = _ref2.children,
-      _ref2$color = _ref2.color,
-      color = _ref2$color === void 0 ? primary : _ref2$color,
       _ref2$underlineWidth = _ref2.underlineWidth,
       underlineWidth = _ref2$underlineWidth === void 0 ? '100%' : _ref2$underlineWidth,
       _ref2$defaultIndex = _ref2.defaultIndex,
@@ -1107,6 +1131,7 @@ var Tabs = function Tabs(_ref2) {
       setActiveIndex = _useState2[1];
 
   var count = React__default['default'].Children.count(children);
+  var color = useThemeColor();
   return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
     theme: {
       color: color
@@ -1368,8 +1393,7 @@ var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_temp
 /** Checkbox, Radiobox带checked状态的 */
 
 var Checkbox = function Checkbox(props) {
-  var _props$color = props.color,
-      color = _props$color === void 0 ? primary : _props$color,
+  var color = props.color,
       _props$size = props.size,
       size = _props$size === void 0 ? 18 : _props$size,
       _props$borderRadius = props.borderRadius,
@@ -1379,6 +1403,8 @@ var Checkbox = function Checkbox(props) {
       checked = props.checked,
       disabled = props.disabled,
       children = props.children;
+
+  var _color = useThemeColor();
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -1408,11 +1434,11 @@ var Checkbox = function Checkbox(props) {
     borderRadius: borderRadius,
     size: size,
     disabled: disabled,
-    color: color
+    color: color || _color
   }), children ? /*#__PURE__*/React__default['default'].createElement("span", null, children) : null);
 };
 
-var _excluded$8 = ["color", "type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
+var _excluded$8 = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
 var _templateObject$a;
 var StyledButton = styled__default['default'].button(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
@@ -1440,9 +1466,7 @@ var StyledButton = styled__default['default'].button(_templateObject$a || (_temp
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$color = props.color,
-      color = _props$color === void 0 ? primary : _props$color,
-      _props$type = props.type,
+  var _props$type = props.type,
       type = _props$type === void 0 ? 'default' : _props$type,
       disabled = props.disabled,
       block = props.block,
@@ -1455,6 +1479,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost = props.ghost,
       rest = _objectWithoutProperties(props, _excluded$8);
 
+  var color = useThemeColor();
   var themeColor = disabled ? disabledText : danger$1 ? danger : color;
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({
     ref: ref,
@@ -1472,7 +1497,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Button.displayName = 'UC-Button';
 
-var _excluded$9 = ["color", "disabled", "checked", "defaultChecked", "className", "style", "onChange"];
+var _excluded$9 = ["disabled", "checked", "defaultChecked", "className", "style", "onChange"];
 
 var _templateObject$b;
 var StyledSwitch = styled__default['default'].button(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border-color: ", ";\n\n    &::after {\n      left: calc(100% - 18px - 2px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.4;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (_ref) {
@@ -1485,9 +1510,7 @@ var StyledSwitch = styled__default['default'].button(_templateObject$b || (_temp
 /** 开关 */
 
 var Switch = function Switch(props) {
-  var _props$color = props.color,
-      color = _props$color === void 0 ? primary : _props$color,
-      disabled = props.disabled,
+  var disabled = props.disabled,
       checked = props.checked,
       defaultChecked = props.defaultChecked,
       className = props.className,
@@ -1495,6 +1518,8 @@ var Switch = function Switch(props) {
       style = _props$style === void 0 ? {} : _props$style,
       onChange = props.onChange,
       rest = _objectWithoutProperties(props, _excluded$9);
+
+  var color = useThemeColor();
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -1704,10 +1729,6 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 Waypoint.displayName = 'UC-Waypoint';
 
 var _templateObject$e;
-// if (isBrowser && isSupportStyleValue('position', 'sticky')) {
-//   isSupportSticky = true;
-// }
-
 var StyledContainer = styled__default['default'].div(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  .uc-indexbar-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexbar-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n\n      &.active {\n        color: ", ";\n      }\n    }\n  }\n\n  .bar-title {\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      color: ", ";\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    margin: 0;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), function (_ref) {
   var color = _ref.color;
   return color;
@@ -1779,8 +1800,6 @@ var renderItem = function renderItem(item, index, activeIndex, setIndex, contain
 var IndexList = function IndexList(props) {
   var _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      _props$color = props.color,
-      color = _props$color === void 0 ? primary : _props$color,
       onChange = props.onChange;
   var ref = React.useRef();
 
@@ -1789,6 +1808,7 @@ var IndexList = function IndexList(props) {
       index = _useState2[0],
       setIndex = _useState2[1];
 
+  var color = useThemeColor();
   return /*#__PURE__*/React__default['default'].createElement(StyledContainer, {
     className: clsx__default['default']('uc-indexbar'),
     color: color,
@@ -2601,11 +2621,179 @@ var Tooltip = function Tooltip(props) {
 
 Tooltip.displayName = 'UC-Tooltip';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+var _isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
+
+var getPosition = function getPosition(el) {
+  var left = 0;
+  var top = 0;
+
+  while (el) {
+    left += el.offsetLeft;
+    top += el.offsetTop;
+    el = el.offsetParent;
+  }
+
+  return {
+    left: left,
+    top: top
+  };
+};
+
+var useDragMove = function useDragMove(elRef, boundRef, onStart, onEnd) {
+  React.useEffect(function () {
+    if (elRef.current) {
+      var ox, oy;
+      var ol, ot;
+      var isMoving = false;
+      var elRect = elRef.current.getBoundingClientRect();
+      var boundRect = null;
+
+      if (boundRef) {
+        boundRect = boundRef.current.getBoundingClientRect();
+      }
+
+      var setPosition = function setPosition(left, top, bottom, right) {
+        if (left != undefined) {
+          elRef.current.style.left = left + 'px';
+        }
+
+        if (top != undefined) {
+          elRef.current.style.top = top + 'px';
+        }
+
+        if (bottom != undefined) {
+          elRef.current.style.top = 'unset';
+          elRef.current.style.bottom = bottom + 'px';
+        }
+
+        if (right != undefined) {
+          elRef.current.style.left = 'unset';
+          elRef.current.style.right = right + 'px';
+        }
+      };
+
+      var moveHanlder = function moveHanlder(e) {
+        if (!isMoving) return;
+
+        if (e.touches) {
+          e = e.touches[0];
+        }
+
+        var left = ol + e.clientX - ox;
+        var top = ot + e.clientY - oy;
+        var bottom, right;
+
+        if (boundRef) {
+          if (left <= 0) {
+            left = 0;
+          }
+
+          if (left + elRect.width > boundRect.width) {
+            right = 0;
+          }
+
+          if (top <= 0) {
+            top = 0;
+          }
+
+          if (top + elRect.height > boundRect.height) {
+            bottom = 0;
+          }
+        }
+
+        setPosition(left, top, bottom, right);
+      }; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+      elRef.current.addEventListener(_isTouch ? 'touchstart' : 'mousedown', function (e) {
+        e.stopPropagation();
+
+        if (typeof e.cancelable !== 'boolean' || e.cancelable) {
+          e.preventDefault();
+        }
+
+        onStart === null || onStart === void 0 ? void 0 : onStart(e, getPosition(e.target));
+
+        if (!isMoving) {
+          isMoving = true;
+        }
+
+        if (e.touches) {
+          e = e.touches[0];
+        }
+
+        ox = e.clientX;
+        oy = e.clientY;
+        ol = elRef.current.offsetLeft;
+        ot = elRef.current.offsetTop;
+        document.addEventListener(_isTouch ? 'touchmove' : 'mousemove', moveHanlder);
+      });
+
+      var touchEndHandler = function touchEndHandler(e) {
+        if (isMoving) {
+          isMoving = false;
+        }
+
+        document.removeEventListener(_isTouch ? 'touchmove' : 'mousemove', moveHanlder);
+
+        if (typeof onEnd === 'function' && elRef.current === e.target) {
+          onEnd(e, getPosition(e.target));
+        }
+      };
+
+      document.addEventListener(_isTouch ? 'touchend' : 'mouseup', touchEndHandler);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, []);
+};
+
+/** 拖拽包裹的元素 */
+var Drag = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      boundRef = props.boundRef;
+  var elRef = React.useRef();
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
+      throw new Error('Drag:children must be a valid react element');
+    }
+  }
+
+  useDragMove(elRef, boundRef, function (e, position) {
+    var _props$onDragStart;
+
+    (_props$onDragStart = props.onDragStart) === null || _props$onDragStart === void 0 ? void 0 : _props$onDragStart.call(props, e, position);
+  }, function (e, position) {
+    var _props$onDragEnd;
+
+    (_props$onDragEnd = props.onDragEnd) === null || _props$onDragEnd === void 0 ? void 0 : _props$onDragEnd.call(props, e, position);
+  });
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  return /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: elRef,
+    style: _objectSpread2(_objectSpread2({}, children.props.style), {
+      position: 'absolute'
+    })
+  });
+});
+Drag.displayName = 'UC-Drag';
+
+Object.defineProperty(exports, 'ThemeProvider', {
+  enumerable: true,
+  get: function () {
+    return styled.ThemeProvider;
+  }
+});
 exports.AnimationElement = AnimationElement;
 exports.Button = Button;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.Divider = Divider;
+exports.Drag = Drag;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.HairLineBox = HairLineBox;

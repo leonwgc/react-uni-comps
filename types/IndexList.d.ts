@@ -5,8 +5,6 @@ declare type Item = {
     subItems: Item[];
 };
 export declare type Props = {
-    /** hilight颜色 */
-    color?: string;
     /** 数据 */
     data: Item[];
     /** 点击数据项回调 */

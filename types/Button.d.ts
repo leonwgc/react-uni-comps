@@ -1,12 +1,10 @@
 import React, { HTMLAttributes } from 'react';
 export declare type Props = {
     type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
-    color?: string /** 线框/背景颜色 */;
     disabled?: boolean;
     style?: React.CSSProperties;
     block?: boolean;
     children?: React.ReactNode;
-    href?: string;
     className?: string;
     circle?: boolean /** 圆形按钮 */;
     dashed?: boolean /** 虚线边 */;
@@ -17,12 +15,10 @@ export declare type Props = {
 /** 按钮 */
 declare const Button: React.ForwardRefExoticComponent<{
     type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
-    color?: string /** 线框/背景颜色 */;
     disabled?: boolean;
     style?: React.CSSProperties;
     block?: boolean;
     children?: React.ReactNode;
-    href?: string;
     className?: string;
     circle?: boolean /** 圆形按钮 */;
     dashed?: boolean /** 虚线边 */;

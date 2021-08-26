@@ -44,6 +44,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
+import useThemeColor from './hooks/useThemeColor';
 import Color from 'color';
 var StyledButton = styled.button(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"], ["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), colors.border, isMobile() ? '&:active' : '&:hover', function (_a) {
   var color = _a.color;
@@ -70,10 +71,8 @@ var StyledButton = styled.button(templateObject_1 || (templateObject_1 = __makeT
 /** 按钮 */
 
 var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var _a = props.color,
-      color = _a === void 0 ? colors.primary : _a,
-      _b = props.type,
-      type = _b === void 0 ? 'default' : _b,
+  var _a = props.type,
+      type = _a === void 0 ? 'default' : _a,
       disabled = props.disabled,
       block = props.block,
       className = props.className,
@@ -83,8 +82,9 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       dashed = props.dashed,
       danger = props.danger,
       ghost = props.ghost,
-      rest = __rest(props, ["color", "type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"]);
+      rest = __rest(props, ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"]);
 
+  var color = useThemeColor();
   var themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
   return /*#__PURE__*/React.createElement(StyledButton, __assign({
     ref: ref,
