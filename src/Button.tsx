@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
+import useThemeColor from './hooks/useThemeColor';
 import Color from 'color';
 
 export type Props = {
@@ -12,7 +13,6 @@ export type Props = {
   style?: React.CSSProperties;
   block?: boolean;
   children?: React.ReactNode;
-  href?: string;
   className?: string;
   circle?: boolean /** 圆形按钮 */;
   dashed?: boolean /** 虚线边 */;
@@ -105,7 +105,7 @@ const StyledButton = styled.button`
 /** 按钮 */
 const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
-    color = colors.primary,
+    color,
     type = 'default',
     disabled,
     block,
@@ -119,7 +119,9 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
+  const _color = useThemeColor(color);
+
+  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : _color;
 
   return (
     <StyledButton

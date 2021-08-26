@@ -23,6 +23,10 @@ export default function App() {
           hello
         </Button>
 
+        <Button type="primary" color="gray">
+          hello
+        </Button>
+
         <Button danger>danger default</Button>
         <Button danger type="primary">
           danger primary
@@ -31,11 +35,8 @@ export default function App() {
           hello
         </Button>
 
-        <Button type="primary" color="#ff4d4f" disabled>
+        <Button type="primary" danger disabled>
           danger
-        </Button>
-        <Button type="default" dashed>
-          hello
         </Button>
         <Button type="default" dashed>
           hello
@@ -77,7 +78,6 @@ export default function App() {
         <Button type="primary" color="#00bc8d" block style={{ height: 40 }}>
           dr
         </Button>
-        <Button block style={{ height: 40 }} color="gray" type="primary"></Button>
         <Button block style={{ height: 80 }}></Button>
       </div>
       <div style={{ background: '#333', padding: 16 }}>
