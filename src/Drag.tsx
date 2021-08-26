@@ -2,7 +2,8 @@ import React, { useRef, useImperativeHandle, MutableRefObject } from 'react';
 import useDrag, { Position } from './hooks/useDrag';
 
 export type Props = {
-  onDragEnd?: (position: Position) => void;
+  onDragStart?: (e: MouseEvent | TouchEvent, position: Position) => void;
+  onDragEnd?: (e: MouseEvent | TouchEvent, position: Position) => void;
   boundRef?: MutableRefObject<HTMLElement>;
   children: React.ReactElement;
 };
@@ -17,9 +18,16 @@ const Drag = React.forwardRef<Element, Props>((props: Props, ref): React.ReactEl
     }
   }
 
-  useDrag(elRef, boundRef, (pos: Position) => {
-    props.onDragEnd?.(pos);
-  });
+  useDrag(
+    elRef,
+    boundRef,
+    (e: MouseEvent | TouchEvent, position: Position) => {
+      props.onDragStart?.(e, position);
+    },
+    (e: MouseEvent | TouchEvent, position: Position) => {
+      props.onDragEnd?.(e, position);
+    }
+  );
 
   useImperativeHandle(ref, () => elRef.current);
 

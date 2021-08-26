@@ -13,6 +13,7 @@ const StyledDiv = styled.div`
 export default function App() {
   const [pos, setPos] = useState();
   const boundRef = useRef();
+  const elNoBoundRef = useRef();
   return (
     <div>
       <div
@@ -26,7 +27,7 @@ export default function App() {
           height: 300,
         }}
       >
-        <Drag onDragEnd={setPos} boundRef={boundRef}>
+        <Drag onDragEnd={(e, p) => setPos(p)} boundRef={boundRef}>
           <StyledDiv>
             {pos ? (
               <span>
@@ -39,8 +40,15 @@ export default function App() {
         </Drag>
       </div>
 
-      <Drag>
-        <StyledDiv>no bound</StyledDiv>
+      <Drag
+        onDragStart={(e) => {
+          e.target.style.borderColor = 'blue';
+        }}
+        onDragEnd={(e) => {
+          e.target.style.borderColor = 'green';
+        }}
+      >
+        <StyledDiv ref={elNoBoundRef}>no bound</StyledDiv>
       </Drag>
     </div>
   );

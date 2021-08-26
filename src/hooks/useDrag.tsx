@@ -23,7 +23,8 @@ export type Position = {
 const useDragMove = (
   elRef: MutableRefObject<HTMLElement>,
   boundRef?: MutableRefObject<HTMLElement>,
-  onEnd?: (position: Position) => void
+  onStart?: (e: MouseEvent | TouchEvent, position: Position) => void,
+  onEnd?: (e: MouseEvent | TouchEvent, position: Position) => void
 ): void => {
   useEffect(() => {
     if (elRef.current) {
@@ -92,6 +93,7 @@ const useDragMove = (
         if (typeof e.cancelable !== 'boolean' || e.cancelable) {
           e.preventDefault();
         }
+        onStart?.(e, getPosition(e.target));
         if (!isMoving) {
           isMoving = true;
         }
@@ -112,7 +114,7 @@ const useDragMove = (
         }
         document.removeEventListener(_isTouch ? 'touchmove' : 'mousemove', moveHanlder);
         if (typeof onEnd === 'function' && elRef.current === e.target) {
-          onEnd(getPosition(e.target));
+          onEnd(e, getPosition(e.target));
         }
       };
 
