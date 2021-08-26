@@ -31,7 +31,7 @@ const StyledImageUpload = styled.div`
 
   img {
     max-width: 100%;
-    object-fit: fill;
+    object-fit: cover;
   }
 
   &.with-image {
@@ -66,10 +66,10 @@ export default function App() {
   }, [files]);
 
   return (
-    <Space>
+    <Space size={[24, 24]} wrap>
       {files.length === 0 ? (
         <FileInputTrigger
-          accept="images/*"
+          accept="image/*"
           onChange={(files) => {
             setFiles(files);
             const file = files[0];
@@ -121,7 +121,7 @@ export default function App() {
         <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
           <Image width={108} height={108} src={url} />
           <FileInputTrigger
-            accept="images/*"
+            accept="image/*"
             onChange={(files) => {
               setFiles(files);
             }}
@@ -132,7 +132,7 @@ export default function App() {
         </StyledImageUpload>
       ) : (
         <FileInputTrigger
-          accept="images/*"
+          accept="image/*"
           onChange={(files) => {
             setFiles(files);
           }}
@@ -149,12 +149,27 @@ export default function App() {
       {/* trigger from outside */}
       <FileInputTrigger
         accept="image/*"
+        capture="environment"
         onChange={(files) => {
           setFiles(files);
         }}
       >
-        <Button type="primary">trigger upload</Button>
+        <Button type="primary">调后置拍照</Button>
       </FileInputTrigger>
+
+      <FileInputTrigger
+        accept="image/*"
+        capture="user"
+        onChange={(files) => {
+          setFiles(files);
+        }}
+      >
+        <Button type="primary">调前置拍照</Button>
+      </FileInputTrigger>
+
+      <Button type="primary" onClick={() => setFiles([])}>
+        清除图片
+      </Button>
     </Space>
   );
 }
