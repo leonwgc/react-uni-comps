@@ -25,4 +25,5 @@ export { default as ScrollTop } from './ScrollTop';
 export { default as Popover } from './Popover';
 export { default as Tooltip } from './Tooltip';
 export { default as ThemeProvider } from './ThemeProvider';
+export { default as Drag } from './Drag';
 export * from './helper';

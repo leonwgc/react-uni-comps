@@ -85,6 +85,10 @@ const routes = [
     path: '/popover',
     component: lazy(() => import('./Popover')),
   },
+  {
+    path: '/drag',
+    component: lazy(() => import('./Drag')),
+  },
 ];
 
 export default routes;
