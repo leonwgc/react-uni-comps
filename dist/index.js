@@ -1194,16 +1194,19 @@ var Tabs = function Tabs(_ref2) {
 
 Tabs.Tab = Tab;
 
+var _excluded$6 = ["label", "content", "lineColor", "children"];
+
 var _templateObject$6;
 var StyledCell = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 10px 16px;\n  overflow: hidden;\n  color: #323233;\n  font-size: 14px;\n  line-height: 24px;\n  background-color: #fff;\n\n  .cell__title {\n    box-sizing: border-box;\n    width: 6.2em;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .cell__value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #969799;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .field__body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: inherit;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
 /** 列表项，通常用于移动端 */
 
-var Cell = function Cell(_ref) {
-  var label = _ref.label,
-      content = _ref.content,
-      _ref$lineColor = _ref.lineColor,
-      lineColor = _ref$lineColor === void 0 ? '#dcdcdc' : _ref$lineColor,
-      children = _ref.children;
+var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var label = props.label,
+      content = props.content,
+      _props$lineColor = props.lineColor,
+      lineColor = _props$lineColor === void 0 ? '#dcdcdc' : _props$lineColor,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$6);
 
   if (content && children) {
     throw new Error("don't set content and children at the same time");
@@ -1214,16 +1217,19 @@ var Cell = function Cell(_ref) {
   });
   return /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
     color: lineColor
-  }, /*#__PURE__*/React__default['default'].createElement(StyledCell, null, /*#__PURE__*/React__default['default'].createElement("div", {
+  }, /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({
+    ref: ref
+  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
     className: titleClsx
   }, label), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "cell__value"
   }, content, children ? /*#__PURE__*/React__default['default'].createElement("div", {
     className: "field__body"
   }, children) : null)));
-};
+});
+Cell.displayName = 'UC-Cell';
 
-var _excluded$6 = ["animate", "width", "height", "shape"],
+var _excluded$7 = ["animate", "width", "height", "shape"],
     _excluded2$2 = ["style", "className"];
 
 var _templateObject$7;
@@ -1238,7 +1244,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       height = _props$height === void 0 ? 16 : _props$height,
       _props$shape = props.shape,
       shape = _props$shape === void 0 ? 'rect' : _props$shape,
-      other = _objectWithoutProperties(props, _excluded$6);
+      other = _objectWithoutProperties(props, _excluded$7);
 
   var _other$style = other.style,
       style = _other$style === void 0 ? {} : _other$style,
@@ -1259,7 +1265,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 
-var _excluded$7 = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
+var _excluded$8 = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
     _excluded2$3 = ["className"];
 
 var _templateObject$8;
@@ -1282,7 +1288,7 @@ var Skeleton = function Skeleton(props) {
       avatarSize = _props$avatarSize === void 0 ? 32 : _props$avatarSize,
       children = props.children,
       loading = props.loading,
-      other = _objectWithoutProperties(props, _excluded$7);
+      other = _objectWithoutProperties(props, _excluded$8);
 
   if (row < 1) {
     throw new Error('row必须设置>=1,默认4');
@@ -1438,7 +1444,7 @@ var Checkbox = function Checkbox(props) {
   }), children ? /*#__PURE__*/React__default['default'].createElement("span", null, children) : null);
 };
 
-var _excluded$8 = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
+var _excluded$9 = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
 var _templateObject$a;
 var StyledButton = styled__default['default'].button(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
@@ -1477,7 +1483,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       dashed = props.dashed,
       danger$1 = props.danger,
       ghost = props.ghost,
-      rest = _objectWithoutProperties(props, _excluded$8);
+      rest = _objectWithoutProperties(props, _excluded$9);
 
   var color = useThemeColor();
   var themeColor = disabled ? disabledText : danger$1 ? danger : color;
@@ -1497,7 +1503,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Button.displayName = 'UC-Button';
 
-var _excluded$9 = ["disabled", "checked", "defaultChecked", "className", "style", "onChange"];
+var _excluded$a = ["disabled", "checked", "defaultChecked", "className", "style", "onChange"];
 
 var _templateObject$b;
 var StyledSwitch = styled__default['default'].button(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border-color: ", ";\n\n    &::after {\n      left: calc(100% - 18px - 2px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.4;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (_ref) {
@@ -1517,7 +1523,7 @@ var Switch = function Switch(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$9);
+      rest = _objectWithoutProperties(props, _excluded$a);
 
   var color = useThemeColor();
 
@@ -1600,7 +1606,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   return ErrorBoundary;
 }(React__default['default'].Component);
 
-var _excluded$a = ["type", "textPosition", "className", "dashed", "color", "children"];
+var _excluded$b = ["type", "textPosition", "className", "dashed", "color", "children"];
 
 var _templateObject$c;
 
@@ -1626,7 +1632,7 @@ var Divider = function Divider(props) {
       _props$color = props.color,
       color = _props$color === void 0 ? 'rgba(0, 0, 0, 0.06)' : _props$color,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$a);
+      rest = _objectWithoutProperties(props, _excluded$b);
 
   var hasText = !!children;
   return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({
@@ -1640,7 +1646,7 @@ var Divider = function Divider(props) {
   }, children) : null);
 };
 
-var _excluded$b = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
+var _excluded$c = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
 
 var _templateObject$d;
 var StyledFileInputTrigger = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
@@ -1656,7 +1662,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       capture = props.capture,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$b);
+      rest = _objectWithoutProperties(props, _excluded$c);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({
     onClick: function onClick() {
@@ -1687,7 +1693,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
   }), children);
 };
 
-var _excluded$c = ["onVisible", "onInVisible"];
+var _excluded$d = ["onVisible", "onInVisible"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1696,7 +1702,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
-      rest = _objectWithoutProperties(props, _excluded$c);
+      rest = _objectWithoutProperties(props, _excluded$d);
 
   var vv = React.useRef(onVisible);
   var vi = React.useRef(onInVisible);
@@ -1835,7 +1841,7 @@ var IndexList = function IndexList(props) {
 
 IndexList.displayName = 'UC-IndexList';
 
-var _excluded$d = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
+var _excluded$e = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
 
 var _templateObject$f;
 var StyledSlide = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
@@ -1860,7 +1866,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       style = props.style,
       _props$showDot = props.showDot,
       showDot = _props$showDot === void 0 ? true : _props$showDot,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$e);
 
   var containerRef = React.useRef();
   var bsRef = React.useRef();
@@ -2085,7 +2091,7 @@ var ScrollTop = function ScrollTop(props) {
 
 ScrollTop.displayName = 'UC-ScrollTop';
 
-var _excluded$e = ["size", "fill"];
+var _excluded$f = ["size", "fill"];
 
 /** 用于关闭的 x */
 var Cross = function Cross(props) {
@@ -2093,7 +2099,7 @@ var Cross = function Cross(props) {
       size = _props$size === void 0 ? 16 : _props$size,
       _props$fill = props.fill,
       fill = _props$fill === void 0 ? '#999' : _props$fill,
-      rest = _objectWithoutProperties(props, _excluded$e);
+      rest = _objectWithoutProperties(props, _excluded$f);
 
   return /*#__PURE__*/React__default['default'].createElement("div", rest, /*#__PURE__*/React__default['default'].createElement("svg", {
     width: size,
@@ -2440,7 +2446,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$f = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children"];
+var _excluded$g = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children"];
 
 var _templateObject$g;
 
@@ -2465,7 +2471,7 @@ var Popover = function Popover(props) {
       className = props.className,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$f);
+      rest = _objectWithoutProperties(props, _excluded$g);
 
   var childrenRef = React.useRef();
   var popoverRef = React.useRef(null);
