@@ -782,6 +782,10 @@ export default function SkeletonDemo() {
 
 #### 26. Tooltip (文字提示)
 
+#### 27. Drag (拖拽)
+
+#### 28. ThemeProvider (全局主题色配置)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import
