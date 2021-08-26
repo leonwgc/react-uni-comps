@@ -35,7 +35,7 @@ const App = () => {
         // dom滚动需要设置高度
         // style={{ height: '80vh' }}
         dataList={list}
-        finishedText="没有更多数据了!"
+        // finishedText="没有更多数据了!"
         fetchData={fetchData}
         finished={finished}
         dataRender={(data, index) => {

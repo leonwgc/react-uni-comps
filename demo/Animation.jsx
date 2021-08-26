@@ -4,12 +4,10 @@ import styled from 'styled-components';
 import 'animate.css';
 import bird from './images/bird.png';
 
-const StyledDiv = styled.div`
+const StyledDiv = styled(Button)`
   height: 100px;
   width: 100px;
-  background-color: red;
   margin-top: 10px;
-  color: #fff;
   font-size: 32px;
   display: flex;
   align-items: center;

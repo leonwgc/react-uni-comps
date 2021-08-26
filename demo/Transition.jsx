@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { TransitionElement, Space } from 'react-uni-comps';
+import { TransitionElement, Space, Button, Switch } from '../src';
 import styled from 'styled-components';
-import { Switch } from 'antd';
 
-const StyledDiv = styled.div`
+const StyledUCButton = styled(Button)`
   height: 100px;
   background-color: red;
   margin-top: 10px;
@@ -79,7 +78,9 @@ const Tansition = () => {
       </div>
       {arr.map((item, k) => (
         <TransitionElement key={k} once={once}>
-          <StyledDiv style={{ width: k * 10 }}>{item}</StyledDiv>
+          <StyledUCButton type="primary" style={{ width: k * 10 }}>
+            {item}
+          </StyledUCButton>
         </TransitionElement>
       ))}
     </div>

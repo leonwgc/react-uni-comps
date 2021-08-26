@@ -17,8 +17,10 @@ const StyledPullupContainer = styled.div`
   }
 
   > .uc-pullup-footer {
-    padding: 8px 0;
+    padding: 10px 0;
     display: flex;
+    color: #909090;
+    font-size: 14px;
     justify-content: center;
     align-items: center;
   }
@@ -65,11 +67,11 @@ const Pullup = (props: Props): React.ReactNode => {
     fetchData,
     loadingText = (
       <Space>
-        <Spinner />
-        加载中...
+        <Spinner color="#909090" />
+        加载中
       </Space>
     ),
-    finishedText = '我是有底线的~',
+    finishedText = '我是有底线的',
     finished = false,
     className,
     useWindowScroll = true,
