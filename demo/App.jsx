@@ -7,7 +7,7 @@ import routes from './RouteConfig';
 
 import 'dayjs/locale/zh-cn';
 import dayjs from 'dayjs';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '../src';
 import './App.less';
 
 dayjs.locale('zh-cn');

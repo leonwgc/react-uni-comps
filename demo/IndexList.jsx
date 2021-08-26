@@ -62,7 +62,7 @@ export default function App() {
   ];
   return (
     <div className="app">
-      <IndexList data={data} color="#00bc8d" onChange={(item) => alert(item.value)} />
+      <IndexList data={data} onChange={(item) => alert(item.value)} />
     </div>
   );
 }

@@ -37,7 +37,7 @@ const StyledTabs = styled(Tabs)`
 
 export default function App() {
   return (
-    <div classNameName="app">
+    <div className="app">
       <StyledTabs defaultIndex={2} onIndexChange={(index) => console.log(index)}>
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
@@ -75,7 +75,7 @@ export default function App() {
         <Tabs.Tab title="title3">
           <StyledContent>
             <AnimationElement name="fadeInRight" duration=".24s">
-              <Spinner color="#004bcc" size={48}></Spinner>
+              <Spinner color="red" size={48}></Spinner>
             </AnimationElement>
           </StyledContent>
         </Tabs.Tab>

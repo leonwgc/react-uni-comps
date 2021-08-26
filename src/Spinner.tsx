@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import useThemeColor from './hooks/useThemeColor';
 
 export type Props = {
   size?: number /** 圈圈大小,应用到font-size,默认16 */;
-  color?: string /** 圈圈颜色,默认 #606060 */;
+  color?: string /** 圈圈颜色*/;
 };
 
 const StyledLoading = styled.div<{ size: number; color: string }>`
@@ -65,8 +66,11 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
 `;
 
 /** Spinner 加载中 */
-const Spinner: React.FC<Props> = ({ size = 16, color = '#606060' }) => {
-  return <StyledLoading size={size} color={color}></StyledLoading>;
-};
+const Spinner = React.forwardRef<HTMLDivElement, Props>(({ size = 16, color }, ref) => {
+  const _color = useThemeColor();
+  return <StyledLoading ref={ref} size={size} color={color || _color}></StyledLoading>;
+});
+
+Spinner.displayName = 'UC-Spinner';
 
 export default Spinner;

@@ -24,4 +24,5 @@ export { default as Slide } from './Slide';
 export { default as ScrollTop } from './ScrollTop';
 export { default as Popover } from './Popover';
 export { default as Tooltip } from './Tooltip';
+export { default as ThemeProvider } from './ThemeProvider';
 export * from './helper';

@@ -1,16 +1,9 @@
 import React, { MutableRefObject, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
-// import { isSupportStyleValue, isBrowser } from './dom';
 import { useRef } from 'react';
+import useThemeColor from './hooks/useThemeColor';
 import Waypoint from './Waypoint';
-
-// let isSupportSticky;
-
-// if (isBrowser && isSupportStyleValue('position', 'sticky')) {
-//   isSupportSticky = true;
-// }
 
 type Item = {
   label: string;
@@ -19,8 +12,6 @@ type Item = {
 };
 
 export type Props = {
-  /** hilight颜色 */
-  color?: string;
   /** 数据 */
   data: Item[];
   /** 点击数据项回调 */
@@ -156,9 +147,10 @@ const renderItem = (
 
 /** 索引列表 */
 const IndexList = (props: Props): React.ReactElement => {
-  const { data = [], color = colors.primary, onChange } = props;
+  const { data = [], onChange } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
+  const color = useThemeColor();
 
   return (
     <StyledContainer className={clsx('uc-indexbar')} color={color} ref={ref}>

@@ -8,7 +8,6 @@ import Color from 'color';
 
 export type Props = {
   type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
-  color?: string /** 线框/背景颜色 */;
   disabled?: boolean;
   style?: React.CSSProperties;
   block?: boolean;
@@ -105,7 +104,6 @@ const StyledButton = styled.button`
 /** 按钮 */
 const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
-    color,
     type = 'default',
     disabled,
     block,
@@ -119,9 +117,9 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const _color = useThemeColor(color);
+  const color = useThemeColor();
 
-  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : _color;
+  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
 
   return (
     <StyledButton

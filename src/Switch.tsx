@@ -1,10 +1,10 @@
 import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import useThemeColor from './hooks/useThemeColor';
 import * as colors from './colors';
 
 export type Props = {
-  color?: string /** 颜色 */;
   disabled?: boolean;
   checked?: boolean;
   defaultChecked?: boolean;
@@ -72,16 +72,8 @@ const StyledSwitch = styled.button`
 
 /** 开关 */
 const Switch = (props: Props): React.ReactElement => {
-  const {
-    color = colors.primary,
-    disabled,
-    checked,
-    defaultChecked,
-    className,
-    style = {},
-    onChange,
-    ...rest
-  } = props;
+  const { disabled, checked, defaultChecked, className, style = {}, onChange, ...rest } = props;
+  const color = useThemeColor();
 
   const [_checked, _setChecked] = useState(() => {
     return typeof checked !== 'undefined'

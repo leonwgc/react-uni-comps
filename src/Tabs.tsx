@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import * as colors from './colors';
+import useThemeColor from './hooks/useThemeColor';
 import clsx from 'clsx';
 
 type TabsProp = {
   underline?: boolean /** 是否有下划线,默认true*/;
   underlineWidth?: string /** 下划线宽度,默认100% */;
-  color?: string /** 主题色， 影响active tab标题颜色，和下划线颜色 */;
   children: React.ReactElement[];
   defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
   onIndexChange?: (index: number) => void /** index变化时触发的回调函数 */;
@@ -85,7 +85,7 @@ const StyledTabContentWrap = styled.div`
  *  选项卡项，放在Tabs里面
  *
  * @param {*} { children }
- * @return {*} 
+ * @return {*}
  */
 const Tab: React.FC<TabProp> = ({ children }) => {
   return children;
@@ -111,7 +111,6 @@ const isValidtTabElement = (el) => {
  */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
-  color = colors.primary,
   underlineWidth = '100%',
   defaultIndex = 0,
   underline = true,
@@ -121,6 +120,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const count = React.Children.count(children);
+  const color = useThemeColor();
 
   return (
     <ThemeProvider theme={{ color: color }}>

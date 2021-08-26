@@ -2,25 +2,17 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import * as colors from '../colors';
 /**
- *  use color in ThemeProvider, if propColor not set
+ *  获得主题色
  *
  * @export
- * @param {string} propColor
+ * @param {string} defaultColor
  * @return {*}  {string}
  */
-export default function useThemeColor(propColor: string): string {
+export default function useThemeColor(defaultColor = colors.primary): string {
   const theme = useContext(ThemeContext);
-  // prop has highest priority
-  let color = propColor;
-
-  if (!color) {
-    // check theme provider
-    if (typeof theme.color === 'string') {
-      color = theme.color;
-    } else {
-      color = colors.primary;
-    }
+  let color = defaultColor;
+  if (typeof theme.color === 'string') {
+    color = theme.color;
   }
-
   return color;
 }

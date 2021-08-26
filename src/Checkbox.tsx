@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import useThemeColor from './hooks/useThemeColor';
 import * as colors from './colors';
 
 export type Props = {
   size?: number /** 默认18 */;
-  color?: string /** checked状态颜色,默认#004bcc */;
+  color?: string /** checked状态颜色 */;
   borderRadius?: string /** 默认2px,圆形设置为50% */;
   onChange?: (checked: boolean) => void /** checked状态改变回调 */;
   checked?: boolean;
@@ -89,7 +90,7 @@ const StyledCheckbox = styled.div<{
 /** Checkbox, Radiobox带checked状态的 */
 const Checkbox = (props: Props): React.ReactNode => {
   const {
-    color = colors.primary,
+    color,
     size = 18,
     borderRadius = '2px',
     onChange,
@@ -98,6 +99,9 @@ const Checkbox = (props: Props): React.ReactNode => {
     disabled,
     children,
   } = props;
+
+  const _color = useThemeColor();
+
   const [_checked, _setChecked] = useState(() => {
     return typeof checked !== 'undefined'
       ? checked
@@ -121,7 +125,7 @@ const Checkbox = (props: Props): React.ReactNode => {
         borderRadius={borderRadius}
         size={size}
         disabled={disabled}
-        color={color}
+        color={color || _color}
       ></StyledCheckbox>
       {children ? <span>{children}</span> : null}
     </StyledCheckboxWrapper>
