@@ -98,6 +98,10 @@ const routes = [
     path: '/CopyToClipboard',
     component: lazy(() => import('./CopyToClipboard')),
   },
+  {
+    path: '/Text',
+    component: lazy(() => import('./Text')),
+  },
 ];
 
 export default routes;
