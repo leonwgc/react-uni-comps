@@ -5,11 +5,18 @@ import useThemeColor from './hooks/useThemeColor';
 import clsx from 'clsx';
 
 type TabsProp = {
-  underline?: boolean /** 是否有下划线,默认true*/;
-  underlineWidth?: string /** 下划线宽度,默认100% */;
+  /** 是否有下划线,默认true*/
+  underline?: boolean;
+  /** 下划线宽度,默认100%,可以使用百分比和px */
+  underlineWidth?: string;
+  /** Tabs.Tab子元素*/
   children: React.ReactElement[];
-  defaultIndex?: number /** 默认选择的tab,默认0,第一个 */;
-  onIndexChange?: (index: number) => void /** index变化时触发的回调函数 */;
+  /** 默认选择的tab,默认0,第一个 */
+  defaultIndex?: number;
+  /** index变化时触发的回调函数 */
+  onIndexChange?: (index: number) => void;
+  /** 是否显示border,默认显示 */
+  border?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 type TabProp = {
@@ -28,6 +35,10 @@ const StyledTabHeaderWrap = styled.div`
   border-bottom: 1px solid ${colors.border};
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  &.no-border {
+    border-bottom: none;
   }
 `;
 
@@ -114,6 +125,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   underlineWidth = '100%',
   defaultIndex = 0,
   underline = true,
+  border = true,
   onIndexChange,
   className,
   ...otherProps
@@ -125,7 +137,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   return (
     <ThemeProvider theme={{ color: color }}>
       <div {...otherProps} className={clsx('uc-tabs', className)}>
-        <StyledTabHeaderWrap className={`uc-tabs-header-wrap`}>
+        <StyledTabHeaderWrap className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
           {React.Children.map(children, (child: React.ReactElement, index) => {
             if (isValidtTabElement(child)) {
               const { title = '', disabled } = child.props as TabProp;

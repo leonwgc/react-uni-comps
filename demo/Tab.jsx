@@ -56,13 +56,17 @@ export default function App() {
         <Tabs.Tab title="title3"></Tabs.Tab>
       </Tabs>
 
-      <Tabs
-        defaultIndex={1}
-        color="#00bc8d"
-        underlineWidth="50px"
-        onIndexChange={(index) => console.log(index)}
-      >
+      <Tabs defaultIndex={1} underlineWidth="50px" onIndexChange={(index) => console.log(index)}>
         <Tabs.Tab title="title1"></Tabs.Tab>
+        <Tabs.Tab title="title2">
+          <div style={{ padding: 20 }}>hello</div>
+        </Tabs.Tab>
+      </Tabs>
+
+      <Tabs underlineWidth="50px" border={false} onIndexChange={(index) => console.log(index)}>
+        <Tabs.Tab title="title1">
+          <div style={{ padding: 20 }}>no border</div>
+        </Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
       </Tabs>
       <Tabs underlineWidth="40px" themeColor="#004bcc" style={{ marginTop: 30 }}>
