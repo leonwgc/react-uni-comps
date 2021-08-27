@@ -94,6 +94,10 @@ const routes = [
     path: '/Drag',
     component: lazy(() => import('./Drag')),
   },
+  {
+    path: '/CopyToClipboard',
+    component: lazy(() => import('./CopyToClipboard')),
+  },
 ];
 
 export default routes;

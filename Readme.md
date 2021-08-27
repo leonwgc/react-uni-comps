@@ -786,6 +786,8 @@ export default function SkeletonDemo() {
 
 #### 28. ThemeProvider (全局主题色配置)
 
+#### 29. CopyToClipboard (复制文本到剪贴板)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import

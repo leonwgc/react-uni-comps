@@ -26,4 +26,5 @@ export { default as Popover } from './Popover';
 export { default as Tooltip } from './Tooltip';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as Drag } from './Drag';
+export { default as CopyToClipboard } from './CopyToClipboard';
 export * from './helper';
