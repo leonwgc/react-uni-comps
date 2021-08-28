@@ -42,6 +42,7 @@ export default function All() {
       <Cell label="Text" content="go" onClick={() => gotoPage('Text')}></Cell>
       <Cell label="Tooltip" content="go" onClick={() => gotoPage('Tooltip')}></Cell>
       <Cell label="Popup" content="go" onClick={() => gotoPage('Popup')}></Cell>
+      <Cell label="Toast" content="go" onClick={() => gotoPage('Toast')}></Cell>
     </div>
   );
 }

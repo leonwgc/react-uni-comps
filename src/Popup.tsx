@@ -115,6 +115,8 @@ export type Props = {
   visible?: boolean;
   /** 是否显示遮罩，默认显示 */
   backdrop?: boolean;
+  /** 遮罩样式 */
+  backdropStyle?: React.CSSProperties;
   /** 遮罩点击事件 */
   onBackdropClick?: () => void;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
@@ -137,6 +139,7 @@ const Popup = (props: Props): React.ReactElement => {
     children,
     visible,
     backdrop = true,
+    backdropStyle,
     onBackdropClick,
     position = 'bottom',
     duration = 280,
@@ -148,7 +151,7 @@ const Popup = (props: Props): React.ReactElement => {
 
   return ReactDOM.createPortal(
     <>
-      {backdrop && visible ? <Backdrop onClick={onBackdropClick} /> : null}
+      {backdrop && visible ? <Backdrop style={backdropStyle} onClick={onBackdropClick} /> : null}
       <Transition in={visible} timeout={duration}>
         {(status) => (
           <div>

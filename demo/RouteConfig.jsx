@@ -106,6 +106,10 @@ const routes = [
     path: '/Tooltip',
     component: lazy(() => import('./Tooltip')),
   },
+  {
+    path: '/Toast',
+    component: lazy(() => import('./Toast')),
+  },
 ];
 
 export default routes;
