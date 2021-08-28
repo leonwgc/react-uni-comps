@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, Space, Toast, Button, Checkbox } from '../src';
+import { Spinner, Space, Toast, Button, Tick } from '../src';
 
 export default function App() {
   const [v, setV] = useState(false);
@@ -12,9 +12,19 @@ export default function App() {
           type="primary"
           onClick={() =>
             Toast.show(
-              <Space>
-                <Spinner color="rgba(255,255,255,.5)" /> 加载中
-              </Space>
+              <div
+                style={{
+                  width: 160,
+                  height: 80,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Space>
+                  <Spinner color="rgba(255,255,255,.5)" /> 加载中
+                </Space>
+              </div>
             )
           }
         >
@@ -25,8 +35,19 @@ export default function App() {
           type="primary"
           onClick={() =>
             Toast.show(
-              <Space direction="vertical" size={16}>
-                <Checkbox size={40} borderRadius="50%" color="#e4e4e4" checked></Checkbox> 认证成功
+              <Space direction="vertical" size={12} style={{ width: 120, textAlign: 'center' }}>
+                <div
+                  style={{
+                    borderRadius: '50%',
+                    width: 40,
+                    height: 40,
+                    display: 'inline-block',
+                    backgroundColor: '#fff',
+                  }}
+                >
+                  <Tick size={40} color="#333" />
+                </div>
+                认证成功
               </Space>
             )
           }

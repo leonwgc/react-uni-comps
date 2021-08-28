@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import useThemeColor from './hooks/useThemeColor';
+import Tick from './Tick';
 import * as colors from './colors';
 
 export type Props = {
@@ -51,44 +52,20 @@ const StyledCheckbox = styled.div<{
     border: 1px solid ${({ color }) => color};
   }
 
-  &::before {
-    transform: rotate(45deg);
-    opacity: 0;
-    transition: transform 0.3s ease;
-    content: '';
-    width: calc(${({ size }) => size}px / 3.5);
-    height: calc(${({ size }) => size}px / 2);
-    border: calc(${({ size }) => size}px / 9) solid ${({ color }) => color};
-    border-top: 0;
-    border-left: 0;
-    margin-top: calc(${({ size }) => size}px / -12);
-    margin-left: calc(${({ size }) => size}px / ${({ size }) => size});
-    transition: all 0.2s ease;
-  }
-
   &.checked {
     background-color: ${({ color }) => color};
     border: 1px solid ${({ color }) => color};
-    &::before {
-      transform: rotate(45deg);
-      opacity: 1;
-      border-color: #fff;
-    }
   }
 
   &.disabled {
     background-color: ${colors.disabledBg};
     border-color: ${colors.border};
     opacity: 0.4;
-
-    &::before {
-      border-color: ${colors.border};
-    }
   }
 `;
 
 /** Checkbox, Radiobox带checked状态的 */
-const Checkbox = (props: Props): React.ReactNode => {
+const Checkbox = (props: Props): React.ReactElement => {
   const {
     color,
     size = 18,
@@ -126,7 +103,9 @@ const Checkbox = (props: Props): React.ReactNode => {
         size={size}
         disabled={disabled}
         color={color || _color}
-      ></StyledCheckbox>
+      >
+        <Tick size={size} color="#fff" />
+      </StyledCheckbox>
       {children ? <span>{children}</span> : null}
     </StyledCheckboxWrapper>
   );

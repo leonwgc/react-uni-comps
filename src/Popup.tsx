@@ -129,7 +129,7 @@ export type Props = {
   children?: React.ReactNode;
   /** 弹框style */
   style?: React.CSSProperties;
-  /** 弹框className */
+/** 弹框className */
   className?: string;
 };
 

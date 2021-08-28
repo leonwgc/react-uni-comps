@@ -30,4 +30,5 @@ export { default as CopyToClipboard } from './CopyToClipboard';
 export { default as Text } from './Text';
 export { default as Backdrop } from './Backdrop';
 export { default as Toast } from './Toast';
+export { default as Tick } from './Tick';
 export * from './helper';
