@@ -28,4 +28,5 @@ export { default as ThemeProvider } from './ThemeProvider';
 export { default as Drag } from './Drag';
 export { default as CopyToClipboard } from './CopyToClipboard';
 export { default as Text } from './Text';
+export { default as Backdrop } from './Backdrop';
 export * from './helper';

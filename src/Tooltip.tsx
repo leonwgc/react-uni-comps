@@ -43,6 +43,12 @@ const Tooltip = (props: Props): React.ReactElement => {
         setVisible(false);
       }, 300);
     },
+    onFocus: () => {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+      setVisible(true);
+    },
   };
 
   const titleRender = () => {

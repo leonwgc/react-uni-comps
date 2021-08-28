@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Tooltip, Space, Popover, Button } from '../src';
+import { Backdrop, Space, Popover, Button } from '../src';
 
 const places = [
   {
@@ -84,6 +84,7 @@ const Items = places.map(({ title, content, placement, selector }) => ({
 }));
 
 export default function App() {
+  const [v, setV] = useState(false);
   const [visible, setVisible] = useState({});
 
   const handleClick = (placement) => {
@@ -98,6 +99,17 @@ export default function App() {
 
   return (
     <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
+      <Popover
+        placement="bottom-right"
+        backdrop
+        closable
+        onClose={() => setV(false)}
+        visible={v}
+        content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
+      >
+        <Button onClick={() => setV(true)}>back drop </Button>
+      </Popover>
+
       <Space wrap direction="vertical">
         {Items.map((step, idx) => {
           const { placement, title, content } = step;

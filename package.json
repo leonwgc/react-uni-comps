@@ -64,6 +64,7 @@
     "rimraf": "^3.0.2",
     "simple-redux-store": "^1.0.2",
     "typescript": "^4.3.5",
+    "vconsole": "^3.9.1",
     "xhr-fetch-lib": "^1.2.1",
     "yargs": "^17.1.0"
   },

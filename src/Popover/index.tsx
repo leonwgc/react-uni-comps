@@ -7,6 +7,7 @@ import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from '.
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
+import Backdrop from '../Backdrop';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -35,9 +36,17 @@ const StyledPopover = styled.div`
     transform: rotate(45deg);
   }
 
+  &.backdrop {
+    box-shadow: none;
+
+    .uc-popover-arrow {
+      box-shadow: none !important;
+    }
+  }
+
   transition: transform 0.24s ease-out;
   &.from {
-    transform: translateY(1%);
+    transform: translateY(0.5%);
   }
   &.to {
     transform: none;
@@ -51,7 +60,7 @@ export type Props = {
   children: React.ReactElement;
   /** 弹框内容 */
   content?: React.ReactNode;
-  /** 弹框是否显示 */
+  /** 弹框内容是否显示 */
   visible?: boolean;
   /** arrow是否显示 */
   arrow?: boolean;
@@ -62,6 +71,8 @@ export type Props = {
   /**  关闭回调 */
   onClose?: () => void;
   className?: string;
+  /** backdrop是否显示 */
+  backdrop?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 const MARGIN = 12;
@@ -82,6 +93,7 @@ const Popover = (props: Props): React.ReactElement => {
     className,
     style,
     children,
+    backdrop,
     ...rest
   } = props;
 
@@ -195,23 +207,26 @@ const Popover = (props: Props): React.ReactElement => {
       {React.cloneElement(children, { ref: childrenRef })}
       {visible
         ? ReactDOM.createPortal(
-            <TransitionElement ref={popoverRef}>
-              <StyledPopover
-                className={clsx(className, 'uc-popover')}
-                style={{ ...modalStyle, ...style }}
-                {...rest}
-              >
-                {/* arrow */}
-                {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+            <>
+              {backdrop ? <Backdrop visible onClick={onClose} /> : null}
+              <TransitionElement ref={popoverRef}>
+                <StyledPopover
+                  className={clsx(className, 'uc-popover', { backdrop: backdrop })}
+                  style={{ ...modalStyle, ...style }}
+                  {...rest}
+                >
+                  {/* arrow */}
+                  {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-                {/* close */}
-                {closable && <Cross className={clsx('uc-popover-close')} onClick={onClose} />}
+                  {/* close */}
+                  {closable && <Cross className={clsx('uc-popover-close')} onClick={onClose} />}
 
-                {/** content */}
+                  {/** content */}
 
-                <div className={clsx('uc-popover-content')}>{content}</div>
-              </StyledPopover>
-            </TransitionElement>,
+                  <div className={clsx('uc-popover-content')}>{content}</div>
+                </StyledPopover>
+              </TransitionElement>
+            </>,
             document.body
           )
         : null}
