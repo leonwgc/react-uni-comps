@@ -11,7 +11,7 @@ import * as colors from '../colors';
 export default function useThemeColor(fallbackColor = colors.primary): string {
   const theme = useContext(ThemeContext);
   let color = fallbackColor;
-  if (typeof theme.color === 'string') {
+  if (typeof theme?.color === 'string') {
     color = theme.color;
   }
   return color;

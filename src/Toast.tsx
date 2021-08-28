@@ -10,6 +10,7 @@ const StyleToast = styled(Popup)`
   background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
   border-radius: 2px;
+  text-align: center;
 `;
 
 export type Props = {
