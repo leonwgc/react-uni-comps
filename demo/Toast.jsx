@@ -12,6 +12,10 @@ export default function App() {
           Toast.show
         </Button>
 
+        <Button type="primary" onClick={() => Toast.show('中华人民共和国 none modal', 3000, false)}>
+          Toast.show none modal
+        </Button>
+
         <Button type="primary" onClick={() => Toast.show('hello,world', 1000)}>
           Toast.show 1s
         </Button>
