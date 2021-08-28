@@ -499,6 +499,7 @@ var Popup = function Popup(props) {
       visible = props.visible,
       _props$backdrop = props.backdrop,
       backdrop = _props$backdrop === void 0 ? true : _props$backdrop,
+      backdropStyle = props.backdropStyle,
       onBackdropClick = props.onBackdropClick,
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
@@ -512,6 +513,7 @@ var Popup = function Popup(props) {
       className = props.className;
   var wrapRef = React.useRef();
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, backdrop && visible ? /*#__PURE__*/React__default['default'].createElement(Backdrop, {
+    style: backdropStyle,
     onClick: onBackdropClick
   }) : null, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
@@ -2882,6 +2884,76 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Text.displayName = 'UC-Text';
 
+var _templateObject$k;
+var StyleToast = styled__default['default'](Popup)(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n"])));
+
+var getContainer = function getContainer() {
+  if (isBrowser) {
+    var div = document.querySelector('.uc-toast-static');
+
+    if (!div) {
+      div = document.createElement('div');
+      div.className = 'uc-toast-static';
+      document.body.appendChild(div);
+    }
+
+    return div;
+  }
+
+  return null;
+};
+/** 黑背景提示 */
+
+
+var Toast = function Toast(props) {
+  var content = props.content,
+      visible = props.visible,
+      modal = props.modal;
+  var toastProps = {};
+
+  if (modal) {
+    toastProps.backdrop = true;
+    toastProps.backdropStyle = {
+      opacity: 0
+    };
+  } else {
+    toastProps.backdrop = false;
+  }
+
+  if (isBrowser) {
+    return /*#__PURE__*/React__default['default'].createElement(StyleToast, _extends({
+      position: "center",
+      visible: visible,
+      className: clsx__default['default']('uc-toast')
+    }, toastProps), content);
+  } else {
+    return null;
+  }
+};
+/** 黑背景提示,静态调用 */
+
+
+Toast.show = function (content) {
+  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+  var modal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  if (!content) return;
+  var div = getContainer();
+  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, {
+    content: content,
+    visible: true,
+    modal: modal
+  }), div);
+  window.setTimeout(function () {
+    ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, {
+      content: content,
+      visible: false,
+      modal: modal
+    }), div);
+  }, duration);
+};
+
+Toast.displayName = 'UC-Toast';
+
 Object.defineProperty(exports, 'ThemeProvider', {
   enumerable: true,
   get: function () {
@@ -2914,6 +2986,7 @@ exports.Spinner = Spinner;
 exports.Switch = Switch;
 exports.Tabs = Tabs;
 exports.Text = Text;
+exports.Toast = Toast;
 exports.Tooltip = Tooltip;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;

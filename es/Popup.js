@@ -28,6 +28,7 @@ var Popup = function Popup(props) {
       visible = props.visible,
       _a = props.backdrop,
       backdrop = _a === void 0 ? true : _a,
+      backdropStyle = props.backdropStyle,
       onBackdropClick = props.onBackdropClick,
       _b = props.position,
       position = _b === void 0 ? 'bottom' : _b,
@@ -41,6 +42,7 @@ var Popup = function Popup(props) {
       className = props.className;
   var wrapRef = useRef();
   return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(React.Fragment, null, backdrop && visible ? /*#__PURE__*/React.createElement(Backdrop, {
+    style: backdropStyle,
     onClick: onBackdropClick
   }) : null, /*#__PURE__*/React.createElement(Transition, {
     in: visible,

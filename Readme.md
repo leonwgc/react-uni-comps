@@ -788,6 +788,10 @@ export default function SkeletonDemo() {
 
 #### 29. CopyToClipboard (复制文本到剪贴板)
 
+#### 30. Toast (黑背景提示)
+
+#### 31. Text (文本显示,单行/多行截断显示省略)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import
