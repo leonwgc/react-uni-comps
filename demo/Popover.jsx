@@ -96,71 +96,30 @@ export default function App() {
     setVisible(copy);
   };
 
-  const renderButton = (placement) => (
-    <Button
-      id={placement}
-      key={placement}
-      onClick={() => {
-        handleClick(placement);
-      }}
-    >
-      {placement}
-    </Button>
-  );
   return (
-    <div className="app">
-      <Tooltip
-        title={
-          <div style={{ padding: 8, width: 160 }}>
-            modal的bottom-border紧贴内容的top-border，right-borders水平对齐
-          </div>
-        }
-        bgColor="#00bc8d"
-      >
-        <Button style={{ margin: '200px 0 0 200px' }}>hello</Button>
-      </Tooltip>
-
-      <Tooltip
-        placement="right"
-        title={
-          <div style={{ padding: 8, width: 160 }}>
-            modal的bottom-border紧贴内容的top-border，right-borders水平对齐
-          </div>
-        }
-      >
-        <Button style={{ margin: 100 }}>hello</Button>
-      </Tooltip>
-
-      <div style={{ margin: 20 }}>
-        <Tooltip title="hello,world" arrow={false}>
-          no-arrow hello
-        </Tooltip>
-      </div>
-
-      <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
-        <Space wrap direction="vertical">
-          {Items.map((step, idx) => {
-            const { placement, title, content } = step;
-            return (
-              <Popover
-                placement={placement}
-                visible={visible[placement]}
-                closable
-                key={idx}
-                onClose={() => setVisible({ [placement]: false })}
-                content={
-                  <div style={{ padding: 16, width: 260 }}>
-                    <h5 style={{ fontSize: 16 }}>{title}</h5>
-                    <p>{content}</p>
-                  </div>
-                }
-              >
-                <Button onClick={() => handleClick(placement)}>{title}</Button>
-              </Popover>
-            );
-          })}
-        </Space>
-      </div>
+    <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
+      <Space wrap direction="vertical">
+        {Items.map((step, idx) => {
+          const { placement, title, content } = step;
+          return (
+            <Popover
+              placement={placement}
+              visible={visible[placement]}
+              closable
+              key={idx}
+              onClose={() => setVisible({ [placement]: false })}
+              content={
+                <div style={{ padding: 16, width: 260 }}>
+                  <h5 style={{ fontSize: 16 }}>{title}</h5>
+                  <p>{content}</p>
+                </div>
+              }
+            >
+              <Button onClick={() => handleClick(placement)}>{title}</Button>
+            </Popover>
+          );
+        })}
+      </Space>
     </div>
   );
 }

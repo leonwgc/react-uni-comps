@@ -35,12 +35,12 @@ const StyledPopover = styled.div`
     transform: rotate(45deg);
   }
 
-  transition: opacity 0.18s linear;
+  transition: transform 0.24s ease-out;
   &.from {
-    opacity: 0.8;
+    transform: translateY(1%);
   }
   &.to {
-    opacity: 1;
+    transform: none;
   }
 `;
 

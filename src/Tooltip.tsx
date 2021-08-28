@@ -7,6 +7,7 @@ import clsx from 'clsx';
 const StylePopover = styled(Popover)`
   color: #fff;
   padding: 8px;
+  opacity: 0.85;
 
   .uc-tooltip-content {
     display: inline-block;
