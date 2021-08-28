@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Space, Popup, HairLineBox, Button } from 'react-uni-comps';
+import { Space, Popup, Button } from '../src';
 
 export default function App() {
   const [b, setB] = useState(false);
@@ -9,29 +9,12 @@ export default function App() {
 
   return (
     <div>
-      <Space wrap>
+      <Space wrap style={{ margin: 50 }}>
         <Button onClick={() => setB(true)}>show bottom</Button>
         <Button onClick={() => setC(true)}>show center</Button>
         <Button onClick={() => setL(true)}>show left</Button>
         <Button onClick={() => setT(true)}>show top</Button>
       </Space>
-
-      <HairLineBox style={{ marginTop: 8, padding: '16px 32px' }}>
-        <input
-          placeholder="请输入姓名"
-          style={{
-            border: 'none',
-            outline: 'none',
-            display: 'block',
-            WebkitAppearance: 'none',
-            width: '100%',
-            height: '1.41176471em',
-            lineHeight: 1.41176471,
-            fontSize: 'inherit',
-            backgroundColor: 'transparent',
-          }}
-        ></input>
-      </HairLineBox>
 
       <Popup
         position="bottom"
@@ -40,7 +23,7 @@ export default function App() {
           width: '100%',
         }}
         visible={b}
-        onMaskClick={() => setB(false)}
+        onBackdropClick={() => setB(false)}
       >
         <div
           style={{
@@ -57,7 +40,7 @@ export default function App() {
         position="center"
         style={{ width: '70vw', height: '60vh', backgroundColor: '#fff' }}
         visible={c}
-        onMaskClick={() => setC(false)}
+        onBackdropClick={() => setC(false)}
       >
         <div
           style={{
@@ -73,7 +56,7 @@ export default function App() {
         position="left"
         style={{ width: '50vw', height: '100vh', backgroundColor: '#fff' }}
         visible={l}
-        onMaskClick={() => setL(false)}
+        onBackdropClick={() => setL(false)}
       >
         <div
           style={{
@@ -85,7 +68,7 @@ export default function App() {
           <Button onClick={() => setL(false)}>click to close</Button>
         </div>
       </Popup>
-      <Popup position="top" visible={t} onMaskClick={() => setT(false)}>
+      <Popup position="top" visible={t} onBackdropClick={() => setT(false)}>
         <div
           style={{
             display: 'flex',

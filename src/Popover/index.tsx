@@ -208,7 +208,7 @@ const Popover = (props: Props): React.ReactElement => {
       {visible
         ? ReactDOM.createPortal(
             <>
-              {backdrop ? <Backdrop visible onClick={onClose} /> : null}
+              {backdrop ? <Backdrop onClick={onClose} /> : null}
               <TransitionElement ref={popoverRef}>
                 <StyledPopover
                   className={clsx(className, 'uc-popover', { backdrop: backdrop })}

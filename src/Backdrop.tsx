@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StyledBackdrop = styled.div`
   background-color: rgba(0, 0, 0);
-  z-index: 999;
+  z-index: 100;
   position: fixed;
   left: 0;
   top: 0;
@@ -22,15 +22,15 @@ const StyledBackdrop = styled.div`
 `;
 
 export type Props = {
-  /** 是否显示 */
-  visible: boolean;
+  /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
+  hideOverflow?: boolean;
   /** 上层元素 */
   children?: ReactElement;
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 遮罩层 */
 const Backdrop = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, visible, ...rest } = props;
+  const { children, hideOverflow = true, ...rest } = props;
 
   const lastBodyFlow = useRef<string>('');
 
@@ -43,8 +43,10 @@ const Backdrop = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => 
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = visible ? 'hidden' : lastBodyFlow.current;
-  }, [visible]);
+    if (hideOverflow) {
+      document.body.style.overflow = hideOverflow ? 'hidden' : lastBodyFlow.current;
+    }
+  }, [hideOverflow]);
 
   return (
     <TransitionElement>
