@@ -7,6 +7,12 @@ import clsx from 'clsx';
 const StylePopover = styled(Popover)`
   color: #fff;
   padding: 8px;
+
+  .uc-tooltip-content {
+    display: inline-block;
+    min-width: 30px;
+    max-width: 240px;
+  }
 `;
 
 export type Props = {
@@ -38,13 +44,24 @@ const Tooltip = (props: Props): React.ReactElement => {
     },
   };
 
+  const titleRender = () => {
+    const otherProps = {
+      className: clsx('uc-tooltip-content'),
+    };
+    if (React.isValidElement(title)) {
+      return React.cloneElement(title, otherProps);
+    } else {
+      return <span {...otherProps}>{title}</span>;
+    }
+  };
+
   return (
     <StylePopover
       className={clsx('uc-tooltip')}
       style={{ background: bgColor }}
       visible={visible}
       placement={placement}
-      content={title}
+      content={titleRender()}
       arrow={arrow}
       {...actionProps}
     >

@@ -35,9 +35,9 @@ const StyledPopover = styled.div`
     transform: rotate(45deg);
   }
 
-  transition: opacity 240ms linear;
+  transition: opacity 0.18s linear;
   &.from {
-    opacity: 0.62;
+    opacity: 0.8;
   }
   &.to {
     opacity: 1;

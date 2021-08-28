@@ -40,6 +40,7 @@ export default function All() {
       <Cell label="Drag" content="go" onClick={() => gotoPage('Drag')}></Cell>
       <Cell label="CopyToClipboard" content="go" onClick={() => gotoPage('CopyToClipboard')}></Cell>
       <Cell label="Text" content="go" onClick={() => gotoPage('Text')}></Cell>
+      <Cell label="Tooltip" content="go" onClick={() => gotoPage('Tooltip')}></Cell>
     </div>
   );
 }
