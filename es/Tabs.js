@@ -44,7 +44,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import * as colors from './colors';
 import useThemeColor from './hooks/useThemeColor';
 import clsx from 'clsx';
-var StyledTabHeaderWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"], ["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n"])), colors.border);
+var StyledTabHeaderWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  &.no-border {\n    border-bottom: none;\n  }\n"], ["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  &.no-border {\n    border-bottom: none;\n  }\n"])), colors.border);
 var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n  /* transition: all 0.3s ease-in-out; */\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n      }\n    }\n  }\n"], ["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n  /* transition: all 0.3s ease-in-out; */\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n      }\n    }\n  }\n"])), function (props) {
   return props.theme.color;
 }, colors.disabledText, function (props) {
@@ -95,13 +95,15 @@ var Tabs = function Tabs(_a) {
       defaultIndex = _c === void 0 ? 0 : _c,
       _d = _a.underline,
       underline = _d === void 0 ? true : _d,
+      _e = _a.border,
+      border = _e === void 0 ? true : _e,
       onIndexChange = _a.onIndexChange,
       className = _a.className,
-      otherProps = __rest(_a, ["children", "underlineWidth", "defaultIndex", "underline", "onIndexChange", "className"]);
+      otherProps = __rest(_a, ["children", "underlineWidth", "defaultIndex", "underline", "border", "onIndexChange", "className"]);
 
-  var _e = useState(defaultIndex),
-      activeIndex = _e[0],
-      setActiveIndex = _e[1];
+  var _f = useState(defaultIndex),
+      activeIndex = _f[0],
+      setActiveIndex = _f[1];
 
   var count = React.Children.count(children);
   var color = useThemeColor();
@@ -112,7 +114,9 @@ var Tabs = function Tabs(_a) {
   }, /*#__PURE__*/React.createElement("div", __assign({}, otherProps, {
     className: clsx('uc-tabs', className)
   }), /*#__PURE__*/React.createElement(StyledTabHeaderWrap, {
-    className: "uc-tabs-header-wrap"
+    className: clsx('uc-tabs-header-wrap', {
+      'no-border': !border
+    })
   }, React.Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _a = child.props,

@@ -30,7 +30,7 @@ import React, { useState, useRef } from 'react';
 import Popover from './Popover/index';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 8px;\n"], ["\n  color: #fff;\n  padding: 8px;\n"])));
+var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"], ["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
 /** 文字提示 */
 
 var Tooltip = function Tooltip(props) {
@@ -61,8 +61,28 @@ var Tooltip = function Tooltip(props) {
       ref.current = window.setTimeout(function () {
         setVisible(false);
       }, 300);
+    },
+    onFocus: function onFocus() {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      setVisible(true);
     }
   };
+
+  var titleRender = function titleRender() {
+    var otherProps = {
+      className: clsx('uc-tooltip-content')
+    };
+
+    if ( /*#__PURE__*/React.isValidElement(title)) {
+      return /*#__PURE__*/React.cloneElement(title, otherProps);
+    } else {
+      return /*#__PURE__*/React.createElement("span", __assign({}, otherProps), title);
+    }
+  };
+
   return /*#__PURE__*/React.createElement(StylePopover, __assign({
     className: clsx('uc-tooltip'),
     style: {
@@ -70,7 +90,7 @@ var Tooltip = function Tooltip(props) {
     },
     visible: visible,
     placement: placement,
-    content: title,
+    content: titleRender(),
     arrow: arrow
   }, actionProps), /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, actionProps) : /*#__PURE__*/React.createElement("span", __assign({}, actionProps), children));
 };

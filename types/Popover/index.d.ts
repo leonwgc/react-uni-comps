@@ -7,7 +7,7 @@ export declare type Props = {
     children: React.ReactElement;
     /** 弹框内容 */
     content?: React.ReactNode;
-    /** 弹框是否显示 */
+    /** 弹框内容是否显示 */
     visible?: boolean;
     /** arrow是否显示 */
     arrow?: boolean;
@@ -18,6 +18,8 @@ export declare type Props = {
     /**  关闭回调 */
     onClose?: () => void;
     className?: string;
+    /** backdrop是否显示 */
+    backdrop?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
