@@ -792,6 +792,10 @@ export default function SkeletonDemo() {
 
 #### 31. Text (文本显示,单行/多行截断显示省略)
 
+#### 32. Backdrop (遮罩层,组件内部使用)
+
+#### 33. IconTick (勾勾), IconCross(x) , IconArrow(箭头) [内部使用]
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import
