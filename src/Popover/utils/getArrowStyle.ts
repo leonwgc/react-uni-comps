@@ -1,7 +1,6 @@
 import React from 'react';
 import { getReversePosition } from './getReversePosition';
 import { Placement, SinglePlacement } from '../types';
-import * as theme from '../../colors';
 
 export const getArrowStyle = (
   modalEl: Element,
@@ -15,10 +14,10 @@ export const getArrowStyle = (
   const [firstPlacement, lastPlacement] = (placement as string).split('-') as SinglePlacement[];
 
   const boxShadowmMap = {
-    top: `1px 1px 1px 0px ${theme.border}`,
-    right: `-1px 1px 1px 0px ${theme.border}`,
-    bottom: `-1px -1px 1px 0px ${theme.border}`,
-    left: `1px -1px 1px 0px ${theme.border}`,
+    top: `1px 1px 1px 0px rgba(0, 0, 0, 0.05)`,
+    right: `-1px 1px 1px 0px rgba(0, 0, 0, 0.05)`,
+    bottom: `-1px -1px 1px 0px rgba(0, 0, 0, 0.05)`,
+    left: `1px -1px 1px 0px rgba(0, 0, 0, 0.05)`,
   };
 
   const extraStyle = {
