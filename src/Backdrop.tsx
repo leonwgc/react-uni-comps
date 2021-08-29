@@ -11,7 +11,7 @@ const StyledBackdrop = styled.div`
   bottom: 0;
   right: 0;
   width: 100%;
-  transition: opacity 0.1s linear;
+  transition: opacity 0.24s linear;
 
   &.from {
     opacity: 0.4;

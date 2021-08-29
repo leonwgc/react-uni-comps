@@ -53,9 +53,9 @@ const StyledPopover = styled.div`
     }
   }
 
-  transition: transform 0.24s ease-out;
+  transition: transform 0.24s ease-in-out;
   &.from {
-    transform: translateY(0.5%);
+    transform: scale3d(0.98, 0.98, 0);
   }
   &.to {
     transform: none;
