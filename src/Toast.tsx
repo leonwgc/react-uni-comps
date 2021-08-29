@@ -46,26 +46,22 @@ const Toast = (props: Props): React.ReactElement => {
     toastProps.backdrop = false;
   }
 
-  if (isBrowser) {
-    return (
-      <StyleToast position="center" visible={visible} className={clsx('uc-toast')} {...toastProps}>
-        {content}
-      </StyleToast>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <StyleToast position="center" visible={visible} className={clsx('uc-toast')} {...toastProps}>
+      {content}
+    </StyleToast>
+  );
 };
 
 /** 黑背景提示,静态调用 */
 Toast.show = (content: string, duration = 3000, modal = true) => {
   if (!content) return;
-  const div = getContainer();
+  const container = getContainer();
 
-  ReactDOM.render(<Toast content={content} visible modal={modal} />, div);
+  ReactDOM.render(<Toast content={content} visible modal={modal} />, container);
 
   window.setTimeout(() => {
-    ReactDOM.render(<Toast content={content} visible={false} modal={modal} />, div);
+    ReactDOM.render(<Toast content={content} visible={false} modal={modal} />, container);
   }, duration);
 };
 
