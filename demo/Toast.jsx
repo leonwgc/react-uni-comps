@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, Space, Toast, Button, Tick } from '../src';
+import { Spinner, Space, Toast, Button, IconTick } from '../src';
 
 export default function App() {
   const [v, setV] = useState(false);
@@ -41,11 +41,13 @@ export default function App() {
                     borderRadius: '50%',
                     width: 40,
                     height: 40,
-                    display: 'inline-block',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'inline-flex',
                     backgroundColor: '#fff',
                   }}
                 >
-                  <Tick size={40} color="#333" />
+                  <IconTick size={40 * 0.5} color="#333" />
                 </div>
                 认证成功
               </Space>

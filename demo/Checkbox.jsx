@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Space, Checkbox, Tick } from 'react-uni-comps';
+import { Space, Checkbox, IconTick } from '../src';
 
 const StyledContent = styled.div`
   .article {
@@ -47,12 +47,6 @@ export default function App() {
           love m
         </Checkbox>
       </Space>
-      <div>
-        <div>tick</div>
-        <Tick></Tick>
-        <Tick size={40}></Tick>
-        <Tick size={40} color="#004bcc"></Tick>
-      </div>
     </StyledContent>
   );
 }

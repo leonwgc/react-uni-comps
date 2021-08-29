@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import useThemeColor from './hooks/useThemeColor';
-import Tick from './Tick';
+import IconTick from './IconTick';
 import * as colors from './colors';
 
 export type Props = {
@@ -104,7 +104,7 @@ const Checkbox = (props: Props): React.ReactElement => {
         disabled={disabled}
         color={color || _color}
       >
-        <Tick size={size} color="#fff" />
+        <IconTick size={size * 0.6} color="#fff" />
       </StyledCheckbox>
       {children ? <span>{children}</span> : null}
     </StyledCheckboxWrapper>
