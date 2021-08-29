@@ -6,7 +6,7 @@ import * as theme from '../../colors';
 export const getArrowStyle = (
   modalEl: Element,
   placement: Placement = 'bottom',
-  mask = false,
+  backdrop = false,
   margin = 12,
   diagonalWidth = 6 // make it the same as arrow w/h
 ): Record<string, string | number> => {
@@ -22,7 +22,7 @@ export const getArrowStyle = (
   };
 
   const extraStyle = {
-    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement],
+    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement],
     [getReversePosition(firstPlacement)]: -diagonalWidth / 2,
   };
 

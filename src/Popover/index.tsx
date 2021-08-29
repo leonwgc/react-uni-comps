@@ -45,21 +45,13 @@ const StyledPopover = styled.div`
     transform: rotate(45deg);
   }
 
-  &.backdrop {
-    box-shadow: none;
-
-    .uc-popover-arrow {
-      box-shadow: none !important;
-    }
-  }
-
-  transition: transform 0.24s ease-in-out;
+  /* transition: transform 0.24s ease-in-out;
   &.from {
     transform: scale3d(0.98, 0.98, 0);
   }
   &.to {
     transform: none;
-  }
+  } */
 `;
 
 export type Props = {
@@ -128,7 +120,7 @@ const Popover = (props: Props): React.ReactElement => {
         placement,
         { x: 0, y: 0 } // offset
       );
-      const arrowStyle = getArrowStyle(modalEl, placement, false, 12);
+      const arrowStyle = getArrowStyle(modalEl, placement, backdrop, 12);
 
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
@@ -209,7 +201,7 @@ const Popover = (props: Props): React.ReactElement => {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement]);
+  }, [visible, placement, backdrop]);
 
   return (
     <>
