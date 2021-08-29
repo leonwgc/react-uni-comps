@@ -458,7 +458,7 @@ TransitionElement.displayName = 'UC-TransitionElement';
 var _excluded = ["children", "hideOverflow"];
 
 var _templateObject;
-var StyledBackdrop = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.1s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
+var StyledBackdrop = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
 
 /** 遮罩层 */
 var Backdrop = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2505,7 +2505,7 @@ var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onCl
 
 var _templateObject$j;
 
-var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-out;\n  &.from {\n    transform: translateY(0.5%);\n  }\n  &.to {\n    transform: none;\n  }\n"])), border, border);
+var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-in-out;\n  &.from {\n    transform: scale3d(0.98, 0.98, 0);\n  }\n  &.to {\n    transform: none;\n  }\n"])), border, border);
 var MARGIN$1 = 12;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
