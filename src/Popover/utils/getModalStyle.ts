@@ -1,6 +1,7 @@
 import { getComputedStyle, getNodeName } from './utils';
 import { getOffsetTop } from './getOffsetParent';
 
+/** popup距离trigger el的距离 */
 export const MARGIN = 12;
 
 interface IModalStyle {
@@ -8,6 +9,8 @@ interface IModalStyle {
   top: number;
   left: number;
 }
+
+export type Offset = { x?: number; y?: number };
 
 /**
  * 根据选择器所选元素、modal 的长宽、用户定义的 placement 和 offset，获取 modal 的位置
@@ -24,7 +27,7 @@ export const getModalStyle = (
   parentEl: Element,
   scrollContainer: Element,
   placement = 'bottom',
-  customOffset = { x: 0, y: 0 }
+  customOffset: Offset
 ): IModalStyle => {
   const modalPos = modalEl.getBoundingClientRect();
   const anchorPos = anchorEl.getBoundingClientRect();

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
 import Backdrop from '../Backdrop';
+import { MARGIN, Offset } from './utils/getModalStyle';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -74,9 +75,10 @@ export type Props = {
   className?: string;
   /** backdrop是否显示 */
   backdrop?: boolean;
+  /** 弹框自定义偏移 */
+  offset?: Offset;
 } & React.HTMLAttributes<HTMLElement>;
 
-const MARGIN = 12;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
  *
@@ -95,15 +97,21 @@ const Popover = (props: Props): React.ReactElement => {
     style,
     children,
     backdrop,
+    offset = {},
     ...rest
   } = props;
 
   const childrenRef = useRef();
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
+  const offsetRef = useRef<Offset>(offset);
 
   const [modalStyle, setModalStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
+
+  useEffect(() => {
+    offsetRef.current = offset;
+  }, [offset]);
 
   useEffect(() => {
     const anchorEl = childrenRef.current;
@@ -118,9 +126,9 @@ const Popover = (props: Props): React.ReactElement => {
         document.body,
         scrollContainer,
         placement,
-        { x: 0, y: 0 } // offset
+        offsetRef.current
       );
-      const arrowStyle = getArrowStyle(modalEl, placement, backdrop, 12);
+      const arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
 
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
