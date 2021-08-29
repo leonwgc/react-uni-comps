@@ -42,15 +42,14 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import IconCross from '../IconCross';
-import * as theme from '../colors';
-import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
+import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
-import Backdrop from '../Backdrop'; // port from https://github.com/bytedance/guide and refactor
+import Backdrop from '../Backdrop';
+import { MARGIN } from './utils/getModalStyle'; // port from https://github.com/bytedance/guide and refactor
 
-var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-in-out;\n  &.from {\n    transform: scale3d(0.98, 0.98, 0);\n  }\n  &.to {\n    transform: none;\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-in-out;\n  &.from {\n    transform: scale3d(0.98, 0.98, 0);\n  }\n  &.to {\n    transform: none;\n  }\n"])), theme.border, theme.border);
-var MARGIN = 12;
+var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
  *
@@ -71,32 +70,34 @@ var Popover = function Popover(props) {
       style = props.style,
       children = props.children,
       backdrop = props.backdrop,
-      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop"]);
+      _c = props.offset,
+      offset = _c === void 0 ? {} : _c,
+      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop", "offset"]);
 
   var childrenRef = useRef();
   var popoverRef = useRef(null);
   var resizeTimerRef = useRef(0);
-
-  var _c = useState({}),
-      modalStyle = _c[0],
-      setModalStyle = _c[1];
+  var offsetRef = useRef(offset);
 
   var _d = useState({}),
-      arrowStyle = _d[0],
-      setArrowStyle = _d[1];
+      modalStyle = _d[0],
+      setModalStyle = _d[1];
 
+  var _e = useState({}),
+      arrowStyle = _e[0],
+      setArrowStyle = _e[1];
+
+  useEffect(function () {
+    offsetRef.current = offset;
+  }, [offset]);
   useEffect(function () {
     var anchorEl = childrenRef.current;
     var scrollContainer = getScrollContainer(anchorEl);
 
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
-      var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, {
-        x: 0,
-        y: 0
-      } // offset
-      );
-      var arrowStyle = getArrowStyle(modalEl, placement, false, 12);
+      var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, offsetRef.current);
+      var arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
     };
@@ -111,53 +112,14 @@ var Popover = function Popover(props) {
       });
     };
 
-    var handleScroll = function handleScroll() {
-      var modalEl = popoverRef.current;
-      var anchorPos = anchorEl.getBoundingClientRect();
-      var modalPos = modalEl.getBoundingClientRect();
-      var scrollPos = scrollContainer.getBoundingClientRect();
-      var isScrollContainerHtml = getNodeName(scrollContainer) === 'html';
-      /* scroll the scroll container to show the modal */
-
-      var visibleHeight = scrollContainer.clientHeight;
-      var scrollContainerTop = isScrollContainerHtml ? 0 : scrollPos.top;
-
-      if ( // Modal is below the viewport
-      anchorPos.top - scrollContainerTop + anchorPos.height + modalPos.height + MARGIN >= visibleHeight || // Modal is above the viewport
-      anchorPos.top <= modalPos.height + MARGIN) {
-        // scrolls to a particular set of coordinates inside a given element.
-        scrollContainer.scrollTo({
-          left: 0,
-          top: scrollContainer.scrollTop + anchorPos.top - scrollContainerTop + anchorPos.height / 2 - visibleHeight / 2 + MARGIN,
-          behavior: 'smooth'
-        });
-      }
-
-      if (getNodeName(scrollContainer) === 'html') return;
-      var documentEl = document.documentElement;
-      /* scroll to show the scroll container */
-
-      if ( // Modal is below the viewport
-      scrollPos.top + scrollPos.height >= window.innerHeight || // Modal is above the viewport
-      scrollPos.bottom > scrollPos.height) {
-        // scrolls to a particular set of coordinates inside a given element.
-        documentEl.scrollTo({
-          left: 0,
-          top: documentEl.scrollTop + scrollPos.top + scrollPos.height / 2 - window.innerHeight / 2 + MARGIN,
-          behavior: 'smooth'
-        });
-      }
-    };
-
     if (visible) {
-      handleScroll();
       calculateStyle(anchorEl, scrollContainer);
       window.addEventListener('resize', handleResize);
       return function () {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement]);
+  }, [visible, placement, backdrop]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.cloneElement(children, {
     ref: childrenRef
   }), visible ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(React.Fragment, null, backdrop ? /*#__PURE__*/React.createElement(Backdrop, {

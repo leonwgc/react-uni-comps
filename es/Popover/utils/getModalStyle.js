@@ -1,5 +1,7 @@
 import { getComputedStyle, getNodeName } from './utils';
 import { getOffsetTop } from './getOffsetParent';
+/** popup距离trigger el的距离 */
+
 export var MARGIN = 12;
 /**
  * 根据选择器所选元素、modal 的长宽、用户定义的 placement 和 offset，获取 modal 的位置
@@ -14,13 +16,6 @@ export var MARGIN = 12;
 export var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollContainer, placement, customOffset) {
   if (placement === void 0) {
     placement = 'bottom';
-  }
-
-  if (customOffset === void 0) {
-    customOffset = {
-      x: 0,
-      y: 0
-    };
   }
 
   var modalPos = modalEl.getBoundingClientRect();

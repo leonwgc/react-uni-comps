@@ -1,5 +1,6 @@
 import React from 'react';
 import { Placement } from './types';
+import { Offset } from './utils/getModalStyle';
 export declare type Props = {
     /** 弹框位置,包含-的-后面指示arrow位置 */
     placement?: Placement;
@@ -20,6 +21,8 @@ export declare type Props = {
     className?: string;
     /** backdrop是否显示 */
     backdrop?: boolean;
+    /** 弹框自定义偏移 */
+    offset?: Offset;
 } & React.HTMLAttributes<HTMLElement>;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层

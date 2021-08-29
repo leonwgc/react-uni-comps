@@ -15,8 +15,7 @@ var __assign = this && this.__assign || function () {
 };
 
 import { getReversePosition } from './getReversePosition';
-import * as theme from '../../colors';
-export var getArrowStyle = function getArrowStyle(modalEl, placement, mask, margin, diagonalWidth // make it the same as arrow w/h
+export var getArrowStyle = function getArrowStyle(modalEl, placement, backdrop, margin, diagonalWidth // make it the same as arrow w/h
 ) {
   var _a, _b;
 
@@ -24,8 +23,8 @@ export var getArrowStyle = function getArrowStyle(modalEl, placement, mask, marg
     placement = 'bottom';
   }
 
-  if (mask === void 0) {
-    mask = false;
+  if (backdrop === void 0) {
+    backdrop = false;
   }
 
   if (margin === void 0) {
@@ -43,13 +42,13 @@ export var getArrowStyle = function getArrowStyle(modalEl, placement, mask, marg
       lastPlacement = _c[1];
 
   var boxShadowmMap = {
-    top: "1px 1px 1px 0px " + theme.border,
-    right: "-1px 1px 1px 0px " + theme.border,
-    bottom: "-1px -1px 1px 0px " + theme.border,
-    left: "1px -1px 1px 0px " + theme.border
+    top: "1px 1px 1px 0px rgba(0, 0, 0, 0.05)",
+    right: "-1px 1px 1px 0px rgba(0, 0, 0, 0.05)",
+    bottom: "-1px -1px 1px 0px rgba(0, 0, 0, 0.05)",
+    left: "1px -1px 1px 0px rgba(0, 0, 0, 0.05)"
   };
   var extraStyle = (_a = {
-    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement]
+    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement]
   }, _a[getReversePosition(firstPlacement)] = -diagonalWidth / 2, _a);
 
   if (!lastPlacement) {

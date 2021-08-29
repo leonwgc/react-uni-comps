@@ -2340,6 +2340,8 @@ var getScrollContainer = function getScrollContainer(node, callback) {
   return getDocumentElement(node);
 };
 
+/** popup距离trigger el的距离 */
+
 var MARGIN = 12;
 
 /**
@@ -2353,10 +2355,7 @@ var MARGIN = 12;
  */
 var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollContainer) {
   var placement = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'bottom';
-  var customOffset = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {
-    x: 0,
-    y: 0
-  };
+  var customOffset = arguments.length > 5 ? arguments[5] : undefined;
   var modalPos = modalEl.getBoundingClientRect();
   var anchorPos = anchorEl.getBoundingClientRect();
   var parentPos = parentEl.getBoundingClientRect();
@@ -2463,7 +2462,7 @@ var getReversePosition = function getReversePosition(position) {
 
 var getArrowStyle = function getArrowStyle(modalEl) {
   var placement = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'bottom';
-  var mask = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var backdrop = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var margin = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 12;
   var diagonalWidth = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 6;
   var modalPos = modalEl.getBoundingClientRect();
@@ -2474,14 +2473,14 @@ var getArrowStyle = function getArrowStyle(modalEl) {
       lastPlacement = _ref2[1];
 
   var boxShadowmMap = {
-    top: "1px 1px 1px 0px ".concat(border),
-    right: "-1px 1px 1px 0px ".concat(border),
-    bottom: "-1px -1px 1px 0px ".concat(border),
-    left: "1px -1px 1px 0px ".concat(border)
+    top: "1px 1px 1px 0px rgba(0, 0, 0, 0.05)",
+    right: "-1px 1px 1px 0px rgba(0, 0, 0, 0.05)",
+    bottom: "-1px -1px 1px 0px rgba(0, 0, 0, 0.05)",
+    left: "1px -1px 1px 0px rgba(0, 0, 0, 0.05)"
   };
 
   var extraStyle = _defineProperty({
-    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement]
+    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement]
   }, getReversePosition(firstPlacement), -diagonalWidth / 2);
 
   if (!lastPlacement) {
@@ -2501,19 +2500,18 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop"];
+var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop", "offset"];
 
 var _templateObject$j;
 
-var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-in-out;\n  &.from {\n    transform: scale3d(0.98, 0.98, 0);\n  }\n  &.to {\n    transform: none;\n  }\n"])), border, border);
-var MARGIN$1 = 12;
+var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
  *
  * @param {Props} props
  * @return {*}  {React.ReactElement}
  */
-
 var Popover = function Popover(props) {
   var _props$placement = props.placement,
       placement = _props$placement === void 0 ? 'bottom' : _props$placement,
@@ -2527,11 +2525,14 @@ var Popover = function Popover(props) {
       style = props.style,
       children = props.children,
       backdrop = props.backdrop,
+      _props$offset = props.offset,
+      offset = _props$offset === void 0 ? {} : _props$offset,
       rest = _objectWithoutProperties(props, _excluded$i);
 
   var childrenRef = React.useRef();
   var popoverRef = React.useRef(null);
   var resizeTimerRef = React.useRef(0);
+  var offsetRef = React.useRef(offset);
 
   var _useState = React.useState({}),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2544,17 +2545,16 @@ var Popover = function Popover(props) {
       setArrowStyle = _useState4[1];
 
   React.useEffect(function () {
+    offsetRef.current = offset;
+  }, [offset]);
+  React.useEffect(function () {
     var anchorEl = childrenRef.current;
     var scrollContainer = getScrollContainer(anchorEl);
 
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
-      var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, {
-        x: 0,
-        y: 0
-      } // offset
-      );
-      var arrowStyle = getArrowStyle(modalEl, placement, false, 12);
+      var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, offsetRef.current);
+      var arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
     };
@@ -2569,53 +2569,14 @@ var Popover = function Popover(props) {
       });
     };
 
-    var handleScroll = function handleScroll() {
-      var modalEl = popoverRef.current;
-      var anchorPos = anchorEl.getBoundingClientRect();
-      var modalPos = modalEl.getBoundingClientRect();
-      var scrollPos = scrollContainer.getBoundingClientRect();
-      var isScrollContainerHtml = getNodeName(scrollContainer) === 'html';
-      /* scroll the scroll container to show the modal */
-
-      var visibleHeight = scrollContainer.clientHeight;
-      var scrollContainerTop = isScrollContainerHtml ? 0 : scrollPos.top;
-
-      if ( // Modal is below the viewport
-      anchorPos.top - scrollContainerTop + anchorPos.height + modalPos.height + MARGIN$1 >= visibleHeight || // Modal is above the viewport
-      anchorPos.top <= modalPos.height + MARGIN$1) {
-        // scrolls to a particular set of coordinates inside a given element.
-        scrollContainer.scrollTo({
-          left: 0,
-          top: scrollContainer.scrollTop + anchorPos.top - scrollContainerTop + anchorPos.height / 2 - visibleHeight / 2 + MARGIN$1,
-          behavior: 'smooth'
-        });
-      }
-
-      if (getNodeName(scrollContainer) === 'html') return;
-      var documentEl = document.documentElement;
-      /* scroll to show the scroll container */
-
-      if ( // Modal is below the viewport
-      scrollPos.top + scrollPos.height >= window.innerHeight || // Modal is above the viewport
-      scrollPos.bottom > scrollPos.height) {
-        // scrolls to a particular set of coordinates inside a given element.
-        documentEl.scrollTo({
-          left: 0,
-          top: documentEl.scrollTop + scrollPos.top + scrollPos.height / 2 - window.innerHeight / 2 + MARGIN$1,
-          behavior: 'smooth'
-        });
-      }
-    };
-
     if (visible) {
-      handleScroll();
       calculateStyle(anchorEl, scrollContainer);
       window.addEventListener('resize', handleResize);
       return function () {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement]);
+  }, [visible, placement, backdrop]);
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: childrenRef
   }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, backdrop ? /*#__PURE__*/React__default['default'].createElement(Backdrop, {
