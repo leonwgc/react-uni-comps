@@ -1,5 +1,21 @@
 import React, { useRef, useState } from 'react';
-import { Backdrop, Space, Popover, Button } from '../src';
+import { Backdrop, Space, Popover, Button, TransitionElement } from '../src';
+import styled from 'styled-components';
+
+const StyledContent = styled.div`
+  padding: 16px;
+  width: 260px;
+
+  transition: all 0.24s ease-in-out;
+  &.from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  &.to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
 
 const places = [
   {
@@ -121,10 +137,12 @@ export default function App() {
               key={idx}
               onClose={() => setVisible({ [placement]: false })}
               content={
-                <div style={{ padding: 16, width: 260 }}>
-                  <h5 style={{ fontSize: 16 }}>{title}</h5>
-                  <p>{content}</p>
-                </div>
+                <TransitionElement>
+                  <StyledContent>
+                    <h5 style={{ fontSize: 16 }}>{title}</h5>
+                    <p>{content}</p>
+                  </StyledContent>
+                </TransitionElement>
               }
             >
               <Button onClick={() => handleClick(placement)}>{title}</Button>

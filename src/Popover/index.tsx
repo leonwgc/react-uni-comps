@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import IconCross from '../IconCross';
 import { Placement } from './types';
-import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
@@ -17,8 +16,6 @@ const StyledPopover = styled.div`
   z-index: 1100;
   background: #fff;
   border-radius: 2px;
-  /* box-shadow: 0px 0px 4px 0px ${theme.border}, 0px 2px 6px 0px ${theme.border};
-   */
 
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
@@ -27,6 +24,7 @@ const StyledPopover = styled.div`
 
   .uc-popover-close {
     position: absolute;
+    z-index: 10;
     top: 16px;
     right: 16px;
     cursor: pointer;
@@ -45,14 +43,6 @@ const StyledPopover = styled.div`
     background: inherit;
     transform: rotate(45deg);
   }
-
-  /* transition: transform 0.24s ease-in-out;
-  &.from {
-    transform: scale3d(0.98, 0.98, 0);
-  }
-  &.to {
-    transform: none;
-  } */
 `;
 
 export type Props = {
