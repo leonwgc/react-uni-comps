@@ -16,7 +16,10 @@ const StyledPopover = styled.div`
   z-index: 1100;
   background: #fff;
   border-radius: 2px;
-  box-shadow: 0px 0px 4px 0px ${theme.border}, 0px 2px 6px 0px ${theme.border};
+  /* box-shadow: 0px 0px 4px 0px ${theme.border}, 0px 2px 6px 0px ${theme.border};
+   */
+
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
   .uc-popover-content {
   }
@@ -26,6 +29,12 @@ const StyledPopover = styled.div`
     top: 16px;
     right: 16px;
     cursor: pointer;
+    color: #000;
+    opacity: 0.35;
+
+    :hover {
+      opacity: 0.75;
+    }
   }
 
   .uc-popover-arrow {
@@ -220,7 +229,7 @@ const Popover = (props: Props): React.ReactElement => {
 
                   {/* close */}
                   {closable && (
-                    <Cross className={clsx('uc-popover-close')} color="#999" onClick={onClose} />
+                    <Cross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
                   )}
 
                   {/** content */}

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 
 export type Props = {
-  size?: number /** 默认18 */;
+  /** 大小, 默认16 */
+  size?: number;
   /** 勾勾颜色 */
   color?: string;
 };
@@ -21,7 +22,7 @@ const StyledTick = styled.div<{
 
 /** 勾勾 */
 const Tick = (props: Props): React.ReactElement => {
-  const { color, size = 18, ...rest } = props;
+  const { color = 'currentColor', size = 16, ...rest } = props;
 
   return (
     <StyledTick className={clsx('uc-tick')} size={size} {...rest}>

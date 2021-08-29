@@ -32,4 +32,5 @@ export { default as Backdrop } from './Backdrop';
 export { default as Toast } from './Toast';
 export { default as IconTick } from './IconTick';
 export { default as IconCross } from './IconCross';
+export { default as IconArrow } from './IconArrow';
 export * from './helper';

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 
 type CrossProps = {
+  /** 大小, 默认16 */
   size?: number;
+  /** 颜色 */
   color?: string;
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
@@ -20,7 +22,7 @@ const StyledCross = styled.div<{
 
 /** 用于关闭的 x */
 const Cross = (props: CrossProps): React.ReactElement => {
-  const { size = 16, color = 'rgb(0,0,0)', ...rest } = props;
+  const { size = 16, color = 'currentColor', ...rest } = props;
   return (
     <StyledCross className={clsx('uc-tick')} size={size} {...rest}>
       <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">

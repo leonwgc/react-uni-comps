@@ -28,7 +28,6 @@ const StyledCell = styled.div`
 
   .uc-cell-title {
     box-sizing: border-box;
-    width: 6.2em;
     margin-right: 12px;
     text-align: left;
     word-wrap: break-word;
