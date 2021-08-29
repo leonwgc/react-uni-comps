@@ -10,5 +10,5 @@ export declare type Props = {
     children: React.ReactNode;
 };
 /** Checkbox, Radiobox带checked状态的 */
-declare const Checkbox: (props: Props) => React.ReactNode;
+declare const Checkbox: (props: Props) => React.ReactElement;
 export default Checkbox;

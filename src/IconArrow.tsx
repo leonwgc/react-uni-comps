@@ -43,11 +43,16 @@ const StyledArrow = styled.div<{
 `;
 
 /** 勾勾 */
-const IconArrow = (props: Props): React.ReactElement => {
+const IconArrow = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { color = 'currentColor', direction = 'bottom', size = 16, ...rest } = props;
 
   return (
-    <StyledArrow className={clsx('uc-arrow', { [direction]: direction })} size={size} {...rest}>
+    <StyledArrow
+      ref={ref}
+      className={clsx('uc-icon-arrow', { [direction]: direction })}
+      size={size}
+      {...rest}
+    >
       <svg
         width={size}
         height={size}
@@ -62,6 +67,8 @@ const IconArrow = (props: Props): React.ReactElement => {
       </svg>
     </StyledArrow>
   );
-};
+});
+
+IconArrow.displayName = 'UC-IconArrow';
 
 export default IconArrow;

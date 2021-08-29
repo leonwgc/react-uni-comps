@@ -32,7 +32,7 @@ import Popup from './Popup';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { isBrowser } from './dom';
-var StyleToast = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n"], ["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n"])));
+var StyleToast = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"], ["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
 
 var getContainer = function getContainer() {
   if (isBrowser) {
@@ -67,15 +67,11 @@ var Toast = function Toast(props) {
     toastProps.backdrop = false;
   }
 
-  if (isBrowser) {
-    return /*#__PURE__*/React.createElement(StyleToast, __assign({
-      position: "center",
-      visible: visible,
-      className: clsx('uc-toast')
-    }, toastProps), content);
-  } else {
-    return null;
-  }
+  return /*#__PURE__*/React.createElement(StyleToast, __assign({
+    position: "center",
+    visible: visible,
+    className: clsx('uc-toast')
+  }, toastProps), content);
 };
 /** 黑背景提示,静态调用 */
 
@@ -90,18 +86,18 @@ Toast.show = function (content, duration, modal) {
   }
 
   if (!content) return;
-  var div = getContainer();
+  var container = getContainer();
   ReactDOM.render( /*#__PURE__*/React.createElement(Toast, {
     content: content,
     visible: true,
     modal: modal
-  }), div);
+  }), container);
   window.setTimeout(function () {
     ReactDOM.render( /*#__PURE__*/React.createElement(Toast, {
       content: content,
       visible: false,
       modal: modal
-    }), div);
+    }), container);
   }, duration);
 };
 

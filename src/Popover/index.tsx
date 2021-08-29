@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import Cross from '../IconCross';
+import IconCross from '../IconCross';
 import { Placement } from './types';
 import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
@@ -229,7 +229,7 @@ const Popover = (props: Props): React.ReactElement => {
 
                   {/* close */}
                   {closable && (
-                    <Cross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
+                    <IconCross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
                   )}
 
                   {/** content */}

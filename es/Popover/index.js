@@ -41,7 +41,7 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import Cross from '../Cross';
+import IconCross from '../IconCross';
 import * as theme from '../colors';
 import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
 import styled from 'styled-components';
@@ -49,7 +49,7 @@ import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
 import Backdrop from '../Backdrop'; // port from https://github.com/bytedance/guide and refactor
 
-var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-out;\n  &.from {\n    transform: translateY(0.5%);\n  }\n  &.to {\n    transform: none;\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-out;\n  &.from {\n    transform: translateY(0.5%);\n  }\n  &.to {\n    transform: none;\n  }\n"])), theme.border, theme.border);
+var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-out;\n  &.from {\n    transform: translateY(0.5%);\n  }\n  &.to {\n    transform: none;\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n  /* box-shadow: 0px 0px 4px 0px ", ", 0px 2px 6px 0px ", ";\n   */\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n\n  &.backdrop {\n    box-shadow: none;\n\n    .uc-popover-arrow {\n      box-shadow: none !important;\n    }\n  }\n\n  transition: transform 0.24s ease-out;\n  &.from {\n    transform: translateY(0.5%);\n  }\n  &.to {\n    transform: none;\n  }\n"])), theme.border, theme.border);
 var MARGIN = 12;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -172,8 +172,9 @@ var Popover = function Popover(props) {
   }, rest), arrow && /*#__PURE__*/React.createElement("span", {
     className: clsx('uc-popover-arrow'),
     style: arrowStyle
-  }), closable && /*#__PURE__*/React.createElement(Cross, {
+  }), closable && /*#__PURE__*/React.createElement(IconCross, {
     className: clsx('uc-popover-close'),
+    size: 20,
     onClick: onClose
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popover-content')

@@ -17,7 +17,7 @@ export default function useThemeColor(fallbackColor) {
   var theme = useContext(ThemeContext);
   var color = fallbackColor;
 
-  if (typeof theme.color === 'string') {
+  if (typeof (theme === null || theme === void 0 ? void 0 : theme.color) === 'string') {
     color = theme.color;
   }
 

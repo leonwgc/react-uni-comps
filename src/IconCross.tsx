@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-type CrossProps = {
+type Props = {
   /** 大小, 默认16 */
   size?: number;
   /** 颜色 */
@@ -21,10 +21,10 @@ const StyledCross = styled.div<{
 `;
 
 /** 用于关闭的 x */
-const Cross = (props: CrossProps): React.ReactElement => {
+const IconCross = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { size = 16, color = 'currentColor', ...rest } = props;
   return (
-    <StyledCross className={clsx('uc-tick')} size={size} {...rest}>
+    <StyledCross className={clsx('uc-icon-cross')} ref={ref} size={size} {...rest}>
       <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <g>
           <g>
@@ -62,6 +62,8 @@ const Cross = (props: CrossProps): React.ReactElement => {
       </svg>
     </StyledCross>
   );
-};
+});
 
-export default Cross;
+IconCross.displayName = 'UC-IconCross';
+
+export default IconCross;
