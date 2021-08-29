@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import IconCross from '../IconCross';
 import { Placement } from './types';
 import * as theme from '../colors';
-import { getArrowStyle, getModalStyle, getScrollContainer, getNodeName } from './utils';
+import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
@@ -143,64 +143,7 @@ const Popover = (props: Props): React.ReactElement => {
       });
     };
 
-    const handleScroll = () => {
-      const modalEl = popoverRef.current;
-      const anchorPos = (anchorEl as Element).getBoundingClientRect();
-      const modalPos = (modalEl as Element).getBoundingClientRect();
-      const scrollPos = scrollContainer.getBoundingClientRect();
-
-      const isScrollContainerHtml = getNodeName(scrollContainer) === 'html';
-
-      /* scroll the scroll container to show the modal */
-      const visibleHeight = (scrollContainer as HTMLElement).clientHeight;
-      const scrollContainerTop = isScrollContainerHtml ? 0 : scrollPos.top;
-      if (
-        // Modal is below the viewport
-        anchorPos.top - scrollContainerTop + anchorPos.height + modalPos.height + MARGIN >=
-          visibleHeight ||
-        // Modal is above the viewport
-        anchorPos.top <= modalPos.height + MARGIN
-      ) {
-        // scrolls to a particular set of coordinates inside a given element.
-        scrollContainer.scrollTo({
-          left: 0,
-          top:
-            scrollContainer.scrollTop +
-            anchorPos.top -
-            scrollContainerTop +
-            anchorPos.height / 2 -
-            visibleHeight / 2 +
-            MARGIN,
-          behavior: 'smooth',
-        });
-      }
-
-      if (getNodeName(scrollContainer) === 'html') return;
-
-      const documentEl = document.documentElement;
-      /* scroll to show the scroll container */
-      if (
-        // Modal is below the viewport
-        scrollPos.top + scrollPos.height >= window.innerHeight ||
-        // Modal is above the viewport
-        scrollPos.bottom > scrollPos.height
-      ) {
-        // scrolls to a particular set of coordinates inside a given element.
-        documentEl.scrollTo({
-          left: 0,
-          top:
-            documentEl.scrollTop +
-            scrollPos.top +
-            scrollPos.height / 2 -
-            window.innerHeight / 2 +
-            MARGIN,
-          behavior: 'smooth',
-        });
-      }
-    };
-
     if (visible) {
-      handleScroll();
       calculateStyle(anchorEl, scrollContainer);
 
       window.addEventListener('resize', handleResize);
@@ -233,7 +176,6 @@ const Popover = (props: Props): React.ReactElement => {
                   )}
 
                   {/** content */}
-
                   <div className={clsx('uc-popover-content')}>{content}</div>
                 </StyledPopover>
               </TransitionElement>
