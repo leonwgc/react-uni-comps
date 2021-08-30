@@ -14,7 +14,7 @@ const Drag = React.forwardRef<Element, Props>((props: Props, ref): React.ReactEl
 
   if (process.env.NODE_ENV !== 'production') {
     if (!React.isValidElement(children)) {
-      throw new Error('Drag:children must be a valid react element');
+      throw new Error('Drag:子元素必须为ReactElement');
     }
   }
 

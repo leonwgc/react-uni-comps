@@ -38,7 +38,7 @@ const ScrollTop = (props: Props): React.ReactElement => {
 
   if (process.env.NODE_ENV !== 'production') {
     if (!React.isValidElement(children)) {
-      throw new Error('ScrollTop:children must be a valid react element');
+      throw new Error('ScrollTop:子元素必须为ReactElement');
     }
   }
 
