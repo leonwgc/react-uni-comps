@@ -35,7 +35,6 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   const newStyle = {
     ...style,
-    //  transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
     transitionDuration: duration + 'ms',
   };
 
@@ -46,7 +45,7 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const count = React.Children.count(children);
 
   if (count > 1) {
-    throw new Error('TransitionElement can have only one children');
+    throw new Error('TransitionElement:只能包含一个子元素.');
   }
 
   if (React.isValidElement(children)) {
@@ -63,7 +62,7 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
     );
   } else {
     if (process.env.NODE_ENV !== 'production') {
-      throw new Error('TransitionElement:children must be ReactElement');
+      throw new Error('TransitionElement:子元素必须为ReactElement');
     }
     return children;
   }
