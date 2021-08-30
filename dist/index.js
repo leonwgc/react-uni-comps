@@ -420,7 +420,6 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
   });
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    //  transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
     transitionDuration: duration + 'ms'
   });
 
@@ -430,7 +429,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
-    throw new Error('TransitionElement can have only one children');
+    throw new Error('TransitionElement:只能包含一个子元素.');
   }
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
@@ -447,7 +446,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
     });
   } else {
     if (process.env.NODE_ENV !== 'production') {
-      throw new Error('TransitionElement:children must be ReactElement');
+      throw new Error('TransitionElement:子元素必须为ReactElement');
     }
 
     return children;
@@ -725,39 +724,42 @@ var Space = function Space(props) {
 };
 
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
-var AnimationElement = function AnimationElement(_ref) {
-  var children = _ref.children,
-      _ref$duration = _ref.duration,
-      duration = _ref$duration === void 0 ? '1s' : _ref$duration,
-      _ref$name = _ref.name,
-      name = _ref$name === void 0 ? 'none' : _ref$name,
-      _ref$timingFunc = _ref.timingFunc,
-      timingFunc = _ref$timingFunc === void 0 ? 'ease' : _ref$timingFunc,
-      _ref$delay = _ref.delay,
-      delay = _ref$delay === void 0 ? '0s' : _ref$delay,
-      _ref$direction = _ref.direction,
-      direction = _ref$direction === void 0 ? 'normal' : _ref$direction,
-      _ref$iterationCount = _ref.iterationCount,
-      iterationCount = _ref$iterationCount === void 0 ? 1 : _ref$iterationCount,
-      _ref$fillMode = _ref.fillMode,
-      fillMode = _ref$fillMode === void 0 ? 'backwards' : _ref$fillMode,
-      _ref$once = _ref.once,
-      once = _ref$once === void 0 ? true : _ref$once;
-  var ref = React.useRef();
+var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? '1s' : _props$duration,
+      _props$name = props.name,
+      name = _props$name === void 0 ? 'none' : _props$name,
+      _props$timingFunc = props.timingFunc,
+      timingFunc = _props$timingFunc === void 0 ? 'ease' : _props$timingFunc,
+      _props$delay = props.delay,
+      delay = _props$delay === void 0 ? '0s' : _props$delay,
+      _props$direction = props.direction,
+      direction = _props$direction === void 0 ? 'normal' : _props$direction,
+      _props$iterationCount = props.iterationCount,
+      iterationCount = _props$iterationCount === void 0 ? 1 : _props$iterationCount,
+      _props$fillMode = props.fillMode,
+      fillMode = _props$fillMode === void 0 ? 'backwards' : _props$fillMode,
+      _props$once = props.once,
+      once = _props$once === void 0 ? true : _props$once;
+  var innerRef = React.useRef();
   var vRef = React.useRef();
-  var isInViewport = useInViewport__default['default'](ref);
+  var isInViewport = useInViewport__default['default'](innerRef);
+  React.useImperativeHandle(ref, function () {
+    return innerRef.current;
+  });
 
-  var _ref2 = (children === null || children === void 0 ? void 0 : children.props) || {},
-      _ref2$style = _ref2.style,
-      style = _ref2$style === void 0 ? {} : _ref2$style;
+  var _ref = (children === null || children === void 0 ? void 0 : children.props) || {},
+      _ref$style = _ref.style,
+      style = _ref$style === void 0 ? {} : _ref$style;
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
     animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " running ").concat(name)
   });
 
   React.useEffect(function () {
-    if (ref.current) {
-      var dom = ref.current;
+    if (innerRef.current) {
+      var dom = innerRef.current;
       dom.addEventListener('animationend', function () {
         dom.style.animationName = 'none';
       });
@@ -767,8 +769,8 @@ var AnimationElement = function AnimationElement(_ref) {
     }
   }, []);
   React.useEffect(function () {
-    if (ref.current) {
-      var dom = ref.current;
+    if (innerRef.current) {
+      var dom = innerRef.current;
 
       if (!vRef.current && isInViewport && !once) {
         dom.style.webkitAnimationName = name;
@@ -781,18 +783,23 @@ var AnimationElement = function AnimationElement(_ref) {
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
-    throw new Error('AnimationElement can have only one ReactElement children');
+    throw new Error('AnimationElement:只能包含一个子元素.');
   }
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].cloneElement(children, {
-      ref: ref,
+      ref: innerRef,
       style: newStyle
     });
   } else {
+    if (process.env.NODE_ENV !== 'production') {
+      throw new Error('AnimationElement:子元素必须为ReactElement');
+    }
+
     return children;
   }
-};
+});
+AnimationElement.displayName = 'UC-AnimationElement';
 
 var _excluded$2 = ["width", "height", "children"],
     _excluded2 = ["style"];
@@ -2107,7 +2114,7 @@ var ScrollTop = function ScrollTop(props) {
 
   if (process.env.NODE_ENV !== 'production') {
     if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
-      throw new Error('ScrollTop:children must be a valid react element');
+      throw new Error('ScrollTop:子元素必须为ReactElement');
     }
   }
 
@@ -2805,7 +2812,7 @@ var Drag = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 
   if (process.env.NODE_ENV !== 'production') {
     if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
-      throw new Error('Drag:children must be a valid react element');
+      throw new Error('Drag:子元素必须为ReactElement');
     }
   }
 

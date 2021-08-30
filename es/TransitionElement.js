@@ -62,7 +62,6 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
 
   var newStyle = __assign(__assign({}, style), {
-    //  transition: `${transitionProp} ${duration}ms ${timingFunc} ${delay}ms`,
     transitionDuration: duration + 'ms'
   });
 
@@ -72,7 +71,7 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var count = React.Children.count(children);
 
   if (count > 1) {
-    throw new Error('TransitionElement can have only one children');
+    throw new Error('TransitionElement:只能包含一个子元素.');
   }
 
   if ( /*#__PURE__*/React.isValidElement(children)) {
@@ -89,7 +88,7 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   } else {
     if (process.env.NODE_ENV !== 'production') {
-      throw new Error('TransitionElement:children must be ReactElement');
+      throw new Error('TransitionElement:子元素必须为ReactElement');
     }
 
     return children;
