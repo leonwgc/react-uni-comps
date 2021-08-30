@@ -111,14 +111,7 @@ const Animation = () => {
           hello
         </div>
       </AnimationElement>
-      <AnimationElement
-        name="fadeInLeft"
-        duration="600ms"
-        delay="1s"
-        timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
-      >
-        txt no effect
-      </AnimationElement>
+
       <LazyLoadElement width={143} height={132}>
         <AnimationElement
           name="fadeInRight"
