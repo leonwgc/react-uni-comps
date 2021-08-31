@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
@@ -12,19 +12,27 @@ export type Props = {
   lineColor?: string;
   /** 通常放input/textarea等输入控件 */
   children?: React.ReactNode | React.ReactNode[];
-};
+} & HTMLAttributes<HTMLDivElement>;
+
+const StyledWrapper = styled.div`
+  padding-left: 12px;
+  &.clickable {
+    &:active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+`;
 
 const StyledCell = styled.div`
   position: relative;
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  padding: 10px 16px;
+  padding: 12px 12px 12px 0;
   overflow: hidden;
-  color: #323233;
+  color: #333;
   font-size: 14px;
   line-height: 24px;
-  background-color: #fff;
 
   .uc-cell-title {
     box-sizing: border-box;
@@ -94,15 +102,19 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const titleClsx = clsx('uc-cell-title', { 'not-edit-mode': content });
 
   return (
-    <HairLineBox color={lineColor}>
-      <StyledCell ref={ref} className="uc-cell" {...rest}>
-        <div className={titleClsx}>{label}</div>
-        <div className="uc-cell-value">
-          {content}
-          {children ? <div className="uc-field-body">{children}</div> : null}
-        </div>
-      </StyledCell>
-    </HairLineBox>
+    <StyledWrapper
+      className={clsx('uc-cell-wrapper', { clickable: typeof rest.onClick === 'function' })}
+    >
+      <HairLineBox color={lineColor}>
+        <StyledCell ref={ref} className={clsx('uc-cell')} {...rest}>
+          <div className={titleClsx}>{label}</div>
+          <div className="uc-cell-value">
+            {content}
+            {children ? <div className="uc-field-body">{children}</div> : null}
+          </div>
+        </StyledCell>
+      </HairLineBox>
+    </StyledWrapper>
   );
 });
 

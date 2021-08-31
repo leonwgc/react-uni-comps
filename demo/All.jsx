@@ -2,8 +2,8 @@ import React, { useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Space, Cell, Button, Checkbox, Switch } from '../src';
+import { SoundOutlined } from '@ant-design/icons';
+import { Space, Cell, Button, Checkbox, Switch, IconArrow } from '../src';
 
 export default function All() {
   const history = useHistory();
@@ -13,38 +13,239 @@ export default function All() {
   return (
     <div>
       <Cell
-        label="TransitionElement"
+        label={
+          <Space>
+            <SoundOutlined /> TransitionElement
+          </Space>
+        }
         content="go"
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
       <Cell
-        label="AnimationElement"
+        label={
+          <Space>
+            <SoundOutlined /> AnimationElement
+          </Space>
+        }
         content="go"
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
-      <Cell label="LazyloadImage" content="go" onClick={() => gotoPage('LazyloadImage')}></Cell>
-      <Cell label="LazyLoadElement" content="go" onClick={() => gotoPage('LazyLoadElement')}></Cell>
-      <Cell label="Tab" content="go" onClick={() => gotoPage('Tab')}></Cell>
-      <Cell label="Skeleton" content="go" onClick={() => gotoPage('Skeleton')}></Cell>
-      <Cell label="Checkbox" content="go" onClick={() => gotoPage('Checkbox')}></Cell>
-      <Cell label="Cell" content="go" onClick={() => gotoPage('Cell')}></Cell>
-      <Cell label="Spinner" content="go" onClick={() => gotoPage('Spinner')}></Cell>
-      <Cell label="Switch" content="go" onClick={() => gotoPage('Switch')}></Cell>
-      <Cell label="Divider" content="go" onClick={() => gotoPage('Divider')}></Cell>
-      <Cell label="ImageUpload" content="go" onClick={() => gotoPage('ImageUpload')}></Cell>
-      <Cell label="Waypoint" content="go" onClick={() => gotoPage('Waypoint')}></Cell>
-      <Cell label="IndexList" content="go" onClick={() => gotoPage('IndexList')}></Cell>
-      <Cell label="Slide" content="go" onClick={() => gotoPage('Slide')}></Cell>
-      <Cell label="SlideFull" content="go" onClick={() => gotoPage('SlideFull')}></Cell>
-      <Cell label="Popover" content="go" onClick={() => gotoPage('Popover')}></Cell>
-      <Cell label="Drag" content="go" onClick={() => gotoPage('Drag')}></Cell>
-      <Cell label="CopyToClipboard" content="go" onClick={() => gotoPage('CopyToClipboard')}></Cell>
-      <Cell label="Text" content="go" onClick={() => gotoPage('Text')}></Cell>
-      <Cell label="Tooltip" content="go" onClick={() => gotoPage('Tooltip')}></Cell>
-      <Cell label="Popup" content="go" onClick={() => gotoPage('Popup')}></Cell>
-      <Cell label="Toast" content="go" onClick={() => gotoPage('Toast')}></Cell>
-      <Cell label="Icon" content="go" onClick={() => gotoPage('Icon')}></Cell>
-      <Cell label="Button" content="go" onClick={() => gotoPage('Button')}></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> LazyloadImage
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('LazyloadImage')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> LazyLoadElement
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('LazyLoadElement')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Tab
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Tab')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Skeleton
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Skeleton')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Checkbox
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Checkbox')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Cell
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Cell')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Spinner
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Spinner')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Switch
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Switch')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Divider
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Divider')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> ImageUpload
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('ImageUpload')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Waypoint
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Waypoint')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> IndexList
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('IndexList')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Slide
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Slide')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> SlideFull
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('SlideFull')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Popover
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Popover')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Drag
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Drag')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> CopyToClipboard
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('CopyToClipboard')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Text
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Text')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Tooltip
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Tooltip')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Popup
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Popup')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Toast
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Toast')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Icon
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Icon')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Button
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Button')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Clickable Effect
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => console.log(1)}
+      ></Cell>
     </div>
   );
 }
