@@ -114,6 +114,10 @@ const routes = [
     path: '/Icon',
     component: lazy(() => import('./Icon')),
   },
+  {
+    path: '/NoticeBar',
+    component: lazy(() => import('./NoticeBar')),
+  },
 ];
 
 export default routes;

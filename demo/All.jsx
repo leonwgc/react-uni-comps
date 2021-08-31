@@ -246,6 +246,15 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => console.log(1)}
       ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> NoticeBar
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('NoticeBar')}
+      ></Cell>
     </div>
   );
 }
