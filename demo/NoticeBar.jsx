@@ -1,6 +1,6 @@
 import React from 'react';
 import { SoundOutlined } from '@ant-design/icons';
-import { Spinner, Space, NoticeBar } from '../src';
+import { NoticeBar } from '../src';
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
         content="各位请注意，当前文本超出了屏幕宽度"
       />
       <NoticeBar
-        speed={200}
+        speed={100}
         closeable
         style={{ backgroundColor: '#eee', color: '#333', marginTop: 30 }}
         icon={<SoundOutlined />}
@@ -42,6 +42,7 @@ export default function App() {
           marginTop: 30,
           height: 50,
         }}
+        delay={100}
         extra={
           <div>
             <SoundOutlined /> hello

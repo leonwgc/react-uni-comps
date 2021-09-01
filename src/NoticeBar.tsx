@@ -53,7 +53,7 @@ export type Props = {
   content: string;
   /** 开始滚动的延迟，单位 ms, 默认2000 */
   delay?: number;
-  /** 广播图标 */
+  /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
   icon?: React.ReactNode;
   /** 滚动速度，单位 px/s, 默认50 */
   speed?: number;
@@ -69,7 +69,7 @@ export type Props = {
 const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const {
     content,
-    delay = 0,
+    delay = 2000,
     icon,
     speed = 50,
     closeable = false,
@@ -81,7 +81,6 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
   const wrapRef = useRef<HTMLDivElement>();
   const contentRef = useRef<HTMLDivElement>();
   const [v, setV] = useState(0);
-  const fRef = useRef(false);
   const [visible, setVisible] = useState(true);
 
   useLayoutEffect(() => {
@@ -89,23 +88,19 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
     const text = contentRef.current;
 
     if (container.offsetWidth >= text.offsetWidth) return;
-    if (!fRef.current) {
-      fRef.current = true;
-      const timeout = window.setTimeout(() => {
-        text.style.transitionDuration = `${Math.round(text.offsetWidth / speed)}s`;
-        text.style.transform = `translateX(-${text.offsetWidth}px)`;
-      }, delay);
-      return () => {
-        window.clearTimeout(timeout);
-      };
-    } else {
-    }
+    const timeout = window.setTimeout(() => {
+      text.style.transitionDuration = `${Math.round(text.offsetWidth / speed)}s`;
+      text.style.transform = `translateX(-${text.offsetWidth}px)`;
+    }, delay);
+    return () => {
+      window.clearTimeout(timeout);
+    };
   }, [delay, speed]);
 
   useLayoutEffect(() => {
     const container = wrapRef.current;
     const text = contentRef.current;
-    if (container.offsetWidth >= text.offsetWidth || !fRef.current) {
+    if (container.offsetWidth >= text.offsetWidth || v === 0) {
       return;
     }
     text.style.transform = `translateX(${container.offsetWidth}px)`;
