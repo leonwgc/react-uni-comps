@@ -40,12 +40,11 @@ const StyledNoticeBar = styled.div`
       white-space: nowrap;
       flex: 1;
     }
-
-    .content-extra {
-      display: inline-block;
-      flex-shrink: 0;
-      margin-left: 12px;
-    }
+  }
+  .content-extra {
+    display: inline-block;
+    flex-shrink: 0;
+    margin-left: 12px;
   }
 `;
 
@@ -131,24 +130,24 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
         >
           {content}
         </div>
-        {(closeable || extra) && (
-          <div className={clsx('content-extra')}>
-            <Space>
-              {props.extra}
-              {props.closeable && (
-                <IconCross
-                  size={20}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    setVisible(false);
-                    onClose?.();
-                  }}
-                />
-              )}
-            </Space>
-          </div>
-        )}
       </div>
+      {(closeable || extra) && (
+        <div className={clsx('content-extra')}>
+          <Space>
+            {props.extra}
+            {props.closeable && (
+              <IconCross
+                size={20}
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  setVisible(false);
+                  onClose?.();
+                }}
+              />
+            )}
+          </Space>
+        </div>
+      )}
     </StyledNoticeBar>
   );
 });
