@@ -112,7 +112,11 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
   }, [v]);
 
   return (
-    <StyledNoticeBar ref={ref} className={clsx(className, { hide: !visible })} {...rest}>
+    <StyledNoticeBar
+      ref={ref}
+      className={clsx(className, 'uc-noticebar', { hide: !visible })}
+      {...rest}
+    >
       <div className="icon-part">{icon}</div>
       <div className="content-wrap" ref={wrapRef}>
         <div
