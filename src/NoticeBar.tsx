@@ -1,5 +1,8 @@
-import React, { HTMLAttributes, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
+import React, { HTMLAttributes, useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
+import Space from './Space';
+import IconCross from './IconCross';
 
 // ref zarm design
 
@@ -15,6 +18,10 @@ const StyledNoticeBar = styled.div`
   color: rgb(236, 146, 49);
   overflow: hidden;
 
+  &.hide {
+    display: none;
+  }
+
   .icon-part {
     flex-shrink: 0;
     margin-right: 8px;
@@ -23,68 +30,124 @@ const StyledNoticeBar = styled.div`
   .content-wrap {
     flex: 1 1;
     overflow: hidden;
-    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
+
+    .content-text {
+      transition-property: transform;
+      transition-timing-function: linear;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .content-extra {
+      display: inline-block;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
   }
 `;
 
 export type Props = {
   /** 公告内容 */
   content: string;
-  /** 开始滚动的延迟，单位 ms */
+  /** 开始滚动的延迟，单位 ms, 默认2000 */
   delay?: number;
   /** 广播图标 */
   icon?: React.ReactNode;
+  /** 滚动速度，单位 px/s, 默认50 */
   speed?: number;
+  /** 是否可关闭 ，默认false*/
+  closeable?: boolean;
+  /**额外操作区域，显示在关闭按钮左侧 */
+  extra?: React.ReactNode;
+  /** 关闭时的回调 */
+  onClose?: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 通告栏  */
 const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { content, delay = 2000, icon, speed = 50, ...rest } = props;
-  const [data, setData] = useState<any>({});
+  const {
+    content,
+    delay = 0,
+    icon,
+    speed = 50,
+    closeable = false,
+    className,
+    onClose,
+    extra,
+    ...rest
+  } = props;
   const wrapRef = useRef<HTMLDivElement>();
   const contentRef = useRef<HTMLDivElement>();
+  const [v, setV] = useState(0);
+  const fRef = useRef(false);
+  const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    const wrapWidth = wrapRef.current.getBoundingClientRect().width;
-    const offsetWidth = contentRef.current.getBoundingClientRect().width;
+  useLayoutEffect(() => {
+    const container = wrapRef.current;
+    const text = contentRef.current;
 
-    if (offsetWidth > wrapWidth) {
-      // 完整的执行时间 = 前后停留时间 + 移动时间
-      const animationDuration = Math.round(delay * 2 + (offsetWidth / speed) * 1000);
-
-      // 计算停留时间占总时间的百分比
-      const delayPercent = Math.round((delay * 100) / animationDuration);
-
-      setData({ animationDuration, delayPercent, offsetWidth, wrapWidth });
+    if (container.offsetWidth >= text.offsetWidth) return;
+    if (!fRef.current) {
+      fRef.current = true;
+      const timeout = window.setTimeout(() => {
+        text.style.transitionDuration = `${Math.round(text.offsetWidth / speed)}s`;
+        text.style.transform = `translateX(-${text.offsetWidth}px)`;
+      }, delay);
+      return () => {
+        window.clearTimeout(timeout);
+      };
+    } else {
     }
-  }, []);
+  }, [delay, speed]);
 
-  const { animationDuration, delayPercent, offsetWidth, wrapWidth } = data;
-
-  const StyledContent = styled.div`
-    @keyframes move {
-      0%,
-      ${delayPercent}% {
-        transform: translate3d(0, 0, 0);
-      }
-      ${100 - delayPercent}%,100% {
-        transform: translate3d(-${offsetWidth - wrapWidth}px, 0, 0);
-      }
+  useLayoutEffect(() => {
+    const container = wrapRef.current;
+    const text = contentRef.current;
+    if (container.offsetWidth >= text.offsetWidth || !fRef.current) {
+      return;
     }
-    position: absolute;
-    padding: 0 4px;
-    white-space: nowrap;
-    animation: move ${animationDuration}ms linear infinite;
-  `;
+    text.style.transform = `translateX(${container.offsetWidth}px)`;
+    text.style.transitionDuration = `${Math.round(
+      (container.offsetWidth + text.offsetWidth) / speed
+    )}s`;
+    text.style.transform = `translateX(-${text.offsetWidth}px)`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [v]);
 
   return (
-    <StyledNoticeBar ref={ref} {...rest}>
+    <StyledNoticeBar ref={ref} className={clsx(className, { hide: !visible })} {...rest}>
       <div className="icon-part">{icon}</div>
       <div className="content-wrap" ref={wrapRef}>
-        <StyledContent ref={contentRef}>{content}</StyledContent>
+        <div
+          className="content-text"
+          key={v}
+          onTransitionEnd={() => {
+            setV((v) => v + 1);
+          }}
+          ref={contentRef}
+        >
+          {content}
+        </div>
+        {(closeable || extra) && (
+          <div className={clsx('content-extra')}>
+            <Space>
+              {props.extra}
+              {props.closeable && (
+                <IconCross
+                  size={20}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    setVisible(false);
+                    onClose?.();
+                  }}
+                />
+              )}
+            </Space>
+          </div>
+        )}
       </div>
     </StyledNoticeBar>
   );
