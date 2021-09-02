@@ -9,7 +9,7 @@ export default function App() {
   }, []);
   return (
     <div style={{ margin: 100 }}>
-      <Affix offsetTop={20}>
+      <Affix offsetTop={20} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
         <Button type="primary">hello,top</Button>
       </Affix>
       <Button block type="primary" style={{ marginTop: 50 }}>

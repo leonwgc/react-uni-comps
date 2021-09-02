@@ -17,9 +17,10 @@ export type Props = {
 
 /** 将页面元素钉在可视范围,为了简单只支持window滚动和窗口顶部偏移量检测*/
 const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, offsetTop = 0, ...rest } = props;
+  const { children, offsetTop = 0, onChange, ...rest } = props;
   const innerRef = useRef<HTMLDivElement>();
   const scrollPosRef = useRef<number>();
+  const onChangeRef = useRef(onChange);
 
   useImperativeHandle(ref, () => innerRef.current);
 
@@ -36,10 +37,12 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       ) {
         affix.style.position = '';
         affix.style.top = 'unset';
+        onChangeRef.current?.(false);
       } else if (affixPos.top < offsetTop) {
         affix.style.position = 'fixed';
         affix.style.top = offsetTop + 'px';
         scrollPosRef.current = scrollTop; // mark current scroll pos
+        onChangeRef.current?.(true);
       }
     }, 17);
     window.addEventListener('scroll', updateScrollPos);
