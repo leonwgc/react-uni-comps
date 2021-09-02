@@ -1,5 +1,6 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
+import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 
 const StyledAffix = styled.div`
@@ -20,7 +21,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const { children, offsetTop = 0, onChange, ...rest } = props;
   const innerRef = useRef<HTMLDivElement>();
   const scrollPosRef = useRef<number>();
-  const onChangeRef = useRef(onChange);
+  const onChangeRef = useCallbackRef(onChange);
 
   useImperativeHandle(ref, () => innerRef.current);
 
@@ -48,7 +49,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     window.addEventListener('scroll', updateScrollPos);
 
     return () => window.removeEventListener('scroll', updateScrollPos);
-  }, [offsetTop]);
+  }, [offsetTop, onChangeRef]);
 
   return (
     <StyledAffix className="uc-affix" ref={innerRef} {...rest}>
