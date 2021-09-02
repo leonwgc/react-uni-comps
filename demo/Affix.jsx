@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Affix, Button } from '../src';
 
 export default function App() {
@@ -9,8 +9,8 @@ export default function App() {
   }, []);
   return (
     <div style={{ margin: 100 }}>
-      <Affix offsetTop={50}>
-        <Button type="primary">hello</Button>
+      <Affix offsetTop={20}>
+        <Button type="primary">hello,top</Button>
       </Affix>
       <Button block type="primary" style={{ marginTop: 50 }}>
         wgc

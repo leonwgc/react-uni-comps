@@ -1,48 +1,56 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
-import { useInViewport } from 'react-use-lib';
+import { throttle } from './helper';
 
 const StyledAffix = styled.div`
   display: inline-block;
+  z-index: 10;
 `;
 
 export type Props = {
-  /** 	距离窗口顶部达到指定偏移量后触发 */
+  /** 距离窗口顶部达到指定偏移量后触发 */
   offsetTop?: number;
-  offsetBottom?: number;
-  /** 上层元素 */
   children?: ReactElement;
+  /** 固定状态改变时触发的回调函数 */
+  onChange?: (affixed) => void;
 } & HTMLAttributes<HTMLDivElement>;
 
-/** 遮罩层 */
+/** 将页面元素钉在可视范围,为了简单只支持window滚动和窗口顶部偏移量检测*/
 const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, offsetTop = 0, offsetBottom, ...rest } = props;
+  const { children, offsetTop = 0, ...rest } = props;
   const innerRef = useRef<HTMLDivElement>();
-  const wpRef = useRef<HTMLSpanElement>();
+  const scrollPosRef = useRef<number>();
 
   useImperativeHandle(ref, () => innerRef.current);
 
-  const visible = useInViewport(wpRef, null, {
-    rootMargin: `-${offsetTop || 0}px 0px 0px -${offsetBottom || 0}px`,
-  });
-
   useEffect(() => {
     const affix = innerRef.current;
-    if (!visible) {
-      affix.style.position = 'fixed';
-      affix.style.top = offsetTop + 'px';
-    } else {
-      affix.style.position = '';
-    }
-  }, [visible]);
+
+    const updateScrollPos = throttle(() => {
+      const affixPos = affix.getBoundingClientRect();
+      const scrollTop = window.pageYOffset;
+      if (
+        affix.style.position === 'fixed' &&
+        scrollPosRef.current &&
+        scrollPosRef.current > scrollTop
+      ) {
+        affix.style.position = '';
+        affix.style.top = 'unset';
+      } else if (affixPos.top < offsetTop) {
+        affix.style.position = 'fixed';
+        affix.style.top = offsetTop + 'px';
+        scrollPosRef.current = scrollTop; // mark current scroll pos
+      }
+    }, 17);
+    window.addEventListener('scroll', updateScrollPos);
+
+    return () => window.removeEventListener('scroll', updateScrollPos);
+  }, [offsetTop]);
 
   return (
-    <>
-      <span data-role="waypoint" ref={wpRef} style={{ fontSize: 0 }}></span>
-      <StyledAffix className="uc-affix" ref={innerRef} {...rest}>
-        {children}
-      </StyledAffix>
-    </>
+    <StyledAffix className="uc-affix" ref={innerRef} {...rest}>
+      {children}
+    </StyledAffix>
   );
 });
 
