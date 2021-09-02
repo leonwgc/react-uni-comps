@@ -34,4 +34,5 @@ export { default as IconTick } from './IconTick';
 export { default as IconCross } from './IconCross';
 export { default as IconArrow } from './IconArrow';
 export { default as NoticeBar } from './NoticeBar';
+export { default as Affix } from './Affix';
 export * from './helper';

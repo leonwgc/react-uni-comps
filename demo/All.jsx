@@ -255,6 +255,15 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NoticeBar')}
       ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> Affix
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Affix')}
+      ></Cell>
     </div>
   );
 }

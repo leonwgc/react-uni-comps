@@ -118,6 +118,10 @@ const routes = [
     path: '/NoticeBar',
     component: lazy(() => import('./NoticeBar')),
   },
+  {
+    path: '/Affix',
+    component: lazy(() => import('./Affix')),
+  },
 ];
 
 export default routes;
