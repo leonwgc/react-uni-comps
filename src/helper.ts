@@ -14,11 +14,19 @@ export const debounce = (fn: F, timeout = 100): F => {
     }, timeout);
   };
 };
-
-export const throttle = (fn: F, timeout = 200): F => {
+/**
+ * 截流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+export const throttle = (fn: F, timeout = 200, last = true): F => {
   let start = 0;
   let timer = 0;
   const ensureExecute = (now, args, that) => {
+    if (!last) return;
     if (timer) {
       clearTimeout(timer);
       timer = 0;

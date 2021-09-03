@@ -3,94 +3,170 @@ import React, {
   ReactElement,
   useEffect,
   useRef,
-  useImperativeHandle,
+  useState,
   useCallback,
+  useImperativeHandle,
 } from 'react';
-import styled from 'styled-components';
 import useValueRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
+import clsx from 'clsx';
 
-const StyledAffix = styled.div`
-  display: inline-block;
-  z-index: 10;
-`;
+/** refer to zarm Affix  */
 
 export type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */
   offsetTop?: number;
+  /** 距离窗口底部达到指定偏移量后触发 */
+  offsetBottom?: number;
   children?: ReactElement;
   /** 固定状态改变时触发的回调函数 */
   onChange?: (affixed) => void;
+  /**设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
+  target?: () => HTMLElement | Window;
 } & HTMLAttributes<HTMLDivElement>;
 
-/** 将页面元素钉在可视范围,为了简单只支持window滚动和窗口顶部偏移量检测*/
+type StateInfo = {
+  affixed: boolean;
+  width: number | string;
+  height: number | string;
+};
+
+type OffsetInfo = {
+  offsetBottom: number;
+  offsetTop: number;
+};
+
+/** 将页面元素钉在可视范围*/
 const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, offsetTop = 0, onChange, ...rest } = props;
+  const { children, offsetTop, offsetBottom, target, onChange, ...rest } = props;
   const innerRef = useRef<HTMLDivElement>();
   useImperativeHandle(ref, () => innerRef.current);
-  // store pos when affixed
-  const scrollPosRef = useRef<number>();
+
+  const [data, setData] = useState<StateInfo>({
+    affixed: false,
+    width: 0,
+    height: 0,
+  });
 
   const onChangeRef = useValueRef(onChange);
-  const offsetTopRef = useValueRef(offsetTop);
+  const targetRef = useRef<() => HTMLElement | Window>(target);
+  const wrapElRef = useRef<HTMLDivElement>();
+  const fixedElRef = useRef<HTMLDivElement>();
+  const targetRectRef = useRef<Partial<DOMRect>>({ top: 0, bottom: 0 });
+  const wrapElTopRef = useRef<number>('offsetBottom' in props ? -10000 : 10000);
 
-  const getPos = useCallback(() => {
-    const affix = innerRef.current;
-    const affixPos = affix.getBoundingClientRect();
-    return affixPos;
+  const offsetRef = useRef<OffsetInfo>({
+    offsetBottom,
+    offsetTop: typeof offsetTop === 'number' ? offsetTop : typeof offsetBottom !== 'number' && 0,
+  });
+
+  const getAffixed = useCallback(() => {
+    const targetRect = targetRectRef.current;
+    const wrapElTop = wrapElTopRef.current;
+    const { offsetTop, offsetBottom } = offsetRef.current;
+
+    if (typeof offsetBottom === 'number' && wrapElTop + offsetBottom >= targetRect.bottom) {
+      return true;
+    }
+
+    if (
+      typeof offsetBottom !== 'number' &&
+      typeof offsetTop === 'number' &&
+      wrapElTop - offsetTop <= targetRect.top
+    ) {
+      return true;
+    }
+
+    return false;
   }, []);
 
-  const updateDom = useCallback(
-    (el, affixed) => {
-      if (affixed) {
-        el.style.position = 'fixed';
-        el.style.top = offsetTopRef.current + 'px';
-      } else {
-        el.style.position = '';
-        el.style.top = 'unset';
-      }
-    },
-    [offsetTopRef]
-  );
+  const getAffixeStyle = useCallback(() => {
+    const targetRect = targetRectRef.current;
+    const { offsetTop, offsetBottom } = offsetRef.current;
+    const { width, height } = data;
+    const affixed = getAffixed();
 
-  useEffect(() => {
-    const affix = innerRef.current;
-    const affixPos = affix.getBoundingClientRect();
-
-    if (affixPos.top < offsetTopRef.current) {
-      updateDom(affixPos, true);
+    if (affixed && typeof offsetBottom === 'number') {
+      return {
+        position: 'fixed',
+        bottom: offsetBottom,
+        width,
+        height,
+        zIndex: 100,
+      };
     }
-  }, [updateDom, offsetTopRef]);
+
+    if (affixed && typeof offsetTop === 'number') {
+      return {
+        position: 'fixed',
+        top: targetRect.top + offsetTop,
+        width,
+        height,
+        zIndex: 100,
+      };
+    }
+
+    return {};
+  }, [getAffixed, data]);
 
   useEffect(() => {
-    const affix = innerRef.current;
+    const t = targetRef.current?.() || window;
+    targetRectRef.current =
+      t !== window
+        ? (t as HTMLElement).getBoundingClientRect()
+        : ({ top: 0, bottom: t.innerHeight, width: 0, height: 0 } as DOMRect);
+  }, [targetRef, targetRectRef]);
 
-    const updateScrollPos = throttle(() => {
-      const affixPos = affix.getBoundingClientRect();
-      const scrollTop = window.pageYOffset;
-      if (
-        affix.style.position === 'fixed' &&
-        scrollPosRef.current &&
-        scrollPosRef.current > scrollTop &&
-        scrollTop <= offsetTopRef.current
-      ) {
-        updateDom(affix, false);
-        onChangeRef.current?.(false);
-      } else if (affixPos.top < offsetTopRef.current) {
-        updateDom(affix, true);
-        scrollPosRef.current = scrollTop; // mark current scroll pos
-        onChangeRef.current?.(true);
-      }
-    }, 17);
-    window.addEventListener('scroll', updateScrollPos);
+  const onScrollUpdate = useCallback(() => {
+    const { affixed } = data;
+    const wrapEl = wrapElRef.current;
+    const { top, width, height } = wrapEl.getBoundingClientRect();
 
-    return () => window.removeEventListener('scroll', updateScrollPos);
-  }, [offsetTopRef, onChangeRef]);
+    wrapElTopRef.current = top;
+
+    const currentAffixed = getAffixed();
+    if (currentAffixed !== affixed) {
+      setData({
+        affixed: currentAffixed,
+        width: width === 0 ? 'auto' : width,
+        height: height === 0 ? 'auto' : height,
+      });
+      onChangeRef.current?.(currentAffixed);
+    }
+  }, [getAffixed, onChangeRef, data]);
+
+  useEffect(() => {
+    const onScroll = throttle(onScrollUpdate, 16, false);
+
+    const t = targetRef.current?.() || window;
+
+    t.addEventListener('scroll', onScroll);
+
+    onScroll();
+
+    return () => t.removeEventListener('scroll', onScroll);
+  }, [offsetRef, onScrollUpdate]);
+
+  const { affixed } = data;
+
+  if (!affixed) {
+    return (
+      <div ref={wrapElRef}>
+        {React.cloneElement(children, {
+          ref: innerRef,
+        })}
+      </div>
+    );
+  }
 
   return (
-    <StyledAffix className="uc-affix" ref={innerRef} {...rest}>
-      {children}
-    </StyledAffix>
+    <div ref={wrapElRef} className={clsx('uc-affix-wrap')}>
+      <div ref={fixedElRef} {...rest} style={getAffixeStyle() as React.CSSProperties}>
+        {React.cloneElement(children, {
+          ref: innerRef,
+        })}
+      </div>
+    </div>
   );
 });
 
