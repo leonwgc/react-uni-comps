@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import useValueRef from './hooks/useCallbackRef';
+import useValueRef from './hooks/useValueRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
 
