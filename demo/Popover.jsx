@@ -101,6 +101,7 @@ const Items = places.map(({ title, content, placement, selector }) => ({
 
 export default function App() {
   const [v, setV] = useState(false);
+  const [v1, setV1] = useState(false);
   const [visible, setVisible] = useState({});
 
   const handleClick = (placement) => {
@@ -114,8 +115,8 @@ export default function App() {
   };
 
   return (
-    <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
-      <Popover
+    <div>
+      {/* <Popover
         placement="bottom-right"
         mask
         closable
@@ -124,6 +125,19 @@ export default function App() {
         content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
       >
         <Button onClick={() => setV(true)}>back drop </Button>
+      </Popover> */}
+
+      <Popover
+        placement="bottom"
+        mask
+        closable
+        onClose={() => setV1(false)}
+        visible={v1}
+        content={<div style={{ height: 100, width: 300, background: '#fff' }}>menus</div>}
+      >
+        <Button type="primary" style={{ width: 300, margin: '200px' }} onClick={() => setV1(true)}>
+          test
+        </Button>
       </Popover>
 
       <Space wrap direction="vertical">
@@ -137,12 +151,10 @@ export default function App() {
               key={idx}
               onClose={() => setVisible({ [placement]: false })}
               content={
-                <TransitionElement>
-                  <StyledContent>
-                    <h5 style={{ fontSize: 16 }}>{title}</h5>
-                    <p>{content}</p>
-                  </StyledContent>
-                </TransitionElement>
+                <StyledContent>
+                  <h5 style={{ fontSize: 16 }}>{title}</h5>
+                  <p>{content}</p>
+                </StyledContent>
               }
             >
               <Button onClick={() => handleClick(placement)}>{title}</Button>
