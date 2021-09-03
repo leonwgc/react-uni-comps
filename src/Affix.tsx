@@ -120,6 +120,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const onScrollUpdate = useCallback(() => {
     const { affixed } = data;
     const wrapEl = wrapElRef.current;
+    if (!wrapEl) return;
     const { top, width, height } = wrapEl.getBoundingClientRect();
 
     wrapElTopRef.current = top;
