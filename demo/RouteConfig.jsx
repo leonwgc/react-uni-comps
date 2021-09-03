@@ -122,6 +122,10 @@ const routes = [
     path: '/Affix',
     component: lazy(() => import('./Affix')),
   },
+  {
+    path: '/ActionSheet',
+    component: lazy(() => import('./ActionSheet')),
+  },
 ];
 
 export default routes;

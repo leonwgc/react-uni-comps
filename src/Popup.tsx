@@ -142,7 +142,7 @@ const Popup = (props: Props): React.ReactElement => {
     backdropStyle,
     onBackdropClick,
     position = 'bottom',
-    duration = 280,
+    duration = 180,
     mountContainer = () => document.body,
     style,
     className,

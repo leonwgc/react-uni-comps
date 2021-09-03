@@ -264,6 +264,15 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Affix')}
       ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> ActionSheet
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ActionSheet')}
+      ></Cell>
     </div>
   );
 }
