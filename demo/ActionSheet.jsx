@@ -18,6 +18,7 @@ export default function App() {
       <Button onClick={() => setVisible(true)}>ActionSheet 动作面板</Button>
       <ActionSheet
         extra={'ActionSheet 动作面板'}
+        cancelText="取消"
         visible={visible}
         actions={actions}
         onClose={() => setVisible(false)}
