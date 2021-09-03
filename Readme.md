@@ -13,6 +13,7 @@ yarn add react-uni-comps
 2. 支持桌面和移动端
 3. 支持动态切换主题色
 4. 只支持 react>=16.8 版本，使用 hooks 实现
+5. 基本样式使用 styled-components
 
 ### 组件说明
 
