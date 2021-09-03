@@ -28,7 +28,7 @@ export { default as ThemeProvider } from './ThemeProvider';
 export { default as Drag } from './Drag';
 export { default as CopyToClipboard } from './CopyToClipboard';
 export { default as Text } from './Text';
-export { default as Backdrop } from './Backdrop';
+export { default as Mask } from './Mask';
 export { default as Toast } from './Toast';
 export { default as IconTick } from './IconTick';
 export { default as IconCross } from './IconCross';

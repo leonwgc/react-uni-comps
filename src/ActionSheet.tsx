@@ -133,7 +133,7 @@ const ActionSheet = (props: Props): React.ReactElement => {
       className={clsx('uc-actionsheet')}
       visible={visible}
       position="bottom"
-      onBackdropClick={() => {
+      onMaskClick={() => {
         onMaskClick?.();
         if (closeOnMaskClick) {
           onClose?.();

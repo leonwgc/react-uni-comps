@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactElement, useEffect, useRef } from 'react';
 import TransitionElement from './TransitionElement';
 import styled from 'styled-components';
 
-const StyledBackdrop = styled.div`
+const StyledMask = styled.div`
   background-color: rgba(0, 0, 0);
   z-index: 100;
   position: fixed;
@@ -29,7 +29,7 @@ export type Props = {
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 遮罩层 */
-const Backdrop = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
+const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const { children, hideOverflow = true, ...rest } = props;
 
   const lastBodyFlow = useRef<string>('');
@@ -50,13 +50,13 @@ const Backdrop = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => 
 
   return (
     <TransitionElement>
-      <StyledBackdrop className="uc-backdrop" ref={ref} {...rest}>
+      <StyledMask className="uc-mask" ref={ref} {...rest}>
         {children}
-      </StyledBackdrop>
+      </StyledMask>
     </TransitionElement>
   );
 });
 
-Backdrop.displayName = 'UC-Backdrop';
+Mask.displayName = 'UC-Mask';
 
-export default Backdrop;
+export default Mask;

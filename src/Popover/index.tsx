@@ -6,7 +6,7 @@ import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
-import Backdrop from '../Backdrop';
+import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 
 // port from https://github.com/bytedance/guide and refactor
@@ -63,8 +63,8 @@ export type Props = {
   /**  关闭回调 */
   onClose?: () => void;
   className?: string;
-  /** backdrop是否显示 */
-  backdrop?: boolean;
+  /** mask是否显示 */
+  mask?: boolean;
   /** 弹框自定义偏移 */
   offset?: Offset;
 } & React.HTMLAttributes<HTMLElement>;
@@ -86,7 +86,7 @@ const Popover = (props: Props): React.ReactElement => {
     className,
     style,
     children,
-    backdrop,
+    mask,
     offset = {},
     ...rest
   } = props;
@@ -118,7 +118,7 @@ const Popover = (props: Props): React.ReactElement => {
         placement,
         offsetRef.current
       );
-      const arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
+      const arrowStyle = getArrowStyle(modalEl, placement, mask, MARGIN);
 
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
@@ -142,7 +142,7 @@ const Popover = (props: Props): React.ReactElement => {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement, backdrop]);
+  }, [visible, placement, mask]);
 
   return (
     <>
@@ -150,10 +150,10 @@ const Popover = (props: Props): React.ReactElement => {
       {visible
         ? ReactDOM.createPortal(
             <>
-              {backdrop ? <Backdrop onClick={onClose} /> : null}
+              {mask ? <Mask onClick={onClose} /> : null}
               <TransitionElement ref={popoverRef}>
                 <StyledPopover
-                  className={clsx(className, 'uc-popover', { backdrop: backdrop })}
+                  className={clsx(className, 'uc-popover', { mask: mask })}
                   style={{ ...modalStyle, ...style }}
                   {...rest}
                 >

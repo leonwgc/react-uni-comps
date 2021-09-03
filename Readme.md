@@ -79,13 +79,15 @@ yarn add react-uni-comps
 
 #### 31. Text (文本显示,单行/多行截断显示省略)
 
-#### 32. Backdrop (遮罩层,组件内部使用)
+#### 32. Mask (遮罩层,组件内部使用)
 
 #### 33. IconTick (勾勾), IconCross(x) , IconArrow(箭头) [内部使用]
 
 #### 34. Affix (将页面元素钉在可视范围)
 
 #### 35. NoticeBar (通告栏)
+
+#### 36. ActionSheet (动作面板)
 
 ### 按需加载
 

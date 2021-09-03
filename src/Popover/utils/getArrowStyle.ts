@@ -5,7 +5,7 @@ import { Placement, SinglePlacement } from '../types';
 export const getArrowStyle = (
   modalEl: Element,
   placement: Placement = 'bottom',
-  backdrop = false,
+  mask = false,
   margin = 12,
   diagonalWidth = 6 // make it the same as arrow w/h
 ): Record<string, string | number> => {
@@ -21,7 +21,7 @@ export const getArrowStyle = (
   };
 
   const extraStyle = {
-    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement],
+    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement],
     [getReversePosition(firstPlacement)]: -diagonalWidth / 2,
   };
 

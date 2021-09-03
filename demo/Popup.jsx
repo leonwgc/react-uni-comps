@@ -23,7 +23,7 @@ export default function App() {
           width: '100%',
         }}
         visible={b}
-        onBackdropClick={() => setB(false)}
+        onMaskClick={() => setB(false)}
       >
         <div
           style={{
@@ -40,7 +40,7 @@ export default function App() {
         position="center"
         style={{ width: '70vw', height: '60vh', backgroundColor: '#fff' }}
         visible={c}
-        onBackdropClick={() => setC(false)}
+        onMaskClick={() => setC(false)}
       >
         <div
           style={{
@@ -56,7 +56,7 @@ export default function App() {
         position="left"
         style={{ width: '50vw', height: '100vh', backgroundColor: '#fff' }}
         visible={l}
-        onBackdropClick={() => setL(false)}
+        onMaskClick={() => setL(false)}
       >
         <div
           style={{
@@ -68,7 +68,7 @@ export default function App() {
           <Button onClick={() => setL(false)}>click to close</Button>
         </div>
       </Popup>
-      <Popup position="top" visible={t} onBackdropClick={() => setT(false)}>
+      <Popup position="top" visible={t} onMaskClick={() => setT(false)}>
         <div
           style={{
             display: 'flex',

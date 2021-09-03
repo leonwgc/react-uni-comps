@@ -117,7 +117,7 @@ export default function App() {
     <div style={{ position: 'absolute', left: '40%', top: '20%' }}>
       <Popover
         placement="bottom-right"
-        backdrop
+        mask
         closable
         onClose={() => setV(false)}
         visible={v}

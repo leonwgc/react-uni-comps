@@ -40,10 +40,10 @@ const Toast = (props: Props): React.ReactElement => {
 
   const toastProps: Partial<PopupProps> = {};
   if (modal) {
-    toastProps.backdrop = true;
-    toastProps.backdropStyle = { opacity: 0 };
+    toastProps.mask = true;
+    toastProps.maskStyle = { opacity: 0 };
   } else {
-    toastProps.backdrop = false;
+    toastProps.mask = false;
   }
 
   return (

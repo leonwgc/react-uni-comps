@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
-import Backdrop from './Backdrop';
+import Mask from './Mask';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
@@ -114,11 +114,11 @@ export type Props = {
   /** 是否可见 */
   visible?: boolean;
   /** 是否显示遮罩，默认显示 */
-  backdrop?: boolean;
+  mask?: boolean;
   /** 遮罩样式 */
-  backdropStyle?: React.CSSProperties;
+  maskStyle?: React.CSSProperties;
   /** 遮罩点击事件 */
-  onBackdropClick?: () => void;
+  onMaskClick?: () => void;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
   position: 'top' | 'bottom' | 'left' | 'center' | 'right';
   /** 弹出动画时间，默认280ms */
@@ -129,7 +129,7 @@ export type Props = {
   children?: React.ReactNode;
   /** 弹框style */
   style?: React.CSSProperties;
-/** 弹框className */
+  /** 弹框className */
   className?: string;
 };
 
@@ -138,11 +138,11 @@ const Popup = (props: Props): React.ReactElement => {
   const {
     children,
     visible,
-    backdrop = true,
-    backdropStyle,
-    onBackdropClick,
+    mask = true,
+    maskStyle,
+    onMaskClick,
     position = 'bottom',
-    duration = 180,
+    duration = 160,
     mountContainer = () => document.body,
     style,
     className,
@@ -151,7 +151,7 @@ const Popup = (props: Props): React.ReactElement => {
 
   return ReactDOM.createPortal(
     <>
-      {backdrop && visible ? <Backdrop style={backdropStyle} onClick={onBackdropClick} /> : null}
+      {mask && visible ? <Mask style={maskStyle} onClick={onMaskClick} /> : null}
       <Transition in={visible} timeout={duration}>
         {(status) => (
           <div>
