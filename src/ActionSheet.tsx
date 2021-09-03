@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
 import * as colors from './colors';
+import clsx from 'clsx';
 
 export type Action = {
-  key: string | number;
   text: string;
   disabled?: boolean;
   description?: string;
@@ -18,13 +18,9 @@ export type Props = {
   actions: Action[];
   extra?: React.ReactNode;
   cancelText?: string;
-  onAction?: (action: Action, index: number) => void;
   onClose?: () => void;
-  afterClose?: () => void;
   onMaskClick?: () => void;
-  closeOnAction?: boolean;
   closeOnMaskClick?: boolean;
-  getContainer?: () => HTMLElement;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledActionSheet = styled(Popup)`
@@ -52,12 +48,20 @@ const StyledActionSheet = styled(Popup)`
       border-top: 1px solid ${colors.border};
       padding: 14px;
       text-align: center;
+      &.disabled {
+        color: #999;
+
+        &:active {
+          background-color: unset;
+        }
+      }
       &:first-child {
         border-top: none;
       }
-      &:active:not(:disabled) {
+      &:active {
         background-color: rgba(0, 0, 0, 0.1);
       }
+
       button {
         background-color: transparent;
         border: none;
@@ -68,6 +72,13 @@ const StyledActionSheet = styled(Popup)`
         &:disabled {
           background-color: #fff;
           color: #999;
+        }
+
+        .button-item-name {
+          color: #333;
+          &.disabled {
+            color: #999 !important;
+          }
         }
 
         .button-item-description {
@@ -86,10 +97,8 @@ const ActionSheet = (props: Props): React.ReactElement => {
     visible = false,
     actions = [],
     cancelText = '',
-    closeOnAction = false,
     closeOnMaskClick = true,
     onMaskClick,
-    onAction,
     onClose,
     extra,
     ...rest
@@ -97,6 +106,7 @@ const ActionSheet = (props: Props): React.ReactElement => {
 
   return (
     <StyledActionSheet
+      className={clsx('uc-actionsheet')}
       visible={visible}
       position="bottom"
       onBackdropClick={() => {
@@ -111,20 +121,20 @@ const ActionSheet = (props: Props): React.ReactElement => {
         {extra && <div className={`extra`}>{extra}</div>}
         <div className={`button-list`}>
           {actions.map((action, index) => (
-            <div key={action.key} className={`wrapper`}>
-              <Button
-                block
-                disabled={action.disabled}
-                onClick={() => {
-                  action.onClick?.();
-                  onAction?.(action, index);
-                  if (closeOnAction) {
-                    onClose?.();
-                  }
-                }}
-                style={{ color: action.color || '#333' }}
-              >
-                <div className={`button-item-name`}>{action.text}</div>
+            <div
+              key={index}
+              className={clsx('wrapper', { disabled: action.disabled })}
+              onClick={() => {
+                action.onClick?.();
+              }}
+            >
+              <Button block disabled={action.disabled}>
+                <div
+                  className={clsx('button-item-name', { disabled: action.disabled })}
+                  style={{ color: action.color || '#333' }}
+                >
+                  {action.text}
+                </div>
                 {action.description && (
                   <div className={`button-item-description`}>{action.description}</div>
                 )}
