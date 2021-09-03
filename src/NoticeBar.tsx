@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import Space from './Space';
 import IconCross from './IconCross';
 
-// ref zarm design
-
 const StyledNoticeBar = styled.div`
   height: 30px;
   font-size: 14px;

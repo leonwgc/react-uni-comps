@@ -1227,8 +1227,9 @@ Tabs.Tab = Tab;
 
 var _excluded$7 = ["label", "content", "lineColor", "children"];
 
-var _templateObject$7;
-var StyledCell = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 10px 16px;\n  overflow: hidden;\n  color: #323233;\n  font-size: 14px;\n  line-height: 24px;\n  background-color: #fff;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #969799;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: inherit;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
+var _templateObject$7, _templateObject2$1;
+var StyledWrapper$1 = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: rgba(0, 0, 0, 0.1);\n    }\n  }\n"])));
+var StyledCell = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #969799;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: inherit;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1246,18 +1247,22 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var titleClsx = clsx__default['default']('uc-cell-title', {
     'not-edit-mode': content
   });
-  return /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, {
+    className: clsx__default['default']('uc-cell-wrapper', {
+      clickable: typeof rest.onClick === 'function'
+    })
+  }, /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
     color: lineColor
   }, /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({
     ref: ref,
-    className: "uc-cell"
+    className: clsx__default['default']('uc-cell')
   }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
     className: titleClsx
   }, label), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-cell-value"
   }, content, children ? /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-field-body"
-  }, children) : null)));
+  }, children) : null))));
 });
 Cell.displayName = 'UC-Cell';
 
@@ -1420,9 +1425,9 @@ var IconTick = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 IconTick.displayName = 'UC-IconTick';
 
-var _templateObject$b, _templateObject2$1;
+var _templateObject$b, _templateObject2$2;
 var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    color: ", ";\n    cursor: not-allowed;\n  }\n"])), disabledText);
-var StyledCheckbox = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n    opacity: 0.4;\n  }\n"])), function (_ref) {
+var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n    opacity: 0.4;\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -2042,12 +2047,24 @@ var debounce = function debounce(fn) {
     }, timeout);
   };
 };
+/**
+ * 截流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+
 var throttle = function throttle(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   var start = 0;
   var timer = 0;
 
   var ensureExecute = function ensureExecute(now, args, that) {
+    if (!last) return;
+
     if (timer) {
       clearTimeout(timer);
       timer = 0;
@@ -2859,11 +2876,11 @@ CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
 var _excluded$j = ["lines", "children"];
 
-var _templateObject$l, _templateObject2$2;
+var _templateObject$l, _templateObject2$3;
 var StyledSpanMultiLines = styled__default['default'].span(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
-var StyledSpanOneline = styled__default['default'].span(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
+var StyledSpanOneline = styled__default['default'].span(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2987,12 +3004,277 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 IconArrow.displayName = 'UC-IconArrow';
 
+var _excluded$l = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
+
+var _templateObject$o;
+var StyledNoticeBar = styled__default['default'].div(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
+
+/** 通告栏  */
+var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var content = props.content,
+      _props$delay = props.delay,
+      delay = _props$delay === void 0 ? 2000 : _props$delay,
+      icon = props.icon,
+      _props$speed = props.speed,
+      speed = _props$speed === void 0 ? 50 : _props$speed,
+      _props$closeable = props.closeable,
+      closeable = _props$closeable === void 0 ? false : _props$closeable,
+      className = props.className,
+      onClose = props.onClose,
+      extra = props.extra,
+      rest = _objectWithoutProperties(props, _excluded$l);
+
+  var wrapRef = React.useRef();
+  var contentRef = React.useRef();
+
+  var _useState = React.useState(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      v = _useState2[0],
+      setV = _useState2[1];
+
+  var _useState3 = React.useState(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      visible = _useState4[0],
+      setVisible = _useState4[1];
+
+  React.useLayoutEffect(function () {
+    var container = wrapRef.current;
+    var text = contentRef.current;
+    if (container.offsetWidth >= text.offsetWidth) return;
+    var timeout = window.setTimeout(function () {
+      text.style.transitionDuration = "".concat(Math.round(text.offsetWidth / speed), "s");
+      text.style.transform = "translateX(-".concat(text.offsetWidth, "px)");
+    }, delay);
+    return function () {
+      window.clearTimeout(timeout);
+    };
+  }, [delay, speed]);
+  React.useLayoutEffect(function () {
+    var container = wrapRef.current;
+    var text = contentRef.current;
+
+    if (container.offsetWidth >= text.offsetWidth || v === 0) {
+      return;
+    }
+
+    text.style.transform = "translateX(".concat(container.offsetWidth, "px)");
+    text.style.transitionDuration = "".concat(Math.round((container.offsetWidth + text.offsetWidth) / speed), "s");
+    text.style.transform = "translateX(-".concat(text.offsetWidth, "px)"); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [v]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeBar, _extends({
+    ref: ref,
+    className: clsx__default['default'](className, 'uc-noticebar', {
+      hide: !visible
+    })
+  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "icon-part"
+  }, icon), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "content-wrap",
+    ref: wrapRef
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "content-text",
+    key: v,
+    onTransitionEnd: function onTransitionEnd() {
+      setV(function (v) {
+        return v + 1;
+      });
+    },
+    ref: contentRef
+  }, content)), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content-extra')
+  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
+    size: 20,
+    style: {
+      cursor: 'pointer'
+    },
+    onClick: function onClick() {
+      setVisible(false);
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }))));
+});
+NoticeBar.displayName = 'UC-NoticeBar';
+
+/**
+ *  store value in ref and update it after effect
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useValueRef(value) {
+  var ref = React.useRef(value);
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
+var _excluded$m = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
+/** refer to zarm Affix  */
+
+/** 将页面元素钉在可视范围*/
+var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      offsetTop = props.offsetTop,
+      offsetBottom = props.offsetBottom,
+      target = props.target,
+      onChange = props.onChange,
+      rest = _objectWithoutProperties(props, _excluded$m);
+
+  var innerRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return innerRef.current;
+  });
+
+  var _useState = React.useState({
+    affixed: false,
+    width: 0,
+    height: 0
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var onChangeRef = useValueRef(onChange);
+  var targetRef = React.useRef(target);
+  var wrapElRef = React.useRef();
+  var fixedElRef = React.useRef();
+  var targetRectRef = React.useRef({
+    top: 0,
+    bottom: 0
+  });
+  var wrapElTopRef = React.useRef('offsetBottom' in props ? -10000 : 10000);
+  var offsetRef = React.useRef({
+    offsetBottom: offsetBottom,
+    offsetTop: typeof offsetTop === 'number' ? offsetTop : typeof offsetBottom !== 'number' && 0
+  });
+  var getAffixed = React.useCallback(function () {
+    var targetRect = targetRectRef.current;
+    var wrapElTop = wrapElTopRef.current;
+    var _offsetRef$current = offsetRef.current,
+        offsetTop = _offsetRef$current.offsetTop,
+        offsetBottom = _offsetRef$current.offsetBottom;
+
+    if (typeof offsetBottom === 'number' && wrapElTop + offsetBottom >= targetRect.bottom) {
+      return true;
+    }
+
+    if (typeof offsetBottom !== 'number' && typeof offsetTop === 'number' && wrapElTop - offsetTop <= targetRect.top) {
+      return true;
+    }
+
+    return false;
+  }, []);
+  var getAffixeStyle = React.useCallback(function () {
+    var targetRect = targetRectRef.current;
+    var _offsetRef$current2 = offsetRef.current,
+        offsetTop = _offsetRef$current2.offsetTop,
+        offsetBottom = _offsetRef$current2.offsetBottom;
+    var width = data.width,
+        height = data.height;
+    var affixed = getAffixed();
+
+    if (affixed && typeof offsetBottom === 'number') {
+      return {
+        position: 'fixed',
+        bottom: offsetBottom,
+        width: width,
+        height: height,
+        zIndex: 100
+      };
+    }
+
+    if (affixed && typeof offsetTop === 'number') {
+      return {
+        position: 'fixed',
+        top: targetRect.top + offsetTop,
+        width: width,
+        height: height,
+        zIndex: 100
+      };
+    }
+
+    return {};
+  }, [getAffixed, data]);
+  React.useEffect(function () {
+    var _targetRef$current;
+
+    var t = ((_targetRef$current = targetRef.current) === null || _targetRef$current === void 0 ? void 0 : _targetRef$current.call(targetRef)) || window;
+    targetRectRef.current = t !== window ? t.getBoundingClientRect() : {
+      top: 0,
+      bottom: t.innerHeight,
+      width: 0,
+      height: 0
+    };
+  }, [targetRef, targetRectRef]);
+  var onScrollUpdate = React.useCallback(function () {
+    var affixed = data.affixed;
+    var wrapEl = wrapElRef.current;
+    if (!wrapEl) return;
+
+    var _wrapEl$getBoundingCl = wrapEl.getBoundingClientRect(),
+        top = _wrapEl$getBoundingCl.top,
+        width = _wrapEl$getBoundingCl.width,
+        height = _wrapEl$getBoundingCl.height;
+
+    wrapElTopRef.current = top;
+    var currentAffixed = getAffixed();
+
+    if (currentAffixed !== affixed) {
+      var _onChangeRef$current;
+
+      setData({
+        affixed: currentAffixed,
+        width: width === 0 ? 'auto' : width,
+        height: height === 0 ? 'auto' : height
+      });
+      (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, currentAffixed);
+    }
+  }, [getAffixed, onChangeRef, data]);
+  React.useEffect(function () {
+    var _targetRef$current2;
+
+    var onScroll = throttle(onScrollUpdate, 16, false);
+    var t = ((_targetRef$current2 = targetRef.current) === null || _targetRef$current2 === void 0 ? void 0 : _targetRef$current2.call(targetRef)) || window;
+    t.addEventListener('scroll', onScroll);
+    onScroll();
+    return function () {
+      return t.removeEventListener('scroll', onScroll);
+    };
+  }, [offsetRef, onScrollUpdate]);
+  var affixed = data.affixed;
+
+  if (!affixed) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      ref: wrapElRef
+    }, /*#__PURE__*/React__default['default'].cloneElement(children, {
+      ref: innerRef
+    }));
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: wrapElRef,
+    className: clsx__default['default']('uc-affix-wrap')
+  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
+    ref: fixedElRef
+  }, rest, {
+    style: getAffixeStyle()
+  }), /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: innerRef
+  })));
+});
+Affix.displayName = 'UC-Affix';
+
 Object.defineProperty(exports, 'ThemeProvider', {
   enumerable: true,
   get: function () {
     return styled.ThemeProvider;
   }
 });
+exports.Affix = Affix;
 exports.AnimationElement = AnimationElement;
 exports.Backdrop = Backdrop;
 exports.Button = Button;
@@ -3010,6 +3292,7 @@ exports.IconTick = IconTick;
 exports.IndexList = IndexList;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
+exports.NoticeBar = NoticeBar;
 exports.Popover = Popover;
 exports.Popup = Popup;
 exports.Pullup = Pullup;

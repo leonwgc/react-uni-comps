@@ -23,15 +23,30 @@ export var debounce = function debounce(fn, timeout) {
     }, timeout);
   };
 };
-export var throttle = function throttle(fn, timeout) {
+/**
+ * 截流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+
+export var throttle = function throttle(fn, timeout, last) {
   if (timeout === void 0) {
     timeout = 200;
+  }
+
+  if (last === void 0) {
+    last = true;
   }
 
   var start = 0;
   var timer = 0;
 
   var ensureExecute = function ensureExecute(now, args, that) {
+    if (!last) return;
+
     if (timer) {
       clearTimeout(timer);
       timer = 0;

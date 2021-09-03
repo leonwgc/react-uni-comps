@@ -81,6 +81,10 @@ yarn add react-uni-comps
 
 #### 33. IconTick (勾勾), IconCross(x) , IconArrow(箭头) [内部使用]
 
+#### 34. Affix (将页面元素钉在可视范围)
+
+#### 35. NoticeBar (通告栏)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import
