@@ -1,6 +1,13 @@
-import React, { HTMLAttributes, ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
+import React, {
+  HTMLAttributes,
+  ReactElement,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  useCallback,
+} from 'react';
 import styled from 'styled-components';
-import useCallbackRef from './hooks/useCallbackRef';
+import useValueRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 
 const StyledAffix = styled.div`
@@ -20,10 +27,40 @@ export type Props = {
 const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const { children, offsetTop = 0, onChange, ...rest } = props;
   const innerRef = useRef<HTMLDivElement>();
-  const scrollPosRef = useRef<number>();
-  const onChangeRef = useCallbackRef(onChange);
-
   useImperativeHandle(ref, () => innerRef.current);
+  // store pos when affixed
+  const scrollPosRef = useRef<number>();
+
+  const onChangeRef = useValueRef(onChange);
+  const offsetTopRef = useValueRef(offsetTop);
+
+  const getPos = useCallback(() => {
+    const affix = innerRef.current;
+    const affixPos = affix.getBoundingClientRect();
+    return affixPos;
+  }, []);
+
+  const updateDom = useCallback(
+    (el, affixed) => {
+      if (affixed) {
+        el.style.position = 'fixed';
+        el.style.top = offsetTopRef.current + 'px';
+      } else {
+        el.style.position = '';
+        el.style.top = 'unset';
+      }
+    },
+    [offsetTopRef]
+  );
+
+  useEffect(() => {
+    const affix = innerRef.current;
+    const affixPos = affix.getBoundingClientRect();
+
+    if (affixPos.top < offsetTopRef.current) {
+      updateDom(affixPos, true);
+    }
+  }, [updateDom, offsetTopRef]);
 
   useEffect(() => {
     const affix = innerRef.current;
@@ -34,14 +71,13 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       if (
         affix.style.position === 'fixed' &&
         scrollPosRef.current &&
-        scrollPosRef.current > scrollTop
+        scrollPosRef.current > scrollTop &&
+        scrollTop <= offsetTopRef.current
       ) {
-        affix.style.position = '';
-        affix.style.top = 'unset';
+        updateDom(affix, false);
         onChangeRef.current?.(false);
-      } else if (affixPos.top < offsetTop) {
-        affix.style.position = 'fixed';
-        affix.style.top = offsetTop + 'px';
+      } else if (affixPos.top < offsetTopRef.current) {
+        updateDom(affix, true);
         scrollPosRef.current = scrollTop; // mark current scroll pos
         onChangeRef.current?.(true);
       }
@@ -49,7 +85,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     window.addEventListener('scroll', updateScrollPos);
 
     return () => window.removeEventListener('scroll', updateScrollPos);
-  }, [offsetTop, onChangeRef]);
+  }, [offsetTopRef, onChangeRef]);
 
   return (
     <StyledAffix className="uc-affix" ref={innerRef} {...rest}>

@@ -9,12 +9,12 @@ export default function App() {
   }, []);
   return (
     <div style={{ margin: 100 }}>
-      <Affix offsetTop={60} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
+      {/* <Affix offsetTop={60} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
         <Button type="primary">hello,top</Button>
       </Affix>
       <Button block type="primary" style={{ margin: '50px 30px' }}>
         wgc
-      </Button>
+      </Button> */}
 
       <Affix onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
         <Button type="primary">hello,0</Button>
