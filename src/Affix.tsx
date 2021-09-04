@@ -11,7 +11,7 @@ import useValueRef from './hooks/useValueRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
 
-/** refer to zarm Affix  */
+/**  port from zarm Affix & refactor  */
 
 export type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */

@@ -13,7 +13,7 @@ import { MARGIN, Offset } from './utils/getModalStyle';
 
 const StyledPopover = styled.div`
   position: absolute;
-  z-index: 1100;
+  z-index: 1000;
   background: #fff;
   border-radius: 2px;
 
