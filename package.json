@@ -91,8 +91,5 @@
     "react-use-lib": "~1.1.0",
     "styled-components": "^5.3.0"
   },
-  "sideEffects": [
-    "./es/index.js",
-    "./src/index.tsx"
-  ]
+  "sideEffects": false
 }
