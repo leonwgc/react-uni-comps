@@ -54,6 +54,9 @@ const StyledAlertDialog = styled(Popup)`
         height: 48px;
         padding: 0;
         overflow: hidden;
+        .confirm {
+          color: ${(props) => props.theme.color};
+        }
 
         .m-btn {
           height: 48px;
@@ -181,7 +184,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
       {...rest}
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
-        {closable && <IconCross className="close" size={20} onClick={onClose} />}
+        {closable && <IconCross className="close" size={24} onClick={onClose} />}
         {title && <div className={clsx('title')}>{title}</div>}
         <div className={clsx('content')}>{content}</div>
         <div className={clsx('footer')}>

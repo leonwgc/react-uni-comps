@@ -53,9 +53,12 @@ const StyledButton = styled.button`
     background-color: #fff;
     border-color: ${colors.border};
 
-    ${isMobile() ? '&:active' : '&:hover'} {
+    :hover {
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
+    }
+    &.mobile:active {
+      background-color: ${colors.activeBg};
     }
   }
   &.primary {
@@ -136,6 +139,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           circle: circle,
           dashed: dashed,
           ghost: ghost,
+          mobile: isMobile(),
         },
         className
       )}

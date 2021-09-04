@@ -4,7 +4,7 @@ import { AlertDialog, Space, Button, Toast } from '../src';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
-  const [visible1, setVisible1] = useState(true);
+  const [visible1, setVisible1] = useState(false);
 
   return (
     <div style={{ margin: 60 }}>

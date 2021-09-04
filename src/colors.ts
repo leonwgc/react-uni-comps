@@ -5,3 +5,4 @@ export const disabledText = 'rgba(0, 0, 0, 0.25)'; // text
 export const disabledBg = '#f5f5f5';
 export const primary = '#004bcc';
 export const danger = '#ff4d4f';
+export const activeBg = 'rgba(0, 0, 0, 0.1)';

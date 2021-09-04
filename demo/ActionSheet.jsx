@@ -12,7 +12,7 @@ export default function App() {
     },
   ];
 
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <Button onClick={() => setVisible(true)}>ActionSheet 动作面板</Button>

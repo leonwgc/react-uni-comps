@@ -35,14 +35,14 @@ const IconCross = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               y="0"
               width="48"
               height="48"
-              strokeWidth="4"
+              strokeWidth="2"
               stroke="none"
               fillRule="evenodd"
             />
             <path
               d="M14,14 L34,34"
               stroke={color}
-              strokeWidth="4"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
@@ -51,7 +51,7 @@ const IconCross = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             <path
               d="M14,34 L34,14"
               stroke={color}
-              strokeWidth="4"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
