@@ -126,6 +126,10 @@ const routes = [
     path: '/ActionSheet',
     component: lazy(() => import('./ActionSheet')),
   },
+  {
+    path: '/AlertDialog',
+    component: lazy(() => import('./AlertDialog')),
+  },
 ];
 
 export default routes;

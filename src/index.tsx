@@ -36,4 +36,5 @@ export { default as IconArrow } from './IconArrow';
 export { default as NoticeBar } from './NoticeBar';
 export { default as Affix } from './Affix';
 export { default as ActionSheet } from './ActionSheet';
+export { default as AlertDialog } from './AlertDialog';
 export * from './helper';

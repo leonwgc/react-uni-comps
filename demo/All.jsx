@@ -273,6 +273,15 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ActionSheet')}
       ></Cell>
+      <Cell
+        label={
+          <Space>
+            <SoundOutlined /> AlertDialog
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('AlertDialog')}
+      ></Cell>
     </div>
   );
 }
