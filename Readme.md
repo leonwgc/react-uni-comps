@@ -91,6 +91,8 @@ yarn add react-uni-comps
 
 ### 按需加载
 
+支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具，可以采用下列方式按需加载
+
 1. 搭配 babel-plugin-import
 
 ```js
@@ -112,4 +114,4 @@ yarn add react-uni-comps
 import xxx from 'react-uni-comps/es/xxx';
 ```
 
-持续其他组件...
+持续更新其他组件...
