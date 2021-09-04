@@ -96,7 +96,7 @@ const StyledDivider = styled.div`
 `;
 
 /** 分割线 */
-const Divider = (props: Props): React.ReactNode => {
+const Divider = (props: Props): React.ReactElement => {
   const {
     type = 'horizontal',
     textPosition = 'center',

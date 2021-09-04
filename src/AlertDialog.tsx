@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
+import Divider from './Divider';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
-import { isBrowser } from './dom';
+import { isBrowser, isMobile } from './dom';
 import clsx from 'clsx';
 
 export type Props = {
@@ -30,6 +31,62 @@ export type Props = {
 
 const StyledAlertDialog = styled(Popup)`
   width: 560px;
+
+  &.mobile {
+    width: 320px;
+    border-radius: 16x;
+
+    .uc-alert-dialog-wrap {
+      padding-bottom: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: unset;
+      min-height: unset;
+
+      .title {
+        text-align: center;
+        border-bottom: none;
+      }
+
+      .footer {
+        position: relative;
+        display: flex;
+        height: 48px;
+        padding: 0;
+        overflow: hidden;
+
+        .m-btn {
+          height: 48px;
+          line-height: 48px;
+          text-align: center;
+          flex: 1;
+          user-select: none;
+          &:active {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+
+        &:after {
+          content: '';
+          pointer-events: none;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          border-top: 1px solid ${colors.border};
+
+          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5);
+            transform-origin: 0 0;
+          }
+        }
+      }
+    }
+  }
+
   .uc-alert-dialog-wrap {
     background-color: #fff;
     position: relative;
@@ -42,7 +99,6 @@ const StyledAlertDialog = styled(Popup)`
     white-space: normal;
     min-width: 560px;
     max-width: calc(100vw - 56px);
-    min-height: 190px;
     max-height: calc(100vh - 112px);
 
     .close {
@@ -108,7 +164,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
 
   return (
     <StyledAlertDialog
-      className={clsx('uc-alert-dialog')}
+      className={clsx('uc-alert-dialog', { mobile: isMobile() })}
       visible={visible}
       position="center"
       onMaskClick={() => {
@@ -120,29 +176,57 @@ const AlertDialog = (props: Props): React.ReactElement => {
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
         {closable && <IconCross className="close" size={20} onClick={onClose} />}
-        <div className={clsx('title')}>{title}</div>
+        {title && <div className={clsx('title')}>{title}</div>}
         <div className={clsx('content')}>{content}</div>
         <div className={clsx('footer')}>
-          <Space size={buttonSpace}>
-            {cancelText ? (
-              <Button onClick={onClose} style={{ width: buttonWidth }}>
-                {cancelText}
-              </Button>
-            ) : null}
-            <Button
-              type="primary"
-              onClick={() => {
-                onConfirm?.();
+          {!isMobile() ? (
+            <Space size={buttonSpace}>
+              {cancelText ? (
+                <Button onClick={onClose} style={{ width: buttonWidth }}>
+                  {cancelText}
+                </Button>
+              ) : null}
+              <Button
+                type="primary"
+                onClick={() => {
+                  onConfirm?.();
 
-                if (typeof onConfirm !== 'function') {
-                  onClose?.();
-                }
-              }}
-              style={{ width: buttonWidth }}
-            >
-              {confirmText}
-            </Button>
-          </Space>
+                  if (typeof onConfirm !== 'function') {
+                    onClose?.();
+                  }
+                }}
+                style={{ width: buttonWidth }}
+              >
+                {confirmText}
+              </Button>
+            </Space>
+          ) : (
+            <>
+              {cancelText ? (
+                <>
+                  <div className="m-btn" onClick={onClose}>
+                    {cancelText}
+                  </div>
+                  <Divider
+                    type="vertical"
+                    style={{ height: '100%', color: colors.border, margin: 0 }}
+                  />
+                </>
+              ) : null}
+              <div
+                className="m-btn"
+                onClick={() => {
+                  onConfirm?.();
+
+                  if (typeof onConfirm !== 'function') {
+                    onClose?.();
+                  }
+                }}
+              >
+                {confirmText}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </StyledAlertDialog>
@@ -186,7 +270,10 @@ AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelTex
       visible
       confirmText={confirmText}
       cancelText={cancelText}
-      onConfirm={onConfirm}
+      onConfirm={() => {
+        onConfirm?.();
+        ReactDOM.unmountComponentAtNode(container);
+      }}
       onClose={() => {
         ReactDOM.unmountComponentAtNode(container);
       }}
