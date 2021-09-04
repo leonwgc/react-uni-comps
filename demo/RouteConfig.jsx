@@ -78,14 +78,14 @@ const routes = [
     path: '/IndexList',
     component: lazy(() => import('./IndexList')),
   },
-  {
-    path: '/Slide',
-    component: lazy(() => import('./Slide')),
-  },
-  {
-    path: '/SlideFull',
-    component: lazy(() => import('./SlideFull')),
-  },
+  // {
+  //   path: '/Slide',
+  //   component: lazy(() => import('./Slide')),
+  // },
+  // {
+  //   path: '/SlideFull',
+  //   component: lazy(() => import('./SlideFull')),
+  // },
   {
     path: '/Popover',
     component: lazy(() => import('./Popover')),

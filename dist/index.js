@@ -12,8 +12,6 @@ var clsx = require('clsx');
 var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
 var Color = require('color');
-var BScroll = require('@better-scroll/core');
-var SlidePlugin = require('@better-scroll/slide');
 var copy = require('copy-text-to-clipboard');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -26,8 +24,6 @@ var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var Color__default = /*#__PURE__*/_interopDefaultLegacy(Color);
-var BScroll__default = /*#__PURE__*/_interopDefaultLegacy(BScroll);
-var SlidePlugin__default = /*#__PURE__*/_interopDefaultLegacy(SlidePlugin);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 
 function ownKeys(object, enumerableOnly) {
@@ -1894,139 +1890,6 @@ var IndexList = function IndexList(props) {
 
 IndexList.displayName = 'UC-IndexList';
 
-var _excluded$g = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
-
-var _templateObject$h;
-var StyledSlide = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .uc-slide-page {\n    transform: translate3d(0, 0, 0);\n    backface-visibility: hidden;\n    width: 100%;\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
-
-/**  轮播焦点图/全屏分页 */
-var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$autoplay = props.autoplay,
-      autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
-      _props$loop = props.loop,
-      loop = _props$loop === void 0 ? true : _props$loop,
-      _props$defaultPageInd = props.defaultPageIndex,
-      defaultPageIndex = _props$defaultPageInd === void 0 ? 0 : _props$defaultPageInd,
-      onPageChange = props.onPageChange,
-      _props$direction = props.direction,
-      direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
-      _props$interval = props.interval,
-      interval = _props$interval === void 0 ? 3000 : _props$interval,
-      children = props.children,
-      className = props.className,
-      _props$height = props.height,
-      height = _props$height === void 0 ? 160 : _props$height,
-      style = props.style,
-      _props$showDot = props.showDot,
-      showDot = _props$showDot === void 0 ? true : _props$showDot,
-      rest = _objectWithoutProperties(props, _excluded$g);
-
-  var containerRef = React.useRef();
-  var bsRef = React.useRef();
-  var onPageChangeRef = React.useRef(onPageChange);
-
-  var _useState = React.useState(defaultPageIndex),
-      _useState2 = _slicedToArray(_useState, 2),
-      pageIndex = _useState2[0],
-      setPageIndex = _useState2[1];
-
-  var slide = React.useMemo(function () {
-    var scrollX = direction === 'horizontal';
-    var options = {
-      autoplay: autoplay,
-      loop: loop,
-      threshold: 0.1,
-      speed: 300,
-      listenFlick: true,
-      interval: interval
-    };
-
-    if (scrollX) {
-      options.startPageXIndex = defaultPageIndex;
-    } else {
-      options.startPageYIndex = defaultPageIndex;
-    }
-
-    return options;
-  }, [autoplay, interval, loop, direction, defaultPageIndex]);
-  React.useEffect(function () {
-    BScroll__default['default'].use(SlidePlugin__default['default']);
-    var scrollX = direction === 'horizontal';
-    var scrollY = !scrollX;
-    bsRef.current = new BScroll__default['default'](containerRef.current, {
-      click: true,
-      scrollX: scrollX,
-      scrollY: scrollY,
-      slide: slide,
-      momentum: false,
-      bounce: false,
-      probeType: 3
-    });
-    bsRef.current.on('slideWillChange', function (page) {
-      setPageIndex(page["page".concat(scrollX ? 'X' : 'Y')]);
-    });
-    bsRef.current.on('slidePageChanged', function (page) {
-      if (typeof onPageChangeRef.current === 'function') {
-        onPageChangeRef.current(page["page".concat(scrollX ? 'X' : 'Y')]);
-      }
-    });
-    return function () {
-      bsRef.current.destroy();
-    };
-  }, [slide, direction, setPageIndex]);
-  React.useImperativeHandle(ref, function () {
-    return {
-      goToPage: function goToPage(pageIndex) {
-        if (direction === 'horizontal') {
-          bsRef.current.goToPage(pageIndex, 0);
-        } else {
-          bsRef.current.goToPage(0, pageIndex);
-        }
-      },
-      prev: function prev() {
-        return bsRef.current.prev();
-      },
-      next: function next() {
-        return bsRef.current.next();
-      },
-      bs: bsRef.current
-    };
-  });
-
-  var dotRender = function dotRender() {
-    if (!showDot) return null;
-    return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('uc-slide-dot-wrapper', {
-        vertial: direction === 'vertical'
-      })
-    }, React__default['default'].Children.map(children, function (c, idx) {
-      return /*#__PURE__*/React__default['default'].createElement("span", {
-        key: idx,
-        className: clsx__default['default']('dot', {
-          active: pageIndex === idx
-        })
-      });
-    }));
-  };
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
-    className: clsx__default['default']('uc-slide', className),
-    style: _objectSpread2(_objectSpread2({}, style), {}, {
-      height: height
-    }),
-    ref: containerRef
-  }, rest), /*#__PURE__*/React__default['default'].createElement("div", null, React__default['default'].Children.map(children, function (c, idx) {
-    return /*#__PURE__*/React__default['default'].cloneElement(c, {
-      key: idx,
-      className: clsx__default['default'](c.props.className, 'uc-slide-page'),
-      style: _objectSpread2(_objectSpread2({}, c.props.style), {}, {
-        height: height
-      })
-    });
-  })), dotRender());
-});
-Slide.displayName = 'UC-Slide';
-
 var debounce = function debounce(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
   var timer = 0;
@@ -2156,10 +2019,10 @@ var ScrollTop = function ScrollTop(props) {
 
 ScrollTop.displayName = 'UC-ScrollTop';
 
-var _excluded$h = ["size", "color"];
+var _excluded$g = ["size", "color"];
 
-var _templateObject$i;
-var StyledCross = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
+var _templateObject$h;
+var StyledCross = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -2173,7 +2036,7 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       size = _props$size === void 0 ? 16 : _props$size,
       _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
-      rest = _objectWithoutProperties(props, _excluded$h);
+      rest = _objectWithoutProperties(props, _excluded$g);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledCross, _extends({
     className: clsx__default['default']('uc-icon-cross'),
@@ -2526,11 +2389,11 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
+var _excluded$h = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
 
-var _templateObject$j;
+var _templateObject$i;
 
-var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -2553,7 +2416,7 @@ var Popover = function Popover(props) {
       mask = props.mask,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
-      rest = _objectWithoutProperties(props, _excluded$i);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
   var childrenRef = React.useRef();
   var popoverRef = React.useRef(null);
@@ -2626,8 +2489,8 @@ var Popover = function Popover(props) {
   }, content)))), document.body) : null);
 };
 
-var _templateObject$k;
-var StylePopover = styled__default['default'](Popover)(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
+var _templateObject$j;
+var StylePopover = styled__default['default'](Popover)(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
 
 /** 文字提示 */
 var Tooltip = function Tooltip(props) {
@@ -2876,10 +2739,10 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
-var _excluded$j = ["lines", "children"];
+var _excluded$i = ["lines", "children"];
 
-var _templateObject$l, _templateObject2$3;
-var StyledSpanMultiLines = styled__default['default'].span(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
+var _templateObject$k, _templateObject2$3;
+var StyledSpanMultiLines = styled__default['default'].span(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
 var StyledSpanOneline = styled__default['default'].span(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
@@ -2889,7 +2752,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var _props$lines = props.lines,
       lines = _props$lines === void 0 ? 1 : _props$lines,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$j);
+      rest = _objectWithoutProperties(props, _excluded$i);
 
   if (typeof children !== 'string' || typeof lines !== 'number') {
     return children;
@@ -2902,8 +2765,8 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Text.displayName = 'UC-Text';
 
-var _templateObject$m;
-var StyleToast = styled__default['default'](Popup)(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
+var _templateObject$l;
+var StyleToast = styled__default['default'](Popup)(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
 
 var getContainer = function getContainer() {
   if (isBrowser) {
@@ -2968,10 +2831,10 @@ Toast.show = function (content) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$k = ["color", "direction", "size"];
+var _excluded$j = ["color", "direction", "size"];
 
-var _templateObject$n;
-var StyledArrow = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
+var _templateObject$m;
+var StyledArrow = styled__default['default'].div(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -2987,7 +2850,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       _props$size = props.size,
       size = _props$size === void 0 ? 16 : _props$size,
-      rest = _objectWithoutProperties(props, _excluded$k);
+      rest = _objectWithoutProperties(props, _excluded$j);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({
     ref: ref,
@@ -3006,10 +2869,10 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 IconArrow.displayName = 'UC-IconArrow';
 
-var _excluded$l = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
+var _excluded$k = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
 
-var _templateObject$o;
-var StyledNoticeBar = styled__default['default'].div(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
+var _templateObject$n;
+var StyledNoticeBar = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
 
 /** 通告栏  */
 var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3024,7 +2887,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$l);
+      rest = _objectWithoutProperties(props, _excluded$k);
 
   var wrapRef = React.useRef();
   var contentRef = React.useRef();
@@ -3114,7 +2977,7 @@ function useValueRef(value) {
   return ref;
 }
 
-var _excluded$m = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
+var _excluded$l = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
 /**  port from zarm Affix & refactor  */
 
 /** 将页面元素钉在可视范围*/
@@ -3124,7 +2987,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       offsetBottom = props.offsetBottom,
       target = props.target,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$m);
+      rest = _objectWithoutProperties(props, _excluded$l);
 
   var innerRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -3270,10 +3133,10 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
-var _excluded$n = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
+var _excluded$m = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
 
-var _templateObject$p;
-var StyledActionSheet = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
+var _templateObject$o;
+var StyledActionSheet = styled__default['default'](Popup)(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -3288,7 +3151,7 @@ var ActionSheet = function ActionSheet(props) {
       _onMaskClick = props.onMaskClick,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$n);
+      rest = _objectWithoutProperties(props, _excluded$m);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({
     className: clsx__default['default']('uc-actionsheet'),
@@ -3346,10 +3209,10 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$o = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
+var _excluded$n = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
 
-var _templateObject$q;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), border, border);
+var _templateObject$p;
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), border, border);
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 
 var AlertDialog = function AlertDialog(props) {
@@ -3370,7 +3233,7 @@ var AlertDialog = function AlertDialog(props) {
       _props$closable = props.closable,
       closable = _props$closable === void 0 ? false : _props$closable,
       onClose = props.onClose,
-      rest = _objectWithoutProperties(props, _excluded$o);
+      rest = _objectWithoutProperties(props, _excluded$n);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({
     className: clsx__default['default']('uc-alert-dialog', {
@@ -3525,7 +3388,6 @@ exports.Pullup = Pullup;
 exports.ScrollTop = ScrollTop;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
-exports.Slide = Slide;
 exports.Space = Space;
 exports.Spinner = Spinner;
 exports.Switch = Switch;

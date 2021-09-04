@@ -3,19 +3,23 @@
 // import SlidePlugin, { SlideConfig } from '@better-scroll/slide';
 // import styled from 'styled-components';
 // import clsx from 'clsx';
+
 // const StyledSlide = styled.div`
 //   overflow: hidden;
 //   position: relative;
+
 //   .uc-slide-page {
 //     transform: translate3d(0, 0, 0);
 //     backface-visibility: hidden;
 //     width: 100%;
 //   }
+
 //   .uc-slide-dot-wrapper {
 //     position: absolute;
 //     bottom: 4px;
 //     left: 50%;
 //     transform: translateX(-50%);
+
 //     .dot {
 //       display: inline-block;
 //       margin: 0 4px;
@@ -24,17 +28,20 @@
 //       border-radius: 50%;
 //       background: #eee;
 //       transition: all ease-in-out 0.3s;
+
 //       &.active {
 //         width: 20px;
 //         border-radius: 5px;
 //       }
 //     }
+
 //     &.vertial {
 //       position: absolute;
 //       right: 8px;
 //       top: 50%;
 //       left: unset;
 //       transform: translateY(-50%);
+
 //       .dot {
 //         display: block;
 //         margin: 4px 0;
@@ -42,6 +49,7 @@
 //         height: 8px;
 //         border-radius: 50%;
 //         background: #eee;
+
 //         &.active {
 //           width: 8px;
 //           height: 20px;
@@ -51,6 +59,7 @@
 //     }
 //   }
 // `;
+
 // export type Props = {
 //   /** 自动播放 */
 //   autoplay?: boolean;
@@ -72,12 +81,14 @@
 //   /** 是否显示分页圆点 */
 //   showDot?: boolean;
 // };
+
 // interface RefType {
 //   goToPage: (pageIndex: number) => void;
 //   prev: () => void;
 //   next: () => void;
 //   bs: BScroll;
 // }
+
 // /**  轮播焦点图/全屏分页 */
 // const Slide = React.forwardRef<RefType, Props>((props, ref) => {
 //   const {
@@ -98,8 +109,10 @@
 //   const bsRef = useRef<BScroll>();
 //   const onPageChangeRef = useRef(onPageChange);
 //   const [pageIndex, setPageIndex] = useState(defaultPageIndex);
+
 //   const slide = useMemo(() => {
 //     const scrollX = direction === 'horizontal';
+
 //     const options: Partial<SlideConfig> = {
 //       autoplay,
 //       loop,
@@ -113,12 +126,16 @@
 //     } else {
 //       options.startPageYIndex = defaultPageIndex;
 //     }
+
 //     return options;
 //   }, [autoplay, interval, loop, direction, defaultPageIndex]);
+
 //   useEffect(() => {
 //     BScroll.use(SlidePlugin);
+
 //     const scrollX = direction === 'horizontal';
 //     const scrollY = !scrollX;
+
 //     bsRef.current = new BScroll(containerRef.current, {
 //       click: true,
 //       scrollX,
@@ -128,18 +145,22 @@
 //       bounce: false,
 //       probeType: 3,
 //     });
+
 //     bsRef.current.on('slideWillChange', (page) => {
 //       setPageIndex(page[`page${scrollX ? 'X' : 'Y'}`]);
 //     });
+
 //     bsRef.current.on('slidePageChanged', (page) => {
 //       if (typeof onPageChangeRef.current === 'function') {
 //         onPageChangeRef.current(page[`page${scrollX ? 'X' : 'Y'}`]);
 //       }
 //     });
+
 //     return () => {
 //       bsRef.current.destroy();
 //     };
 //   }, [slide, direction, setPageIndex]);
+
 //   useImperativeHandle(ref, () => ({
 //     goToPage: (pageIndex) => {
 //       if (direction === 'horizontal') {
@@ -152,8 +173,10 @@
 //     next: () => bsRef.current.next(),
 //     bs: bsRef.current,
 //   }));
+
 //   const dotRender = (): React.ReactNode => {
 //     if (!showDot) return null;
+
 //     return (
 //       <div className={clsx('uc-slide-dot-wrapper', { vertial: direction === 'vertical' })}>
 //         {React.Children.map(children, (c: React.ReactElement, idx) => (
@@ -162,6 +185,7 @@
 //       </div>
 //     );
 //   };
+
 //   return (
 //     <StyledSlide
 //       className={clsx('uc-slide', className)}
@@ -182,5 +206,7 @@
 //     </StyledSlide>
 //   );
 // });
+
 // Slide.displayName = 'UC-Slide';
+
 // export default Slide;

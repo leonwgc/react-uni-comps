@@ -61,8 +61,6 @@ yarn add react-uni-comps
 
 #### 22. IndexList (索引列表)
 
-#### 23. Slide (轮播焦点图/全屏分页)
-
 #### 24. ScrollTop (平滑滚动到顶部)
 
 #### 25. Popover (弹出带箭头的浮层)
