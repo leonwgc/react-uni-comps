@@ -13,7 +13,7 @@ export default function All() {
   return (
     <div>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> TransitionElement
           </Space>
@@ -22,7 +22,7 @@ export default function All() {
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> AnimationElement
           </Space>
@@ -31,7 +31,7 @@ export default function All() {
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> LazyloadImage
           </Space>
@@ -40,7 +40,7 @@ export default function All() {
         onClick={() => gotoPage('LazyloadImage')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> LazyLoadElement
           </Space>
@@ -49,7 +49,7 @@ export default function All() {
         onClick={() => gotoPage('LazyLoadElement')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Tab
           </Space>
@@ -58,7 +58,7 @@ export default function All() {
         onClick={() => gotoPage('Tab')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Skeleton
           </Space>
@@ -67,7 +67,7 @@ export default function All() {
         onClick={() => gotoPage('Skeleton')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Checkbox
           </Space>
@@ -76,7 +76,7 @@ export default function All() {
         onClick={() => gotoPage('Checkbox')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Cell
           </Space>
@@ -85,7 +85,7 @@ export default function All() {
         onClick={() => gotoPage('Cell')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Spinner
           </Space>
@@ -94,7 +94,7 @@ export default function All() {
         onClick={() => gotoPage('Spinner')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Switch
           </Space>
@@ -103,7 +103,7 @@ export default function All() {
         onClick={() => gotoPage('Switch')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Divider
           </Space>
@@ -112,7 +112,7 @@ export default function All() {
         onClick={() => gotoPage('Divider')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> ImageUpload
           </Space>
@@ -121,7 +121,7 @@ export default function All() {
         onClick={() => gotoPage('ImageUpload')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Waypoint
           </Space>
@@ -130,7 +130,7 @@ export default function All() {
         onClick={() => gotoPage('Waypoint')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> IndexList
           </Space>
@@ -139,7 +139,7 @@ export default function All() {
         onClick={() => gotoPage('IndexList')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Slide
           </Space>
@@ -148,7 +148,7 @@ export default function All() {
         onClick={() => gotoPage('Slide')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> SlideFull
           </Space>
@@ -157,7 +157,7 @@ export default function All() {
         onClick={() => gotoPage('SlideFull')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Popover
           </Space>
@@ -166,7 +166,7 @@ export default function All() {
         onClick={() => gotoPage('Popover')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Drag
           </Space>
@@ -175,7 +175,7 @@ export default function All() {
         onClick={() => gotoPage('Drag')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> CopyToClipboard
           </Space>
@@ -184,7 +184,7 @@ export default function All() {
         onClick={() => gotoPage('CopyToClipboard')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Text
           </Space>
@@ -193,7 +193,7 @@ export default function All() {
         onClick={() => gotoPage('Text')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Tooltip
           </Space>
@@ -202,7 +202,7 @@ export default function All() {
         onClick={() => gotoPage('Tooltip')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Popup
           </Space>
@@ -211,7 +211,7 @@ export default function All() {
         onClick={() => gotoPage('Popup')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Toast
           </Space>
@@ -220,7 +220,7 @@ export default function All() {
         onClick={() => gotoPage('Toast')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Icon
           </Space>
@@ -229,7 +229,7 @@ export default function All() {
         onClick={() => gotoPage('Icon')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Button
           </Space>
@@ -238,7 +238,7 @@ export default function All() {
         onClick={() => gotoPage('Button')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Clickable Effect
           </Space>
@@ -247,7 +247,7 @@ export default function All() {
         onClick={() => console.log(1)}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> NoticeBar
           </Space>
@@ -256,7 +256,7 @@ export default function All() {
         onClick={() => gotoPage('NoticeBar')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> Affix
           </Space>
@@ -265,7 +265,7 @@ export default function All() {
         onClick={() => gotoPage('Affix')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> ActionSheet
           </Space>
@@ -274,7 +274,7 @@ export default function All() {
         onClick={() => gotoPage('ActionSheet')}
       ></Cell>
       <Cell
-        label={
+        title={
           <Space>
             <SoundOutlined /> AlertDialog
           </Space>

@@ -17,19 +17,19 @@ export default function App() {
 
   return (
     <div>
-      <Cell label="姓名" content="汪guochao"></Cell>
-      <Cell label="username">
+      <Cell title="姓名" content="汪guochao"></Cell>
+      <Cell title="username">
         <input type="text" placeholder="username" />
       </Cell>
-      <Cell label="antd输入框">
+      <Cell title="antd输入框">
         <Input placeholder="antd输入框" />
         <QuestionCircleOutlined />
       </Cell>
-      <Cell label="邮箱地址">
+      <Cell title="邮箱地址">
         <Input placeholder="邮箱地址" />
         @126.com
       </Cell>
-      <Cell label="多行文本">
+      <Cell title="多行文本">
         <textarea
           placeholder="多行文本"
           maxLength={60}
@@ -38,7 +38,7 @@ export default function App() {
         />
         <span>{v.length}/60</span>
       </Cell>
-      <Cell label="多行文本auto-height">
+      <Cell title="多行文本auto-height">
         <textarea
           ref={ref}
           placeholder="多行文本"
@@ -48,14 +48,14 @@ export default function App() {
         />
         <span>{v.length}/60</span>
       </Cell>
-      <Cell label="Checkbox">
+      <Cell title="Checkbox">
         <Checkbox>Checkbox</Checkbox>
       </Cell>
-      <Cell label="Switch">
+      <Cell title="Switch">
         <Switch />
       </Cell>
       <Cell
-        label={<div style={{ width: 200 }}>Set as the default contact</div>}
+        title={<div style={{ width: 200 }}>Set as the default contact</div>}
         content={<Switch />}
         lineColor="#00bd8d"
       ></Cell>
