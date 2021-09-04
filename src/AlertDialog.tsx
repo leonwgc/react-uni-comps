@@ -1,10 +1,12 @@
 import React, { HTMLAttributes } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
+import { isBrowser } from './dom';
 import clsx from 'clsx';
 
 export type Props = {
@@ -38,7 +40,7 @@ const StyledAlertDialog = styled(Popup)`
     padding: 16px 0;
     box-sizing: border-box;
     white-space: normal;
-    min-width: 260px;
+    min-width: 560px;
     max-width: calc(100vw - 56px);
     min-height: 190px;
     max-height: calc(100vh - 112px);
@@ -127,7 +129,17 @@ const AlertDialog = (props: Props): React.ReactElement => {
                 {cancelText}
               </Button>
             ) : null}
-            <Button type="primary" onClick={onConfirm} style={{ width: buttonWidth }}>
+            <Button
+              type="primary"
+              onClick={() => {
+                onConfirm?.();
+
+                if (typeof onConfirm !== 'function') {
+                  onClose?.();
+                }
+              }}
+              style={{ width: buttonWidth }}
+            >
               {confirmText}
             </Button>
           </Space>
@@ -137,6 +149,50 @@ const AlertDialog = (props: Props): React.ReactElement => {
   );
 };
 
-AlertDialog.displayName = 'UC-ActionSheet';
+AlertDialog.displayName = 'UC-AlertDialog';
+
+const getContainer = () => {
+  if (isBrowser) {
+    let div = document.querySelector('.uc-alert-dialog-static') as HTMLElement;
+    if (!div) {
+      div = document.createElement('div');
+      div.className = 'uc-alert-dialog-static';
+      document.body.appendChild(div);
+    }
+
+    return div;
+  }
+  return null;
+};
+/**
+ *
+ *
+ * @param {*} title
+ * @param {*} content
+ * @param {string} [confirmText='确定']
+ * @param {*} onConfirm ()=>void
+ * @param {*} cancelText
+ * @return {*}
+ */
+AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText) => {
+  if (!content) return;
+  const container = getContainer();
+  ReactDOM.unmountComponentAtNode(container);
+
+  ReactDOM.render(
+    <AlertDialog
+      title={title}
+      content={content}
+      visible
+      confirmText={confirmText}
+      cancelText={cancelText}
+      onConfirm={onConfirm}
+      onClose={() => {
+        ReactDOM.unmountComponentAtNode(container);
+      }}
+    />,
+    container
+  );
+};
 
 export default AlertDialog;

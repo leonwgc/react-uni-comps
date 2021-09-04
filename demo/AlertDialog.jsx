@@ -1,12 +1,41 @@
 import React, { useState } from 'react';
 import { SoundOutlined } from '@ant-design/icons';
-import { AlertDialog, Space } from '../src';
+import { AlertDialog, Space, Button, Toast } from '../src';
 
 export default function App() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
-    <div className="app">
+    <div style={{ margin: 60 }}>
+      <Space direction="vertical">
+        <Button onClick={() => setVisible(true)}>show Alert dialog</Button>
+        <Button onClick={() => AlertDialog.show('are you sure?', 'sure to leave china')}>
+          show Alert dialog via static show
+        </Button>
+        <Button
+          onClick={() =>
+            AlertDialog.show('are you sure?', 'sure to leave china', 'yes', null, 'no')
+          }
+        >
+          show Alert dialog via static show ok/cancel
+        </Button>
+        <Button
+          onClick={() =>
+            AlertDialog.show(
+              'are you sure?',
+              'sure to leave china',
+              'yes',
+              () => {
+                Toast.show('no');
+              },
+              'no'
+            )
+          }
+        >
+          show Alert dialog via static show onConfirm
+        </Button>
+      </Space>
+
       <AlertDialog
         closable
         buttonSpace={16}
