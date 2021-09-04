@@ -89,6 +89,8 @@ yarn add react-uni-comps
 
 #### 36. ActionSheet (动作面板)
 
+#### 37. AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗)
+
 ### 按需加载
 
 1. 搭配 babel-plugin-import

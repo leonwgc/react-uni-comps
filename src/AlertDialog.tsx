@@ -145,7 +145,7 @@ const StyledAlertDialog = styled(Popup)`
   }
 `;
 
-/** alert/confirm弹窗 */
+/** 移动端/pc端两种风格的 alert/confirm弹窗 */
 const AlertDialog = (props: Props): React.ReactElement => {
   const {
     visible = true,
