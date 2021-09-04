@@ -133,6 +133,12 @@ const StyledAlertDialog = styled(Popup)`
       padding: 16px;
       min-height: 46px;
       max-height: calc(100vh - 256px);
+
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     .footer {
       text-align: right;
@@ -182,12 +188,13 @@ const AlertDialog = (props: Props): React.ReactElement => {
           {!isMobile() ? (
             <Space size={buttonSpace}>
               {cancelText ? (
-                <Button onClick={onClose} style={{ width: buttonWidth }}>
+                <Button onClick={onClose} className={clsx('cancel')} style={{ width: buttonWidth }}>
                   {cancelText}
                 </Button>
               ) : null}
               <Button
                 type="primary"
+                className={clsx('confirm')}
                 onClick={() => {
                   onConfirm?.();
 
@@ -204,7 +211,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
             <>
               {cancelText ? (
                 <>
-                  <div className="m-btn" onClick={onClose}>
+                  <div className={clsx('m-btn', 'cancel')} onClick={onClose}>
                     {cancelText}
                   </div>
                   <Divider
@@ -214,7 +221,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
                 </>
               ) : null}
               <div
-                className="m-btn"
+                className={clsx('m-btn', 'confirm')}
                 onClick={() => {
                   onConfirm?.();
 
