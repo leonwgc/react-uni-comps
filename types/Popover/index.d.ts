@@ -19,8 +19,8 @@ export declare type Props = {
     /**  关闭回调 */
     onClose?: () => void;
     className?: string;
-    /** backdrop是否显示 */
-    backdrop?: boolean;
+    /** mask是否显示 */
+    mask?: boolean;
     /** 弹框自定义偏移 */
     offset?: Offset;
 } & React.HTMLAttributes<HTMLElement>;

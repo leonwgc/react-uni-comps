@@ -457,10 +457,10 @@ TransitionElement.displayName = 'UC-TransitionElement';
 var _excluded = ["children", "hideOverflow"];
 
 var _templateObject;
-var StyledBackdrop = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
 
 /** 遮罩层 */
-var Backdrop = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
       _props$hideOverflow = props.hideOverflow,
       hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
@@ -478,12 +478,12 @@ var Backdrop = /*#__PURE__*/React__default['default'].forwardRef(function (props
       document.body.style.overflow = hideOverflow ? 'hidden' : lastBodyFlow.current;
     }
   }, [hideOverflow]);
-  return /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(StyledBackdrop, _extends({
-    className: "uc-backdrop",
+  return /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({
+    className: "uc-mask",
     ref: ref
   }, rest), children));
 });
-Backdrop.displayName = 'UC-Backdrop';
+Mask.displayName = 'UC-Mask';
 
 var _templateObject$1;
 var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition: transform ", "ms ease;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transition: none;\n  }\n\n  @keyframes showUp {\n    from {\n      opacity: 0;\n      transform: translate(-50%, -50%) scale(0.9);\n    }\n    90% {\n      opacity: 0.9;\n      transform: translate(-50%, -50%) scale(1.01);\n    }\n    to {\n      opacity: 1;\n      transform: translate(-50%, -50%) scale(1);\n    }\n  }\n  &.center-entering,\n  &.center-entered {\n    display: '';\n    animation: showUp ease ", "ms forwards;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    display: none;\n  }\n\n  &.no-trasition {\n    animation: none;\n    transition: none;\n  }\n"])), function (props) {
@@ -496,14 +496,14 @@ var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templa
 var Popup = function Popup(props) {
   var children = props.children,
       visible = props.visible,
-      _props$backdrop = props.backdrop,
-      backdrop = _props$backdrop === void 0 ? true : _props$backdrop,
-      backdropStyle = props.backdropStyle,
-      onBackdropClick = props.onBackdropClick,
+      _props$mask = props.mask,
+      mask = _props$mask === void 0 ? true : _props$mask,
+      maskStyle = props.maskStyle,
+      onMaskClick = props.onMaskClick,
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 280 : _props$duration,
+      duration = _props$duration === void 0 ? 160 : _props$duration,
       _props$mountContainer = props.mountContainer,
       mountContainer = _props$mountContainer === void 0 ? function () {
     return document.body;
@@ -511,9 +511,9 @@ var Popup = function Popup(props) {
       style = props.style,
       className = props.className;
   var wrapRef = React.useRef();
-  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, backdrop && visible ? /*#__PURE__*/React__default['default'].createElement(Backdrop, {
-    style: backdropStyle,
-    onClick: onBackdropClick
+  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, mask && visible ? /*#__PURE__*/React__default['default'].createElement(Mask, {
+    style: maskStyle,
+    onClick: onMaskClick
   }) : null, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
     timeout: duration
@@ -895,7 +895,7 @@ var LazyLoadImage = function LazyLoadImage(_ref) {
   }, otherProps));
 };
 
-var border = '#e0e0e0';
+var border = '#eee';
 var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
 
 var disabledBg = '#f5f5f5';
@@ -2404,12 +2404,14 @@ var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollCo
     'top': {
       // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
-      left: left + width / 2 - modalPos.width / 2
+      left: left + width / 2 - modalPos.width / 2 + parentPos.left // fix body margin top bottom  not centered
+
     },
     'bottom': {
       // modal放到内容的下面
       top: bottom + MARGIN,
-      left: left + width / 2 - modalPos.width / 2
+      left: left + width / 2 - modalPos.width / 2 + parentPos.left //fix
+
     },
     'left': {
       // modal放到内容的左边
@@ -2486,7 +2488,7 @@ var getReversePosition = function getReversePosition(position) {
 
 var getArrowStyle = function getArrowStyle(modalEl) {
   var placement = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'bottom';
-  var backdrop = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var mask = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var margin = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 12;
   var diagonalWidth = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 6;
   var modalPos = modalEl.getBoundingClientRect();
@@ -2504,7 +2506,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   };
 
   var extraStyle = _defineProperty({
-    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement]
+    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement]
   }, getReversePosition(firstPlacement), -diagonalWidth / 2);
 
   if (!lastPlacement) {
@@ -2524,11 +2526,11 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop", "offset"];
+var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
 
 var _templateObject$j;
 
-var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -2548,7 +2550,7 @@ var Popover = function Popover(props) {
       className = props.className,
       style = props.style,
       children = props.children,
-      backdrop = props.backdrop,
+      mask = props.mask,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
       rest = _objectWithoutProperties(props, _excluded$i);
@@ -2578,7 +2580,7 @@ var Popover = function Popover(props) {
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
       var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, offsetRef.current);
-      var arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
+      var arrowStyle = getArrowStyle(modalEl, placement, mask, MARGIN);
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
     };
@@ -2600,16 +2602,16 @@ var Popover = function Popover(props) {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement, backdrop]);
+  }, [visible, placement, mask]);
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: childrenRef
-  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, backdrop ? /*#__PURE__*/React__default['default'].createElement(Backdrop, {
+  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, mask ? /*#__PURE__*/React__default['default'].createElement(Mask, {
     onClick: onClose
   }) : null, /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     ref: popoverRef
   }, /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
     className: clsx__default['default'](className, 'uc-popover', {
-      backdrop: backdrop
+      mask: mask
     }),
     style: _objectSpread2(_objectSpread2({}, modalStyle), style)
   }, rest), arrow && /*#__PURE__*/React__default['default'].createElement("span", {
@@ -2928,12 +2930,12 @@ var Toast = function Toast(props) {
   var toastProps = {};
 
   if (modal) {
-    toastProps.backdrop = true;
-    toastProps.backdropStyle = {
+    toastProps.mask = true;
+    toastProps.maskStyle = {
       opacity: 0
     };
   } else {
-    toastProps.backdrop = false;
+    toastProps.mask = false;
   }
 
   return /*#__PURE__*/React__default['default'].createElement(StyleToast, _extends({
@@ -3113,7 +3115,7 @@ function useValueRef(value) {
 }
 
 var _excluded$m = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
-/** refer to zarm Affix  */
+/**  port from zarm Affix & refactor  */
 
 /** 将页面元素钉在可视范围*/
 var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3268,15 +3270,238 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
+var _excluded$n = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
+
+var _templateObject$p;
+var StyledActionSheet = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
+/** 动作面板 */
+
+var ActionSheet = function ActionSheet(props) {
+  var _props$visible = props.visible,
+      visible = _props$visible === void 0 ? false : _props$visible,
+      _props$actions = props.actions,
+      actions = _props$actions === void 0 ? [] : _props$actions,
+      _props$cancelText = props.cancelText,
+      cancelText = _props$cancelText === void 0 ? '' : _props$cancelText,
+      _props$closeOnMaskCli = props.closeOnMaskClick,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
+      _onMaskClick = props.onMaskClick,
+      onClose = props.onClose,
+      extra = props.extra,
+      rest = _objectWithoutProperties(props, _excluded$n);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({
+    className: clsx__default['default']('uc-actionsheet'),
+    visible: visible,
+    position: "bottom",
+    onMaskClick: function onMaskClick() {
+      _onMaskClick === null || _onMaskClick === void 0 ? void 0 : _onMaskClick();
+
+      if (closeOnMaskClick) {
+        onClose === null || onClose === void 0 ? void 0 : onClose();
+      }
+    }
+  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "wrap"
+  }, extra && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "extra"
+  }, extra), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "button-list"
+  }, actions.map(function (action, index) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: index,
+      className: clsx__default['default']('wrapper', {
+        disabled: action.disabled
+      }),
+      onClick: function onClick() {
+        var _action$onClick;
+
+        (_action$onClick = action.onClick) === null || _action$onClick === void 0 ? void 0 : _action$onClick.call(action);
+      }
+    }, /*#__PURE__*/React__default['default'].createElement(Button, {
+      disabled: action.disabled
+    }, /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('button-item-name', {
+        disabled: action.disabled
+      }),
+      style: {
+        color: action.color || '#333'
+      }
+    }, action.text), action.description && /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "button-item-description"
+    }, action.description)));
+  })), cancelText && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "uc-actionsheet-cancel button-list"
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "wrapper"
+  }, /*#__PURE__*/React__default['default'].createElement(Button, {
+    className: "button-item",
+    onClick: function onClick() {
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "button-item-name"
+  }, cancelText))))));
+};
+
+ActionSheet.displayName = 'UC-ActionSheet';
+
+var _excluded$o = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
+
+var _templateObject$q;
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), border, border);
+/** 移动端/pc端两种风格的 alert/confirm弹窗 */
+
+var AlertDialog = function AlertDialog(props) {
+  var _props$visible = props.visible,
+      visible = _props$visible === void 0 ? true : _props$visible,
+      title = props.title,
+      content = props.content,
+      onConfirm = props.onConfirm,
+      _props$confirmText = props.confirmText,
+      confirmText = _props$confirmText === void 0 ? '确定' : _props$confirmText,
+      cancelText = props.cancelText,
+      _props$closeOnMaskCli = props.closeOnMaskClick,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
+      _props$buttonSpace = props.buttonSpace,
+      buttonSpace = _props$buttonSpace === void 0 ? 8 : _props$buttonSpace,
+      _props$buttonWidth = props.buttonWidth,
+      buttonWidth = _props$buttonWidth === void 0 ? 62 : _props$buttonWidth,
+      _props$closable = props.closable,
+      closable = _props$closable === void 0 ? false : _props$closable,
+      onClose = props.onClose,
+      rest = _objectWithoutProperties(props, _excluded$o);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({
+    className: clsx__default['default']('uc-alert-dialog', {
+      mobile: isMobile()
+    }),
+    visible: visible,
+    position: "center",
+    onMaskClick: function onMaskClick() {
+      if (closeOnMaskClick) {
+        onClose === null || onClose === void 0 ? void 0 : onClose();
+      }
+    }
+  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('uc-alert-dialog-wrap')
+  }, closable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
+    className: "close",
+    size: 20,
+    onClick: onClose
+  }), title && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('title')
+  }, title), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content')
+  }, content), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('footer')
+  }, !isMobile() ? /*#__PURE__*/React__default['default'].createElement(Space, {
+    size: buttonSpace
+  }, cancelText ? /*#__PURE__*/React__default['default'].createElement(Button, {
+    onClick: onClose,
+    className: clsx__default['default']('cancel'),
+    style: {
+      width: buttonWidth
+    }
+  }, cancelText) : null, /*#__PURE__*/React__default['default'].createElement(Button, {
+    type: "primary",
+    className: clsx__default['default']('confirm'),
+    onClick: function onClick() {
+      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+
+      if (typeof onConfirm !== 'function') {
+        onClose === null || onClose === void 0 ? void 0 : onClose();
+      }
+    },
+    style: {
+      width: buttonWidth
+    }
+  }, confirmText)) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, cancelText ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('m-btn', 'cancel'),
+    onClick: onClose
+  }, cancelText), /*#__PURE__*/React__default['default'].createElement(Divider, {
+    type: "vertical",
+    style: {
+      height: '100%',
+      color: border,
+      margin: 0
+    }
+  })) : null, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('m-btn', 'confirm'),
+    onClick: function onClick() {
+      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+
+      if (typeof onConfirm !== 'function') {
+        onClose === null || onClose === void 0 ? void 0 : onClose();
+      }
+    }
+  }, confirmText)))));
+};
+
+AlertDialog.displayName = 'UC-AlertDialog';
+
+var getContainer$1 = function getContainer() {
+  if (isBrowser) {
+    var div = document.querySelector('.uc-alert-dialog-static');
+
+    if (!div) {
+      div = document.createElement('div');
+      div.className = 'uc-alert-dialog-static';
+      document.body.appendChild(div);
+    }
+
+    return div;
+  }
+
+  return null;
+};
+/**
+ *
+ *
+ * @param {*} title
+ * @param {*} content
+ * @param {string} [confirmText='确定']
+ * @param {*} onConfirm ()=>void
+ * @param {*} cancelText
+ * @return {*}
+ */
+
+
+AlertDialog.show = function (title, content) {
+  var confirmText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '确定';
+
+  var _onConfirm = arguments.length > 3 ? arguments[3] : undefined;
+
+  var cancelText = arguments.length > 4 ? arguments[4] : undefined;
+  if (!content) return;
+  var container = getContainer$1();
+  ReactDOM__default['default'].unmountComponentAtNode(container);
+  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
+    title: title,
+    content: content,
+    visible: true,
+    confirmText: confirmText,
+    cancelText: cancelText,
+    onConfirm: function onConfirm() {
+      _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm();
+      ReactDOM__default['default'].unmountComponentAtNode(container);
+    },
+    onClose: function onClose() {
+      ReactDOM__default['default'].unmountComponentAtNode(container);
+    }
+  }), container);
+};
+
 Object.defineProperty(exports, 'ThemeProvider', {
   enumerable: true,
   get: function () {
     return styled.ThemeProvider;
   }
 });
+exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
+exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
-exports.Backdrop = Backdrop;
 exports.Button = Button;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
@@ -3292,6 +3517,7 @@ exports.IconTick = IconTick;
 exports.IndexList = IndexList;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
+exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
 exports.Popover = Popover;
 exports.Popup = Popup;

@@ -59,12 +59,12 @@ var Toast = function Toast(props) {
   var toastProps = {};
 
   if (modal) {
-    toastProps.backdrop = true;
-    toastProps.backdropStyle = {
+    toastProps.mask = true;
+    toastProps.maskStyle = {
       opacity: 0
     };
   } else {
-    toastProps.backdrop = false;
+    toastProps.mask = false;
   }
 
   return /*#__PURE__*/React.createElement(StyleToast, __assign({

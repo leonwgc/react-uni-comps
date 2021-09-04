@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
-/** refer to zarm Affix  */
+/**  port from zarm Affix & refactor  */
 export declare type Props = {
     /** 距离窗口顶部达到指定偏移量后触发 */
     offsetTop?: number;

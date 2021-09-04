@@ -15,7 +15,7 @@ var __assign = this && this.__assign || function () {
 };
 
 import { getReversePosition } from './getReversePosition';
-export var getArrowStyle = function getArrowStyle(modalEl, placement, backdrop, margin, diagonalWidth // make it the same as arrow w/h
+export var getArrowStyle = function getArrowStyle(modalEl, placement, mask, margin, diagonalWidth // make it the same as arrow w/h
 ) {
   var _a, _b;
 
@@ -23,8 +23,8 @@ export var getArrowStyle = function getArrowStyle(modalEl, placement, backdrop, 
     placement = 'bottom';
   }
 
-  if (backdrop === void 0) {
-    backdrop = false;
+  if (mask === void 0) {
+    mask = false;
   }
 
   if (margin === void 0) {
@@ -48,7 +48,7 @@ export var getArrowStyle = function getArrowStyle(modalEl, placement, backdrop, 
     left: "1px -1px 1px 0px rgba(0, 0, 0, 0.05)"
   };
   var extraStyle = (_a = {
-    boxShadow: backdrop ? 'none' : boxShadowmMap[firstPlacement]
+    boxShadow: mask ? 'none' : boxShadowmMap[firstPlacement]
   }, _a[getReversePosition(firstPlacement)] = -diagonalWidth / 2, _a);
 
   if (!lastPlacement) {

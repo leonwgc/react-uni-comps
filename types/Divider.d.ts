@@ -10,5 +10,5 @@ export declare type Props = {
     color?: string /** 默认 rgba(0, 0, 0, 0.06) */;
 };
 /** 分割线 */
-declare const Divider: (props: Props) => React.ReactNode;
+declare const Divider: (props: Props) => React.ReactElement;
 export default Divider;

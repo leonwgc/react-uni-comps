@@ -42,10 +42,10 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useEffect, useRef } from 'react';
 import TransitionElement from './TransitionElement';
 import styled from 'styled-components';
-var StyledBackdrop = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"], ["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
+var StyledMask = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"], ["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
 /** 遮罩层 */
 
-var Backdrop = /*#__PURE__*/React.forwardRef(function (props, ref) {
+var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       _a = props.hideOverflow,
       hideOverflow = _a === void 0 ? true : _a,
@@ -63,11 +63,11 @@ var Backdrop = /*#__PURE__*/React.forwardRef(function (props, ref) {
       document.body.style.overflow = hideOverflow ? 'hidden' : lastBodyFlow.current;
     }
   }, [hideOverflow]);
-  return /*#__PURE__*/React.createElement(TransitionElement, null, /*#__PURE__*/React.createElement(StyledBackdrop, __assign({
-    className: "uc-backdrop",
+  return /*#__PURE__*/React.createElement(TransitionElement, null, /*#__PURE__*/React.createElement(StyledMask, __assign({
+    className: "uc-mask",
     ref: ref
   }, rest), children));
 });
-Backdrop.displayName = 'UC-Backdrop';
-export default Backdrop;
+Mask.displayName = 'UC-Mask';
+export default Mask;
 var templateObject_1;

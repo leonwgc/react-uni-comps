@@ -46,10 +46,10 @@ import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
-import Backdrop from '../Backdrop';
+import Mask from '../Mask';
 import { MARGIN } from './utils/getModalStyle'; // port from https://github.com/bytedance/guide and refactor
 
-var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1100;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
  *
@@ -69,10 +69,10 @@ var Popover = function Popover(props) {
       className = props.className,
       style = props.style,
       children = props.children,
-      backdrop = props.backdrop,
+      mask = props.mask,
       _c = props.offset,
       offset = _c === void 0 ? {} : _c,
-      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "backdrop", "offset"]);
+      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"]);
 
   var childrenRef = useRef();
   var popoverRef = useRef(null);
@@ -97,7 +97,7 @@ var Popover = function Popover(props) {
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
       var modalStyle = getModalStyle(modalEl, anchorEl, document.body, scrollContainer, placement, offsetRef.current);
-      var arrowStyle = getArrowStyle(modalEl, placement, backdrop, MARGIN);
+      var arrowStyle = getArrowStyle(modalEl, placement, mask, MARGIN);
       setModalStyle(modalStyle);
       setArrowStyle(arrowStyle);
     };
@@ -119,16 +119,16 @@ var Popover = function Popover(props) {
         window.removeEventListener('resize', handleResize);
       };
     }
-  }, [visible, placement, backdrop]);
+  }, [visible, placement, mask]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.cloneElement(children, {
     ref: childrenRef
-  }), visible ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(React.Fragment, null, backdrop ? /*#__PURE__*/React.createElement(Backdrop, {
+  }), visible ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(React.Fragment, null, mask ? /*#__PURE__*/React.createElement(Mask, {
     onClick: onClose
   }) : null, /*#__PURE__*/React.createElement(TransitionElement, {
     ref: popoverRef
   }, /*#__PURE__*/React.createElement(StyledPopover, __assign({
     className: clsx(className, 'uc-popover', {
-      backdrop: backdrop
+      mask: mask
     }),
     style: __assign(__assign({}, modalStyle), style)
   }, rest), arrow && /*#__PURE__*/React.createElement("span", {

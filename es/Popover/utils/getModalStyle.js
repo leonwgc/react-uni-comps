@@ -42,12 +42,14 @@ export var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, s
     'top': {
       // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
-      left: left + width / 2 - modalPos.width / 2
+      left: left + width / 2 - modalPos.width / 2 + parentPos.left // fix body margin top bottom  not centered
+
     },
     'bottom': {
       // modal放到内容的下面
       top: bottom + MARGIN,
-      left: left + width / 2 - modalPos.width / 2
+      left: left + width / 2 - modalPos.width / 2 + parentPos.left //fix
+
     },
     'left': {
       // modal放到内容的左边
