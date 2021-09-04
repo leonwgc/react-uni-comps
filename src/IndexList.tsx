@@ -11,7 +11,7 @@ type Item = {
   subItems: Item[];
 };
 
-export type Props = {
+type Props = {
   /** 数据 */
   data: Item[];
   /** 点击数据项回调 */

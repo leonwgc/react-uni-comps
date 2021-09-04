@@ -1,6 +1,6 @@
 import React, { MutableRefObject } from 'react';
 import { Position } from './hooks/useDrag';
-export declare type Props = {
+declare type Props = {
     onDragStart?: (e: MouseEvent | TouchEvent, position: Position) => void;
     onDragEnd?: (e: MouseEvent | TouchEvent, position: Position) => void;
     boundRef?: MutableRefObject<HTMLElement>;

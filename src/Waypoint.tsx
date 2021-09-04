@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, HTMLAttributes, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
-export type Props = {
+type Props = {
   /** 可见回调 */
   onVisible?: (el: HTMLElement) => void;
   /** 不可见回调 */

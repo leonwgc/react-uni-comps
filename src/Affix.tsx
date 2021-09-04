@@ -13,7 +13,7 @@ import clsx from 'clsx';
 
 /**  port from zarm Affix & refactor  */
 
-export type Props = {
+type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */
   offsetTop?: number;
   /** 距离窗口底部达到指定偏移量后触发 */

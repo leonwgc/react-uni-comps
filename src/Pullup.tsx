@@ -38,7 +38,7 @@ function isInViewport(el: HTMLElement, container: HTMLElement) {
   }
 }
 
-export type Props = {
+type Props = {
   /** 数组数据 */
   dataList: Array<unknown>;
   /** 数组数据项自定义render */

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useThemeColor from './hooks/useThemeColor';
 
-export type Props = {
+type Props = {
   size?: number /** 圈圈大小,应用到font-size,默认16 */;
   color?: string /** 圈圈颜色*/;
 };

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
-export type Props = {
+type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
   children: React.ReactElement;
   /** animation动画的持续时间,默认1s */

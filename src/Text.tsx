@@ -15,7 +15,7 @@ const StyledSpanOneline = styled.span`
   white-space: nowrap;
 `;
 
-export type Props = {
+type Props = {
   /** 显示几行，超过显示省略号, 默认1 */
   lines?: number;
   /** 包裹的文本 */

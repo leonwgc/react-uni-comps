@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     type?: 'horizontal' | 'vertical';
     textPosition?: 'left' | 'right' | 'center';
     className?: string;

@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     /** 数组数据 */
     dataList: Array<unknown>;
     /** 数组数据项自定义render */

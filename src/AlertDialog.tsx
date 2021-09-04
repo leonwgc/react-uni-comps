@@ -10,7 +10,7 @@ import * as colors from './colors';
 import { isBrowser, isMobile } from './dom';
 import clsx from 'clsx';
 
-export type Props = {
+type Props = {
   visible?: boolean;
   title?: React.ReactNode;
   content?: React.ReactNode;

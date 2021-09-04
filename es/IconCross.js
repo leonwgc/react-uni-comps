@@ -74,13 +74,13 @@ var IconCross = /*#__PURE__*/React.forwardRef(function (props, ref) {
     y: "0",
     width: "48",
     height: "48",
-    strokeWidth: "4",
+    strokeWidth: "2",
     stroke: "none",
     fillRule: "evenodd"
   }), /*#__PURE__*/React.createElement("path", {
     d: "M14,14 L34,34",
     stroke: color,
-    strokeWidth: "4",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     fill: "none",
@@ -88,7 +88,7 @@ var IconCross = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement("path", {
     d: "M14,34 L34,14",
     stroke: color,
-    strokeWidth: "4",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     fill: "none",

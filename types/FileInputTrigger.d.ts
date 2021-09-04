@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     accept?: string;
     onChange?: (files: FileList) => void;
     disabled?: false;

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useEffect, useState } from 'react';
 import { throttle } from './helper';
 
-export type Props = {
+type Props = {
   /**
    * 滚动高度达到此参数值才出现 ScrollTop,默认100
    * @type {number}

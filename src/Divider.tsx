@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 // refer to https://ant.design/components/divider-cn/ antd Divider
 
-export type Props = {
+type Props = {
   type?: 'horizontal' | 'vertical';
   textPosition?: 'left' | 'right' | 'center';
   className?: string;

@@ -5,7 +5,7 @@ import useThemeColor from './hooks/useThemeColor';
 import IconTick from './IconTick';
 import * as colors from './colors';
 
-export type Props = {
+type Props = {
   size?: number /** 默认18 */;
   color?: string /** checked状态颜色 */;
   borderRadius?: string /** 默认2px,圆形设置为50% */;

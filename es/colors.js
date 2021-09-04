@@ -5,3 +5,4 @@ export var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
 export var disabledBg = '#f5f5f5';
 export var primary = '#004bcc';
 export var danger = '#ff4d4f';
+export var activeBg = 'rgba(0, 0, 0, 0.1)';

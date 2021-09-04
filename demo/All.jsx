@@ -141,24 +141,6 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Slide
-          </Space>
-        }
-        content="go"
-        onClick={() => gotoPage('Slide')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> SlideFull
-          </Space>
-        }
-        content="go"
-        onClick={() => gotoPage('SlideFull')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
             <SoundOutlined /> Popover
           </Space>
         }

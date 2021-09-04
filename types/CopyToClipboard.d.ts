@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     /** 要复制的文本 */
     text: string;
     /** 复制成功的回调 */

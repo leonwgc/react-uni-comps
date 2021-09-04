@@ -13,7 +13,7 @@ const StyleToast = styled(Popup)`
   text-align: center;
 `;
 
-export type Props = {
+type Props = {
   content?: React.ReactNode;
   /** 模态 */
   modal?: boolean;

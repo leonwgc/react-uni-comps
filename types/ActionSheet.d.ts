@@ -1,12 +1,12 @@
 import React, { HTMLAttributes } from 'react';
-export declare type Action = {
+declare type Action = {
     text: string;
     disabled?: boolean;
     description?: string;
     color?: string;
     onClick?: () => void;
 };
-export declare type Props = {
+declare type Props = {
     /** 显示隐藏   */
     visible: boolean;
     /** 面板选项列表   */

@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from 'react';
-export declare type Props = {
+declare type Props = {
     visible?: boolean;
     title?: React.ReactNode;
     content?: React.ReactNode;

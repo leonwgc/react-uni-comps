@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     children: React.ReactNode /** loading结束渲染的元素 */;
     animate?: boolean /** 是否显示动画效果，默认显示 */;
     row: number /** 几行，默认4行, 最小1行 */;

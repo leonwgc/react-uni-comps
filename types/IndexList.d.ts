@@ -4,7 +4,7 @@ declare type Item = {
     value?: string;
     subItems: Item[];
 };
-export declare type Props = {
+declare type Props = {
     /** 数据 */
     data: Item[];
     /** 点击数据项回调 */

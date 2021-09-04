@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { useRef } from 'react';
 
-export type Props = {
+type Props = {
   accept?: string;
   onChange?: (files: FileList) => void;
   disabled?: false;

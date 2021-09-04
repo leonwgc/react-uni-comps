@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from 'react';
-export declare type Props = {
+declare type Props = {
     /**
      * 滚动高度达到此参数值才出现 ScrollTop,默认100
      * @type {number}

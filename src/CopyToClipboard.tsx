@@ -1,7 +1,7 @@
 import React from 'react';
 import copy from 'copy-text-to-clipboard';
 
-export type Props = {
+type Props = {
   /** 要复制的文本 */
   text: string;
   /** 复制成功的回调 */

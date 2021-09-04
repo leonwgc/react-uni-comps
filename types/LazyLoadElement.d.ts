@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     children: React.ReactElement /** 需要lazyload的组件 */;
     width?: string | number /** placeholder 宽度 */;
     height?: string | number /** placeholder 高度 */;

@@ -897,6 +897,7 @@ var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
 var disabledBg = '#f5f5f5';
 var primary = '#004bcc';
 var danger = '#ff4d4f';
+var activeBg = 'rgba(0, 0, 0, 0.1)';
 
 /**
  *  获得主题色,主题色优先,没有配置，则取colors定义的主题色
@@ -1221,18 +1222,18 @@ var Tabs = function Tabs(_ref2) {
 
 Tabs.Tab = Tab;
 
-var _excluded$7 = ["label", "content", "lineColor", "children"];
+var _excluded$7 = ["title", "content", "lineColor", "children"];
 
 var _templateObject$7, _templateObject2$1;
-var StyledWrapper$1 = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: rgba(0, 0, 0, 0.1);\n    }\n  }\n"])));
-var StyledCell = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #969799;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: inherit;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
+var StyledWrapper$1 = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n"])), activeBg);
+var StyledCell = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #999;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: 24px;\n        font-size: 14px;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var label = props.label,
+  var title = props.title,
       content = props.content,
       _props$lineColor = props.lineColor,
-      lineColor = _props$lineColor === void 0 ? '#dcdcdc' : _props$lineColor,
+      lineColor = _props$lineColor === void 0 ? border : _props$lineColor,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$7);
 
@@ -1240,9 +1241,6 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     throw new Error("don't set content and children at the same time");
   }
 
-  var titleClsx = clsx__default['default']('uc-cell-title', {
-    'not-edit-mode': content
-  });
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, {
     className: clsx__default['default']('uc-cell-wrapper', {
       clickable: typeof rest.onClick === 'function'
@@ -1253,8 +1251,10 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     ref: ref,
     className: clsx__default['default']('uc-cell')
   }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: titleClsx
-  }, label), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('uc-cell-title', {
+      'not-edit-mode': content
+    })
+  }, title), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-cell-value"
   }, content, children ? /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-field-body"
@@ -1496,13 +1496,13 @@ var Checkbox = function Checkbox(props) {
 var _excluded$b = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
 var _templateObject$c;
-var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
+var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
   var color = _ref2.color;
   return color;
-}, function (_ref3) {
+}, activeBg, function (_ref3) {
   var color = _ref3.color;
   return color;
 }, function (_ref4) {
@@ -1546,7 +1546,8 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       block: block,
       circle: circle,
       dashed: dashed,
-      ghost: ghost
+      ghost: ghost,
+      mobile: isMobile()
     }, className)
   }, rest), children);
 });
@@ -2054,13 +2055,13 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     y: "0",
     width: "48",
     height: "48",
-    strokeWidth: "4",
+    strokeWidth: "2",
     stroke: "none",
     fillRule: "evenodd"
   }), /*#__PURE__*/React__default['default'].createElement("path", {
     d: "M14,14 L34,34",
     stroke: color,
-    strokeWidth: "4",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     fill: "none",
@@ -2068,7 +2069,7 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }), /*#__PURE__*/React__default['default'].createElement("path", {
     d: "M14,34 L34,14",
     stroke: color,
-    strokeWidth: "4",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     fill: "none",
@@ -3212,7 +3213,9 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$n = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
 
 var _templateObject$p;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), border, border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
+  return props.theme.color;
+}, border, border);
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 
 var AlertDialog = function AlertDialog(props) {
@@ -3250,7 +3253,7 @@ var AlertDialog = function AlertDialog(props) {
     className: clsx__default['default']('uc-alert-dialog-wrap')
   }, closable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
     className: "close",
-    size: 20,
+    size: 24,
     onClick: onClose
   }), title && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('title')

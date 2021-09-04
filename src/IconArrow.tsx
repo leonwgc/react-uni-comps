@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-export type Props = {
+type Props = {
   /** 大小, 默认16 */
   size?: number;
   /** 颜色 */

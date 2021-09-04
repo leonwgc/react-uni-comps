@@ -6,17 +6,23 @@ import { isMobile } from './dom';
 import useThemeColor from './hooks/useThemeColor';
 import Color from 'color';
 
-export type Props = {
-  type?: 'primary' | 'default' /** default 线框，primary 实色框 */;
+type Props = {
+  /** default 线框，primary 实色框 */
+  type?: 'primary' | 'default';
   disabled?: boolean;
   style?: React.CSSProperties;
+  /** 块级按钮 */
   block?: boolean;
   children?: React.ReactNode;
   className?: string;
-  circle?: boolean /** 圆形按钮 */;
-  dashed?: boolean /** 虚线边 */;
-  danger?: boolean /** 设置危险按钮 */;
-  ghost?: boolean /** 是否幽灵按钮 */;
+  /** 圆形按钮 */
+  circle?: boolean;
+  /** 虚线边 */
+  dashed?: boolean;
+  /** 设置危险按钮 */
+  danger?: boolean;
+  /** 是否幽灵按钮 */
+  ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
 } & HTMLAttributes<HTMLButtonElement>;
 

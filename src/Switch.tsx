@@ -2,9 +2,8 @@ import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import useThemeColor from './hooks/useThemeColor';
-import * as colors from './colors';
 
-export type Props = {
+type Props = {
   disabled?: boolean;
   checked?: boolean;
   defaultChecked?: boolean;

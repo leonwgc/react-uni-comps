@@ -46,7 +46,7 @@ const StyledNoticeBar = styled.div`
   }
 `;
 
-export type Props = {
+type Props = {
   /** 公告内容 */
   content: string;
   /** 开始滚动的延迟，单位 ms, 默认2000 */

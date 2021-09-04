@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     size?: number /** 圈圈大小,应用到font-size,默认16 */;
     color?: string /** 圈圈颜色*/;
 };

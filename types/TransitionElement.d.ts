@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = {
+declare type Props = {
     /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
     children: React.ReactElement;
     /** from到to动画执行的时间,单位ms,默认240ms */

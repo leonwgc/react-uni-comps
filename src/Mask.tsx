@@ -21,7 +21,7 @@ const StyledMask = styled.div`
   }
 `;
 
-export type Props = {
+type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
   hideOverflow?: boolean;
   /** 上层元素 */

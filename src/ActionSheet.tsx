@@ -5,7 +5,7 @@ import Button from './Button';
 import * as colors from './colors';
 import clsx from 'clsx';
 
-export type Action = {
+type Action = {
   text: string;
   disabled?: boolean;
   description?: string;
@@ -13,7 +13,7 @@ export type Action = {
   onClick?: () => void;
 };
 
-export type Props = {
+type Props = {
   /** 显示隐藏   */
   visible: boolean;
   /** 面板选项列表   */

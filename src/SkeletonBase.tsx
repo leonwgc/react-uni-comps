@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-export type Props = {
+type Props = {
   animate?: boolean /** 是否显示动画效果，默认显示 */;
   shape?: 'rect' | 'circle' /** 形状：默认 react */;
   height?: number | string /** 高度，默认16px */;

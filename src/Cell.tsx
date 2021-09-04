@@ -4,7 +4,7 @@ import * as colors from './colors';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 
-export type Props = {
+type Props = {
   /** 标题 */
   title?: React.ReactNode;
   /** 右侧内容 */

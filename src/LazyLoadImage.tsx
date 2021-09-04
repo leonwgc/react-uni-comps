@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
-export type Props = React.ImgHTMLAttributes<HTMLImageElement>;
+type Props = React.ImgHTMLAttributes<HTMLImageElement>;
 
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 const LazyLoadImage: React.FC<Props> = ({ width, height, src, ...props }) => {
