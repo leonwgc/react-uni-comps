@@ -61,33 +61,33 @@ yarn add react-uni-comps
 
 #### 22. IndexList (索引列表)
 
-#### 24. ScrollTop (平滑滚动到顶部)
+#### 23. ScrollTop (平滑滚动到顶部)
 
-#### 25. Popover (弹出带箭头的浮层)
+#### 24. Popover (弹出带箭头的浮层)
 
-#### 26. Tooltip (文字提示)
+#### 25. Tooltip (文字提示)
 
-#### 27. Drag (拖拽)
+#### 26. Drag (拖拽)
 
-#### 28. ThemeProvider (全局主题色配置)
+#### 27. ThemeProvider (全局主题色配置)
 
-#### 29. CopyToClipboard (复制文本到剪贴板)
+#### 28. CopyToClipboard (复制文本到剪贴板)
 
-#### 30. Toast (黑背景提示)
+#### 29. Toast (黑背景提示)
 
-#### 31. Text (文本显示,单行/多行截断显示省略)
+#### 30. Text (文本显示,单行/多行截断显示省略)
 
-#### 32. Mask (遮罩层,组件内部使用)
+#### 31. Mask (遮罩层,组件内部使用)
 
-#### 33. IconTick (勾勾), IconCross(x) , IconArrow(箭头) [内部使用]
+#### 32. IconTick (勾勾), IconCross(x) , IconArrow(箭头) [内部使用]
 
-#### 34. Affix (将页面元素钉在可视范围)
+#### 33. Affix (将页面元素钉在可视范围)
 
-#### 35. NoticeBar (通告栏)
+#### 34. NoticeBar (通告栏)
 
-#### 36. ActionSheet (动作面板)
+#### 35. ActionSheet (动作面板)
 
-#### 37. AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗)
+#### 36. AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗)
 
 ### 按需加载
 
