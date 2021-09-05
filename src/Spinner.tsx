@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import useThemeColor from './hooks/useThemeColor';
 
 type Props = {
   size?: number /** 圈圈大小,应用到font-size,默认16 */;
@@ -37,7 +36,7 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  color: ${(props) => props.color};
+  color: ${(props) => props.color || props.theme.color};
   animation: loading 1s steps(60, end) infinite;
   :before,
   :after {
@@ -67,8 +66,7 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
 
 /** Spinner 加载中 */
 const Spinner = React.forwardRef<HTMLDivElement, Props>(({ size = 16, color }, ref) => {
-  const _color = useThemeColor();
-  return <StyledLoading ref={ref} size={size} color={color || _color}></StyledLoading>;
+  return <StyledLoading ref={ref} size={size} color={color}></StyledLoading>;
 });
 
 Spinner.displayName = 'UC-Spinner';
