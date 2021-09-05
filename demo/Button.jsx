@@ -4,7 +4,7 @@ import { Space, Button } from '../src';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`
-  button {
+  .uc-btn {
     margin: 8px 0;
   }
 `;
