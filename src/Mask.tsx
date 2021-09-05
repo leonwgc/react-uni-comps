@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, useEffect, useRef } from 'react';
+import React, { HTMLAttributes, ReactElement, useEffect } from 'react';
 import TransitionElement from './TransitionElement';
 import styled from 'styled-components';
 
@@ -32,19 +32,15 @@ type Props = {
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const { children, hideOverflow = true, ...rest } = props;
 
-  const lastBodyFlow = useRef<string>('');
-
   useEffect(() => {
-    lastBodyFlow.current = document.body.style.overflow;
-
     return () => {
-      document.body.style.overflow = lastBodyFlow.current;
+      document.body.style.overflow = '';
     };
   }, []);
 
   useEffect(() => {
     if (hideOverflow) {
-      document.body.style.overflow = hideOverflow ? 'hidden' : lastBodyFlow.current;
+      document.body.style.overflow = hideOverflow ? 'hidden' : '';
     }
   }, [hideOverflow]);
 

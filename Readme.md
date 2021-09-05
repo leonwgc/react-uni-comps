@@ -91,7 +91,7 @@ yarn add react-uni-comps
 
 ### 按需加载
 
-支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具，可以采用下列方式按需加载
+支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
 
 1. 搭配 babel-plugin-import
 
@@ -111,7 +111,16 @@ yarn add react-uni-comps
 2. 直接引用组件
 
 ```js
-import xxx from 'react-uni-comps/es/xxx';
+// 以Button组件为例
+import Button from 'react-uni-comps/es/Button';
+```
+
+### 主题色设置
+
+1. 使用 ThemeProvider 设置
+
+```js
+<ThemeProvider color="rgb(19, 194, 194)">...</ThemeProvider>
 ```
 
 持续更新其他组件...

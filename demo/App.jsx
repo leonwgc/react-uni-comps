@@ -1,10 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider, configureStore } from 'simple-redux-store';
 import routes from './RouteConfig';
-
 import 'dayjs/locale/zh-cn';
 import dayjs from 'dayjs';
 import { ThemeProvider } from '../src';
@@ -17,7 +16,7 @@ const Routes = () => {
   return (
     <Provider store={store}>
       <ConfigProvider locale={zhCN}>
-        <ThemeProvider theme={{ color: '#409EFF' }}>
+        <ThemeProvider color="#409EFF">
           <Router history={history}>
             <Suspense fallback={null}>
               <Switch>

@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
 import useThemeColor from './hooks/useThemeColor';
-import Color from 'color';
 
 type Props = {
   /** default 线框，primary 实色框 */
@@ -62,6 +61,9 @@ const StyledButton = styled.button`
     :hover {
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
+
+      border-color: var(--uc-color, ${colors.primary});
+      color: var(--uc-color, ${colors.primary});
     }
     &.mobile:active {
       background-color: ${colors.activeBg};
@@ -70,10 +72,12 @@ const StyledButton = styled.button`
   &.primary {
     background-color: ${({ color }) => color};
     border-color: ${({ color }) => color};
+    background-color: var(--uc-color, ${colors.primary});
+    border-color: var(--uc-color, ${colors.primary});
     color: #fff;
 
     ${isMobile() ? '&:active' : '&:hover'} {
-      background-color: ${({ color }) => Color(color).lighten(0.16).hex()};
+      opacity: 0.8;
     }
 
     &.ghost,
@@ -81,6 +85,8 @@ const StyledButton = styled.button`
       background-color: transparent;
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
+      border-color: var(--uc-color, ${colors.primary});
+      color: var(--uc-color, ${colors.primary});
     }
   }
   &.block {
