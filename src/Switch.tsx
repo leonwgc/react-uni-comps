@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
+import * as colors from './colors';
 import clsx from 'clsx';
-import useThemeColor from './hooks/useThemeColor';
 
 type Props = {
   disabled?: boolean;
@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 } & HTMLAttributes<HTMLElement>;
 
-const StyledSwitch = styled.button`
+const StyledSwitch = styled.div`
   position: relative;
   box-sizing: border-box;
   width: 44px;
@@ -51,17 +51,19 @@ const StyledSwitch = styled.button`
   }
 
   &.checked {
-    background-color: ${({ color }) => color};
-    border-color: ${({ color }) => color};
+    background-color: ${(props) => props.theme.color};
+    background-color: var(--uc-color, ${colors.primary});
+    border-color: ${(props) => props.theme.color};
+    border-color: var(--uc-color, ${colors.primary});
 
     &::after {
-      left: calc(100% - 18px - 2px);
+      left: calc(100% - 20px);
     }
   }
 
   &.disabled {
     cursor: not-allowed;
-    opacity: 0.4;
+    opacity: 0.6;
 
     &::after {
       cursor: not-allowed;
@@ -70,9 +72,8 @@ const StyledSwitch = styled.button`
 `;
 
 /** 开关 */
-const Switch = (props: Props): React.ReactElement => {
-  const { disabled, checked, defaultChecked, className, style = {}, onChange, ...rest } = props;
-  const color = useThemeColor();
+const Switch = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { disabled, checked, defaultChecked, className, onChange, ...rest } = props;
 
   const [_checked, _setChecked] = useState(() => {
     return typeof checked !== 'undefined'
@@ -84,15 +85,13 @@ const Switch = (props: Props): React.ReactElement => {
 
   return (
     <StyledSwitch
-      color={color}
+      ref={ref}
       onClick={() => {
-        if (typeof onChange === 'function') {
-          onChange(!_checked);
+        if (!disabled) {
+          _setChecked(!_checked);
+          onChange?.(!_checked);
         }
-        _setChecked(!_checked);
       }}
-      style={{ ...style }}
-      disabled={disabled}
       className={clsx('uc-switch', className, {
         disabled: disabled,
         checked: _checked,
@@ -100,6 +99,8 @@ const Switch = (props: Props): React.ReactElement => {
       {...rest}
     ></StyledSwitch>
   );
-};
+});
+
+Switch.displayName = 'UC-Switch';
 
 export default Switch;

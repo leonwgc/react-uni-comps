@@ -27,11 +27,8 @@ export default function App() {
         <Switch checked={c} onChange={setC} />
         {c ? 'checked' : 'unchecked'}
         <Switch checked />
-        <Switch defaultChecked />
-        <Switch defaultChecked disabled />
-        <Switch disabled />
-        <Switch color="#00bc8d" defaultChecked />
-        <Switch disabled color="#00bc8d" defaultChecked />
+        <Switch defaultChecked /> defaultChecked
+        <Switch disabled defaultChecked />
       </Space>
     </StyledContent>
   );
