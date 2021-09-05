@@ -86,17 +86,8 @@ const Items = places.map(({ title, content, placement, selector }) => ({
 export default function App() {
   const [v, setV] = useState(false);
   const [v1, setV1] = useState(false);
+  const [v2, setV2] = useState(false);
   const [visible, setVisible] = useState({});
-
-  useEffect(() => {
-    document.body.style.height = '200vh';
-    document.body.style.width = '200vw';
-
-    return () => {
-      document.body.style.height = '';
-      document.body.style.width = '';
-    };
-  }, []);
 
   const handleClick = (placement) => {
     const key = Object.keys(visible).find((key) => visible[key]);
@@ -109,7 +100,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: '30vh 10px 0 30vw' }}>
+    <div style={{ paddingLeft: '30vw' }}>
       <Popover
         placement="bottom-right"
         mask
@@ -118,7 +109,9 @@ export default function App() {
         visible={v}
         content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
       >
-        <Button onClick={() => setV(true)}>back drop </Button>
+        <Button style={{ position: 'fixed', top: 200, left: 100 }} onClick={() => setV(true)}>
+          back drop fixed
+        </Button>
       </Popover>
 
       <Popover
@@ -133,6 +126,22 @@ export default function App() {
           test
         </Button>
       </Popover>
+
+      <div style={{ width: '100vw', height: 100, border: '1px solid #eee', overflowY: 'scroll' }}>
+        <div style={{ height: '100vh' }}>
+          <Popover
+            placement="bottom"
+            closable
+            onClose={() => setV2(false)}
+            visible={v2}
+            content={<div style={{ padding: '30px' }}>hello,world</div>}
+          >
+            <Button type="primary" style={{ marginTop: 100 }} onClick={() => setV2(true)}>
+              test in scroll div
+            </Button>
+          </Popover>
+        </div>
+      </div>
 
       <Space wrap direction="vertical">
         {Items.map((step, idx) => {

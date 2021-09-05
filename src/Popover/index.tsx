@@ -105,6 +105,7 @@ const Popover = (props: Props): React.ReactElement => {
   useEffect(() => {
     const anchorEl = childrenRef.current;
     const scrollContainer = getScrollContainer(anchorEl);
+    // todo: support cust scroll container , by now it's window
 
     const calculateStyle = (anchorEl, scrollContainer) => {
       const modalEl = popoverRef.current;

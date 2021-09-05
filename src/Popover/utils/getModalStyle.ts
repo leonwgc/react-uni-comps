@@ -33,17 +33,24 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-  const { scrollTop } = scrollContainer;
+  // const { scrollTop } = scrollContainer;
 
   const isParentBody = getNodeName(parentEl) === 'body';
   const isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
-  const anchorOffsetTop = getOffsetTop(anchorEl);
+  // const anchorOffsetTop = getOffsetTop(anchorEl);
 
-  const scrollY = isAnchorFixed
+  // backup
+  // const scrollY = isAnchorFixed
+  //   ? anchorPos.top
+  //   : isParentBody
+  //   ? anchorPos.top + scrollTop
+  //   : anchorOffsetTop;
+
+  const anchorTop = isAnchorFixed
     ? anchorPos.top
     : isParentBody
-    ? anchorPos.top + scrollTop
-    : anchorOffsetTop;
+    ? anchorPos.top + window.pageYOffset
+    : getOffsetTop(anchorEl);
 
   /* The distance between the top of the offsetParent and the top of the anchor.
    *
@@ -51,9 +58,9 @@ export const getModalStyle = (
    * for the cases with no mask, the anchorEl's should be positioned relative to the body rather than
    * its real offsetParent.
    */
-  const top = scrollY;
-  const bottom = anchorPos.height + scrollY;
-  const left = anchorPos.left - parentPos.left;
+  const top = anchorTop;
+  const bottom = anchorPos.height + anchorTop;
+  const left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
 
   const { width, height } = anchorPos;
 
