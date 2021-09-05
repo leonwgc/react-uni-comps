@@ -127,21 +127,7 @@ export default function App() {
         </Button>
       </Popover>
 
-      <div style={{ width: '100vw', height: 100, border: '1px solid #eee', overflowY: 'scroll' }}>
-        <div style={{ height: '100vh' }}>
-          <Popover
-            placement="bottom"
-            closable
-            onClose={() => setV2(false)}
-            visible={v2}
-            content={<div style={{ padding: '30px' }}>hello,world</div>}
-          >
-            <Button type="primary" style={{ marginTop: 100 }} onClick={() => setV2(true)}>
-              test in scroll div
-            </Button>
-          </Popover>
-        </div>
-      </div>
+      <div style={{ width: '100vw', height: '100vh', border: '1px solid #eee' }}></div>
 
       <Space wrap direction="vertical">
         {Items.map((step, idx) => {

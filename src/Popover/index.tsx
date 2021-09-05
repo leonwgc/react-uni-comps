@@ -24,8 +24,8 @@ const StyledPopover = styled.div`
   .uc-popover-close {
     position: absolute;
     z-index: 10;
-    top: 16px;
-    right: 16px;
+    top: 8px;
+    right: 8px;
     cursor: pointer;
     color: #000;
     opacity: 0.35;
