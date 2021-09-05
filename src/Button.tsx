@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
-import useThemeColor from './hooks/useThemeColor';
 
 type Props = {
   /** default 线框，primary 实色框 */
@@ -58,6 +57,10 @@ const StyledButton = styled.button`
     background-color: #fff;
     border-color: ${colors.border};
 
+    ${isMobile() ? '&:active' : '&:hover'} {
+      opacity: 0.8;
+    }
+
     :hover {
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
@@ -67,6 +70,22 @@ const StyledButton = styled.button`
     }
     &.mobile:active {
       background-color: ${colors.activeBg};
+    }
+
+    &.danger,
+    &.danger:hover,
+    &.danger:active {
+      color: ${colors.danger};
+      border-color: ${colors.danger};
+    }
+
+    &.disabled,
+    &.disabled:hover,
+    &.disabled:active {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: ${colors.border};
+      color: #999;
     }
   }
   &.primary {
@@ -81,12 +100,24 @@ const StyledButton = styled.button`
     }
 
     &.ghost,
-    &.ghost:hover {
-      background-color: transparent;
+    &.ghost:hover,
+    &.ghost:active {
+      background-color: transparent !important;
       border-color: ${({ color }) => color};
       color: ${({ color }) => color};
       border-color: var(--uc-color, ${colors.primary});
       color: var(--uc-color, ${colors.primary});
+
+      &.danger {
+        color: ${colors.danger};
+      }
+    }
+
+    &.danger,
+    &.danger:hover,
+    &.danger:active {
+      background-color: ${colors.danger};
+      border-color: ${colors.danger};
     }
   }
   &.block {
@@ -102,11 +133,10 @@ const StyledButton = styled.button`
   }
 
   &.disabled,
-  &.disabled:hover {
-    background-color: ${colors.disabledBg};
-    border-color: ${colors.border};
+  &.disabled:hover,
+  &.disabled:active {
+    opacity: 0.6;
     cursor: not-allowed;
-    color: ${colors.disabledText};
   }
   &.ghost,
   &.ghost:hover {
@@ -132,14 +162,9 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const color = useThemeColor();
-
-  const themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
-
   return (
     <StyledButton
       ref={ref}
-      color={themeColor}
       disabled={disabled}
       type={htmlType}
       className={clsx(
@@ -151,6 +176,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           circle: circle,
           dashed: dashed,
           ghost: ghost,
+          danger: danger,
           mobile: isMobile(),
         },
         className
