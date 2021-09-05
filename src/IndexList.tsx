@@ -2,7 +2,7 @@ import React, { MutableRefObject, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { useRef } from 'react';
-import useThemeColor from './hooks/useThemeColor';
+import * as colors from './colors';
 import Waypoint from './Waypoint';
 
 type Item = {
@@ -18,8 +18,8 @@ type Props = {
   onChange?: (item: Omit<Item, 'subItems'>) => void;
 };
 
-const StyledContainer = styled.div<{ color: string }>`
-  .uc-indexbar-side {
+const StyledContainer = styled.div`
+  .uc-indexlist-side {
     position: fixed;
     top: 50%;
     right: 0;
@@ -31,14 +31,16 @@ const StyledContainer = styled.div<{ color: string }>`
     cursor: pointer;
     user-select: none;
 
-    .uc-indexbar-side-item {
+    .uc-indexlist-side-item {
       padding: 0 8px 0 16px;
       font-weight: 500;
       font-size: 10px;
       line-height: 14px;
+      user-select: none;
 
       &.active {
-        color: ${({ color }) => color};
+        color: ${(props) => props.theme.color};
+        color: var(--uc-color, ${colors.primary});
       }
     }
   }
@@ -52,7 +54,8 @@ const StyledContainer = styled.div<{ color: string }>`
     padding: 8px 16px;
     background-color: #f5f5f5;
     &.active {
-      color: ${({ color }) => color};
+      color: ${(props) => props.theme.color};
+      color: var(--uc-color, ${colors.primary});
     }
   }
 
@@ -150,15 +153,14 @@ const IndexList = (props: Props): React.ReactElement => {
   const { data = [], onChange } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
-  const color = useThemeColor();
 
   return (
-    <StyledContainer className={clsx('uc-indexbar')} color={color} ref={ref}>
+    <StyledContainer className={clsx('uc-indexlist')} ref={ref}>
       <dl>{data.map((item, idx) => renderItem(item, idx, index, setIndex, ref, onChange))}</dl>
-      <div className="uc-indexbar-side">
+      <div className="uc-indexlist-side">
         {data.map((item, idx) => (
           <div
-            className={clsx('uc-indexbar-side-item', { active: idx === index })}
+            className={clsx('uc-indexlist-side-item', { active: idx === index })}
             key={idx}
             onClick={() => {
               const el = ref.current.querySelector('#index-bar-' + idx);
