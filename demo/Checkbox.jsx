@@ -1,25 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Space, Checkbox, IconTick } from '../src';
+import { Space, Checkbox } from '../src';
 
 const StyledContent = styled.div`
-  .article {
-    margin-top: 20px;
-    display: flex;
-    .l {
-      flex: 0;
-    }
-    .r {
-      flex: 1;
-      margin-left: 16px;
-      padding-top: 8px;
-    }
-  }
-
-  .check {
-    .uc-checkbox {
-      margin: 0 8px;
-    }
+  .uc-checkbox {
+    margin: 0 8px;
   }
 `;
 
@@ -32,19 +17,22 @@ export default function App() {
         <Checkbox checked={checked} onChange={setChecked}>
           hello
         </Checkbox>
-        <Checkbox defaultChecked onChange={console.log} />
-        <Checkbox />
-        <Checkbox color="red" />
-        <Checkbox size={32} defaultChecked color="#ff4d4f" />
-        <Checkbox borderRadius="50%" size={60} defaultChecked />
-        <Checkbox borderRadius="50%" color="red" size={32} defaultChecked disabled>
+
+        <Checkbox size={32} defaultChecked />
+        <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
+          good
+        </Checkbox>
+        <Checkbox
+          style={{ backgroundColor: 'red', borderRadius: '50%' }}
+          size={32}
+          defaultChecked
+          disabled
+        >
           love u
         </Checkbox>
-        <Checkbox borderRadius="50%" disabled>
-          love u
-        </Checkbox>
+        <Checkbox disabled>love u</Checkbox>
         <Checkbox disabled checked>
-          love m
+          love u
         </Checkbox>
       </Space>
     </StyledContent>

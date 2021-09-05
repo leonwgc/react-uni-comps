@@ -1,83 +1,71 @@
-import React, { useState } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import useThemeColor from './hooks/useThemeColor';
 import IconTick from './IconTick';
 import * as colors from './colors';
 
 type Props = {
-  size?: number /** 默认18 */;
-  color?: string /** checked状态颜色 */;
-  borderRadius?: string /** 默认2px,圆形设置为50% */;
-  onChange?: (checked: boolean) => void /** checked状态改变回调 */;
+  /** 默认18 */
+  size?: number;
+  /** checked状态改变回调 */
+  onChange?: (checked: boolean) => void;
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
   children: React.ReactNode;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 const StyledCheckboxWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
+  vertical-align: middle;
 
   > span {
     margin-left: 8px;
   }
 
   &.disabled {
-    color: ${colors.disabledText};
     cursor: not-allowed;
+    opacity: 0.5;
   }
 `;
 
 const StyledCheckbox = styled.div<{
   size: number;
-  color: string;
-  borderRadius: string;
   disabled: boolean;
 }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   border: 1px solid ${colors.border};
-  border-radius: ${({ borderRadius }) => borderRadius};
+  border-radius: 2px;
   background: #fff;
   transition: all 0.3s ease;
 
   &:hover {
-    border: 1px solid ${({ color }) => color};
+    border: 1px solid ${(props) => props.theme.color};
+    border: 1px solid var(--uc-color, ${colors.primary});
   }
 
   &.checked {
-    background-color: ${({ color }) => color};
-    border: 1px solid ${({ color }) => color};
+    background-color: ${(props) => props.theme.color};
+    background-color: var(--uc-color, ${colors.primary});
+    border: 1px solid ${(props) => props.theme.color};
+    border: 1px solid var(--uc-color, ${colors.primary});
   }
 
   &.disabled {
-    background-color: ${colors.disabledBg};
     border-color: ${colors.border};
-    opacity: 0.4;
   }
 `;
 
-/** Checkbox, Radiobox带checked状态的 */
-const Checkbox = (props: Props): React.ReactElement => {
-  const {
-    color,
-    size = 18,
-    borderRadius = '2px',
-    onChange,
-    defaultChecked,
-    checked,
-    disabled,
-    children,
-  } = props;
-
-  const _color = useThemeColor();
+/** Checkbox/Radiobox带checked状态的 */
+const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { size = 18, onChange, defaultChecked, checked, disabled, children, ...rest } = props;
 
   const [_checked, _setChecked] = useState(() => {
     return typeof checked !== 'undefined'
@@ -88,6 +76,7 @@ const Checkbox = (props: Props): React.ReactElement => {
   });
   return (
     <StyledCheckboxWrapper
+      ref={ref}
       className={clsx('uc-checkbox', { disabled: disabled })}
       onClick={() => {
         if (disabled) return;
@@ -99,16 +88,17 @@ const Checkbox = (props: Props): React.ReactElement => {
     >
       <StyledCheckbox
         className={clsx({ checked: _checked, disabled: disabled })}
-        borderRadius={borderRadius}
         size={size}
         disabled={disabled}
-        color={color || _color}
+        {...rest}
       >
         <IconTick size={size * 0.6} color="#fff" />
       </StyledCheckbox>
       {children ? <span>{children}</span> : null}
     </StyledCheckboxWrapper>
   );
-};
+});
+
+Checkbox.displayName = 'UC-Checkbox';
 
 export default Checkbox;
