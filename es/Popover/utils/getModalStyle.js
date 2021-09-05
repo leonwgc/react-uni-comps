@@ -20,12 +20,18 @@ export var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, s
 
   var modalPos = modalEl.getBoundingClientRect();
   var anchorPos = anchorEl.getBoundingClientRect();
-  var parentPos = parentEl.getBoundingClientRect();
-  var scrollTop = scrollContainer.scrollTop;
+  var parentPos = parentEl.getBoundingClientRect(); // const { scrollTop } = scrollContainer;
+
   var isParentBody = getNodeName(parentEl) === 'body';
-  var isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
-  var anchorOffsetTop = getOffsetTop(anchorEl);
-  var scrollY = isAnchorFixed ? anchorPos.top : isParentBody ? anchorPos.top + scrollTop : anchorOffsetTop;
+  var isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed'; // const anchorOffsetTop = getOffsetTop(anchorEl);
+  // backup
+  // const scrollY = isAnchorFixed
+  //   ? anchorPos.top
+  //   : isParentBody
+  //   ? anchorPos.top + scrollTop
+  //   : anchorOffsetTop;
+
+  var anchorTop = isAnchorFixed ? anchorPos.top : isParentBody ? anchorPos.top + window.pageYOffset : getOffsetTop(anchorEl);
   /* The distance between the top of the offsetParent and the top of the anchor.
    *
    * We don't simply use anchorEl.offsetTop but the below code instead due to the following reason:
@@ -33,23 +39,21 @@ export var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, s
    * its real offsetParent.
    */
 
-  var top = scrollY;
-  var bottom = anchorPos.height + scrollY;
-  var left = anchorPos.left - parentPos.left;
+  var top = anchorTop;
+  var bottom = anchorPos.height + anchorTop;
+  var left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
   var width = anchorPos.width,
       height = anchorPos.height;
   var transform = {
     'top': {
       // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left // fix body margin top bottom  not centered
-
+      left: left + width / 2 - modalPos.width / 2
     },
     'bottom': {
       // modal放到内容的下面
       top: bottom + MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left //fix
-
+      left: left + width / 2 - modalPos.width / 2
     },
     'left': {
       // modal放到内容的左边

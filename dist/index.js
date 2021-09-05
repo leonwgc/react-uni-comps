@@ -2176,12 +2176,18 @@ var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollCo
   var customOffset = arguments.length > 5 ? arguments[5] : undefined;
   var modalPos = modalEl.getBoundingClientRect();
   var anchorPos = anchorEl.getBoundingClientRect();
-  var parentPos = parentEl.getBoundingClientRect();
-  var scrollTop = scrollContainer.scrollTop;
+  var parentPos = parentEl.getBoundingClientRect(); // const { scrollTop } = scrollContainer;
+
   var isParentBody = getNodeName(parentEl) === 'body';
-  var isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
-  var anchorOffsetTop = getOffsetTop(anchorEl);
-  var scrollY = isAnchorFixed ? anchorPos.top : isParentBody ? anchorPos.top + scrollTop : anchorOffsetTop;
+  var isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed'; // const anchorOffsetTop = getOffsetTop(anchorEl);
+  // backup
+  // const scrollY = isAnchorFixed
+  //   ? anchorPos.top
+  //   : isParentBody
+  //   ? anchorPos.top + scrollTop
+  //   : anchorOffsetTop;
+
+  var anchorTop = isAnchorFixed ? anchorPos.top : isParentBody ? anchorPos.top + window.pageYOffset : getOffsetTop(anchorEl);
   /* The distance between the top of the offsetParent and the top of the anchor.
    *
    * We don't simply use anchorEl.offsetTop but the below code instead due to the following reason:
@@ -2189,23 +2195,21 @@ var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollCo
    * its real offsetParent.
    */
 
-  var top = scrollY;
-  var bottom = anchorPos.height + scrollY;
-  var left = anchorPos.left - parentPos.left;
+  var top = anchorTop;
+  var bottom = anchorPos.height + anchorTop;
+  var left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
   var width = anchorPos.width,
       height = anchorPos.height;
   var transform = {
     'top': {
       // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left // fix body margin top bottom  not centered
-
+      left: left + width / 2 - modalPos.width / 2
     },
     'bottom': {
       // modal放到内容的下面
       top: bottom + MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left //fix
-
+      left: left + width / 2 - modalPos.width / 2
     },
     'left': {
       // modal放到内容的左边
@@ -2324,7 +2328,7 @@ var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onCl
 
 var _templateObject$i;
 
-var StyledPopover = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -2369,7 +2373,7 @@ var Popover = function Popover(props) {
   }, [offset]);
   React.useEffect(function () {
     var anchorEl = childrenRef.current;
-    var scrollContainer = getScrollContainer(anchorEl);
+    var scrollContainer = getScrollContainer(anchorEl); // todo: support cust scroll container , by now it's window
 
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
@@ -2401,9 +2405,8 @@ var Popover = function Popover(props) {
     ref: childrenRef
   }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, mask ? /*#__PURE__*/React__default['default'].createElement(Mask, {
     onClick: onClose
-  }) : null, /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
-    ref: popoverRef
-  }, /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
+  }) : null, /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
+    ref: popoverRef,
     className: clsx__default['default'](className, 'uc-popover', {
       mask: mask
     }),
@@ -2417,7 +2420,7 @@ var Popover = function Popover(props) {
     onClick: onClose
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popover-content')
-  }, content)))), document.body) : null);
+  }, content))), document.body) : null);
 };
 
 var _templateObject$j;
@@ -3172,7 +3175,7 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$o = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
 
 var _templateObject$p;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n          color: var(--uc-color, ", ");\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 280px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n          color: var(--uc-color, ", ");\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
   return props.theme.color || primary;
 }, primary, border, border);
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */

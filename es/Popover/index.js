@@ -44,12 +44,11 @@ import ReactDOM from 'react-dom';
 import IconCross from '../IconCross';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
-import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN } from './utils/getModalStyle'; // port from https://github.com/bytedance/guide and refactor
 
-var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 16px;\n    right: 16px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
  *
@@ -92,7 +91,7 @@ var Popover = function Popover(props) {
   }, [offset]);
   useEffect(function () {
     var anchorEl = childrenRef.current;
-    var scrollContainer = getScrollContainer(anchorEl);
+    var scrollContainer = getScrollContainer(anchorEl); // todo: support cust scroll container , by now it's window
 
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
       var modalEl = popoverRef.current;
@@ -124,9 +123,8 @@ var Popover = function Popover(props) {
     ref: childrenRef
   }), visible ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement(React.Fragment, null, mask ? /*#__PURE__*/React.createElement(Mask, {
     onClick: onClose
-  }) : null, /*#__PURE__*/React.createElement(TransitionElement, {
-    ref: popoverRef
-  }, /*#__PURE__*/React.createElement(StyledPopover, __assign({
+  }) : null, /*#__PURE__*/React.createElement(StyledPopover, __assign({
+    ref: popoverRef,
     className: clsx(className, 'uc-popover', {
       mask: mask
     }),
@@ -140,7 +138,7 @@ var Popover = function Popover(props) {
     onClick: onClose
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popover-content')
-  }, content)))), document.body) : null);
+  }, content))), document.body) : null);
 };
 
 export default Popover;
