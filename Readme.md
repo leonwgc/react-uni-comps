@@ -117,7 +117,7 @@ import Button from 'react-uni-comps/es/Button';
 
 ### 主题色设置
 
-1. 使用 ThemeProvider 设置
+使用 ThemeProvider 设置
 
 ```js
 <ThemeProvider color="#409eff">...</ThemeProvider>

@@ -11,7 +11,6 @@ var styled = require('styled-components');
 var clsx = require('clsx');
 var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
-var Color = require('color');
 var copy = require('copy-text-to-clipboard');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -23,7 +22,6 @@ var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffec
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
-var Color__default = /*#__PURE__*/_interopDefaultLegacy(Color);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 
 function ownKeys(object, enumerableOnly) {
@@ -462,16 +460,14 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
       rest = _objectWithoutProperties(props, _excluded);
 
-  var lastBodyFlow = React.useRef('');
   React.useEffect(function () {
-    lastBodyFlow.current = document.body.style.overflow;
     return function () {
-      document.body.style.overflow = lastBodyFlow.current;
+      document.body.style.overflow = '';
     };
   }, []);
   React.useEffect(function () {
     if (hideOverflow) {
-      document.body.style.overflow = hideOverflow ? 'hidden' : lastBodyFlow.current;
+      document.body.style.overflow = hideOverflow ? 'hidden' : '';
     }
   }, [hideOverflow]);
   return /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({
@@ -891,39 +887,11 @@ var LazyLoadImage = function LazyLoadImage(_ref) {
   }, otherProps));
 };
 
-var border = '#eee';
-var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
-
-var disabledBg = '#f5f5f5';
-var primary = '#004bcc';
-var danger = '#ff4d4f';
-var activeBg = 'rgba(0, 0, 0, 0.1)';
-
-/**
- *  获得主题色,主题色优先,没有配置，则取colors定义的主题色
- *
- * @export
- * @param {string} fallbackColor
- * @return {*}  {string}
- */
-
-function useThemeColor() {
-  var fallbackColor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : primary;
-  var theme = React.useContext(styled.ThemeContext);
-  var color = fallbackColor;
-
-  if (typeof (theme === null || theme === void 0 ? void 0 : theme.color) === 'string') {
-    color = theme.color;
-  }
-
-  return color;
-}
-
 var _templateObject$3;
 var StyledLoading = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  font-size: ", "px;\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  color: ", ";\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])), function (props) {
   return props.size;
 }, function (props) {
-  return props.color;
+  return props.color || props.theme.color;
 });
 /** Spinner 加载中 */
 
@@ -931,13 +899,10 @@ var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, 
   var _ref$size = _ref.size,
       size = _ref$size === void 0 ? 16 : _ref$size,
       color = _ref.color;
-
-  var _color = useThemeColor();
-
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
     ref: ref,
     size: size,
-    color: color || _color
+    color: color
   });
 });
 Spinner.displayName = 'UC-Spinner';
@@ -1091,19 +1056,25 @@ var WaitLoading = function WaitLoading(_ref) {
   return show ? React__default['default'].Children.only(children) : null;
 };
 
+var border = '#eee';
+var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
+var primary = '#004bcc';
+var danger = '#ff4d4f';
+var activeBg = 'rgba(0, 0, 0, 0.1)';
+
 var _excluded$6 = ["children", "underlineWidth", "defaultIndex", "underline", "border", "onIndexChange", "className"];
 
 var _templateObject$6, _templateObject2, _templateObject3;
 var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  &.no-border {\n    border-bottom: none;\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n  /* transition: all 0.3s ease-in-out; */\n\n  &.active {\n    color: ", ";\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n      }\n    }\n  }\n"])), function (props) {
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    color: ", ";\n    color: var(--uc-color, ", ");\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n        background-color: var(--uc-color, ", ");\n      }\n    }\n  }\n"])), function (props) {
   return props.theme.color;
-}, disabledText, function (props) {
+}, primary, disabledText, function (props) {
   return (props.activeIndex - props.count) * 100 + '%';
 }, function (props) {
   return props.underlineWidth;
 }, function (props) {
   return props.theme.color;
-});
+}, primary);
 var StyledTabContentWrap = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  overflow: hidden;\n"])));
 /**
  *  选项卡项，放在Tabs里面
@@ -1122,18 +1093,6 @@ var isValidtTabElement = function isValidtTabElement(el) {
 };
 /**
  * 选项卡切换
- *
- * @param {*} {
- *   children,
- *   color = colors.primary,
- *   underlineWidth = '100%',
- *   defaultIndex = 0,
- *   underline = true,
- *   onIndexChange,
- *   className,
- *   ...otherProps
- * }
- * @return {*}
  */
 
 
@@ -1157,12 +1116,7 @@ var Tabs = function Tabs(_ref2) {
       setActiveIndex = _useState2[1];
 
   var count = React__default['default'].Children.count(children);
-  var color = useThemeColor();
-  return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
-    theme: {
-      color: color
-    }
-  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({}, otherProps, {
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, otherProps, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement(StyledTabHeaderWrap, {
     className: clsx__default['default']('uc-tabs-header-wrap', {
@@ -1215,7 +1169,7 @@ var Tabs = function Tabs(_ref2) {
     } else {
       throw new Error('Tabs can only contain Tab element');
     }
-  }))));
+  })));
 };
 /** Tab直接子元素 */
 
@@ -1421,42 +1375,34 @@ var IconTick = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 IconTick.displayName = 'UC-IconTick';
 
+var _excluded$b = ["size", "onChange", "defaultChecked", "checked", "disabled", "children"];
+
 var _templateObject$b, _templateObject2$2;
-var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    color: ", ";\n    cursor: not-allowed;\n  }\n"])), disabledText);
-var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n    opacity: 0.4;\n  }\n"])), function (_ref) {
+var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
+var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
   var size = _ref2.size;
   return size;
-}, border, function (_ref3) {
-  var borderRadius = _ref3.borderRadius;
-  return borderRadius;
-}, function (_ref4) {
-  var color = _ref4.color;
-  return color;
-}, function (_ref5) {
-  var color = _ref5.color;
-  return color;
-}, function (_ref6) {
-  var color = _ref6.color;
-  return color;
-}, disabledBg, border);
-/** Checkbox, Radiobox带checked状态的 */
+}, border, function (props) {
+  return props.theme.color;
+}, primary, function (props) {
+  return props.theme.color;
+}, primary, function (props) {
+  return props.theme.color;
+}, primary, border);
+/** Checkbox/Radiobox带checked状态的 */
 
-var Checkbox = function Checkbox(props) {
-  var color = props.color,
-      _props$size = props.size,
+var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$size = props.size,
       size = _props$size === void 0 ? 18 : _props$size,
-      _props$borderRadius = props.borderRadius,
-      borderRadius = _props$borderRadius === void 0 ? '2px' : _props$borderRadius,
       onChange = props.onChange,
       defaultChecked = props.defaultChecked,
       checked = props.checked,
       disabled = props.disabled,
-      children = props.children;
-
-  var _color = useThemeColor();
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$b);
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -1466,6 +1412,7 @@ var Checkbox = function Checkbox(props) {
       _setChecked = _useState2[1];
 
   return /*#__PURE__*/React__default['default'].createElement(StyledCheckboxWrapper, {
+    ref: ref,
     className: clsx__default['default']('uc-checkbox', {
       disabled: disabled
     }),
@@ -1478,46 +1425,42 @@ var Checkbox = function Checkbox(props) {
 
       _setChecked(!_checked);
     }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledCheckbox, {
+  }, /*#__PURE__*/React__default['default'].createElement(StyledCheckbox, _extends({
     className: clsx__default['default']({
       checked: _checked,
       disabled: disabled
     }),
-    borderRadius: borderRadius,
     size: size,
-    disabled: disabled,
-    color: color || _color
-  }, /*#__PURE__*/React__default['default'].createElement(IconTick, {
+    disabled: disabled
+  }, rest), /*#__PURE__*/React__default['default'].createElement(IconTick, {
     size: size * 0.6,
     color: "#fff"
   })), children ? /*#__PURE__*/React__default['default'].createElement("span", null, children) : null);
-};
+});
+Checkbox.displayName = 'UC-Checkbox';
 
-var _excluded$b = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
+var _excluded$c = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
 var _templateObject$c;
-var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, function (_ref) {
+var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n\n    &.disabled,\n    &.disabled:hover,\n    &.disabled:active {\n      opacity: 0.6;\n      cursor: not-allowed;\n      border-color: ", ";\n      color: #999;\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: var(--uc-color, ", ");\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      border-color: ", ";\n      color: ", ";\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
   var color = _ref2.color;
   return color;
-}, activeBg, function (_ref3) {
+}, primary, primary, activeBg, danger, danger, border, function (_ref3) {
   var color = _ref3.color;
   return color;
 }, function (_ref4) {
   var color = _ref4.color;
   return color;
-}, isMobile() ? '&:active' : '&:hover', function (_ref5) {
+}, primary, primary, isMobile() ? '&:active' : '&:hover', function (_ref5) {
   var color = _ref5.color;
-  return Color__default['default'](color).lighten(0.16).hex();
+  return color;
 }, function (_ref6) {
   var color = _ref6.color;
   return color;
-}, function (_ref7) {
-  var color = _ref7.color;
-  return color;
-}, disabledBg, border, disabledText, border, border);
+}, primary, primary, danger, danger, danger, border, border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1530,15 +1473,12 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       htmlType = props.htmlType,
       circle = props.circle,
       dashed = props.dashed,
-      danger$1 = props.danger,
+      danger = props.danger,
       ghost = props.ghost,
-      rest = _objectWithoutProperties(props, _excluded$b);
+      rest = _objectWithoutProperties(props, _excluded$c);
 
-  var color = useThemeColor();
-  var themeColor = disabled ? disabledText : danger$1 ? danger : color;
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({
     ref: ref,
-    color: themeColor,
     disabled: disabled,
     type: htmlType,
     className: clsx__default['default']('uc-btn', type, {
@@ -1547,35 +1487,30 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       circle: circle,
       dashed: dashed,
       ghost: ghost,
+      danger: danger,
       mobile: isMobile()
     }, className)
   }, rest), children);
 });
 Button.displayName = 'UC-Button';
 
-var _excluded$c = ["disabled", "checked", "defaultChecked", "className", "style", "onChange"];
+var _excluded$d = ["disabled", "checked", "defaultChecked", "className", "onChange"];
 
 var _templateObject$d;
-var StyledSwitch = styled__default['default'].button(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    border-color: ", ";\n\n    &::after {\n      left: calc(100% - 18px - 2px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.4;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (_ref) {
-  var color = _ref.color;
-  return color;
-}, function (_ref2) {
-  var color = _ref2.color;
-  return color;
-});
+var StyledSwitch = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: ", ";\n    border-color: var(--uc-color, ", ");\n\n    &::after {\n      left: calc(100% - 20px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.6;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (props) {
+  return props.theme.color;
+}, primary, function (props) {
+  return props.theme.color;
+}, primary);
 /** 开关 */
 
-var Switch = function Switch(props) {
+var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var disabled = props.disabled,
       checked = props.checked,
       defaultChecked = props.defaultChecked,
       className = props.className,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$c);
-
-  var color = useThemeColor();
+      rest = _objectWithoutProperties(props, _excluded$d);
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -1585,22 +1520,21 @@ var Switch = function Switch(props) {
       _setChecked = _useState2[1];
 
   return /*#__PURE__*/React__default['default'].createElement(StyledSwitch, _extends({
-    color: color,
+    ref: ref,
     onClick: function onClick() {
-      if (typeof onChange === 'function') {
-        onChange(!_checked);
-      }
+      if (!disabled) {
+        _setChecked(!_checked);
 
-      _setChecked(!_checked);
+        onChange === null || onChange === void 0 ? void 0 : onChange(!_checked);
+      }
     },
-    style: _objectSpread2({}, style),
-    disabled: disabled,
     className: clsx__default['default']('uc-switch', className, {
       disabled: disabled,
       checked: _checked
     })
   }, rest));
-};
+});
+Switch.displayName = 'UC-Switch';
 
 /**
  * 错误边界
@@ -1656,7 +1590,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   return ErrorBoundary;
 }(React__default['default'].Component);
 
-var _excluded$d = ["type", "textPosition", "className", "dashed", "color", "children"];
+var _excluded$e = ["type", "textPosition", "className", "dashed", "color", "children"];
 
 var _templateObject$e;
 
@@ -1682,7 +1616,7 @@ var Divider = function Divider(props) {
       _props$color = props.color,
       color = _props$color === void 0 ? 'rgba(0, 0, 0, 0.06)' : _props$color,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$e);
 
   var hasText = !!children;
   return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({
@@ -1696,7 +1630,7 @@ var Divider = function Divider(props) {
   }, children) : null);
 };
 
-var _excluded$e = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
+var _excluded$f = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
 
 var _templateObject$f;
 var StyledFileInputTrigger = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
@@ -1712,7 +1646,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       capture = props.capture,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$e);
+      rest = _objectWithoutProperties(props, _excluded$f);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({
     onClick: function onClick() {
@@ -1743,7 +1677,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
   }), children);
 };
 
-var _excluded$f = ["onVisible", "onInVisible"];
+var _excluded$g = ["onVisible", "onInVisible"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1752,7 +1686,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
-      rest = _objectWithoutProperties(props, _excluded$f);
+      rest = _objectWithoutProperties(props, _excluded$g);
 
   var vv = React.useRef(onVisible);
   var vi = React.useRef(onInVisible);
@@ -1785,13 +1719,11 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 Waypoint.displayName = 'UC-Waypoint';
 
 var _templateObject$g;
-var StyledContainer = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  .uc-indexbar-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexbar-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n\n      &.active {\n        color: ", ";\n      }\n    }\n  }\n\n  .bar-title {\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      color: ", ";\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    margin: 0;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), function (_ref) {
-  var color = _ref.color;
-  return color;
-}, function (_ref2) {
-  var color = _ref2.color;
-  return color;
-});
+var StyledContainer = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  .uc-indexlist-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexlist-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n      user-select: none;\n\n      &.active {\n        color: ", ";\n        color: var(--uc-color, ", ");\n      }\n    }\n  }\n\n  .bar-title {\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      color: ", ";\n      color: var(--uc-color, ", ");\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    margin: 0;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), function (props) {
+  return props.theme.color;
+}, primary, function (props) {
+  return props.theme.color;
+}, primary);
 
 var setActiveIndex = function setActiveIndex(containerRef, setIndex) {
   var els = _toConsumableArray(containerRef.current.querySelectorAll('.wp'));
@@ -1864,18 +1796,16 @@ var IndexList = function IndexList(props) {
       index = _useState2[0],
       setIndex = _useState2[1];
 
-  var color = useThemeColor();
   return /*#__PURE__*/React__default['default'].createElement(StyledContainer, {
-    className: clsx__default['default']('uc-indexbar'),
-    color: color,
+    className: clsx__default['default']('uc-indexlist'),
     ref: ref
   }, /*#__PURE__*/React__default['default'].createElement("dl", null, data.map(function (item, idx) {
     return renderItem(item, idx, index, setIndex, ref, onChange);
   })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-indexbar-side"
+    className: "uc-indexlist-side"
   }, data.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('uc-indexbar-side-item', {
+      className: clsx__default['default']('uc-indexlist-side-item', {
         active: idx === index
       }),
       key: idx,
@@ -2020,7 +1950,7 @@ var ScrollTop = function ScrollTop(props) {
 
 ScrollTop.displayName = 'UC-ScrollTop';
 
-var _excluded$g = ["size", "color"];
+var _excluded$h = ["size", "color"];
 
 var _templateObject$h;
 var StyledCross = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
@@ -2037,7 +1967,7 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       size = _props$size === void 0 ? 16 : _props$size,
       _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
-      rest = _objectWithoutProperties(props, _excluded$g);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledCross, _extends({
     className: clsx__default['default']('uc-icon-cross'),
@@ -2390,7 +2320,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$h = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
+var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
 
 var _templateObject$i;
 
@@ -2417,7 +2347,7 @@ var Popover = function Popover(props) {
       mask = props.mask,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
-      rest = _objectWithoutProperties(props, _excluded$h);
+      rest = _objectWithoutProperties(props, _excluded$i);
 
   var childrenRef = React.useRef();
   var popoverRef = React.useRef(null);
@@ -2558,6 +2488,35 @@ var Tooltip = function Tooltip(props) {
 };
 
 Tooltip.displayName = 'UC-Tooltip';
+
+/**
+ * 主题色设置
+ *
+ * @export
+ * @param {{
+ *   color: string;
+ *   children: ReactElement;
+ * }} {
+ *   color = colors.primary,
+ *   children,
+ * }
+ * @return {*}  {React.ReactElement}
+ */
+var ThemeProvider = function ThemeProvider(props) {
+  var _props$color = props.color,
+      color = _props$color === void 0 ? primary : _props$color,
+      children = props.children;
+  React.useEffect(function () {
+    document.documentElement.style.setProperty('--uc-color', color);
+  }, [color]);
+  return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
+    theme: {
+      color: color
+    }
+  }, children);
+};
+
+ThemeProvider.displayName = 'UC-ThemeProvider';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -2740,7 +2699,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
-var _excluded$i = ["lines", "children"];
+var _excluded$j = ["lines", "children"];
 
 var _templateObject$k, _templateObject2$3;
 var StyledSpanMultiLines = styled__default['default'].span(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
@@ -2753,7 +2712,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var _props$lines = props.lines,
       lines = _props$lines === void 0 ? 1 : _props$lines,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$i);
+      rest = _objectWithoutProperties(props, _excluded$j);
 
   if (typeof children !== 'string' || typeof lines !== 'number') {
     return children;
@@ -2812,7 +2771,7 @@ var Toast = function Toast(props) {
 
 
 Toast.show = function (content) {
-  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
   var modal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   if (!content) return;
   var container = getContainer();
@@ -2832,7 +2791,7 @@ Toast.show = function (content) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$j = ["color", "direction", "size"];
+var _excluded$k = ["color", "direction", "size"];
 
 var _templateObject$m;
 var StyledArrow = styled__default['default'].div(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
@@ -2851,7 +2810,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       _props$size = props.size,
       size = _props$size === void 0 ? 16 : _props$size,
-      rest = _objectWithoutProperties(props, _excluded$j);
+      rest = _objectWithoutProperties(props, _excluded$k);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({
     ref: ref,
@@ -2870,7 +2829,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 IconArrow.displayName = 'UC-IconArrow';
 
-var _excluded$k = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
+var _excluded$l = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
 
 var _templateObject$n;
 var StyledNoticeBar = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
@@ -2888,7 +2847,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$k);
+      rest = _objectWithoutProperties(props, _excluded$l);
 
   var wrapRef = React.useRef();
   var contentRef = React.useRef();
@@ -2978,7 +2937,7 @@ function useValueRef(value) {
   return ref;
 }
 
-var _excluded$l = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
+var _excluded$m = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
 /**  port from zarm Affix & refactor  */
 
 /** 将页面元素钉在可视范围*/
@@ -2988,7 +2947,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       offsetBottom = props.offsetBottom,
       target = props.target,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$l);
+      rest = _objectWithoutProperties(props, _excluded$m);
 
   var innerRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -3134,7 +3093,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
-var _excluded$m = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
+var _excluded$n = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
 
 var _templateObject$o;
 var StyledActionSheet = styled__default['default'](Popup)(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
@@ -3152,7 +3111,7 @@ var ActionSheet = function ActionSheet(props) {
       _onMaskClick = props.onMaskClick,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$m);
+      rest = _objectWithoutProperties(props, _excluded$n);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({
     className: clsx__default['default']('uc-actionsheet'),
@@ -3210,12 +3169,12 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$n = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
+var _excluded$o = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
 
 var _templateObject$p;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
-  return props.theme.color;
-}, border, border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 320px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n          color: var(--uc-color, ", ");\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
+  return props.theme.color || primary;
+}, primary, border, border);
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 
 var AlertDialog = function AlertDialog(props) {
@@ -3236,7 +3195,7 @@ var AlertDialog = function AlertDialog(props) {
       _props$closable = props.closable,
       closable = _props$closable === void 0 ? false : _props$closable,
       onClose = props.onClose,
-      rest = _objectWithoutProperties(props, _excluded$n);
+      rest = _objectWithoutProperties(props, _excluded$o);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({
     className: clsx__default['default']('uc-alert-dialog', {
@@ -3358,12 +3317,6 @@ AlertDialog.show = function (title, content) {
   }), container);
 };
 
-Object.defineProperty(exports, 'ThemeProvider', {
-  enumerable: true,
-  get: function () {
-    return styled.ThemeProvider;
-  }
-});
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -3396,6 +3349,7 @@ exports.Spinner = Spinner;
 exports.Switch = Switch;
 exports.Tabs = Tabs;
 exports.Text = Text;
+exports.ThemeProvider = ThemeProvider;
 exports.Toast = Toast;
 exports.Tooltip = Tooltip;
 exports.TransitionElement = TransitionElement;

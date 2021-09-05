@@ -10,55 +10,74 @@ var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked
   return cooked;
 };
 
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import useThemeColor from './hooks/useThemeColor';
 import IconTick from './IconTick';
 import * as colors from './colors';
-var StyledCheckboxWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    color: ", ";\n    cursor: not-allowed;\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    color: ", ";\n    cursor: not-allowed;\n  }\n"])), colors.disabledText);
-var StyledCheckbox = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n    opacity: 0.4;\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: ", ";\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n  }\n\n  &.checked {\n    background-color: ", ";\n    border: 1px solid ", ";\n  }\n\n  &.disabled {\n    background-color: ", ";\n    border-color: ", ";\n    opacity: 0.4;\n  }\n"])), function (_a) {
+var StyledCheckboxWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
+var StyledCheckbox = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_a) {
   var size = _a.size;
   return size;
 }, function (_a) {
   var size = _a.size;
   return size;
-}, colors.border, function (_a) {
-  var borderRadius = _a.borderRadius;
-  return borderRadius;
-}, function (_a) {
-  var color = _a.color;
-  return color;
-}, function (_a) {
-  var color = _a.color;
-  return color;
-}, function (_a) {
-  var color = _a.color;
-  return color;
-}, colors.disabledBg, colors.border);
-/** Checkbox, Radiobox带checked状态的 */
+}, colors.border, function (props) {
+  return props.theme.color;
+}, colors.primary, function (props) {
+  return props.theme.color;
+}, colors.primary, function (props) {
+  return props.theme.color;
+}, colors.primary, colors.border);
+/** Checkbox/Radiobox带checked状态的 */
 
-var Checkbox = function Checkbox(props) {
-  var color = props.color,
-      _a = props.size,
+var Checkbox = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var _a = props.size,
       size = _a === void 0 ? 18 : _a,
-      _b = props.borderRadius,
-      borderRadius = _b === void 0 ? '2px' : _b,
       onChange = props.onChange,
       defaultChecked = props.defaultChecked,
       checked = props.checked,
       disabled = props.disabled,
-      children = props.children;
+      children = props.children,
+      rest = __rest(props, ["size", "onChange", "defaultChecked", "checked", "disabled", "children"]);
 
-  var _color = useThemeColor();
-
-  var _c = useState(function () {
+  var _b = useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
   }),
-      _checked = _c[0],
-      _setChecked = _c[1];
+      _checked = _b[0],
+      _setChecked = _b[1];
 
   return /*#__PURE__*/React.createElement(StyledCheckboxWrapper, {
+    ref: ref,
     className: clsx('uc-checkbox', {
       disabled: disabled
     }),
@@ -71,20 +90,18 @@ var Checkbox = function Checkbox(props) {
 
       _setChecked(!_checked);
     }
-  }, /*#__PURE__*/React.createElement(StyledCheckbox, {
+  }, /*#__PURE__*/React.createElement(StyledCheckbox, __assign({
     className: clsx({
       checked: _checked,
       disabled: disabled
     }),
-    borderRadius: borderRadius,
     size: size,
-    disabled: disabled,
-    color: color || _color
-  }, /*#__PURE__*/React.createElement(IconTick, {
+    disabled: disabled
+  }, rest), /*#__PURE__*/React.createElement(IconTick, {
     size: size * 0.6,
     color: "#fff"
   })), children ? /*#__PURE__*/React.createElement("span", null, children) : null);
-};
-
+});
+Checkbox.displayName = 'UC-Checkbox';
 export default Checkbox;
 var templateObject_1, templateObject_2;

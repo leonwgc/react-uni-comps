@@ -78,7 +78,7 @@ var Toast = function Toast(props) {
 
 Toast.show = function (content, duration, modal) {
   if (duration === void 0) {
-    duration = 3000;
+    duration = 2000;
   }
 
   if (modal === void 0) {

@@ -44,30 +44,25 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
-import useThemeColor from './hooks/useThemeColor';
-import Color from 'color';
-var StyledButton = styled.button(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"], ["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    color: #fff;\n\n    ", " {\n      background-color: ", ";\n    }\n\n    &.ghost,\n    &.ghost:hover {\n      background-color: transparent;\n      border-color: ", ";\n      color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover {\n    background-color: ", ";\n    border-color: ", ";\n    cursor: not-allowed;\n    color: ", ";\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), colors.border, function (_a) {
+var StyledButton = styled.button(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n\n    &.disabled,\n    &.disabled:hover,\n    &.disabled:active {\n      opacity: 0.6;\n      cursor: not-allowed;\n      border-color: ", ";\n      color: #999;\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: var(--uc-color, ", ");\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      border-color: ", ";\n      color: ", ";\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"], ["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n\n    &.disabled,\n    &.disabled:hover,\n    &.disabled:active {\n      opacity: 0.6;\n      cursor: not-allowed;\n      border-color: ", ";\n      color: #999;\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: var(--uc-color, ", ");\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      border-color: ", ";\n      color: ", ";\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), colors.border, isMobile() ? '&:active' : '&:hover', function (_a) {
   var color = _a.color;
   return color;
 }, function (_a) {
   var color = _a.color;
   return color;
-}, colors.activeBg, function (_a) {
+}, colors.primary, colors.primary, colors.activeBg, colors.danger, colors.danger, colors.border, function (_a) {
   var color = _a.color;
   return color;
 }, function (_a) {
   var color = _a.color;
   return color;
-}, isMobile() ? '&:active' : '&:hover', function (_a) {
-  var color = _a.color;
-  return Color(color).lighten(0.16).hex();
-}, function (_a) {
+}, colors.primary, colors.primary, isMobile() ? '&:active' : '&:hover', function (_a) {
   var color = _a.color;
   return color;
 }, function (_a) {
   var color = _a.color;
   return color;
-}, colors.disabledBg, colors.border, colors.disabledText, colors.border, colors.border);
+}, colors.primary, colors.primary, colors.danger, colors.danger, colors.danger, colors.border, colors.border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -84,11 +79,8 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ghost = props.ghost,
       rest = __rest(props, ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"]);
 
-  var color = useThemeColor();
-  var themeColor = disabled ? colors.disabledText : danger ? colors.danger : color;
   return /*#__PURE__*/React.createElement(StyledButton, __assign({
     ref: ref,
-    color: themeColor,
     disabled: disabled,
     type: htmlType,
     className: clsx('uc-btn', type, {
@@ -97,6 +89,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       circle: circle,
       dashed: dashed,
       ghost: ghost,
+      danger: danger,
       mobile: isMobile()
     }, className)
   }, rest), children);

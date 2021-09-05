@@ -1,5 +1,6 @@
-import React, { HTMLAttributes } from 'react';
-declare type Props = {
+import React from 'react';
+/** 开关 */
+declare const Switch: React.ForwardRefExoticComponent<{
     disabled?: boolean;
     checked?: boolean;
     defaultChecked?: boolean;
@@ -7,7 +8,5 @@ declare type Props = {
     style?: React.CSSProperties;
     children?: React.ReactNode;
     className?: string;
-} & HTMLAttributes<HTMLElement>;
-/** 开关 */
-declare const Switch: (props: Props) => React.ReactElement;
+} & React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLDivElement>>;
 export default Switch;
