@@ -120,7 +120,7 @@ import Button from 'react-uni-comps/es/Button';
 1. 使用 ThemeProvider 设置
 
 ```js
-<ThemeProvider color="rgb(19, 194, 194)">...</ThemeProvider>
+<ThemeProvider color="#409eff">...</ThemeProvider>
 ```
 
 持续更新其他组件...

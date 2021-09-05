@@ -69,7 +69,7 @@ export default function App() {
         </Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
       </Tabs>
-      <Tabs underlineWidth="40px" themeColor="#004bcc" style={{ marginTop: 30 }}>
+      <Tabs underlineWidth="40px" style={{ marginTop: 30 }}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
@@ -101,13 +101,7 @@ export default function App() {
         </Tabs.Tab>
       </Tabs>
 
-      <Tabs
-        underline={false}
-        style={{ marginTop: 30 }}
-        themeColor="#004bcc"
-        defaultIndex={2}
-        className="my-tab"
-      >
+      <Tabs underline={false} style={{ marginTop: 30 }} defaultIndex={2} className="my-tab">
         <Tabs.Tab title="title1">
           <StyledContent>content</StyledContent>
         </Tabs.Tab>
@@ -117,7 +111,7 @@ export default function App() {
         <Tabs.Tab title="title3">
           <StyledContent>
             <AnimationElement name="fadeInRight" duration=".24s">
-              <Spinner color="#004bcc" size={48}></Spinner>
+              <Spinner size={48}></Spinner>
             </AnimationElement>
           </StyledContent>
         </Tabs.Tab>

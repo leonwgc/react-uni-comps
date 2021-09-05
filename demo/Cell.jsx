@@ -59,9 +59,11 @@ export default function App() {
         content={<Switch />}
         lineColor="#00bd8d"
       ></Cell>
-      <Button type="primary" block style={{ marginTop: 32, height: 44 }}>
-        submit
-      </Button>
+      <div style={{ padding: 12 }}>
+        <Button type="primary" block style={{ height: 44 }}>
+          submit
+        </Button>
+      </div>
     </div>
   );
 }

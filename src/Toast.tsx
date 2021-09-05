@@ -54,7 +54,7 @@ const Toast = (props: Props): React.ReactElement => {
 };
 
 /** 黑背景提示,静态调用 */
-Toast.show = (content: string, duration = 3000, modal = true) => {
+Toast.show = (content: string, duration = 2000, modal = true) => {
   if (!content) return;
   const container = getContainer();
 

@@ -55,7 +55,8 @@ const StyledAlertDialog = styled(Popup)`
         padding: 0;
         overflow: hidden;
         .confirm {
-          color: ${(props) => props.theme.color};
+          color: ${(props) => props.theme.color || colors.primary};
+          color: var(--uc-color, ${colors.primary});
         }
 
         .m-btn {

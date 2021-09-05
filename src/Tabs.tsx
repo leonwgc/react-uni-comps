@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import * as colors from './colors';
-import useThemeColor from './hooks/useThemeColor';
 import clsx from 'clsx';
 
 type TabsProp = {
@@ -59,10 +58,10 @@ const StyledTabHeadItem = styled.div<{
   font-size: 14px;
   min-width: 56px;
   user-select: none;
-  /* transition: all 0.3s ease-in-out; */
 
   &.active {
     color: ${(props) => props.theme.color};
+    color: var(--uc-color, ${colors.primary});
     font-weight: 500;
   }
   &.disabled {
@@ -84,6 +83,7 @@ const StyledTabHeadItem = styled.div<{
         width: ${(props) => props.underlineWidth};
         height: 2px;
         background-color: ${(props) => props.theme.color};
+        background-color: var(--uc-color, ${colors.primary});
       }
     }
   }
@@ -107,18 +107,6 @@ const isValidtTabElement = (el) => {
 };
 /**
  * 选项卡切换
- *
- * @param {*} {
- *   children,
- *   color = colors.primary,
- *   underlineWidth = '100%',
- *   defaultIndex = 0,
- *   underline = true,
- *   onIndexChange,
- *   className,
- *   ...otherProps
- * }
- * @return {*}
  */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
@@ -132,65 +120,62 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const count = React.Children.count(children);
-  const color = useThemeColor();
 
   return (
-    <ThemeProvider theme={{ color: color }}>
-      <div {...otherProps} className={clsx('uc-tabs', className)}>
-        <StyledTabHeaderWrap className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
-          {React.Children.map(children, (child: React.ReactElement, index) => {
-            if (isValidtTabElement(child)) {
-              const { title = '', disabled } = child.props as TabProp;
-              return (
-                <StyledTabHeadItem
-                  key={index}
-                  className={clsx('uc-tabs-header-item', {
-                    active: index === activeIndex,
-                    disabled: disabled,
-                  })}
-                  onClick={() => {
-                    if (!disabled && index !== activeIndex) {
-                      setActiveIndex(index);
-                      if (typeof onIndexChange === 'function') {
-                        onIndexChange(index);
-                      }
+    <div {...otherProps} className={clsx('uc-tabs', className)}>
+      <StyledTabHeaderWrap className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
+        {React.Children.map(children, (child: React.ReactElement, index) => {
+          if (isValidtTabElement(child)) {
+            const { title = '', disabled } = child.props as TabProp;
+            return (
+              <StyledTabHeadItem
+                key={index}
+                className={clsx('uc-tabs-header-item', {
+                  active: index === activeIndex,
+                  disabled: disabled,
+                })}
+                onClick={() => {
+                  if (!disabled && index !== activeIndex) {
+                    setActiveIndex(index);
+                    if (typeof onIndexChange === 'function') {
+                      onIndexChange(index);
                     }
-                  }}
-                >
-                  {title}
-                </StyledTabHeadItem>
-              );
+                  }
+                }}
+              >
+                {title}
+              </StyledTabHeadItem>
+            );
+          }
+        })}
+        {underline ? (
+          <StyledTabHeadItem
+            className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
+            count={count}
+            underlineWidth={underlineWidth}
+            activeIndex={activeIndex}
+          />
+        ) : null}
+      </StyledTabHeaderWrap>
+      <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
+        {React.Children.map(children, (child: React.ReactElement, index) => {
+          if (isValidtTabElement(child)) {
+            const { children } = child.props as TabProp;
+            const style: React.CSSProperties = {};
+            if (index !== activeIndex) {
+              style.display = 'none';
             }
-          })}
-          {underline ? (
-            <StyledTabHeadItem
-              className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
-              count={count}
-              underlineWidth={underlineWidth}
-              activeIndex={activeIndex}
-            />
-          ) : null}
-        </StyledTabHeaderWrap>
-        <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
-          {React.Children.map(children, (child: React.ReactElement, index) => {
-            if (isValidtTabElement(child)) {
-              const { children } = child.props as TabProp;
-              const style: React.CSSProperties = {};
-              if (index !== activeIndex) {
-                style.display = 'none';
-              }
-              return (
-                <div key={index} style={style}>
-                  {children}
-                </div>
-              );
-            } else {
-              throw new Error('Tabs can only contain Tab element');
-            }
-          })}
-        </StyledTabContentWrap>
-      </div>
-    </ThemeProvider>
+            return (
+              <div key={index} style={style}>
+                {children}
+              </div>
+            );
+          } else {
+            throw new Error('Tabs can only contain Tab element');
+          }
+        })}
+      </StyledTabContentWrap>
+    </div>
   );
 };
 
