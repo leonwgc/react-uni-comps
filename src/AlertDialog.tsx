@@ -33,7 +33,7 @@ const StyledAlertDialog = styled(Popup)`
   width: 560px;
 
   &.mobile {
-    width: 320px;
+    width: 280px;
     border-radius: 16x;
 
     .uc-alert-dialog-wrap {

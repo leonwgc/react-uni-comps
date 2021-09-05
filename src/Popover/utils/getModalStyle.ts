@@ -61,12 +61,12 @@ export const getModalStyle = (
     'top': {
       // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left, // fix body margin top bottom  not centered
+      left: left + width / 2 - modalPos.width / 2,
     },
     'bottom': {
       // modal放到内容的下面
       top: bottom + MARGIN,
-      left: left + width / 2 - modalPos.width / 2 + parentPos.left, //fix
+      left: left + width / 2 - modalPos.width / 2,
     },
     'left': {
       // modal放到内容的左边

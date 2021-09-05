@@ -4,7 +4,6 @@ import IconCross from '../IconCross';
 import { Placement } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
-import TransitionElement from '../TransitionElement';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
@@ -151,24 +150,24 @@ const Popover = (props: Props): React.ReactElement => {
         ? ReactDOM.createPortal(
             <>
               {mask ? <Mask onClick={onClose} /> : null}
-              <TransitionElement ref={popoverRef}>
-                <StyledPopover
-                  className={clsx(className, 'uc-popover', { mask: mask })}
-                  style={{ ...modalStyle, ...style }}
-                  {...rest}
-                >
-                  {/* arrow */}
-                  {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-                  {/* close */}
-                  {closable && (
-                    <IconCross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
-                  )}
+              <StyledPopover
+                ref={popoverRef}
+                className={clsx(className, 'uc-popover', { mask: mask })}
+                style={{ ...modalStyle, ...style }}
+                {...rest}
+              >
+                {/* arrow */}
+                {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-                  {/** content */}
-                  <div className={clsx('uc-popover-content')}>{content}</div>
-                </StyledPopover>
-              </TransitionElement>
+                {/* close */}
+                {closable && (
+                  <IconCross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
+                )}
+
+                {/** content */}
+                <div className={clsx('uc-popover-content')}>{content}</div>
+              </StyledPopover>
             </>,
             document.body
           )

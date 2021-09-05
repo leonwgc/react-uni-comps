@@ -1,21 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Backdrop, Space, Popover, Button, TransitionElement } from '../src';
-import styled from 'styled-components';
-
-const StyledContent = styled.div`
-  padding: 16px;
-  width: 260px;
-
-  transition: all 0.24s ease-in-out;
-  &.from {
-    opacity: 0;
-    transform: translateX(-10%);
-  }
-  &.to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
+import React, { useRef, useState, useEffect } from 'react';
+import { Space, Popover, Button } from '../src';
 
 const places = [
   {
@@ -104,6 +88,16 @@ export default function App() {
   const [v1, setV1] = useState(false);
   const [visible, setVisible] = useState({});
 
+  useEffect(() => {
+    document.body.style.height = '200vh';
+    document.body.style.width = '200vw';
+
+    return () => {
+      document.body.style.height = '';
+      document.body.style.width = '';
+    };
+  }, []);
+
   const handleClick = (placement) => {
     const key = Object.keys(visible).find((key) => visible[key]);
     const copy = { ...visible };
@@ -115,8 +109,8 @@ export default function App() {
   };
 
   return (
-    <div>
-      {/* <Popover
+    <div style={{ padding: '30vh 10px 0 30vw' }}>
+      <Popover
         placement="bottom-right"
         mask
         closable
@@ -125,7 +119,7 @@ export default function App() {
         content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
       >
         <Button onClick={() => setV(true)}>back drop </Button>
-      </Popover> */}
+      </Popover>
 
       <Popover
         placement="bottom"
@@ -135,7 +129,7 @@ export default function App() {
         visible={v1}
         content={<div style={{ height: 100, width: 300, background: '#fff' }}>menus</div>}
       >
-        <Button type="primary" style={{ width: 300, margin: '200px' }} onClick={() => setV1(true)}>
+        <Button type="primary" style={{ width: 50, margin: 30 }} onClick={() => setV1(true)}>
           test
         </Button>
       </Popover>
@@ -151,10 +145,10 @@ export default function App() {
               key={idx}
               onClose={() => setVisible({ [placement]: false })}
               content={
-                <StyledContent>
+                <div style={{ padding: 16, width: 260 }}>
                   <h5 style={{ fontSize: 16 }}>{title}</h5>
                   <p>{content}</p>
-                </StyledContent>
+                </div>
               }
             >
               <Button onClick={() => handleClick(placement)}>{title}</Button>
