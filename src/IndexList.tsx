@@ -1,9 +1,8 @@
-import React, { MutableRefObject, useState } from 'react';
+import React, { MutableRefObject, useState, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { useRef } from 'react';
-import * as colors from './colors';
 import Waypoint from './Waypoint';
+import { getThemeColorCss } from './themeHelper';
 
 type Item = {
   label: string;
@@ -39,8 +38,7 @@ const StyledContainer = styled.div`
       user-select: none;
 
       &.active {
-        color: ${(props) => props.theme.color};
-        color: var(--uc-color, ${colors.primary});
+        ${getThemeColorCss('color')}
       }
     }
   }
@@ -54,8 +52,7 @@ const StyledContainer = styled.div`
     padding: 8px 16px;
     background-color: #f5f5f5;
     &.active {
-      color: ${(props) => props.theme.color};
-      color: var(--uc-color, ${colors.primary});
+      ${getThemeColorCss('color')}
     }
   }
 
@@ -93,7 +90,7 @@ const StyledContainer = styled.div`
 
 const setActiveIndex = (containerRef, setIndex) => {
   const els = [...containerRef.current.querySelectorAll('.wp')];
-  for (let el of els) {
+  for (const el of els) {
     if (el.dataset.visible === '1') {
       setIndex(Number(el.dataset.index));
       break;

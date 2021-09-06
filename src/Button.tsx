@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
+import { getThemeColorCss } from './themeHelper';
 
 type Props = {
   /** default 线框，primary 实色框 */
@@ -62,11 +63,8 @@ const StyledButton = styled.button`
     }
 
     :hover {
-      border-color: ${({ color }) => color};
-      color: ${({ color }) => color};
-
-      border-color: var(--uc-color, ${colors.primary});
-      color: var(--uc-color, ${colors.primary});
+      ${getThemeColorCss('border-color')}
+      ${getThemeColorCss('color')}
     }
     &.mobile:active {
       background-color: ${colors.activeBg};
@@ -89,10 +87,8 @@ const StyledButton = styled.button`
     }
   }
   &.primary {
-    background-color: ${({ color }) => color};
-    border-color: ${({ color }) => color};
-    background-color: var(--uc-color, ${colors.primary});
-    border-color: var(--uc-color, ${colors.primary});
+    ${getThemeColorCss('background-color')}
+    ${getThemeColorCss('border-color')}
     color: #fff;
 
     ${isMobile() ? '&:active' : '&:hover'} {
@@ -103,10 +99,8 @@ const StyledButton = styled.button`
     &.ghost:hover,
     &.ghost:active {
       background-color: transparent !important;
-      border-color: ${({ color }) => color};
-      color: ${({ color }) => color};
-      border-color: var(--uc-color, ${colors.primary});
-      color: var(--uc-color, ${colors.primary});
+      ${getThemeColorCss('border-color')}
+      ${getThemeColorCss('color')}
 
       &.danger {
         color: ${colors.danger};

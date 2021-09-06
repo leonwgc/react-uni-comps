@@ -8,6 +8,7 @@ import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
 import { isBrowser, isMobile } from './dom';
+import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 
 type Props = {
@@ -55,8 +56,7 @@ const StyledAlertDialog = styled(Popup)`
         padding: 0;
         overflow: hidden;
         .confirm {
-          color: ${(props) => props.theme.color || colors.primary};
-          color: var(--uc-color, ${colors.primary});
+          ${getThemeColorCss('color')}
         }
 
         .m-btn {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import IconTick from './IconTick';
 import * as colors from './colors';
+import { getThemeColorCss } from './themeHelper';
 
 type Props = {
   /** 默认18 */
@@ -47,15 +48,12 @@ const StyledCheckbox = styled.div<{
   transition: all 0.3s ease;
 
   &:hover {
-    border: 1px solid ${(props) => props.theme.color};
-    border: 1px solid var(--uc-color, ${colors.primary});
+    ${getThemeColorCss('border', '1px solid')}
   }
 
   &.checked {
-    background-color: ${(props) => props.theme.color};
-    background-color: var(--uc-color, ${colors.primary});
-    border: 1px solid ${(props) => props.theme.color};
-    border: 1px solid var(--uc-color, ${colors.primary});
+    ${getThemeColorCss('background-color')}
+    ${getThemeColorCss('border', '1px solid')}
   }
 
   &.disabled {

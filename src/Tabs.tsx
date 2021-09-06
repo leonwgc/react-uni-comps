@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as colors from './colors';
 import clsx from 'clsx';
+import { getThemeColorCss } from './themeHelper';
 
 type TabsProp = {
   /** 是否有下划线,默认true*/
@@ -60,8 +61,7 @@ const StyledTabHeadItem = styled.div<{
   user-select: none;
 
   &.active {
-    color: ${(props) => props.theme.color};
-    color: var(--uc-color, ${colors.primary});
+    ${getThemeColorCss('color')}
     font-weight: 500;
   }
   &.disabled {
@@ -82,8 +82,7 @@ const StyledTabHeadItem = styled.div<{
         bottom: 0;
         width: ${(props) => props.underlineWidth};
         height: 2px;
-        background-color: ${(props) => props.theme.color};
-        background-color: var(--uc-color, ${colors.primary});
+        ${getThemeColorCss('background-color')}
       }
     }
   }

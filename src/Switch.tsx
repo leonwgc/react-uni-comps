@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
-import * as colors from './colors';
+import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 
 type Props = {
@@ -51,10 +51,8 @@ const StyledSwitch = styled.div`
   }
 
   &.checked {
-    background-color: ${(props) => props.theme.color};
-    background-color: var(--uc-color, ${colors.primary});
-    border-color: ${(props) => props.theme.color};
-    border-color: var(--uc-color, ${colors.primary});
+    ${getThemeColorCss('background-color')}
+    ${getThemeColorCss('border-color')}
 
     &::after {
       left: calc(100% - 20px);
