@@ -18,7 +18,7 @@ export const getThemeColorCss = (prop: string, leftValue = ''): any => {
   } else {
     return css`
       ${prop}:var(--uc-color, ${colors.primary});
-      ${prop}:${leftValue} ${(props) => props.theme.color || colors.primary};
+      ${prop}:${leftValue} ${(props) => props.theme.color};
     `;
   }
 };
