@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Spinner, AnimationElement, Tabs } from '../src';
+import { Spinner, AnimationElement, Tabs, Button } from '../src';
+import { getThemeColorCss } from '../src/themeHelper';
 import 'animate.css';
 import './Tab.less';
+
+const StyledApp = styled.div`
+  .uc-tabs {
+    margin: 20px 0;
+  }
+`;
+
+const StyledTabs1 = styled(Tabs)`
+  .uc-tabs-header-item {
+    flex: none;
+    width: 120px;
+
+    &.active {
+      ${getThemeColorCss('border-bottom', '2px solid')}
+    }
+  }
+`;
 
 const StyledContent = styled.div`
   padding: 20px;
@@ -36,40 +54,45 @@ const StyledTabs = styled(Tabs)`
 `;
 
 export default function App() {
+  const [tabTitles, setTabTitles] = useState([{ title: '默认欢迎语' }, { title: '默认欢迎语1' }]);
+  const maxCount = 5;
+  const [value, setValue] = useState(0);
+
   return (
-    <div className="app">
-      <StyledTabs defaultIndex={2} onIndexChange={(index) => console.log(index)}>
+    <StyledApp>
+      <StyledTabs1
+        underline={false}
+        value={value}
+        onChange={setValue}
+        extra={
+          tabTitles.length < maxCount ? (
+            <Button
+              onClick={() => {
+                setTabTitles((t) => [...t, { key: tabTitles.length }]);
+              }}
+            >
+              新增欢迎语
+            </Button>
+          ) : null
+        }
+      >
+        {tabTitles.map((item, idx) => {
+          return <Tabs.Tab title={item.title || '欢迎语模板' + idx} key={idx} />;
+        })}
+      </StyledTabs1>
+      <StyledTabs underline="100%" value={value} onChange={setValue}>
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <Tabs onIndexChange={(index) => console.log(index)}>
-        <Tabs.Tab title="title1"></Tabs.Tab>
+      <Tabs value={value} onChange={setValue} border={false}>
+        <Tabs.Tab title="title1">no border</Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
         <Tabs.Tab title="title3"></Tabs.Tab>
       </Tabs>
 
-      <Tabs defaultIndex={1} underlineWidth="40px" onIndexChange={(index) => console.log(index)}>
-        <Tabs.Tab title="title1"></Tabs.Tab>
-        <Tabs.Tab title="title2"></Tabs.Tab>
-        <Tabs.Tab title="title3"></Tabs.Tab>
-      </Tabs>
-
-      <Tabs defaultIndex={1} underlineWidth="50px" onIndexChange={(index) => console.log(index)}>
-        <Tabs.Tab title="title1"></Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <div style={{ padding: 20 }}>hello</div>
-        </Tabs.Tab>
-      </Tabs>
-
-      <Tabs underlineWidth="50px" border={false} onIndexChange={(index) => console.log(index)}>
-        <Tabs.Tab title="title1">
-          <div style={{ padding: 20 }}>no border</div>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2"></Tabs.Tab>
-      </Tabs>
-      <Tabs underlineWidth="40px" style={{ marginTop: 30 }}>
+      <Tabs underline="40px" style={{ marginTop: 30 }} value={value} onChange={setValue}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
@@ -100,38 +123,6 @@ export default function App() {
           <StyledContent>content7</StyledContent>
         </Tabs.Tab>
       </Tabs>
-
-      <Tabs underline={false} style={{ marginTop: 30 }} defaultIndex={2} className="my-tab">
-        <Tabs.Tab title="title1">
-          <StyledContent>content</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <StyledContent>content2</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title3">
-          <StyledContent>
-            <AnimationElement name="fadeInRight" duration=".24s">
-              <Spinner size={48}></Spinner>
-            </AnimationElement>
-          </StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab
-          title={
-            <span>
-              <Spinner></Spinner> loading...
-            </span>
-          }
-        >
-          <StyledContent> loading content</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title5">
-          <StyledContent>content5</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title6" disabled></Tabs.Tab>
-        <Tabs.Tab title="title7">
-          <StyledContent>content7</StyledContent>
-        </Tabs.Tab>
-      </Tabs>
-    </div>
+    </StyledApp>
   );
 }

@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import * as colors from './colors';
 import clsx from 'clsx';
+import * as colors from './colors';
 import { getThemeColorCss } from './themeHelper';
 
 type TabsProp = {
-  /** 是否有下划线,默认true*/
-  underline?: boolean;
-  /** 下划线宽度,默认100%,可以使用百分比和px */
-  underlineWidth?: string;
+  /** 下划线宽度,默认100%,可以使用百分比和px,设置才有，不设置则无*/
+  underline?: string;
   /** Tabs.Tab子元素*/
   children: React.ReactElement[];
-  /** 默认选择的tab,默认0,第一个 */
-  defaultIndex?: number;
+  /** 选择的tab index,0 */
+  value?: number;
   /** index变化时触发的回调函数 */
-  onIndexChange?: (index: number) => void;
+  onChange?: (index: number) => void;
+  /** 头部右侧区域内容 */
+  extra?: React.ReactNode;
   /** 是否显示border,默认显示 */
   border?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
@@ -33,6 +33,7 @@ const StyledTabHeaderWrap = styled.div`
   padding: 0;
   overflow-x: scroll;
   border-bottom: 1px solid ${colors.border};
+  align-items: center;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -43,12 +44,11 @@ const StyledTabHeaderWrap = styled.div`
 `;
 
 const StyledTabHeadItem = styled.div<{
-  activeIndex?: number;
-  count?: number;
-  underlineWidth?: string;
+  value: number;
+  count: number;
+  underline?: string;
 }>`
   flex: 1 0;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -70,17 +70,19 @@ const StyledTabHeadItem = styled.div<{
   }
 
   &.uc-tabs-header-item {
+    height: 100%;
+    box-sizing: border-box;
     &.uc-tabs-header-line {
       position: relative;
       background-color: transparent !important;
       transition: transform 0.3s ease;
-      transform: translate3d(${(props) => (props.activeIndex - props.count) * 100 + '%'}, 0px, 0px);
+      transform: translate3d(${(props) => (props.value - props.count) * 100 + '%'}, 0px, 0px);
 
       &::after {
         content: ' ';
         position: absolute;
         bottom: 0;
-        width: ${(props) => props.underlineWidth};
+        width: ${(props) => props.underline};
         height: 2px;
         ${getThemeColorCss('background-color')}
       }
@@ -109,15 +111,14 @@ const isValidtTabElement = (el) => {
  */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
-  underlineWidth = '100%',
-  defaultIndex = 0,
-  underline = true,
+  underline,
+  value = 0,
   border = true,
-  onIndexChange,
+  onChange,
+  extra,
   className,
   ...otherProps
 }) => {
-  const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const count = React.Children.count(children);
 
   return (
@@ -130,15 +131,12 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
               <StyledTabHeadItem
                 key={index}
                 className={clsx('uc-tabs-header-item', {
-                  active: index === activeIndex,
+                  active: index === value,
                   disabled: disabled,
                 })}
                 onClick={() => {
-                  if (!disabled && index !== activeIndex) {
-                    setActiveIndex(index);
-                    if (typeof onIndexChange === 'function') {
-                      onIndexChange(index);
-                    }
+                  if (!disabled && index !== value) {
+                    onChange?.(index);
                   }
                 }}
               >
@@ -151,17 +149,20 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
           <StyledTabHeadItem
             className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
             count={count}
-            underlineWidth={underlineWidth}
-            activeIndex={activeIndex}
+            underline={underline}
+            value={value}
           />
         ) : null}
+        <span className={clsx('uc-tabs-extra')} style={{ marginLeft: 24 }}>
+          {extra}
+        </span>
       </StyledTabHeaderWrap>
       <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (isValidtTabElement(child)) {
             const { children } = child.props as TabProp;
             const style: React.CSSProperties = {};
-            if (index !== activeIndex) {
+            if (index !== value) {
               style.display = 'none';
             }
             return (
@@ -169,8 +170,6 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
                 {children}
               </div>
             );
-          } else {
-            throw new Error('Tabs can only contain Tab element');
           }
         })}
       </StyledTabContentWrap>
