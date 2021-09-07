@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Spinner, AnimationElement, Tabs, Button } from '../src';
-import { getThemeColorCss } from '../src/themeHelper';
 import 'animate.css';
 import './Tab.less';
 
@@ -15,10 +14,6 @@ const StyledTabs1 = styled(Tabs)`
   .uc-tabs-header-item {
     flex: none;
     width: 120px;
-
-    &.active {
-      ${getThemeColorCss('border-bottom', '2px solid')}
-    }
   }
 `;
 
@@ -61,7 +56,6 @@ export default function App() {
   return (
     <StyledApp>
       <StyledTabs1
-        underline={false}
         value={value}
         onChange={setValue}
         extra={
@@ -69,6 +63,7 @@ export default function App() {
             <Button
               onClick={() => {
                 setTabTitles((t) => [...t, { key: tabTitles.length }]);
+                setValue(tabTitles.length);
               }}
             >
               新增欢迎语
@@ -85,12 +80,6 @@ export default function App() {
         <Tabs.Tab title="title2"></Tabs.Tab>
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
-
-      <Tabs value={value} onChange={setValue} border={false}>
-        <Tabs.Tab title="title1">no border</Tabs.Tab>
-        <Tabs.Tab title="title2"></Tabs.Tab>
-        <Tabs.Tab title="title3"></Tabs.Tab>
-      </Tabs>
 
       <Tabs underline="40px" style={{ marginTop: 30 }} value={value} onChange={setValue}>
         <Tabs.Tab title="title1">

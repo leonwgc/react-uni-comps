@@ -5,7 +5,7 @@ import * as colors from './colors';
 import { getThemeColorCss } from './themeHelper';
 
 type TabsProp = {
-  /** 下划线宽度,默认100%,可以使用百分比和px,设置才有，不设置则无*/
+  /** 下划线宽度,默认100%,可以使用百分比和px*/
   underline?: string;
   /** Tabs.Tab子元素*/
   children: React.ReactElement[];
@@ -40,6 +40,13 @@ const StyledTabHeaderWrap = styled.div`
 
   &.no-border {
     border-bottom: none;
+  }
+
+  .uc-tabs-extra {
+    margin-left: 16px;
+    &.underline {
+      transform: translateX(-100%);
+    }
   }
 `;
 
@@ -111,7 +118,7 @@ const isValidtTabElement = (el) => {
  */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
-  underline,
+  underline = '100%',
   value = 0,
   border = true,
   onChange,
@@ -153,9 +160,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             value={value}
           />
         ) : null}
-        <span className={clsx('uc-tabs-extra')} style={{ marginLeft: 24 }}>
-          {extra}
-        </span>
+        <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
       </StyledTabHeaderWrap>
       <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
