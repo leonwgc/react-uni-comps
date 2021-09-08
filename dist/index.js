@@ -1062,20 +1062,110 @@ var primary = '#004bcc';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
 
-var _excluded$6 = ["children", "underlineWidth", "defaultIndex", "underline", "border", "onIndexChange", "className"];
+var _templateObject$6, _templateObject2;
+/**
+ *  get a css snippet with theme color
+ *
+ * @param {string} prop
+ * @param {string} [leftValue='']
+ * @return {*}  {*}
+ */
 
-var _templateObject$6, _templateObject2, _templateObject3;
-var StyledTabHeaderWrap = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 44px;\n  position: relative;\n  margin: 0;\n  padding: 0;\n  overflow-x: scroll;\n  border-bottom: 1px solid ", ";\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  &.no-border {\n    border-bottom: none;\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1 0;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    color: ", ";\n    color: var(--uc-color, ", ");\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    &.uc-tabs-header-line {\n      position: relative;\n      background-color: transparent !important;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0px, 0px);\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        background-color: ", ";\n        background-color: var(--uc-color, ", ");\n      }\n    }\n  }\n"])), function (props) {
-  return props.theme.color;
-}, primary, disabledText, function (props) {
-  return (props.activeIndex - props.count) * 100 + '%';
+var getThemeColorCss = function getThemeColorCss(prop) {
+  var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  // mobile css variable first
+  if (isMobile()) {
+    return styled.css(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n      ", ":", " ", ";\n      ", ":var(--uc-color, ", ");\n    "])), prop, leftValue, function (props) {
+      return props.theme.color || primary;
+    }, prop, primary);
+  } else {
+    return styled.css(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      ", ":var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, primary, prop, leftValue, function (props) {
+      return props.theme.color;
+    });
+  }
+};
+
+var debounce = function debounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+  var timer = 0;
+  return function a() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var that = this;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+    }, timeout);
+  };
+};
+/**
+ * 截流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+
+var throttle = function throttle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var start = 0;
+  var timer = 0;
+
+  var ensureExecute = function ensureExecute(now, args, that) {
+    if (!last) return;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+      start = now;
+    }, timeout);
+  };
+
+  return function () {
+    var that = this;
+    var now = Date.now();
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    if (!start) {
+      start = now;
+      ensureExecute(now, args, that);
+      return;
+    }
+
+    if (now - start >= timeout) {
+      ensureExecute(now, args, that);
+      fn.apply(that, args);
+      start = now;
+    }
+  };
+};
+
+var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "className"];
+
+var _templateObject$7, _templateObject2$1;
+var StyledWrapper$1 = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
+  return props.value * 100 + '%';
 }, function (props) {
-  return props.underlineWidth;
-}, function (props) {
-  return props.theme.color;
-}, primary);
-var StyledTabContentWrap = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  overflow: hidden;\n"])));
+  return props.underline;
+}, getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -1098,31 +1188,66 @@ var isValidtTabElement = function isValidtTabElement(el) {
 
 var Tabs = function Tabs(_ref2) {
   var children = _ref2.children,
-      _ref2$underlineWidth = _ref2.underlineWidth,
-      underlineWidth = _ref2$underlineWidth === void 0 ? '100%' : _ref2$underlineWidth,
-      _ref2$defaultIndex = _ref2.defaultIndex,
-      defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex,
       _ref2$underline = _ref2.underline,
-      underline = _ref2$underline === void 0 ? true : _ref2$underline,
+      underline = _ref2$underline === void 0 ? '100%' : _ref2$underline,
+      value = _ref2.value,
+      _ref2$defaultValue = _ref2.defaultValue,
+      defaultValue = _ref2$defaultValue === void 0 ? 0 : _ref2$defaultValue,
       _ref2$border = _ref2.border,
       border = _ref2$border === void 0 ? true : _ref2$border,
-      onIndexChange = _ref2.onIndexChange,
+      onChange = _ref2.onChange,
+      extra = _ref2.extra,
       className = _ref2.className,
-      otherProps = _objectWithoutProperties(_ref2, _excluded$6);
-
-  var _useState = React.useState(defaultIndex),
-      _useState2 = _slicedToArray(_useState, 2),
-      activeIndex = _useState2[0],
-      setActiveIndex = _useState2[1];
+      restProps = _objectWithoutProperties(_ref2, _excluded$6);
 
   var count = React__default['default'].Children.count(children);
-  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, otherProps, {
+  var underlineRef = React.useRef();
+
+  var _useState = React.useState(function () {
+    return typeof value === 'undefined' ? defaultValue : value;
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      _v = _useState2[0],
+      _setV = _useState2[1];
+
+  var setUnderlineSize = React.useCallback(function () {
+    if (underline) {
+      var underlineEl = underlineRef.current;
+      var next = underlineEl.nextSibling;
+
+      if (next) {
+        underlineEl.style.width = next.offsetWidth + 'px';
+      }
+    }
+  }, [underline]);
+  useUpdateEffect__default['default'](function () {
+    if (value !== _v) {
+      _setV(value);
+    }
+  }, [value]);
+  React.useLayoutEffect(function () {
+    setUnderlineSize();
+  }, [setUnderlineSize]);
+  React.useEffect(function () {
+    var throttledSetUnderlineSize = throttle(setUnderlineSize, 34);
+    window.addEventListener('resize', throttledSetUnderlineSize);
+    return function () {
+      window.removeEventListener('resize', throttledSetUnderlineSize);
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, restProps, {
     className: clsx__default['default']('uc-tabs', className)
-  }), /*#__PURE__*/React__default['default'].createElement(StyledTabHeaderWrap, {
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-tabs-header-wrap', {
       'no-border': !border
     })
-  }, React__default['default'].Children.map(children, function (child, index) {
+  }, underline ? /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
+    ref: underlineRef,
+    className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
+    count: count,
+    underline: underline,
+    value: _v
+  }) : null, React__default['default'].Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _ref3 = child.props,
           _ref3$title = _ref3.title,
@@ -1131,26 +1256,23 @@ var Tabs = function Tabs(_ref2) {
       return /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
         key: index,
         className: clsx__default['default']('uc-tabs-header-item', {
-          active: index === activeIndex,
+          active: index === _v,
           disabled: disabled
         }),
         onClick: function onClick() {
-          if (!disabled && index !== activeIndex) {
-            setActiveIndex(index);
+          if (!disabled && index !== _v) {
+            onChange === null || onChange === void 0 ? void 0 : onChange(index);
 
-            if (typeof onIndexChange === 'function') {
-              onIndexChange(index);
-            }
+            _setV(index);
           }
         }
       }, title);
     }
-  }), underline ? /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
-    className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
-    count: count,
-    underlineWidth: underlineWidth,
-    activeIndex: activeIndex
-  }) : null), /*#__PURE__*/React__default['default'].createElement(StyledTabContentWrap, {
+  }), extra ? /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default']('uc-tabs-extra', {
+      underline: underline
+    })
+  }, extra) : null), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-tabs-content-wrap"
   }, React__default['default'].Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
@@ -1158,7 +1280,7 @@ var Tabs = function Tabs(_ref2) {
           _children = _ref4.children;
       var style = {};
 
-      if (index !== activeIndex) {
+      if (index !== value) {
         style.display = 'none';
       }
 
@@ -1166,8 +1288,6 @@ var Tabs = function Tabs(_ref2) {
         key: index,
         style: style
       }, _children);
-    } else {
-      throw new Error('Tabs can only contain Tab element');
     }
   })));
 };
@@ -1178,9 +1298,9 @@ Tabs.Tab = Tab;
 
 var _excluded$7 = ["title", "content", "lineColor", "children"];
 
-var _templateObject$7, _templateObject2$1;
-var StyledWrapper$1 = styled__default['default'].div(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n"])), activeBg);
-var StyledCell = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #999;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: 24px;\n        font-size: 14px;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
+var _templateObject$8, _templateObject2$2;
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n"])), activeBg);
+var StyledCell = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #999;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: 24px;\n        font-size: 14px;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1195,7 +1315,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     throw new Error("don't set content and children at the same time");
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$2, {
     className: clsx__default['default']('uc-cell-wrapper', {
       clickable: typeof rest.onClick === 'function'
     })
@@ -1219,8 +1339,8 @@ Cell.displayName = 'UC-Cell';
 var _excluded$8 = ["animate", "width", "height", "shape"],
     _excluded2$2 = ["style", "className"];
 
-var _templateObject$8;
-var StyledSkeletonBase = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"])));
+var _templateObject$9;
+var StyledSkeletonBase = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  display: block;\n  background-color: rgba(0, 0, 0, 0.11);\n  height: 1.2em;\n\n  @keyframes kf-pulse {\n    0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n  }\n\n  &.react {\n  }\n\n  &.circle {\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  &.pulse {\n    animation: kf-pulse 1.5s ease-in-out 0.5s infinite;\n  }\n"])));
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
 var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1255,9 +1375,9 @@ SkeletonBase.displayName = 'UC-SkeletonBase';
 var _excluded$9 = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
     _excluded2$3 = ["className"];
 
-var _templateObject$9;
+var _templateObject$a;
 
-var StyledSkeleton = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  .uc-skeleton {\n    &:not(:first-child) {\n      margin-top: 12px;\n    }\n\n    &:nth-child(2) {\n      margin-top: 20px;\n    }\n  }\n\n  &.avatar {\n    display: flex;\n\n    > .avatar {\n      flex: none;\n    }\n\n    > .rows {\n      flex: 1;\n      margin-left: 16px;\n      padding-top: 8px;\n    }\n  }\n"])));
+var StyledSkeleton = styled__default['default'].div(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  .uc-skeleton {\n    &:not(:first-child) {\n      margin-top: 12px;\n    }\n\n    &:nth-child(2) {\n      margin-top: 20px;\n    }\n  }\n\n  &.avatar {\n    display: flex;\n\n    > .avatar {\n      flex: none;\n    }\n\n    > .rows {\n      flex: 1;\n      margin-left: 16px;\n      padding-top: 8px;\n    }\n  }\n"])));
 /** 骨架屏 */
 
 var Skeleton = function Skeleton(props) {
@@ -1343,8 +1463,8 @@ var Skeleton = function Skeleton(props) {
 
 var _excluded$a = ["color", "size"];
 
-var _templateObject$a;
-var StyledTick = styled__default['default'].div(_templateObject$a || (_templateObject$a = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
+var _templateObject$b;
+var StyledTick = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -1377,21 +1497,15 @@ IconTick.displayName = 'UC-IconTick';
 
 var _excluded$b = ["size", "onChange", "defaultChecked", "checked", "disabled", "children"];
 
-var _templateObject$b, _templateObject2$2;
-var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
-var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border: 1px solid ", ";\n    border: 1px solid var(--uc-color, ", ");\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
+var _templateObject$c, _templateObject2$3;
+var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
+var StyledCheckbox = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
   var size = _ref2.size;
   return size;
-}, border, function (props) {
-  return props.theme.color;
-}, primary, function (props) {
-  return props.theme.color;
-}, primary, function (props) {
-  return props.theme.color;
-}, primary, border);
+}, border, getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border);
 /** Checkbox/Radiobox带checked状态的 */
 
 var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1441,26 +1555,8 @@ Checkbox.displayName = 'UC-Checkbox';
 
 var _excluded$c = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "ghost"];
 
-var _templateObject$c;
-var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      border-color: ", ";\n      color: ", ";\n\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n\n    &.disabled,\n    &.disabled:hover,\n    &.disabled:active {\n      opacity: 0.6;\n      cursor: not-allowed;\n      border-color: ", ";\n      color: #999;\n    }\n  }\n  &.primary {\n    background-color: ", ";\n    border-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: var(--uc-color, ", ");\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      border-color: ", ";\n      color: ", ";\n      border-color: var(--uc-color, ", ");\n      color: var(--uc-color, ", ");\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', function (_ref) {
-  var color = _ref.color;
-  return color;
-}, function (_ref2) {
-  var color = _ref2.color;
-  return color;
-}, primary, primary, activeBg, danger, danger, border, function (_ref3) {
-  var color = _ref3.color;
-  return color;
-}, function (_ref4) {
-  var color = _ref4.color;
-  return color;
-}, primary, primary, isMobile() ? '&:active' : '&:hover', function (_ref5) {
-  var color = _ref5.color;
-  return color;
-}, function (_ref6) {
-  var color = _ref6.color;
-  return color;
-}, primary, primary, danger, danger, danger, border, border);
+var _templateObject$d;
+var StyledButton = styled__default['default'].button(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      ", "\n      ", "\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n\n    &.disabled,\n    &.disabled:hover,\n    &.disabled:active {\n      opacity: 0.6;\n      cursor: not-allowed;\n      border-color: ", ";\n      color: #999;\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, border, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, border, border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1496,12 +1592,8 @@ Button.displayName = 'UC-Button';
 
 var _excluded$d = ["disabled", "checked", "defaultChecked", "className", "onChange"];
 
-var _templateObject$d;
-var StyledSwitch = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    background-color: ", ";\n    background-color: var(--uc-color, ", ");\n    border-color: ", ";\n    border-color: var(--uc-color, ", ");\n\n    &::after {\n      left: calc(100% - 20px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.6;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), function (props) {
-  return props.theme.color;
-}, primary, function (props) {
-  return props.theme.color;
-}, primary);
+var _templateObject$e;
+var StyledSwitch = styled__default['default'].div(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    ", "\n    ", "\n\n    &::after {\n      left: calc(100% - 20px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.6;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'));
 /** 开关 */
 
 var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1592,9 +1684,9 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
 
 var _excluded$e = ["type", "textPosition", "className", "dashed", "color", "children"];
 
-var _templateObject$e;
+var _templateObject$f;
 
-var StyledDivider = styled__default['default'].div(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n    margin: 24px 0;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      margin: 16px 0;\n      text-align: center;\n    }\n\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
+var StyledDivider = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n    margin: 24px 0;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      margin: 16px 0;\n      text-align: center;\n    }\n\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
@@ -1632,8 +1724,8 @@ var Divider = function Divider(props) {
 
 var _excluded$f = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
 
-var _templateObject$f;
-var StyledFileInputTrigger = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
+var _templateObject$g;
+var StyledFileInputTrigger = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
 /** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
 
 var FileInputTrigger = function FileInputTrigger(props) {
@@ -1718,12 +1810,8 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Waypoint.displayName = 'UC-Waypoint';
 
-var _templateObject$g;
-var StyledContainer = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral(["\n  .uc-indexlist-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexlist-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n      user-select: none;\n\n      &.active {\n        color: ", ";\n        color: var(--uc-color, ", ");\n      }\n    }\n  }\n\n  .bar-title {\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      color: ", ";\n      color: var(--uc-color, ", ");\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    margin: 0;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), function (props) {
-  return props.theme.color;
-}, primary, function (props) {
-  return props.theme.color;
-}, primary);
+var _templateObject$h;
+var StyledContainer = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  .uc-indexlist-side {\n    position: fixed;\n    top: 50%;\n    right: 0;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    transform: translateY(-50%);\n    cursor: pointer;\n    user-select: none;\n\n    .uc-indexlist-side-item {\n      padding: 0 8px 0 16px;\n      font-weight: 500;\n      font-size: 10px;\n      line-height: 14px;\n      user-select: none;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n\n  .bar-title {\n    top: 0;\n    z-index: 1;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n    &.active {\n      ", "\n    }\n  }\n\n  .bar-item {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    overflow: hidden;\n    font-size: 14px;\n    background-color: #fff;\n    position: relative;\n    margin: 0;\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n\n      border-bottom: 1px solid #e0e0e0;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), getThemeColorCss('color'));
 
 var setActiveIndex = function setActiveIndex(containerRef, setIndex) {
   var els = _toConsumableArray(containerRef.current.querySelectorAll('.wp'));
@@ -1821,77 +1909,6 @@ var IndexList = function IndexList(props) {
 
 IndexList.displayName = 'UC-IndexList';
 
-var debounce = function debounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-  var timer = 0;
-  return function a() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var that = this;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-    }, timeout);
-  };
-};
-/**
- * 截流
- *
- * @param {F} fn
- * @param {number} [timeout=200]
- * @param {boolean} [last=true] 最后一个timeout是否执行
- * @return {*}  {F}
- */
-
-var throttle = function throttle(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
-  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var start = 0;
-  var timer = 0;
-
-  var ensureExecute = function ensureExecute(now, args, that) {
-    if (!last) return;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-      start = now;
-    }, timeout);
-  };
-
-  return function () {
-    var that = this;
-    var now = Date.now();
-
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    if (!start) {
-      start = now;
-      ensureExecute(now, args, that);
-      return;
-    }
-
-    if (now - start >= timeout) {
-      ensureExecute(now, args, that);
-      fn.apply(that, args);
-      start = now;
-    }
-  };
-};
-
 /**
  * windows回到顶部
  *
@@ -1952,8 +1969,8 @@ ScrollTop.displayName = 'UC-ScrollTop';
 
 var _excluded$h = ["size", "color"];
 
-var _templateObject$h;
-var StyledCross = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
+var _templateObject$i;
+var StyledCross = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -2326,9 +2343,9 @@ var getArrowStyle = function getArrowStyle(modalEl) {
 
 var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
 
-var _templateObject$i;
+var _templateObject$j;
 
-var StyledPopover = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -2423,8 +2440,8 @@ var Popover = function Popover(props) {
   }, content))), document.body) : null);
 };
 
-var _templateObject$j;
-var StylePopover = styled__default['default'](Popover)(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
+var _templateObject$k;
+var StylePopover = styled__default['default'](Popover)(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
 
 /** 文字提示 */
 var Tooltip = function Tooltip(props) {
@@ -2704,11 +2721,11 @@ CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
 var _excluded$j = ["lines", "children"];
 
-var _templateObject$k, _templateObject2$3;
-var StyledSpanMultiLines = styled__default['default'].span(_templateObject$k || (_templateObject$k = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
+var _templateObject$l, _templateObject2$4;
+var StyledSpanMultiLines = styled__default['default'].span(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
-var StyledSpanOneline = styled__default['default'].span(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
+var StyledSpanOneline = styled__default['default'].span(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2728,8 +2745,8 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Text.displayName = 'UC-Text';
 
-var _templateObject$l;
-var StyleToast = styled__default['default'](Popup)(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
+var _templateObject$m;
+var StyleToast = styled__default['default'](Popup)(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
 
 var getContainer = function getContainer() {
   if (isBrowser) {
@@ -2796,8 +2813,8 @@ Toast.displayName = 'UC-Toast';
 
 var _excluded$k = ["color", "direction", "size"];
 
-var _templateObject$m;
-var StyledArrow = styled__default['default'].div(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
+var _templateObject$n;
+var StyledArrow = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -2834,8 +2851,8 @@ IconArrow.displayName = 'UC-IconArrow';
 
 var _excluded$l = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
 
-var _templateObject$n;
-var StyledNoticeBar = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
+var _templateObject$o;
+var StyledNoticeBar = styled__default['default'].div(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
 
 /** 通告栏  */
 var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3098,8 +3115,8 @@ Affix.displayName = 'UC-Affix';
 
 var _excluded$n = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
 
-var _templateObject$o;
-var StyledActionSheet = styled__default['default'](Popup)(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
+var _templateObject$p;
+var StyledActionSheet = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -3174,10 +3191,8 @@ ActionSheet.displayName = 'UC-ActionSheet';
 
 var _excluded$o = ["visible", "title", "content", "onConfirm", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "onClose"];
 
-var _templateObject$p;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 280px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          color: ", ";\n          color: var(--uc-color, ", ");\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), function (props) {
-  return props.theme.color || primary;
-}, primary, border, border);
+var _templateObject$q;
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  width: 560px;\n\n  &.mobile {\n    width: 280px;\n    border-radius: 16x;\n\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      width: 100%;\n      max-width: 100%;\n      min-width: unset;\n      min-height: unset;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          ", "\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    min-width: 560px;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), border, border);
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 
 var AlertDialog = function AlertDialog(props) {

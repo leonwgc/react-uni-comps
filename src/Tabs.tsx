@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useRef, useCallback, useEffect, RefObject } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
@@ -29,32 +29,38 @@ type TabProp = {
   children: React.ReactElement;
 };
 
-const StyledTabHeaderWrap = styled.div`
-  display: flex;
-  height: 44px;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  overflow-x: scroll;
-  border-bottom: 1px solid ${colors.border};
-  align-items: center;
-  &::-webkit-scrollbar {
-    display: none;
+const StyledWrapper = styled.div`
+  .uc-tabs-content-wrap {
+    overflow: hidden;
   }
+  .uc-tabs-header-wrap {
+    display: flex;
+    height: 44px;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow-x: scroll;
+    border-bottom: 1px solid ${colors.border};
+    align-items: center;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
-  &.no-border {
-    border-bottom: none;
-  }
+    &.no-border {
+      border-bottom: none;
+    }
 
-  .uc-tabs-extra {
-    margin-left: 16px;
+    .uc-tabs-extra {
+      margin-left: 16px;
+    }
   }
 `;
 
 const StyledTabHeadItem = styled.div<{
-  value: number;
-  count: number;
+  value?: number;
+  count?: number;
   underline?: string;
+  ref?: RefObject<HTMLDivElement>;
 }>`
   flex: 1;
   white-space: nowrap;
@@ -101,9 +107,6 @@ const StyledTabHeadItem = styled.div<{
   }
 `;
 
-const StyledTabContentWrap = styled.div`
-  overflow: hidden;
-`;
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -129,10 +132,10 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   onChange,
   extra,
   className,
-  ...otherProps
+  ...restProps
 }) => {
   const count = React.Children.count(children);
-  const underlineRef = useRef<HTMLElement>();
+  const underlineRef = useRef<HTMLDivElement>();
 
   const [_v, _setV] = useState(() => {
     return typeof value === 'undefined' ? defaultValue : value;
@@ -142,7 +145,9 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     if (underline) {
       const underlineEl = underlineRef.current;
       const next = underlineEl.nextSibling as HTMLElement;
-      underlineEl.style.width = next.offsetWidth + 'px';
+      if (next) {
+        underlineEl.style.width = next.offsetWidth + 'px';
+      }
     }
   }, [underline]);
 
@@ -163,11 +168,12 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     return () => {
       window.removeEventListener('resize', throttledSetUnderlineSize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div {...otherProps} className={clsx('uc-tabs', className)}>
-      <StyledTabHeaderWrap className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
+    <StyledWrapper {...restProps} className={clsx('uc-tabs', className)}>
+      <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
         {underline ? (
           <StyledTabHeadItem
             ref={underlineRef}
@@ -199,10 +205,11 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             );
           }
         })}
-
-        <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
-      </StyledTabHeaderWrap>
-      <StyledTabContentWrap className={`uc-tabs-content-wrap`}>
+        {extra ? (
+          <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
+        ) : null}
+      </div>
+      <div className={`uc-tabs-content-wrap`}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (isValidtTabElement(child)) {
             const { children } = child.props as TabProp;
@@ -217,8 +224,8 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             );
           }
         })}
-      </StyledTabContentWrap>
-    </div>
+      </div>
+    </StyledWrapper>
   );
 };
 

@@ -1,15 +1,17 @@
 import React from 'react';
 declare type TabsProp = {
-    /** 是否有下划线,默认true*/
-    underline?: boolean;
-    /** 下划线宽度,默认100%,可以使用百分比和px */
-    underlineWidth?: string;
+    /** 下划线宽度,默认100%,可以使用百分比和px*/
+    underline?: string;
     /** Tabs.Tab子元素*/
     children: React.ReactElement[];
-    /** 默认选择的tab,默认0,第一个 */
-    defaultIndex?: number;
+    /** 选择的tab index,非受控模式使用*/
+    defaultValue?: number;
+    /** 选择的tab index,0 */
+    value?: number;
     /** index变化时触发的回调函数 */
-    onIndexChange?: (index: number) => void;
+    onChange?: (index: number) => void;
+    /** 头部右侧区域内容 */
+    extra?: React.ReactNode;
     /** 是否显示border,默认显示 */
     border?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
