@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { getThemeColorCss } from './themeHelper';
+import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比和px*/
   underline?: string;
   /** Tabs.Tab子元素*/
   children: React.ReactElement[];
+  /** 选择的tab index,非受控模式使用*/
+  defaultValue?: number;
   /** 选择的tab index,0 */
   value?: number;
   /** index变化时触发的回调函数 */
@@ -44,9 +47,6 @@ const StyledTabHeaderWrap = styled.div`
 
   .uc-tabs-extra {
     margin-left: 16px;
-    &.underline {
-      transform: translateX(-100%);
-    }
   }
 `;
 
@@ -55,7 +55,7 @@ const StyledTabHeadItem = styled.div<{
   count: number;
   underline?: string;
 }>`
-  flex: 1 0;
+  flex: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -79,11 +79,14 @@ const StyledTabHeadItem = styled.div<{
   &.uc-tabs-header-item {
     height: 100%;
     box-sizing: border-box;
+    cursor: pointer;
     &.uc-tabs-header-line {
-      position: relative;
-      background-color: transparent !important;
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
       transition: transform 0.3s ease;
-      transform: translate3d(${(props) => (props.value - props.count) * 100 + '%'}, 0px, 0px);
+      transform: translateX(${(props) => props.value * 100 + '%'});
 
       &::after {
         content: ' ';
@@ -119,7 +122,8 @@ const isValidtTabElement = (el) => {
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
   underline = '100%',
-  value = 0,
+  value,
+  defaultValue = 0,
   border = true,
   onChange,
   extra,
@@ -127,10 +131,38 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   ...otherProps
 }) => {
   const count = React.Children.count(children);
+  const underlineRef = useRef<HTMLElement>();
+
+  const [_v, _setV] = useState(() => {
+    return typeof value === 'undefined' ? defaultValue : value;
+  });
+
+  useUpdateEffect(() => {
+    if (value !== _v) {
+      _setV(value);
+    }
+  }, [value]);
+
+  useLayoutEffect(() => {
+    if (underline) {
+      const underlineEl = underlineRef.current;
+      const next = underlineEl.nextSibling as HTMLElement;
+      underlineEl.style.width = next.offsetWidth + 'px';
+    }
+  }, [underline]);
 
   return (
     <div {...otherProps} className={clsx('uc-tabs', className)}>
       <StyledTabHeaderWrap className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
+        {underline ? (
+          <StyledTabHeadItem
+            ref={underlineRef}
+            className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
+            count={count}
+            underline={underline}
+            value={_v}
+          />
+        ) : null}
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (isValidtTabElement(child)) {
             const { title = '', disabled } = child.props as TabProp;
@@ -138,12 +170,13 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
               <StyledTabHeadItem
                 key={index}
                 className={clsx('uc-tabs-header-item', {
-                  active: index === value,
+                  active: index === _v,
                   disabled: disabled,
                 })}
                 onClick={() => {
-                  if (!disabled && index !== value) {
+                  if (!disabled && index !== _v) {
                     onChange?.(index);
+                    _setV(index);
                   }
                 }}
               >
@@ -152,14 +185,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             );
           }
         })}
-        {underline ? (
-          <StyledTabHeadItem
-            className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
-            count={count}
-            underline={underline}
-            value={value}
-          />
-        ) : null}
+
         <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
       </StyledTabHeaderWrap>
       <StyledTabContentWrap className={`uc-tabs-content-wrap`}>

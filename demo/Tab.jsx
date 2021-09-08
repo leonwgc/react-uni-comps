@@ -81,7 +81,7 @@ export default function App() {
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <Tabs underline="40px" style={{ marginTop: 30 }} value={value} onChange={setValue}>
+      <Tabs underline="40px" style={{ marginTop: 30 }} onChange={console.log}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
