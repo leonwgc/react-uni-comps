@@ -1,9 +1,10 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import { throttle } from './helper';
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比和px*/
@@ -137,6 +138,14 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     return typeof value === 'undefined' ? defaultValue : value;
   });
 
+  const setUnderlineSize = useCallback(() => {
+    if (underline) {
+      const underlineEl = underlineRef.current;
+      const next = underlineEl.nextSibling as HTMLElement;
+      underlineEl.style.width = next.offsetWidth + 'px';
+    }
+  }, [underline]);
+
   useUpdateEffect(() => {
     if (value !== _v) {
       _setV(value);
@@ -144,12 +153,17 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   }, [value]);
 
   useLayoutEffect(() => {
-    if (underline) {
-      const underlineEl = underlineRef.current;
-      const next = underlineEl.nextSibling as HTMLElement;
-      underlineEl.style.width = next.offsetWidth + 'px';
-    }
-  }, [underline]);
+    setUnderlineSize();
+  }, [setUnderlineSize]);
+
+  useEffect(() => {
+    const throttledSetUnderlineSize = throttle(setUnderlineSize, 34);
+    window.addEventListener('resize', throttledSetUnderlineSize);
+
+    return () => {
+      window.removeEventListener('resize', throttledSetUnderlineSize);
+    };
+  }, []);
 
   return (
     <div {...otherProps} className={clsx('uc-tabs', className)}>
