@@ -15,8 +15,10 @@ declare const Button: React.ForwardRefExoticComponent<{
     dashed?: boolean;
     /** 设置危险按钮 */
     danger?: boolean;
+    /** 设置为展示的标签，比如div,a,button */
+    as?: any;
     /** 是否幽灵按钮 */
     ghost?: boolean;
     htmlType?: 'submit' | 'reset' | 'button' | undefined;
-} & React.HTMLAttributes<HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>>;
+} & React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>>;
 export default Button;
