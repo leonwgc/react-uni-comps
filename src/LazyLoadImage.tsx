@@ -1,13 +1,11 @@
 import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import styled from 'styled-components';
-import Spinner from './Spinner';
 
 const StyledPlaceholder = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.1);
 `;
 
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
@@ -41,9 +39,7 @@ const LazyLoadImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes
     };
 
     return !ready ? (
-      <StyledPlaceholder {...rest} ref={elRef} style={newStyle}>
-        <Spinner size={20} color="#999" />
-      </StyledPlaceholder>
+      <StyledPlaceholder {...rest} ref={elRef} style={newStyle} />
     ) : (
       <img
         {...rest}
