@@ -1,51 +1,63 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
+import styled from 'styled-components';
+import Spinner from './Spinner';
 
-type Props = React.ImgHTMLAttributes<HTMLImageElement>;
+const StyledPlaceholder = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+`;
 
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
-const LazyLoadImage: React.FC<Props> = ({ width, height, src, ...props }) => {
-  const ref = useRef();
-  const isInViewport = useInViewport(ref);
-  const [ready, setReady] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+const LazyLoadImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes<HTMLImageElement>>(
+  (props, ref) => {
+    const { width, height, style, src, ...rest } = props;
+    const elRef = useRef();
+    const isInViewport = useInViewport(elRef);
+    const [ready, setReady] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
+    useImperativeHandle(ref, () => elRef.current);
 
-  const { style, ...otherProps } = props;
+    useEffect(() => {
+      if (isInViewport && !ready) {
+        setReady(true);
+      }
+    }, [isInViewport, ready]);
 
-  const newStyle =
-    !ready || !loaded
-      ? {
-          display: 'inline-block',
-          filter: `blur(2px)`,
-          width,
-          height,
-          ...style,
-        }
-      : style;
+    const newStyle: React.CSSProperties =
+      !ready || !loaded
+        ? {
+            width,
+            height,
+            ...style,
+          }
+        : style;
 
-  const onImageLoaded = () => {
-    setLoaded(true);
-  };
+    const onImageLoaded = () => {
+      setLoaded(true);
+    };
 
-  return !ready ? (
-    <span ref={ref} style={newStyle} {...otherProps} />
-  ) : (
-    <img
-      ref={ref}
-      onLoad={onImageLoaded}
-      width={width}
-      height={height}
-      src={src}
-      style={newStyle}
-      {...otherProps}
-    />
-  );
-};
+    return !ready ? (
+      <StyledPlaceholder {...rest} ref={elRef} style={newStyle}>
+        <Spinner size={20} color="#999" />
+      </StyledPlaceholder>
+    ) : (
+      <img
+        {...rest}
+        ref={elRef}
+        onLoad={onImageLoaded}
+        width={width}
+        height={height}
+        src={src}
+        style={newStyle}
+      />
+    );
+  }
+);
+
+LazyLoadImage.displayName = 'UC-LazyLoadImage';
 
 export default LazyLoadImage;
