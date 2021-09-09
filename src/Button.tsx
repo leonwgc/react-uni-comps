@@ -25,7 +25,7 @@ type Props = {
   /** 是否幽灵按钮 */
   ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
-} & HTMLAttributes<HTMLButtonElement>;
+} & HTMLAttributes<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
 
 const StyledButton = styled.button`
   color: inherit;
@@ -128,6 +128,11 @@ const StyledButton = styled.button`
     border-style: dashed;
   }
 
+  &.anchor {
+    border: none;
+    ${getThemeColorCss('color')}
+  }
+
   &.disabled,
   &.disabled:hover,
   &.disabled:active {
@@ -174,6 +179,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           ghost: ghost,
           danger: danger,
           mobile: isMobile(),
+          anchor: rest.as === 'a',
         },
         className
       )}

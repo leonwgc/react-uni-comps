@@ -67,6 +67,10 @@ export default function App() {
         <Button color="#00bc8d" dashed style={{ height: 60 }}>
           hello
         </Button>
+
+        <Button as="a" target="_blank" href="https://www.baidu.com/">
+          link button
+        </Button>
       </Space>
       <div>
         <Button block style={{ marginBottom: 10 }}>
@@ -78,7 +82,9 @@ export default function App() {
         <Button type="primary" color="#00bc8d" block style={{ height: 40 }}>
           dr
         </Button>
-        <Button block style={{ height: 80 }}></Button>
+        <Button as="div" block style={{ height: 80 }}>
+          as div
+        </Button>
       </div>
       <div style={{ background: '#333', padding: 16 }}>
         <Button block type="primary" ghost color="#00bc8d">
