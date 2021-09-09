@@ -98,7 +98,7 @@ const StyledCell = styled.div`
 const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { title, content, lineColor = colors.border, children, ...rest } = props;
   if (content && children) {
-    throw new Error(`don't set content and children at the same time`);
+    throw new Error(`Cell: 不能同时设置content和子元素`);
   }
 
   return (
