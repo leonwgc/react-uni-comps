@@ -2,6 +2,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import { Transition } from 'react-transition-group';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import clsx from 'clsx';
 
 type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
@@ -28,18 +29,13 @@ const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
 const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { children, duration = 240, once = true, fromClass = 'from', toClass = 'to' } = props;
   const childrenRef = useRef();
-  const ls = useRef(true);
+  const lsRef = useRef(true);
   const isInViewport = useInViewport(childrenRef);
-  const { className = '', style = {} } = children?.props || {};
+
   useImperativeHandle(ref, () => childrenRef.current);
 
-  const newStyle = {
-    ...style,
-    transitionDuration: duration + 'ms',
-  };
-
   useUpdateEffect(() => {
-    ls.current = !once;
+    lsRef.current = !once;
   }, [isInViewport, once]);
 
   const count = React.Children.count(children);
@@ -50,12 +46,18 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   if (React.isValidElement(children)) {
     return (
-      <Transition in={isInViewport && ls.current} appear timeout={duration}>
+      <Transition in={isInViewport && lsRef.current} appear timeout={duration}>
         {(state) =>
           React.cloneElement(children, {
             ref: childrenRef,
-            className: `${className} ${getClassName(state, ls.current, fromClass, toClass)}`,
-            style: newStyle,
+            className: clsx(
+              children.props?.className,
+              getClassName(state, lsRef.current, fromClass, toClass)
+            ),
+            style: {
+              ...children.props?.style,
+              transitionDuration: duration + 'ms',
+            },
           })
         }
       </Transition>
