@@ -66,6 +66,10 @@ export default function App() {
         </Button>
 
         <Button onClick={() => setV((v) => !v)}>Toast comp toggle</Button>
+
+        <Button as="a" target="_blank" href="https://blueprintjs.com/docs/#core/components/tabs">
+          link button
+        </Button>
       </Space>
     </div>
   );

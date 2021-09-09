@@ -20,6 +20,8 @@ type Props = {
   dashed?: boolean;
   /** 设置危险按钮 */
   danger?: boolean;
+  /** 设置为展示的标签，比如div,a,button */
+  as?: string;
   /** 是否幽灵按钮 */
   ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
