@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
 import Spinner from './Spinner';
 import Space from './Space';
 import useInViewport from 'react-use-lib/es/useInViewport';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 
 const StyledPullupContainer = styled.div`
-  &.div-scroll {
+  &.dom-scroll {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 
@@ -55,19 +55,19 @@ type Props = {
   style?: React.CSSProperties;
   /** 容器 class */
   className?: string;
-  /** 使用window滚动，默认true,设置为false请给Pullup组件加个固定高度  */
+  /** 使用window滚动，默认true,设置为false请给Pullup组件加个固定高度,Pullup container将作为滚动容器  */
   useWindowScroll?: boolean;
 };
 
 /** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
-const Pullup = (props: Props): React.ReactNode => {
+const Pullup = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
     dataList = [],
     dataRender = () => null,
     fetchData,
     loadingText = (
       <Space>
-        <Spinner color="#909090" />
+        <Spinner color="#999" />
         加载中
       </Space>
     ),
@@ -75,21 +75,23 @@ const Pullup = (props: Props): React.ReactNode => {
     finished = false,
     className,
     useWindowScroll = true,
-    ...restProps
+    ...rest
   } = props;
 
   const [loading, setLoading] = useState(false);
-  const ref = useRef();
-  const wrapRef = useRef();
-  const isAtBottom = useInViewport(ref, useWindowScroll ? null : wrapRef);
+  const waypointRef = useRef();
+  const containerRef = useRef();
+  const isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
   const lastIsAtBottom = usePrevious(isAtBottom);
+
+  useImperativeHandle(ref, () => containerRef.current);
 
   useEffect(() => {
     if (
       !loading &&
       !finished &&
       ((!lastIsAtBottom && isAtBottom) ||
-        isInViewport(ref.current, useWindowScroll ? null : wrapRef.current))
+        isInViewport(waypointRef.current, useWindowScroll ? null : containerRef.current))
     ) {
       setLoading(true);
       fetchData()
@@ -104,21 +106,23 @@ const Pullup = (props: Props): React.ReactNode => {
 
   return (
     <StyledPullupContainer
-      className={clsx('uc-pullup-container', className, { 'div-scroll': !useWindowScroll })}
-      ref={wrapRef}
-      {...restProps}
+      {...rest}
+      className={clsx('uc-pullup-container', className, { 'dom-scroll': !useWindowScroll })}
+      ref={containerRef}
     >
       <div className="uc-pullup-wrapper">
         {dataList.map((item, idx) => {
           return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
         })}
       </div>
-      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={ref}></span>
+      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={waypointRef}></span>
       <div className="uc-pullup-footer">
         {loading ? loadingText : finished ? finishedText : null}
       </div>
     </StyledPullupContainer>
   );
-};
+});
+
+Pullup.displayName = 'UC-Pullup';
 
 export default Pullup;

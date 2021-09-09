@@ -27,6 +27,10 @@ const routes = [
     component: lazy(() => import('./Pullup')),
   },
   {
+    path: '/PullupDom',
+    component: lazy(() => import('./PullupDom')),
+  },
+  {
     path: '/Popup',
     component: lazy(() => import('./Popup')),
   },
@@ -78,14 +82,6 @@ const routes = [
     path: '/IndexList',
     component: lazy(() => import('./IndexList')),
   },
-  // {
-  //   path: '/Slide',
-  //   component: lazy(() => import('./Slide')),
-  // },
-  // {
-  //   path: '/SlideFull',
-  //   component: lazy(() => import('./SlideFull')),
-  // },
   {
     path: '/Popover',
     component: lazy(() => import('./Popover')),

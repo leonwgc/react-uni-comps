@@ -24,6 +24,24 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Pullup & ScrollTop
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('Pullup')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> PullupDom
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('PullupDom')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> AnimationElement
           </Space>
         }

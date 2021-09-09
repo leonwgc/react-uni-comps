@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop } from '../src';
+import { Spin } from 'antd';
+import { Button, Pullup, ScrollTop, Space } from '../src';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
 
-const App = () => {
+const PullupDom = () => {
   const [list, setList] = useState([]);
   const [finished, setFinished] = useState(false);
   const ref = useRef(0);
@@ -32,10 +33,15 @@ const App = () => {
   return (
     <>
       <Pullup
-        // dom滚动需要设置高度
-        // style={{ height: '80vh' }}
+        style={{ height: '80vh', marginTop: 10 }}
+        useWindowScroll={false}
         dataList={list}
-        // finishedText="没有更多数据了!"
+        finishedText="no more data :("
+        loadingText={
+          <Space>
+            <Spin></Spin> loading
+          </Space>
+        }
         fetchData={fetchData}
         finished={finished}
         dataRender={(data, index) => {
@@ -48,21 +54,20 @@ const App = () => {
       ></Pullup>
       <ScrollTop visibilityHeight={100}>
         <Button
-          type="primary"
           circle
           style={{
-            width: 40,
-            height: 40,
             position: 'fixed',
             bottom: 60,
             right: 20,
+            width: 80,
+            height: 80,
           }}
         >
-          top
+          回到顶部
         </Button>
       </ScrollTop>
     </>
   );
 };
 
-export default App;
+export default PullupDom;
