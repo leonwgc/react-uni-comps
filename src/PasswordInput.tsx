@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useImperativeHandle } from 'react';
+import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'react';
 import styled from 'styled-components';
 import * as colors from './colors';
 import clsx from 'clsx';
@@ -95,6 +95,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
 
   const autoFocusRef = useValueRef(autoFocus);
   const vRef = useValueRef(value);
+  const inputValueRef = useValueRef<string[]>(value.split(''));
 
   useImperativeHandle(ref, () => ({
     focus: () => {
@@ -109,6 +110,16 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
       inputRefArray.current[vRef.current.length].focus?.();
     }
   }, [autoFocusRef, vRef]);
+
+  // prev value check
+  const prevInputCheck = useCallback((idx) => {
+    for (let i = 0; i < idx; i++) {
+      if (!inputValueRef.current[i]) {
+        return false;
+      }
+    }
+    return true;
+  }, []);
 
   return (
     <StyledPasswordInput {...rest} className={clsx('uc-password-input', className)}>
@@ -126,12 +137,18 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
                 inputRefArray.current[idx] = r;
               }}
               onChange={(e) => {
-                const newValue = value.slice(0, idx) + e.target.value;
+                inputValueRef.current[idx] = e.target.value;
+                const newValue = inputValueRef.current.join('');
                 onChange?.(newValue);
                 if (n < length) {
                   inputRefArray.current[idx + 1]?.focus();
                 } else {
                   onFinish?.(newValue);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (!prevInputCheck(idx)) {
+                  e.preventDefault();
                 }
               }}
             />
