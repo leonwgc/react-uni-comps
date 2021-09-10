@@ -69,11 +69,11 @@ const StyledButton = styled.button`
     ${isMobile() ? '&:active' : '&:hover'} {
       opacity: 0.8;
     }
-
-    :hover {
+    &.pc:hover {
       ${getThemeColorCss('border-color')}
       ${getThemeColorCss('color')}
     }
+
     &.mobile:active {
       background-color: ${colors.activeBg};
     }
@@ -181,6 +181,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           ghost: ghost,
           danger: danger,
           mobile: isMobile(),
+          pc: !isMobile(),
           anchor: rest.as === 'a',
         },
         className
