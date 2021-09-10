@@ -1,21 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import * as colors from './colors';
 import clsx from 'clsx';
 import useValueRef from './hooks/useValueRef';
-import useUpdateEffect from './hooks/useUpdateEffect';
-import Button from './Button';
-import IconCross from './IconCross';
 
 type Props = {
-  value?: string;
+  /** 值 */
+  value: string;
+  /** 输入完成回调 */
   onFinish?: (v: string) => void;
+  /** 输入回调 */
+  onChange: (v: string) => void;
+  /** 输入长度 */
   length?: number;
+  /** 不显示原文 */
   mask?: boolean;
   style?: React.CSSProperties;
   className?: string;
+  /** 自动获取焦点 */
   autoFocus?: boolean;
-  closable?: boolean;
 };
 
 const StyledPasswordInput = styled.div`
@@ -75,7 +78,7 @@ const getArray = (len: number) => {
 };
 
 /** 密码输入框 */
-const PasswordInput = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref) => {
   const {
     value = '',
     length = 6,
@@ -83,24 +86,23 @@ const PasswordInput = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     mask = true,
     autoFocus = true,
     onFinish,
-    closable,
+    onChange,
     ...rest
   } = props;
-  const [v, setV] = useState(value);
 
   const arRef = useRef<Array<number>>(getArray(length));
   const inputRefArray = useRef<Array<HTMLInputElement>>([]);
 
   const autoFocusRef = useValueRef(autoFocus);
-  const vRef = useValueRef(v);
-  const onFinishRef = useValueRef(onFinish);
+  const vRef = useValueRef(value);
 
-  useUpdateEffect(() => {
-    setV(value);
-    if (value.length === length) {
-      onFinishRef.current?.(value);
-    }
-  }, [value, onFinishRef, length]);
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      setTimeout(() => {
+        inputRefArray.current[vRef.current.length].focus?.();
+      }, 60);
+    },
+  }));
 
   useEffect(() => {
     if (autoFocusRef.current) {
@@ -109,14 +111,14 @@ const PasswordInput = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, [autoFocusRef, vRef]);
 
   return (
-    <StyledPasswordInput ref={ref} {...rest} className={clsx('uc-password-input', className)}>
+    <StyledPasswordInput {...rest} className={clsx('uc-password-input', className)}>
       {arRef.current.map((n, idx) => (
         <div className={clsx('item')} key={n}>
-          {v.length >= n ? (
+          {value.length >= n ? (
             mask ? (
               <div className="dot" />
             ) : (
-              v[idx]
+              value[idx]
             )
           ) : (
             <input
@@ -124,12 +126,11 @@ const PasswordInput = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 inputRefArray.current[idx] = r;
               }}
               onChange={(e) => {
-                const newValue = v.slice(0, idx) + e.target.value;
-                setV(newValue);
+                const newValue = value.slice(0, idx) + e.target.value;
+                onChange?.(newValue);
                 if (n < length) {
                   inputRefArray.current[idx + 1]?.focus();
                 } else {
-                  // done
                   onFinish?.(newValue);
                 }
               }}
@@ -137,9 +138,6 @@ const PasswordInput = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           )}
         </div>
       ))}
-      {closable && v.length === length && (
-        <Button circle icon={<IconCross />} onClick={() => setV('')}></Button>
-      )}
     </StyledPasswordInput>
   );
 });

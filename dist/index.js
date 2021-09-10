@@ -3340,6 +3340,88 @@ AlertDialog.show = function (title, content) {
   }), container);
 };
 
+var _excluded$p = ["value", "length", "className", "mask", "autoFocus", "onFinish", "onChange"];
+
+var _templateObject$s;
+var StyledPasswordInput = styled__default['default'].div(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n  }\n"])), border, border);
+
+var getArray = function getArray(len) {
+  var ar = [];
+
+  for (var i = 0; i < len; i++) {
+    ar.push(i + 1);
+  }
+
+  return ar;
+};
+/** 密码输入框 */
+
+
+var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$value = props.value,
+      value = _props$value === void 0 ? '' : _props$value,
+      _props$length = props.length,
+      length = _props$length === void 0 ? 6 : _props$length,
+      className = props.className,
+      _props$mask = props.mask,
+      mask = _props$mask === void 0 ? true : _props$mask,
+      _props$autoFocus = props.autoFocus,
+      autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus,
+      onFinish = props.onFinish,
+      _onChange = props.onChange,
+      rest = _objectWithoutProperties(props, _excluded$p);
+
+  var arRef = React.useRef(getArray(length));
+  var inputRefArray = React.useRef([]);
+  var autoFocusRef = useValueRef(autoFocus);
+  var vRef = useValueRef(value);
+  React.useImperativeHandle(ref, function () {
+    return {
+      focus: function focus() {
+        setTimeout(function () {
+          var _inputRefArray$curren, _inputRefArray$curren2;
+
+          (_inputRefArray$curren = (_inputRefArray$curren2 = inputRefArray.current[vRef.current.length]).focus) === null || _inputRefArray$curren === void 0 ? void 0 : _inputRefArray$curren.call(_inputRefArray$curren2);
+        }, 60);
+      }
+    };
+  });
+  React.useEffect(function () {
+    if (autoFocusRef.current) {
+      var _inputRefArray$curren3, _inputRefArray$curren4;
+
+      (_inputRefArray$curren3 = (_inputRefArray$curren4 = inputRefArray.current[vRef.current.length]).focus) === null || _inputRefArray$curren3 === void 0 ? void 0 : _inputRefArray$curren3.call(_inputRefArray$curren4);
+    }
+  }, [autoFocusRef, vRef]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledPasswordInput, _extends({}, rest, {
+    className: clsx__default['default']('uc-password-input', className)
+  }), arRef.current.map(function (n, idx) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('item'),
+      key: n
+    }, value.length >= n ? mask ? /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "dot"
+    }) : value[idx] : /*#__PURE__*/React__default['default'].createElement("input", {
+      ref: function ref(r) {
+        inputRefArray.current[idx] = r;
+      },
+      onChange: function onChange(e) {
+        var newValue = value.slice(0, idx) + e.target.value;
+        _onChange === null || _onChange === void 0 ? void 0 : _onChange(newValue);
+
+        if (n < length) {
+          var _inputRefArray$curren5;
+
+          (_inputRefArray$curren5 = inputRefArray.current[idx + 1]) === null || _inputRefArray$curren5 === void 0 ? void 0 : _inputRefArray$curren5.focus();
+        } else {
+          onFinish === null || onFinish === void 0 ? void 0 : onFinish(newValue);
+        }
+      }
+    }));
+  }));
+});
+PasswordInput.displayName = 'UC-PasswordInput';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -3361,6 +3443,7 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
+exports.PasswordInput = PasswordInput;
 exports.Popover = Popover;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
