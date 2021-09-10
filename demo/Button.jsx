@@ -23,15 +23,15 @@ export default function App() {
           hello
         </Button>
 
-        <Button type="primary" color="gray">
-          hello
-        </Button>
+        <Button type="primary">hello</Button>
 
         <Button type="primary" loading>
           hello
         </Button>
 
-        <Button loading>hello</Button>
+        <Button loading onClick={() => console.log('hello')}>
+          hello
+        </Button>
 
         <Button danger>danger default</Button>
         <Button danger type="primary">

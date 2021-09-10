@@ -92,6 +92,7 @@ const StyledButton = styled.button`
       cursor: not-allowed;
       border-color: ${colors.border};
       color: #999;
+      pointer-events: none;
     }
   }
   &.primary {
