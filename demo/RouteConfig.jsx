@@ -130,6 +130,10 @@ const routes = [
     path: '/PasswordInput',
     component: lazy(() => import('./PasswordInput')),
   },
+  {
+    path: '/NumberKeyboard',
+    component: lazy(() => import('./NumberKeyboard')),
+  },
 ];
 
 export default routes;

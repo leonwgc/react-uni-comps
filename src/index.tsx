@@ -37,4 +37,5 @@ export { default as Affix } from './Affix';
 export { default as ActionSheet } from './ActionSheet';
 export { default as AlertDialog } from './AlertDialog';
 export { default as PasswordInput } from './PasswordInput';
+export { default as NumberKeyboard } from './NumberKeyboard';
 export * from './helper';

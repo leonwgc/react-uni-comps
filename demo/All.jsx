@@ -15,6 +15,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> NumberKeyboard
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('NumberKeyboard')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> PasswordInput
           </Space>
         }
