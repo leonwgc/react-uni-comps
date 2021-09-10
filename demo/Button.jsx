@@ -101,7 +101,7 @@ export default function App() {
         <Button ghost block type="primary">
           hello
         </Button>
-        <Button ghost block type="primary" danger>
+        <Button ghost block type="primary" danger loading>
           danger primary
         </Button>
 
