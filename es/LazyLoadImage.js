@@ -1,3 +1,15 @@
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
 var __assign = this && this.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -27,39 +39,39 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
+import styled from 'styled-components';
+var StyledPlaceholder = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 
-var LazyLoadImage = function LazyLoadImage(_a) {
-  var width = _a.width,
-      height = _a.height,
-      src = _a.src,
-      props = __rest(_a, ["width", "height", "src"]);
+var LazyLoadImage = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var width = props.width,
+      height = props.height,
+      style = props.style,
+      src = props.src,
+      rest = __rest(props, ["width", "height", "style", "src"]);
 
-  var ref = useRef();
-  var isInViewport = useInViewport(ref);
+  var elRef = useRef();
+  var isInViewport = useInViewport(elRef);
+
+  var _a = useState(false),
+      ready = _a[0],
+      setReady = _a[1];
 
   var _b = useState(false),
-      ready = _b[0],
-      setReady = _b[1];
+      loaded = _b[0],
+      setLoaded = _b[1];
 
-  var _c = useState(false),
-      loaded = _c[0],
-      setLoaded = _c[1];
-
+  useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
   useEffect(function () {
     if (isInViewport && !ready) {
       setReady(true);
     }
   }, [isInViewport, ready]);
-
-  var style = props.style,
-      otherProps = __rest(props, ["style"]);
-
   var newStyle = !ready || !loaded ? __assign({
-    display: 'inline-block',
-    filter: "blur(2px)",
     width: width,
     height: height
   }, style) : style;
@@ -68,17 +80,18 @@ var LazyLoadImage = function LazyLoadImage(_a) {
     setLoaded(true);
   };
 
-  return !ready ? /*#__PURE__*/React.createElement("span", __assign({
-    ref: ref,
+  return !ready ? /*#__PURE__*/React.createElement(StyledPlaceholder, __assign({}, rest, {
+    ref: elRef,
     style: newStyle
-  }, otherProps)) : /*#__PURE__*/React.createElement("img", __assign({
-    ref: ref,
+  })) : /*#__PURE__*/React.createElement("img", __assign({}, rest, {
+    ref: elRef,
     onLoad: onImageLoaded,
     width: width,
     height: height,
     src: src,
     style: newStyle
-  }, otherProps));
-};
-
+  }));
+});
+LazyLoadImage.displayName = 'UC-LazyLoadImage';
 export default LazyLoadImage;
+var templateObject_1;

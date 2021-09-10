@@ -17,6 +17,10 @@ declare const Button: React.ForwardRefExoticComponent<{
     danger?: boolean;
     /** 设置为展示的标签，比如div,a,button */
     as?: any;
+    /** 设置按钮的图标组件 */
+    icon?: React.ReactNode;
+    /** 设置按钮加载状态 */
+    loading?: boolean;
     /** 是否幽灵按钮 */
     ghost?: boolean;
     htmlType?: 'submit' | 'reset' | 'button' | undefined;

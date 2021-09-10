@@ -18,6 +18,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import { Transition } from 'react-transition-group';
 import useInViewport from 'react-use-lib/es/useInViewport';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import clsx from 'clsx';
 
 var getClassName = function getClassName(state, c, fromClass, toClass) {
   if (fromClass === void 0) {
@@ -48,25 +49,13 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _d = props.toClass,
       toClass = _d === void 0 ? 'to' : _d;
   var childrenRef = useRef();
-  var ls = useRef(true);
+  var lsRef = useRef(true);
   var isInViewport = useInViewport(childrenRef);
-
-  var _e = (children === null || children === void 0 ? void 0 : children.props) || {},
-      _f = _e.className,
-      className = _f === void 0 ? '' : _f,
-      _g = _e.style,
-      style = _g === void 0 ? {} : _g;
-
   useImperativeHandle(ref, function () {
     return childrenRef.current;
   });
-
-  var newStyle = __assign(__assign({}, style), {
-    transitionDuration: duration + 'ms'
-  });
-
   useUpdateEffect(function () {
-    ls.current = !once;
+    lsRef.current = !once;
   }, [isInViewport, once]);
   var count = React.Children.count(children);
 
@@ -76,14 +65,18 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   if ( /*#__PURE__*/React.isValidElement(children)) {
     return /*#__PURE__*/React.createElement(Transition, {
-      in: isInViewport && ls.current,
+      in: isInViewport && lsRef.current,
       appear: true,
       timeout: duration
     }, function (state) {
+      var _a, _b;
+
       return /*#__PURE__*/React.cloneElement(children, {
         ref: childrenRef,
-        className: className + " " + getClassName(state, ls.current, fromClass, toClass),
-        style: newStyle
+        className: clsx((_a = children.props) === null || _a === void 0 ? void 0 : _a.className, getClassName(state, lsRef.current, fromClass, toClass)),
+        style: __assign(__assign({}, (_b = children.props) === null || _b === void 0 ? void 0 : _b.style), {
+          transitionDuration: duration + 'ms'
+        })
       });
     });
   } else {

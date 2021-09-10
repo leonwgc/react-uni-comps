@@ -27,41 +27,43 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 /** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 
-var LazyLoadElement = function LazyLoadElement(_a) {
-  var width = _a.width,
-      height = _a.height,
-      children = _a.children,
-      props = __rest(_a, ["width", "height", "children"]);
+var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var width = props.width,
+      height = props.height,
+      style = props.style,
+      children = props.children,
+      rest = __rest(props, ["width", "height", "style", "children"]);
 
-  var ref = useRef();
-  var isInViewport = useInViewport(ref);
+  var elRef = useRef();
+  var isInViewport = useInViewport(elRef);
 
-  var _b = useState(false),
-      ready = _b[0],
-      setReady = _b[1];
+  var _a = useState(false),
+      ready = _a[0],
+      setReady = _a[1];
 
+  useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
   useEffect(function () {
     if (isInViewport && !ready) {
       setReady(true);
     }
   }, [isInViewport, ready]);
-
-  var style = props.style,
-      otherProps = __rest(props, ["style"]);
-
   var newStyle = !ready ? __assign({
     display: 'inline-block',
     width: width,
     height: height
   }, style) : style;
-  return !ready ? /*#__PURE__*/React.createElement("span", __assign({
-    ref: ref,
+  return !ready ? /*#__PURE__*/React.createElement("span", __assign({}, rest, {
+    ref: elRef,
     style: newStyle
-  }, otherProps)) : React.Children.only(children);
-};
-
+  })) : /*#__PURE__*/React.cloneElement(children, {
+    ref: elRef
+  });
+});
+LazyLoadElement.displayName = 'UC-LazyLoadElement';
 export default LazyLoadElement;

@@ -12,7 +12,7 @@ type ItemProps = {
   index: number;
   direction?: 'horizontal' | 'vertical';
   marginDirection: 'marginLeft' | 'marginRight';
-  split?: string | React.ReactNode;
+  split?: React.ReactNode;
   wrap?: boolean;
 };
 
@@ -73,15 +73,20 @@ const flexDirectionMap = {
   vertical: 'column',
 };
 
-export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
+type SpaceProps = {
   className?: string;
   style?: React.CSSProperties;
-  size?: number | [number, number] /** 间距大小 */;
-  direction?: 'horizontal' | 'vertical' /** 间距方向 */;
-  align?: Align /** 对齐方式 */;
-  split?: React.ReactNode /** 设置拆分 */;
-  wrap?: boolean /** 是否自动换行，仅在 horizontal 时有效 */;
-}
+  /** 间距大小 */
+  size?: number | [number, number];
+  /** 间距方向 */
+  direction?: 'horizontal' | 'vertical';
+  /** 对齐方式 */
+  align?: Align;
+  /** 设置拆分 */
+  split?: React.ReactNode;
+  /** 是否自动换行，仅在 horizontal 时有效 */
+  wrap?: boolean;
+};
 
 const StyledSpace = styled.div<{
   align: 'center' | 'flex-start' | 'flex-end' | 'baseline';

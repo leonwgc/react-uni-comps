@@ -57,7 +57,7 @@ var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
       rest = __rest(props, ["title", "content", "lineColor", "children"]);
 
   if (content && children) {
-    throw new Error("don't set content and children at the same time");
+    throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
   }
 
   return /*#__PURE__*/React.createElement(StyledWrapper, {

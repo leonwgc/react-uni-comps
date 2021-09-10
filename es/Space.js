@@ -42,7 +42,8 @@ var __rest = this && this.__rest || function (s, e) {
 import * as React from 'react';
 import { toArray } from './util';
 import styled from 'styled-components';
-import { detectFlexGapSupported } from './dom'; //#endregion
+import { detectFlexGapSupported } from './dom';
+import clsx from 'clsx';
 
 function SpaceItem(_a) {
   var _b;
@@ -185,12 +186,13 @@ var Space = function Space(props) {
   return /*#__PURE__*/React.createElement(StyledSpace, __assign({
     direction: direction,
     align: mergedAlign,
-    className: className,
+    className: clsx(className, 'uc-space'),
     style: __assign(__assign({}, gapStyle), style)
   }, otherProps), /*#__PURE__*/React.createElement(SpaceContext.Provider, {
     value: spaceContext
   }, nodes));
 };
 
+Space.displayName = 'UC-Space';
 export default Space;
 var templateObject_1;
