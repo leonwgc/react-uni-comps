@@ -27,6 +27,12 @@ export default function App() {
           hello
         </Button>
 
+        <Button type="primary" loading>
+          hello
+        </Button>
+
+        <Button loading>hello</Button>
+
         <Button danger>danger default</Button>
         <Button danger type="primary">
           danger primary
@@ -49,16 +55,11 @@ export default function App() {
         <Button>
           <SearchOutlined />
         </Button>
-        <Button type="primary">
-          <Space>
-            <SearchOutlined /> 搜索
-          </Space>
+        <Button type="primary" icon={<SearchOutlined />}>
+          搜索
         </Button>
-        <Button>
-          <Space>
-            <SearchOutlined /> 搜索
-          </Space>
-        </Button>
+
+        <Button icon={<SearchOutlined />}>搜索</Button>
 
         <Button color="#00bc8d">hello</Button>
         <Button color="#00bc8d" dashed>
@@ -82,7 +83,10 @@ export default function App() {
         <Button type="primary" color="#00bc8d" block style={{ height: 40 }}>
           dr
         </Button>
-        <Button as="div" block style={{ height: 80 }}>
+        <Button as="div" block style={{ height: 40 }}>
+          as div
+        </Button>
+        <Button as="div" block loading style={{ height: 40 }}>
           as div
         </Button>
       </div>

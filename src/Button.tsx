@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import * as colors from './colors';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
+import Spinner from './Spinner';
+import Space from './Space';
 
 type Props = {
   /** default 线框，primary 实色框 */
@@ -22,6 +24,10 @@ type Props = {
   danger?: boolean;
   /** 设置为展示的标签，比如div,a,button */
   as?: any;
+  /** 设置按钮的图标组件 */
+  icon?: React.ReactNode;
+  /** 设置按钮加载状态 */
+  loading?: boolean;
   /** 是否幽灵按钮 */
   ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
@@ -159,9 +165,13 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     circle,
     dashed,
     danger,
+    loading,
     ghost,
     ...rest
   } = props;
+
+  const icon =
+    props.icon || (loading ? <Spinner color={type === 'primary' ? '#fff' : '#999'} /> : null);
 
   return (
     <StyledButton
@@ -172,7 +182,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
         'uc-btn',
         type,
         {
-          disabled: disabled,
+          disabled: disabled || loading,
           block: block,
           circle: circle,
           dashed: dashed,
@@ -185,7 +195,16 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       )}
       {...rest}
     >
-      {children}
+      {icon && children ? (
+        <Space>
+          {icon}
+          {children}
+        </Space>
+      ) : icon ? (
+        icon
+      ) : (
+        children
+      )}
     </StyledButton>
   );
 });
