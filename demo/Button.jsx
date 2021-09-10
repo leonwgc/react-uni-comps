@@ -34,8 +34,14 @@ export default function App() {
         </Button>
 
         <Button danger>danger default</Button>
+        <Button danger disabled>
+          danger disabled
+        </Button>
         <Button danger type="primary">
           danger primary
+        </Button>
+        <Button danger type="primary" disabled>
+          danger primary disabled
         </Button>
         <Button type="primary" style={{ height: 40 }}>
           hello

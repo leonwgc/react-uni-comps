@@ -2,8 +2,7 @@ import * as React from 'react';
 import { toArray } from './util';
 import styled from 'styled-components';
 import { detectFlexGapSupported } from './dom';
-
-//#region types
+import clsx from 'clsx';
 
 type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 
@@ -16,7 +15,6 @@ type ItemProps = {
   split?: string | React.ReactNode;
   wrap?: boolean;
 };
-//#endregion
 
 function SpaceItem({
   className,
@@ -171,7 +169,7 @@ const Space: React.FC<SpaceProps> = (props) => {
     <StyledSpace
       direction={direction}
       align={mergedAlign}
-      className={className}
+      className={clsx(className, 'uc-space')}
       style={{
         ...gapStyle,
         ...style,
@@ -182,5 +180,7 @@ const Space: React.FC<SpaceProps> = (props) => {
     </StyledSpace>
   );
 };
+
+Space.displayName = 'UC-Space';
 
 export default Space;

@@ -84,16 +84,6 @@ const StyledButton = styled.button`
       color: ${colors.danger};
       border-color: ${colors.danger};
     }
-
-    &.disabled,
-    &.disabled:hover,
-    &.disabled:active {
-      opacity: 0.6;
-      cursor: not-allowed;
-      border-color: ${colors.border};
-      color: #999;
-      pointer-events: none;
-    }
   }
   &.primary {
     ${getThemeColorCss('background-color')}
@@ -145,6 +135,7 @@ const StyledButton = styled.button`
   &.disabled:active {
     opacity: 0.6;
     cursor: not-allowed;
+    pointer-events: none;
   }
   &.ghost,
   &.ghost:hover {
