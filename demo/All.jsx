@@ -15,6 +15,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> PasswordInput
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('PasswordInput')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> TransitionElement
           </Space>
         }

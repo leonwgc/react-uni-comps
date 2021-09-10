@@ -126,6 +126,10 @@ const routes = [
     path: '/AlertDialog',
     component: lazy(() => import('./AlertDialog')),
   },
+  {
+    path: '/PasswordInput',
+    component: lazy(() => import('./PasswordInput')),
+  },
 ];
 
 export default routes;
