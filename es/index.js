@@ -39,4 +39,5 @@ export { default as AlertDialog } from './AlertDialog';
 export { default as PasswordInput } from './PasswordInput';
 export { default as NumberKeyboard } from './NumberKeyboard';
 export { default as NumberKeyboardPicker } from './NumberKeyboardPicker';
+export { default as FingerGestureElement } from './FingerGestureElement';
 export * from './helper';

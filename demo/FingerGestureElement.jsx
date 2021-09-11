@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { transform } from 'typescript';
 import { FingerGestureElement, Toast } from '../src';
-import bird from './images/bird.png';
+import bird from './images/cat.jpg';
 
 export default function App() {
   const ref = useRef();
   const [data, setData] = useState();
 
-  const xyRef = useRef({ x: 0, y: 0 });
-  const rotateRef = useRef(0);
-
-  useRef(() => {
-    transform(ref.current);
-  }, []);
+  const thisRef = useRef({
+    x: 0,
+    y: 0,
+    scale: 1,
+    rotate: 0,
+  });
 
   return (
     <div className="app">
@@ -26,12 +25,14 @@ export default function App() {
         }}
         onPinch={(e) => {
           e.preventDefault();
-          e.target.style.transform = `scale(${e.zoom})`;
+          thisRef.current.scale = e.scale;
+          e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
         }}
         onRotate={(e) => {
           e.preventDefault();
-          rotateRef.current += e.angle;
-          e.target.style.transform = `rotate(${rotateRef.current}deg)`;
+          
+          thisRef.current.rotate += e.angle;
+          e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
         }}
         onSwipe={(e) => {
           e.preventDefault();
@@ -39,12 +40,17 @@ export default function App() {
         }}
         onPressMove={(e) => {
           e.preventDefault();
-          xyRef.current.x += e.deltaX;
-          xyRef.current.y += e.deltaY;
-          e.target.style.transform = `translate(${xyRef.current.x}px,${xyRef.current.y}px)`;
+          thisRef.current.x += e.deltaX;
+          thisRef.current.y += e.deltaY;
+          e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
         }}
       >
-        <img src={bird} width={200} height={200} />
+        <img
+          src={bird}
+          width={200}
+          height={200}
+          style={{ objectFit: 'scale-down', transformOrigin: 'center' }}
+        />
       </FingerGestureElement>
       <div>{JSON.stringify(data)}</div>
     </div>
