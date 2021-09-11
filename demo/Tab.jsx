@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Spinner, AnimationElement, Tabs, Button } from '../src';
+import { Spinner, AnimationElement, Tabs, Button, Divider, Toast } from '../src';
 import 'animate.css';
 import './Tab.less';
 
@@ -18,7 +18,8 @@ const StyledTabs1 = styled(Tabs)`
 `;
 
 const StyledContent = styled.div`
-  padding: 20px;
+  padding: 30px 20px;
+  background-color: #eee;
 `;
 
 const StyledTabs = styled(Tabs)`
@@ -55,6 +56,7 @@ export default function App() {
 
   return (
     <StyledApp>
+      <Divider>controlled & extra & no content</Divider>
       <StyledTabs1
         value={value}
         onChange={setValue}
@@ -81,7 +83,27 @@ export default function App() {
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <Tabs underline="40px" style={{ marginTop: 30 }} onChange={console.log}>
+      <Divider>swipe</Divider>
+
+      <Tabs swipe>
+        <Tabs.Tab title="title1">
+          <StyledContent>content1</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title2">
+          <StyledContent>content2</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title3">
+          <StyledContent>content3</StyledContent>
+        </Tabs.Tab>
+      </Tabs>
+
+      <Divider>uncontrolled tab/scroll swipe</Divider>
+      <Tabs
+        swipe
+        underline="40px"
+        style={{ marginTop: 30 }}
+        onChange={(v) => Toast.show(v + '', 1000)}
+      >
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
@@ -107,7 +129,9 @@ export default function App() {
         <Tabs.Tab title="title5">
           <StyledContent>content5</StyledContent>
         </Tabs.Tab>
-        <Tabs.Tab title="title6" disabled></Tabs.Tab>
+        <Tabs.Tab title="title6" disabled>
+          disabled
+        </Tabs.Tab>
         <Tabs.Tab title="title7">
           <StyledContent>content7</StyledContent>
         </Tabs.Tab>

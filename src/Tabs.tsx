@@ -2,9 +2,14 @@ import React, { useState, useLayoutEffect, useRef, useCallback, useEffect, RefOb
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
+import useGesture from './hooks/useGesture';
+import useThisRef from './hooks/useThisRef';
+import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import { throttle } from './helper';
+
+const isMobileEnv = isMobile();
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比和px*/
@@ -15,6 +20,8 @@ type TabsProp = {
   defaultValue?: number;
   /** 选择的tab index,0 */
   value?: number;
+  /** 是否支持滑动切换(移动端)*/
+  swipe?: boolean;
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;
   /** 头部右侧区域内容 */
@@ -131,15 +138,44 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   border = true,
   onChange,
   extra,
+  swipe,
   className,
-  ...restProps
+  ...rest
 }) => {
   const count = React.Children.count(children);
   const underlineRef = useRef<HTMLDivElement>();
+  const contentWrapRef = useRef<HTMLDivElement>();
 
-  const [_v, _setV] = useState(() => {
-    return typeof value === 'undefined' ? defaultValue : value;
+  const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
+
+  const thisRef = useThisRef({
+    onChange,
+    _v,
   });
+
+  useGesture(contentWrapRef, {
+    onSwipe: (e) => {
+      e.preventDefault();
+      const current = thisRef.current._v;
+      if (e.direction === 'right' && current > 0) {
+        // go to left tab
+        const prevIndex = current - 1;
+        _setV(prevIndex);
+        thisRef.current.onChange?.(prevIndex);
+      } else if (e.direction === 'left' && current < count - 1) {
+        // go to right tab
+        const nextIndex = current + 1;
+        _setV(nextIndex);
+        thisRef.current.onChange?.(nextIndex);
+      }
+    },
+  });
+
+  useUpdateEffect(() => {
+    if (value !== _v) {
+      _setV(value);
+    }
+  }, [value]);
 
   const setUnderlineSize = useCallback(() => {
     if (underline) {
@@ -150,12 +186,6 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
       }
     }
   }, [underline]);
-
-  useUpdateEffect(() => {
-    if (value !== _v) {
-      _setV(value);
-    }
-  }, [value]);
 
   useLayoutEffect(() => {
     setUnderlineSize();
@@ -172,7 +202,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   }, []);
 
   return (
-    <StyledWrapper {...restProps} className={clsx('uc-tabs', className)}>
+    <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>
       <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
         {underline ? (
           <StyledTabHeadItem
@@ -209,12 +239,12 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
           <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
         ) : null}
       </div>
-      <div className={`uc-tabs-content-wrap`}>
+      <div className={`uc-tabs-content-wrap`} ref={isMobileEnv && swipe ? contentWrapRef : null}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (isValidtTabElement(child)) {
-            const { children } = child.props as TabProp;
+            const { children, disabled } = child.props as TabProp;
             const style: React.CSSProperties = {};
-            if (index !== value) {
+            if (index !== _v || disabled) {
               style.display = 'none';
             }
             return (

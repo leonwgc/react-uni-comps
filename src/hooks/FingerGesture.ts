@@ -66,7 +66,7 @@ function wrapFunc(el, handler) {
   return handlerAdmin;
 }
 
-export type Option = {
+export type Option = Partial<{
   onTouchStart: () => void;
   onTouchMove: () => void;
   onTouchEnd: () => void;
@@ -82,7 +82,7 @@ export type Option = {
   onPressMove: (evt: SyntheticEvent & { deltaX: number; deltaY: number }) => void;
   onSwipe: (evt: SyntheticEvent & { direction: 'left' | 'right' | 'up' | 'down' }) => void;
   onTwoFingerPressMove: () => void;
-};
+}>;
 
 /** 手势操作 */
 const FingerGesture: (el: Element, option: Option) => void = function (
