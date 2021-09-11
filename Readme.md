@@ -85,9 +85,15 @@ yarn add react-uni-comps
 
 #### 34. NoticeBar (通告栏)
 
-#### 35. ActionSheet (动作面板)
+#### 35. ActionSheet (移动端,动作面板)
 
 #### 36. AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗)
+
+#### 37. PasswordInput (移动端/pc, 密码输入框 )
+
+#### 38. NumberKeyboard (移动端,数字/身份证虚拟键盘 )
+
+#### 39. NumberKeyboardPicker (移动端, 数字/身份证虚拟键盘底部弹出)
 
 ### 按需加载
 

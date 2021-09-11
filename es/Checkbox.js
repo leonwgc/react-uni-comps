@@ -44,9 +44,10 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import IconTick from './IconTick';
 import * as colors from './colors';
+import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 var StyledCheckboxWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
-var StyledCheckbox = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_a) {
+var StyledCheckbox = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &.pc:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &.pc:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_a) {
   var size = _a.size;
   return size;
 }, function (_a) {
@@ -88,7 +89,9 @@ var Checkbox = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, /*#__PURE__*/React.createElement(StyledCheckbox, __assign({
     className: clsx({
       checked: _checked,
-      disabled: disabled
+      disabled: disabled,
+      mobile: isMobile(),
+      pc: !isMobile()
     }),
     size: size,
     disabled: disabled

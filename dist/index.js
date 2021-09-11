@@ -906,7 +906,7 @@ Spinner.displayName = 'UC-Spinner';
 var _excluded$4 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
 var _templateObject$5;
-var StyledPullupContainer = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 10px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 10px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n    padding-bottom: constant(safe-area-inset-bottom);\n    padding-bottom: env(safe-area-inset-bottom);\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -1499,7 +1499,7 @@ var _excluded$b = ["size", "onChange", "defaultChecked", "checked", "disabled", 
 
 var _templateObject$d, _templateObject2$3;
 var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
-var StyledCheckbox = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
+var StyledCheckbox = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &.pc:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -1542,7 +1542,9 @@ var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props
   }, /*#__PURE__*/React__default['default'].createElement(StyledCheckbox, _extends({
     className: clsx__default['default']({
       checked: _checked,
-      disabled: disabled
+      disabled: disabled,
+      mobile: isMobile(),
+      pc: !isMobile()
     }),
     size: size,
     disabled: disabled
