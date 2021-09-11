@@ -18,26 +18,26 @@ export default function App() {
     <div className="app">
       <FingerGestureElement
         ref={ref}
-        doubleTap={() => {
+        onDoubleTap={() => {
           Toast.show('doubleTap', 1000);
         }}
-        tap={(e) => {
+        onTap={(e) => {
           console.log(e);
         }}
-        pinch={(e) => {
+        onPinch={(e) => {
           e.preventDefault();
           e.target.style.transform = `scale(${e.zoom})`;
         }}
-        rotate={(e) => {
+        onRotate={(e) => {
           e.preventDefault();
           rotateRef.current += e.angle;
           e.target.style.transform = `rotate(${rotateRef.current}deg)`;
         }}
-        swipe={(e) => {
+        onSwipe={(e) => {
           e.preventDefault();
           console.log('swipe', e.direction);
         }}
-        pressMove={(e) => {
+        onPressMove={(e) => {
           e.preventDefault();
           xyRef.current.x += e.deltaX;
           xyRef.current.y += e.deltaY;

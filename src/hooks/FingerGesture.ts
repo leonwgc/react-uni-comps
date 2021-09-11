@@ -65,21 +65,21 @@ function wrapFunc(el, handler) {
 }
 
 export type Option = {
-  touchStart: () => void;
-  touchMove: () => void;
-  touchEnd: () => void;
-  touchCancel: () => void;
-  multipointStart: () => void;
-  multipointEnd: () => void;
-  tap: () => void;
-  doubleTap: () => void;
-  longTap: () => void;
-  singleTap: () => void;
-  rotate: (evt: { angle: number }) => void;
-  pinch: (evt: { zoom: number }) => void;
-  pressMove: (evt: { deltaX: number; deltaY: number }) => void;
-  swipe: (evt: { direction: string }) => void;
-  twoFingerPressMove: () => void;
+  onTouchStart: () => void;
+  onTouchMove: () => void;
+  onTouchEnd: () => void;
+  onTouchCancel: () => void;
+  onMultipointStart: () => void;
+  onMultipointEnd: () => void;
+  onTap: () => void;
+  onDoubleTap: () => void;
+  onLongTap: () => void;
+  onSingleTap: () => void;
+  onRotate: (evt: { angle: number }) => void;
+  onPinch: (evt: { zoom: number }) => void;
+  onPressMove: (evt: { deltaX: number; deltaY: number }) => void;
+  onSwipe: (evt: { direction: string }) => void;
+  onTwoFingerPressMove: () => void;
 };
 
 /** 手势操作 */
@@ -106,21 +106,21 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = function () {};
 
-  this.rotate = wrapFunc(this.element, option.rotate || noop);
-  this.touchStart = wrapFunc(this.element, option.touchStart || noop);
-  this.multipointStart = wrapFunc(this.element, option.multipointStart || noop);
-  this.multipointEnd = wrapFunc(this.element, option.multipointEnd || noop);
-  this.pinch = wrapFunc(this.element, option.pinch || noop);
-  this.swipe = wrapFunc(this.element, option.swipe || noop);
-  this.tap = wrapFunc(this.element, option.tap || noop);
-  this.doubleTap = wrapFunc(this.element, option.doubleTap || noop);
-  this.longTap = wrapFunc(this.element, option.longTap || noop);
-  this.singleTap = wrapFunc(this.element, option.singleTap || noop);
-  this.pressMove = wrapFunc(this.element, option.pressMove || noop);
-  this.twoFingerPressMove = wrapFunc(this.element, option.twoFingerPressMove || noop);
-  this.touchMove = wrapFunc(this.element, option.touchMove || noop);
-  this.touchEnd = wrapFunc(this.element, option.touchEnd || noop);
-  this.touchCancel = wrapFunc(this.element, option.touchCancel || noop);
+  this.rotate = wrapFunc(this.element, option.onRotate || noop);
+  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
+  this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
+  this.pinch = wrapFunc(this.element, option.onPinch || noop);
+  this.swipe = wrapFunc(this.element, option.onSwipe || noop);
+  this.tap = wrapFunc(this.element, option.onTap || noop);
+  this.doubleTap = wrapFunc(this.element, option.onDoubleTap || noop);
+  this.longTap = wrapFunc(this.element, option.onLongTap || noop);
+  this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
+  this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
+  this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
+  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
+  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
+  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
 
   this._cancelAllHandler = this.cancelAll.bind(this);
 
