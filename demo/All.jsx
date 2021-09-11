@@ -12,7 +12,16 @@ export default function All() {
   }, []);
   return (
     <div>
-       <Cell
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> FingerGestureElement
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('FingerGestureElement')}
+      ></Cell>
+      <Cell
         title={
           <Space>
             <SoundOutlined /> NumberKeyboardPicker

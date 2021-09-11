@@ -138,6 +138,10 @@ const routes = [
     path: '/NumberKeyboardPicker',
     component: lazy(() => import('./NumberKeyboardPicker')),
   },
+  {
+    path: '/FingerGestureElement',
+    component: lazy(() => import('./FingerGestureElement')),
+  },
 ];
 
 export default routes;
