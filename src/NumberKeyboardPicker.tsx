@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import NumberKeyboard from './NumberKeyboard';
@@ -11,7 +11,7 @@ type Props = {
   /** 关闭 */
   onClose: () => void;
   className?: string;
-  /** 按键回调 */
+  /** 按键回调,返回输入的字符串 */
   onChange: (str: string) => void;
 };
 

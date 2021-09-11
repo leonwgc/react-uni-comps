@@ -19,7 +19,13 @@ export default function App() {
         ref={ref}
       />
 
-      <PasswordInput style={{ marginTop: 30 }} value={v} length={6} onChange={setV} />
+      <PasswordInput
+        virtualKeyboard={false}
+        style={{ marginTop: 30 }}
+        value={v}
+        length={6}
+        onChange={setV}
+      />
 
       <div style={{ margin: 20 }}>
         <Button

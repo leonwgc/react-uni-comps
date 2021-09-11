@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'reac
 import styled from 'styled-components';
 import * as colors from './colors';
 import clsx from 'clsx';
+import { isMobile } from './dom';
 import useValueRef from './hooks/useValueRef';
 
 type Props = {
@@ -11,12 +12,14 @@ type Props = {
   onFinish?: (v: string) => void;
   /** 输入回调 */
   onChange: (v: string) => void;
-  /** 获取焦点回调 */
+  /** 获取焦点回调,virtualKeyboard为false才生效 */
   onFocus?: () => void;
   /** 输入长度 */
   length?: number;
   /** 不显示原文 */
   mask?: boolean;
+  /** 使用虚拟键盘NumberKeyboard,移动端搭配使用，不弹出原生输入框 ,默认根据环境判断*/
+  virtualKeyboard?: boolean;
   style?: React.CSSProperties;
   className?: string;
   /** 自动获取焦点 */
@@ -68,6 +71,25 @@ const StyledPasswordInput = styled.div`
       -webkit-appearance: none;
       box-shadow: none;
     }
+    @keyframes blink {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    .virtual-input {
+      &.blink {
+        width: 1px;
+        height: 50%;
+        background-color: #333;
+        animation: 1s blink infinite;
+      }
+    }
   }
 `;
 
@@ -87,6 +109,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
     className,
     mask = true,
     autoFocus = true,
+    virtualKeyboard = isMobile(),
     onFinish,
     onFocus,
     onChange,
@@ -104,7 +127,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
   useImperativeHandle(ref, () => ({
     focus: () => {
       setTimeout(() => {
-        inputRefArray.current[vRef.current.length].focus?.();
+        inputRefArray.current[vRef.current.length]?.focus?.();
       }, 60);
     },
   }));
@@ -117,7 +140,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
 
   useEffect(() => {
     if (autoFocusRef.current) {
-      inputRefArray.current[vRef.current.length].focus?.();
+      inputRefArray.current[vRef.current.length]?.focus?.();
     }
   }, [autoFocusRef, vRef]);
 
@@ -141,7 +164,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
             ) : (
               value[idx]
             )
-          ) : (
+          ) : !virtualKeyboard ? (
             <input
               ref={(r) => {
                 inputRefArray.current[idx] = r;
@@ -161,6 +184,8 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
               }}
               onFocus={onFocus}
             />
+          ) : (
+            <div className={clsx('virtual-input', { blink: value.length === idx })} />
           )}
         </div>
       ))}
