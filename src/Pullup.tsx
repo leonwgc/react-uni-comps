@@ -23,6 +23,8 @@ const StyledPullupContainer = styled.div`
     font-size: 14px;
     justify-content: center;
     align-items: center;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 `;
 

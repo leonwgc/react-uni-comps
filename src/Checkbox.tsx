@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import IconTick from './IconTick';
 import * as colors from './colors';
+import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 
 type Props = {
@@ -47,7 +48,7 @@ const StyledCheckbox = styled.div<{
   background: #fff;
   transition: all 0.3s ease;
 
-  &:hover {
+  &.pc:hover {
     ${getThemeColorCss('border', '1px solid')}
   }
 
@@ -85,7 +86,12 @@ const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       }}
     >
       <StyledCheckbox
-        className={clsx({ checked: _checked, disabled: disabled })}
+        className={clsx({
+          checked: _checked,
+          disabled: disabled,
+          mobile: isMobile(),
+          pc: !isMobile(),
+        })}
         size={size}
         disabled={disabled}
         {...rest}
