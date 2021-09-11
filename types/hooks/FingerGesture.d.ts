@@ -1,5 +1,5 @@
 import { SyntheticEvent } from 'react';
-export declare type Option = {
+export declare type Option = Partial<{
     onTouchStart: () => void;
     onTouchMove: () => void;
     onTouchEnd: () => void;
@@ -24,7 +24,7 @@ export declare type Option = {
         direction: 'left' | 'right' | 'up' | 'down';
     }) => void;
     onTwoFingerPressMove: () => void;
-};
+}>;
 /** 手势操作 */
 declare const FingerGesture: (el: Element, option: Option) => void;
 export default FingerGesture;

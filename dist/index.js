@@ -1062,6 +1062,371 @@ var primary = '#004bcc';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
 
+var getLen = function getLen(v) {
+  return Math.sqrt(v.x * v.x + v.y * v.y);
+};
+
+function dot(v1, v2) {
+  return v1.x * v2.x + v1.y * v2.y;
+}
+
+function getAngle(v1, v2) {
+  var mr = getLen(v1) * getLen(v2);
+  if (mr === 0) return 0;
+  var r = dot(v1, v2) / mr;
+  if (r > 1) r = 1;
+  return Math.acos(r);
+}
+
+function cross(v1, v2) {
+  return v1.x * v2.y - v2.x * v1.y;
+}
+
+function getRotateAngle(v1, v2) {
+  var angle = getAngle(v1, v2);
+
+  if (cross(v1, v2) > 0) {
+    angle *= -1;
+  }
+
+  return angle * 180 / Math.PI;
+}
+
+var HandlerAdmin = function HandlerAdmin(el) {
+  this.handlers = [];
+  this.el = el;
+};
+
+HandlerAdmin.prototype.add = function (handler) {
+  this.handlers.push(handler);
+};
+
+HandlerAdmin.prototype.del = function (handler) {
+  if (!handler) this.handlers = [];
+
+  for (var i = this.handlers.length; i >= 0; i--) {
+    if (this.handlers[i] === handler) {
+      this.handlers.splice(i, 1);
+    }
+  }
+};
+
+HandlerAdmin.prototype.dispatch = function () {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  for (var i = 0, len = this.handlers.length; i < len; i++) {
+    var _handler$apply;
+
+    var handler = this.handlers[i];
+    (_handler$apply = handler.apply) === null || _handler$apply === void 0 ? void 0 : _handler$apply.call(handler, this.el, args);
+  }
+};
+
+function wrapFunc(el, handler) {
+  var handlerAdmin = new HandlerAdmin(el);
+  handlerAdmin.add(handler);
+  return handlerAdmin;
+}
+
+/** 手势操作 */
+var FingerGesture = function FingerGesture(el, option) {
+  this.element = typeof el == 'string' ? document.querySelector(el) : el;
+  this.start = this.start.bind(this);
+  this.move = this.move.bind(this);
+  this.end = this.end.bind(this);
+  this.cancel = this.cancel.bind(this);
+  this.element.addEventListener('touchstart', this.start, false);
+  this.element.addEventListener('touchmove', this.move, false);
+  this.element.addEventListener('touchend', this.end, false);
+  this.element.addEventListener('touchcancel', this.cancel, false);
+  this.preV = {
+    x: null,
+    y: null
+  };
+  this.pinchStartLen = null;
+  this.scale = 1;
+  this.isDoubleTap = false; // eslint-disable-next-line @typescript-eslint/no-empty-function
+
+  var noop = function noop() {};
+
+  this.rotate = wrapFunc(this.element, option.onRotate || noop);
+  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
+  this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
+  this.pinch = wrapFunc(this.element, option.onPinch || noop);
+  this.swipe = wrapFunc(this.element, option.onSwipe || noop);
+  this.tap = wrapFunc(this.element, option.onTap || noop);
+  this.doubleTap = wrapFunc(this.element, option.onDoubleTap || noop);
+  this.longTap = wrapFunc(this.element, option.onLongTap || noop);
+  this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
+  this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
+  this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
+  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
+  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
+  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
+  this._cancelAllHandler = this.cancelAll.bind(this);
+  window.addEventListener('scroll', this._cancelAllHandler);
+  this.delta = null;
+  this.last = null;
+  this.now = null;
+  this.tapTimeout = null;
+  this.singleTapTimeout = null;
+  this.longTapTimeout = null;
+  this.swipeTimeout = null;
+  this.x1 = this.x2 = this.y1 = this.y2 = null;
+  this.preTapPosition = {
+    x: null,
+    y: null
+  };
+};
+
+FingerGesture.prototype = {
+  start: function start(evt) {
+    if (!evt.touches) return;
+    this.now = Date.now();
+    this.x1 = evt.touches[0].pageX;
+    this.y1 = evt.touches[0].pageY;
+    this.delta = this.now - (this.last || this.now);
+    this.touchStart.dispatch(evt, this.element);
+
+    if (this.preTapPosition.x !== null) {
+      this.isDoubleTap = this.delta > 0 && this.delta <= 250 && Math.abs(this.preTapPosition.x - this.x1) < 30 && Math.abs(this.preTapPosition.y - this.y1) < 30;
+      if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
+    }
+
+    this.preTapPosition.x = this.x1;
+    this.preTapPosition.y = this.y1;
+    this.last = this.now;
+    var preV = this.preV,
+        len = evt.touches.length;
+
+    if (len > 1) {
+      this._cancelLongTap();
+
+      this._cancelSingleTap();
+
+      var v = {
+        x: evt.touches[1].pageX - this.x1,
+        y: evt.touches[1].pageY - this.y1
+      };
+      preV.x = v.x;
+      preV.y = v.y;
+      this.pinchStartLen = getLen(preV);
+      this.multipointStart.dispatch(evt, this.element);
+    }
+
+    this._preventTap = false;
+    this.longTapTimeout = setTimeout(function () {
+      this.longTap.dispatch(evt, this.element);
+      this._preventTap = true;
+    }.bind(this), 750);
+  },
+  move: function move(evt) {
+    if (!evt.touches) return;
+    var preV = this.preV,
+        len = evt.touches.length,
+        currentX = evt.touches[0].pageX,
+        currentY = evt.touches[0].pageY;
+    this.isDoubleTap = false;
+
+    if (len > 1) {
+      var sCurrentX = evt.touches[1].pageX,
+          sCurrentY = evt.touches[1].pageY;
+      var v = {
+        x: evt.touches[1].pageX - currentX,
+        y: evt.touches[1].pageY - currentY
+      };
+
+      if (preV.x !== null) {
+        if (this.pinchStartLen > 0) {
+          evt.scale = getLen(v) / this.pinchStartLen;
+          this.pinch.dispatch(evt, this.element);
+        }
+
+        evt.angle = getRotateAngle(v, preV);
+        this.rotate.dispatch(evt, this.element);
+      }
+
+      preV.x = v.x;
+      preV.y = v.y;
+
+      if (this.x2 !== null && this.sx2 !== null) {
+        evt.deltaX = (currentX - this.x2 + sCurrentX - this.sx2) / 2;
+        evt.deltaY = (currentY - this.y2 + sCurrentY - this.sy2) / 2;
+      } else {
+        evt.deltaX = 0;
+        evt.deltaY = 0;
+      }
+
+      this.twoFingerPressMove.dispatch(evt, this.element);
+      this.sx2 = sCurrentX;
+      this.sy2 = sCurrentY;
+    } else {
+      if (this.x2 !== null) {
+        evt.deltaX = currentX - this.x2;
+        evt.deltaY = currentY - this.y2; //move事件中添加对当前触摸点到初始触摸点的判断，
+        //如果曾经大于过某个距离(比如10),就认为是移动到某个地方又移回来，应该不再触发tap事件才对。
+
+        var movedX = Math.abs(this.x1 - this.x2),
+            movedY = Math.abs(this.y1 - this.y2);
+
+        if (movedX > 10 || movedY > 10) {
+          this._preventTap = true;
+        }
+      } else {
+        evt.deltaX = 0;
+        evt.deltaY = 0;
+      }
+
+      this.pressMove.dispatch(evt, this.element);
+    }
+
+    this.touchMove.dispatch(evt, this.element);
+
+    this._cancelLongTap();
+
+    this.x2 = currentX;
+    this.y2 = currentY;
+
+    if (len > 1) {
+      evt.preventDefault();
+    }
+  },
+  end: function end(evt) {
+    if (!evt.changedTouches) return;
+
+    this._cancelLongTap();
+
+    var self = this;
+
+    if (evt.touches.length < 2) {
+      this.multipointEnd.dispatch(evt, this.element);
+      this.sx2 = this.sy2 = null;
+    } //swipe
+
+
+    if (this.x2 && Math.abs(this.x1 - this.x2) > 30 || this.y2 && Math.abs(this.y1 - this.y2) > 30) {
+      evt.direction = this._swipeDirection(this.x1, this.x2, this.y1, this.y2);
+      this.swipeTimeout = setTimeout(function () {
+        self.swipe.dispatch(evt, self.element);
+      }, 0);
+    } else {
+      this.tapTimeout = setTimeout(function () {
+        if (!self._preventTap) {
+          self.tap.dispatch(evt, self.element);
+        } // trigger double tap immediately
+
+
+        if (self.isDoubleTap) {
+          self.doubleTap.dispatch(evt, self.element);
+          self.isDoubleTap = false;
+        }
+      }, 0);
+
+      if (!self.isDoubleTap) {
+        self.singleTapTimeout = setTimeout(function () {
+          self.singleTap.dispatch(evt, self.element);
+        }, 250);
+      }
+    }
+
+    this.touchEnd.dispatch(evt, this.element);
+    this.preV.x = 0;
+    this.preV.y = 0;
+    this.scale = 1;
+    this.pinchStartLen = null;
+    this.x1 = this.x2 = this.y1 = this.y2 = null;
+  },
+  cancelAll: function cancelAll() {
+    this._preventTap = true;
+    clearTimeout(this.singleTapTimeout);
+    clearTimeout(this.tapTimeout);
+    clearTimeout(this.longTapTimeout);
+    clearTimeout(this.swipeTimeout);
+  },
+  cancel: function cancel(evt) {
+    this.cancelAll();
+    this.touchCancel.dispatch(evt, this.element);
+  },
+  _cancelLongTap: function _cancelLongTap() {
+    clearTimeout(this.longTapTimeout);
+  },
+  _cancelSingleTap: function _cancelSingleTap() {
+    clearTimeout(this.singleTapTimeout);
+  },
+  _swipeDirection: function _swipeDirection(x1, x2, y1, y2) {
+    return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? x1 - x2 > 0 ? 'left' : 'right' : y1 - y2 > 0 ? 'up' : 'down';
+  },
+  on: function on(evt, handler) {
+    if (this[evt]) {
+      this[evt].add(handler);
+    }
+  },
+  off: function off(evt, handler) {
+    if (this[evt]) {
+      this[evt].del(handler);
+    }
+  },
+  destroy: function destroy() {
+    if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
+    if (this.tapTimeout) clearTimeout(this.tapTimeout);
+    if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
+    if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
+    this.element.removeEventListener('touchstart', this.start);
+    this.element.removeEventListener('touchmove', this.move);
+    this.element.removeEventListener('touchend', this.end);
+    this.element.removeEventListener('touchcancel', this.cancel);
+    this.rotate.del();
+    this.touchStart.del();
+    this.multipointStart.del();
+    this.multipointEnd.del();
+    this.pinch.del();
+    this.swipe.del();
+    this.tap.del();
+    this.doubleTap.del();
+    this.longTap.del();
+    this.singleTap.del();
+    this.pressMove.del();
+    this.twoFingerPressMove.del();
+    this.touchMove.del();
+    this.touchEnd.del();
+    this.touchCancel.del();
+    this.preV = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = this.singleTapTimeout = this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = this.singleTap = this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
+    window.removeEventListener('scroll', this._cancelAllHandler);
+    return null;
+  }
+};
+
+/* eslint-disable react-hooks/exhaustive-deps */
+
+var useGesture = function useGesture(elRef, option) {
+  React.useEffect(function () {
+    if (elRef.current instanceof Element) {
+      var fg = new FingerGesture(elRef.current, option);
+      return function () {
+        fg.destroy();
+      };
+    }
+  }, []);
+};
+
+/**
+ *  get latest values from ref like this
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useThisRef(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
 var _templateObject$7, _templateObject2;
 /**
  *  get a css snippet with theme color
@@ -1157,9 +1522,10 @@ var throttle = function throttle(fn) {
   };
 };
 
-var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "className"];
+var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2$1;
+var isMobileEnv = isMobile();
 var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
 var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
@@ -1197,19 +1563,54 @@ var Tabs = function Tabs(_ref2) {
       border = _ref2$border === void 0 ? true : _ref2$border,
       onChange = _ref2.onChange,
       extra = _ref2.extra,
+      swipe = _ref2.swipe,
       className = _ref2.className,
-      restProps = _objectWithoutProperties(_ref2, _excluded$6);
+      rest = _objectWithoutProperties(_ref2, _excluded$6);
 
   var count = React__default['default'].Children.count(children);
   var underlineRef = React.useRef();
+  var contentWrapRef = React.useRef();
 
-  var _useState = React.useState(function () {
-    return typeof value === 'undefined' ? defaultValue : value;
-  }),
+  var _useState = React.useState(typeof value === 'undefined' ? defaultValue : value),
       _useState2 = _slicedToArray(_useState, 2),
       _v = _useState2[0],
       _setV = _useState2[1];
 
+  var thisRef = useThisRef({
+    onChange: onChange,
+    _v: _v
+  });
+  useGesture(contentWrapRef, {
+    onSwipe: function onSwipe(e) {
+      e.preventDefault();
+      var current = thisRef.current._v;
+
+      if (e.direction === 'right' && current > 0) {
+        var _thisRef$current$onCh, _thisRef$current;
+
+        // go to left tab
+        var prevIndex = current - 1;
+
+        _setV(prevIndex);
+
+        (_thisRef$current$onCh = (_thisRef$current = thisRef.current).onChange) === null || _thisRef$current$onCh === void 0 ? void 0 : _thisRef$current$onCh.call(_thisRef$current, prevIndex);
+      } else if (e.direction === 'left' && current < count - 1) {
+        var _thisRef$current$onCh2, _thisRef$current2;
+
+        // go to right tab
+        var nextIndex = current + 1;
+
+        _setV(nextIndex);
+
+        (_thisRef$current$onCh2 = (_thisRef$current2 = thisRef.current).onChange) === null || _thisRef$current$onCh2 === void 0 ? void 0 : _thisRef$current$onCh2.call(_thisRef$current2, nextIndex);
+      }
+    }
+  });
+  useUpdateEffect__default['default'](function () {
+    if (value !== _v) {
+      _setV(value);
+    }
+  }, [value]);
   var setUnderlineSize = React.useCallback(function () {
     if (underline) {
       var underlineEl = underlineRef.current;
@@ -1220,11 +1621,6 @@ var Tabs = function Tabs(_ref2) {
       }
     }
   }, [underline]);
-  useUpdateEffect__default['default'](function () {
-    if (value !== _v) {
-      _setV(value);
-    }
-  }, [value]);
   React.useLayoutEffect(function () {
     setUnderlineSize();
   }, [setUnderlineSize]);
@@ -1235,7 +1631,7 @@ var Tabs = function Tabs(_ref2) {
       window.removeEventListener('resize', throttledSetUnderlineSize);
     }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, restProps, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-tabs-header-wrap', {
@@ -1273,14 +1669,16 @@ var Tabs = function Tabs(_ref2) {
       underline: underline
     })
   }, extra) : null), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-tabs-content-wrap"
+    className: "uc-tabs-content-wrap",
+    ref: isMobileEnv && swipe ? contentWrapRef : null
   }, React__default['default'].Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
       var _ref4 = child.props,
-          _children = _ref4.children;
+          _children = _ref4.children,
+          disabled = _ref4.disabled;
       var style = {};
 
-      if (index !== value) {
+      if (index !== _v || disabled) {
         style.display = 'none';
       }
 
@@ -2949,7 +3347,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 NoticeBar.displayName = 'UC-NoticeBar';
 
 /**
- *  get/set the latest value from ref 
+ *  get the latest value from ref
  *
  * @export
  * @template T
@@ -3579,356 +3977,6 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
 };
 
 NumberKeyboardPicker.displayName = 'UC-NumberKeyboardPicker';
-
-var getLen = function getLen(v) {
-  return Math.sqrt(v.x * v.x + v.y * v.y);
-};
-
-function dot(v1, v2) {
-  return v1.x * v2.x + v1.y * v2.y;
-}
-
-function getAngle(v1, v2) {
-  var mr = getLen(v1) * getLen(v2);
-  if (mr === 0) return 0;
-  var r = dot(v1, v2) / mr;
-  if (r > 1) r = 1;
-  return Math.acos(r);
-}
-
-function cross(v1, v2) {
-  return v1.x * v2.y - v2.x * v1.y;
-}
-
-function getRotateAngle(v1, v2) {
-  var angle = getAngle(v1, v2);
-
-  if (cross(v1, v2) > 0) {
-    angle *= -1;
-  }
-
-  return angle * 180 / Math.PI;
-}
-
-var HandlerAdmin = function HandlerAdmin(el) {
-  this.handlers = [];
-  this.el = el;
-};
-
-HandlerAdmin.prototype.add = function (handler) {
-  this.handlers.push(handler);
-};
-
-HandlerAdmin.prototype.del = function (handler) {
-  if (!handler) this.handlers = [];
-
-  for (var i = this.handlers.length; i >= 0; i--) {
-    if (this.handlers[i] === handler) {
-      this.handlers.splice(i, 1);
-    }
-  }
-};
-
-HandlerAdmin.prototype.dispatch = function () {
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  for (var i = 0, len = this.handlers.length; i < len; i++) {
-    var _handler$apply;
-
-    var handler = this.handlers[i];
-    (_handler$apply = handler.apply) === null || _handler$apply === void 0 ? void 0 : _handler$apply.call(handler, this.el, args);
-  }
-};
-
-function wrapFunc(el, handler) {
-  var handlerAdmin = new HandlerAdmin(el);
-  handlerAdmin.add(handler);
-  return handlerAdmin;
-}
-
-/** 手势操作 */
-var FingerGesture = function FingerGesture(el, option) {
-  this.element = typeof el == 'string' ? document.querySelector(el) : el;
-  this.start = this.start.bind(this);
-  this.move = this.move.bind(this);
-  this.end = this.end.bind(this);
-  this.cancel = this.cancel.bind(this);
-  this.element.addEventListener('touchstart', this.start, false);
-  this.element.addEventListener('touchmove', this.move, false);
-  this.element.addEventListener('touchend', this.end, false);
-  this.element.addEventListener('touchcancel', this.cancel, false);
-  this.preV = {
-    x: null,
-    y: null
-  };
-  this.pinchStartLen = null;
-  this.scale = 1;
-  this.isDoubleTap = false; // eslint-disable-next-line @typescript-eslint/no-empty-function
-
-  var noop = function noop() {};
-
-  this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
-  this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
-  this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
-  this.pinch = wrapFunc(this.element, option.onPinch || noop);
-  this.swipe = wrapFunc(this.element, option.onSwipe || noop);
-  this.tap = wrapFunc(this.element, option.onTap || noop);
-  this.doubleTap = wrapFunc(this.element, option.onDoubleTap || noop);
-  this.longTap = wrapFunc(this.element, option.onLongTap || noop);
-  this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
-  this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
-  this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
-  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
-  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
-  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
-  this._cancelAllHandler = this.cancelAll.bind(this);
-  window.addEventListener('scroll', this._cancelAllHandler);
-  this.delta = null;
-  this.last = null;
-  this.now = null;
-  this.tapTimeout = null;
-  this.singleTapTimeout = null;
-  this.longTapTimeout = null;
-  this.swipeTimeout = null;
-  this.x1 = this.x2 = this.y1 = this.y2 = null;
-  this.preTapPosition = {
-    x: null,
-    y: null
-  };
-};
-
-FingerGesture.prototype = {
-  start: function start(evt) {
-    if (!evt.touches) return;
-    this.now = Date.now();
-    this.x1 = evt.touches[0].pageX;
-    this.y1 = evt.touches[0].pageY;
-    this.delta = this.now - (this.last || this.now);
-    this.touchStart.dispatch(evt, this.element);
-
-    if (this.preTapPosition.x !== null) {
-      this.isDoubleTap = this.delta > 0 && this.delta <= 250 && Math.abs(this.preTapPosition.x - this.x1) < 30 && Math.abs(this.preTapPosition.y - this.y1) < 30;
-      if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
-    }
-
-    this.preTapPosition.x = this.x1;
-    this.preTapPosition.y = this.y1;
-    this.last = this.now;
-    var preV = this.preV,
-        len = evt.touches.length;
-
-    if (len > 1) {
-      this._cancelLongTap();
-
-      this._cancelSingleTap();
-
-      var v = {
-        x: evt.touches[1].pageX - this.x1,
-        y: evt.touches[1].pageY - this.y1
-      };
-      preV.x = v.x;
-      preV.y = v.y;
-      this.pinchStartLen = getLen(preV);
-      this.multipointStart.dispatch(evt, this.element);
-    }
-
-    this._preventTap = false;
-    this.longTapTimeout = setTimeout(function () {
-      this.longTap.dispatch(evt, this.element);
-      this._preventTap = true;
-    }.bind(this), 750);
-  },
-  move: function move(evt) {
-    if (!evt.touches) return;
-    var preV = this.preV,
-        len = evt.touches.length,
-        currentX = evt.touches[0].pageX,
-        currentY = evt.touches[0].pageY;
-    this.isDoubleTap = false;
-
-    if (len > 1) {
-      var sCurrentX = evt.touches[1].pageX,
-          sCurrentY = evt.touches[1].pageY;
-      var v = {
-        x: evt.touches[1].pageX - currentX,
-        y: evt.touches[1].pageY - currentY
-      };
-
-      if (preV.x !== null) {
-        if (this.pinchStartLen > 0) {
-          evt.scale = getLen(v) / this.pinchStartLen;
-          this.pinch.dispatch(evt, this.element);
-        }
-
-        evt.angle = getRotateAngle(v, preV);
-        this.rotate.dispatch(evt, this.element);
-      }
-
-      preV.x = v.x;
-      preV.y = v.y;
-
-      if (this.x2 !== null && this.sx2 !== null) {
-        evt.deltaX = (currentX - this.x2 + sCurrentX - this.sx2) / 2;
-        evt.deltaY = (currentY - this.y2 + sCurrentY - this.sy2) / 2;
-      } else {
-        evt.deltaX = 0;
-        evt.deltaY = 0;
-      }
-
-      this.twoFingerPressMove.dispatch(evt, this.element);
-      this.sx2 = sCurrentX;
-      this.sy2 = sCurrentY;
-    } else {
-      if (this.x2 !== null) {
-        evt.deltaX = currentX - this.x2;
-        evt.deltaY = currentY - this.y2; //move事件中添加对当前触摸点到初始触摸点的判断，
-        //如果曾经大于过某个距离(比如10),就认为是移动到某个地方又移回来，应该不再触发tap事件才对。
-
-        var movedX = Math.abs(this.x1 - this.x2),
-            movedY = Math.abs(this.y1 - this.y2);
-
-        if (movedX > 10 || movedY > 10) {
-          this._preventTap = true;
-        }
-      } else {
-        evt.deltaX = 0;
-        evt.deltaY = 0;
-      }
-
-      this.pressMove.dispatch(evt, this.element);
-    }
-
-    this.touchMove.dispatch(evt, this.element);
-
-    this._cancelLongTap();
-
-    this.x2 = currentX;
-    this.y2 = currentY;
-
-    if (len > 1) {
-      evt.preventDefault();
-    }
-  },
-  end: function end(evt) {
-    if (!evt.changedTouches) return;
-
-    this._cancelLongTap();
-
-    var self = this;
-
-    if (evt.touches.length < 2) {
-      this.multipointEnd.dispatch(evt, this.element);
-      this.sx2 = this.sy2 = null;
-    } //swipe
-
-
-    if (this.x2 && Math.abs(this.x1 - this.x2) > 30 || this.y2 && Math.abs(this.y1 - this.y2) > 30) {
-      evt.direction = this._swipeDirection(this.x1, this.x2, this.y1, this.y2);
-      this.swipeTimeout = setTimeout(function () {
-        self.swipe.dispatch(evt, self.element);
-      }, 0);
-    } else {
-      this.tapTimeout = setTimeout(function () {
-        if (!self._preventTap) {
-          self.tap.dispatch(evt, self.element);
-        } // trigger double tap immediately
-
-
-        if (self.isDoubleTap) {
-          self.doubleTap.dispatch(evt, self.element);
-          self.isDoubleTap = false;
-        }
-      }, 0);
-
-      if (!self.isDoubleTap) {
-        self.singleTapTimeout = setTimeout(function () {
-          self.singleTap.dispatch(evt, self.element);
-        }, 250);
-      }
-    }
-
-    this.touchEnd.dispatch(evt, this.element);
-    this.preV.x = 0;
-    this.preV.y = 0;
-    this.scale = 1;
-    this.pinchStartLen = null;
-    this.x1 = this.x2 = this.y1 = this.y2 = null;
-  },
-  cancelAll: function cancelAll() {
-    this._preventTap = true;
-    clearTimeout(this.singleTapTimeout);
-    clearTimeout(this.tapTimeout);
-    clearTimeout(this.longTapTimeout);
-    clearTimeout(this.swipeTimeout);
-  },
-  cancel: function cancel(evt) {
-    this.cancelAll();
-    this.touchCancel.dispatch(evt, this.element);
-  },
-  _cancelLongTap: function _cancelLongTap() {
-    clearTimeout(this.longTapTimeout);
-  },
-  _cancelSingleTap: function _cancelSingleTap() {
-    clearTimeout(this.singleTapTimeout);
-  },
-  _swipeDirection: function _swipeDirection(x1, x2, y1, y2) {
-    return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? x1 - x2 > 0 ? 'left' : 'right' : y1 - y2 > 0 ? 'up' : 'down';
-  },
-  on: function on(evt, handler) {
-    if (this[evt]) {
-      this[evt].add(handler);
-    }
-  },
-  off: function off(evt, handler) {
-    if (this[evt]) {
-      this[evt].del(handler);
-    }
-  },
-  destroy: function destroy() {
-    if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
-    if (this.tapTimeout) clearTimeout(this.tapTimeout);
-    if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
-    if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
-    this.element.removeEventListener('touchstart', this.start);
-    this.element.removeEventListener('touchmove', this.move);
-    this.element.removeEventListener('touchend', this.end);
-    this.element.removeEventListener('touchcancel', this.cancel);
-    this.rotate.del();
-    this.touchStart.del();
-    this.multipointStart.del();
-    this.multipointEnd.del();
-    this.pinch.del();
-    this.swipe.del();
-    this.tap.del();
-    this.doubleTap.del();
-    this.longTap.del();
-    this.singleTap.del();
-    this.pressMove.del();
-    this.twoFingerPressMove.del();
-    this.touchMove.del();
-    this.touchEnd.del();
-    this.touchCancel.del();
-    this.preV = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = this.singleTapTimeout = this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = this.singleTap = this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
-    window.removeEventListener('scroll', this._cancelAllHandler);
-    return null;
-  }
-};
-
-/* eslint-disable react-hooks/exhaustive-deps */
-
-var useGesture = function useGesture(elRef, option) {
-  React.useEffect(function () {
-    if (elRef.current instanceof Element) {
-      var fg = new FingerGesture(elRef.current, option);
-      return function () {
-        fg.destroy();
-      };
-    }
-  }, []);
-};
 
 var _excluded$s = ["children"];
 

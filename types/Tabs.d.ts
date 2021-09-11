@@ -8,6 +8,8 @@ declare type TabsProp = {
     defaultValue?: number;
     /** 选择的tab index,0 */
     value?: number;
+    /** 是否支持滑动切换(移动端)*/
+    swipe?: boolean;
     /** index变化时触发的回调函数 */
     onChange?: (index: number) => void;
     /** 头部右侧区域内容 */

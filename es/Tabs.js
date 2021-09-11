@@ -43,9 +43,13 @@ import React, { useState, useLayoutEffect, useRef, useCallback, useEffect } from
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
+import useGesture from './hooks/useGesture';
+import useThisRef from './hooks/useThisRef';
+import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import { throttle } from './helper';
+var isMobileEnv = isMobile();
 var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"], ["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), colors.border);
 var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"], ["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), colors.disabledText, function (props) {
   return props.value * 100 + '%';
@@ -83,18 +87,51 @@ var Tabs = function Tabs(_a) {
       border = _d === void 0 ? true : _d,
       onChange = _a.onChange,
       extra = _a.extra,
+      swipe = _a.swipe,
       className = _a.className,
-      restProps = __rest(_a, ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "className"]);
+      rest = __rest(_a, ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"]);
 
   var count = React.Children.count(children);
   var underlineRef = useRef();
+  var contentWrapRef = useRef();
 
-  var _e = useState(function () {
-    return typeof value === 'undefined' ? defaultValue : value;
-  }),
+  var _e = useState(typeof value === 'undefined' ? defaultValue : value),
       _v = _e[0],
       _setV = _e[1];
 
+  var thisRef = useThisRef({
+    onChange: onChange,
+    _v: _v
+  });
+  useGesture(contentWrapRef, {
+    onSwipe: function onSwipe(e) {
+      var _a, _b, _c, _d;
+
+      e.preventDefault();
+      var current = thisRef.current._v;
+
+      if (e.direction === 'right' && current > 0) {
+        // go to left tab
+        var prevIndex = current - 1;
+
+        _setV(prevIndex);
+
+        (_b = (_a = thisRef.current).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, prevIndex);
+      } else if (e.direction === 'left' && current < count - 1) {
+        // go to right tab
+        var nextIndex = current + 1;
+
+        _setV(nextIndex);
+
+        (_d = (_c = thisRef.current).onChange) === null || _d === void 0 ? void 0 : _d.call(_c, nextIndex);
+      }
+    }
+  });
+  useUpdateEffect(function () {
+    if (value !== _v) {
+      _setV(value);
+    }
+  }, [value]);
   var setUnderlineSize = useCallback(function () {
     if (underline) {
       var underlineEl = underlineRef.current;
@@ -105,11 +142,6 @@ var Tabs = function Tabs(_a) {
       }
     }
   }, [underline]);
-  useUpdateEffect(function () {
-    if (value !== _v) {
-      _setV(value);
-    }
-  }, [value]);
   useLayoutEffect(function () {
     setUnderlineSize();
   }, [setUnderlineSize]);
@@ -120,7 +152,7 @@ var Tabs = function Tabs(_a) {
       window.removeEventListener('resize', throttledSetUnderlineSize);
     }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, restProps, {
+  return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
     className: clsx('uc-tabs', className)
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-tabs-header-wrap', {
@@ -158,13 +190,16 @@ var Tabs = function Tabs(_a) {
       underline: underline
     })
   }, extra) : null), /*#__PURE__*/React.createElement("div", {
-    className: "uc-tabs-content-wrap"
+    className: "uc-tabs-content-wrap",
+    ref: isMobileEnv && swipe ? contentWrapRef : null
   }, React.Children.map(children, function (child, index) {
     if (isValidtTabElement(child)) {
-      var children_1 = child.props.children;
+      var _a = child.props,
+          children_1 = _a.children,
+          disabled = _a.disabled;
       var style = {};
 
-      if (index !== value) {
+      if (index !== _v || disabled) {
         style.display = 'none';
       }
 
