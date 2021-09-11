@@ -12,6 +12,15 @@ export default function All() {
   }, []);
   return (
     <div>
+       <Cell
+        title={
+          <Space>
+            <SoundOutlined /> NumberKeyboardPicker
+          </Space>
+        }
+        content="go"
+        onClick={() => gotoPage('NumberKeyboardPicker')}
+      ></Cell>
       <Cell
         title={
           <Space>

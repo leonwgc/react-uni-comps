@@ -12,17 +12,14 @@ export default function App() {
         value={v}
         length={6}
         onChange={setV}
-        onFinish={(v) => Toast.show(v)}
+        onFinish={(v) => {
+          Toast.show(v);
+          console.log(v);
+        }}
         ref={ref}
       />
 
-      <PasswordInput
-        style={{ marginTop: 30 }}
-        value={v}
-        length={6}
-        onChange={setV}
-        onFinish={(v) => Toast.show(v)}
-      />
+      <PasswordInput style={{ marginTop: 30 }} value={v} length={6} onChange={setV} />
 
       <div style={{ margin: 20 }}>
         <Button
@@ -34,6 +31,18 @@ export default function App() {
           }}
         >
           清空
+        </Button>
+
+        <Button
+          block
+          type="primary"
+          style={{ marginTop: 30 }}
+          onClick={() => {
+            setV('123');
+            ref.current.focus();
+          }}
+        >
+          设置值
         </Button>
       </div>
     </div>

@@ -134,6 +134,10 @@ const routes = [
     path: '/NumberKeyboard',
     component: lazy(() => import('./NumberKeyboard')),
   },
+  {
+    path: '/NumberKeyboardPicker',
+    component: lazy(() => import('./NumberKeyboardPicker')),
+  },
 ];
 
 export default routes;

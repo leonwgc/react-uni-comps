@@ -11,6 +11,8 @@ type Props = {
   onFinish?: (v: string) => void;
   /** 输入回调 */
   onChange: (v: string) => void;
+  /** 获取焦点回调 */
+  onFocus?: () => void;
   /** 输入长度 */
   length?: number;
   /** 不显示原文 */
@@ -86,6 +88,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
     mask = true,
     autoFocus = true,
     onFinish,
+    onFocus,
     onChange,
     ...rest
   } = props;
@@ -96,6 +99,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
   const autoFocusRef = useValueRef(autoFocus);
   const vRef = useValueRef(value);
   const inputValueRef = useValueRef<string[]>(value.split(''));
+  const onFinishRef = useValueRef(onFinish);
 
   useImperativeHandle(ref, () => ({
     focus: () => {
@@ -104,6 +108,12 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
       }, 60);
     },
   }));
+
+  useEffect(() => {
+    if (value.length === length) {
+      onFinishRef.current?.(value);
+    }
+  }, [value, onFinishRef, length]);
 
   useEffect(() => {
     if (autoFocusRef.current) {
@@ -142,8 +152,6 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
                 onChange?.(newValue);
                 if (n < length) {
                   inputRefArray.current[idx + 1]?.focus();
-                } else {
-                  onFinish?.(newValue);
                 }
               }}
               onKeyDown={(e) => {
@@ -151,6 +159,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
                   e.preventDefault();
                 }
               }}
+              onFocus={onFocus}
             />
           )}
         </div>

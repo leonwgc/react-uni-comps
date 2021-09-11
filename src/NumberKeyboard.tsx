@@ -1,12 +1,9 @@
-import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import * as colors from './colors';
 import clsx from 'clsx';
 import Button from './Button';
-import useValueRef from './hooks/useValueRef';
 
 type Props = {
-  type?: 'number' | 'id';
   className?: string;
   onClick: (key: string) => void;
 };
@@ -68,9 +65,9 @@ const getKeys = () => {
 
 /** 数字/身份证键盘 */
 const NumberKeyboard = React.forwardRef<{ focus: () => void }, Props>((props, ref) => {
-  const { type = 'number', onClick, className, ...rest } = props;
+  const { onClick, className, ...rest } = props;
 
-  const keys = getKeys(type);
+  const keys = getKeys();
 
   return (
     <StyledNumberKeyboard {...rest} className={clsx('uc-number-keyboard', className)}>
