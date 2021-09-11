@@ -8,6 +8,7 @@ export default function App() {
   const [data, setData] = useState();
 
   const xyRef = useRef({ x: 0, y: 0 });
+  const rotateRef = useRef(0);
 
   useRef(() => {
     transform(ref.current);
@@ -23,21 +24,18 @@ export default function App() {
         tap={(e) => {
           console.log(e);
         }}
-        // pinch={(e) => {
-        //   const t = e.target;
-        //   transform(e.target);
-        //   setData(e);
-        //   t.scaleX = t.scaleY = e.zoom;
-        // }}
-        // rotate={(e) => {
-        //   setData(e);
-        //   const t = e.target;
-        //   transform(e.target);
-        //   t.rotate += e.angle;
-        // }}
+        pinch={(e) => {
+          e.preventDefault();
+          e.target.style.transform = `scale(${e.zoom})`;
+        }}
+        rotate={(e) => {
+          e.preventDefault();
+          rotateRef.current += e.angle;
+          e.target.style.transform = `rotate(${rotateRef.current}deg)`;
+        }}
         swipe={(e) => {
           e.preventDefault();
-          Toast.show('swipe' + e.direction);
+          console.log('swipe', e.direction);
         }}
         pressMove={(e) => {
           e.preventDefault();
