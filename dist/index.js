@@ -6,7 +6,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
 var useInViewport = require('react-use-lib/es/useInViewport');
-var useUpdateEffect = require('react-use-lib/es/useUpdateEffect');
+var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
-var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect);
+var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
@@ -1556,7 +1556,7 @@ Checkbox.displayName = 'UC-Checkbox';
 var _excluded$c = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost"];
 
 var _templateObject$e;
-var StyledButton = styled__default['default'].button(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    :hover {\n      ", "\n      ", "\n    }\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.anchor {\n    border: none;\n    ", "\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n    pointer-events: none;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
+var StyledButton = styled__default['default'].button(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n    &.pc:hover {\n      ", "\n      ", "\n    }\n\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.anchor {\n    border: none;\n    ", "\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n    pointer-events: none;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile() ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -1589,6 +1589,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost: ghost,
       danger: danger,
       mobile: isMobile(),
+      pc: !isMobile(),
       anchor: rest.as === 'a'
     }, className)
   }, rest), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : icon ? icon : children);
@@ -2946,7 +2947,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 NoticeBar.displayName = 'UC-NoticeBar';
 
 /**
- *  store value in ref and update it after effect
+ *  get/set the latest value from ref 
  *
  * @export
  * @template T
@@ -3340,10 +3341,10 @@ AlertDialog.show = function (title, content) {
   }), container);
 };
 
-var _excluded$p = ["value", "length", "className", "mask", "autoFocus", "onFinish", "onChange"];
+var _excluded$p = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];
 
 var _templateObject$s;
-var StyledPasswordInput = styled__default['default'].div(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n  }\n"])), border, border);
+var StyledPasswordInput = styled__default['default'].div(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n    @keyframes blink {\n      0% {\n        opacity: 0;\n      }\n      50% {\n        opacity: 1;\n      }\n      100% {\n        opacity: 0;\n      }\n    }\n    .virtual-input {\n      &.blink {\n        width: 1px;\n        height: 50%;\n        background-color: #333;\n        animation: 1s blink infinite;\n      }\n    }\n  }\n"])), border, border);
 
 var getArray = function getArray(len) {
   var ar = [];
@@ -3367,7 +3368,10 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       mask = _props$mask === void 0 ? true : _props$mask,
       _props$autoFocus = props.autoFocus,
       autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus,
+      _props$virtualKeyboar = props.virtualKeyboard,
+      virtualKeyboard = _props$virtualKeyboar === void 0 ? isMobile() : _props$virtualKeyboar,
       onFinish = props.onFinish,
+      onFocus = props.onFocus,
       _onChange = props.onChange,
       rest = _objectWithoutProperties(props, _excluded$p);
 
@@ -3375,24 +3379,43 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
   var inputRefArray = React.useRef([]);
   var autoFocusRef = useValueRef(autoFocus);
   var vRef = useValueRef(value);
+  var inputValueRef = useValueRef(value.split(''));
+  var onFinishRef = useValueRef(onFinish);
   React.useImperativeHandle(ref, function () {
     return {
       focus: function focus() {
         setTimeout(function () {
           var _inputRefArray$curren, _inputRefArray$curren2;
 
-          (_inputRefArray$curren = (_inputRefArray$curren2 = inputRefArray.current[vRef.current.length]).focus) === null || _inputRefArray$curren === void 0 ? void 0 : _inputRefArray$curren.call(_inputRefArray$curren2);
+          (_inputRefArray$curren = inputRefArray.current[vRef.current.length]) === null || _inputRefArray$curren === void 0 ? void 0 : (_inputRefArray$curren2 = _inputRefArray$curren.focus) === null || _inputRefArray$curren2 === void 0 ? void 0 : _inputRefArray$curren2.call(_inputRefArray$curren);
         }, 60);
       }
     };
   });
   React.useEffect(function () {
+    if (value.length === length) {
+      var _onFinishRef$current;
+
+      (_onFinishRef$current = onFinishRef.current) === null || _onFinishRef$current === void 0 ? void 0 : _onFinishRef$current.call(onFinishRef, value);
+    }
+  }, [value, onFinishRef, length]);
+  React.useEffect(function () {
     if (autoFocusRef.current) {
       var _inputRefArray$curren3, _inputRefArray$curren4;
 
-      (_inputRefArray$curren3 = (_inputRefArray$curren4 = inputRefArray.current[vRef.current.length]).focus) === null || _inputRefArray$curren3 === void 0 ? void 0 : _inputRefArray$curren3.call(_inputRefArray$curren4);
+      (_inputRefArray$curren3 = inputRefArray.current[vRef.current.length]) === null || _inputRefArray$curren3 === void 0 ? void 0 : (_inputRefArray$curren4 = _inputRefArray$curren3.focus) === null || _inputRefArray$curren4 === void 0 ? void 0 : _inputRefArray$curren4.call(_inputRefArray$curren3);
     }
-  }, [autoFocusRef, vRef]);
+  }, [autoFocusRef, vRef]); // prev value check
+
+  var prevInputCheck = React.useCallback(function (idx) {
+    for (var i = 0; i < idx; i++) {
+      if (!inputValueRef.current[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledPasswordInput, _extends({}, rest, {
     className: clsx__default['default']('uc-password-input', className)
   }), arRef.current.map(function (n, idx) {
@@ -3401,26 +3424,159 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       key: n
     }, value.length >= n ? mask ? /*#__PURE__*/React__default['default'].createElement("div", {
       className: "dot"
-    }) : value[idx] : /*#__PURE__*/React__default['default'].createElement("input", {
+    }) : value[idx] : !virtualKeyboard ? /*#__PURE__*/React__default['default'].createElement("input", {
       ref: function ref(r) {
         inputRefArray.current[idx] = r;
       },
       onChange: function onChange(e) {
-        var newValue = value.slice(0, idx) + e.target.value;
+        inputValueRef.current[idx] = e.target.value;
+        var newValue = inputValueRef.current.join('');
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(newValue);
 
         if (n < length) {
           var _inputRefArray$curren5;
 
           (_inputRefArray$curren5 = inputRefArray.current[idx + 1]) === null || _inputRefArray$curren5 === void 0 ? void 0 : _inputRefArray$curren5.focus();
-        } else {
-          onFinish === null || onFinish === void 0 ? void 0 : onFinish(newValue);
         }
-      }
+      },
+      onKeyDown: function onKeyDown(e) {
+        if (!prevInputCheck(idx)) {
+          e.preventDefault();
+        }
+      },
+      onFocus: onFocus
+    }) : /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('virtual-input', {
+        blink: value.length === idx
+      })
     }));
   }));
 });
 PasswordInput.displayName = 'UC-PasswordInput';
+
+var _excluded$q = ["onClick", "className"];
+
+var _templateObject$t, _templateObject2$5;
+var StyledNumberKeyboard = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n      }\n    }\n  }\n"])));
+var Styledkey = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
+
+var getKeys = function getKeys() {
+  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '.'];
+};
+/** 数字/身份证键盘 */
+
+
+var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _onClick = props.onClick,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$q);
+
+  var keys = getKeys();
+  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
+    className: clsx__default['default']('uc-number-keyboard', className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('body')
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "keys"
+  }, keys.map(function (key) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('key'),
+      key: key
+    }, /*#__PURE__*/React__default['default'].createElement(Styledkey, {
+      onClick: function onClick() {
+        _onClick === null || _onClick === void 0 ? void 0 : _onClick(key);
+      }
+    }, key));
+  })), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('sidebar', 'keys')
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('key'),
+    key: 'backspace'
+  }, /*#__PURE__*/React__default['default'].createElement(Styledkey, {
+    onClick: function onClick() {
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick('backspace');
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("svg", {
+    width: 32,
+    height: 32,
+    viewBox: "0 0 32 22",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React__default['default'].createElement("path", {
+    d: "M28.016 0A3.991 3.991 0 0132 3.987v14.026c0 2.2-1.787 3.987-3.98 3.987H10.382c-.509 0-.996-.206-1.374-.585L.89 13.09C.33 12.62 0 11.84 0 11.006c0-.86.325-1.62.887-2.08L9.01.585A1.936 1.936 0 0110.383 0zm0 1.947H10.368L2.24 10.28c-.224.226-.312.432-.312.73 0 .287.094.51.312.729l8.128 8.333h17.648a2.041 2.041 0 002.037-2.04V3.987c0-1.127-.915-2.04-2.037-2.04zM23.028 6a.96.96 0 01.678.292.95.95 0 01-.003 1.377l-3.342 3.348 3.326 3.333c.189.188.292.43.292.679 0 .248-.103.49-.292.679a.96.96 0 01-.678.292.959.959 0 01-.677-.292L18.99 12.36l-3.343 3.345a.96.96 0 01-.677.292.96.96 0 01-.678-.292.962.962 0 01-.292-.68c0-.248.104-.49.292-.679l3.342-3.348-3.342-3.348A.963.963 0 0114 6.971c0-.248.104-.49.292-.679A.96.96 0 0114.97 6a.96.96 0 01.677.292l3.358 3.348 3.345-3.348A.96.96 0 0123.028 6z"
+  })))), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('key'),
+    key: 'ok'
+  }, /*#__PURE__*/React__default['default'].createElement(Styledkey, {
+    type: "primary",
+    onClick: function onClick() {
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick('ok');
+    }
+  }, "\u786E\u5B9A")))));
+});
+NumberKeyboard.displayName = 'UC-NumberKeyboard';
+
+/* eslint-disable react-hooks/exhaustive-deps */
+
+var useUpdateEffect = function useUpdateEffect(effect) {
+  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var isMounted = React.useRef(false);
+  React.useEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+    } else {
+      return effect();
+    }
+  }, deps);
+};
+
+var _excluded$r = ["visible", "onClose", "onChange", "className"];
+
+var _templateObject$u;
+var StyledNumberKeyboardPicker = styled__default['default'](Popup)(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
+/** 数字/身份证键盘底部弹出 */
+
+var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
+  var visible = props.visible,
+      onClose = props.onClose,
+      onChange = props.onChange,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$r);
+
+  var _useState = React.useState(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      value = _useState2[0],
+      setValue = _useState2[1];
+
+  useUpdateEffect(function () {
+    onChange === null || onChange === void 0 ? void 0 : onChange(value);
+  }, [value]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardPicker, _extends({
+    visible: visible,
+    onMaskClick: onClose,
+    maskStyle: {
+      backgroundColor: 'transparent'
+    },
+    position: "bottom"
+  }, rest, {
+    className: clsx__default['default']('uc-number-keyboard-picker', className)
+  }), /*#__PURE__*/React__default['default'].createElement(NumberKeyboard, {
+    onClick: function onClick(k) {
+      if (k === 'ok') {
+        onClose === null || onClose === void 0 ? void 0 : onClose();
+      } else if (k === 'backspace') {
+        if (value.length) {
+          setValue(value.slice(0, value.length - 1));
+        }
+      } else {
+        setValue(function (v) {
+          return v + k;
+        });
+      }
+    }
+  }));
+};
+
+NumberKeyboardPicker.displayName = 'UC-NumberKeyboardPicker';
 
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
@@ -3443,6 +3599,8 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
+exports.NumberKeyboard = NumberKeyboard;
+exports.NumberKeyboardPicker = NumberKeyboardPicker;
 exports.PasswordInput = PasswordInput;
 exports.Popover = Popover;
 exports.Popup = Popup;

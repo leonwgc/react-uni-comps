@@ -6,10 +6,14 @@ declare type Props = {
     onFinish?: (v: string) => void;
     /** 输入回调 */
     onChange: (v: string) => void;
+    /** 获取焦点回调,virtualKeyboard为false才生效 */
+    onFocus?: () => void;
     /** 输入长度 */
     length?: number;
     /** 不显示原文 */
     mask?: boolean;
+    /** 使用虚拟键盘NumberKeyboard,移动端搭配使用，不弹出原生输入框 ,默认根据环境判断*/
+    virtualKeyboard?: boolean;
     style?: React.CSSProperties;
     className?: string;
     /** 自动获取焦点 */

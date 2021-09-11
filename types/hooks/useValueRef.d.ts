@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 /**
- *  store value in ref and update it after effect
+ *  get/set the latest value from ref
  *
  * @export
  * @template T
