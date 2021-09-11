@@ -6,7 +6,7 @@ import './Tab.less';
 
 const StyledApp = styled.div`
   .uc-tabs {
-    margin: 20px 0;
+    margin: 10px 0;
   }
 `;
 
@@ -77,15 +77,31 @@ export default function App() {
           return <Tabs.Tab title={item.title || '欢迎语模板' + idx} key={idx} />;
         })}
       </StyledTabs1>
+
+      <Divider>cust style</Divider>
       <StyledTabs underline="100%" value={value} onChange={setValue}>
         <Tabs.Tab title="title1"></Tabs.Tab>
         <Tabs.Tab title="title2"></Tabs.Tab>
         <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <Divider>swipe</Divider>
+      <Divider>swipe controlled</Divider>
 
-      <Tabs swipe>
+      <Tabs swipe value={value} onChange={setValue}>
+        <Tabs.Tab title="title1">
+          <StyledContent>content1</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title2">
+          <StyledContent>content2</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title3">
+          <StyledContent>content3</StyledContent>
+        </Tabs.Tab>
+      </Tabs>
+
+      <Divider>swipe uncontrolled</Divider>
+
+      <Tabs swipe defaultValue={1}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
