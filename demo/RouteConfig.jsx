@@ -142,6 +142,10 @@ const routes = [
     path: '/FingerGestureElement',
     component: lazy(() => import('./FingerGestureElement')),
   },
+  {
+    path: '/HairLineBox',
+    component: lazy(() => import('./HairLineBox')),
+  },
 ];
 
 export default routes;

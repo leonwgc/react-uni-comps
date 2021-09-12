@@ -15,6 +15,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> HairLineBox
+          </Space>
+        }
+        description="一像素边框"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('HairLineBox')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> FingerGestureElement
           </Space>
         }
