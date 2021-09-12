@@ -906,7 +906,7 @@ Spinner.displayName = 'UC-Spinner';
 var _excluded$4 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
 var _templateObject$5;
-var StyledPullupContainer = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  > .uc-pullup-footer {\n    padding: 10px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n    padding-bottom: constant(safe-area-inset-bottom);\n    padding-bottom: env(safe-area-inset-bottom);\n  }\n"]))); // check isInViewport in vertical direction
+var StyledPullupContainer = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -967,7 +967,8 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
   return /*#__PURE__*/React__default['default'].createElement(StyledPullupContainer, _extends({}, rest, {
     className: clsx__default['default']('uc-pullup-container', className, {
-      'dom-scroll': !useWindowScroll
+      'dom-scroll': !useWindowScroll,
+      'window-scroll': useWindowScroll
     }),
     ref: containerRef
   }), /*#__PURE__*/React__default['default'].createElement("div", {

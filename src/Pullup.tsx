@@ -16,15 +16,19 @@ const StyledPullupContainer = styled.div`
     }
   }
 
-  > .uc-pullup-footer {
-    padding: 10px 0;
+  &.window-scroll {
+    .uc-pullup-footer {
+      padding-bottom: 34px;
+    }
+  }
+
+  .uc-pullup-footer {
+    padding: 16px 0;
     display: flex;
     color: #909090;
     font-size: 14px;
     justify-content: center;
     align-items: center;
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-bottom: env(safe-area-inset-bottom);
   }
 `;
 
@@ -109,7 +113,10 @@ const Pullup = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   return (
     <StyledPullupContainer
       {...rest}
-      className={clsx('uc-pullup-container', className, { 'dom-scroll': !useWindowScroll })}
+      className={clsx('uc-pullup-container', className, {
+        'dom-scroll': !useWindowScroll,
+        'window-scroll': useWindowScroll,
+      })}
       ref={containerRef}
     >
       <div className="uc-pullup-wrapper">
