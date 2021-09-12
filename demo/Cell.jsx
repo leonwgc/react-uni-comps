@@ -2,11 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Space, Cell, Button, Checkbox, Switch } from '../src';
+import { Divider, Cell, Button, Checkbox, Switch } from '../src';
+import useBgColor from './hooks/useBgColor';
+
+const StyledInputCell = styled(Cell)`
+  .cell-title {
+    width: 100px;
+  }
+`;
 
 export default function App() {
   const [v, setV] = useState('');
   const ref = useRef();
+
+  useBgColor('#f7f8fa');
 
   useEffect(() => {
     // 实现 textarea  自适应内容高度
@@ -17,8 +26,17 @@ export default function App() {
 
   return (
     <div>
-      <Cell title="姓名" content="汪guochao"></Cell>
-      <Cell title="username">
+      <Divider style={{ margin: 0 }}>base</Divider>
+      <Cell title="Cell title" content="Content"></Cell>
+      <Cell
+        title="Cell title"
+        lineColor="transparent"
+        description="Description"
+        content="Content"
+      ></Cell>
+
+      <Divider style={{ margin: 0 }}>input</Divider>
+      <Cell title="姓名" description="请输入完整姓名">
         <input type="text" placeholder="username" />
       </Cell>
       <Cell title="antd输入框">
@@ -48,19 +66,15 @@ export default function App() {
         />
         <span>{v.length}/60</span>
       </Cell>
-      <Cell title="Checkbox">
-        <Checkbox>Checkbox</Checkbox>
-      </Cell>
-      <Cell title="Switch">
-        <Switch />
-      </Cell>
+      <Cell title="Checkbox" content={<Checkbox>Checkbox</Checkbox>}></Cell>
+      <Cell title="Switch" content={<Switch />}></Cell>
       <Cell
         title={<div style={{ width: 200 }}>Set as the default contact</div>}
         content={<Switch />}
-        lineColor="#00bd8d"
+        lineColor="transparent"
       ></Cell>
       <div style={{ padding: 12 }}>
-        <Button type="primary" block style={{ height: 44 }}>
+        <Button type="primary" block>
           submit
         </Button>
       </div>

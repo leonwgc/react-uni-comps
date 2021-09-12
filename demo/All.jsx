@@ -18,6 +18,7 @@ export default function All() {
             <SoundOutlined /> FingerGestureElement
           </Space>
         }
+        description="手势操作"
         content="go"
         onClick={() => gotoPage('FingerGestureElement')}
       ></Cell>
