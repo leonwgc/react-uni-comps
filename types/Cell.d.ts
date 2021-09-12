@@ -3,6 +3,8 @@ import React from 'react';
 declare const Cell: React.ForwardRefExoticComponent<{
     /** 标题 */
     title?: React.ReactNode;
+    /** 标题下方描述 */
+    description?: React.ReactNode;
     /** 右侧内容 */
     content?: React.ReactNode;
     /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */

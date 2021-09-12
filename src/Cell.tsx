@@ -56,7 +56,6 @@ const StyledCell = styled.div`
         word-wrap: break-word;
         width: 6.2em;
         flex: none;
-        margin-right: 12px;
       }
     }
     .cell-content {

@@ -54,11 +54,14 @@ var getKeys = function getKeys() {
 
 var NumberKeyboard = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _onClick = props.onClick,
+      _a = props.okText,
+      okText = _a === void 0 ? '确定' : _a,
       className = props.className,
-      rest = __rest(props, ["onClick", "className"]);
+      rest = __rest(props, ["onClick", "okText", "className"]);
 
   var keys = getKeys();
   return /*#__PURE__*/React.createElement(StyledNumberKeyboard, __assign({}, rest, {
+    ref: ref,
     className: clsx('uc-number-keyboard', className)
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('body')
@@ -97,7 +100,7 @@ var NumberKeyboard = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onClick: function onClick() {
       _onClick === null || _onClick === void 0 ? void 0 : _onClick('ok');
     }
-  }, "\u786E\u5B9A")))));
+  }, okText)))));
 });
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 export default NumberKeyboard;

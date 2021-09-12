@@ -1527,10 +1527,8 @@ var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "
 var _templateObject$8, _templateObject2$1;
 var isMobileEnv = isMobile();
 var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      &::after {\n        content: ' ';\n        position: absolute;\n        bottom: 0;\n        width: ", ";\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
-}, function (props) {
-  return props.underline;
 }, getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
@@ -1543,10 +1541,6 @@ var Tab = function Tab(_ref) {
   var children = _ref.children;
   return children;
 };
-
-var isValidtTabElement = function isValidtTabElement(el) {
-  return /*#__PURE__*/React__default['default'].isValidElement(el) && el.type === Tab;
-};
 /**
  * 选项卡切换
  */
@@ -1555,7 +1549,7 @@ var isValidtTabElement = function isValidtTabElement(el) {
 var Tabs = function Tabs(_ref2) {
   var children = _ref2.children,
       _ref2$underline = _ref2.underline,
-      underline = _ref2$underline === void 0 ? '100%' : _ref2$underline,
+      underline = _ref2$underline === void 0 ? true : _ref2$underline,
       value = _ref2.value,
       _ref2$defaultValue = _ref2.defaultValue,
       defaultValue = _ref2$defaultValue === void 0 ? 0 : _ref2$defaultValue,
@@ -1568,8 +1562,8 @@ var Tabs = function Tabs(_ref2) {
       rest = _objectWithoutProperties(_ref2, _excluded$6);
 
   var count = React__default['default'].Children.count(children);
-  var underlineRef = React.useRef();
-  var contentWrapRef = React.useRef();
+  var underlineElRef = React.useRef();
+  var contentWrapElRef = React.useRef();
 
   var _useState = React.useState(typeof value === 'undefined' ? defaultValue : value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1580,7 +1574,7 @@ var Tabs = function Tabs(_ref2) {
     onChange: onChange,
     _v: _v
   });
-  useGesture(contentWrapRef, {
+  useGesture(contentWrapElRef, {
     onSwipe: function onSwipe(e) {
       e.preventDefault();
       var current = thisRef.current._v;
@@ -1613,7 +1607,7 @@ var Tabs = function Tabs(_ref2) {
   }, [value]);
   var setUnderlineSize = React.useCallback(function () {
     if (underline) {
-      var underlineEl = underlineRef.current;
+      var underlineEl = underlineElRef.current;
       var next = underlineEl.nextSibling;
 
       if (next) {
@@ -1638,13 +1632,17 @@ var Tabs = function Tabs(_ref2) {
       'no-border': !border
     })
   }, underline ? /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
-    ref: underlineRef,
+    ref: underlineElRef,
     className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
     count: count,
-    underline: underline,
     value: _v
-  }) : null, React__default['default'].Children.map(children, function (child, index) {
-    if (isValidtTabElement(child)) {
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "line",
+    style: {
+      width: typeof underline === 'boolean' ? '100%' : underline
+    }
+  })) : null, React__default['default'].Children.map(children, function (child, index) {
+    if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
       var _ref3 = child.props,
           _ref3$title = _ref3.title,
           title = _ref3$title === void 0 ? '' : _ref3$title,
@@ -1670,9 +1668,9 @@ var Tabs = function Tabs(_ref2) {
     })
   }, extra) : null), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-tabs-content-wrap",
-    ref: isMobileEnv && swipe ? contentWrapRef : null
+    ref: isMobileEnv && swipe ? contentWrapElRef : null
   }, React__default['default'].Children.map(children, function (child, index) {
-    if (isValidtTabElement(child)) {
+    if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
       var _ref4 = child.props,
           _children = _ref4.children,
           disabled = _ref4.disabled;
@@ -1694,15 +1692,15 @@ var Tabs = function Tabs(_ref2) {
 
 Tabs.Tab = Tab;
 
-var _excluded$7 = ["title", "content", "lineColor", "children"];
+var _excluded$7 = ["title", "description", "content", "lineColor", "children"];
 
-var _templateObject$9, _templateObject2$2;
-var StyledWrapper$2 = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n"])), activeBg);
-var StyledCell = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  position: relative;\n  display: flex;\n  box-sizing: border-box;\n  width: 100%;\n  padding: 12px 12px 12px 0;\n  overflow: hidden;\n  color: #333;\n  font-size: 14px;\n  line-height: 24px;\n\n  .uc-cell-title {\n    box-sizing: border-box;\n    margin-right: 12px;\n    text-align: left;\n    word-wrap: break-word;\n\n    &.not-edit-mode {\n      width: auto;\n      flex: 1;\n    }\n  }\n  .uc-cell-value {\n    flex: 1;\n    position: relative;\n    overflow: visible;\n    color: #999;\n    text-align: right;\n    vertical-align: middle;\n    word-wrap: break-word;\n\n    .uc-field-body {\n      display: flex;\n      align-items: center;\n\n      > input,\n      textarea {\n        display: block;\n        box-sizing: border-box;\n        flex: 1;\n        width: 100%;\n        min-width: 0;\n        margin: 0;\n        padding: 0;\n        color: #323233;\n        line-height: 24px;\n        font-size: 14px;\n        text-align: left;\n        background-color: transparent;\n        border: 0;\n        resize: none;\n        outline: none;\n        -webkit-tap-highlight-color: transparent;\n        -webkit-appearance: none;\n        box-shadow: none;\n        padding-right: 4px;\n      }\n      > textarea {\n        resize: none;\n        word-break: break-all;\n        word-wrap: break-word;\n\n        & + * {\n          align-self: flex-end;\n        }\n      }\n    }\n  }\n"])));
+var _templateObject$9;
+var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n\n        input,\n        textarea {\n          display: block;\n          box-sizing: border-box;\n          flex: 1;\n          width: 100%;\n          min-width: 0;\n          margin: 0;\n          padding: 0;\n          color: #323233;\n          line-height: 24px;\n          font-size: 14px;\n          text-align: left;\n          background-color: transparent;\n          border: 0;\n          resize: none;\n          outline: none;\n          -webkit-tap-highlight-color: transparent;\n          -webkit-appearance: none;\n          box-shadow: none;\n          padding-right: 4px;\n        }\n        > textarea {\n          resize: none;\n          word-break: break-all;\n          word-wrap: break-word;\n\n          & + * {\n            align-self: flex-end;\n          }\n        }\n      }\n    }\n  }\n"])), activeBg);
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var title = props.title,
+      description = props.description,
       content = props.content,
       _props$lineColor = props.lineColor,
       lineColor = _props$lineColor === void 0 ? border : _props$lineColor,
@@ -1713,24 +1711,29 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$2, {
-    className: clsx__default['default']('uc-cell-wrapper', {
+  return /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-cell', {
       clickable: typeof rest.onClick === 'function'
     })
-  }, /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
-    color: lineColor
-  }, /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({
-    ref: ref,
-    className: clsx__default['default']('uc-cell')
-  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('uc-cell-title', {
-      'not-edit-mode': content
+  }), /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
+    color: lineColor,
+    className: "cell-line"
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('cell-inner')
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('cell-title', {
+      input: !!children
     })
-  }, title), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-cell-value"
-  }, content, children ? /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-field-body"
-  }, children) : null))));
+  }, /*#__PURE__*/React__default['default'].createElement("span", {
+    className: "title"
+  }, title), description && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "description"
+  }, description)), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('cell-content', {
+      input: !!children
+    })
+  }, content, children))));
 });
 Cell.displayName = 'UC-Cell';
 
@@ -1895,9 +1898,9 @@ IconTick.displayName = 'UC-IconTick';
 
 var _excluded$b = ["size", "onChange", "defaultChecked", "checked", "disabled", "children"];
 
-var _templateObject$d, _templateObject2$3;
+var _templateObject$d, _templateObject2$2;
 var StyledCheckboxWrapper = styled__default['default'].div(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  > span {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n"])));
-var StyledCheckbox = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &.pc:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
+var StyledCheckbox = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: ", "px;\n  height: ", "px;\n  border: 1px solid ", ";\n  border-radius: 2px;\n  background: #fff;\n  transition: all 0.3s ease;\n\n  &.pc:hover {\n    ", "\n  }\n\n  &.checked {\n    ", "\n    ", "\n  }\n\n  &.disabled {\n    border-color: ", ";\n  }\n"])), function (_ref) {
   var size = _ref.size;
   return size;
 }, function (_ref2) {
@@ -3127,11 +3130,11 @@ CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
 var _excluded$j = ["lines", "children"];
 
-var _templateObject$m, _templateObject2$4;
+var _templateObject$m, _templateObject2$3;
 var StyledSpanMultiLines = styled__default['default'].span(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
-var StyledSpanOneline = styled__default['default'].span(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
+var StyledSpanOneline = styled__default['default'].span(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3854,11 +3857,11 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PasswordInput.displayName = 'UC-PasswordInput';
 
-var _excluded$q = ["onClick", "className"];
+var _excluded$q = ["onClick", "okText", "className"];
 
-var _templateObject$t, _templateObject2$5;
+var _templateObject$t, _templateObject2$4;
 var StyledNumberKeyboard = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n      }\n    }\n  }\n"])));
-var Styledkey = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
+var Styledkey = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
 
 var getKeys = function getKeys() {
   return ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '.'];
@@ -3868,11 +3871,14 @@ var getKeys = function getKeys() {
 
 var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _onClick = props.onClick,
+      _props$okText = props.okText,
+      okText = _props$okText === void 0 ? '确定' : _props$okText,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$q);
 
   var keys = getKeys();
   return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
+    ref: ref,
     className: clsx__default['default']('uc-number-keyboard', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('body')
@@ -3911,7 +3917,7 @@ var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function 
     onClick: function onClick() {
       _onClick === null || _onClick === void 0 ? void 0 : _onClick('ok');
     }
-  }, "\u786E\u5B9A")))));
+  }, okText)))));
 });
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 

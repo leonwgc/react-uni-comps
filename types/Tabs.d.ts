@@ -1,7 +1,7 @@
 import React from 'react';
 declare type TabsProp = {
-    /** 下划线宽度,默认100%,可以使用百分比和px*/
-    underline?: string;
+    /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
+    underline?: string | boolean;
     /** Tabs.Tab子元素*/
     children: React.ReactElement[];
     /** 选择的tab index,非受控模式使用*/
