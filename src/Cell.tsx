@@ -40,7 +40,7 @@ const StyledCell = styled.div`
       box-sizing: border-box;
       margin-right: 12px;
       text-align: left;
-      word-wrap: break-word;
+      flex: 1;
 
       .title {
         color: #333;
@@ -52,9 +52,11 @@ const StyledCell = styled.div`
         line-height: 18px;
       }
 
-      &.not-edit-mode {
-        width: auto;
-        flex: 1;
+      &.input {
+        word-wrap: break-word;
+        width: 6.2em;
+        flex: none;
+        margin-right: 12px;
       }
     }
     .cell-content {
@@ -114,10 +116,14 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }
 
   return (
-    <StyledCell className={clsx('uc-cell', { clickable: typeof rest.onClick === 'function' })}>
+    <StyledCell
+      {...rest}
+      ref={ref}
+      className={clsx('uc-cell', { clickable: typeof rest.onClick === 'function' })}
+    >
       <HairLineBox color={lineColor} className="cell-line">
-        <div ref={ref} className={clsx('cell-inner')} {...rest}>
-          <div className={clsx('cell-title', { 'not-edit-mode': content })}>
+        <div className={clsx('cell-inner')}>
+          <div className={clsx('cell-title', { input: !!children })}>
             <span className="title">{title}</span>
             {description && <div className="description">{description}</div>}
           </div>

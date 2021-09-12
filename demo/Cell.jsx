@@ -5,9 +5,9 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Divider, Cell, Button, Checkbox, Switch } from '../src';
 import useBgColor from './hooks/useBgColor';
 
-const StyledInputCell = styled(Cell)`
+const StyledApp = styled.div`
   .cell-title {
-    width: 100px;
+    /* width: 100px; */
   }
 `;
 
@@ -25,7 +25,7 @@ export default function App() {
   });
 
   return (
-    <div>
+    <StyledApp>
       <Divider style={{ margin: 0 }}>base</Divider>
       <Cell title="Cell title" content="Content"></Cell>
       <Cell
@@ -36,10 +36,17 @@ export default function App() {
       ></Cell>
 
       <Divider style={{ margin: 0 }}>input</Divider>
-      <Cell title="姓名" description="请输入完整姓名">
+
+      <Cell
+        title={
+          <span>
+            <span style={{ color: 'red' }}>*</span> 姓名
+          </span>
+        }
+      >
         <input type="text" placeholder="username" />
       </Cell>
-      <Cell title="antd输入框">
+      <Cell title="antd输入框" description="antd">
         <Input placeholder="antd输入框" />
         <QuestionCircleOutlined />
       </Cell>
@@ -68,16 +75,18 @@ export default function App() {
       </Cell>
       <Cell title="Checkbox" content={<Checkbox>Checkbox</Checkbox>}></Cell>
       <Cell title="Switch" content={<Switch />}></Cell>
-      <Cell
-        title={<div style={{ width: 200 }}>Set as the default contact</div>}
-        content={<Switch />}
-        lineColor="transparent"
-      ></Cell>
+      <Cell title="Checkbox">
+        <Checkbox>Checkbox</Checkbox>
+      </Cell>
+      <Cell title="Switch" lineColor="transparent">
+        <Switch />
+      </Cell>
+
       <div style={{ padding: 12 }}>
         <Button type="primary" block>
           submit
         </Button>
       </div>
-    </div>
+    </StyledApp>
   );
 }
