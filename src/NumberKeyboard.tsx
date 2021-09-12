@@ -5,6 +5,8 @@ import Button from './Button';
 
 type Props = {
   className?: string;
+  /** 确定按钮文字,默认：确定 */
+  okText?: React.ReactNode;
   onClick: (key: string) => void;
 };
 
@@ -64,13 +66,13 @@ const getKeys = () => {
 };
 
 /** 数字/身份证键盘 */
-const NumberKeyboard = React.forwardRef<{ focus: () => void }, Props>((props, ref) => {
-  const { onClick, className, ...rest } = props;
+const NumberKeyboard = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { onClick, okText = '确定', className, ...rest } = props;
 
   const keys = getKeys();
 
   return (
-    <StyledNumberKeyboard {...rest} className={clsx('uc-number-keyboard', className)}>
+    <StyledNumberKeyboard {...rest} ref={ref} className={clsx('uc-number-keyboard', className)}>
       <div className={clsx('body')}>
         <div className="keys">
           {keys.map((key) => (
@@ -104,7 +106,7 @@ const NumberKeyboard = React.forwardRef<{ focus: () => void }, Props>((props, re
                 onClick?.('ok');
               }}
             >
-              确定
+              {okText}
             </Styledkey>
           </div>
         </div>
