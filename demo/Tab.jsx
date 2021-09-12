@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Spinner, AnimationElement, Tabs, Button, Divider, Toast } from '../src';
+import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space } from '../src';
 import 'animate.css';
 import './Tab.less';
 
@@ -10,7 +10,7 @@ const StyledApp = styled.div`
   }
 `;
 
-const StyledTabs1 = styled(Tabs)`
+const StyledTabs = styled(Tabs)`
   .uc-tabs-header-item {
     flex: none;
     width: 120px;
@@ -22,70 +22,64 @@ const StyledContent = styled.div`
   background-color: #eee;
 `;
 
-const StyledTabs = styled(Tabs)`
-  display: inline-block;
-
-  .uc-tabs-header-wrap {
-    border-bottom: none;
-
-    .uc-tabs-header-item {
-      background-color: #fff;
-      color: #999;
-      border-color: #e0e0e0;
-      border-width: 1px;
-      border-style: solid;
-      min-width: 80px;
-
-      &.active {
-        border-color: #155bd4;
-        background-color: #e6efff;
-        color: #155bd4;
-      }
-    }
-
-    .uc-tabs-header-line {
-      display: none;
-    }
-  }
-`;
-
 export default function App() {
-  const [tabTitles, setTabTitles] = useState([{ title: '默认欢迎语' }, { title: '默认欢迎语1' }]);
+  const [tabTitles, setTabTitles] = useState([{ title: 'tab' }, { title: 'tabx' }]);
   const maxCount = 5;
   const [value, setValue] = useState(0);
 
   return (
     <StyledApp>
       <Divider>controlled & extra & no content</Divider>
-      <StyledTabs1
+      <StyledTabs
         value={value}
         onChange={setValue}
         extra={
-          tabTitles.length < maxCount ? (
-            <Button
-              onClick={() => {
-                setTabTitles((t) => [...t, { key: tabTitles.length }]);
-                setValue(tabTitles.length);
-              }}
-            >
-              新增欢迎语
-            </Button>
-          ) : null
+          <Space>
+            {tabTitles.length > 1 && (
+              <Button
+                onClick={() => {
+                  tabTitles.pop();
+                  setTabTitles([...tabTitles]);
+                  setValue(tabTitles.length - 1);
+                }}
+              >
+                delete
+              </Button>
+            )}
+            {tabTitles.length < maxCount && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  setTabTitles((t) => [...t, { key: tabTitles.length }]);
+                  setValue(tabTitles.length);
+                }}
+              >
+                add
+              </Button>
+            )}
+          </Space>
         }
       >
         {tabTitles.map((item, idx) => {
-          return <Tabs.Tab title={item.title || '欢迎语模板' + idx} key={idx} />;
+          return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
         })}
-      </StyledTabs1>
-
-      <Divider>cust style</Divider>
-      <StyledTabs underline="100%" value={value} onChange={setValue}>
-        <Tabs.Tab title="title1"></Tabs.Tab>
-        <Tabs.Tab title="title2"></Tabs.Tab>
-        <Tabs.Tab title="title3"></Tabs.Tab>
       </StyledTabs>
 
-      <Divider>swipe controlled</Divider>
+      <Divider> no underline</Divider>
+
+      <Tabs underline={false} value={value} onChange={setValue}>
+        <Tabs.Tab title="title1">
+          <StyledContent>content1</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title2">
+          <StyledContent>content2</StyledContent>
+        </Tabs.Tab>
+        <Tabs.Tab title="title3">
+          <StyledContent>content3</StyledContent>
+        </Tabs.Tab>
+      </Tabs>
+
+      <Divider>swipe controlled </Divider>
 
       <Tabs swipe value={value} onChange={setValue}>
         <Tabs.Tab title="title1">
@@ -99,9 +93,9 @@ export default function App() {
         </Tabs.Tab>
       </Tabs>
 
-      <Divider>swipe uncontrolled</Divider>
+      <Divider>swipe uncontrolled/defaultValue</Divider>
 
-      <Tabs swipe defaultValue={1}>
+      <Tabs swipe defaultValue={2}>
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>
         </Tabs.Tab>
@@ -113,10 +107,11 @@ export default function App() {
         </Tabs.Tab>
       </Tabs>
 
-      <Divider>uncontrolled tab/scroll swipe</Divider>
+      <Divider>uncontrolled swipe/onChange</Divider>
       <Tabs
         swipe
         underline="40px"
+        defaultValue={2}
         style={{ marginTop: 30 }}
         onChange={(v) => Toast.show(v + '', 1000)}
       >

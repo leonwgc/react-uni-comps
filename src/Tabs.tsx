@@ -12,8 +12,8 @@ import { throttle } from './helper';
 const isMobileEnv = isMobile();
 
 type TabsProp = {
-  /** 下划线宽度,默认100%,可以使用百分比和px*/
-  underline?: string;
+  /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
+  underline?: string | boolean;
   /** Tabs.Tab子元素*/
   children: React.ReactElement[];
   /** 选择的tab index,非受控模式使用*/
@@ -66,7 +66,6 @@ const StyledWrapper = styled.div`
 const StyledTabHeadItem = styled.div<{
   value?: number;
   count?: number;
-  underline?: string;
   ref?: RefObject<HTMLDivElement>;
 }>`
   flex: 1;
@@ -102,11 +101,9 @@ const StyledTabHeadItem = styled.div<{
       transition: transform 0.3s ease;
       transform: translateX(${(props) => props.value * 100 + '%'});
 
-      &::after {
-        content: ' ';
+      .line {
         position: absolute;
         bottom: 0;
-        width: ${(props) => props.underline};
         height: 2px;
         ${getThemeColorCss('background-color')}
       }
@@ -124,15 +121,12 @@ const Tab: React.FC<TabProp> = ({ children }) => {
   return children;
 };
 
-const isValidtTabElement = (el) => {
-  return React.isValidElement(el) && el.type === Tab;
-};
 /**
  * 选项卡切换
  */
 const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   children,
-  underline = '100%',
+  underline = true,
   value,
   defaultValue = 0,
   border = true,
@@ -143,8 +137,8 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   ...rest
 }) => {
   const count = React.Children.count(children);
-  const underlineRef = useRef<HTMLDivElement>();
-  const contentWrapRef = useRef<HTMLDivElement>();
+  const underlineElRef = useRef<HTMLDivElement>();
+  const contentWrapElRef = useRef<HTMLDivElement>();
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
 
@@ -153,7 +147,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     _v,
   });
 
-  useGesture(contentWrapRef, {
+  useGesture(contentWrapElRef, {
     onSwipe: (e) => {
       e.preventDefault();
       const current = thisRef.current._v;
@@ -179,7 +173,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 
   const setUnderlineSize = useCallback(() => {
     if (underline) {
-      const underlineEl = underlineRef.current;
+      const underlineEl = underlineElRef.current;
       const next = underlineEl.nextSibling as HTMLElement;
       if (next) {
         underlineEl.style.width = next.offsetWidth + 'px';
@@ -206,15 +200,19 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
       <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
         {underline ? (
           <StyledTabHeadItem
-            ref={underlineRef}
+            ref={underlineElRef}
             className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
             count={count}
-            underline={underline}
             value={_v}
-          />
+          >
+            <div
+              className="line"
+              style={{ width: typeof underline === 'boolean' ? '100%' : underline }}
+            ></div>
+          </StyledTabHeadItem>
         ) : null}
         {React.Children.map(children, (child: React.ReactElement, index) => {
-          if (isValidtTabElement(child)) {
+          if (React.isValidElement(child)) {
             const { title = '', disabled } = child.props as TabProp;
             return (
               <StyledTabHeadItem
@@ -239,9 +237,9 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
           <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
         ) : null}
       </div>
-      <div className={`uc-tabs-content-wrap`} ref={isMobileEnv && swipe ? contentWrapRef : null}>
+      <div className={`uc-tabs-content-wrap`} ref={isMobileEnv && swipe ? contentWrapElRef : null}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
-          if (isValidtTabElement(child)) {
+          if (React.isValidElement(child)) {
             const { children, disabled } = child.props as TabProp;
             const style: React.CSSProperties = {};
             if (index !== _v || disabled) {
