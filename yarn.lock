@@ -7467,10 +7467,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packx@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.npmjs.org/packx/-/packx-0.4.8.tgz#e2e26e0e257923cbdb28dfd296e2f75c11f910b1"
-  integrity sha512-l5zUC79NLQxmgbKXziHHWJ+bLuYA5WFPJqRI+/U3k7cgfG4Lqlsc8PbJkNtTAhmzDurH8ebi2qf9/UWq0C6lnA==
+packx@0.4.9:
+  version "0.4.9"
+  resolved "https://registry.npmjs.org/packx/-/packx-0.4.9.tgz#694ce66e1ec1365a5ecc45cfacb4b0c4fef52741"
+  integrity sha512-CEs9VwpDoex1DK0solQYYPklSCPcQmotVQKT6YTZiinIFiVPyXRERTtux53LyQencBpz2O0AnI8JdCE6ebn1Vg==
   dependencies:
     "@babel/cli" "^7.14.8"
     "@babel/core" "^7.15.0"
