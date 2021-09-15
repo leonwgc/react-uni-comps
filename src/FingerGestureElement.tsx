@@ -14,6 +14,7 @@ const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) =
   useGesture(elRef, rest as Option);
 
   return React.cloneElement(children, {
+    ...rest,
     ref: elRef,
   });
 });

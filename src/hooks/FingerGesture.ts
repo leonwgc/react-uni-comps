@@ -67,12 +67,12 @@ function wrapFunc(el, handler) {
 }
 
 export type Option = Partial<{
-  onTouchStart: () => void;
-  onTouchMove: () => void;
-  onTouchEnd: () => void;
-  onTouchCancel: () => void;
-  onMultipointStart: () => void;
-  onMultipointEnd: () => void;
+  onTouchStart: (evt: SyntheticEvent) => void;
+  onTouchMove: (evt: SyntheticEvent) => void;
+  onTouchEnd: (evt: SyntheticEvent) => void;
+  onTouchCancel: (evt: SyntheticEvent) => void;
+  onMultipointStart: (evt: SyntheticEvent) => void;
+  onMultipointEnd: (evt: SyntheticEvent) => void;
   onTap: () => void;
   onDoubleTap: () => void;
   onLongTap: () => void;
