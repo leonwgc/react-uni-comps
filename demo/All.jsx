@@ -15,6 +15,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> SwipeAction
+          </Space>
+        }
+        description="滑动操作"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SwipeAction')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> HairLineBox
           </Space>
         }

@@ -146,6 +146,10 @@ const routes = [
     path: '/HairLineBox',
     component: lazy(() => import('./HairLineBox')),
   },
+  {
+    path: '/SwipeAction',
+    component: lazy(() => import('./SwipeAction')),
+  },
 ];
 
 export default routes;
