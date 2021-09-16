@@ -1,9 +1,10 @@
 import React from 'react';
-import { SwipeAction, HairLineBox, Toast } from '../src';
+import { SwipeAction, HairLineBox, Toast, Divider } from '../src';
 
 export default function App() {
   return (
     <div>
+      <Divider>左滑右滑</Divider>
       <HairLineBox style={{ margin: '30px 0' }}>
         <SwipeAction
           onOpen={(p) => {
@@ -48,7 +49,9 @@ export default function App() {
         </SwipeAction>
       </HairLineBox>
 
-      <HairLineBox style={{ margin: '30px 0' }}>
+      <Divider>只有右边</Divider>
+
+      <HairLineBox>
         <SwipeAction
           onOpen={(p) => {
             console.log('open' + p);
@@ -85,6 +88,44 @@ export default function App() {
           只有右边
         </SwipeAction>
       </HairLineBox>
+
+      <Divider>no hariline box</Divider>
+
+      <SwipeAction
+        onOpen={(p) => {
+          console.log('open' + p);
+        }}
+        onClose={(p) => {
+          console.log('close' + p);
+        }}
+        autoClose={false}
+        closeOnClickOutside={false}
+        right={[
+          {
+            text: '取消关注',
+            color: '#ccc',
+            onClick: () => {
+              Toast.show('取消关注', 1000);
+            },
+          },
+          {
+            text: '免打扰',
+            color: 'orange',
+            onClick: () => {
+              Toast.show('免打扰', 1000);
+            },
+          },
+          {
+            text: '删除',
+            color: 'red',
+            onClick: () => {
+              Toast.show('删除', 1000);
+            },
+          },
+        ]}
+      >
+        只有右边
+      </SwipeAction>
     </div>
   );
 }
