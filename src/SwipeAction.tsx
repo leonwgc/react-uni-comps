@@ -63,6 +63,7 @@ const StyledButton = styled(Button)`
   border-radius: 0;
   border: 0;
   color: #fff;
+  font-size: 15px;
 `;
 
 /** SwipeAction 滑动操作 */
@@ -100,7 +101,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         }
 
         if (!v.el.contains(e.target)) {
-          startTransform('translate3d(0,0,0)');
+          startTransform('translate3d(0,0,0)', 0);
           v.x = 0;
         }
       };
@@ -119,8 +120,9 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, [thisRef]);
 
   const startTransform = useCallback(
-    (transformStr) => {
+    (transformStr, x) => {
       const v = thisRef.current;
+      v.x = x;
       v.el.style.transitionProperty = 'transform';
       setTimeout(() => {
         v.el.style.transform = `${transformStr}`;
@@ -128,6 +130,18 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     },
     [thisRef]
   );
+
+  const renderAction = useCallback((item, idx) => {
+    return (
+      <StyledButton
+        onClick={item.onClick}
+        key={idx}
+        style={{ backgroundColor: item.color || colors.primary }}
+      >
+        {item.text}
+      </StyledButton>
+    );
+  }, []);
 
   return (
     <FingerGestureElement
@@ -137,7 +151,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       }}
       onClick={() => {
         if (autoClose) {
-          startTransform('translate3d(0,0,0)');
+          startTransform('translate3d(0,0,0)', 0);
         }
       }}
       onTouchStart={() => {
@@ -150,15 +164,15 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           // open right
           if (Math.abs(v.x) < v.rightWidth / 2) {
             // no more than half way
-            startTransform('translate3d(0,0,0)');
-            v.x = 0;
+            startTransform('translate3d(0,0,0)', 0);
+            // v.x = 0;
             if (v.isOpen) {
               v.onClose?.('right');
               v.isOpen = 0;
             }
           } else {
-            startTransform(`translate3d(-${v.rightWidth}px,0,0)`);
-            v.x = -1 * v.rightWidth;
+            startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
+            // v.x = -1 * v.rightWidth;
             if (!v.isOpen) {
               v.onOpen?.('right');
               v.isOpen = 1;
@@ -167,15 +181,15 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         } else if (v.x > 0) {
           if (Math.abs(v.x) < v.leftWidth / 2) {
             // no more than half way
-            startTransform('translate3d(0,0,0)');
+            startTransform('translate3d(0,0,0)', 0);
             v.x = 0;
             if (v.isOpen) {
               v.onClose?.('left');
               v.isOpen = 0;
             }
           } else {
-            startTransform(`translate3d(${v.leftWidth}px,0,0)`);
-            v.x = v.leftWidth;
+            startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
+            // v.x = v.leftWidth;
             if (!v.isOpen) {
               v.onOpen?.('left');
               v.isOpen = 1;
@@ -197,21 +211,13 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <StyledSwipeAction className={clsx('uc-swipe-action')}>
         <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
-          {left.map((item, idx) => (
-            <StyledButton key={idx} style={{ backgroundColor: item.color || colors.primary }}>
-              {item.text}
-            </StyledButton>
-          ))}
+          {left.map((item, idx) => renderAction(item, idx))}
         </div>
 
         <div className="center-part">{children}</div>
 
         <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
-          {right.map((item, idx) => (
-            <StyledButton key={idx} style={{ backgroundColor: item.color || colors.primary }}>
-              {item.text}
-            </StyledButton>
-          ))}
+          {right.map((item, idx) => renderAction(item, idx))}
         </div>
       </StyledSwipeAction>
     </FingerGestureElement>

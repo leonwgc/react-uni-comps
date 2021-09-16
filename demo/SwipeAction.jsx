@@ -1,5 +1,5 @@
 import React from 'react';
-import { SwipeAction, Button, HairLineBox, Toast } from '../src';
+import { SwipeAction, HairLineBox, Toast } from '../src';
 
 export default function App() {
   return (
@@ -14,22 +14,34 @@ export default function App() {
           }}
           left={[
             {
-              text: 'left',
-              color: 'red',
+              text: '收藏',
               onClick: () => {
-                Toast.show('left', 1000);
+                Toast.show('收藏', 1000);
               },
             },
           ]}
           right={[
             {
-              text: 'right1',
-              color: 'red',
+              text: '取消关注',
+              color: '#ccc',
               onClick: () => {
-                Toast.show('left', 1000);
+                Toast.show('取消关注', 1000);
               },
             },
-            { text: 'right1' },
+            {
+              text: '免打扰',
+              color: 'orange',
+              onClick: () => {
+                Toast.show('免打扰', 1000);
+              },
+            },
+            {
+              text: '删除',
+              color: 'red',
+              onClick: () => {
+                Toast.show('删除', 1000);
+              },
+            },
           ]}
         >
           左滑右滑都可以哦
@@ -44,17 +56,33 @@ export default function App() {
           onClose={(p) => {
             console.log('close' + p);
           }}
+          autoClose={false}
+          closeOnClickOutside={false}
           right={[
             {
-              text: 'delete',
-
+              text: '取消关注',
+              color: '#ccc',
               onClick: () => {
-                Toast.show('left', 1000);
+                Toast.show('取消关注', 1000);
+              },
+            },
+            {
+              text: '免打扰',
+              color: 'orange',
+              onClick: () => {
+                Toast.show('免打扰', 1000);
+              },
+            },
+            {
+              text: '删除',
+              color: 'red',
+              onClick: () => {
+                Toast.show('删除', 1000);
               },
             },
           ]}
         >
-          swipe
+          只有右边
         </SwipeAction>
       </HairLineBox>
     </div>
