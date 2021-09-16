@@ -30,31 +30,38 @@ const StyledSwipeAction = styled.div`
   user-select: none;
   position: relative;
   display: block;
-  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
 
-  .left-part,
-  .right-part {
-    position: absolute;
-    top: 0;
-    height: 100%;
-  }
+  .wrap {
+    transition: transform 0.3s ease-in-out;
+    overflow: visible;
+    display: flex;
+    flex-wrap: nowrap;
 
-  .left-part {
-    left: -1px;
-    transform: translate(-100%);
-  }
-  .right-part {
-    right: -1px;
-    transform: translate(100%);
-  }
-  .center-part {
-    display: block;
-    line-height: 20px;
-    padding: 13px 16px;
-    background: #fff;
-    font-size: 14px;
-    color: #666;
-    box-sizing: border-box;
+    .left-part,
+    .right-part {
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+
+    .left-part {
+      left: 0px;
+      transform: translate(-100%);
+    }
+    .right-part {
+      right: 0px;
+      transform: translate(100%);
+    }
+    .center-part {
+      display: block;
+      line-height: 20px;
+      padding: 13px 16px;
+      background: #fff;
+      font-size: 14px;
+      color: #666;
+      box-sizing: border-box;
+    }
   }
 `;
 
@@ -144,83 +151,85 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, []);
 
   return (
-    <FingerGestureElement
-      ref={elRef}
-      onTransitionEnd={() => {
-        thisRef.current.el.style.transitionProperty = 'transform';
-      }}
-      onClick={() => {
-        if (autoClose) {
-          startTransform('translate3d(0,0,0)', 0);
-        }
-      }}
-      onTouchStart={() => {
-        thisRef.current.el.style.transitionProperty = 'none';
-      }}
-      onTouchEnd={() => {
-        const v = thisRef.current;
-
-        if (v.x < 0) {
-          // open right
-          if (Math.abs(v.x) < v.rightWidth / 2) {
-            // no more than half way
+    <StyledSwipeAction className={clsx('uc-swipe-action')}>
+      <FingerGestureElement
+        ref={elRef}
+        onTransitionEnd={() => {
+          thisRef.current.el.style.transitionProperty = 'transform';
+        }}
+        onClick={() => {
+          if (autoClose) {
             startTransform('translate3d(0,0,0)', 0);
-            // v.x = 0;
-            if (v.isOpen) {
-              v.onClose?.('right');
-              v.isOpen = 0;
+          }
+        }}
+        onTouchStart={() => {
+          thisRef.current.el.style.transitionProperty = 'none';
+        }}
+        onTouchEnd={() => {
+          const v = thisRef.current;
+
+          if (v.x < 0) {
+            // open right
+            if (Math.abs(v.x) < v.rightWidth / 2) {
+              // no more than half way
+              startTransform('translate3d(0,0,0)', 0);
+              // v.x = 0;
+              if (v.isOpen) {
+                v.onClose?.('right');
+                v.isOpen = 0;
+              }
+            } else {
+              startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
+              // v.x = -1 * v.rightWidth;
+              if (!v.isOpen) {
+                v.onOpen?.('right');
+                v.isOpen = 1;
+              }
             }
-          } else {
-            startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
-            // v.x = -1 * v.rightWidth;
-            if (!v.isOpen) {
-              v.onOpen?.('right');
-              v.isOpen = 1;
+          } else if (v.x > 0) {
+            if (Math.abs(v.x) < v.leftWidth / 2) {
+              // no more than half way
+              startTransform('translate3d(0,0,0)', 0);
+              v.x = 0;
+              if (v.isOpen) {
+                v.onClose?.('left');
+                v.isOpen = 0;
+              }
+            } else {
+              startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
+              // v.x = v.leftWidth;
+              if (!v.isOpen) {
+                v.onOpen?.('left');
+                v.isOpen = 1;
+              }
             }
           }
-        } else if (v.x > 0) {
-          if (Math.abs(v.x) < v.leftWidth / 2) {
-            // no more than half way
-            startTransform('translate3d(0,0,0)', 0);
-            v.x = 0;
-            if (v.isOpen) {
-              v.onClose?.('left');
-              v.isOpen = 0;
-            }
-          } else {
-            startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
-            // v.x = v.leftWidth;
-            if (!v.isOpen) {
-              v.onOpen?.('left');
-              v.isOpen = 1;
-            }
+        }}
+        onPressMove={(e) => {
+          e.preventDefault();
+          const v = thisRef.current;
+          v.x += e.deltaX;
+          // x<0:swipe left & show right
+          if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
+            v.el.style.transform = `translate3d(${v.x}px,0,0)`;
+          } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
+            v.el.style.transform = `translate3d(${v.x}px,0,0)`;
           }
-        }
-      }}
-      onPressMove={(e) => {
-        e.preventDefault();
-        const v = thisRef.current;
-        v.x += e.deltaX;
-        // x<0:swipe left & show right
-        if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
-          v.el.style.transform = `translate3d(${v.x}px,0,0)`;
-        } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
-          v.el.style.transform = `translate3d(${v.x}px,0,0)`;
-        }
-      }}
-    >
-      <StyledSwipeAction className={clsx('uc-swipe-action')}>
-        <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
-          {left.map((item, idx) => renderAction(item, idx))}
-        </div>
+        }}
+      >
+        <div className="wrap">
+          <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
+            {left.map((item, idx) => renderAction(item, idx))}
+          </div>
 
-        <div className="center-part">{children}</div>
+          <div className="center-part">{children}</div>
 
-        <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
-          {right.map((item, idx) => renderAction(item, idx))}
+          <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
+            {right.map((item, idx) => renderAction(item, idx))}
+          </div>
         </div>
-      </StyledSwipeAction>
-    </FingerGestureElement>
+      </FingerGestureElement>
+    </StyledSwipeAction>
   );
 });
 
