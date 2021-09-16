@@ -12,38 +12,31 @@ export default function App() {
           onClose={(p) => {
             console.log('close' + p);
           }}
-          left={
-            <Button
-              onClick={() => Toast.show('left', 200)}
-              style={{ height: '100%', width: 100, borderRadius: 0, border: 0 }}
-              type="primary"
-            >
-              left
-            </Button>
-          }
-          right={
-            <>
-              <Button
-                onClick={() => {
-                  Toast.show('danger');
-                }}
-                style={{ height: '100%', borderRadius: 0, border: 0 }}
-                danger
-                type="primary"
-              >
-                right1
-              </Button>
-              <Button style={{ height: '100%', borderRadius: 0, border: 0 }} type="primary">
-                right2
-              </Button>
-            </>
-          }
+          left={[
+            {
+              text: 'left',
+              color: 'red',
+              onClick: () => {
+                Toast.show('left', 1000);
+              },
+            },
+          ]}
+          right={[
+            {
+              text: 'right1',
+              color: 'red',
+              onClick: () => {
+                Toast.show('left', 1000);
+              },
+            },
+            { text: 'right1' },
+          ]}
         >
           左滑右滑都可以哦
         </SwipeAction>
       </HairLineBox>
 
-      {/* <HairLineBox style={{ margin: '130px 0' }}>
+      <HairLineBox style={{ margin: '30px 0' }}>
         <SwipeAction
           onOpen={(p) => {
             console.log('open' + p);
@@ -51,29 +44,19 @@ export default function App() {
           onClose={(p) => {
             console.log('close' + p);
           }}
-          left={
-            <Button
-              onClick={() => Toast.show('left')}
-              style={{ height: '100%', width: 100, borderRadius: 0, border: 0 }}
-              type="primary"
-            >
-              left
-            </Button>
-          }
-          right={
-            <Button
-              onClick={() => Toast.show('danger')}
-              style={{ height: '100%', borderRadius: 0, border: 0 }}
-              danger
-              type="primary"
-            >
-              right1
-            </Button>
-          }
+          right={[
+            {
+              text: 'delete',
+
+              onClick: () => {
+                Toast.show('left', 1000);
+              },
+            },
+          ]}
         >
-          左滑右滑
+          swipe
         </SwipeAction>
-      </HairLineBox> */}
+      </HairLineBox>
     </div>
   );
 }

@@ -2,13 +2,21 @@ import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEf
 import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
 import useThisRef from './hooks/useThisRef';
+import * as colors from './colors';
 import clsx from 'clsx';
+import Button from './Button';
 
 type openType = 'left' | 'right';
 
+type Action = {
+  text: string;
+  color?: string;
+  onClick?: () => void;
+};
+
 type Props = {
-  left: React.ReactNode;
-  right: React.ReactNode;
+  left?: Action[];
+  right?: Action[];
   children: React.ReactNode;
   onOpen: (type: openType) => void;
   onClose: (type: openType) => void;
@@ -22,6 +30,7 @@ const StyledSwipeAction = styled.div`
   user-select: none;
   position: relative;
   display: block;
+  transition: transform 0.3s ease-in-out;
 
   .left-part,
   .right-part {
@@ -49,11 +58,18 @@ const StyledSwipeAction = styled.div`
   }
 `;
 
+const StyledButton = styled(Button)`
+  height: 100%;
+  border-radius: 0;
+  border: 0;
+  color: #fff;
+`;
+
 /** SwipeAction 滑动操作 */
 const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
-    left,
-    right,
+    left = [],
+    right = [],
     onClose,
     onOpen,
     autoClose = true,
@@ -105,7 +121,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const startTransform = useCallback(
     (transformStr) => {
       const v = thisRef.current;
-      v.el.style.transition = 'transform .3s ease-in-out';
+      v.el.style.transitionProperty = 'transform';
       setTimeout(() => {
         v.el.style.transform = `${transformStr}`;
       });
@@ -117,23 +133,23 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <FingerGestureElement
       ref={elRef}
       onTransitionEnd={() => {
-        thisRef.current.el.style.transition = 'none';
+        thisRef.current.el.style.transitionProperty = 'transform';
       }}
       onClick={() => {
         if (autoClose) {
           startTransform('translate3d(0,0,0)');
         }
       }}
+      onTouchStart={() => {
+        thisRef.current.el.style.transitionProperty = 'none';
+      }}
       onTouchEnd={() => {
         const v = thisRef.current;
-
-        // v.el.style.transition = 'transform .3s ease-in-out';
 
         if (v.x < 0) {
           // open right
           if (Math.abs(v.x) < v.rightWidth / 2) {
             // no more than half way
-            // v.el.style.transform = `translate3d(0,0,0)`;
             startTransform('translate3d(0,0,0)');
             v.x = 0;
             if (v.isOpen) {
@@ -141,7 +157,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               v.isOpen = 0;
             }
           } else {
-            // v.el.style.transform = `translate3d(-${v.rightWidth}px,0,0)`;
             startTransform(`translate3d(-${v.rightWidth}px,0,0)`);
             v.x = -1 * v.rightWidth;
             if (!v.isOpen) {
@@ -152,7 +167,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         } else if (v.x > 0) {
           if (Math.abs(v.x) < v.leftWidth / 2) {
             // no more than half way
-            // v.el.style.transform = `translate3d(0,0,0)`;
             startTransform('translate3d(0,0,0)');
             v.x = 0;
             if (v.isOpen) {
@@ -160,7 +174,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               v.isOpen = 0;
             }
           } else {
-            // v.el.style.transform = `translate3d(${v.leftWidth}px,0,0)`;
             startTransform(`translate3d(${v.leftWidth}px,0,0)`);
             v.x = v.leftWidth;
             if (!v.isOpen) {
@@ -184,13 +197,21 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <StyledSwipeAction className={clsx('uc-swipe-action')}>
         <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
-          {left}
+          {left.map((item, idx) => (
+            <StyledButton key={idx} style={{ backgroundColor: item.color || colors.primary }}>
+              {item.text}
+            </StyledButton>
+          ))}
         </div>
 
         <div className="center-part">{children}</div>
 
         <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
-          {right}
+          {right.map((item, idx) => (
+            <StyledButton key={idx} style={{ backgroundColor: item.color || colors.primary }}>
+              {item.text}
+            </StyledButton>
+          ))}
         </div>
       </StyledSwipeAction>
     </FingerGestureElement>
