@@ -150,6 +150,10 @@ const routes = [
     path: '/SwipeAction',
     component: lazy(() => import('./SwipeAction')),
   },
+  {
+    path: '/Input',
+    component: lazy(() => import('./Input')),
+  },
 ];
 
 export default routes;
