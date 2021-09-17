@@ -8,16 +8,8 @@ const StyledApp = styled.div``;
 
 export default function App() {
   const [v, setV] = useState('');
-  const ref = useRef();
 
   useBgColor('#f7f8fa');
-
-  // useEffect(() => {
-  //   // 实现 textarea  自适应内容高度
-  //   ref.current.style.height = 'auto';
-  //   ref.current.scrollTop = 0;
-  //   ref.current.style.height = ref.current.scrollHeight + 'px';
-  // });
 
   return (
     <StyledApp>
