@@ -99,7 +99,7 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       inputRef.current.scrollTop = 0;
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
-  }, [thisRef]);
+  });
 
   return (
     <StyledInput

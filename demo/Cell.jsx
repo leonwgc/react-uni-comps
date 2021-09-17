@@ -12,12 +12,12 @@ export default function App() {
 
   useBgColor('#f7f8fa');
 
-  useEffect(() => {
-    // 实现 textarea  自适应内容高度
-    ref.current.style.height = 'auto';
-    ref.current.scrollTop = 0;
-    ref.current.style.height = ref.current.scrollHeight + 'px';
-  });
+  // useEffect(() => {
+  //   // 实现 textarea  自适应内容高度
+  //   ref.current.style.height = 'auto';
+  //   ref.current.scrollTop = 0;
+  //   ref.current.style.height = ref.current.scrollHeight + 'px';
+  // });
 
   return (
     <StyledApp>
@@ -52,6 +52,7 @@ export default function App() {
           textarea
           placeholder="多行文本"
           maxLength={60}
+          autoHeight={false}
           value={v}
           suffix={<span>{v.length}/60</span>}
           onChange={(e) => setV(e.target.value)}
@@ -60,7 +61,7 @@ export default function App() {
       <Cell title="多行文本auto-height">
         <Input
           textarea
-          ref={ref}
+          autoHeight
           placeholder="多行文本"
           maxLength={60}
           value={v}

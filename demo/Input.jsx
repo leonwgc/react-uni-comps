@@ -12,6 +12,7 @@ export default function App() {
       <Input
         value={v}
         maxLength={10}
+        style={{ marginBottom: 10 }}
         onChange={(e) => setV(e.target.value)}
         prefix={
           <span>
@@ -21,6 +22,13 @@ export default function App() {
         }
         suffix={v.length + ' / 10'}
       ></Input>
+
+      <Input style={{ marginBottom: 10 }} defaultValue="123"></Input>
+
+      <Input style={{ marginBottom: 10 }} prefix={'password'} type="password"></Input>
+
+      <Input style={{ marginBottom: 10 }} prefix={'number'} type="number"></Input>
+
       <Divider>suffix</Divider>
       <Input
         value={v}
