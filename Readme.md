@@ -97,6 +97,8 @@ yarn add react-uni-comps
 
 #### 40. FingerGestureElement (移动端手势操作,onTap,onDoubleTap,onLongTap,onPinch, onSwipe,onPressMove 等手势支持)
 
+#### 41. Input (单行/多行输入框)
+
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
