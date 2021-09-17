@@ -1,8 +1,9 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useEffect, useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import * as colors from './colors';
+import useThisRef from './hooks/useThisRef';
 import clsx from 'clsx';
 
 type Props = {
@@ -10,47 +11,47 @@ type Props = {
   prefix?: React.ReactNode;
   /** input右边内容 */
   suffix?: React.ReactNode;
-} & HTMLAttributes<HTMLInputElement>;
+  /** 是否为多行文本输入 */
+  textarea?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  /** textarea 是否高度自适应,默认true */
+  autoHeight?: boolean;
+} & HTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
 
 const StyledInput = styled.div`
   display: flex;
   align-items: center;
-
-  &.prefix {
-    input {
-      margin-left: 8px;
-    }
-  }
-
-  &.suffix {
-    input {
-      margin-right: 8px;
-    }
-  }
+  padding: 4px 12px;
+  font-size: 14px;
+  width: 100%;
+  background-color: #fff;
 
   &.pc {
-    input {
-      display: inline-block;
-      padding: 4px 12px;
-      font-size: 14px;
-      line-height: 1.5715;
-      background-color: #fff;
-      background-image: none;
-      border: 1px solid ${colors.border};
-      border-radius: 2px;
-      transition: all 0.3s;
-      &:hover {
-        ${getThemeColorCss('border-color')}
-      }
+    background-image: none;
+    border: 1px solid ${colors.border};
+    border-radius: 2px;
+    transition: all 0.3s;
+    &:hover {
+      ${getThemeColorCss('border-color')}
     }
   }
   &.mobile {
-    input {
-      display: block;
-      line-height: 24px;
-    }
+    border: none;
+    padding: 0 4px;
+    line-height: 24px;
   }
-  input {
+
+  .prefix {
+    margin-right: 8px;
+  }
+  .suffix {
+    margin-left: 8px;
+    color: #999;
+  }
+
+  input,
+  textarea {
     flex: 1;
     position: relative;
     box-sizing: border-box;
@@ -66,26 +67,54 @@ const StyledInput = styled.div`
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     box-shadow: none;
-    font-size: 14px;
     width: 100%;
+    line-height: 1.5715;
+  }
+
+  textarea {
+    resize: none;
+    word-break: break-all;
+    word-wrap: break-word;
+    & + * {
+      align-self: flex-end;
+    }
   }
 `;
 
-/** 输入框 */
-const Input = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { className, prefix, suffix, ...rest } = props;
+/** 单行/多行输入框 input/textarea */
+const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((props, ref) => {
+  const { className, style, prefix, suffix, autoHeight = true, textarea, ...rest } = props;
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
+  useImperativeHandle(ref, () => inputRef.current);
+
+  const thisRef = useThisRef({
+    textarea,
+    autoHeight,
+  });
+
+  useEffect(() => {
+    const v = thisRef.current;
+    if (v.textarea && v.autoHeight) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.scrollTop = 0;
+      inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
+    }
+  }, [thisRef]);
 
   return (
     <StyledInput
+      style={style}
       className={clsx('uc-input', className, {
         mobile: isMobile(),
         pc: !isMobile(),
-        prefix: prefix,
-        suffix: suffix,
       })}
     >
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
-      <input {...rest} ref={ref} />
+      {React.createElement(textarea ? 'textarea' : 'input', {
+        ...rest,
+        ref: inputRef,
+      })}
+
       {suffix && <span className={clsx('suffix')}>{suffix}</span>}
     </StyledInput>
   );

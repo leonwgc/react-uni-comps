@@ -1,14 +1,13 @@
 import React, { useState, useref, useRef } from 'react';
-import { Space, Divider } from '../src';
+import { Space, Divider, Input } from '../src';
 import { SoundOutlined } from '@ant-design/icons';
-import Input from '../src/Input';
 
 export default function App() {
   const [v, setV] = useState('');
   return (
     <div className="app" style={{ margin: '20px' }}>
       <Divider>default</Divider>
-      <Input></Input>
+      <Input placeholder="请输入内容"></Input>
       <Divider>prefix/suffix</Divider>
       <Input
         value={v}
@@ -24,6 +23,22 @@ export default function App() {
       ></Input>
       <Divider>suffix</Divider>
       <Input
+        value={v}
+        maxLength={10}
+        onChange={(e) => setV(e.target.value)}
+        suffix={v.length + ' / 10'}
+      ></Input>
+      <Divider>textarea</Divider>
+      <Input
+        style={{ marginBottom: 20 }}
+        textarea
+        value={v}
+        maxLength={10}
+        onChange={(e) => setV(e.target.value)}
+      ></Input>
+
+      <Input
+        textarea
         value={v}
         maxLength={10}
         onChange={(e) => setV(e.target.value)}

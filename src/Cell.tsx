@@ -70,38 +70,6 @@ const StyledCell = styled.div`
       &.input {
         display: flex;
         align-items: center;
-
-        input,
-        textarea {
-          display: block;
-          box-sizing: border-box;
-          flex: 1;
-          width: 100%;
-          min-width: 0;
-          margin: 0;
-          padding: 0;
-          color: #323233;
-          line-height: 24px;
-          font-size: 14px;
-          text-align: left;
-          background-color: transparent;
-          border: 0;
-          resize: none;
-          outline: none;
-          -webkit-tap-highlight-color: transparent;
-          -webkit-appearance: none;
-          box-shadow: none;
-          padding-right: 4px;
-        }
-        > textarea {
-          resize: none;
-          word-break: break-all;
-          word-wrap: break-word;
-
-          & + * {
-            align-self: flex-end;
-          }
-        }
       }
     }
   }

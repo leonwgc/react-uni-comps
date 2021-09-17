@@ -1,15 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Input } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Divider, Cell, Button, Checkbox, Switch } from '../src';
+import { Divider, Cell, Button, Checkbox, Switch, Input } from '../src';
 import useBgColor from './hooks/useBgColor';
 
-const StyledApp = styled.div`
-  .cell-title {
-    /* width: 100px; */
-  }
-`;
+const StyledApp = styled.div``;
 
 export default function App() {
   const [v, setV] = useState('');
@@ -44,34 +39,34 @@ export default function App() {
           </span>
         }
       >
-        <input type="text" placeholder="username" />
+        <Input type="text" placeholder="username" />
       </Cell>
       <Cell title="antd输入框" description="antd">
-        <Input placeholder="antd输入框" />
-        <QuestionCircleOutlined />
+        <Input placeholder="输入框" suffix={<QuestionCircleOutlined />} />
       </Cell>
       <Cell title="邮箱地址">
-        <Input placeholder="邮箱地址" />
-        @126.com
+        <Input placeholder="邮箱地址" suffix={'@126.com'} />
       </Cell>
       <Cell title="多行文本">
-        <textarea
+        <Input
+          textarea
           placeholder="多行文本"
           maxLength={60}
           value={v}
+          suffix={<span>{v.length}/60</span>}
           onChange={(e) => setV(e.target.value)}
         />
-        <span>{v.length}/60</span>
       </Cell>
       <Cell title="多行文本auto-height">
-        <textarea
+        <Input
+          textarea
           ref={ref}
           placeholder="多行文本"
           maxLength={60}
           value={v}
           onChange={(e) => setV(e.target.value)}
+          suffix={<span>{v.length}/60</span>}
         />
-        <span>{v.length}/60</span>
       </Cell>
       <Cell title="Checkbox" content={<Checkbox>Checkbox</Checkbox>}></Cell>
       <Cell title="Switch" content={<Switch />}></Cell>
