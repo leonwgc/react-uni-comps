@@ -154,6 +154,10 @@ const routes = [
     path: '/Input',
     component: lazy(() => import('./Input')),
   },
+  {
+    path: '/Picker',
+    component: lazy(() => import('./Picker')),
+  },
 ];
 
 export default routes;
