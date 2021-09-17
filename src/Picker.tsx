@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useThisRef from './hooks/useThisRef';
 import clsx from 'clsx';
+import { debounce } from './helper';
 
 type DataItem = {
   label: string;
@@ -87,6 +88,7 @@ const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((
   const thisRef = useThisRef({
     y: firstItemY,
     data,
+    onChange,
   });
 
   const scrollToIndex = useCallback((index) => {
@@ -103,6 +105,28 @@ const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((
     return d;
   }, []);
 
+  const onTouchEnd = debounce(
+    useCallback(() => {
+      const v = thisRef.current;
+      const list = v.data;
+      const min = -1 * (list.length - 1) * 35 + firstItemY;
+      const max = firstItemY;
+
+      if (v.y >= max - itemHeight / 2) {
+        v.y = firstItemY;
+        scrollToIndex(0);
+        v.onChange?.(0);
+      } else if (v.y <= min) {
+        v.y = min;
+        scrollToIndex(list.length - 1);
+        v.onChange?.(list.length - 1);
+      } else {
+        scrollToIndex(getIndex());
+        v.onChange?.(getIndex());
+      }
+    }, [getIndex, scrollToIndex, thisRef])
+  );
+
   return (
     <StyledPicker className={clsx('uc-picker')}>
       <div className="mask"></div>
@@ -114,25 +138,7 @@ const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((
             onTouchStart={() => {
               elRef.current.style.transitionProperty = 'none';
             }}
-            onTouchEnd={() => {
-              const v = thisRef.current;
-              const list = v.data;
-              const min = -1 * (list.length - 1) * 35 + firstItemY;
-              const max = firstItemY;
-
-              if (v.y >= max - itemHeight / 2) {
-                v.y = firstItemY;
-                scrollToIndex(0);
-                onChange?.(0);
-              } else if (v.y <= min) {
-                v.y = min;
-                scrollToIndex(list.length - 1);
-                onChange?.(list.length - 1);
-              } else {
-                scrollToIndex(getIndex());
-                onChange?.(getIndex());
-              }
-            }}
+            onTouchEnd={onTouchEnd}
             onPressMove={(e) => {
               e.preventDefault();
               const v = thisRef.current;

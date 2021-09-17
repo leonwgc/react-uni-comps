@@ -20,6 +20,9 @@ export default function App() {
         onDoubleTap={() => {
           Toast.show('doubleTap', 1000);
         }}
+        onTouchEnd={() => {
+          console.log('end');
+        }}
         onTap={(e) => {
           console.log(e);
         }}
