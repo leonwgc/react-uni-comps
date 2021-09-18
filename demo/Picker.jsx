@@ -39,6 +39,8 @@ const twoColsData = [
 
 export default function App() {
   const [value, setValue] = useState([]);
+  const [value1, setValue1] = useState([]);
+  const [value2, setValue2] = useState([]);
   const [visible, setVisible] = useState(1);
 
   return (
@@ -79,8 +81,9 @@ export default function App() {
       <Picker
         visible={visible === 2}
         onClose={() => setVisible(false)}
+        value={value1}
         onChange={(v) => {
-          setValue(v);
+          setValue1(v);
         }}
         onOk={(v) => {
           Toast.show(JSON.stringify(v), 1000);
@@ -92,8 +95,9 @@ export default function App() {
         visible={visible === 3}
         onClose={() => setVisible(false)}
         onChange={(v) => {
-          setValue(v);
+          setValue2(v);
         }}
+        value={value2}
         onOk={(v) => {
           Toast.show(JSON.stringify(v), 1000);
         }}

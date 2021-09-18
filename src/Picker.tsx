@@ -262,7 +262,22 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div
           className="ok"
           onClick={() => {
-            onOk?.(value);
+            if (listRef.current.length) {
+              const v = thisRef.current;
+              const cv = [...v.value];
+              let i = cols - 1;
+              while (i >= 0) {
+                if (typeof cv[i] === 'undefined') {
+                  cv[i] = listRef.current[i][v.value[i] || 0]?.value || '';
+                }
+                i--;
+              }
+
+              onOk?.(cv);
+            } else {
+              onOk?.([]);
+            }
+
             onClose?.();
           }}
         >
