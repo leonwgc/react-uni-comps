@@ -1,6 +1,8 @@
 /*
- * refer https://github.com/AlloyTeam/AlloyFinger & refactor
+ * refer to AlloyFinger & refactor
  */
+export var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
+
 var getLen = function getLen(v) {
   return Math.sqrt(v.x * v.x + v.y * v.y);
 };
@@ -74,7 +76,7 @@ function wrapFunc(el, handler) {
 
 
 var FingerGesture = function FingerGesture(el, option) {
-  this.element = typeof el == 'string' ? document.querySelector(el) : el;
+  this.element = el;
   this.start = this.start.bind(this);
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
@@ -94,7 +96,12 @@ var FingerGesture = function FingerGesture(el, option) {
   var noop = function noop() {};
 
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  /** native events special care prevent from twice invoke  */
+
+  this.touchStart = new HandlerAdmin(this.element);
+  this.touchMove = new HandlerAdmin(this.element);
+  this.touchEnd = new HandlerAdmin(this.element);
+  this.touchCancel = new HandlerAdmin(this.element);
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
   this.pinch = wrapFunc(this.element, option.onPinch || noop);
@@ -105,9 +112,6 @@ var FingerGesture = function FingerGesture(el, option) {
   this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
   this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
   this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
-  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
-  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
-  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
   this._cancelAllHandler = this.cancelAll.bind(this);
   window.addEventListener('scroll', this._cancelAllHandler);
   this.delta = null;

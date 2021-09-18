@@ -81,3 +81,33 @@ export var throttle = function throttle(fn, timeout, last) {
     }
   };
 };
+/** get filterd props */
+
+export var getProps = function getProps(props, propKeys, isIncluded) {
+  if (props === void 0) {
+    props = {};
+  }
+
+  if (isIncluded === void 0) {
+    isIncluded = true;
+  }
+
+  var required = {};
+  var rest = {};
+  var keys = Object.keys(props);
+
+  if (propKeys === null || propKeys === void 0 ? void 0 : propKeys.length) {
+    keys.map(function (k) {
+      if (propKeys.includes(k)) {
+        required[k] = props[k];
+      } else {
+        rest[k] = props[k];
+      }
+    });
+  } else {
+    required = {};
+    rest = props;
+  }
+
+  return isIncluded ? required : rest;
+};

@@ -12,6 +12,7 @@ var styled = require('styled-components');
 var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
 var copy = require('copy-text-to-clipboard');
+var reactUniComps = require('react-uni-comps');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -1063,6 +1064,8 @@ var primary = '#004bcc';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
 
+var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
+
 var getLen = function getLen(v) {
   return Math.sqrt(v.x * v.x + v.y * v.y);
 };
@@ -1133,7 +1136,7 @@ function wrapFunc(el, handler) {
 
 /** 手势操作 */
 var FingerGesture = function FingerGesture(el, option) {
-  this.element = typeof el == 'string' ? document.querySelector(el) : el;
+  this.element = el;
   this.start = this.start.bind(this);
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
@@ -1153,7 +1156,12 @@ var FingerGesture = function FingerGesture(el, option) {
   var noop = function noop() {};
 
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  /** native events special care prevent from twice invoke  */
+
+  this.touchStart = new HandlerAdmin(this.element);
+  this.touchMove = new HandlerAdmin(this.element);
+  this.touchEnd = new HandlerAdmin(this.element);
+  this.touchCancel = new HandlerAdmin(this.element);
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
   this.pinch = wrapFunc(this.element, option.onPinch || noop);
@@ -1164,9 +1172,6 @@ var FingerGesture = function FingerGesture(el, option) {
   this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
   this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
   this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
-  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
-  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
-  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
   this._cancelAllHandler = this.cancelAll.bind(this);
   window.addEventListener('scroll', this._cancelAllHandler);
   this.delta = null;
@@ -1400,58 +1405,6 @@ FingerGesture.prototype = {
   }
 };
 
-/* eslint-disable react-hooks/exhaustive-deps */
-
-var useGesture = function useGesture(elRef, option) {
-  React.useEffect(function () {
-    if (elRef.current instanceof Element) {
-      var fg = new FingerGesture(elRef.current, option);
-      return function () {
-        fg.destroy();
-      };
-    }
-  }, []);
-};
-
-/**
- *  get latest values from ref like this
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useThisRef(value) {
-  var ref = React.useRef(value);
-  ref.current = value;
-  return ref;
-}
-
-var _templateObject$7, _templateObject2;
-/**
- *  get a css snippet with theme color
- *
- * @param {string} prop
- * @param {string} [leftValue='']
- * @return {*}  {*}
- */
-
-var getThemeColorCss = function getThemeColorCss(prop) {
-  var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-  // mobile css variable first
-  if (isMobile()) {
-    return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n      ", ":", " ", ";\n      ", ":var(--uc-color, ", ");\n    "])), prop, leftValue, function (props) {
-      return props.theme.color || primary;
-    }, prop, primary);
-  } else {
-    return styled.css(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      ", ":var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, primary, prop, leftValue, function (props) {
-      return props.theme.color;
-    });
-  }
-};
-
 var debounce = function debounce(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
   var timer = 0;
@@ -1521,6 +1474,84 @@ var throttle = function throttle(fn) {
       start = now;
     }
   };
+};
+/** get filterd props */
+
+var getProps = function getProps() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var propKeys = arguments.length > 1 ? arguments[1] : undefined;
+  var isIncluded = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var required = {};
+  var rest = {};
+  var keys = Object.keys(props);
+
+  if (propKeys === null || propKeys === void 0 ? void 0 : propKeys.length) {
+    keys.map(function (k) {
+      if (propKeys.includes(k)) {
+        required[k] = props[k];
+      } else {
+        rest[k] = props[k];
+      }
+    });
+  } else {
+    required = {};
+    rest = props;
+  }
+
+  return isIncluded ? required : rest;
+};
+
+/* eslint-disable react-hooks/exhaustive-deps */
+
+var useGesture = function useGesture(elRef, option) {
+  React.useEffect(function () {
+    if (elRef.current instanceof Element) {
+      var gestureProps = getProps(option, supportedGestures);
+      var fg = new FingerGesture(elRef.current, gestureProps);
+      return function () {
+        fg.destroy();
+      };
+    }
+  }, []);
+};
+
+/**
+ *  get latest values from ref like this
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useThisRef(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
+var _templateObject$7, _templateObject2;
+/**
+ *  get a css snippet with theme color
+ *
+ * @param {string} prop
+ * @param {string} [leftValue='']
+ * @return {*}  {*}
+ */
+
+var getThemeColorCss = function getThemeColorCss(prop) {
+  var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  // mobile css variable first
+  if (isMobile()) {
+    return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n      ", ":", " ", ";\n      ", ":var(--uc-color, ", ");\n    "])), prop, leftValue, function (props) {
+      return props.theme.color || primary;
+    }, prop, primary);
+  } else {
+    return styled.css(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      ", ":var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, primary, prop, leftValue, function (props) {
+      return props.theme.color;
+    });
+  }
 };
 
 var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
@@ -1696,7 +1727,7 @@ Tabs.Tab = Tab;
 var _excluded$7 = ["title", "description", "content", "lineColor", "children"];
 
 var _templateObject$9;
-var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n\n        input,\n        textarea {\n          display: block;\n          box-sizing: border-box;\n          flex: 1;\n          width: 100%;\n          min-width: 0;\n          margin: 0;\n          padding: 0;\n          color: #323233;\n          line-height: 24px;\n          font-size: 14px;\n          text-align: left;\n          background-color: transparent;\n          border: 0;\n          resize: none;\n          outline: none;\n          -webkit-tap-highlight-color: transparent;\n          -webkit-appearance: none;\n          box-shadow: none;\n          padding-right: 4px;\n        }\n        > textarea {\n          resize: none;\n          word-break: break-all;\n          word-wrap: break-word;\n\n          & + * {\n            align-self: flex-end;\n          }\n        }\n      }\n    }\n  }\n"])), activeBg);
+var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg);
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3997,11 +4028,234 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
     return elRef.current;
   });
   useGesture(elRef, rest);
-  return /*#__PURE__*/React__default['default'].cloneElement(children, {
+  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, reactUniComps.getProps(rest, supportedGestures, false)), {}, {
+    // filter out gesture evts
     ref: elRef
-  });
+  }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
+
+var _templateObject$v, _templateObject2$5;
+var StyledSwipeAction = styled__default['default'].div(_templateObject$v || (_templateObject$v = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
+var StyledButton$1 = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
+/** SwipeAction 滑动操作 */
+
+var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$left = props.left,
+      left = _props$left === void 0 ? [] : _props$left,
+      _props$right = props.right,
+      right = _props$right === void 0 ? [] : _props$right,
+      onClose = props.onClose,
+      onOpen = props.onOpen,
+      _props$autoClose = props.autoClose,
+      autoClose = _props$autoClose === void 0 ? true : _props$autoClose,
+      _props$closeOnClickOu = props.closeOnClickOutside,
+      closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
+      children = props.children;
+  var elRef = React.useRef();
+  var thisRef = useThisRef({
+    x: 0,
+    onClose: onClose,
+    onOpen: onOpen,
+    closeOnClickOutside: closeOnClickOutside,
+    el: null,
+    leftEl: null,
+    rightEl: null,
+    leftWidth: 0,
+    rightWidth: 0,
+    isOpen: 0
+  });
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  React.useEffect(function () {
+    var v = thisRef.current;
+
+    if (v.closeOnClickOutside) {
+      var closeHandler = function closeHandler(e) {
+        if (!v.isOpen) {
+          return;
+        }
+
+        if (!v.el.contains(e.target)) {
+          startTransform('translate3d(0,0,0)', 0);
+          v.x = 0;
+        }
+      };
+
+      window.addEventListener('click', closeHandler);
+      return function () {
+        window.removeEventListener('click', closeHandler);
+      };
+    }
+  }, []);
+  React.useLayoutEffect(function () {
+    thisRef.current.el = elRef.current;
+    thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
+    thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
+  }, [thisRef]);
+  var startTransform = React.useCallback(function (transformStr, x) {
+    var v = thisRef.current;
+    v.x = x;
+    v.el.style.transitionProperty = 'transform';
+    setTimeout(function () {
+      v.el.style.transform = "".concat(transformStr);
+    });
+  }, [thisRef]);
+  var renderAction = React.useCallback(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement(StyledButton$1, {
+      onClick: item.onClick,
+      key: idx,
+      style: {
+        backgroundColor: item.color || primary
+      }
+    }, item.text);
+  }, []);
+  return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, {
+    className: clsx__default['default']('uc-swipe-action')
+  }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+    ref: elRef,
+    onTransitionEnd: function onTransitionEnd() {
+      thisRef.current.el.style.transitionProperty = 'transform';
+    },
+    onClick: function onClick() {
+      if (autoClose) {
+        startTransform('translate3d(0,0,0)', 0);
+      }
+    },
+    onTouchStart: function onTouchStart() {
+      thisRef.current.el.style.transitionProperty = 'none';
+    },
+    onTouchEnd: function onTouchEnd() {
+      var v = thisRef.current;
+
+      if (v.x < 0) {
+        // open right
+        if (Math.abs(v.x) < v.rightWidth / 2) {
+          // no more than half way
+          startTransform('translate3d(0,0,0)', 0); // v.x = 0;
+
+          if (v.isOpen) {
+            var _v$onClose;
+
+            (_v$onClose = v.onClose) === null || _v$onClose === void 0 ? void 0 : _v$onClose.call(v, 'right');
+            v.isOpen = 0;
+          }
+        } else {
+          startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth); // v.x = -1 * v.rightWidth;
+
+          if (!v.isOpen) {
+            var _v$onOpen;
+
+            (_v$onOpen = v.onOpen) === null || _v$onOpen === void 0 ? void 0 : _v$onOpen.call(v, 'right');
+            v.isOpen = 1;
+          }
+        }
+      } else if (v.x > 0) {
+        if (Math.abs(v.x) < v.leftWidth / 2) {
+          // no more than half way
+          startTransform('translate3d(0,0,0)', 0);
+          v.x = 0;
+
+          if (v.isOpen) {
+            var _v$onClose2;
+
+            (_v$onClose2 = v.onClose) === null || _v$onClose2 === void 0 ? void 0 : _v$onClose2.call(v, 'left');
+            v.isOpen = 0;
+          }
+        } else {
+          startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth); // v.x = v.leftWidth;
+
+          if (!v.isOpen) {
+            var _v$onOpen2;
+
+            (_v$onOpen2 = v.onOpen) === null || _v$onOpen2 === void 0 ? void 0 : _v$onOpen2.call(v, 'left');
+            v.isOpen = 1;
+          }
+        }
+      }
+    },
+    onPressMove: function onPressMove(e) {
+      e.preventDefault();
+      var v = thisRef.current;
+      v.x += e.deltaX; // x<0:swipe left & show right
+
+      if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
+        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
+      } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
+        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
+      }
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: function ref(_ref) {
+      return thisRef.current.leftEl = _ref;
+    },
+    className: clsx__default['default']('left-part')
+  }, left.map(function (item, idx) {
+    return renderAction(item, idx);
+  })), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "center-part"
+  }, children), /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: function ref(_ref2) {
+      return thisRef.current.rightEl = _ref2;
+    },
+    className: clsx__default['default']('right-part')
+  }, right.map(function (item, idx) {
+    return renderAction(item, idx);
+  })))));
+});
+SwipeAction.displayName = 'UC-SwipeAction';
+
+var _excluded$t = ["className", "style", "prefix", "suffix", "autoHeight", "textarea"];
+
+var _templateObject$w;
+var StyledInput = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n    line-height: 1.5715;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
+/** 单行/多行输入框 input/textarea */
+
+var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      style = props.style,
+      prefix = props.prefix,
+      suffix = props.suffix,
+      _props$autoHeight = props.autoHeight,
+      autoHeight = _props$autoHeight === void 0 ? true : _props$autoHeight,
+      textarea = props.textarea,
+      rest = _objectWithoutProperties(props, _excluded$t);
+
+  var inputRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return inputRef.current;
+  });
+  var thisRef = useThisRef({
+    textarea: textarea,
+    autoHeight: autoHeight
+  });
+  React.useEffect(function () {
+    var v = thisRef.current;
+
+    if (v.textarea && v.autoHeight) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.scrollTop = 0;
+      inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
+    }
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledInput, {
+    style: style,
+    className: clsx__default['default']('uc-input', className, {
+      mobile: isMobile(),
+      pc: !isMobile()
+    })
+  }, prefix && /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default']('prefix')
+  }, prefix), /*#__PURE__*/React__default['default'].createElement(textarea ? 'textarea' : 'input', _objectSpread2(_objectSpread2({}, rest), {}, {
+    ref: inputRef
+  })), suffix && /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default']('suffix')
+  }, suffix));
+});
+Input.displayName = 'UC-Input';
 
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
@@ -4021,6 +4275,7 @@ exports.IconArrow = IconArrow;
 exports.IconCross = IconCross;
 exports.IconTick = IconTick;
 exports.IndexList = IndexList;
+exports.Input = Input;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
@@ -4036,6 +4291,7 @@ exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Space = Space;
 exports.Spinner = Spinner;
+exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;
 exports.Tabs = Tabs;
 exports.Text = Text;
@@ -4046,4 +4302,5 @@ exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
 exports.Waypoint = Waypoint;
 exports.debounce = debounce;
+exports.getProps = getProps;
 exports.throttle = throttle;

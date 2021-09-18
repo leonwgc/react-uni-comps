@@ -9,3 +9,5 @@ export declare const debounce: (fn: F, timeout?: number) => F;
  * @return {*}  {F}
  */
 export declare const throttle: (fn: F, timeout?: number, last?: boolean) => F;
+/** get filterd props */
+export declare const getProps: (props: {}, propKeys: string[], isIncluded?: boolean) => Record<string, unknown>;

@@ -3,12 +3,12 @@ import React from 'react';
 declare const FingerGestureElement: React.ForwardRefExoticComponent<{
     children: React.ReactElement;
 } & Partial<Partial<{
-    onTouchStart: () => void;
-    onTouchMove: () => void;
-    onTouchEnd: () => void;
-    onTouchCancel: () => void;
-    onMultipointStart: () => void;
-    onMultipointEnd: () => void;
+    onTouchStart: (evt: React.SyntheticEvent<Element, Event>) => void;
+    onTouchMove: (evt: React.SyntheticEvent<Element, Event>) => void;
+    onTouchEnd: (evt: React.SyntheticEvent<Element, Event>) => void;
+    onTouchCancel: (evt: React.SyntheticEvent<Element, Event>) => void;
+    onMultipointStart: (evt: React.SyntheticEvent<Element, Event>) => void;
+    onMultipointEnd: (evt: React.SyntheticEvent<Element, Event>) => void;
     onTap: () => void;
     onDoubleTap: () => void;
     onLongTap: () => void;

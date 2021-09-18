@@ -154,14 +154,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledSwipeAction className={clsx('uc-swipe-action')}>
       <FingerGestureElement
         ref={elRef}
-        onTransitionEnd={() => {
-          thisRef.current.el.style.transitionProperty = 'transform';
-        }}
-        onClick={() => {
-          if (autoClose) {
-            startTransform('translate3d(0,0,0)', 0);
-          }
-        }}
         onTouchStart={() => {
           thisRef.current.el.style.transitionProperty = 'none';
         }}
@@ -217,7 +209,14 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           }
         }}
       >
-        <div className="wrap">
+        <div
+          className="wrap"
+          onClick={() => {
+            if (autoClose) {
+              startTransform('translate3d(0,0,0)', 0);
+            }
+          }}
+        >
           <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
             {left.map((item, idx) => renderAction(item, idx))}
           </div>
