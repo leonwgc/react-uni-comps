@@ -2,6 +2,8 @@ import React, { HTMLAttributes, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useThisRef from './hooks/useThisRef';
+import Popup from './Popup';
+import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 
 type DataItem = {
@@ -15,14 +17,39 @@ type Props = {
   cols?: 1 | 2 | 3;
   data: DataItem[];
   value?: string[];
+  onClose: () => void;
+  onOk?: (value: string[]) => void;
   onChange?: (value: string[]) => void;
+  visible?: boolean;
 } & HTMLAttributes<HTMLElement>;
+
+const StyledBar = styled.div`
+  display: flex;
+  height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  width: 100%;
+  background-color: #fff;
+  font-size: 16px;
+
+  .ok {
+    ${getThemeColorCss('color')}
+  }
+  .cancel {
+    color: #999;
+  }
+  .title {
+    color: #333;
+  }
+`;
 
 const StyledPicker = styled.div`
   display: flex;
   position: relative;
   background-color: #fff;
   height: 245px;
+  width: 100%;
 
   .mask {
     position: absolute;
@@ -210,7 +237,7 @@ const Wheel = (props) => {
 
 /** picker select */
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { onChange, value = [], data = [], cols = 1, ...rest } = props;
+  const { onChange, onClose, visible, onOk, value = [], data = [], cols = 1, ...rest } = props;
 
   const listRef = useRef(getPickerMapData(data, cols));
   const thisRef = useThisRef({
@@ -219,27 +246,51 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   });
 
   return (
-    <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
-      <div className="mask"></div>
-      <div className="hairline"></div>
-      <div className="columnitem">
-        <div className="content">
-          {listRef.current?.map((d, idx) => {
-            return (
-              <Wheel
-                cols={cols}
-                data={d}
-                key={idx === 0 ? 'first' : value?.[idx - 1] || idx}
-                value={value}
-                valueIndex={idx}
-                listRef={listRef}
-                onChange={thisRef.current.onChange}
-              />
-            );
-          })}
+    <Popup
+      position="bottom"
+      style={{
+        width: '100%',
+      }}
+      visible={visible}
+      onMaskClick={() => onClose?.()}
+    >
+      <StyledBar className="bar">
+        <div className="cancel" onClick={onClose}>
+          取消
         </div>
-      </div>
-    </StyledPicker>
+        <div className="title">选择</div>
+        <div
+          className="ok"
+          onClick={() => {
+            onOk?.(value);
+            onClose?.();
+          }}
+        >
+          确定
+        </div>
+      </StyledBar>
+      <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
+        <div className="mask"></div>
+        <div className="hairline"></div>
+        <div className="columnitem">
+          <div className="content">
+            {listRef.current?.map((d, idx) => {
+              return (
+                <Wheel
+                  cols={cols}
+                  data={d}
+                  key={idx === 0 ? 'first' : value?.[idx - 1] || idx}
+                  value={value}
+                  valueIndex={idx}
+                  listRef={listRef}
+                  onChange={thisRef.current.onChange}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </StyledPicker>
+    </Popup>
   );
 });
 
