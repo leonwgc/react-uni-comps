@@ -1,6 +1,5 @@
 import React, { useState, useref, useRef } from 'react';
-import { Divider, Popup, Toast, Button } from '../src';
-import Picker from '../src/Picker';
+import { Toast, Button, Picker } from '../src';
 
 const oneColData = [
   {
