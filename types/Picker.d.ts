@@ -4,7 +4,7 @@ declare type DataItem = {
     value: string;
     children?: DataItem[];
 };
-/** picker select */
+/** picker 选择器 */
 declare const Picker: React.ForwardRefExoticComponent<{
     /** 几栏,默认1 */
     cols?: 1 | 2 | 3;

@@ -209,7 +209,7 @@ var Wheel = function Wheel(props) {
     }, item.label);
   })));
 };
-/** picker select */
+/** picker 选择器 */
 
 
 var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {

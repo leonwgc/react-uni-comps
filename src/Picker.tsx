@@ -242,7 +242,7 @@ const Wheel = (props) => {
   );
 };
 
-/** picker select */
+/** picker 选择器 */
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     okText = '确定',
