@@ -148,9 +148,6 @@ export default function App() {
       <Picker
         visible={visible === 1}
         onClose={() => setVisible(false)}
-        onChange={(v) => {
-          setValue(v);
-        }}
         onOk={(v) => {
           setValue(v);
           Toast.show(JSON.stringify(v), 1000);
@@ -163,9 +160,6 @@ export default function App() {
         visible={visible === 2}
         onClose={() => setVisible(false)}
         value={value1}
-        onChange={(v) => {
-          setValue1(v);
-        }}
         onOk={(v) => {
           setValue1(v);
           Toast.show(JSON.stringify(v), 1000);
@@ -176,9 +170,6 @@ export default function App() {
       <Picker
         visible={visible === 3}
         onClose={() => setVisible(false)}
-        onChange={(v) => {
-          setValue2(v);
-        }}
         value={value2}
         onOk={(v) => {
           setValue2(v);
