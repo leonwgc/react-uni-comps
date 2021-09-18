@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useCallback, useRef } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useThisRef from './hooks/useThisRef';
@@ -11,8 +11,11 @@ type DataItem = {
 };
 
 type Props = {
+  /** 几栏,默认1 */
+  cols?: 1 | 2 | 3;
   data: DataItem[];
-  onChange?: (value: string[] | string) => void;
+  value?: string[];
+  onChange?: (value: string[]) => void;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledPicker = styled.div`
@@ -54,7 +57,7 @@ const StyledPicker = styled.div`
     height: 100%;
 
     .content {
-      display: block;
+      display: flex;
       position: relative;
       text-align: center;
       overflow-y: hidden;
@@ -80,37 +83,68 @@ const StyledPicker = styled.div`
 const itemHeight = 35;
 const firstItemY = 105;
 
-/** picker select */
-const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((props, ref) => {
-  const { onChange, data = [], ...rest } = props;
-  const elRef = useRef<HTMLElement>();
-  const thisRef = useThisRef({
-    y: firstItemY,
-    data,
-    onChange,
+const getPickerMapData = (data: DataItem[], cols = 1) => {
+  const ret = [];
+  for (let i = 0; i < cols; i++) {
+    ret.push([]);
+  }
+
+  data?.map((d) => {
+    ret[0].push(d);
   });
 
-  const scrollToIndex = useCallback((index) => {
-    elRef.current.style.transitionProperty = 'transform';
-    const y = firstItemY - itemHeight * index;
-    setTimeout(() => {
-      elRef.current.style.transform = `translate3d(0,${y}px,0)`;
-    });
-  }, []);
+  if (cols > 1) {
+    ret[1] = data[0].children || [];
+
+    if (cols === 3) {
+      ret[2] = ret[1][0].children || [];
+    }
+  }
+
+  return ret;
+};
+
+const Wheel = (props) => {
+  const { onChange, data = [], listRef, value = [], valueIndex = 0, cols = 1 } = props;
+  const elRef = useRef<HTMLElement>();
+
+  const yRef = useRef(firstItemY);
+  const thisRef = useThisRef({
+    list: listRef.current,
+    cols,
+    data,
+    onChange,
+    value,
+    valueIndex,
+  });
+
+  const scrollToIndex = useCallback(
+    (index) => {
+      if (elRef.current) {
+        elRef.current.style.transitionProperty = 'transform';
+        const y = firstItemY - itemHeight * index;
+        yRef.current = y;
+        setTimeout(() => {
+          if (elRef.current) {
+            elRef.current.style.transform = `translate3d(0,${y}px,0)`;
+          }
+        });
+      }
+    },
+    [yRef]
+  );
 
   const getIndexByY = useCallback(() => {
-    const y = thisRef.current.y;
+    const y = yRef.current;
     const d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [thisRef]);
+  }, [yRef]);
 
-  const getValueByIndex = useCallback(
-    (index) => {
-      const v = thisRef.current;
-      return v.data[index].value;
-    },
-    [thisRef]
-  );
+  useEffect(() => {
+    const v = thisRef.current;
+    const i = v.data.findIndex((d) => d.value === v.value[v.valueIndex]);
+    scrollToIndex(i > -1 ? i : 0);
+  }, [scrollToIndex, thisRef]);
 
   const onTouchEnd = useCallback(() => {
     const v = thisRef.current;
@@ -119,46 +153,90 @@ const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((
     const max = firstItemY;
 
     let index;
-    if (v.y >= max - itemHeight / 2) {
-      v.y = firstItemY;
+    if (yRef.current >= max - itemHeight / 2) {
       index = 0;
-    } else if (v.y <= min) {
-      v.y = min;
+    } else if (yRef.current <= min) {
       index = v.data.length - 1;
     } else {
       index = getIndexByY();
     }
     scrollToIndex(index);
-    v.onChange?.(getValueByIndex(index));
-  }, [getIndexByY, scrollToIndex, thisRef, getValueByIndex]);
+    v.value[v.valueIndex] = v.data[index]?.value;
+
+    let vIndex = v.valueIndex;
+    while (vIndex < v.cols - 1) {
+      // next wheel refresh  & update value to next&first
+      v.list[vIndex + 1] = v.list[vIndex][index]?.children || [];
+      v.value[vIndex + 1] = v.list[vIndex + 1][0]?.value || '';
+      vIndex++;
+    }
+
+    const cv = [...v.value];
+    vIndex = v.valueIndex - 1;
+    while (vIndex >= 0) {
+      if (typeof cv[vIndex] === 'undefined') {
+        // left not scrolled
+        cv[vIndex] = v.list[vIndex][0]?.value || '';
+      }
+      vIndex--;
+    }
+
+    v.onChange?.(cv);
+  }, [getIndexByY, scrollToIndex, thisRef]);
 
   return (
-    <StyledPicker {...rest} className={clsx('uc-picker')}>
+    <FingerGestureElement
+      ref={elRef}
+      onTouchStart={() => {
+        elRef.current.style.transitionProperty = 'none';
+      }}
+      onTouchEnd={onTouchEnd}
+      onPressMove={(e) => {
+        e.preventDefault();
+        yRef.current += e.deltaY;
+        elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
+      }}
+    >
+      <div className="wrapper" style={{ width: 100 / cols + '%' }}>
+        {data.map((item) => (
+          <div className="item" key={item.value}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+    </FingerGestureElement>
+  );
+};
+
+/** picker select */
+const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { onChange, value = [], data = [], cols = 1, ...rest } = props;
+
+  const listRef = useRef(getPickerMapData(data, cols));
+  const thisRef = useThisRef({
+    value,
+    onChange,
+  });
+
+  return (
+    <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
       <div className="mask"></div>
       <div className="hairline"></div>
       <div className="columnitem">
         <div className="content">
-          <FingerGestureElement
-            ref={elRef}
-            onTouchStart={() => {
-              elRef.current.style.transitionProperty = 'none';
-            }}
-            onTouchEnd={onTouchEnd}
-            onPressMove={(e) => {
-              e.preventDefault();
-              const v = thisRef.current;
-              v.y += e.deltaY;
-              elRef.current.style.transform = `translate3d(0,${v.y}px,0)`;
-            }}
-          >
-            <div className="wrapper">
-              {data.map((item) => (
-                <div className="item" key={item.value}>
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          </FingerGestureElement>
+          {listRef.current?.map((d, idx) => {
+            return (
+              <Wheel
+                cols={cols}
+                data={d}
+                key={idx === 0 ? 'first' : value?.[idx - 1] || idx}
+                value={value}
+                valueIndex={idx}
+                listRef={listRef}
+                onChange={thisRef.current.onChange}
+              />
+            );
+          })}
         </div>
       </div>
     </StyledPicker>
