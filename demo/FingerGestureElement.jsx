@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FingerGestureElement, Toast } from '../src';
-import bird from './images/cat.gif';
+import dog from './images/dog.jpg';
 
 export default function App() {
   const ref = useRef();
@@ -49,7 +49,7 @@ export default function App() {
         }}
       >
         <img
-          src={bird}
+          src={dog}
           width={200}
           height={200}
           style={{ objectFit: 'scale-down', transformOrigin: 'center', border: '1px solid #eee' }}
