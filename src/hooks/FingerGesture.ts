@@ -1,5 +1,5 @@
 /*
- * refer https://github.com/AlloyTeam/AlloyFinger & refactor
+ * refer to AlloyFinger & refactor
  */
 
 import { SyntheticEvent } from 'react';
@@ -89,7 +89,7 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   el: Element,
   option: Option
 ) {
-  this.element = typeof el == 'string' ? document.querySelector(el) : el;
+  this.element = el;
 
   this.start = this.start.bind(this);
   this.move = this.move.bind(this);
@@ -109,7 +109,12 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   const noop = function () {};
 
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  /** native events special care prevent from twice invoke  */
+  this.touchStart = new HandlerAdmin(this.element);
+  this.touchMove = new HandlerAdmin(this.element);
+  this.touchEnd = new HandlerAdmin(this.element);
+  this.touchCancel = new HandlerAdmin(this.element);
+
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
   this.pinch = wrapFunc(this.element, option.onPinch || noop);
@@ -120,9 +125,6 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
   this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
   this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
-  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
-  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
-  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
 
   this._cancelAllHandler = this.cancelAll.bind(this);
 

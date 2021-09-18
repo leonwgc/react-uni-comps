@@ -24,7 +24,7 @@ export default function App() {
           console.log('end');
         }}
         onTap={(e) => {
-          console.log(e);
+          console.log('tap');
         }}
         onPinch={(e) => {
           e.preventDefault();
