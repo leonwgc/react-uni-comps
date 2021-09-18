@@ -21,6 +21,9 @@ type Props = {
   onOk?: (value: string[]) => void;
   onChange?: (value: string[]) => void;
   visible?: boolean;
+  okText?: React.ReactNode;
+  title?: React.ReactNode;
+  cancelText?: React.ReactNode;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledBar = styled.div`
@@ -237,7 +240,19 @@ const Wheel = (props) => {
 
 /** picker select */
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { onChange, onClose, visible, onOk, value = [], data = [], cols = 1, ...rest } = props;
+  const {
+    okText = '确定',
+    cancelText = '取消',
+    title = '请选择',
+    onChange,
+    onClose,
+    visible,
+    onOk,
+    value = [],
+    data = [],
+    cols = 1,
+    ...rest
+  } = props;
 
   const listRef = useRef(getPickerMapData(data, cols));
   const thisRef = useThisRef({
@@ -256,9 +271,9 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <StyledBar className="bar">
         <div className="cancel" onClick={onClose}>
-          取消
+          {cancelText}
         </div>
-        <div className="title">选择</div>
+        <div className="title">{title}</div>
         <div
           className="ok"
           onClick={() => {
@@ -281,7 +296,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             onClose?.();
           }}
         >
-          确定
+          {okText}
         </div>
       </StyledBar>
       <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
