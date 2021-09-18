@@ -31,6 +31,16 @@ const twoColsData = [
   {
     label: '北京',
     value: '北京',
+    children: [
+      {
+        label: '北京1',
+        value: '北京1',
+      },
+      {
+        label: '北京2',
+        value: '北京2',
+      },
+    ],
   },
 ];
 
@@ -108,9 +118,9 @@ const areas = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState([]);
-  const [value1, setValue1] = useState([]);
-  const [value2, setValue2] = useState(['北京', '北京1', '北京11']);
+  const [value, setValue] = useState(['北京']);
+  const [value1, setValue1] = useState(['北京', '北京2']);
+  const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [visible, setVisible] = useState(false);
 
   return (
@@ -142,6 +152,7 @@ export default function App() {
           setValue(v);
         }}
         onOk={(v) => {
+          setValue(v);
           Toast.show(JSON.stringify(v), 1000);
         }}
         value={value}
@@ -156,6 +167,7 @@ export default function App() {
           setValue1(v);
         }}
         onOk={(v) => {
+          setValue1(v);
           Toast.show(JSON.stringify(v), 1000);
         }}
         cols={2}
@@ -169,6 +181,7 @@ export default function App() {
         }}
         value={value2}
         onOk={(v) => {
+          setValue2(v);
           Toast.show(JSON.stringify(v), 1000);
         }}
         cols={3}

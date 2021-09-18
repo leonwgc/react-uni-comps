@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useCallback, useEffect, useRef } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useThisRef from './hooks/useThisRef';
@@ -19,7 +19,6 @@ type Props = {
   value?: string[];
   onClose: () => void;
   onOk?: (value: string[]) => void;
-  onChange?: (value: string[]) => void;
   visible?: boolean;
   okText?: React.ReactNode;
   title?: React.ReactNode;
@@ -113,7 +112,7 @@ const StyledPicker = styled.div`
 const itemHeight = 35;
 const firstItemY = 105;
 
-const getPickerMapData = (data: DataItem[], cols = 1) => {
+const getPickerMapData = (data: DataItem[], cols = 1, value = []) => {
   const ret = [];
   for (let i = 0; i < cols; i++) {
     ret.push([]);
@@ -124,10 +123,14 @@ const getPickerMapData = (data: DataItem[], cols = 1) => {
   });
 
   if (cols > 1) {
-    ret[1] = data[0].children || [];
+    let lastIndex = data.findIndex((d) => d.value === value[0]);
+    lastIndex = lastIndex === -1 ? 0 : lastIndex;
+    ret[1] = data[lastIndex].children || [];
 
     if (cols === 3) {
-      ret[2] = ret[1][0].children || [];
+      lastIndex = data.findIndex((d) => d.value === value[1]);
+      lastIndex = lastIndex === -1 ? 0 : lastIndex;
+      ret[2] = ret[1][lastIndex].children || [];
     }
   }
 
@@ -245,7 +248,6 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     okText = '确定',
     cancelText = '取消',
     title = '请选择',
-    onChange,
     onClose,
     visible,
     onOk,
@@ -255,11 +257,8 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const listRef = useRef(getPickerMapData(data, cols));
-  const thisRef = useThisRef({
-    value,
-    onChange,
-  });
+  const listRef = useRef(getPickerMapData(data, cols, value));
+  const [val, setVal] = useState(value);
 
   return (
     <Popup
@@ -279,12 +278,11 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           className="ok"
           onClick={() => {
             if (listRef.current.length) {
-              const v = thisRef.current;
-              const cv = [...v.value];
+              const cv = [...val];
               let i = cols - 1;
               while (i >= 0) {
                 if (typeof cv[i] === 'undefined') {
-                  cv[i] = listRef.current[i][v.value[i] || 0]?.value || '';
+                  cv[i] = listRef.current[i][val[i] || 0]?.value || '';
                 }
                 i--;
               }
@@ -310,11 +308,11 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 <Wheel
                   cols={cols}
                   data={d}
-                  key={idx === 0 ? 'first' : value?.[idx - 1] || idx}
-                  value={value}
+                  key={idx === 0 ? 'first' : val?.[idx - 1] || idx}
+                  value={val}
                   valueIndex={idx}
                   listRef={listRef}
-                  onChange={thisRef.current.onChange}
+                  onChange={setVal}
                 />
               );
             })}
