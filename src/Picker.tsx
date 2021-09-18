@@ -193,17 +193,18 @@ const Wheel = (props) => {
     scrollToIndex(index);
     v.value[v.valueIndex] = v.data[index]?.value;
 
-    let vIndex = v.valueIndex;
-    while (vIndex < v.cols - 1) {
+    let vIndex = v.valueIndex + 1;
+    while (vIndex <= v.cols - 1) {
       // next wheel refresh  & update value to next&first
-      v.list[vIndex + 1] = v.list[vIndex][index]?.children || [];
-      v.value[vIndex + 1] = v.list[vIndex + 1][0]?.value || '';
+      v.list[vIndex] = v.list[vIndex - 1][index]?.children || [];
+      v.value[vIndex] = v.list[vIndex][0]?.value || '';
       vIndex++;
     }
 
     const cv = [...v.value];
     vIndex = v.valueIndex - 1;
     while (vIndex >= 0) {
+      // prev wheel check
       if (typeof cv[vIndex] === 'undefined') {
         // left not scrolled
         cv[vIndex] = v.list[vIndex][0]?.value || '';

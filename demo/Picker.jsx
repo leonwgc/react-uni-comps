@@ -1,7 +1,6 @@
 import React, { useState, useref, useRef } from 'react';
 import { Divider, Popup, Toast, Button } from '../src';
 import Picker from '../src/Picker';
-import areas from './pickerData';
 
 const oneColData = [
   {
@@ -35,13 +34,84 @@ const twoColsData = [
   },
 ];
 
+const areas = [
+  {
+    label: '上海',
+    value: '上海',
+    children: [
+      {
+        label: '闵行',
+        value: '闵行',
+        children: [
+          {
+            label: '莘庄',
+            value: '莘庄',
+          },
+          {
+            label: '颛桥',
+            value: '颛桥',
+          },
+        ],
+      },
+      {
+        label: '浦东',
+        value: '浦东',
+        children: [
+          {
+            label: '浦东1',
+            value: '浦东1',
+          },
+          {
+            label: '浦东2',
+            value: '浦东2',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: '北京',
+    value: '北京',
+    children: [
+      {
+        label: '北京1',
+        value: '北京1',
+        children: [
+          {
+            label: '北京11',
+            value: '北京11',
+          },
+          {
+            label: '北京12',
+            value: '北京12',
+          },
+        ],
+      },
+      {
+        label: '北京2',
+        value: '北京2',
+        children: [
+          {
+            label: '北京21',
+            value: '北京21',
+          },
+          {
+            label: '北京22',
+            value: '北京22',
+          },
+        ],
+      },
+    ],
+  },
+];
+
 //#endregion
 
 export default function App() {
   const [value, setValue] = useState([]);
   const [value1, setValue1] = useState([]);
-  const [value2, setValue2] = useState([]);
-  const [visible, setVisible] = useState(1);
+  const [value2, setValue2] = useState(['北京', '北京1', '北京11']);
+  const [visible, setVisible] = useState(false);
 
   return (
     <div className="app" style={{ margin: '20px' }}>
