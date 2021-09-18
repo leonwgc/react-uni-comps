@@ -147,7 +147,7 @@ var Wheel = function Wheel(props) {
 
     var v = thisRef.current;
     var list = v.data;
-    var min = -1 * (list.length - 1) * 35 + firstItemY;
+    var min = -1 * (list.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
     var index;
 

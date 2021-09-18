@@ -96,14 +96,6 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: clsx('uc-swipe-action')
   }, /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: elRef,
-    onTransitionEnd: function onTransitionEnd() {
-      thisRef.current.el.style.transitionProperty = 'transform';
-    },
-    onClick: function onClick() {
-      if (autoClose) {
-        startTransform('translate3d(0,0,0)', 0);
-      }
-    },
     onTouchStart: function onTouchStart() {
       thisRef.current.el.style.transitionProperty = 'none';
     },
@@ -162,7 +154,12 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "wrap"
+    className: "wrap",
+    onClick: function onClick() {
+      if (autoClose) {
+        startTransform('translate3d(0,0,0)', 0);
+      }
+    }
   }, /*#__PURE__*/React.createElement("div", {
     ref: function ref(_ref) {
       return thisRef.current.leftEl = _ref;

@@ -4115,14 +4115,6 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     className: clsx__default['default']('uc-swipe-action')
   }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: elRef,
-    onTransitionEnd: function onTransitionEnd() {
-      thisRef.current.el.style.transitionProperty = 'transform';
-    },
-    onClick: function onClick() {
-      if (autoClose) {
-        startTransform('translate3d(0,0,0)', 0);
-      }
-    },
     onTouchStart: function onTouchStart() {
       thisRef.current.el.style.transitionProperty = 'none';
     },
@@ -4187,7 +4179,12 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       }
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "wrap"
+    className: "wrap",
+    onClick: function onClick() {
+      if (autoClose) {
+        startTransform('translate3d(0,0,0)', 0);
+      }
+    }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     ref: function ref(_ref) {
       return thisRef.current.leftEl = _ref;

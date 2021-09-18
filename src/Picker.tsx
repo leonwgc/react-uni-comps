@@ -182,7 +182,7 @@ const Wheel = (props) => {
   const onTouchEnd = useCallback(() => {
     const v = thisRef.current;
     const list = v.data;
-    const min = -1 * (list.length - 1) * 35 + firstItemY;
+    const min = -1 * (list.length - 1) * itemHeight + firstItemY;
     const max = firstItemY;
 
     let index;
