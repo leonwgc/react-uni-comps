@@ -1,13 +1,12 @@
-import React, { useRef, useImperativeHandle, HTMLAttributes } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import useGesture from './hooks/useGesture';
-import { Option } from './hooks/FingerGesture';
+import { Option, supportedGestures } from './hooks/FingerGesture';
+import { getProps } from 'react-uni-comps';
 
 type Props = {
   children: React.ReactElement;
-} & Partial<Option> &
-  HTMLAttributes<HTMLElement>;
-// TODO: omit rest props from children
-/** 手势操作元素, 非手势props透传到子元素 */
+} & Partial<Option>;
+/** 手势操作元素 */
 const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { children, ...rest } = props;
   const elRef = useRef();
@@ -15,7 +14,7 @@ const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) =
   useGesture(elRef, rest as Option);
 
   return React.cloneElement(children, {
-    ...rest,
+    ...getProps(rest, supportedGestures, false), // filter out gesture evts
     ref: elRef,
   });
 });

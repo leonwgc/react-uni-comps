@@ -1,9 +1,8 @@
-import React, { HTMLAttributes, useCallback, useRef, useImperativeHandle } from 'react';
+import React, { HTMLAttributes, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useThisRef from './hooks/useThisRef';
 import clsx from 'clsx';
-import { debounce } from './helper';
 
 type DataItem = {
   label: string;
@@ -13,7 +12,7 @@ type DataItem = {
 
 type Props = {
   data: DataItem[];
-  onChange?: (value: any) => void;
+  onChange?: (value: string[] | string) => void;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledPicker = styled.div`
@@ -99,36 +98,42 @@ const Picker = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((
     });
   }, []);
 
-  const getIndex = useCallback(() => {
+  const getIndexByY = useCallback(() => {
     const y = thisRef.current.y;
     const d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, []);
+  }, [thisRef]);
 
-  const onTouchEnd = debounce(
-    useCallback(() => {
+  const getValueByIndex = useCallback(
+    (index) => {
       const v = thisRef.current;
-      const list = v.data;
-      const min = -1 * (list.length - 1) * 35 + firstItemY;
-      const max = firstItemY;
-
-      if (v.y >= max - itemHeight / 2) {
-        v.y = firstItemY;
-        scrollToIndex(0);
-        v.onChange?.(0);
-      } else if (v.y <= min) {
-        v.y = min;
-        scrollToIndex(list.length - 1);
-        v.onChange?.(list.length - 1);
-      } else {
-        scrollToIndex(getIndex());
-        v.onChange?.(getIndex());
-      }
-    }, [getIndex, scrollToIndex, thisRef])
+      return v.data[index].value;
+    },
+    [thisRef]
   );
 
+  const onTouchEnd = useCallback(() => {
+    const v = thisRef.current;
+    const list = v.data;
+    const min = -1 * (list.length - 1) * 35 + firstItemY;
+    const max = firstItemY;
+
+    let index;
+    if (v.y >= max - itemHeight / 2) {
+      v.y = firstItemY;
+      index = 0;
+    } else if (v.y <= min) {
+      v.y = min;
+      index = v.data.length - 1;
+    } else {
+      index = getIndexByY();
+    }
+    scrollToIndex(index);
+    v.onChange?.(getValueByIndex(index));
+  }, [getIndexByY, scrollToIndex, thisRef, getValueByIndex]);
+
   return (
-    <StyledPicker className={clsx('uc-picker')}>
+    <StyledPicker {...rest} className={clsx('uc-picker')}>
       <div className="mask"></div>
       <div className="hairline"></div>
       <div className="columnitem">

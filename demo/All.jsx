@@ -15,6 +15,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Picker
+          </Space>
+        }
+        description="Picker选择器"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Picker')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> SwipeAction
           </Space>
         }

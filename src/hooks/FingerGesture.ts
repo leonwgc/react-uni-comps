@@ -4,6 +4,20 @@
 
 import { SyntheticEvent } from 'react';
 
+export const supportedGestures = [
+  'onMultipointStart',
+  'onMultipointEnd',
+  'onTap',
+  'onDoubleTap',
+  'onLongTap',
+  'onSingleTap',
+  'onRotate',
+  'onPinch',
+  'onPressMove',
+  'onSwipe',
+  'onTwoFingerPressMove',
+];
+
 const getLen = (v) => {
   return Math.sqrt(v.x * v.x + v.y * v.y);
 };
