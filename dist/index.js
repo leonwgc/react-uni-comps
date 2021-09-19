@@ -13,6 +13,7 @@ var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
 var copy = require('copy-text-to-clipboard');
 var reactUniComps = require('react-uni-comps');
+var useSigPad = require('react-use-lib/es/useSigPad');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -24,6 +25,7 @@ var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
+var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -4552,6 +4554,58 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Steps.displayName = 'UC-Steps';
 
+var _excluded$w = ["padColor", "penColor", "landscape", "className"];
+
+var _templateObject$z;
+var StyledSignaturePad = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n  &.landscape {\n    transform: translate(-50%, -50%) rotate(90deg);\n  }\n"])), border);
+/** 签名面板 */
+
+var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var padColor = props.padColor,
+      penColor = props.penColor,
+      _props$landscape = props.landscape,
+      landscape = _props$landscape === void 0 ? false : _props$landscape,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$w);
+
+  var elRef = React.useRef();
+  var canvasRef = React.useRef();
+
+  var _useSigPad = useSigPad__default['default'](canvasRef, {
+    useLandscape: !!landscape,
+    penColor: penColor,
+    backgroundColor: padColor
+  }),
+      padRef = _useSigPad.padRef,
+      _clear = _useSigPad.clear;
+
+  React.useImperativeHandle(ref, function () {
+    return {
+      getDataUrl: function getDataUrl() {
+        return padRef.current.toDataURL();
+      },
+      clear: function clear() {
+        _clear();
+      }
+    };
+  });
+  React.useLayoutEffect(function () {
+    // read size from container
+    canvasRef.current.width = elRef.current.offsetWidth;
+    canvasRef.current.height = elRef.current.offsetHeight;
+  }, []);
+  return /*#__PURE__*/React__default['default'].createElement(StyledSignaturePad, _extends({}, rest, {
+    className: clsx__default['default']('uc-sigpad', className, {
+      landscape: landscape,
+      portrait: !landscape
+    }),
+    ref: elRef
+  }), /*#__PURE__*/React__default['default'].createElement("canvas", {
+    ref: canvasRef
+  }));
+});
+SignaturePad.displayName = 'UC-SignaturePad';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -4583,6 +4637,7 @@ exports.Popover = Popover;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
 exports.ScrollTop = ScrollTop;
+exports.SignaturePad = SignaturePad;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Space = Space;
