@@ -158,6 +158,10 @@ const routes = [
     path: '/Picker',
     component: lazy(() => import('./Picker')),
   },
+  {
+    path: '/Steps',
+    component: lazy(() => import('./Steps')),
+  },
 ];
 
 export default routes;

@@ -13,11 +13,11 @@ export const getThemeColorCss = (prop: string, leftValue = ''): any => {
   if (isMobile()) {
     return css`
       ${prop}:${leftValue} ${(props) => props.theme.color || colors.primary};
-      ${prop}:var(--uc-color, ${colors.primary});
+      ${prop}:${leftValue} var(--uc-color, ${colors.primary});
     `;
   } else {
     return css`
-      ${prop}:var(--uc-color, ${colors.primary});
+      ${prop}:${leftValue} var(--uc-color, ${colors.primary});
       ${prop}:${leftValue} ${(props) => props.theme.color};
     `;
   }

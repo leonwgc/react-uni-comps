@@ -33,7 +33,7 @@ const StyledDivider = styled.div`
     clear: both;
     width: 100%;
     min-width: 100%;
-    margin: 24px 0;
+    margin: 16px 0;
   }
 
   &.dashed {
