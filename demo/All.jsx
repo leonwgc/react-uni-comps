@@ -13,6 +13,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> SignaturePad
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SignaturePad')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Input
           </Space>
         }
