@@ -1,9 +1,7 @@
-import React, { useState, useRef, useCallback } from 'react';
-import styled from 'styled-components';
-import { Input } from 'antd';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SoundOutlined } from '@ant-design/icons';
-import { Space, Cell, Button, Checkbox, Switch, IconArrow } from '../src';
+import { Space, Cell, IconArrow } from '../src';
 
 export default function All() {
   const history = useHistory();
@@ -15,10 +13,18 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Input
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Input')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Steps
           </Space>
         }
-        description="Steps"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Steps')}
       ></Cell>
@@ -28,7 +34,6 @@ export default function All() {
             <SoundOutlined /> Picker
           </Space>
         }
-        description="Picker选择器"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Picker')}
       ></Cell>
