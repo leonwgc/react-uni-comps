@@ -2,10 +2,12 @@ import React, { useRef } from 'react';
 import { SignaturePad, Button, Space } from '../src';
 import styled from 'styled-components';
 
+// simulate landscape mode
+
 const StyledOps = styled.div`
   position: fixed;
   top: 50%;
-  left: calc(100% - 60px);
+  left: calc(100% - 30px);
   transform: translate(-50%, -50%) rotate(90deg);
 `;
 
