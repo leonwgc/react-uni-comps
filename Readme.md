@@ -1,4 +1,4 @@
-桌面和移动端通用组件集合,包含结构和行为封装，不定义样式.
+适用于桌面和移动端的 react 组件集合
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
@@ -11,11 +11,12 @@ yarn add react-uni-comps
 
 1. 支持按需加载
 2. 支持桌面和移动端
-3. 支持动态切换主题色
+3. 支持 js 动态切换主题色
 4. 只支持 react>=16.8 版本，使用 hooks 实现
-5. 基本样式使用 styled-components
+5. 样式采用 css-in-js 方案 (styled-components)
+6. 方便扩展样式风格,二次开发/定制属于自己的组件库
 
-### 组件说明
+### 组件列表
 
 #### 1. TransitionElement (给子元素添加初始加载过渡动画/不可见到可见状态的过渡动画)
 
@@ -131,12 +132,27 @@ yarn add react-uni-comps
 import Button from 'react-uni-comps/es/Button';
 ```
 
-### 主题色设置
+### 设置主题色
 
 使用 ThemeProvider 设置
 
 ```js
 <ThemeProvider color="#409eff">...</ThemeProvider>
+```
+
+### 自定义样式
+
+```js
+import styled from 'styled-components';
+import { Button } from 'react-uni-comps';
+
+const StyledButton = styled(Button)`
+  border-radius: 10px;
+`;
+
+<StyledButton type="primary" loading>
+  waiting
+</StyledButton>;
 ```
 
 持续更新其他组件...

@@ -9,6 +9,10 @@ const StyledContent = styled.div`
   }
 `;
 
+const StyledButton = styled(Button)`
+  border-radius: 10px;
+`;
+
 export default function App() {
   return (
     <StyledContent>
@@ -28,6 +32,10 @@ export default function App() {
         <Button type="primary" loading>
           hello
         </Button>
+
+        <StyledButton type="primary" loading>
+          StyledButton
+        </StyledButton>
 
         <Button loading onClick={() => console.log('hello')}>
           hello

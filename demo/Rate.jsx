@@ -1,6 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Rate, Divider, Space, Toast } from '../src';
 import { HeartOutlined } from '@ant-design/icons';
+
+const StyledRate = styled(Rate)`
+  .char {
+    &.active {
+      color: red;
+    }
+  }
+`;
 
 export default function App() {
   return (
@@ -22,14 +31,14 @@ export default function App() {
       </Space>
       <Divider>自定义字符和样式</Divider>
       <Space direction="vertical">
-        <Rate
+        <StyledRate
           allowHalf
           defaultValue={3}
           char={<HeartOutlined />}
           onChange={(v) => Toast.show(v, 800)}
         />
-        <Rate allowHalf defaultValue={1.5} char={'W'} onChange={(v) => Toast.show(v, 800)} />
-        <Rate allowHalf defaultValue={3.5} char={'好'} onChange={(v) => Toast.show(v, 800)} />
+        <StyledRate allowHalf defaultValue={1.5} char={'M'} onChange={(v) => Toast.show(v, 800)} />
+        <StyledRate allowHalf defaultValue={3.5} char={'好'} onChange={(v) => Toast.show(v, 800)} />
       </Space>
     </div>
   );
