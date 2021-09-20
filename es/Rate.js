@@ -89,7 +89,7 @@ var Rate = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setVal(value);
     }
   }, [value]);
-  var renderStar = useCallback(function (v, val, half) {
+  var renderChar = useCallback(function (v, val, half) {
     return /*#__PURE__*/React.createElement("div", {
       className: clsx("star", {
         active: val >= v,
@@ -114,7 +114,7 @@ var Rate = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return /*#__PURE__*/React.createElement("div", {
       key: i,
       className: clsx("box")
-    }, allowHalf && renderStar(i + 0.5, val, true), renderStar(i + 1, val, false));
+    }, allowHalf && renderChar(i + 0.5, val, true), renderChar(i + 1, val, false));
   }));
 });
 Rate.displayName = 'UC-Rate';

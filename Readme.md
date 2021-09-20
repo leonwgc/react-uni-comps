@@ -101,9 +101,9 @@ yarn add react-uni-comps
 
 #### 42. Picker (移动端选择器)
 
-#### 42. Steps (步骤条)
+#### 43. Steps (步骤条)
 
-#### 42. Rate (评分/几颗星)
+#### 44. Rate (评分/几颗星)
 
 ### 按需加载
 

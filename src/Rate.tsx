@@ -10,7 +10,7 @@ const StyledRate = styled.div`
     position: relative;
   }
 
-  .star {
+  .char {
     padding: calc(24px / 8);
     line-height: 24px;
     font-size: 24px;
@@ -90,11 +90,11 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     }
   }, [value]);
 
-  const renderStar = useCallback(
+  const renderChar = useCallback(
     (v: number, val, half) => {
       return (
         <div
-          className={clsx(`star`, {
+          className={clsx(`char`, {
             active: val >= v,
             half,
             readonly: readonly,
@@ -118,8 +118,8 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     <StyledRate {...rest} ref={ref} className={clsx(className)}>
       {starList.map((_, i) => (
         <div key={i} className={clsx(`box`)}>
-          {allowHalf && renderStar(i + 0.5, val, true)}
-          {renderStar(i + 1, val, false)}
+          {allowHalf && renderChar(i + 0.5, val, true)}
+          {renderChar(i + 1, val, false)}
         </div>
       ))}
     </StyledRate>
