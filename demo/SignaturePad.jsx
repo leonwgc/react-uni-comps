@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <div className="app" style={{ margin: '20px' }}>
-      <Divider>默认竖屏</Divider>
+      <Divider>竖屏</Divider>
       <SignaturePad ref={ref} style={{ width: '100%', height: 200, border: '1px solid #666' }} />
       <Space>
         <Button
