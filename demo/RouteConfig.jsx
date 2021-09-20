@@ -174,6 +174,10 @@ const routes = [
     path: '/Rate',
     component: lazy(() => import('./Rate')),
   },
+  {
+    path: '/NoticeList',
+    component: lazy(() => import('./NoticeList')),
+  },
 ];
 
 export default routes;

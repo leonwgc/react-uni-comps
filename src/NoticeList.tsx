@@ -1,0 +1,167 @@
+import clsx from 'clsx';
+import React, { HTMLAttributes, useRef, useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Space from './Space';
+import IconCross from './IconCross';
+import useThisRef from './hooks/useThisRef';
+
+const StyledNoticeList = styled.div`
+  height: 40px;
+  font-size: 14px;
+  line-height: 40px;
+  padding: 0px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(236, 146, 49, 0.1);
+  color: rgb(236, 146, 49);
+  overflow: hidden;
+
+  &.hide {
+    display: none;
+  }
+
+  .icon-part {
+    flex-shrink: 0;
+    margin-right: 8px;
+  }
+
+  .content-wrap {
+    flex: 1 1;
+    overflow: hidden;
+    height: 100%;
+
+    .list {
+      transition-property: transform;
+      transition-duration: 0.8s;
+      transition-timing-function: ease-in-out;
+      .item {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  .content-extra {
+    display: inline-block;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+`;
+
+type Props = {
+  /** 公告内容 */
+  list: string[];
+  /** 开始滚动的延迟，单位 ms, 默认2000 */
+  delay?: number;
+  /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
+  icon?: React.ReactNode;
+  /** 是否可关闭 ，默认false*/
+  closeable?: boolean;
+  /**额外操作区域，显示在关闭按钮左侧 */
+  extra?: React.ReactNode;
+  /** 关闭时的回调 */
+  onClose?: () => void;
+} & HTMLAttributes<HTMLDivElement>;
+
+/** 多条信息垂直滚动通通知栏  */
+const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
+  const {
+    list = [],
+    delay = 2000,
+    icon,
+    closeable = false,
+    className,
+    onClose,
+    extra,
+    ...rest
+  } = props;
+  const listRef = useRef<HTMLDivElement>();
+  const wrapRef = useRef<HTMLDivElement>();
+  const [visible, setVisible] = useState(true);
+  const [data, setData] = useState(list);
+
+  const thisRef = useThisRef({
+    delay,
+    visible,
+  });
+
+  useEffect(() => {
+    setData(list);
+  }, [list]);
+
+  useEffect(() => {
+    const v = thisRef.current;
+    const wrap = wrapRef.current;
+    const list = listRef.current;
+
+    if (data.length > 1) {
+      const timer = window.setTimeout(() => {
+        list.style.transitionProperty = 'transform';
+        list.style.transform = `translateY(-${wrap.offsetHeight}px)`;
+      }, v.delay);
+      return () => {
+        window.clearTimeout(timer);
+      };
+    }
+  }, [thisRef, data]);
+
+  return (
+    <StyledNoticeList
+      ref={ref}
+      className={clsx(className, 'uc-noticelist', { hide: !visible })}
+      {...rest}
+    >
+      <div className="icon-part">{icon}</div>
+      <div className="content-wrap" ref={wrapRef}>
+        <div
+          className="list"
+          ref={listRef}
+          onTransitionEnd={() => {
+            // move
+            listRef.current.style.transitionProperty = 'none';
+            listRef.current.style.transform = 'none';
+            const lIndex = data.length - 1;
+            if (lIndex > 0) {
+              data.push(data[0]);
+              data.shift();
+              setData([...data]);
+            }
+          }}
+        >
+          {data.map((item) => {
+            return (
+              <div key={item} className={clsx('item')}>
+                {item}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {(closeable || extra) && (
+        <div className={clsx('content-extra')}>
+          <Space>
+            {props.extra}
+            {props.closeable && (
+              <IconCross
+                size={20}
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  setVisible(false);
+                  onClose?.();
+                }}
+              />
+            )}
+          </Space>
+        </div>
+      )}
+    </StyledNoticeList>
+  );
+});
+
+NoticeList.displayName = 'UC-NoticeList';
+
+export default NoticeList;
