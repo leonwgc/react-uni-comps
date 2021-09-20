@@ -40,7 +40,7 @@ type Props = {
   /**是否允许半选 */
   allowHalf?: boolean;
   /** 自定义字符 */
-  character?: React.ReactNode;
+  char?: React.ReactNode;
   /** star 总数   */
   count?: number;
   /**默认数，非受控 */
@@ -54,7 +54,7 @@ type Props = {
   className?: string;
 } & HTMLAttributes<HTMLDivElement>;
 
-const defaultCharacter = (
+const defaultChar = (
   <svg
     viewBox="64 64 896 896"
     focusable="false"
@@ -76,7 +76,7 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     allowHalf = false,
     readonly,
     count = 5,
-    character = defaultCharacter,
+    char = defaultChar,
     onChange,
     className,
     allowClear = true,
@@ -116,11 +116,11 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
             }
           }}
         >
-          {character}
+          {char}
         </div>
       );
     },
-    [allowClear, character, readonly]
+    [allowClear, char, readonly]
   );
   return (
     <StyledRate {...rest} ref={ref} className={clsx(className)}>

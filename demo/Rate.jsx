@@ -25,11 +25,11 @@ export default function App() {
         <Rate
           allowHalf
           defaultValue={3}
-          character={<HeartOutlined />}
+          char={<HeartOutlined />}
           onChange={(v) => Toast.show(v, 800)}
         />
-        <Rate allowHalf defaultValue={1.5} character={'X'} onChange={(v) => Toast.show(v, 800)} />
-        <Rate allowHalf defaultValue={3.5} character={'好'} onChange={(v) => Toast.show(v, 800)} />
+        <Rate allowHalf defaultValue={1.5} char={'W'} onChange={(v) => Toast.show(v, 800)} />
+        <Rate allowHalf defaultValue={3.5} char={'好'} onChange={(v) => Toast.show(v, 800)} />
       </Space>
     </div>
   );
