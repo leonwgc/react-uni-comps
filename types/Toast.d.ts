@@ -9,7 +9,7 @@ declare type Props = {
 declare const Toast: {
     (props: Props): React.ReactElement;
     /** 黑背景提示,静态调用 */
-    show(content: string, duration?: number, modal?: boolean): void;
+    show(content: React.ReactNode, duration?: number, modal?: boolean): void;
     displayName: string;
 };
 export default Toast;

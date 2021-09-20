@@ -3236,7 +3236,6 @@ var Toast = function Toast(props) {
 Toast.show = function (content) {
   var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
   var modal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  if (!content) return;
   var container = getContainer();
   ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, {
     content: content,
@@ -4604,7 +4603,7 @@ SignaturePad.displayName = 'UC-SignaturePad';
 var _excluded$x = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
 
 var _templateObject$A;
-var StyledRate = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .star {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])));
+var StyledRate = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])));
 var defaultChar = /*#__PURE__*/React__default['default'].createElement("svg", {
   viewBox: "64 64 896 896",
   "data-icon": "star",
@@ -4652,7 +4651,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   }, [value]);
   var renderChar = React.useCallback(function (v, val, half) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']("star", {
+      className: clsx__default['default']("char", {
         active: val >= v,
         half: half,
         readonly: readonly

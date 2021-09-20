@@ -85,7 +85,6 @@ Toast.show = function (content, duration, modal) {
     modal = true;
   }
 
-  if (!content) return;
   var container = getContainer();
   ReactDOM.render( /*#__PURE__*/React.createElement(Toast, {
     content: content,
