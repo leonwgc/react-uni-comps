@@ -44,31 +44,29 @@ import styled from 'styled-components';
 import useSigPad from 'react-use-lib/es/useSigPad';
 import clsx from 'clsx';
 import * as colors from './colors';
-var StyledSignaturePad = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n  &.landscape {\n    transform: translate(-50%, -50%) rotate(90deg);\n  }\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n  &.landscape {\n    transform: translate(-50%, -50%) rotate(90deg);\n  }\n"])), colors.border);
+var StyledSignaturePad = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), colors.border);
 /** 签名面板 */
 
 var SignaturePad = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var padColor = props.padColor,
       penColor = props.penColor,
-      _a = props.landscape,
-      landscape = _a === void 0 ? false : _a,
       className = props.className,
-      rest = __rest(props, ["padColor", "penColor", "landscape", "className"]);
+      rest = __rest(props, ["padColor", "penColor", "className"]);
 
   var elRef = useRef();
   var canvasRef = useRef();
 
-  var _b = useSigPad(canvasRef, {
-    useLandscape: !!landscape,
+  var _a = useSigPad(canvasRef, {
+    useLandscape: false,
     penColor: penColor,
     backgroundColor: padColor
   }),
-      padRef = _b.padRef,
-      _clear = _b.clear;
+      padRef = _a.padRef,
+      _clear = _a.clear;
 
   useImperativeHandle(ref, function () {
     return {
-      getDataUrl: function getDataUrl() {
+      getData: function getData() {
         return padRef.current.toDataURL();
       },
       clear: function clear() {
@@ -82,10 +80,7 @@ var SignaturePad = /*#__PURE__*/React.forwardRef(function (props, ref) {
     canvasRef.current.height = elRef.current.offsetHeight;
   }, []);
   return /*#__PURE__*/React.createElement(StyledSignaturePad, __assign({}, rest, {
-    className: clsx('uc-sigpad', className, {
-      landscape: landscape,
-      portrait: !landscape
-    }),
+    className: clsx('uc-sigpad', className),
     ref: elRef
   }), /*#__PURE__*/React.createElement("canvas", {
     ref: canvasRef

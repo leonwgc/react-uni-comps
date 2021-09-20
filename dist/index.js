@@ -4554,17 +4554,15 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Steps.displayName = 'UC-Steps';
 
-var _excluded$w = ["padColor", "penColor", "landscape", "className"];
+var _excluded$w = ["padColor", "penColor", "className"];
 
 var _templateObject$z;
-var StyledSignaturePad = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n  &.landscape {\n    transform: translate(-50%, -50%) rotate(90deg);\n  }\n"])), border);
+var StyledSignaturePad = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), border);
 /** 签名面板 */
 
 var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var padColor = props.padColor,
       penColor = props.penColor,
-      _props$landscape = props.landscape,
-      landscape = _props$landscape === void 0 ? false : _props$landscape,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$w);
 
@@ -4572,7 +4570,7 @@ var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (p
   var canvasRef = React.useRef();
 
   var _useSigPad = useSigPad__default['default'](canvasRef, {
-    useLandscape: !!landscape,
+    useLandscape: false,
     penColor: penColor,
     backgroundColor: padColor
   }),
@@ -4581,7 +4579,7 @@ var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (p
 
   React.useImperativeHandle(ref, function () {
     return {
-      getDataUrl: function getDataUrl() {
+      getData: function getData() {
         return padRef.current.toDataURL();
       },
       clear: function clear() {
@@ -4595,16 +4593,92 @@ var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (p
     canvasRef.current.height = elRef.current.offsetHeight;
   }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledSignaturePad, _extends({}, rest, {
-    className: clsx__default['default']('uc-sigpad', className, {
-      landscape: landscape,
-      portrait: !landscape
-    }),
+    className: clsx__default['default']('uc-sigpad', className),
     ref: elRef
   }), /*#__PURE__*/React__default['default'].createElement("canvas", {
     ref: canvasRef
   }));
 });
 SignaturePad.displayName = 'UC-SignaturePad';
+
+var _excluded$x = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
+
+var _templateObject$A;
+var StyledRate = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .star {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])));
+var defaultChar = /*#__PURE__*/React__default['default'].createElement("svg", {
+  viewBox: "64 64 896 896",
+  "data-icon": "star",
+  width: "1em",
+  height: "1em",
+  fill: "currentColor"
+}, /*#__PURE__*/React__default['default'].createElement("path", {
+  d: "M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"
+}));
+/** 评分 */
+
+var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var value = props.value,
+      _props$defaultValue = props.defaultValue,
+      defaultValue = _props$defaultValue === void 0 ? 0 : _props$defaultValue,
+      _props$allowHalf = props.allowHalf,
+      allowHalf = _props$allowHalf === void 0 ? false : _props$allowHalf,
+      readonly = props.readonly,
+      _props$count = props.count,
+      count = _props$count === void 0 ? 5 : _props$count,
+      _props$char = props["char"],
+      _char = _props$char === void 0 ? defaultChar : _props$char,
+      onChange = props.onChange,
+      className = props.className,
+      _props$allowClear = props.allowClear,
+      allowClear = _props$allowClear === void 0 ? true : _props$allowClear,
+      rest = _objectWithoutProperties(props, _excluded$x);
+
+  var _useState = React.useState(typeof value === 'number' ? value : defaultValue),
+      _useState2 = _slicedToArray(_useState, 2),
+      val = _useState2[0],
+      setVal = _useState2[1];
+
+  var starList = Array(count).fill(null);
+  var onChangeRef = useValueRef(onChange);
+  useUpdateEffect(function () {
+    var _onChangeRef$current;
+
+    (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, val);
+  }, [val]);
+  useUpdateEffect(function () {
+    if (val !== value) {
+      setVal(value);
+    }
+  }, [value]);
+  var renderStar = React.useCallback(function (v, val, half) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']("star", {
+        active: val >= v,
+        half: half,
+        readonly: readonly
+      }),
+      onClick: function onClick() {
+        if (readonly) return;
+
+        if (allowClear && val === v) {
+          setVal(0);
+        } else {
+          setVal(v);
+        }
+      }
+    }, _char);
+  }, [allowClear, _char, readonly]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledRate, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default'](className)
+  }), starList.map(function (_, i) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: i,
+      className: clsx__default['default']("box")
+    }, allowHalf && renderStar(i + 0.5, val, true), renderStar(i + 1, val, false));
+  }));
+});
+Rate.displayName = 'UC-Rate';
 
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
@@ -4636,6 +4710,7 @@ exports.Picker = Picker;
 exports.Popover = Popover;
 exports.Popup = Popup;
 exports.Pullup = Pullup;
+exports.Rate = Rate;
 exports.ScrollTop = ScrollTop;
 exports.SignaturePad = SignaturePad;
 exports.Skeleton = Skeleton;

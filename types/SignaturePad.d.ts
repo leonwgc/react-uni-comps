@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { RefAttributes } from 'react';
+declare type SigPadRefProps = {
+    getData: () => string;
+    clear: () => void;
+};
 declare type Props = {
-    /** 横屏书写模式 */
-    landscape?: boolean;
     padColor: '';
     penColor: '';
     className?: string;
     style: React.CSSProperties;
-};
-declare type RefObject = {
-    getDataUrl: () => string;
-    clear: () => void;
-};
+} & RefAttributes<SigPadRefProps>;
 /** 签名面板 */
-declare const SignaturePad: React.ForwardRefExoticComponent<Props & React.RefAttributes<RefObject>>;
+declare const SignaturePad: React.ForwardRefExoticComponent<Pick<Props, "style" | "className" | "key" | "padColor" | "penColor"> & React.RefAttributes<SigPadRefProps>>;
 export default SignaturePad;
