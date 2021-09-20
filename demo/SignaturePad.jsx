@@ -7,10 +7,8 @@ export default function App() {
 
   return (
     <div className="app" style={{ margin: '20px' }}>
-      <Divider>cust style</Divider>
-      <SignaturePad ref={ref} style={{ width: '100%', height: 200, border: '1px solid red' }} />
-      <Divider>横屏书写（取消注释） </Divider>
-      {/* <SignaturePad style={{ width: 600, height: 600 }} landscape ref={ref} /> */}
+      <Divider>默认竖屏</Divider>
+      <SignaturePad ref={ref} style={{ width: '100%', height: 200, border: '1px solid #666' }} />
       <Space>
         <Button
           onClick={() => {
@@ -22,7 +20,7 @@ export default function App() {
         </Button>
         <Button
           onClick={() => {
-            imgRef.current.src = ref.current.getDataUrl();
+            imgRef.current.src = ref.current.getData();
           }}
         >
           ok

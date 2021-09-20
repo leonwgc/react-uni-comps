@@ -166,6 +166,10 @@ const routes = [
     path: '/SignaturePad',
     component: lazy(() => import('./SignaturePad')),
   },
+  {
+    path: '/SignaturePadLandscape',
+    component: lazy(() => import('./SignaturePadLandscape')),
+  },
 ];
 
 export default routes;
