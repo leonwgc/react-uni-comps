@@ -101,7 +101,7 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: clsx(className, 'uc-noticebar', {
       hide: !visible
     })
-  }, rest), /*#__PURE__*/React.createElement("div", {
+  }, rest), icon && /*#__PURE__*/React.createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React.createElement("div", {
     className: "content-wrap",

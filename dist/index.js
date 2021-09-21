@@ -3178,13 +3178,15 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       rest = _objectWithoutProperties(props, _excluded$j);
 
   if (typeof children !== 'string' || typeof lines !== 'number') {
-    return children;
+    return /*#__PURE__*/React__default['default'].createElement("span", {
+      ref: ref
+    }, children);
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledSpanMultiLines : StyledSpanOneline, _objectSpread2({
+  return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledSpanMultiLines : StyledSpanOneline, _objectSpread2(_objectSpread2({}, rest), {}, {
     ref: ref,
     lines: lines
-  }, rest), children);
+  }), children);
 });
 Text.displayName = 'UC-Text';
 
@@ -3353,7 +3355,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     className: clsx__default['default'](className, 'uc-noticebar', {
       hide: !visible
     })
-  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
+  }, rest), icon && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content-wrap",
@@ -4679,6 +4681,105 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Rate.displayName = 'UC-Rate';
 
+var _excluded$y = ["list", "delay", "icon", "closeable", "className", "onClose", "extra"];
+
+var _templateObject$B;
+var StyledNoticeList = styled__default['default'].div(_templateObject$B || (_templateObject$B = _taggedTemplateLiteral(["\n  font-size: 14px;\n  padding: 0px 12px;\n  height: 40px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n\n    .list {\n      height: 100%;\n      transition-property: transform;\n      transition-duration: 0.8s;\n      transition-timing-function: ease-in-out;\n      .item {\n        height: 100%;\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
+
+/** 多条信息垂直滚动通知栏  */
+var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$list = props.list,
+      list = _props$list === void 0 ? [] : _props$list,
+      _props$delay = props.delay,
+      delay = _props$delay === void 0 ? 2000 : _props$delay,
+      icon = props.icon,
+      _props$closeable = props.closeable,
+      closeable = _props$closeable === void 0 ? false : _props$closeable,
+      className = props.className,
+      onClose = props.onClose,
+      extra = props.extra,
+      rest = _objectWithoutProperties(props, _excluded$y);
+
+  var listRef = React.useRef();
+  var wrapRef = React.useRef();
+
+  var _useState = React.useState(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      visible = _useState2[0],
+      setVisible = _useState2[1];
+
+  var _useState3 = React.useState(list),
+      _useState4 = _slicedToArray(_useState3, 2),
+      data = _useState4[0],
+      setData = _useState4[1];
+
+  var thisRef = useThisRef({
+    delay: delay,
+    visible: visible
+  });
+  React.useEffect(function () {
+    setData(list);
+  }, [list]);
+  React.useEffect(function () {
+    var v = thisRef.current;
+    var wrap = wrapRef.current;
+    var list = listRef.current;
+
+    if (data.length > 1) {
+      var timer = window.setTimeout(function () {
+        list.style.transitionProperty = 'transform';
+        list.style.transform = "translateY(-".concat(wrap.offsetHeight, "px)");
+      }, v.delay);
+      return function () {
+        window.clearTimeout(timer);
+      };
+    }
+  }, [thisRef, data]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeList, _extends({
+    ref: ref,
+    className: clsx__default['default'](className, 'uc-noticelist', {
+      hide: !visible
+    })
+  }, rest), icon && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "icon-part"
+  }, icon), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "content-wrap",
+    ref: wrapRef
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "list",
+    ref: listRef,
+    onTransitionEnd: function onTransitionEnd() {
+      // move
+      listRef.current.style.transitionProperty = 'none';
+      listRef.current.style.transform = 'none';
+      var lIndex = data.length - 1;
+
+      if (lIndex > 0) {
+        data.push(data[0]);
+        data.shift();
+        setData(_toConsumableArray(data));
+      }
+    }
+  }, data.map(function (item) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: item,
+      className: clsx__default['default']('item')
+    }, /*#__PURE__*/React__default['default'].createElement(Text, null, item));
+  }))), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content-extra')
+  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
+    size: 20,
+    style: {
+      cursor: 'pointer'
+    },
+    onClick: function onClick() {
+      setVisible(false);
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }))));
+});
+NoticeList.displayName = 'UC-NoticeList';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -4702,6 +4803,7 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
+exports.NoticeList = NoticeList;
 exports.NumberKeyboard = NumberKeyboard;
 exports.NumberKeyboardPicker = NumberKeyboardPicker;
 exports.PasswordInput = PasswordInput;

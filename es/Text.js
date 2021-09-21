@@ -54,13 +54,15 @@ var Text = /*#__PURE__*/React.forwardRef(function (props, ref) {
       rest = __rest(props, ["lines", "children"]);
 
   if (typeof children !== 'string' || typeof lines !== 'number') {
-    return children;
+    return /*#__PURE__*/React.createElement("span", {
+      ref: ref
+    }, children);
   }
 
-  return /*#__PURE__*/React.createElement(lines > 1 ? StyledSpanMultiLines : StyledSpanOneline, __assign({
+  return /*#__PURE__*/React.createElement(lines > 1 ? StyledSpanMultiLines : StyledSpanOneline, __assign(__assign({}, rest), {
     ref: ref,
     lines: lines
-  }, rest), children);
+  }), children);
 });
 Text.displayName = 'UC-Text';
 export default Text;

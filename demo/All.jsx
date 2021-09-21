@@ -22,6 +22,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> NoticeBar
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('NoticeBar')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Rate
           </Space>
         }
@@ -364,15 +373,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => console.log(1)}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> NoticeBar
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('NoticeBar')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

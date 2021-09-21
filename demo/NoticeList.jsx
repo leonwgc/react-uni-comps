@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
 import { SoundOutlined } from '@ant-design/icons';
 import { NoticeList, Button } from '../src';
+import styled from 'styled-components';
+
+const StyledNoticeList = styled(NoticeList)`
+  background-color: rgb(251, 248, 220);
+  color: red;
+  margin-top: 30px;
+  height: 50px;
+  font-size: 16px;
+  padding: 0 8px;
+`;
 
 export default function App() {
-  const [list, setList] = useState(['通知1', '通知2', '通知3', '通知4']);
+  const [list, setList] = useState([
+    '买超值优惠',
+    '1华为畅享9新品即将上市，活动期间0元预约',
+    '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！',
+    '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示',
+  ]);
+
+  const [list1] = useState([
+    '买超值优惠1',
+    '1华为畅享9新品即将上市，活动期间0元预约1',
+    '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！1',
+    '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示1',
+  ]);
   return (
     <div className="app">
       <NoticeList
@@ -16,6 +38,8 @@ export default function App() {
         }
         list={list}
       />
+
+      <StyledNoticeList list={list1} delay={1000} />
 
       <Button
         style={{ marginTop: 30 }}

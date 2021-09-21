@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const StyledSpanMultiLines = styled.span<{ lines?: number }>`
@@ -19,7 +19,7 @@ type Props = {
   /** 显示几行，超过显示省略号, 默认1 */
   lines?: number;
   /** 包裹的文本 */
-  children?: ReactElement;
+  children?: React.ReactNode;
 } & HTMLAttributes<HTMLSpanElement>;
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
@@ -27,15 +27,15 @@ const Text = React.forwardRef<HTMLSpanElement, Props>((props: Props, ref) => {
   const { lines = 1, children, ...rest } = props;
 
   if (typeof children !== 'string' || typeof lines !== 'number') {
-    return children;
+    return <span ref={ref}>{children}</span>;
   }
 
   return React.createElement(
     lines > 1 ? StyledSpanMultiLines : StyledSpanOneline,
     {
+      ...rest,
       ref,
       lines,
-      ...rest,
     },
     children
   );

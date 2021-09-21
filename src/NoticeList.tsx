@@ -4,18 +4,17 @@ import styled from 'styled-components';
 import Space from './Space';
 import IconCross from './IconCross';
 import useThisRef from './hooks/useThisRef';
+import Text from './Text';
 
 const StyledNoticeList = styled.div`
-  height: 40px;
   font-size: 14px;
-  line-height: 40px;
   padding: 0px 12px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: rgba(236, 146, 49, 0.1);
   color: rgb(236, 146, 49);
-  overflow: hidden;
 
   &.hide {
     display: none;
@@ -32,6 +31,7 @@ const StyledNoticeList = styled.div`
     height: 100%;
 
     .list {
+      height: 100%;
       transition-property: transform;
       transition-duration: 0.8s;
       transition-timing-function: ease-in-out;
@@ -39,9 +39,6 @@ const StyledNoticeList = styled.div`
         height: 100%;
         display: flex;
         align-items: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     }
   }
@@ -67,7 +64,7 @@ type Props = {
   onClose?: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
-/** 多条信息垂直滚动通通知栏  */
+/** 多条信息垂直滚动通知栏  */
 const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const {
     list = [],
@@ -115,7 +112,7 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
       className={clsx(className, 'uc-noticelist', { hide: !visible })}
       {...rest}
     >
-      <div className="icon-part">{icon}</div>
+      {icon && <div className="icon-part">{icon}</div>}
       <div className="content-wrap" ref={wrapRef}>
         <div
           className="list"
@@ -135,7 +132,7 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
           {data.map((item) => {
             return (
               <div key={item} className={clsx('item')}>
-                {item}
+                <Text>{item}</Text>
               </div>
             );
           })}
