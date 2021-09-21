@@ -49,9 +49,14 @@ const StyledNoticeList = styled.div`
   }
 `;
 
+type Notice = {
+  text: string;
+  link: string;
+};
+
 type Props = {
   /** 公告内容 */
-  list: string[];
+  list: Notice[];
   /** 开始滚动的延迟，单位 ms, 默认2000 */
   delay?: number;
   /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
@@ -131,8 +136,16 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
         >
           {data.map((item) => {
             return (
-              <div key={item} className={clsx('item')}>
-                <Text>{item}</Text>
+              <div
+                key={item.text}
+                onClick={() => {
+                  if (item.link) {
+                    location.href = item.link;
+                  }
+                }}
+                className={clsx('item')}
+              >
+                <Text>{item.text}</Text>
               </div>
             );
           })}

@@ -130,9 +130,14 @@ var NoticeList = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, data.map(function (item) {
     return /*#__PURE__*/React.createElement("div", {
-      key: item,
+      key: item.text,
+      onClick: function onClick() {
+        if (item.link) {
+          location.href = item.link;
+        }
+      },
       className: clsx('item')
-    }, /*#__PURE__*/React.createElement(Text, null, item));
+    }, /*#__PURE__*/React.createElement(Text, null, item.text));
   }))), (closeable || extra) && /*#__PURE__*/React.createElement("div", {
     className: clsx('content-extra')
   }, /*#__PURE__*/React.createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React.createElement(IconCross, {

@@ -14,17 +14,20 @@ const StyledNoticeList = styled(NoticeList)`
 
 export default function App() {
   const [list, setList] = useState([
-    '买超值优惠',
-    '1华为畅享9新品即将上市，活动期间0元预约',
-    '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！',
-    '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示',
+    { text: '买超值优惠' },
+    { text: '1华为畅享9新品即将上市，活动期间0元预约' },
+    { text: '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！' },
+    { text: '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示' },
   ]);
 
   const [list1] = useState([
-    '买超值优惠1',
-    '1华为畅享9新品即将上市，活动期间0元预约1',
-    '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！1',
-    '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示1',
+    { text: '买超值优惠11', link: 'https://www.baidu.com/' },
+    { text: '1华为畅享9新品即将上市，活动期间0元预约1', link: 'https://www.baidu.com/' },
+    { text: '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！2', link: 'https://www.baidu.com/' },
+    {
+      text: '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示3',
+      link: 'https://www.baidu.com/',
+    },
   ]);
   return (
     <div className="app">

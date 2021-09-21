@@ -1,8 +1,12 @@
 import React from 'react';
+declare type Notice = {
+    text: string;
+    link: string;
+};
 /** 多条信息垂直滚动通知栏  */
 declare const NoticeList: React.ForwardRefExoticComponent<{
     /** 公告内容 */
-    list: string[];
+    list: Notice[];
     /** 开始滚动的延迟，单位 ms, 默认2000 */
     delay?: number;
     /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */

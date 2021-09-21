@@ -4762,9 +4762,14 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     }
   }, data.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      key: item,
+      key: item.text,
+      onClick: function onClick() {
+        if (item.link) {
+          location.href = item.link;
+        }
+      },
       className: clsx__default['default']('item')
-    }, /*#__PURE__*/React__default['default'].createElement(Text, null, item));
+    }, /*#__PURE__*/React__default['default'].createElement(Text, null, item.text));
   }))), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content-extra')
   }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
