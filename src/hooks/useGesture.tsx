@@ -13,7 +13,7 @@ const useGesture = (elRef: MutableRefObject<Element>, option: Option): void => {
         fg.destroy();
       };
     }
-  }, []);
+  }, [option]);
 };
 
 export default useGesture;

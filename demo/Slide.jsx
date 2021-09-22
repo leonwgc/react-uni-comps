@@ -35,7 +35,7 @@ export default function App() {
           </div>
         ))}
       </Slide>
-      <Space style={{ marginTop: 20 }}>
+      {/* <Space style={{ marginTop: 20 }}>
         <Button type="primary" onClick={() => ref.current.prev()}>
           Prev
         </Button>
@@ -53,7 +53,7 @@ export default function App() {
             page {item}
           </div>
         ))}
-      </Slide>
+      </Slide> */}
     </div>
   );
 }
