@@ -133,6 +133,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
     lastX: 0,
     wrapWidth: 0,
     count: 0,
+    timer: 0,
   });
   const [pageIndex, setPageIndex] = useState(defaultPageIndex);
 
@@ -152,9 +153,10 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   }, [thisRef]);
 
   const startTransform = useCallback(
-    (newPageIndex: number) => {
+    (newPageIndex: number, effect = true) => {
       const s = nRef.current;
-      wrapElRef.current.style.transitionProperty = 'transform';
+      wrapElRef.current.style.transitionProperty = effect ? 'transform' : 'none';
+      window.clearTimeout(s.timer);
       setTimeout(() => {
         wrapElRef.current.style.transform = `translate3d(-${newPageIndex * s.wrapWidth}px, 0, 0)`;
         s.x = -newPageIndex * s.wrapWidth;
@@ -167,6 +169,24 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
     startTransform(pageIndex);
     thisRef.current.onPageChange?.(pageIndex);
   }, [pageIndex, startTransform, thisRef]);
+
+  useEffect(() => {
+    const v = thisRef.current;
+    const s = nRef.current;
+    if (v.autoplay) {
+      if (pageIndex === s.count - 1) {
+        s.timer = window.setTimeout(() => {
+          wrapElRef.current.style.transitionProperty = 'none';
+          wrapElRef.current.style.transform = 'none';
+          setPageIndex(0);
+        }, v.interval);
+      } else {
+        s.timer = window.setTimeout(() => {
+          setPageIndex(pageIndex < s.count - 1 ? pageIndex + 1 : 0);
+        }, v.interval);
+      }
+    }
+  }, [thisRef, nRef, pageIndex, startTransform]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;
