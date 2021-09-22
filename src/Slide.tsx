@@ -1,4 +1,11 @@
-import React, { useState, useRef, useCallback, useLayoutEffect, useImperativeHandle } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import clsx from 'clsx';
@@ -7,7 +14,6 @@ import useThisRef from './hooks/useThisRef';
 const StyledSlide = styled.div`
   overflow: hidden;
   position: relative;
-  width: 100%;
 
   .wrap {
     position: relative;
@@ -147,18 +153,20 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
 
   const startTransform = useCallback(
     (newPageIndex: number) => {
-      const v = thisRef.current;
       const s = nRef.current;
       wrapElRef.current.style.transitionProperty = 'transform';
       setTimeout(() => {
         wrapElRef.current.style.transform = `translate3d(-${newPageIndex * s.wrapWidth}px, 0, 0)`;
         s.x = -newPageIndex * s.wrapWidth;
-        v.onPageChange?.(newPageIndex);
-        setPageIndex(newPageIndex);
       });
     },
-    [thisRef, setPageIndex, nRef]
+    [nRef]
   );
+
+  useEffect(() => {
+    startTransform(pageIndex);
+    thisRef.current.onPageChange?.(pageIndex);
+  }, [pageIndex, startTransform, thisRef]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;
@@ -173,7 +181,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   };
 
   return (
-    <StyledSlide className={clsx('uc-slide', className)} style={{ ...style, height }} {...rest}>
+    <StyledSlide {...rest} className={clsx('uc-slide', className)} style={{ ...style, height }}>
       <FingerGestureElement
         ref={wrapElRef}
         onTouchStart={() => {
@@ -186,11 +194,12 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
 
           if (Math.abs(s.x - s.lastX) > s.wrapWidth / 2) {
             if (e.direction === 'left') {
-              pageIndex < s.count - 1 && startTransform(pageIndex + 1);
+              pageIndex < s.count - 1 && setPageIndex(pageIndex + 1);
             } else {
-              pageIndex > 0 && startTransform(pageIndex - 1);
+              pageIndex > 0 && setPageIndex(pageIndex - 1);
             }
           } else {
+            // back
             startTransform(pageIndex);
           }
         }}

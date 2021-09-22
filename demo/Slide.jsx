@@ -23,7 +23,14 @@ export default function App() {
         showDot
       </Space>
       <Divider>ex.1</Divider>
-      <Slide loop={loop} autoplay={autoplay} showDot={dot} ref={ref} onPageChange={console.log}>
+      <Slide
+        style={{ margin: '10px 12px' }}
+        loop={loop}
+        autoplay={autoplay}
+        showDot={dot}
+        ref={ref}
+        onPageChange={console.log}
+      >
         {ar.map((item, idx) => (
           <div
             key={idx}
