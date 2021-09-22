@@ -108,7 +108,7 @@ export default function App() {
       </Tabs>
 
       <Divider>uncontrolled swipe/onChange</Divider>
-      <Tabs
+      <StyledTabs
         swipe
         underline="40px"
         defaultValue={2}
@@ -146,7 +146,7 @@ export default function App() {
         <Tabs.Tab title="title7">
           <StyledContent>content7</StyledContent>
         </Tabs.Tab>
-      </Tabs>
+      </StyledTabs>
     </StyledApp>
   );
 }
