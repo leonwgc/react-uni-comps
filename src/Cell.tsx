@@ -13,6 +13,8 @@ type Props = {
   content?: React.ReactNode;
   /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */
   lineColor?: string;
+  className?: string;
+  style?: React.CSSProperties;
   /** 通常放input/textarea等输入控件 */
   children?: React.ReactNode | React.ReactNode[];
 } & HTMLAttributes<HTMLDivElement>;
@@ -77,7 +79,15 @@ const StyledCell = styled.div`
 
 /** 列表项，通常用于移动端 */
 const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { title, description, content, lineColor = colors.border, children, ...rest } = props;
+  const {
+    title,
+    description,
+    className,
+    content,
+    lineColor = colors.border,
+    children,
+    ...rest
+  } = props;
   if (content && children) {
     throw new Error(`Cell: 不能同时设置content和子元素`);
   }
@@ -86,7 +96,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledCell
       {...rest}
       ref={ref}
-      className={clsx('uc-cell', { clickable: typeof rest.onClick === 'function' })}
+      className={clsx('uc-cell', className, { clickable: typeof rest.onClick === 'function' })}
     >
       <HairLineBox color={lineColor} className="cell-line">
         <div className={clsx('cell-inner')}>

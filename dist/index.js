@@ -1514,7 +1514,7 @@ var useGesture = function useGesture(elRef, option) {
         fg.destroy();
       };
     }
-  }, []);
+  }, [option]);
 };
 
 /**
@@ -1726,7 +1726,7 @@ var Tabs = function Tabs(_ref2) {
 
 Tabs.Tab = Tab;
 
-var _excluded$7 = ["title", "description", "content", "lineColor", "children"];
+var _excluded$7 = ["title", "description", "className", "content", "lineColor", "children"];
 
 var _templateObject$9;
 var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg);
@@ -1735,6 +1735,7 @@ var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateO
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var title = props.title,
       description = props.description,
+      className = props.className,
       content = props.content,
       _props$lineColor = props.lineColor,
       lineColor = _props$lineColor === void 0 ? border : _props$lineColor,
@@ -1747,7 +1748,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 
   return /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-cell', {
+    className: clsx__default['default']('uc-cell', className, {
       clickable: typeof rest.onClick === 'function'
     })
   }), /*#__PURE__*/React__default['default'].createElement(HairLineBox, {
@@ -4785,6 +4786,168 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
+var _excluded$z = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
+
+var _templateObject$C;
+var StyledSlide = styled__default['default'].div(_templateObject$C || (_templateObject$C = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
+
+/**  轮播焦点图/全屏分页 */
+var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$autoplay = props.autoplay,
+      autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
+      _props$loop = props.loop,
+      loop = _props$loop === void 0 ? true : _props$loop,
+      _props$defaultPageInd = props.defaultPageIndex,
+      defaultPageIndex = _props$defaultPageInd === void 0 ? 0 : _props$defaultPageInd,
+      onPageChange = props.onPageChange,
+      _props$direction = props.direction,
+      direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
+      _props$interval = props.interval,
+      interval = _props$interval === void 0 ? 3000 : _props$interval,
+      children = props.children,
+      className = props.className,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 160 : _props$height,
+      style = props.style,
+      _props$showDot = props.showDot,
+      showDot = _props$showDot === void 0 ? true : _props$showDot,
+      rest = _objectWithoutProperties(props, _excluded$z);
+
+  var wrapElRef = React.useRef();
+  var thisRef = useThisRef({
+    autoplay: autoplay,
+    loop: loop,
+    onPageChange: onPageChange,
+    interval: interval,
+    children: children
+  });
+  var nRef = React.useRef({
+    x: 0,
+    lastX: 0,
+    wrapWidth: 0,
+    count: 0,
+    timer: 0
+  });
+
+  var _useState = React.useState(defaultPageIndex),
+      _useState2 = _slicedToArray(_useState, 2),
+      pageIndex = _useState2[0],
+      setPageIndex = _useState2[1];
+
+  React.useLayoutEffect(function () {
+    var v = thisRef.current;
+    var s = nRef.current;
+    var wrapEl = wrapElRef.current;
+    s.wrapWidth = wrapEl.offsetWidth;
+    var count = 0;
+    React__default['default'].Children.map(v.children, function (c) {
+      if ( /*#__PURE__*/React__default['default'].isValidElement(c)) {
+        count++;
+      }
+    });
+    s.count = count;
+  }, [thisRef]);
+  var startTransform = React.useCallback(function (newPageIndex) {
+    var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var s = nRef.current;
+    wrapElRef.current.style.transitionProperty = effect ? 'transform' : 'none';
+    window.clearTimeout(s.timer);
+    setTimeout(function () {
+      wrapElRef.current.style.transform = "translate3d(-".concat(newPageIndex * s.wrapWidth, "px, 0, 0)");
+      s.x = -newPageIndex * s.wrapWidth;
+    });
+  }, [nRef]);
+  React.useEffect(function () {
+    var _thisRef$current$onPa, _thisRef$current;
+
+    startTransform(pageIndex);
+    (_thisRef$current$onPa = (_thisRef$current = thisRef.current).onPageChange) === null || _thisRef$current$onPa === void 0 ? void 0 : _thisRef$current$onPa.call(_thisRef$current, pageIndex);
+  }, [pageIndex, startTransform, thisRef]);
+  React.useEffect(function () {
+    var v = thisRef.current;
+    var s = nRef.current;
+
+    if (v.autoplay) {
+      if (pageIndex === s.count - 1) {
+        s.timer = window.setTimeout(function () {
+          wrapElRef.current.style.transitionProperty = 'none';
+          wrapElRef.current.style.transform = 'none';
+          setPageIndex(0);
+        }, v.interval);
+      } else {
+        s.timer = window.setTimeout(function () {
+          setPageIndex(pageIndex < s.count - 1 ? pageIndex + 1 : 0);
+        }, v.interval);
+      }
+    }
+  }, [thisRef, nRef, pageIndex, startTransform]);
+
+  var dotRender = function dotRender() {
+    if (!showDot) return null;
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('uc-slide-dot-wrapper', {
+        vertial: direction === 'vertical'
+      })
+    }, React__default['default'].Children.map(children, function (c, idx) {
+      return /*#__PURE__*/React__default['default'].createElement("span", {
+        key: idx,
+        className: clsx__default['default']('dot', {
+          active: pageIndex === idx
+        })
+      });
+    }));
+  };
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({}, rest, {
+    className: clsx__default['default']('uc-slide', className),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      height: height
+    })
+  }), /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+    ref: wrapElRef,
+    onTouchStart: function onTouchStart() {
+      var s = nRef.current;
+      wrapElRef.current.style.transitionProperty = 'none';
+      s.lastX = s.x;
+    },
+    onSwipe: function onSwipe(e) {
+      var s = nRef.current;
+
+      if (Math.abs(s.x - s.lastX) > s.wrapWidth / 2) {
+        if (e.direction === 'left') {
+          pageIndex < s.count - 1 && setPageIndex(pageIndex + 1);
+        } else {
+          pageIndex > 0 && setPageIndex(pageIndex - 1);
+        }
+      } else {
+        // back
+        startTransform(pageIndex);
+      }
+    },
+    onPressMove: function onPressMove(e) {
+      e.preventDefault();
+      var s = nRef.current;
+      if (s.x > 0) return;
+      if (s.x < -1 * (s.count - 1) * s.wrapWidth) return;
+      s.x += e.deltaX;
+      wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('wrap')
+  }, React__default['default'].Children.map(children, function (c, idx) {
+    var _c$props, _c$props2;
+
+    return /*#__PURE__*/React__default['default'].isValidElement(c) && /*#__PURE__*/React__default['default'].cloneElement(c, {
+      key: idx,
+      className: clsx__default['default']((_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className, 'uc-slide-page'),
+      style: _objectSpread2(_objectSpread2({}, (_c$props2 = c.props) === null || _c$props2 === void 0 ? void 0 : _c$props2.style), {}, {
+        height: height
+      })
+    });
+  }))), dotRender());
+});
+Slide.displayName = 'UC-Slide';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -4821,6 +4984,7 @@ exports.ScrollTop = ScrollTop;
 exports.SignaturePad = SignaturePad;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
+exports.Slide = Slide;
 exports.Space = Space;
 exports.Spinner = Spinner;
 exports.Steps = Steps;

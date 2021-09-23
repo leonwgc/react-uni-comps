@@ -12,7 +12,7 @@ var useGesture = function useGesture(elRef, option) {
         fg_1.destroy();
       };
     }
-  }, []);
+  }, [option]);
 };
 
 export default useGesture;

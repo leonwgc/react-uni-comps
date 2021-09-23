@@ -9,6 +9,8 @@ declare const Cell: React.ForwardRefExoticComponent<{
     content?: React.ReactNode;
     /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */
     lineColor?: string;
+    className?: string;
+    style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode | React.ReactNode[];
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;

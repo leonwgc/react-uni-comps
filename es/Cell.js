@@ -50,11 +50,12 @@ var StyledCell = styled.div(templateObject_1 || (templateObject_1 = __makeTempla
 var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var title = props.title,
       description = props.description,
+      className = props.className,
       content = props.content,
       _a = props.lineColor,
       lineColor = _a === void 0 ? colors.border : _a,
       children = props.children,
-      rest = __rest(props, ["title", "description", "content", "lineColor", "children"]);
+      rest = __rest(props, ["title", "description", "className", "content", "lineColor", "children"]);
 
   if (content && children) {
     throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
@@ -62,7 +63,7 @@ var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   return /*#__PURE__*/React.createElement(StyledCell, __assign({}, rest, {
     ref: ref,
-    className: clsx('uc-cell', {
+    className: clsx('uc-cell', className, {
       clickable: typeof rest.onClick === 'function'
     })
   }), /*#__PURE__*/React.createElement(HairLineBox, {
