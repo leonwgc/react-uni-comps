@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useLayoutEffect,
-  useImperativeHandle,
-  useEffect,
-} from 'react';
+import React, { useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import clsx from 'clsx';
@@ -78,8 +71,8 @@ export type Props = {
   autoPlay?: boolean;
   /** 初始显示第几页 */
   defaultPageIndex?: number;
-  /** 水平还是垂直播放 */
-  direction?: 'horizontal' | 'vertical';
+  // /** 水平还是垂直播放 */
+  // direction?: 'horizontal' | 'vertical';
   /** 距离下一次播放的间隔毫秒, 默认 3000 */
   interval?: number;
   children: React.ReactElement[];
@@ -101,6 +94,18 @@ interface RefType {
   next: () => void;
 }
 
+const getChildrenElementCount = (children) => {
+  let count = 0;
+  React.Children.map(children, (c) => {
+    if (React.isValidElement(c)) {
+      count++;
+    }
+  });
+  return count;
+};
+
+// Todo: vertical support
+
 /**  轮播焦点图/全屏分页 */
 const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const {
@@ -108,7 +113,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
     loop = true,
     defaultPageIndex = 0,
     onPageChange,
-    direction = 'horizontal',
+    // direction = 'horizontal',
     interval = 3000,
     children,
     className,
@@ -120,79 +125,82 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
 
   const wrapElRef = useRef<HTMLDivElement>();
 
-  const thisRef = useThisRef({
-    autoPlay,
-    loop,
-    onPageChange,
-    interval,
-    children,
+  const [count, setCount] = useState(() => {
+    return getChildrenElementCount(children);
   });
 
-  const nRef = useRef({
+  useEffect(() => {
+    setCount(getChildrenElementCount(children));
+  }, [children]);
+
+  const thisRef = useThisRef({
+    onPageChange,
+  });
+
+  const sRef = useRef({
     x: 0,
     lastX: 0,
     wrapWidth: 0,
-    count: 0,
     timer: 0,
+    lastPageIndex: -1,
   });
   const [pageIndex, setPageIndex] = useState(defaultPageIndex);
 
   useLayoutEffect(() => {
-    const v = thisRef.current;
-    const s = nRef.current;
+    const s = sRef.current;
     const wrapEl = wrapElRef.current;
     s.wrapWidth = wrapEl.offsetWidth;
-
-    let count = 0;
-    React.Children.map(v.children, (c) => {
-      if (React.isValidElement(c)) {
-        count++;
-      }
-    });
-    s.count = count;
   }, [thisRef]);
 
-  const startTransform = useCallback(
-    (newPageIndex: number, effect = true) => {
-      const s = nRef.current;
-      wrapElRef.current.style.transitionProperty = effect ? 'transform' : 'none';
+  const gotoPage = useCallback(
+    (newPageIndex: number, transition = true) => {
+      const s = sRef.current;
+
       window.clearTimeout(s.timer);
-      setTimeout(() => {
+      if (newPageIndex >= 0 && newPageIndex < count) {
+        setPageIndex(newPageIndex);
+        thisRef.current.onPageChange?.(newPageIndex);
+      }
+      if (newPageIndex == count) {
+        setPageIndex(0);
+        thisRef.current.onPageChange?.(0);
+      }
+
+      wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
+      s.timer = window.setTimeout(() => {
         wrapElRef.current.style.transform = `translate3d(-${newPageIndex * s.wrapWidth}px, 0, 0)`;
         s.x = -newPageIndex * s.wrapWidth;
+        s.lastPageIndex = newPageIndex;
       });
     },
-    [nRef]
+    [sRef, count, thisRef]
   );
 
   useEffect(() => {
-    startTransform(pageIndex);
-    thisRef.current.onPageChange?.(pageIndex);
-  }, [pageIndex, startTransform, thisRef]);
-
-  useEffect(() => {
-    const v = thisRef.current;
-    const s = nRef.current;
-    if (v.autoPlay) {
-      if (pageIndex === s.count - 1) {
+    const s = sRef.current;
+    if (autoPlay) {
+      if (pageIndex === count - 1) {
+        if (loop) {
+          const wrap = wrapElRef.current;
+          const firstEl = wrap.children[0] as HTMLElement;
+          firstEl.style.transform = `translateX(${s.wrapWidth * count}px)`;
+        }
         s.timer = window.setTimeout(() => {
-          wrapElRef.current.style.transitionProperty = 'none';
-          wrapElRef.current.style.transform = 'none';
-          setPageIndex(0);
-        }, v.interval);
+          gotoPage(count);
+        }, interval);
       } else {
         s.timer = window.setTimeout(() => {
-          setPageIndex(pageIndex < s.count - 1 ? pageIndex + 1 : 0);
-        }, v.interval);
+          gotoPage(pageIndex < count - 1 ? pageIndex + 1 : 0);
+        }, interval);
       }
     }
-  }, [thisRef, nRef, pageIndex, startTransform]);
+  }, [thisRef, sRef, pageIndex, gotoPage, count, loop, autoPlay, interval]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;
 
     return (
-      <div className={clsx('uc-slide-dot-wrapper', { vertial: direction === 'vertical' })}>
+      <div className={clsx('uc-slide-dot-wrapper', { vertial: false })}>
         {React.Children.map(children, (c: React.ReactElement, idx) => (
           <span key={idx} className={clsx('dot', { active: pageIndex === idx })}></span>
         ))}
@@ -205,34 +213,63 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
       <FingerGestureElement
         ref={wrapElRef}
         onTouchStart={() => {
-          const s = nRef.current;
+          const s = sRef.current;
           wrapElRef.current.style.transitionProperty = 'none';
           s.lastX = s.x;
         }}
         onSwipe={(e) => {
-          const s = nRef.current;
+          const s = sRef.current;
 
           if (Math.abs(s.x - s.lastX) > s.wrapWidth / 2) {
             if (e.direction === 'left') {
-              pageIndex < s.count - 1 && setPageIndex(pageIndex + 1);
+              if (pageIndex === count - 1) {
+                return gotoPage(count);
+              } else {
+                pageIndex < count - 1 && gotoPage(pageIndex + 1);
+              }
             } else {
-              pageIndex > 0 && setPageIndex(pageIndex - 1);
+              pageIndex > 0 && gotoPage(pageIndex - 1);
             }
           } else {
             // back
-            startTransform(pageIndex);
+            gotoPage(pageIndex);
           }
         }}
         onPressMove={(e) => {
           e.preventDefault();
-          const s = nRef.current;
+
+          const s = sRef.current;
+          if (loop && s.lastPageIndex === count) {
+            // last trick frame
+            return;
+          }
           if (s.x > 0) return;
-          if (s.x < -1 * (s.count - 1) * s.wrapWidth) return;
+          if (s.x < -1 * (loop ? count : count - 1) * s.wrapWidth) return;
           s.x += e.deltaX;
           wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
         }}
       >
-        <div className={clsx('wrap')}>
+        <div
+          className={clsx('wrap')}
+          onTransitionEnd={() => {
+            // last & loop
+            const wrap = wrapElRef.current;
+            const firstEl = wrap.children[0] as HTMLElement;
+            if (pageIndex == count - 1 && loop) {
+              firstEl.style.transform = `translateX(${sRef.current.wrapWidth * count}px)`;
+            } else {
+              firstEl.style.transform = 'none';
+            }
+
+            if (sRef.current.lastPageIndex === count) {
+              // reset
+              // gotoPage(0, false);
+              wrapElRef.current.style.transitionProperty = 'none';
+              wrapElRef.current.style.transform = `translate3d(0, 0, 0)`;
+              firstEl.style.transform = 'none';
+            }
+          }}
+        >
           {React.Children.map(
             children,
             (c, idx) =>

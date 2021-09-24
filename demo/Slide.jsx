@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import * as hello from 'styled-components';
 import { Spinner, Slide, Switch, Space, Divider, Button } from '../src';
 import clsx from 'clsx';
 import './Slide.less';
@@ -7,13 +6,9 @@ import './Slide.less';
 export default function App() {
   const [autoPlay, setAutoPlay] = useState(true);
   const [loop, setLoop] = useState(true);
-  const [dot, setDot] = useState(true);
+  const [dot, setDot] = useState(false);
   const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
-
-  useEffect(() => {
-    Object.keys(hello).map((item) => console.log(item));
-  }, []);
 
   return (
     <div className="app">
@@ -34,15 +29,16 @@ export default function App() {
         showDot={dot}
         ref={ref}
         onPageChange={console.log}
+        interval={2000}
       >
         {ar.map((item, idx) => (
           <div
             key={idx}
             className={clsx('slide-page')}
             style={{ background: item }}
-            onClick={() => alert('page' + item)}
+            onClick={() => alert('page' + (idx + 1))}
           >
-            page {item}
+            page {idx + 1}
           </div>
         ))}
       </Slide>
