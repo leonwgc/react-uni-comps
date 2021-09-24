@@ -109,6 +109,7 @@ yarn add react-uni-comps
 
 #### 45. NoticeList (多条信息垂直滚动通知栏)
 
+#### 46. Slide (轮播)
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
