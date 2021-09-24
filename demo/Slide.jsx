@@ -5,8 +5,8 @@ import './Slide.less';
 
 export default function App() {
   const [autoPlay, setAutoPlay] = useState(true);
-  const [loop, setLoop] = useState(true);
-  const [dot, setDot] = useState(false);
+  const [loop, setLoop] = useState(false);
+  const [dot, setDot] = useState(true);
   const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
 

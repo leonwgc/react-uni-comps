@@ -107,7 +107,7 @@ const getChildrenElementCount = (children) => {
 // Todo: vertical support
 
 /**  轮播焦点图/全屏分页 */
-const Slide = React.forwardRef<RefType, Props>((props, ref) => {
+const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     autoPlay = true,
     loop = true,
@@ -184,10 +184,10 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
           const wrap = wrapElRef.current;
           const firstEl = wrap.children[0] as HTMLElement;
           firstEl.style.transform = `translateX(${s.wrapWidth * count}px)`;
+          s.timer = window.setTimeout(() => {
+            gotoPage(count);
+          }, interval);
         }
-        s.timer = window.setTimeout(() => {
-          gotoPage(count);
-        }, interval);
       } else {
         s.timer = window.setTimeout(() => {
           gotoPage(pageIndex < count - 1 ? pageIndex + 1 : 0);
@@ -209,7 +209,12 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   };
 
   return (
-    <StyledSlide {...rest} className={clsx('uc-slide', className)} style={{ ...style, height }}>
+    <StyledSlide
+      ref={ref}
+      {...rest}
+      className={clsx('uc-slide', className)}
+      style={{ ...style, height }}
+    >
       <FingerGestureElement
         ref={wrapElRef}
         onTouchStart={() => {
