@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Divider, Waypoint } from '../src';
 
 export default function App() {

@@ -1,7 +1,7 @@
 import React, { useRef, useImperativeHandle } from 'react';
 import useGesture from './hooks/useGesture';
 import { Option, supportedGestures } from './hooks/FingerGesture';
-import { getProps } from 'react-uni-comps';
+import { getProps } from './helper';
 
 type Props = {
   children: React.ReactElement;

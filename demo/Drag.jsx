@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Space, Switch, Drag } from '../src';
 
 const StyledDiv = styled.div`

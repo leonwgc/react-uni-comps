@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Divider, Cell, Button, Checkbox, Switch, Input } from '../src';
 import useBgColor from './hooks/useBgColor';

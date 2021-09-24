@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Image } from 'antd';
 import { Space, FileInputTrigger, Button } from '../src';
 import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';

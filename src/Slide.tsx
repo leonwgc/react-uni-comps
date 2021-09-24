@@ -75,7 +75,7 @@ const StyledSlide = styled.div`
 
 export type Props = {
   /** 自动播放 */
-  autoplay?: boolean;
+  autoPlay?: boolean;
   /** 初始显示第几页 */
   defaultPageIndex?: number;
   /** 水平还是垂直播放 */
@@ -104,7 +104,7 @@ interface RefType {
 /**  轮播焦点图/全屏分页 */
 const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const {
-    autoplay = true,
+    autoPlay = true,
     loop = true,
     defaultPageIndex = 0,
     onPageChange,
@@ -121,7 +121,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const wrapElRef = useRef<HTMLDivElement>();
 
   const thisRef = useThisRef({
-    autoplay,
+    autoPlay,
     loop,
     onPageChange,
     interval,
@@ -173,7 +173,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   useEffect(() => {
     const v = thisRef.current;
     const s = nRef.current;
-    if (v.autoplay) {
+    if (v.autoPlay) {
       if (pageIndex === s.count - 1) {
         s.timer = window.setTimeout(() => {
           wrapElRef.current.style.transitionProperty = 'none';

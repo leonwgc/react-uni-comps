@@ -1,7 +1,7 @@
 import React from 'react';
 export declare type Props = {
     /** 自动播放 */
-    autoplay?: boolean;
+    autoPlay?: boolean;
     /** 初始显示第几页 */
     defaultPageIndex?: number;
     /** 水平还是垂直播放 */

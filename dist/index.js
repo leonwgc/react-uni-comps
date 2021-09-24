@@ -12,7 +12,6 @@ var styled = require('styled-components');
 var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
 var copy = require('copy-text-to-clipboard');
-var reactUniComps = require('react-uni-comps');
 var useSigPad = require('react-use-lib/es/useSigPad');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -1407,26 +1406,6 @@ FingerGesture.prototype = {
   }
 };
 
-var debounce = function debounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-  var timer = 0;
-  return function a() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var that = this;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-    }, timeout);
-  };
-};
 /**
  * 截流
  *
@@ -4032,7 +4011,7 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
     return elRef.current;
   });
   useGesture(elRef, rest);
-  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, reactUniComps.getProps(rest, supportedGestures, false)), {}, {
+  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, getProps(rest, supportedGestures, false)), {}, {
     // filter out gesture evts
     ref: elRef
   }));
@@ -4786,15 +4765,15 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$z = ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
+var _excluded$z = ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"];
 
 var _templateObject$C;
 var StyledSlide = styled__default['default'].div(_templateObject$C || (_templateObject$C = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 
 /**  轮播焦点图/全屏分页 */
 var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$autoplay = props.autoplay,
-      autoplay = _props$autoplay === void 0 ? true : _props$autoplay,
+  var _props$autoPlay = props.autoPlay,
+      autoPlay = _props$autoPlay === void 0 ? true : _props$autoPlay,
       _props$loop = props.loop,
       loop = _props$loop === void 0 ? true : _props$loop,
       _props$defaultPageInd = props.defaultPageIndex,
@@ -4815,7 +4794,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var wrapElRef = React.useRef();
   var thisRef = useThisRef({
-    autoplay: autoplay,
+    autoPlay: autoPlay,
     loop: loop,
     onPageChange: onPageChange,
     interval: interval,
@@ -4867,7 +4846,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     var v = thisRef.current;
     var s = nRef.current;
 
-    if (v.autoplay) {
+    if (v.autoPlay) {
       if (pageIndex === s.count - 1) {
         s.timer = window.setTimeout(function () {
           wrapElRef.current.style.transitionProperty = 'none';
@@ -4998,6 +4977,3 @@ exports.Tooltip = Tooltip;
 exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
 exports.Waypoint = Waypoint;
-exports.debounce = debounce;
-exports.getProps = getProps;
-exports.throttle = throttle;

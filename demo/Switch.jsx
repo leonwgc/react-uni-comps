@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Space, Switch } from '../src';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 

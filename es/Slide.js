@@ -48,8 +48,8 @@ var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTempl
 /**  轮播焦点图/全屏分页 */
 
 var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var _a = props.autoplay,
-      autoplay = _a === void 0 ? true : _a,
+  var _a = props.autoPlay,
+      autoPlay = _a === void 0 ? true : _a,
       _b = props.loop,
       loop = _b === void 0 ? true : _b,
       _c = props.defaultPageIndex,
@@ -66,11 +66,11 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style = props.style,
       _g = props.showDot,
       showDot = _g === void 0 ? true : _g,
-      rest = __rest(props, ["autoplay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"]);
+      rest = __rest(props, ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot"]);
 
   var wrapElRef = useRef();
   var thisRef = useThisRef({
-    autoplay: autoplay,
+    autoPlay: autoPlay,
     loop: loop,
     onPageChange: onPageChange,
     interval: interval,
@@ -124,7 +124,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var v = thisRef.current;
     var s = nRef.current;
 
-    if (v.autoplay) {
+    if (v.autoPlay) {
       if (pageIndex === s.count - 1) {
         s.timer = window.setTimeout(function () {
           wrapElRef.current.style.transitionProperty = 'none';

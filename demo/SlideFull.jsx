@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Slide, AnimationElement } from '../src';
 import clsx from 'clsx';
 import 'animate.css';

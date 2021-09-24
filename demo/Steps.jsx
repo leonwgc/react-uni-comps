@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { SmileOutlined, GithubOutlined } from '@ant-design/icons';
 import { Steps, Divider, Button, IconTick } from '../src';
 

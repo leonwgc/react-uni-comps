@@ -30,7 +30,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useRef, useImperativeHandle } from 'react';
 import useGesture from './hooks/useGesture';
 import { supportedGestures } from './hooks/FingerGesture';
-import { getProps } from 'react-uni-comps';
+import { getProps } from './helper';
 /** 手势操作元素 */
 
 var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {

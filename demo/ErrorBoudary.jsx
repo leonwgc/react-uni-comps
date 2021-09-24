@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { ErrorBoundary, Button } from '../src';
 
 const StyledContent = styled.div`

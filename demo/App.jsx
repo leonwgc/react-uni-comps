@@ -16,7 +16,7 @@ const Routes = () => {
   return (
     <Provider store={store}>
       <ConfigProvider locale={zhCN}>
-        <ThemeProvider color="#409eff">
+        <ThemeProvider color="#FF5D0D">
           <Router history={history}>
             <Suspense fallback={null}>
               <Switch>

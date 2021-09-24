@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Form } from 'antd';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { HairLineBox, Divider } from '../src';
 
 const StyledHairline = styled(HairLineBox)`

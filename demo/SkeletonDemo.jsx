@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled  from '../src/styled';
 import { Avatar, Image } from 'antd';
 import { Skeleton, Switch, Space } from 'react-uni-comps';
 
