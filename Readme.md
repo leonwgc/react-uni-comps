@@ -147,7 +147,7 @@ import Button from 'react-uni-comps/es/Button';
 ### 自定义样式
 
 ```js
-import styled from 'styled-components';
+import styled from 'react-uni-comps/es/styled';
 import { Button } from 'react-uni-comps';
 
 const StyledButton = styled(Button)`
