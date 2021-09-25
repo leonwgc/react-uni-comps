@@ -1,4 +1,11 @@
-import React, { useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+  useImperativeHandle,
+} from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
@@ -96,7 +103,6 @@ export type Props = {
 };
 
 interface RefType {
-  goToPage: (pageIndex: number) => void;
   prev: () => void;
   next: () => void;
 }
@@ -106,7 +112,7 @@ const getItems = (children, loop, height) => {
     firstItem = items[0],
     lastItem = items[items.length - 1];
 
-  if (loop) {
+  if (loop && items.length > 1) {
     items.push(firstItem);
     items.unshift(lastItem);
   }
@@ -123,7 +129,7 @@ const getItems = (children, loop, height) => {
 };
 
 /**  轮播 */
-const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const Slide = React.forwardRef<RefType, Props>((props, ref) => {
   const {
     autoPlay = true,
     loop = true,
@@ -163,6 +169,7 @@ const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const slideToPageLoc = useCallback(
     (newPageIndex: number, transition = true) => {
       const s = sRef.current;
+
       wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
       if (direction === 'horizontal') {
         const x = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapWidth;
@@ -179,6 +186,14 @@ const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     },
     [sRef, loop, direction]
   );
+
+  const exp = count > len;
+
+  useImperativeHandle(ref, () => ({
+    prev: () => slideToPageLoc(pageIndex > (exp ? -1 : 0) ? pageIndex - 1 : exp ? -1 : 0),
+    next: () =>
+      slideToPageLoc(pageIndex < (exp ? len : len - 1) ? pageIndex + 1 : exp ? len : len - 1),
+  }));
 
   useUpdateEffect(() => {
     setItems(getItems(children, loop, height));

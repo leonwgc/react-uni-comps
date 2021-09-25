@@ -22,6 +22,7 @@ export default function App() {
       <Cell title="showDot" content={<Switch checked={dot} onChange={setDot} />} />
       <Cell title="horizontal" content={<Switch checked={isH} onChange={setisH} />} />
       <Slide
+        ref={ref}
         style={{ margin: '10px 12px' }}
         loop={loop}
         autoPlay={autoPlay}
@@ -49,6 +50,9 @@ export default function App() {
           </div>
         ))}
       </Slide>
+
+      <Button onClick={() => ref.current.next()}>next</Button>
+      <Button onClick={() => ref.current.prev()}>prev</Button>
     </div>
   );
 }
