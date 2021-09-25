@@ -1,66 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Spinner, Slide, Switch, Space, Divider, Button } from '../src';
+import { Spinner, Slide, Switch, Space, Divider, Button, Cell } from '../src';
 import clsx from 'clsx';
-import './Slide.less';
 
 export default function App() {
-  const [autoPlay, setAutoPlay] = useState(true);
-  const [loop, setLoop] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const [loop, setLoop] = useState(true);
   const [dot, setDot] = useState(true);
+  const [isH, setisH] = useState(true);
   const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+  }, []);
+
   return (
     <div className="app">
-      <Divider>controls no.1</Divider>
-      <Space wrap>
-        <Switch checked={autoPlay} onChange={setAutoPlay} />
-        autoPlay
-        <Switch checked={loop} onChange={setLoop} />
-        loop
-        <Switch checked={dot} onChange={setDot} />
-        showDot
-      </Space>
-      <Divider>ex.1</Divider>
+      <Divider>Slide</Divider>
+      <Cell title="autoPlay" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
+      <Cell title="loop" content={<Switch checked={loop} onChange={setLoop} />} />
+      <Cell title="showDot" content={<Switch checked={dot} onChange={setDot} />} />
+      <Cell title="horizontal" content={<Switch checked={isH} onChange={setisH} />} />
       <Slide
         style={{ margin: '10px 12px' }}
         loop={loop}
         autoPlay={autoPlay}
+        direction={isH ? 'horizontal' : 'vertical'}
         showDot={dot}
         ref={ref}
+        height={200}
         onPageChange={console.log}
-        interval={2000}
+        interval={3000}
       >
         {ar.map((item, idx) => (
           <div
             key={idx}
             className={clsx('slide-page')}
-            style={{ background: item }}
-            onClick={() => alert('page' + (idx + 1))}
+            style={{
+              background: item,
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              fontSize: 40,
+              justifyContent: 'center',
+            }}
           >
             page {idx + 1}
           </div>
         ))}
       </Slide>
-      {/* <Space style={{ marginTop: 20 }}>
-        <Button type="primary" onClick={() => ref.current.prev()}>
-          Prev
-        </Button>
-        <Button onClick={() => ref.current.goToPage(0)}>First</Button>
-        <Button onClick={() => ref.current.goToPage(ar.length - 1)}>Last</Button>
-        <Button type="primary" onClick={() => ref.current.next()}>
-          Next
-        </Button>
-        <Button onClick={() => console.log(ref.current.bs)}>instance</Button>
-      </Space>
-      <Divider>ex.2</Divider>
-      <Slide direction="vertical" defaultPageIndex={2} style={{ marginTop: 30, height: 200 }}>
-        {ar.map((item, idx) => (
-          <div key={idx} className={clsx('slide-page', 'v')} style={{ background: item }}>
-            page {item}
-          </div>
-        ))}
-      </Slide> */}
     </div>
   );
 }

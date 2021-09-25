@@ -67,3 +67,20 @@ export const isSupportStyleValue = (prop: string, value: string): boolean => {
 
   return false;
 };
+
+let _passiveIfSupported: boolean | { passive: boolean } = false;
+
+try {
+  isBrowser &&
+    window.addEventListener(
+      'test',
+      null,
+      Object.defineProperty({}, 'passive', {
+        get: function () {
+          _passiveIfSupported = { passive: true };
+        },
+      })
+    );
+} catch (err) {}
+
+export const passiveIfSupported = _passiveIfSupported;

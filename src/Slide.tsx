@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
+import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import clsx from 'clsx';
-import useThisRef from './hooks/useThisRef';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -13,6 +13,11 @@ const StyledSlide = styled.div`
     display: flex;
     flex-wrap: nowrap;
     transition: transform 0.3s ease-in-out;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
     .uc-slide-page {
       backface-visibility: hidden;
       width: 100%;
@@ -41,7 +46,7 @@ const StyledSlide = styled.div`
       }
     }
 
-    &.vertial {
+    &.vertical {
       position: absolute;
       right: 8px;
       top: 50%;
@@ -72,7 +77,7 @@ export type Props = {
   /** 初始显示第几页 */
   defaultPageIndex?: number;
   // /** 水平还是垂直播放 */
-  // direction?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
   /** 距离下一次播放的间隔毫秒, 默认 3000 */
   interval?: number;
   children: React.ReactElement[];
@@ -86,6 +91,8 @@ export type Props = {
   onPageChange?: (pageIndex: number) => void;
   /** 是否显示分页圆点 */
   showDot?: boolean;
+  /** 滑动比例多少切换，默认0.25 */
+  ratio?: number;
 };
 
 interface RefType {
@@ -94,115 +101,133 @@ interface RefType {
   next: () => void;
 }
 
-const getChildrenElementCount = (children) => {
-  let count = 0;
-  React.Children.map(children, (c) => {
-    if (React.isValidElement(c)) {
-      count++;
-    }
-  });
-  return count;
+const getItems = (children, loop, height) => {
+  const items = [].concat(children),
+    firstItem = items[0],
+    lastItem = items[items.length - 1];
+
+  if (loop) {
+    items.push(firstItem);
+    items.unshift(lastItem);
+  }
+
+  const newItems = React.Children.map(items, (c, index) =>
+    React.cloneElement(c, {
+      key: index,
+      className: clsx('uc-slide-page', c.props?.className),
+      style: { ...c.props?.style, height },
+    })
+  );
+
+  return newItems;
 };
 
-// Todo: vertical support
-
-/**  轮播焦点图/全屏分页 */
+/**  轮播 */
 const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     autoPlay = true,
     loop = true,
     defaultPageIndex = 0,
     onPageChange,
-    // direction = 'horizontal',
+    direction = 'horizontal',
     interval = 3000,
     children,
     className,
     height = 160,
     style,
     showDot = true,
+    ratio = 0.25,
     ...rest
   } = props;
 
+  const containerRef = useRef<HTMLDivElement>();
+
   const wrapElRef = useRef<HTMLDivElement>();
 
-  const [count, setCount] = useState(() => {
-    return getChildrenElementCount(children);
-  });
+  const [items, setItems] = useState(() => getItems(children, loop, height));
 
-  useEffect(() => {
-    setCount(getChildrenElementCount(children));
-  }, [children]);
-
-  const thisRef = useThisRef({
-    onPageChange,
-  });
+  const count = items.length;
+  const len = React.Children.count(children);
 
   const sRef = useRef({
     x: 0,
     lastX: 0,
+    y: 0,
+    lastY: 0,
+    wrapHeight: 0,
     wrapWidth: 0,
-    timer: 0,
-    lastPageIndex: -1,
+    inTransition: false,
   });
-  const [pageIndex, setPageIndex] = useState(defaultPageIndex);
+  const [pageIndex, setPageIndex] = useState(defaultPageIndex); // !loop:0~len-1, loop: -1~len
+
+  const slideToPageLoc = useCallback(
+    (newPageIndex: number, transition = true) => {
+      const s = sRef.current;
+      wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
+      if (direction === 'horizontal') {
+        const x = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapWidth;
+        wrapElRef.current.style.transform = `translate3d(${x}px, 0, 0)`;
+        s.x = x;
+      } else {
+        const y = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapHeight;
+        wrapElRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
+        s.y = y;
+      }
+      s.inTransition = transition;
+
+      setPageIndex(newPageIndex);
+    },
+    [sRef, loop, direction]
+  );
+
+  useUpdateEffect(() => {
+    setItems(getItems(children, loop, height));
+    slideToPageLoc(0, false);
+  }, [children, loop, height, slideToPageLoc]);
+
+  useUpdateEffect(() => {
+    if (pageIndex === len) {
+      onPageChange?.(0);
+    } else if (pageIndex === -1) {
+      onPageChange?.(len - 1);
+    } else {
+      onPageChange?.(pageIndex);
+    }
+  }, [pageIndex, len]);
 
   useLayoutEffect(() => {
     const s = sRef.current;
-    const wrapEl = wrapElRef.current;
-    s.wrapWidth = wrapEl.offsetWidth;
-  }, [thisRef]);
+    const container = containerRef.current;
+    s.wrapWidth = container.offsetWidth;
+    s.wrapHeight = container.offsetHeight;
 
-  const gotoPage = useCallback(
-    (newPageIndex: number, transition = true) => {
-      const s = sRef.current;
-
-      window.clearTimeout(s.timer);
-      if (newPageIndex >= 0 && newPageIndex < count) {
-        setPageIndex(newPageIndex);
-        thisRef.current.onPageChange?.(newPageIndex);
-      }
-      if (newPageIndex == count) {
-        setPageIndex(0);
-        thisRef.current.onPageChange?.(0);
-      }
-
-      wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
-      s.timer = window.setTimeout(() => {
-        wrapElRef.current.style.transform = `translate3d(-${newPageIndex * s.wrapWidth}px, 0, 0)`;
-        s.x = -newPageIndex * s.wrapWidth;
-        s.lastPageIndex = newPageIndex;
-      });
-    },
-    [sRef, count, thisRef]
-  );
+    slideToPageLoc(0, false);
+  }, [slideToPageLoc]);
 
   useEffect(() => {
-    const s = sRef.current;
+    // auto play
     if (autoPlay) {
-      if (pageIndex === count - 1) {
-        if (loop) {
-          const wrap = wrapElRef.current;
-          const firstEl = wrap.children[0] as HTMLElement;
-          firstEl.style.transform = `translateX(${s.wrapWidth * count}px)`;
-          s.timer = window.setTimeout(() => {
-            gotoPage(count);
-          }, interval);
-        }
-      } else {
-        s.timer = window.setTimeout(() => {
-          gotoPage(pageIndex < count - 1 ? pageIndex + 1 : 0);
-        }, interval);
-      }
+      const timer = window.setTimeout(() => {
+        slideToPageLoc(pageIndex + 1);
+      }, interval);
+
+      return () => {
+        window.clearTimeout(timer);
+      };
     }
-  }, [thisRef, sRef, pageIndex, gotoPage, count, loop, autoPlay, interval]);
+  }, [pageIndex, slideToPageLoc, autoPlay, interval]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;
 
     return (
-      <div className={clsx('uc-slide-dot-wrapper', { vertial: false })}>
-        {React.Children.map(children, (c: React.ReactElement, idx) => (
-          <span key={idx} className={clsx('dot', { active: pageIndex === idx })}></span>
+      <div className={clsx('uc-slide-dot-wrapper', { vertical: direction === 'vertical' })}>
+        {React.Children.map(children, (c, idx) => (
+          <span
+            key={idx}
+            className={clsx('dot', { active: pageIndex === idx })}
+            onClick={() => slideToPageLoc(idx)}
+          ></span>
         ))}
       </div>
     );
@@ -210,7 +235,7 @@ const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <StyledSlide
-      ref={ref}
+      ref={containerRef}
       {...rest}
       className={clsx('uc-slide', className)}
       style={{ ...style, height }}
@@ -221,70 +246,56 @@ const Slide = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           const s = sRef.current;
           wrapElRef.current.style.transitionProperty = 'none';
           s.lastX = s.x;
+          s.lastY = s.y;
         }}
-        onSwipe={(e) => {
+        onTouchEnd={() => {
           const s = sRef.current;
 
-          if (Math.abs(s.x - s.lastX) > s.wrapWidth / 2) {
-            if (e.direction === 'left') {
-              if (pageIndex === count - 1) {
-                return gotoPage(count);
-              } else {
-                pageIndex < count - 1 && gotoPage(pageIndex + 1);
-              }
-            } else {
-              pageIndex > 0 && gotoPage(pageIndex - 1);
-            }
+          if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
+            slideToPageLoc(pageIndex + (s.x < s.lastX ? 1 : -1));
+          } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
+            slideToPageLoc(pageIndex + (s.y < s.lastY ? 1 : -1));
           } else {
-            // back
-            gotoPage(pageIndex);
+            // reset
+            slideToPageLoc(pageIndex);
           }
         }}
         onPressMove={(e) => {
-          e.preventDefault();
-
+          e.stopPropagation();
           const s = sRef.current;
-          if (loop && s.lastPageIndex === count) {
-            // last trick frame
-            return;
+          if (s.inTransition) {
+            return setTimeout(() => {
+              s.inTransition = false;
+            }, 300);
           }
-          if (s.x > 0) return;
-          if (s.x < -1 * (loop ? count : count - 1) * s.wrapWidth) return;
-          s.x += e.deltaX;
-          wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
+          if (direction === 'horizontal') {
+            if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+              return;
+            }
+            s.x += e.deltaX;
+            wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
+          } else {
+            if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+              return;
+            }
+            s.y += e.deltaY;
+            wrapElRef.current.style.transform = `translate3d(0, ${s.y}px, 0)`;
+          }
         }}
       >
         <div
-          className={clsx('wrap')}
+          className={clsx('wrap', { vertical: direction === 'vertical' })}
           onTransitionEnd={() => {
-            // last & loop
-            const wrap = wrapElRef.current;
-            const firstEl = wrap.children[0] as HTMLElement;
-            if (pageIndex == count - 1 && loop) {
-              firstEl.style.transform = `translateX(${sRef.current.wrapWidth * count}px)`;
-            } else {
-              firstEl.style.transform = 'none';
-            }
-
-            if (sRef.current.lastPageIndex === count) {
-              // reset
-              // gotoPage(0, false);
-              wrapElRef.current.style.transitionProperty = 'none';
-              wrapElRef.current.style.transform = `translate3d(0, 0, 0)`;
-              firstEl.style.transform = 'none';
+            sRef.current.inTransition = false;
+            // loop
+            if (pageIndex === len) {
+              slideToPageLoc(0, false);
+            } else if (pageIndex === -1) {
+              slideToPageLoc(len - 1, false);
             }
           }}
         >
-          {React.Children.map(
-            children,
-            (c, idx) =>
-              React.isValidElement(c) &&
-              React.cloneElement(c, {
-                key: idx,
-                className: clsx(c.props?.className, 'uc-slide-page'),
-                style: { ...c.props?.style, height },
-              })
-          )}
+          {items}
         </div>
       </FingerGestureElement>
       {dotRender()}

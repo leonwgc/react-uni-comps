@@ -3,6 +3,7 @@
  */
 
 import { SyntheticEvent } from 'react';
+import { passiveIfSupported } from '../dom';
 
 export const supportedGestures = [
   'onMultipointStart',
@@ -109,10 +110,10 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener('touchstart', this.start, false);
-  this.element.addEventListener('touchmove', this.move, false);
-  this.element.addEventListener('touchend', this.end, false);
-  this.element.addEventListener('touchcancel', this.cancel, false);
+  this.element.addEventListener('touchstart', this.start, passiveIfSupported);
+  this.element.addEventListener('touchmove', this.move, passiveIfSupported);
+  this.element.addEventListener('touchend', this.end, passiveIfSupported);
+  this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
 
   this.preV = { x: null, y: null };
   this.pinchStartLen = null;
@@ -350,10 +351,10 @@ FingerGesture.prototype = {
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
 
-    this.element.removeEventListener('touchstart', this.start);
-    this.element.removeEventListener('touchmove', this.move);
-    this.element.removeEventListener('touchend', this.end);
-    this.element.removeEventListener('touchcancel', this.cancel);
+    this.element.removeEventListener('touchstart', this.start, passiveIfSupported);
+    this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
+    this.element.removeEventListener('touchend', this.end, passiveIfSupported);
+    this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
 
     this.rotate.del();
     this.touchStart.del();
