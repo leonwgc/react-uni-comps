@@ -1,5 +1,5 @@
 import React from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { Space, Button } from '../src';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -13,10 +13,20 @@ const StyledButton = styled(Button)`
   border-radius: 10px;
 `;
 
+const StyButton = styled(Button)`
+  width: 63px;
+  height: 30px;
+  border-radius: 15px;
+  font-size: 13px;
+  line-height: 30px;
+  padding: 0;
+`;
+
 export default function App() {
   return (
     <StyledContent>
       <Space wrap>
+        <StyButton type="primary">去领取</StyButton>
         <Button disabled onClick={() => console.log(1)}>
           hello
         </Button>
