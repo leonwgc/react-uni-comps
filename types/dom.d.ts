@@ -20,3 +20,4 @@ export declare const isSupportStyleProp: (prop: string) => boolean;
  * @return {*}
  */
 export declare const isSupportStyleValue: (prop: string, value: string) => boolean;
+export declare const passiveIfSupported = false;

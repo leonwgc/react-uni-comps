@@ -65,3 +65,16 @@ export var isSupportStyleValue = function isSupportStyleValue(prop, value) {
 
   return false;
 };
+var _passiveIfSupported = false;
+
+try {
+  isBrowser && window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
+    get: function get() {
+      _passiveIfSupported = {
+        passive: true
+      };
+    }
+  }));
+} catch (err) {}
+
+export var passiveIfSupported = _passiveIfSupported;

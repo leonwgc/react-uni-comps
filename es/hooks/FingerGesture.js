@@ -1,6 +1,7 @@
 /*
  * refer to AlloyFinger & refactor
  */
+import { passiveIfSupported } from '../dom';
 export var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
 
 var getLen = function getLen(v) {
@@ -81,10 +82,10 @@ var FingerGesture = function FingerGesture(el, option) {
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener('touchstart', this.start, false);
-  this.element.addEventListener('touchmove', this.move, false);
-  this.element.addEventListener('touchend', this.end, false);
-  this.element.addEventListener('touchcancel', this.cancel, false);
+  this.element.addEventListener('touchstart', this.start, passiveIfSupported);
+  this.element.addEventListener('touchmove', this.move, passiveIfSupported);
+  this.element.addEventListener('touchend', this.end, passiveIfSupported);
+  this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
   this.preV = {
     x: null,
     y: null
@@ -320,10 +321,10 @@ FingerGesture.prototype = {
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
-    this.element.removeEventListener('touchstart', this.start);
-    this.element.removeEventListener('touchmove', this.move);
-    this.element.removeEventListener('touchend', this.end);
-    this.element.removeEventListener('touchcancel', this.cancel);
+    this.element.removeEventListener('touchstart', this.start, passiveIfSupported);
+    this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
+    this.element.removeEventListener('touchend', this.end, passiveIfSupported);
+    this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
     this.rotate.del();
     this.touchStart.del();
     this.multipointStart.del();

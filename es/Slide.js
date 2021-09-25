@@ -39,24 +39,37 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
+import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import clsx from 'clsx';
-import useThisRef from './hooks/useThisRef';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertial {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 
-var getChildrenElementCount = function getChildrenElementCount(children) {
-  var count = 0;
-  React.Children.map(children, function (c) {
-    if ( /*#__PURE__*/React.isValidElement(c)) {
-      count++;
-    }
+var getItems = function getItems(children, loop, height) {
+  var items = [].concat(children),
+      firstItem = items[0],
+      lastItem = items[items.length - 1];
+
+  if (loop && items.length > 1) {
+    items.push(firstItem);
+    items.unshift(lastItem);
+  }
+
+  var newItems = React.Children.map(items, function (c, index) {
+    var _a, _b;
+
+    return /*#__PURE__*/React.cloneElement(c, {
+      key: index,
+      className: clsx('uc-slide-page', (_a = c.props) === null || _a === void 0 ? void 0 : _a.className),
+      style: __assign(__assign({}, (_b = c.props) === null || _b === void 0 ? void 0 : _b.style), {
+        height: height
+      })
+    });
   });
-  return count;
-}; // Todo: vertical support
-
-/**  轮播焦点图/全屏分页 */
+  return newItems;
+};
+/**  轮播 */
 
 
 var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -67,116 +80,132 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _c = props.defaultPageIndex,
       defaultPageIndex = _c === void 0 ? 0 : _c,
       onPageChange = props.onPageChange,
-      // direction = 'horizontal',
-  _d = props.interval,
-      // direction = 'horizontal',
-  interval = _d === void 0 ? 3000 : _d,
+      _d = props.direction,
+      direction = _d === void 0 ? 'horizontal' : _d,
+      _e = props.interval,
+      interval = _e === void 0 ? 3000 : _e,
       children = props.children,
       className = props.className,
-      _e = props.height,
-      height = _e === void 0 ? 160 : _e,
+      _f = props.height,
+      height = _f === void 0 ? 160 : _f,
       style = props.style,
-      _f = props.showDot,
-      showDot = _f === void 0 ? true : _f,
-      rest = __rest(props, ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "interval", "children", "className", "height", "style", "showDot"]);
+      _g = props.showDot,
+      showDot = _g === void 0 ? true : _g,
+      _h = props.ratio,
+      ratio = _h === void 0 ? 0.25 : _h,
+      rest = __rest(props, ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"]);
 
+  var containerRef = useRef();
   var wrapElRef = useRef();
 
-  var _g = useState(function () {
-    return getChildrenElementCount(children);
+  var _j = useState(function () {
+    return getItems(children, loop, height);
   }),
-      count = _g[0],
-      setCount = _g[1];
+      items = _j[0],
+      setItems = _j[1];
 
-  useEffect(function () {
-    setCount(getChildrenElementCount(children));
-  }, [children]);
-  var thisRef = useThisRef({
-    onPageChange: onPageChange
-  });
+  var count = items.length;
+  var len = React.Children.count(children);
   var sRef = useRef({
     x: 0,
     lastX: 0,
+    y: 0,
+    lastY: 0,
+    wrapHeight: 0,
     wrapWidth: 0,
-    timer: 0,
-    lastPageIndex: -1
+    inTransition: false
   });
 
-  var _h = useState(defaultPageIndex),
-      pageIndex = _h[0],
-      setPageIndex = _h[1];
+  var _k = useState(defaultPageIndex),
+      pageIndex = _k[0],
+      setPageIndex = _k[1]; // !loop:0~len-1, loop: -1~len
 
-  useLayoutEffect(function () {
-    var s = sRef.current;
-    var wrapEl = wrapElRef.current;
-    s.wrapWidth = wrapEl.offsetWidth;
-  }, [thisRef]);
-  var gotoPage = useCallback(function (newPageIndex, transition) {
-    var _a, _b, _c, _d;
 
+  var slideToPageLoc = useCallback(function (newPageIndex, transition) {
     if (transition === void 0) {
       transition = true;
     }
 
     var s = sRef.current;
-    window.clearTimeout(s.timer);
-
-    if (newPageIndex >= 0 && newPageIndex < count) {
-      setPageIndex(newPageIndex);
-      (_b = (_a = thisRef.current).onPageChange) === null || _b === void 0 ? void 0 : _b.call(_a, newPageIndex);
-    }
-
-    if (newPageIndex == count) {
-      setPageIndex(0);
-      (_d = (_c = thisRef.current).onPageChange) === null || _d === void 0 ? void 0 : _d.call(_c, 0);
-    }
-
     wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
-    s.timer = window.setTimeout(function () {
-      wrapElRef.current.style.transform = "translate3d(-" + newPageIndex * s.wrapWidth + "px, 0, 0)";
-      s.x = -newPageIndex * s.wrapWidth;
-      s.lastPageIndex = newPageIndex;
-    });
-  }, [sRef, count, thisRef]);
-  useEffect(function () {
-    var s = sRef.current;
 
-    if (autoPlay) {
-      if (pageIndex === count - 1) {
-        if (loop) {
-          var wrap = wrapElRef.current;
-          var firstEl = wrap.children[0];
-          firstEl.style.transform = "translateX(" + s.wrapWidth * count + "px)";
-          s.timer = window.setTimeout(function () {
-            gotoPage(count);
-          }, interval);
-        }
-      } else {
-        s.timer = window.setTimeout(function () {
-          gotoPage(pageIndex < count - 1 ? pageIndex + 1 : 0);
-        }, interval);
-      }
+    if (direction === 'horizontal') {
+      var x = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapWidth;
+      wrapElRef.current.style.transform = "translate3d(" + x + "px, 0, 0)";
+      s.x = x;
+    } else {
+      var y = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapHeight;
+      wrapElRef.current.style.transform = "translate3d(0, " + y + "px, 0)";
+      s.y = y;
     }
-  }, [thisRef, sRef, pageIndex, gotoPage, count, loop, autoPlay, interval]);
+
+    s.inTransition = transition;
+    setPageIndex(newPageIndex);
+  }, [sRef, loop, direction]);
+  var exp = count > len;
+  useImperativeHandle(ref, function () {
+    return {
+      prev: function prev() {
+        return slideToPageLoc(pageIndex > (exp ? -1 : 0) ? pageIndex - 1 : exp ? -1 : 0);
+      },
+      next: function next() {
+        return slideToPageLoc(pageIndex < (exp ? len : len - 1) ? pageIndex + 1 : exp ? len : len - 1);
+      }
+    };
+  });
+  useUpdateEffect(function () {
+    setItems(getItems(children, loop, height));
+    slideToPageLoc(0, false);
+  }, [children, loop, height, slideToPageLoc]);
+  useUpdateEffect(function () {
+    if (pageIndex === len) {
+      onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(0);
+    } else if (pageIndex === -1) {
+      onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(len - 1);
+    } else {
+      onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
+    }
+  }, [pageIndex, len]);
+  useLayoutEffect(function () {
+    var s = sRef.current;
+    var container = containerRef.current;
+    s.wrapWidth = container.offsetWidth;
+    s.wrapHeight = container.offsetHeight;
+    slideToPageLoc(0, false);
+  }, [slideToPageLoc]);
+  useEffect(function () {
+    // auto play
+    if (autoPlay) {
+      var timer_1 = window.setTimeout(function () {
+        slideToPageLoc(pageIndex + 1);
+      }, interval);
+      return function () {
+        window.clearTimeout(timer_1);
+      };
+    }
+  }, [pageIndex, slideToPageLoc, autoPlay, interval]);
 
   var dotRender = function dotRender() {
     if (!showDot) return null;
     return /*#__PURE__*/React.createElement("div", {
       className: clsx('uc-slide-dot-wrapper', {
-        vertial: false
+        vertical: direction === 'vertical'
       })
     }, React.Children.map(children, function (c, idx) {
       return /*#__PURE__*/React.createElement("span", {
         key: idx,
         className: clsx('dot', {
           active: pageIndex === idx
-        })
+        }),
+        onClick: function onClick() {
+          return slideToPageLoc(idx);
+        }
       });
     }));
   };
 
   return /*#__PURE__*/React.createElement(StyledSlide, __assign({
-    ref: ref
+    ref: containerRef
   }, rest, {
     className: clsx('uc-slide', className),
     style: __assign(__assign({}, style), {
@@ -188,71 +217,60 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       var s = sRef.current;
       wrapElRef.current.style.transitionProperty = 'none';
       s.lastX = s.x;
+      s.lastY = s.y;
     },
-    onSwipe: function onSwipe(e) {
+    onTouchEnd: function onTouchEnd() {
       var s = sRef.current;
 
-      if (Math.abs(s.x - s.lastX) > s.wrapWidth / 2) {
-        if (e.direction === 'left') {
-          if (pageIndex === count - 1) {
-            return gotoPage(count);
-          } else {
-            pageIndex < count - 1 && gotoPage(pageIndex + 1);
-          }
-        } else {
-          pageIndex > 0 && gotoPage(pageIndex - 1);
-        }
+      if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
+        slideToPageLoc(pageIndex + (s.x < s.lastX ? 1 : -1));
+      } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
+        slideToPageLoc(pageIndex + (s.y < s.lastY ? 1 : -1));
       } else {
-        // back
-        gotoPage(pageIndex);
+        // reset
+        slideToPageLoc(pageIndex);
       }
     },
     onPressMove: function onPressMove(e) {
-      e.preventDefault();
+      e.stopPropagation();
       var s = sRef.current;
 
-      if (loop && s.lastPageIndex === count) {
-        // last trick frame
-        return;
+      if (s.inTransition) {
+        return setTimeout(function () {
+          s.inTransition = false;
+        }, 300);
       }
 
-      if (s.x > 0) return;
-      if (s.x < -1 * (loop ? count : count - 1) * s.wrapWidth) return;
-      s.x += e.deltaX;
-      wrapElRef.current.style.transform = "translate3d(" + s.x + "px, 0, 0)";
+      if (direction === 'horizontal') {
+        if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+          return;
+        }
+
+        s.x += e.deltaX;
+        wrapElRef.current.style.transform = "translate3d(" + s.x + "px, 0, 0)";
+      } else {
+        if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+          return;
+        }
+
+        s.y += e.deltaY;
+        wrapElRef.current.style.transform = "translate3d(0, " + s.y + "px, 0)";
+      }
     }
   }, /*#__PURE__*/React.createElement("div", {
-    className: clsx('wrap'),
+    className: clsx('wrap', {
+      vertical: direction === 'vertical'
+    }),
     onTransitionEnd: function onTransitionEnd() {
-      // last & loop
-      var wrap = wrapElRef.current;
-      var firstEl = wrap.children[0];
+      sRef.current.inTransition = false; // loop
 
-      if (pageIndex == count - 1 && loop) {
-        firstEl.style.transform = "translateX(" + sRef.current.wrapWidth * count + "px)";
-      } else {
-        firstEl.style.transform = 'none';
-      }
-
-      if (sRef.current.lastPageIndex === count) {
-        // reset
-        // gotoPage(0, false);
-        wrapElRef.current.style.transitionProperty = 'none';
-        wrapElRef.current.style.transform = "translate3d(0, 0, 0)";
-        firstEl.style.transform = 'none';
+      if (pageIndex === len) {
+        slideToPageLoc(0, false);
+      } else if (pageIndex === -1) {
+        slideToPageLoc(len - 1, false);
       }
     }
-  }, React.Children.map(children, function (c, idx) {
-    var _a, _b;
-
-    return /*#__PURE__*/React.isValidElement(c) && /*#__PURE__*/React.cloneElement(c, {
-      key: idx,
-      className: clsx((_a = c.props) === null || _a === void 0 ? void 0 : _a.className, 'uc-slide-page'),
-      style: __assign(__assign({}, (_b = c.props) === null || _b === void 0 ? void 0 : _b.style), {
-        height: height
-      })
-    });
-  }))), dotRender());
+  }, items)), dotRender());
 });
 Slide.displayName = 'UC-Slide';
 export default Slide;

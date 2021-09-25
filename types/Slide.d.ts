@@ -4,6 +4,7 @@ export declare type Props = {
     autoPlay?: boolean;
     /** 初始显示第几页 */
     defaultPageIndex?: number;
+    direction?: 'horizontal' | 'vertical';
     /** 距离下一次播放的间隔毫秒, 默认 3000 */
     interval?: number;
     children: React.ReactElement[];
@@ -17,7 +18,13 @@ export declare type Props = {
     onPageChange?: (pageIndex: number) => void;
     /** 是否显示分页圆点 */
     showDot?: boolean;
+    /** 滑动比例多少切换，默认0.25 */
+    ratio?: number;
 };
-/**  轮播焦点图/全屏分页 */
-declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+interface RefType {
+    prev: () => void;
+    next: () => void;
+}
+/**  轮播 */
+declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<RefType>>;
 export default Slide;
