@@ -1,13 +1,21 @@
 import React, { HTMLAttributes } from 'react';
 declare type Props = {
+    /** 是否显示 */
     visible?: boolean;
+    /** 标题 */
     title?: React.ReactNode;
+    /** 内容  */
     content?: React.ReactNode;
+    /** 确认文本 */
     confirmText?: string;
+    /** 取消文本 */
     cancelText?: boolean;
+    /** 确认回调 */
     onConfirm?: () => void;
     /** 取消，关闭默认调用onClose */
     onClose?: () => void;
+    /** 取消回调 */
+    onCancel?: () => void;
     closeOnMaskClick?: boolean;
     className?: string;
     /** 按钮间距，默认8 */

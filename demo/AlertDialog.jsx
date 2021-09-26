@@ -43,7 +43,14 @@ export default function App() {
         buttonSpace={16}
         buttonWidth={80}
         confirmText="确定"
-        cancelText="cancel"
+        cancelText="取消"
+        onCancel={() => {
+          Toast.show('canceled', 1000);
+          setTimeout(() => {
+            setVisible(false);
+          }, 1000);
+        }}
+        onConfirm={() => Toast.show('confirmed', 1000)}
         title={
           <span>
             <SoundOutlined /> 提示
@@ -57,7 +64,7 @@ export default function App() {
 
       <AlertDialog
         confirmText="确定"
-        // cancelText="cancel"
+        cancelText="cancel"
         visible={visible1}
         onClose={() => setVisible1(false)}
         content="hello,world"

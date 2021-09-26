@@ -12,14 +12,22 @@ import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 
 type Props = {
+  /** 是否显示 */
   visible?: boolean;
+  /** 标题 */
   title?: React.ReactNode;
+  /** 内容  */
   content?: React.ReactNode;
+  /** 确认文本 */
   confirmText?: string;
+  /** 取消文本 */
   cancelText?: boolean;
+  /** 确认回调 */
   onConfirm?: () => void;
   /** 取消，关闭默认调用onClose */
   onClose?: () => void;
+  /** 取消回调 */
+  onCancel?: () => void;
   closeOnMaskClick?: boolean;
   className?: string;
   /** 按钮间距，默认8 */
@@ -101,7 +109,6 @@ const StyledAlertDialog = styled(Popup)`
     padding: 16px 0;
     box-sizing: border-box;
     white-space: normal;
-    min-width: 560px;
     max-width: calc(100vw - 56px);
     max-height: calc(100vh - 112px);
 
@@ -162,6 +169,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
     title,
     content,
     onConfirm,
+    onCancel,
     confirmText = '确定',
     cancelText,
     closeOnMaskClick = true,
@@ -169,12 +177,14 @@ const AlertDialog = (props: Props): React.ReactElement => {
     buttonWidth = 62,
     closable = false,
     onClose,
+    className,
     ...rest
   } = props;
 
   return (
     <StyledAlertDialog
-      className={clsx('uc-alert-dialog', { mobile: isMobile() })}
+      {...rest}
+      className={clsx('uc-alert-dialog', className, { mobile: isMobile() })}
       visible={visible}
       position="center"
       onMaskClick={() => {
@@ -182,7 +192,6 @@ const AlertDialog = (props: Props): React.ReactElement => {
           onClose?.();
         }
       }}
-      {...rest}
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
         {closable && <IconCross className="close" size={24} onClick={onClose} />}
@@ -192,7 +201,16 @@ const AlertDialog = (props: Props): React.ReactElement => {
           {!isMobile() ? (
             <Space size={buttonSpace}>
               {cancelText ? (
-                <Button onClick={onClose} className={clsx('cancel')} style={{ width: buttonWidth }}>
+                <Button
+                  onClick={() => {
+                    onCancel?.();
+                    if (typeof onCancel !== 'function') {
+                      onClose?.();
+                    }
+                  }}
+                  className={clsx('cancel')}
+                  style={{ width: buttonWidth }}
+                >
                   {cancelText}
                 </Button>
               ) : null}
@@ -215,7 +233,15 @@ const AlertDialog = (props: Props): React.ReactElement => {
             <>
               {cancelText ? (
                 <>
-                  <div className={clsx('m-btn', 'cancel')} onClick={onClose}>
+                  <div
+                    className={clsx('m-btn', 'cancel')}
+                    onClick={() => {
+                      onCancel?.();
+                      if (typeof onCancel !== 'function') {
+                        onClose?.();
+                      }
+                    }}
+                  >
                     {cancelText}
                   </div>
                   <Divider
