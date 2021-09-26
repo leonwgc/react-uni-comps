@@ -159,4 +159,17 @@ const StyledButton = styled(Button)`
 </StyledButton>;
 ```
 
-持续更新其他组件...
+
+### 参考
+- [Ant Design](https://ant.design/)
+- [Ant Design Mobile](https://next.mobile.ant.design/)
+- [Zarm](https://zarm.gitee.io/)
+- [Vant](https://vant-contrib.gitee.io/vant/#/zh-CN/home)
+- [Zent](https://youzan.github.io/zent/zh/guides/install)
+- [Material UI](https://material-ui.com/zh/)
+- [Welcome UI](https://www.welcome-ui.com/)
+- [NutUI](https://nutui.jd.com/3x/#/)
+- [Blueprint](https://blueprintjs.com/)
+- [Bootstrap](https://getbootstrap.com/)
+
+持续更新优化中...

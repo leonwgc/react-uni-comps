@@ -51,8 +51,10 @@ export default function App() {
         ))}
       </Slide>
 
-      <Button onClick={() => ref.current.next()}>next</Button>
-      <Button onClick={() => ref.current.prev()}>prev</Button>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button onClick={() => ref.current.prev()}>prev</Button>
+        <Button onClick={() => ref.current.next()}>next</Button>
+      </div>
     </div>
   );
 }
