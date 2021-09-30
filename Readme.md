@@ -16,6 +16,7 @@ yarn add react-uni-comps
 5. 样式采用 css-in-js 方案 (styled-components)
 6. 方便扩展样式风格,二次开发/定制属于自己的组件库
 7. 使用 typescript 编写，良好的智能提示
+8. 体积小，可以和桌面端组件库如antd，移动端antd-mobile/zarm作为补充，搭配使用
 
 ### 组件列表
 
