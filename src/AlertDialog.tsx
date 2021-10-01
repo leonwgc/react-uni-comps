@@ -46,19 +46,13 @@ type Props = {
 } & HTMLAttributes<HTMLElement>;
 
 const StyledAlertDialog = styled(Popup)`
-  width: 560px;
   z-index: 300;
 
   &.mobile {
-    width: 280px;
-    border-radius: 16x;
-
     .uc-alert-dialog-wrap {
       padding-bottom: 0;
-      width: 100%;
-      max-width: 100%;
-      min-width: unset;
-      min-height: unset;
+      border-radius: 8px;
+      width: 280px;
 
       .title {
         text-align: center;
@@ -119,6 +113,7 @@ const StyledAlertDialog = styled(Popup)`
     white-space: normal;
     max-width: calc(100vw - 56px);
     max-height: calc(100vh - 112px);
+    width: 420px;
 
     .close {
       top: 16px;
