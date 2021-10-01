@@ -35,7 +35,6 @@ type Props = {
   /** 按钮宽度，默认62 */
   buttonWidth?: number;
   closable?: boolean;
-  modal?: boolean;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledAlertDialog = styled(Popup)`
