@@ -39,18 +39,20 @@ export default function App() {
       </Space>
 
       <AlertDialog
+        mountContainer={() => document.querySelector('#root')}
         closable
+        className="mount-in-root"
         buttonSpace={16}
         buttonWidth={80}
         confirmText="确定"
         cancelText="取消"
         onCancel={() => {
-          Toast.show('canceled', 1000);
+          Toast.show({ content: 'canceld', duration: 1000 });
           setTimeout(() => {
             setVisible(false);
           }, 1000);
         }}
-        onConfirm={() => Toast.show('confirmed', 1000)}
+        onConfirm={() => Toast.show({ content: 'confirmed' })}
         title={
           <span>
             <SoundOutlined /> 提示
@@ -67,6 +69,7 @@ export default function App() {
         cancelText="cancel"
         visible={visible1}
         onClose={() => setVisible1(false)}
+        maskStyle={{ background: 'red', opacity: 0.1 }}
         content="hello,world"
       />
     </div>

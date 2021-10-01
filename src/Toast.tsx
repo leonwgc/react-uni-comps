@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { isBrowser } from './dom';
 
 const StyleToast = styled(Popup)`
+  z-index: 1000;
   padding: 12px 16px;
   background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
@@ -15,9 +16,15 @@ const StyleToast = styled(Popup)`
 
 type Props = {
   content?: React.ReactNode;
-  /** 模态 */
+  /** 模态, 默认true */
   modal?: boolean;
   visible: boolean;
+  /** toast style */
+  style?: React.CSSProperties;
+  /** modal mask 样式 */
+  maskStyle?: React.CSSProperties;
+  /** className */
+  className?: string;
 };
 
 const getContainer = () => {
@@ -36,31 +43,53 @@ const getContainer = () => {
 
 /** 黑背景提示 */
 const Toast = (props: Props): React.ReactElement => {
-  const { content, visible, modal } = props;
+  const { content, visible, modal, maskStyle, className, ...rest } = props;
 
   const toastProps: Partial<PopupProps> = {};
   if (modal) {
     toastProps.mask = true;
-    toastProps.maskStyle = { opacity: 0 };
+    toastProps.maskStyle = { opacity: 0, zIndex: 500, ...maskStyle };
   } else {
     toastProps.mask = false;
   }
 
   return (
-    <StyleToast position="center" visible={visible} className={clsx('uc-toast')} {...toastProps}>
+    <StyleToast
+      {...rest}
+      position="center"
+      visible={visible}
+      className={clsx('uc-toast', className)}
+      {...toastProps}
+    >
       {content}
     </StyleToast>
   );
 };
 
+type StaticToastProps = {
+  /** 内容 */
+  content: React.ReactNode;
+  /** 持续显示时间，默认3000ms */
+  duration?: number;
+  /** 模态, 默认true */
+  modal?: boolean;
+  /** toast class */
+  className?: string;
+  /** toast style */
+  style?: React.CSSProperties;
+  /** 模态时 mask style */
+  maskStyle: React.CSSProperties;
+};
+
 /** 黑背景提示,静态调用 */
-Toast.show = (content: React.ReactNode, duration = 2000, modal = true) => {
+Toast.show = (props: StaticToastProps) => {
+  const { duration = 3000, ...rest } = props;
   const container = getContainer();
 
-  ReactDOM.render(<Toast content={content} visible modal={modal} />, container);
+  ReactDOM.render(<Toast {...rest} visible />, container);
 
   window.setTimeout(() => {
-    ReactDOM.render(<Toast content={content} visible={false} modal={modal} />, container);
+    ReactDOM.render(<Toast {...rest} visible={false} />, container);
   }, duration);
 };
 

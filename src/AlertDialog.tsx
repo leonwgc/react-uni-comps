@@ -35,10 +35,19 @@ type Props = {
   /** 按钮宽度，默认62 */
   buttonWidth?: number;
   closable?: boolean;
+  /** 弹框mount位置，默认为document.body */
+  mountContainer?: () => HTMLElement;
+  /** 是否显示遮罩，默认显示 */
+  mask?: boolean;
+  /** 遮罩样式 */
+  maskStyle?: React.CSSProperties;
+  /** 遮罩class*/
+  maskClass?: string;
 } & HTMLAttributes<HTMLElement>;
 
 const StyledAlertDialog = styled(Popup)`
   width: 560px;
+  z-index: 300;
 
   &.mobile {
     width: 280px;
@@ -175,6 +184,9 @@ const AlertDialog = (props: Props): React.ReactElement => {
     buttonSpace = 8,
     buttonWidth = 62,
     closable = false,
+    mask = true,
+    maskStyle,
+    maskClass,
     onClose,
     className,
     ...rest
@@ -186,6 +198,9 @@ const AlertDialog = (props: Props): React.ReactElement => {
       className={clsx('uc-alert-dialog', className, { mobile: isMobile() })}
       visible={visible}
       position="center"
+      mask={mask}
+      maskStyle={maskStyle}
+      maskClass={maskClass}
       onMaskClick={() => {
         if (closeOnMaskClick) {
           onClose?.();

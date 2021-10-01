@@ -117,6 +117,8 @@ export type Props = {
   mask?: boolean;
   /** 遮罩样式 */
   maskStyle?: React.CSSProperties;
+  /** 遮罩class*/
+  maskClass?: string;
   /** 遮罩点击事件 */
   onMaskClick?: () => void;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
@@ -140,34 +142,38 @@ const Popup = (props: Props): React.ReactElement => {
     visible,
     mask = true,
     maskStyle,
+    maskClass,
     onMaskClick,
     position = 'bottom',
     duration = 160,
-    mountContainer = () => document.body,
+    mountContainer,
     style,
     className,
   } = props;
   const wrapRef = useRef();
 
+  const mountNode = mountContainer?.() || document.body;
+  const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+
   return ReactDOM.createPortal(
-    <>
-      {mask && visible ? <Mask style={maskStyle} onClick={onMaskClick} /> : null}
+    <div className={clsx('uc-popup-container-' + position)}>
+      {mask && visible ? (
+        <Mask className={maskClass} style={maskStyle} onClick={onMaskClick} />
+      ) : null}
       <Transition in={visible} timeout={duration}>
         {(status) => (
-          <div>
-            <StyledWrapper
-              ref={wrapRef}
-              duration={duration}
-              style={style}
-              className={clsx('uc-popup', className, position, status, position + '-' + status)}
-            >
-              {children}
-            </StyledWrapper>
-          </div>
+          <StyledWrapper
+            ref={wrapRef}
+            duration={duration}
+            style={{ ...style, position: showPosition }}
+            className={clsx('uc-popup-wrap', className, position, status, position + '-' + status)}
+          >
+            {children}
+          </StyledWrapper>
         )}
       </Transition>
-    </>,
-    mountContainer()
+    </div>,
+    mountNode
   );
 };
 

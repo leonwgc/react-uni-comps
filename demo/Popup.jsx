@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
-import { Space, Popup, Button } from '../src';
+import React, { useState, useRef } from 'react';
+import styled from '../src/styled';
+import { Space, Popup, Button, AlertDialog } from '../src';
+
+const StyleedPopupBottom = styled(Popup)`
+  height: 50vh;
+  width: 100%;
+
+  .content {
+    display: flex;
+    height: 100%;
+    padding: 16px;
+    background-color: #fff;
+  }
+`;
 
 export default function App() {
   const [b, setB] = useState(false);
   const [c, setC] = useState(false);
   const [l, setL] = useState(false);
   const [t, setT] = useState(false);
+
+  const [a, setA] = useState(false);
+  const [il, setIl] = useState(false);
+  const bRef = useRef();
 
   return (
     <div>
@@ -16,26 +33,41 @@ export default function App() {
         <Button onClick={() => setT(true)}>show top</Button>
       </Space>
 
-      <Popup
-        position="bottom"
-        style={{
-          height: '40vh',
-          width: '100%',
-        }}
-        visible={b}
-        onMaskClick={() => setB(false)}
-      >
-        <div
-          style={{
-            display: 'flex',
-            height: '100%',
-            padding: '16px',
-            backgroundColor: '#fff',
-          }}
-        >
-          hello,world
+      <StyleedPopupBottom position="bottom" visible={b} onMaskClick={() => setB(false)}>
+        <div className="content" ref={bRef}>
+          <Button type="primary" onClick={() => setA(true)}>
+            open alert
+          </Button>
+          <Button type="primary" onClick={() => setIl(true)}>
+            open left
+          </Button>
+          <AlertDialog
+            visible={a}
+            onClose={() => setA(false)}
+            content={<span>hello</span>}
+          ></AlertDialog>
+          <Popup
+            position="left"
+            className="bref"
+            mountContainer={() => bRef.current}
+            style={{ height: '100%', background: '#ccc' }}
+            visible={il}
+            mask={false}
+          >
+            <div
+              style={{
+                display: 'flex',
+                height: '100%',
+                padding: '16px',
+              }}
+            >
+              <Button type="primary" onClick={() => setIl(false)}>
+                close
+              </Button>
+            </div>
+          </Popup>
         </div>
-      </Popup>
+      </StyleedPopupBottom>
       <Popup
         position="center"
         style={{ width: '70vw', height: '60vh', backgroundColor: '#fff' }}
@@ -54,17 +86,11 @@ export default function App() {
       </Popup>
       <Popup
         position="left"
-        style={{ width: '50vw', height: '100vh', backgroundColor: '#fff' }}
+        style={{ width: '50vw', padding: 16, backgroundColor: '#fff' }}
         visible={l}
         onMaskClick={() => setL(false)}
       >
-        <div
-          style={{
-            display: 'flex',
-            height: '100%',
-            padding: '16px',
-          }}
-        >
+        <div>
           <Button onClick={() => setL(false)}>click to close</Button>
         </div>
       </Popup>

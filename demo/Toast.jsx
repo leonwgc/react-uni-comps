@@ -11,21 +11,24 @@ export default function App() {
         <Button
           type="primary"
           onClick={() =>
-            Toast.show(
-              <div
-                style={{
-                  width: 160,
-                  height: 80,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Space>
-                  <Spinner color="rgba(255,255,255,.5)" /> 加载中
-                </Space>
-              </div>
-            )
+            Toast.show({
+              content: (
+                <div
+                  style={{
+                    width: 160,
+                    height: 80,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Space>
+                    <Spinner color="rgba(255,255,255,.5)" /> 加载中
+                  </Space>
+                </div>
+              ),
+              maskStyle: { backgroundColor: 'red', opacity: 0.1 },
+            })
           }
         >
           Toast.show loading
@@ -34,35 +37,85 @@ export default function App() {
         <Button
           type="primary"
           onClick={() =>
-            Toast.show(
-              <Space direction="vertical" size={12} style={{ width: 120, textAlign: 'center' }}>
-                <div
-                  style={{
-                    borderRadius: '50%',
-                    width: 40,
-                    height: 40,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    display: 'inline-flex',
-                    backgroundColor: '#fff',
-                  }}
-                >
-                  <IconTick size={40 * 0.5} color="#333" />
-                </div>
-                认证成功
-              </Space>
-            )
+            Toast.show({
+              content: (
+                <Space direction="vertical" size={12} style={{ width: 120, textAlign: 'center' }}>
+                  <div
+                    style={{
+                      borderRadius: '50%',
+                      width: 40,
+                      height: 40,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      display: 'inline-flex',
+                      backgroundColor: '#fff',
+                    }}
+                  >
+                    <IconTick size={40 * 0.5} color="#333" />
+                  </div>
+                  认证成功
+                </Space>
+              ),
+            })
           }
         >
           Toast.show checked
         </Button>
 
-        <Button type="primary" onClick={() => Toast.show('中华人民共和国 none modal', 3000, false)}>
-          Toast.show none modal
+        <Button
+          type="primary"
+          onClick={() => Toast.show({ content: '中华人民共和国 none modal', modal: false })}
+        >
+          Toast.show not modal
         </Button>
 
-        <Button type="primary" onClick={() => Toast.show('hello,world', 1000)}>
-          Toast.show 1s
+        <Button
+          type="primary"
+          onClick={() =>
+            Toast.show({
+              content: 'hello,world',
+              duration: 10000,
+              style: {
+                top: 100,
+              },
+            })
+          }
+        >
+          Toast.show, toast style, top 100px
+        </Button>
+
+        <Button
+          type="primary"
+          onClick={() =>
+            Toast.show({
+              content: 'hello,world',
+              duration: 10000,
+              style: {
+                top: 'unset',
+                bottom: 10,
+              },
+            })
+          }
+        >
+          Toast.show, toast style, bottom 100px
+        </Button>
+
+        <Button
+          type="primary"
+          onClick={() =>
+            Toast.show({
+              content: 'hello,world',
+              modal: true,
+              style: {
+                top: 'unset',
+                bottom: 10,
+                background: '#00bc8d',
+                width: '80vw',
+              },
+            })
+          }
+        >
+          Toast.show, modal
         </Button>
 
         <Button onClick={() => setV((v) => !v)}>Toast comp toggle</Button>

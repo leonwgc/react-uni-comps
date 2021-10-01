@@ -1,6 +1,7 @@
 import React, { HTMLAttributes, ReactElement, useEffect } from 'react';
 import TransitionElement from './TransitionElement';
 import styled from 'styled-components';
+import clsx from 'clsx';
 
 const StyledMask = styled.div`
   background-color: rgba(0, 0, 0);
@@ -24,13 +25,15 @@ const StyledMask = styled.div`
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
   hideOverflow?: boolean;
+  style?: React.CSSProperties;
+  className?: string;
   /** 上层元素 */
   children?: ReactElement;
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, hideOverflow = true, ...rest } = props;
+  const { children, className, hideOverflow = true, ...rest } = props;
 
   useEffect(() => {
     return () => {
@@ -46,7 +49,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
 
   return (
     <TransitionElement>
-      <StyledMask className="uc-mask" ref={ref} {...rest}>
+      <StyledMask {...rest} className={clsx('uc-mask', className)} ref={ref}>
         {children}
       </StyledMask>
     </TransitionElement>
