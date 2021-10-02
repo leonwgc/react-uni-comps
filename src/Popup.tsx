@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
 import styled from 'styled-components';
+import { isMobile } from './dom';
 import clsx from 'clsx';
 
-const StyledWrapper = styled.div<{ duration: number }>`
+const StyledWrapper = styled.div`
   position: fixed;
   z-index: 200;
-  transition: transform ${(props) => props.duration}ms ease;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
   // bottom
   &.bottom {
     left: 0;
@@ -76,37 +78,32 @@ const StyledWrapper = styled.div<{ duration: number }>`
     position: fixed;
     top: 50%;
     left: 50%;
-    transition: none;
+    transform: translate(-50%, -50%);
+
+    &.pc {
+      top: 200px;
+      transform: translate(-50%, 0);
+    }
   }
 
-  @keyframes showUp {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-    90% {
-      opacity: 0.9;
-      transform: translate(-50%, -50%) scale(1.01);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
   &.center-entering,
   &.center-entered {
-    display: '';
-    animation: showUp ease ${(props) => props.duration}ms forwards;
+    transform: translate(-50%, -50%) scale(1);
+    &.pc {
+      top: 200px;
+      transform: translate(-50%, 0) scale(1);
+    }
+    opacity: 1;
   }
 
   &.center-exited,
   &.center-exiting {
-    display: none;
-  }
-
-  &.no-trasition {
-    animation: none;
-    transition: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+    &.pc {
+      top: 200px;
+      transform: translate(-50%, 0) scale(0.9);
+    }
   }
 `;
 
@@ -135,6 +132,27 @@ export type Props = {
   className?: string;
 };
 
+// type MousePosition = {
+//   x: number;
+//   y: number;
+// };
+
+// let mousePosition: MousePosition = null;
+
+// if (isBrowser) {
+//   const getClickPosition = (e: MouseEvent) => {
+//     mousePosition = {
+//       x: e.pageX,
+//       y: e.pageY,
+//     };
+//     setTimeout(() => {
+//       mousePosition = null;
+//     }, 100);
+//   };
+
+//   document.documentElement.addEventListener('click', getClickPosition, true);
+// }
+
 /** 弹框，可以从上，下，左，右，中间弹出 */
 const Popup = (props: Props): React.ReactElement => {
   const {
@@ -150,10 +168,35 @@ const Popup = (props: Props): React.ReactElement => {
     style,
     className,
   } = props;
-  const wrapRef = useRef();
+  const wrapRef = useRef<HTMLDivElement>();
+
+  // const lastMousePositionRef = useRef<MousePosition>();
 
   const mountNode = mountContainer?.() || document.body;
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+
+  // const resetTransformOrigin = useCallback(() => {
+  //   const mousePosition = lastMousePositionRef.current;
+  //   const dialogEl = wrapRef.current;
+  //   if (
+  //     mousePosition &&
+  //     mousePosition.x >= 0 &&
+  //     mousePosition.y >= 0 &&
+  //     dialogEl &&
+  //     dialogEl.getBoundingClientRect
+  //   ) {
+  //     const { left: x, top: y } = dialogEl.getBoundingClientRect();
+  //     const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px`;
+  //     dialogEl.style.transformOrigin = origin;
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!isMobile && position === 'center' && visible && !lastMousePositionRef.current) {
+  //     lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
+  //     resetTransformOrigin();
+  //   }
+  // }, [visible, position, resetTransformOrigin]);
 
   return ReactDOM.createPortal(
     <div className={clsx('uc-popup-container-' + position)}>
@@ -164,9 +207,11 @@ const Popup = (props: Props): React.ReactElement => {
         {(status) => (
           <StyledWrapper
             ref={wrapRef}
-            duration={duration}
-            style={{ ...style, position: showPosition }}
-            className={clsx('uc-popup-wrap', className, position, status, position + '-' + status)}
+            style={{ ...style, position: showPosition, transitionDuration: duration + 'ms' }}
+            className={clsx('uc-popup-wrap', className, position, status, position + '-' + status, {
+              mobile: isMobile,
+              pc: !isMobile,
+            })}
           >
             {children}
           </StyledWrapper>
