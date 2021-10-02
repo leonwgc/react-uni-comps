@@ -70,7 +70,7 @@ export default function App() {
       </StyleedPopupBottom>
       <Popup
         position="center"
-        style={{ width: '70vw', height: '60vh', backgroundColor: '#fff' }}
+        style={{ width: 300, height: 150, backgroundColor: '#fff' }}
         visible={c}
         onMaskClick={() => setC(false)}
       >

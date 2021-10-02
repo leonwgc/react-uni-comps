@@ -38,9 +38,7 @@ export const offset = (el: HTMLElement | null): { top: number; left: number } =>
 
 export const isBrowser = !!(typeof window !== 'undefined' && window);
 
-export const isMobile = (): boolean =>
-  isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
-
+export const isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 /**
  *
  * 判断是否支持某个css属性

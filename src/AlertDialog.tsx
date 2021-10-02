@@ -190,7 +190,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
   return (
     <StyledAlertDialog
       {...rest}
-      className={clsx('uc-alert-dialog', className, { mobile: isMobile() })}
+      className={clsx('uc-alert-dialog', className, { mobile: isMobile })}
       visible={visible}
       position="center"
       mask={mask}
@@ -207,7 +207,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
         {title && <div className={clsx('title')}>{title}</div>}
         <div className={clsx('content')}>{content}</div>
         <div className={clsx('footer')}>
-          {!isMobile() ? (
+          {!isMobile ? (
             <Space size={buttonSpace}>
               {cancelText ? (
                 <Button

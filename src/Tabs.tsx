@@ -9,7 +9,7 @@ import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import { throttle } from './helper';
 
-const isMobileEnv = isMobile();
+const isMobileEnv = isMobile;
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比/px/true/false */

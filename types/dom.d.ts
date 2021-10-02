@@ -4,7 +4,7 @@ export declare const offset: (el: HTMLElement | null) => {
     left: number;
 };
 export declare const isBrowser: boolean;
-export declare const isMobile: () => boolean;
+export declare const isMobile: boolean;
 /**
  *
  * 判断是否支持某个css属性

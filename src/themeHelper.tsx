@@ -10,7 +10,7 @@ import { isMobile } from './dom';
  */
 export const getThemeColorCss = (prop: string, leftValue = ''): any => {
   // mobile css variable first
-  if (isMobile()) {
+  if (isMobile) {
     return css`
       ${prop}:${leftValue} ${(props) => props.theme.color || colors.primary};
       ${prop}:${leftValue} var(--uc-color, ${colors.primary});

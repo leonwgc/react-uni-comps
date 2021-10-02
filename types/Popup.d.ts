@@ -6,6 +6,8 @@ export declare type Props = {
     mask?: boolean;
     /** 遮罩样式 */
     maskStyle?: React.CSSProperties;
+    /** 遮罩class*/
+    maskClass?: string;
     /** 遮罩点击事件 */
     onMaskClick?: () => void;
     /** 弹框弹出位置，从上，下，左，右，中间 弹出 */

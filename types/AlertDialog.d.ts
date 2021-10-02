@@ -23,7 +23,14 @@ declare type Props = {
     /** 按钮宽度，默认62 */
     buttonWidth?: number;
     closable?: boolean;
-    modal?: boolean;
+    /** 弹框mount位置，默认为document.body */
+    mountContainer?: () => HTMLElement;
+    /** 是否显示遮罩，默认显示 */
+    mask?: boolean;
+    /** 遮罩样式 */
+    maskStyle?: React.CSSProperties;
+    /** 遮罩class*/
+    maskClass?: string;
 } & HTMLAttributes<HTMLElement>;
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 declare const AlertDialog: {

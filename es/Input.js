@@ -79,8 +79,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledInput, {
     style: style,
     className: clsx('uc-input', className, {
-      mobile: isMobile(),
-      pc: !isMobile()
+      mobile: isMobile,
+      pc: !isMobile
     })
   }, prefix && /*#__PURE__*/React.createElement("span", {
     className: clsx('prefix')

@@ -89,8 +89,8 @@ const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         className={clsx({
           checked: _checked,
           disabled: disabled,
-          mobile: isMobile(),
-          pc: !isMobile(),
+          mobile: isMobile,
+          pc: !isMobile,
         })}
         size={size}
         disabled={disabled}

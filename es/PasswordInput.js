@@ -70,7 +70,7 @@ var PasswordInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _d = props.autoFocus,
       autoFocus = _d === void 0 ? true : _d,
       _e = props.virtualKeyboard,
-      virtualKeyboard = _e === void 0 ? isMobile() : _e,
+      virtualKeyboard = _e === void 0 ? isMobile : _e,
       onFinish = props.onFinish,
       onFocus = props.onFocus,
       _onChange = props.onChange,

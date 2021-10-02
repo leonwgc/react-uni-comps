@@ -109,7 +109,7 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
     className,
     mask = true,
     autoFocus = true,
-    virtualKeyboard = isMobile(),
+    virtualKeyboard = isMobile,
     onFinish,
     onFocus,
     onChange,

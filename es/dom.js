@@ -35,9 +35,7 @@ export var offset = function offset(el) {
   };
 };
 export var isBrowser = !!(typeof window !== 'undefined' && window);
-export var isMobile = function isMobile() {
-  return isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
-};
+export var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 /**
  *
  * 判断是否支持某个css属性

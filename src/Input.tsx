@@ -105,8 +105,8 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
     <StyledInput
       style={style}
       className={clsx('uc-input', className, {
-        mobile: isMobile(),
-        pc: !isMobile(),
+        mobile: isMobile,
+        pc: !isMobile,
       })}
     >
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
