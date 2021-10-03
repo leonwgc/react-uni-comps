@@ -14,9 +14,9 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { useRef, useImperativeHandle, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import { observe, unobserve } from './defaultIntersectionObserver';
+import useVisibleObserve from './hooks/useVisibleObserve';
 import clsx from 'clsx';
 
 var getClassName = function getClassName(state, fromClass, toClass) {
@@ -54,21 +54,7 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  useEffect(function () {
-    observe(elRef.current, function (isIn) {
-      setIsInViewport(isIn);
-
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-    return function () {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
   var count = React.Children.count(children);
 
   if (count > 1) {
@@ -84,7 +70,7 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
       return /*#__PURE__*/React.cloneElement(children, {
         ref: elRef,
-        className: clsx((_a = children.props) === null || _a === void 0 ? void 0 : _a.className, state, getClassName(state, fromClass, toClass)),
+        className: clsx((_a = children.props) === null || _a === void 0 ? void 0 : _a.className, getClassName(state, fromClass, toClass)),
         style: __assign(__assign({}, (_b = children.props) === null || _b === void 0 ? void 0 : _b.style), {
           transitionDuration: duration + 'ms'
         })

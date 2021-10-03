@@ -39,9 +39,9 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useState, useImperativeHandle, useLayoutEffect } from 'react';
 import styled from 'styled-components';
+import { observe, unobserve } from './defaultIntersectionObserver';
 var StyledPlaceholder = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 
@@ -53,7 +53,6 @@ var LazyLoadImage = /*#__PURE__*/React.forwardRef(function (props, ref) {
       rest = __rest(props, ["width", "height", "style", "src"]);
 
   var elRef = useRef();
-  var isInViewport = useInViewport(elRef);
 
   var _a = useState(false),
       ready = _a[0],
@@ -66,11 +65,20 @@ var LazyLoadImage = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  useEffect(function () {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
+  useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      if (visible) {
+        setReady(true);
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
   var newStyle = !ready || !loaded ? __assign({
     width: width,
     height: height

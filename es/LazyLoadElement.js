@@ -27,8 +27,8 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useState, useLayoutEffect, useImperativeHandle } from 'react';
+import { observe, unobserve } from './defaultIntersectionObserver';
 /** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 
 var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -39,7 +39,6 @@ var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
       rest = __rest(props, ["width", "height", "style", "children"]);
 
   var elRef = useRef();
-  var isInViewport = useInViewport(elRef);
 
   var _a = useState(false),
       ready = _a[0],
@@ -48,11 +47,20 @@ var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  useEffect(function () {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
+  useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      if (visible) {
+        setReady(true);
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
   var newStyle = !ready ? __assign({
     display: 'inline-block',
     width: width,

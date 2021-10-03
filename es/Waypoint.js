@@ -27,45 +27,47 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useEffect, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import useValueRef from './hooks/useValueRef';
+import { observe, unobserve } from './defaultIntersectionObserver';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var wpRef = useRef();
-  var visible = useInViewport(wpRef);
+  var elRef = useRef();
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
       rest = __rest(props, ["onVisible", "onInVisible"]);
 
-  var vv = useRef(onVisible);
-  var vi = useRef(onInVisible);
-  useEffect(function () {
-    vv.current = onVisible;
-  }, [onVisible]);
-  useEffect(function () {
-    vi.current = onInVisible;
-  }, [onInVisible]);
-  useEffect(function () {
-    if (visible === true && typeof vv.current === 'function') {
-      vv.current(wpRef.current);
-    }
+  var vv = useValueRef(onVisible);
+  var vi = useValueRef(onInVisible);
+  useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      var _a, _b;
 
-    if (visible === false && typeof vi.current === 'function') {
-      vi.current(wpRef.current);
-    }
-  }, [visible]);
+      if (visible) {
+        (_a = vv.current) === null || _a === void 0 ? void 0 : _a.call(vv, elRef.current);
+      } else {
+        (_b = vi.current) === null || _b === void 0 ? void 0 : _b.call(vi, elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, [vv, vi]);
   useImperativeHandle(ref, function () {
-    return wpRef.current;
+    return elRef.current;
   });
-  return /*#__PURE__*/React.createElement("span", __assign({
+  return /*#__PURE__*/React.createElement("span", __assign({}, rest, {
     "data-role": "waypoint",
     style: {
       fontSize: 0
     },
-    ref: wpRef
-  }, rest));
+    ref: elRef
+  }));
 });
 Waypoint.displayName = 'UC-Waypoint';
 export default Waypoint;

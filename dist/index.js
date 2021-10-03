@@ -448,10 +448,12 @@ if (isBrowser) {
 
 
 var observe = function observe(el, action) {
-  var _intersectionObserver, _intersectionObserver2;
+  if (el) {
+    var _intersectionObserver, _intersectionObserver2;
 
-  (_intersectionObserver = (_intersectionObserver2 = intersectionObserver).observe) === null || _intersectionObserver === void 0 ? void 0 : _intersectionObserver.call(_intersectionObserver2, el);
-  handlers.set(el, action);
+    (_intersectionObserver = (_intersectionObserver2 = intersectionObserver).observe) === null || _intersectionObserver === void 0 ? void 0 : _intersectionObserver.call(_intersectionObserver2, el);
+    handlers.set(el, action);
+  }
 };
 /**
  * unobserve el
@@ -460,10 +462,38 @@ var observe = function observe(el, action) {
  */
 
 var unobserve = function unobserve(el) {
-  var _intersectionObserver3, _intersectionObserver4;
+  if (el) {
+    var _intersectionObserver3, _intersectionObserver4;
 
-  (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
-  handlers["delete"](el);
+    (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
+    handlers["delete"](el);
+  }
+};
+
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  observe el's visibility & do sth then unobserve el
+ *
+ * @param {RefObject<HTMLElement>} elRef
+ * @param {(v: boolean) => void} setVisible
+ */
+
+var useVisibleObserve = function useVisibleObserve(elRef, setVisible) {
+  // layout for cleanup
+  React.useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      setVisible(visible);
+
+      if (visible) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
 };
 
 var getClassName = function getClassName(state) {
@@ -497,21 +527,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  React.useEffect(function () {
-    observe(elRef.current, function (isIn) {
-      setIsInViewport(isIn);
-
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-    return function () {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
@@ -527,7 +543,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
 
       return /*#__PURE__*/React__default['default'].cloneElement(children, {
         ref: elRef,
-        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, state, getClassName(state, fromClass, toClass)),
+        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, getClassName(state, fromClass, toClass)),
         style: _objectSpread2(_objectSpread2({}, (_children$props2 = children.props) === null || _children$props2 === void 0 ? void 0 : _children$props2.style), {}, {
           transitionDuration: duration + 'ms'
         })
@@ -862,21 +878,7 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
       _ref$style = _ref.style,
       style = _ref$style === void 0 ? {} : _ref$style;
 
-  React.useEffect(function () {
-    observe(elRef.current, function (isIn) {
-      setIsInViewport(isIn);
-
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-    return function () {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
     animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
@@ -902,6 +904,139 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
   }
 });
 AnimationElement.displayName = 'UC-AnimationElement';
+
+var _excluded$2 = ["width", "height", "style", "children"];
+
+/** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
+var LazyLoadElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var width = props.width,
+      height = props.height,
+      style = props.style,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$2);
+
+  var elRef = React.useRef();
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      ready = _useState2[0],
+      setReady = _useState2[1];
+
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  React.useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      if (visible) {
+        setReady(true);
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
+  var newStyle = !ready ? _objectSpread2({
+    display: 'inline-block',
+    width: width,
+    height: height
+  }, style) : style;
+  return !ready ? /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
+    ref: elRef,
+    style: newStyle
+  })) : /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: elRef
+  });
+});
+LazyLoadElement.displayName = 'UC-LazyLoadElement';
+
+var _excluded$3 = ["width", "height", "style", "src"];
+
+var _templateObject$3;
+var StyledPlaceholder = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
+/** 懒加载图片，当做img标签使用, 在视口才加载图片 */
+
+var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var width = props.width,
+      height = props.height,
+      style = props.style,
+      src = props.src,
+      rest = _objectWithoutProperties(props, _excluded$3);
+
+  var elRef = React.useRef();
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      ready = _useState2[0],
+      setReady = _useState2[1];
+
+  var _useState3 = React.useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loaded = _useState4[0],
+      setLoaded = _useState4[1];
+
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  React.useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      if (visible) {
+        setReady(true);
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
+  var newStyle = !ready || !loaded ? _objectSpread2({
+    width: width,
+    height: height
+  }, style) : style;
+
+  var onImageLoaded = function onImageLoaded() {
+    setLoaded(true);
+  };
+
+  return !ready ? /*#__PURE__*/React__default['default'].createElement(StyledPlaceholder, _extends({}, rest, {
+    ref: elRef,
+    style: newStyle
+  })) : /*#__PURE__*/React__default['default'].createElement("img", _extends({}, rest, {
+    ref: elRef,
+    onLoad: onImageLoaded,
+    width: width,
+    height: height,
+    src: src,
+    style: newStyle
+  }));
+});
+LazyLoadImage.displayName = 'UC-LazyLoadImage';
+
+var _templateObject$4;
+var StyledLoading = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  font-size: ", "px;\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  color: ", ";\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])), function (props) {
+  return props.size;
+}, function (props) {
+  return props.color || props.theme.color;
+});
+/** Spinner 加载中 */
+
+var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
+  var _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 16 : _ref$size,
+      color = _ref.color;
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
+    ref: ref,
+    size: size,
+    color: color
+  });
+});
+Spinner.displayName = 'UC-Spinner';
 
 function useInViewport(ref) {
   var rootRef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -950,123 +1085,6 @@ function useInViewport(ref) {
   }, []);
   return inViewPort;
 }
-
-var _excluded$2 = ["width", "height", "style", "children"];
-
-/** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
-var LazyLoadElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var width = props.width,
-      height = props.height,
-      style = props.style,
-      children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$2);
-
-  var elRef = React.useRef();
-  var isInViewport = useInViewport(elRef);
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      ready = _useState2[0],
-      setReady = _useState2[1];
-
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  React.useEffect(function () {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
-  var newStyle = !ready ? _objectSpread2({
-    display: 'inline-block',
-    width: width,
-    height: height
-  }, style) : style;
-  return !ready ? /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
-    ref: elRef,
-    style: newStyle
-  })) : /*#__PURE__*/React__default['default'].cloneElement(children, {
-    ref: elRef
-  });
-});
-LazyLoadElement.displayName = 'UC-LazyLoadElement';
-
-var _excluded$3 = ["width", "height", "style", "src"];
-
-var _templateObject$3;
-var StyledPlaceholder = styled__default['default'].div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
-/** 懒加载图片，当做img标签使用, 在视口才加载图片 */
-
-var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var width = props.width,
-      height = props.height,
-      style = props.style,
-      src = props.src,
-      rest = _objectWithoutProperties(props, _excluded$3);
-
-  var elRef = React.useRef();
-  var isInViewport = useInViewport(elRef);
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      ready = _useState2[0],
-      setReady = _useState2[1];
-
-  var _useState3 = React.useState(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      loaded = _useState4[0],
-      setLoaded = _useState4[1];
-
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  React.useEffect(function () {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
-  var newStyle = !ready || !loaded ? _objectSpread2({
-    width: width,
-    height: height
-  }, style) : style;
-
-  var onImageLoaded = function onImageLoaded() {
-    setLoaded(true);
-  };
-
-  return !ready ? /*#__PURE__*/React__default['default'].createElement(StyledPlaceholder, _extends({}, rest, {
-    ref: elRef,
-    style: newStyle
-  })) : /*#__PURE__*/React__default['default'].createElement("img", _extends({}, rest, {
-    ref: elRef,
-    onLoad: onImageLoaded,
-    width: width,
-    height: height,
-    src: src,
-    style: newStyle
-  }));
-});
-LazyLoadImage.displayName = 'UC-LazyLoadImage';
-
-var _templateObject$4;
-var StyledLoading = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  font-size: ", "px;\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  color: ", ";\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])), function (props) {
-  return props.size;
-}, function (props) {
-  return props.color || props.theme.color;
-});
-/** Spinner 加载中 */
-
-var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
-  var _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 16 : _ref$size,
-      color = _ref.color;
-  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
-    ref: ref,
-    size: size,
-    color: color
-  });
-});
-Spinner.displayName = 'UC-Spinner';
 
 var _excluded$4 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
@@ -2355,44 +2373,64 @@ var FileInputTrigger = function FileInputTrigger(props) {
   }), children);
 };
 
+/**
+ *  get the latest value from ref
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useValueRef(value) {
+  var ref = React.useRef(value);
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
 var _excluded$g = ["onVisible", "onInVisible"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var wpRef = React.useRef();
-  var visible = useInViewport(wpRef);
+  var elRef = React.useRef();
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
       rest = _objectWithoutProperties(props, _excluded$g);
 
-  var vv = React.useRef(onVisible);
-  var vi = React.useRef(onInVisible);
-  React.useEffect(function () {
-    vv.current = onVisible;
-  }, [onVisible]);
-  React.useEffect(function () {
-    vi.current = onInVisible;
-  }, [onInVisible]);
-  React.useEffect(function () {
-    if (visible === true && typeof vv.current === 'function') {
-      vv.current(wpRef.current);
-    }
+  var vv = useValueRef(onVisible);
+  var vi = useValueRef(onInVisible);
+  React.useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      if (visible) {
+        var _vv$current;
 
-    if (visible === false && typeof vi.current === 'function') {
-      vi.current(wpRef.current);
-    }
-  }, [visible]);
+        (_vv$current = vv.current) === null || _vv$current === void 0 ? void 0 : _vv$current.call(vv, elRef.current);
+      } else {
+        var _vi$current;
+
+        (_vi$current = vi.current) === null || _vi$current === void 0 ? void 0 : _vi$current.call(vi, elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, [vv, vi]);
   React.useImperativeHandle(ref, function () {
-    return wpRef.current;
+    return elRef.current;
   });
-  return /*#__PURE__*/React__default['default'].createElement("span", _extends({
+  return /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
     "data-role": "waypoint",
     style: {
       fontSize: 0
     },
-    ref: wpRef
-  }, rest));
+    ref: elRef
+  }));
 });
 Waypoint.displayName = 'UC-Waypoint';
 
@@ -3531,23 +3569,6 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }))));
 });
 NoticeBar.displayName = 'UC-NoticeBar';
-
-/**
- *  get the latest value from ref
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useValueRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
 
 var _excluded$n = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
 /**  port from zarm Affix & refactor  */

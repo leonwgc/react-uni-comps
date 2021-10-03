@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimationElement, LazyLoadElement, Space, Button } from '../src';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import 'animate.css';
 import bird from './images/bird.png';
 
@@ -95,7 +95,6 @@ const Animation = () => {
 
       <AnimationElement
         name="fadeInLeft"
-        once={false}
         duration="600ms"
         timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
       >
@@ -112,16 +111,13 @@ const Animation = () => {
         </div>
       </AnimationElement>
 
-      <LazyLoadElement width={143} height={132}>
-        <AnimationElement
-          name="fadeInRight"
-          duration="1s"
-          once={false}
-          timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
-        >
-          <StyledBird />
-        </AnimationElement>
-      </LazyLoadElement>
+      <AnimationElement
+        name="fadeInRight"
+        duration="1s"
+        timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
+      >
+        <StyledBird />
+      </AnimationElement>
     </Space>
   );
 };

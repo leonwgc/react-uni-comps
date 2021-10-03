@@ -14,8 +14,8 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
-import { observe, unobserve } from './defaultIntersectionObserver';
+import React, { useRef, useImperativeHandle, useState } from 'react';
+import useVisibleObserve from './hooks/useVisibleObserve';
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 
 var AnimationElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -45,21 +45,7 @@ var AnimationElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
   var _j = ((children === null || children === void 0 ? void 0 : children.props) || {}).style,
       style = _j === void 0 ? {} : _j;
-  useEffect(function () {
-    observe(elRef.current, function (isIn) {
-      setIsInViewport(isIn);
-
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-    return function () {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
 
   var newStyle = __assign(__assign({}, style), {
     animation: duration + " " + timingFunc + " " + delay + " " + iterationCount + " " + direction + " " + fillMode + " " + (isInViewport ? 'running' : 'paused') + " " + name

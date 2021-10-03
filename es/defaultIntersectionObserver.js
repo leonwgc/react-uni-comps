@@ -28,8 +28,10 @@ if (isBrowser) {
 export var observe = function observe(el, action) {
   var _a;
 
-  (_a = intersectionObserver.observe) === null || _a === void 0 ? void 0 : _a.call(intersectionObserver, el);
-  handlers.set(el, action);
+  if (el) {
+    (_a = intersectionObserver.observe) === null || _a === void 0 ? void 0 : _a.call(intersectionObserver, el);
+    handlers.set(el, action);
+  }
 };
 /**
  * unobserve el
@@ -40,8 +42,10 @@ export var observe = function observe(el, action) {
 export var unobserve = function unobserve(el) {
   var _a;
 
-  (_a = intersectionObserver.unobserve) === null || _a === void 0 ? void 0 : _a.call(intersectionObserver, el);
-  handlers.delete(el);
+  if (el) {
+    (_a = intersectionObserver.unobserve) === null || _a === void 0 ? void 0 : _a.call(intersectionObserver, el);
+    handlers.delete(el);
+  }
 };
 export var disconnect = function disconnect() {
   var _a;
