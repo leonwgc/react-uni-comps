@@ -54,9 +54,6 @@ const AnimationElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
       dom.addEventListener('animationend', () => {
         dom.style.animationName = 'none';
       });
-      dom.addEventListener('webkitAnimationEnd', () => {
-        dom.style.webkitAnimationName = 'none';
-      });
     }
   }, []);
 

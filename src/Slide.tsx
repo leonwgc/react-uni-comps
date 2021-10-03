@@ -276,7 +276,6 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
           }
         }}
         onPressMove={(e) => {
-          e.stopPropagation();
           const s = sRef.current;
           if (s.inTransition) {
             return setTimeout(() => {

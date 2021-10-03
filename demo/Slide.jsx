@@ -14,6 +14,15 @@ export default function App() {
     document.body.style.overflow = 'hidden';
   }, []);
 
+  useEffect(() => {
+    const handler = (e) => e.preventDefault();
+    window.addEventListener('touchmove', handler, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', handler, { passive: false });
+    };
+  }, []);
+
   return (
     <div className="app">
       <Divider>Slide</Divider>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from '../src/styled';
 import { Slide, AnimationElement } from '../src';
-import clsx from 'clsx';
 import 'animate.css';
 
 const StyledSlidePage = styled.div`
@@ -14,13 +13,12 @@ const StyledSlidePage = styled.div`
 
 export default function SlideFullPage() {
   useEffect(() => {
-    document.body.addEventListener(
-      'touchmove',
-      (e) => {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
+    const handler = (e) => e.preventDefault();
+    window.addEventListener('touchmove', handler, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', handler, { passive: false });
+    };
   }, []);
 
   return (
@@ -44,6 +42,7 @@ export default function SlideFullPage() {
               name="fadeInLeft"
               delay="200ms"
               once={false}
+              fillMode="both"
               timingFunc="ease-in-out"
               duration="300ms"
             >
