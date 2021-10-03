@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useState, useLayoutEffect, useImperativeHandle } from 'react';
+import { observe, unobserve } from './defaultIntersectionObserver';
 
 type Props = {
   /** 需要lazyload的组件 */
@@ -15,16 +15,25 @@ type Props = {
 const LazyLoadElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { width, height, style, children, ...rest } = props;
   const elRef = useRef();
-  const isInViewport = useInViewport(elRef);
   const [ready, setReady] = useState(false);
 
   useImperativeHandle(ref, () => elRef.current);
 
-  useEffect(() => {
-    if (isInViewport && !ready) {
-      setReady(true);
-    }
-  }, [isInViewport, ready]);
+  useLayoutEffect(() => {
+    observe(elRef.current, (visible) => {
+      if (visible) {
+        setReady(true);
+        unobserve(elRef.current);
+      }
+    });
+
+    return () => {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
 
   const newStyle = !ready
     ? {

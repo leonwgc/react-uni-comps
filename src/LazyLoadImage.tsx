@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useState, useImperativeHandle, useLayoutEffect } from 'react';
 import styled from 'styled-components';
+import { observe, unobserve } from './defaultIntersectionObserver';
 
 const StyledPlaceholder = styled.div`
   display: inline-flex;
@@ -13,17 +13,26 @@ const LazyLoadImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes
   (props, ref) => {
     const { width, height, style, src, ...rest } = props;
     const elRef = useRef();
-    const isInViewport = useInViewport(elRef);
     const [ready, setReady] = useState(false);
     const [loaded, setLoaded] = useState(false);
 
     useImperativeHandle(ref, () => elRef.current);
 
-    useEffect(() => {
-      if (isInViewport && !ready) {
-        setReady(true);
-      }
-    }, [isInViewport, ready]);
+    useLayoutEffect(() => {
+      observe(elRef.current, (visible) => {
+        if (visible) {
+          setReady(true);
+          unobserve(elRef.current);
+        }
+      });
+
+      return () => {
+        if (elRef.current) {
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          unobserve(elRef.current);
+        }
+      };
+    }, []);
 
     const newStyle: React.CSSProperties =
       !ready || !loaded
