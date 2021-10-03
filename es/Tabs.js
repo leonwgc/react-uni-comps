@@ -44,7 +44,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import useGesture from './hooks/useGesture';
-import useThisRef from './hooks/useThisRef';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
@@ -93,31 +92,24 @@ var Tabs = function Tabs(_a) {
       _v = _e[0],
       _setV = _e[1];
 
-  var thisRef = useThisRef({
-    onChange: onChange,
-    _v: _v
-  });
   useGesture(contentWrapElRef, {
     onSwipe: function onSwipe(e) {
-      var _a, _b, _c, _d;
-
       e.preventDefault();
-      var current = thisRef.current._v;
 
-      if (e.direction === 'right' && current > 0) {
+      if (e.direction === 'right' && _v > 0) {
         // go to left tab
-        var prevIndex = current - 1;
+        var prevIndex = _v - 1;
 
         _setV(prevIndex);
 
-        (_b = (_a = thisRef.current).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, prevIndex);
-      } else if (e.direction === 'left' && current < count - 1) {
+        onChange === null || onChange === void 0 ? void 0 : onChange(prevIndex);
+      } else if (e.direction === 'left' && _v < count - 1) {
         // go to right tab
-        var nextIndex = current + 1;
+        var nextIndex = _v + 1;
 
         _setV(nextIndex);
 
-        (_d = (_c = thisRef.current).onChange) === null || _d === void 0 ? void 0 : _d.call(_c, nextIndex);
+        onChange === null || onChange === void 0 ? void 0 : onChange(nextIndex);
       }
     }
   });

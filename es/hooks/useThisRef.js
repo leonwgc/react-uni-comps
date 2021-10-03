@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 /**
- *  get latest values from ref like this
+ *  get latest values from ref
  *
  * @export
  * @template T

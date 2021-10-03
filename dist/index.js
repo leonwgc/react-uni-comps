@@ -1677,21 +1677,6 @@ var useGesture = function useGesture(elRef, option) {
   }, [option]);
 };
 
-/**
- *  get latest values from ref like this
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useThisRef(value) {
-  var ref = React.useRef(value);
-  ref.current = value;
-  return ref;
-}
-
 var _templateObject$7, _templateObject2;
 /**
  *  get a css snippet with theme color
@@ -1764,33 +1749,24 @@ var Tabs = function Tabs(_ref2) {
       _v = _useState2[0],
       _setV = _useState2[1];
 
-  var thisRef = useThisRef({
-    onChange: onChange,
-    _v: _v
-  });
   useGesture(contentWrapElRef, {
     onSwipe: function onSwipe(e) {
       e.preventDefault();
-      var current = thisRef.current._v;
 
-      if (e.direction === 'right' && current > 0) {
-        var _thisRef$current$onCh, _thisRef$current;
-
+      if (e.direction === 'right' && _v > 0) {
         // go to left tab
-        var prevIndex = current - 1;
+        var prevIndex = _v - 1;
 
         _setV(prevIndex);
 
-        (_thisRef$current$onCh = (_thisRef$current = thisRef.current).onChange) === null || _thisRef$current$onCh === void 0 ? void 0 : _thisRef$current$onCh.call(_thisRef$current, prevIndex);
-      } else if (e.direction === 'left' && current < count - 1) {
-        var _thisRef$current$onCh2, _thisRef$current2;
-
+        onChange === null || onChange === void 0 ? void 0 : onChange(prevIndex);
+      } else if (e.direction === 'left' && _v < count - 1) {
         // go to right tab
-        var nextIndex = current + 1;
+        var nextIndex = _v + 1;
 
         _setV(nextIndex);
 
-        (_thisRef$current$onCh2 = (_thisRef$current2 = thisRef.current).onChange) === null || _thisRef$current$onCh2 === void 0 ? void 0 : _thisRef$current$onCh2.call(_thisRef$current2, nextIndex);
+        onChange === null || onChange === void 0 ? void 0 : onChange(nextIndex);
       }
     }
   });
@@ -4228,6 +4204,21 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
+/**
+ *  get latest values from ref
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useThisRef(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
 var _templateObject$v, _templateObject2$5;
 var StyledSwipeAction = styled__default['default'].div(_templateObject$v || (_templateObject$v = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
 var StyledButton$1 = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
@@ -4418,14 +4409,8 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   React.useImperativeHandle(ref, function () {
     return inputRef.current;
   });
-  var thisRef = useThisRef({
-    textarea: textarea,
-    autoHeight: autoHeight
-  });
   React.useEffect(function () {
-    var v = thisRef.current;
-
-    if (v.textarea && v.autoHeight) {
+    if (textarea && autoHeight) {
       inputRef.current.style.height = 'auto';
       inputRef.current.scrollTop = 0;
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
@@ -4871,7 +4856,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Rate.displayName = 'UC-Rate';
 
-var _excluded$z = ["list", "delay", "icon", "closeable", "className", "onClose", "extra"];
+var _excluded$z = ["list", "stayTime", "icon", "closeable", "className", "onClose", "extra"];
 
 var _templateObject$B;
 var StyledNoticeList = styled__default['default'].div(_templateObject$B || (_templateObject$B = _taggedTemplateLiteral(["\n  font-size: 14px;\n  padding: 0px 12px;\n  height: 40px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n\n    .list {\n      height: 100%;\n      transition-property: transform;\n      transition-duration: 0.8s;\n      transition-timing-function: ease-in-out;\n      .item {\n        height: 100%;\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
@@ -4880,8 +4865,8 @@ var StyledNoticeList = styled__default['default'].div(_templateObject$B || (_tem
 var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$list = props.list,
       list = _props$list === void 0 ? [] : _props$list,
-      _props$delay = props.delay,
-      delay = _props$delay === void 0 ? 2000 : _props$delay,
+      _props$stayTime = props.stayTime,
+      stayTime = _props$stayTime === void 0 ? 3000 : _props$stayTime,
       icon = props.icon,
       _props$closeable = props.closeable,
       closeable = _props$closeable === void 0 ? false : _props$closeable,
@@ -4892,6 +4877,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 
   var listRef = React.useRef();
   var wrapRef = React.useRef();
+  var timerRef = React.useRef();
 
   var _useState = React.useState(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -4903,28 +4889,23 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       data = _useState4[0],
       setData = _useState4[1];
 
-  var thisRef = useThisRef({
-    delay: delay,
-    visible: visible
-  });
   React.useEffect(function () {
     setData(list);
   }, [list]);
   React.useEffect(function () {
-    var v = thisRef.current;
     var wrap = wrapRef.current;
     var list = listRef.current;
 
-    if (data.length > 1) {
-      var timer = window.setTimeout(function () {
+    if (data.length > 1 && visible) {
+      timerRef.current = window.setTimeout(function () {
         list.style.transitionProperty = 'transform';
         list.style.transform = "translateY(-".concat(wrap.offsetHeight, "px)");
-      }, v.delay);
+      }, stayTime);
       return function () {
-        window.clearTimeout(timer);
+        window.clearTimeout(timerRef.current);
       };
     }
-  }, [thisRef, data]);
+  }, [stayTime, data, visible]);
   return /*#__PURE__*/React__default['default'].createElement(StyledNoticeList, _extends({
     ref: ref,
     className: clsx__default['default'](className, 'uc-noticelist', {

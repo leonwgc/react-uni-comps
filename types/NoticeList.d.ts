@@ -7,8 +7,8 @@ declare type Notice = {
 declare const NoticeList: React.ForwardRefExoticComponent<{
     /** 公告内容 */
     list: Notice[];
-    /** 开始滚动的延迟，单位 ms, 默认2000 */
-    delay?: number;
+    /** 一条公告展示时间，默认3000ms */
+    stayTime?: number;
     /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
     icon?: React.ReactNode;
     /** 是否可关闭 ，默认false*/
