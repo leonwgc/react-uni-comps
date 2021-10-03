@@ -182,6 +182,10 @@ const routes = [
     path: '/Slide',
     component: lazy(() => import('./Slide')),
   },
+  {
+    path: '/SlideFullPage',
+    component: lazy(() => import('./SlideFullPage')),
+  },
 ];
 
 export default routes;
