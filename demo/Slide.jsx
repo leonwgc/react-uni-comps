@@ -11,15 +11,11 @@ export default function App() {
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-  }, []);
-
-  useEffect(() => {
     const handler = (e) => e.preventDefault();
     window.addEventListener('touchmove', handler, { passive: false });
 
     return () => {
-      window.removeEventListener('touchmove', handler, { passive: false });
+      window.removeEventListener('touchmove', handler);
     };
   }, []);
 

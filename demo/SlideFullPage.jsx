@@ -17,7 +17,7 @@ export default function SlideFullPage() {
     window.addEventListener('touchmove', handler, { passive: false });
 
     return () => {
-      window.removeEventListener('touchmove', handler, { passive: false });
+      window.removeEventListener('touchmove', handler);
     };
   }, []);
 
