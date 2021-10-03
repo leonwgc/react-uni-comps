@@ -6,11 +6,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
 require('intersection-observer');
-var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
 var usePrevious = require('react-use-lib/es/usePrevious');
+var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
 var useSigPad = require('react-use-lib/es/useSigPad');
 
@@ -18,10 +18,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
-var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
+var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
 
@@ -377,86 +377,141 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
-function useInViewport(ref) {
-  var rootRef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var options = arguments.length > 2 ? arguments[2] : undefined;
+var flexGapSupported;
+var detectFlexGapSupported = function detectFlexGapSupported() {
+  if (flexGapSupported !== undefined) {
+    return flexGapSupported;
+  }
 
-  var _useState = React.useState(),
-      _useState2 = _slicedToArray(_useState, 2),
-      inViewPort = _useState2[0],
-      setInViewport = _useState2[1];
+  if (typeof window === 'undefined') {
+    return false;
+  }
 
-  React.useEffect(function () {
-    if (ref.current) {
-      // eslint-disable-next-line no-undef
-      var opt = _objectSpread2({}, options);
+  var flex = document.createElement('div');
+  flex.style.display = 'flex';
+  flex.style.flexDirection = 'column';
+  flex.style.rowGap = '1px';
+  flex.appendChild(document.createElement('div'));
+  flex.appendChild(document.createElement('div'));
+  document.body.appendChild(flex);
+  flexGapSupported = flex.scrollHeight === 1;
+  document.body.removeChild(flex);
+  return flexGapSupported;
+};
+var isBrowser = !!(typeof window !== 'undefined' && window);
+var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+var _passiveIfSupported = false;
 
-      if (rootRef) {
-        opt.root = rootRef.current;
-      }
-
-      var observer = new IntersectionObserver(function (entries) {
-        var _iterator = _createForOfIteratorHelper(entries),
-            _step;
-
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var entry = _step.value;
-
-            if (entry.isIntersecting) {
-              setInViewport(true);
-            } else {
-              setInViewport(false);
-            }
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-      }, opt);
-      observer.observe(ref.current);
-      return function () {
-        observer.disconnect();
+try {
+  isBrowser && window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
+    get: function get() {
+      _passiveIfSupported = {
+        passive: true
       };
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }));
+} catch (err) {}
 
-  }, []);
-  return inViewPort;
+var passiveIfSupported = _passiveIfSupported;
+
+var intersectionObserver;
+var handlers = new Map();
+
+if (isBrowser) {
+  intersectionObserver = new IntersectionObserver(function (entries) {
+    var _iterator = _createForOfIteratorHelper(entries),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var entry = _step.value;
+        var el = entry.target;
+
+        if (handlers.has(el)) {
+          var _handlers$get;
+
+          (_handlers$get = handlers.get(el)) === null || _handlers$get === void 0 ? void 0 : _handlers$get(entry.isIntersecting);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
 }
+/**
+ * observe el
+ *
+ * @param {Element} el
+ */
 
-var getClassName = function getClassName(state, c) {
-  var fromClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'from';
-  var toClass = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'to';
+
+var observe = function observe(el, action) {
+  var _intersectionObserver, _intersectionObserver2;
+
+  (_intersectionObserver = (_intersectionObserver2 = intersectionObserver).observe) === null || _intersectionObserver === void 0 ? void 0 : _intersectionObserver.call(_intersectionObserver2, el);
+  handlers.set(el, action);
+};
+/**
+ * unobserve el
+ *
+ * @param {Element} el
+ */
+
+var unobserve = function unobserve(el) {
+  var _intersectionObserver3, _intersectionObserver4;
+
+  (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
+  handlers["delete"](el);
+};
+
+var getClassName = function getClassName(state) {
+  var fromClass = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'from';
+  var toClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'to';
 
   if (state === 'entering' || state === 'entered') {
     return toClass;
   } else {
-    return c ? fromClass : toClass; //exited
+    return fromClass;
   }
 };
-/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
+/** 子元素执行从from到to类名过渡 */
 
 
 var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 240 : _props$duration,
-      _props$once = props.once,
-      once = _props$once === void 0 ? true : _props$once,
       _props$fromClass = props.fromClass,
       fromClass = _props$fromClass === void 0 ? 'from' : _props$fromClass,
       _props$toClass = props.toClass,
       toClass = _props$toClass === void 0 ? 'to' : _props$toClass;
-  var childrenRef = React.useRef();
-  var lsRef = React.useRef(true);
-  var isInViewport = useInViewport(childrenRef);
+  var elRef = React.useRef();
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      isInViewport = _useState2[0],
+      setIsInViewport = _useState2[1];
+
   React.useImperativeHandle(ref, function () {
-    return childrenRef.current;
+    return elRef.current;
   });
-  useUpdateEffect__default['default'](function () {
-    lsRef.current = !once;
-  }, [isInViewport, once]);
+  React.useEffect(function () {
+    observe(elRef.current, function (isIn) {
+      setIsInViewport(isIn);
+
+      if (isIn) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
@@ -465,15 +520,14 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-      "in": isInViewport && lsRef.current,
-      appear: true,
+      "in": isInViewport,
       timeout: duration
     }, function (state) {
       var _children$props, _children$props2;
 
       return /*#__PURE__*/React__default['default'].cloneElement(children, {
-        ref: childrenRef,
-        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, getClassName(state, lsRef.current, fromClass, toClass)),
+        ref: elRef,
+        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, state, getClassName(state, fromClass, toClass)),
         style: _objectSpread2(_objectSpread2({}, (_children$props2 = children.props) === null || _children$props2 === void 0 ? void 0 : _children$props2.style), {}, {
           transitionDuration: duration + 'ms'
         })
@@ -518,43 +572,6 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   }), children));
 });
 Mask.displayName = 'UC-Mask';
-
-var flexGapSupported;
-var detectFlexGapSupported = function detectFlexGapSupported() {
-  if (flexGapSupported !== undefined) {
-    return flexGapSupported;
-  }
-
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  var flex = document.createElement('div');
-  flex.style.display = 'flex';
-  flex.style.flexDirection = 'column';
-  flex.style.rowGap = '1px';
-  flex.appendChild(document.createElement('div'));
-  flex.appendChild(document.createElement('div'));
-  document.body.appendChild(flex);
-  flexGapSupported = flex.scrollHeight === 1;
-  document.body.removeChild(flex);
-  return flexGapSupported;
-};
-var isBrowser = !!(typeof window !== 'undefined' && window);
-var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
-var _passiveIfSupported = false;
-
-try {
-  isBrowser && window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
-    get: function get() {
-      _passiveIfSupported = {
-        passive: true
-      };
-    }
-  }));
-} catch (err) {}
-
-var passiveIfSupported = _passiveIfSupported;
 
 var _templateObject$1;
 var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"])));
@@ -831,7 +848,12 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
       _props$fillMode = props.fillMode,
       fillMode = _props$fillMode === void 0 ? 'backwards' : _props$fillMode;
   var elRef = React.useRef();
-  var isInViewport = useInViewport(elRef);
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      isInViewport = _useState2[0],
+      setIsInViewport = _useState2[1];
+
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
@@ -839,6 +861,22 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
   var _ref = (children === null || children === void 0 ? void 0 : children.props) || {},
       _ref$style = _ref.style,
       style = _ref$style === void 0 ? {} : _ref$style;
+
+  React.useEffect(function () {
+    observe(elRef.current, function (isIn) {
+      setIsInViewport(isIn);
+
+      if (isIn) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
     animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
@@ -864,6 +902,54 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
   }
 });
 AnimationElement.displayName = 'UC-AnimationElement';
+
+function useInViewport(ref) {
+  var rootRef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var options = arguments.length > 2 ? arguments[2] : undefined;
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      inViewPort = _useState2[0],
+      setInViewport = _useState2[1];
+
+  React.useEffect(function () {
+    if (ref.current) {
+      // eslint-disable-next-line no-undef
+      var opt = _objectSpread2({}, options);
+
+      if (rootRef) {
+        opt.root = rootRef.current;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var _iterator = _createForOfIteratorHelper(entries),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var entry = _step.value;
+
+            if (entry.isIntersecting) {
+              setInViewport(true);
+            } else {
+              setInViewport(false);
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }, opt);
+      observer.observe(ref.current);
+      return function () {
+        observer.disconnect();
+      };
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, []);
+  return inViewPort;
+}
 
 var _excluded$2 = ["width", "height", "style", "children"];
 

@@ -14,8 +14,8 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, useImperativeHandle } from 'react';
-import useInViewport from './hooks/useInViewport';
+import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
+import { observe, unobserve } from './defaultIntersectionObserver';
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 
 var AnimationElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -35,12 +35,31 @@ var AnimationElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _g = props.fillMode,
       fillMode = _g === void 0 ? 'backwards' : _g;
   var elRef = useRef();
-  var isInViewport = useInViewport(elRef);
+
+  var _h = useState(),
+      isInViewport = _h[0],
+      setIsInViewport = _h[1];
+
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  var _h = ((children === null || children === void 0 ? void 0 : children.props) || {}).style,
-      style = _h === void 0 ? {} : _h;
+  var _j = ((children === null || children === void 0 ? void 0 : children.props) || {}).style,
+      style = _j === void 0 ? {} : _j;
+  useEffect(function () {
+    observe(elRef.current, function (isIn) {
+      setIsInViewport(isIn);
+
+      if (isIn) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
 
   var newStyle = __assign(__assign({}, style), {
     animation: duration + " " + timingFunc + " " + delay + " " + iterationCount + " " + direction + " " + fillMode + " " + (isInViewport ? 'running' : 'paused') + " " + name

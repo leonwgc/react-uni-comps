@@ -1,7 +1,6 @@
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
-import useInViewport from './hooks/useInViewport';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 
 type Props = {
@@ -13,30 +12,39 @@ type Props = {
   fromClass?: string;
   /** transition动画执行结束的类名，默认to*/
   toClass?: string;
-  /** 默认从第一次载入并可见/不可见到可见会执行动画 | once=true 只会第一次载入执行动画 | once=false 元素从不可见到可见状态就会执行过渡动画*/
-  once?: boolean;
 };
 
-const getClassName = (state, c, fromClass = 'from', toClass = 'to') => {
+const getClassName = (state, fromClass = 'from', toClass = 'to') => {
   if (state === 'entering' || state === 'entered') {
     return toClass;
   } else {
-    return c ? fromClass : toClass; //exited
+    return fromClass;
   }
 };
 
-/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
+/** 子元素执行从from到to类名过渡 */
 const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
-  const { children, duration = 240, once = true, fromClass = 'from', toClass = 'to' } = props;
-  const childrenRef = useRef();
-  const lsRef = useRef(true);
-  const isInViewport = useInViewport(childrenRef);
+  const { children, duration = 240, fromClass = 'from', toClass = 'to' } = props;
+  const elRef = useRef<HTMLElement>();
+  const [isInViewport, setIsInViewport] = useState<boolean>();
 
-  useImperativeHandle(ref, () => childrenRef.current);
+  useImperativeHandle(ref, () => elRef.current);
 
-  useUpdateEffect(() => {
-    lsRef.current = !once;
-  }, [isInViewport, once]);
+  useEffect(() => {
+    observe(elRef.current, (isIn) => {
+      setIsInViewport(isIn);
+      if (isIn) {
+        unobserve(elRef.current);
+      }
+    });
+
+    return () => {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
 
   const count = React.Children.count(children);
 
@@ -46,13 +54,14 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   if (React.isValidElement(children)) {
     return (
-      <Transition in={isInViewport && lsRef.current} appear timeout={duration}>
+      <Transition in={isInViewport} timeout={duration}>
         {(state) =>
           React.cloneElement(children, {
-            ref: childrenRef,
+            ref: elRef,
             className: clsx(
               children.props?.className,
-              getClassName(state, lsRef.current, fromClass, toClass)
+              state,
+              getClassName(state, fromClass, toClass)
             ),
             style: {
               ...children.props?.style,

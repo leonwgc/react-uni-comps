@@ -14,13 +14,12 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
-import useInViewport from './hooks/useInViewport';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 
-var getClassName = function getClassName(state, c, fromClass, toClass) {
+var getClassName = function getClassName(state, fromClass, toClass) {
   if (fromClass === void 0) {
     fromClass = 'from';
   }
@@ -32,31 +31,44 @@ var getClassName = function getClassName(state, c, fromClass, toClass) {
   if (state === 'entering' || state === 'entered') {
     return toClass;
   } else {
-    return c ? fromClass : toClass; //exited
+    return fromClass;
   }
 };
-/** 子元素执行从from到to类名过渡(过渡时间由duration定义),给子元素定义transition应用过渡 */
+/** 子元素执行从from到to类名过渡 */
 
 
 var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       _a = props.duration,
       duration = _a === void 0 ? 240 : _a,
-      _b = props.once,
-      once = _b === void 0 ? true : _b,
-      _c = props.fromClass,
-      fromClass = _c === void 0 ? 'from' : _c,
-      _d = props.toClass,
-      toClass = _d === void 0 ? 'to' : _d;
-  var childrenRef = useRef();
-  var lsRef = useRef(true);
-  var isInViewport = useInViewport(childrenRef);
+      _b = props.fromClass,
+      fromClass = _b === void 0 ? 'from' : _b,
+      _c = props.toClass,
+      toClass = _c === void 0 ? 'to' : _c;
+  var elRef = useRef();
+
+  var _d = useState(),
+      isInViewport = _d[0],
+      setIsInViewport = _d[1];
+
   useImperativeHandle(ref, function () {
-    return childrenRef.current;
+    return elRef.current;
   });
-  useUpdateEffect(function () {
-    lsRef.current = !once;
-  }, [isInViewport, once]);
+  useEffect(function () {
+    observe(elRef.current, function (isIn) {
+      setIsInViewport(isIn);
+
+      if (isIn) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
   var count = React.Children.count(children);
 
   if (count > 1) {
@@ -65,15 +77,14 @@ var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   if ( /*#__PURE__*/React.isValidElement(children)) {
     return /*#__PURE__*/React.createElement(Transition, {
-      in: isInViewport && lsRef.current,
-      appear: true,
+      in: isInViewport,
       timeout: duration
     }, function (state) {
       var _a, _b;
 
       return /*#__PURE__*/React.cloneElement(children, {
-        ref: childrenRef,
-        className: clsx((_a = children.props) === null || _a === void 0 ? void 0 : _a.className, getClassName(state, lsRef.current, fromClass, toClass)),
+        ref: elRef,
+        className: clsx((_a = children.props) === null || _a === void 0 ? void 0 : _a.className, state, getClassName(state, fromClass, toClass)),
         style: __assign(__assign({}, (_b = children.props) === null || _b === void 0 ? void 0 : _b.style), {
           transitionDuration: duration + 'ms'
         })
