@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space } from '../src';
 import 'animate.css';
 import './Tab.less';
@@ -113,7 +113,7 @@ export default function App() {
         underline="40px"
         defaultValue={2}
         style={{ marginTop: 30 }}
-        onChange={(v) => Toast.show(v + '', 1000)}
+        onChange={(v) => Toast.show({ content: v })}
       >
         <Tabs.Tab title="title1">
           <StyledContent>content1</StyledContent>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
 import useGesture from './hooks/useGesture';
-import useThisRef from './hooks/useThisRef';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
@@ -142,25 +141,19 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
 
-  const thisRef = useThisRef({
-    onChange,
-    _v,
-  });
-
   useGesture(contentWrapElRef, {
     onSwipe: (e) => {
       e.preventDefault();
-      const current = thisRef.current._v;
-      if (e.direction === 'right' && current > 0) {
+      if (e.direction === 'right' && _v > 0) {
         // go to left tab
-        const prevIndex = current - 1;
+        const prevIndex = _v - 1;
         _setV(prevIndex);
-        thisRef.current.onChange?.(prevIndex);
-      } else if (e.direction === 'left' && current < count - 1) {
+        onChange?.(prevIndex);
+      } else if (e.direction === 'left' && _v < count - 1) {
         // go to right tab
-        const nextIndex = current + 1;
+        const nextIndex = _v + 1;
         _setV(nextIndex);
-        thisRef.current.onChange?.(nextIndex);
+        onChange?.(nextIndex);
       }
     },
   });
