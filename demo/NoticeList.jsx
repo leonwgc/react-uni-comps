@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SoundOutlined } from '@ant-design/icons';
 import { NoticeList, Button } from '../src';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 
 const StyledNoticeList = styled(NoticeList)`
   background-color: rgb(251, 248, 220);
@@ -42,13 +42,13 @@ export default function App() {
         list={list}
       />
 
-      <StyledNoticeList list={list1} delay={1000} />
+      <StyledNoticeList list={list1} stayTime={1000} />
 
       <Button
         style={{ marginTop: 30 }}
         type="primary"
         onClick={() => {
-          list.push('111', '222', '333');
+          list.push({ text: 'item1' }, { text: 'item2' });
           setList([...list]);
         }}
       >

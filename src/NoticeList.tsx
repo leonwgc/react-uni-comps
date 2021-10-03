@@ -3,7 +3,6 @@ import React, { HTMLAttributes, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import IconCross from './IconCross';
-import useThisRef from './hooks/useThisRef';
 import Text from './Text';
 
 const StyledNoticeList = styled.div`
@@ -57,8 +56,8 @@ type Notice = {
 type Props = {
   /** 公告内容 */
   list: Notice[];
-  /** 开始滚动的延迟，单位 ms, 默认2000 */
-  delay?: number;
+  /** 一条公告展示时间，默认3000ms */
+  stayTime?: number;
   /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
   icon?: React.ReactNode;
   /** 是否可关闭 ，默认false*/
@@ -73,7 +72,7 @@ type Props = {
 const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const {
     list = [],
-    delay = 2000,
+    stayTime = 3000,
     icon,
     closeable = false,
     className,
@@ -83,33 +82,28 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
   } = props;
   const listRef = useRef<HTMLDivElement>();
   const wrapRef = useRef<HTMLDivElement>();
+  const timerRef = useRef<number>();
   const [visible, setVisible] = useState(true);
   const [data, setData] = useState(list);
-
-  const thisRef = useThisRef({
-    delay,
-    visible,
-  });
 
   useEffect(() => {
     setData(list);
   }, [list]);
 
   useEffect(() => {
-    const v = thisRef.current;
     const wrap = wrapRef.current;
     const list = listRef.current;
 
-    if (data.length > 1) {
-      const timer = window.setTimeout(() => {
+    if (data.length > 1 && visible) {
+      timerRef.current = window.setTimeout(() => {
         list.style.transitionProperty = 'transform';
         list.style.transform = `translateY(-${wrap.offsetHeight}px)`;
-      }, v.delay);
+      }, stayTime);
       return () => {
-        window.clearTimeout(timer);
+        window.clearTimeout(timerRef.current);
       };
     }
-  }, [thisRef, data]);
+  }, [stayTime, data, visible]);
 
   return (
     <StyledNoticeList
