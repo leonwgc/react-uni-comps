@@ -16,8 +16,6 @@ declare type Props = {
     fillMode?: 'none' | 'forwards' | 'backwards' | 'both';
     /** animation动画 animation-iteration-count,默认1 */
     iterationCount?: 'infinite' | number;
-    /** 默认从第一次载入并可见/不可见到可见会执行动画 | once=true 只会第一次载入执行动画 | once=false 元素从不可见到可见状态就会执行动画*/
-    once?: boolean;
 };
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 declare const AnimationElement: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLElement>>;

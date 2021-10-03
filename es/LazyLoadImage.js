@@ -40,7 +40,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 import styled from 'styled-components';
 var StyledPlaceholder = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */

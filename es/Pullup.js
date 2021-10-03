@@ -42,7 +42,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
 import Spinner from './Spinner';
 import Space from './Space';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 import usePrevious from 'react-use-lib/es/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';

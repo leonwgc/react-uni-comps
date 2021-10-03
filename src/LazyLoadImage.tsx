@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 import styled from 'styled-components';
 
 const StyledPlaceholder = styled.div`

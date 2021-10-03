@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 
 type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */

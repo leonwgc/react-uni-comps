@@ -232,7 +232,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     },
     onPressMove: function onPressMove(e) {
-      e.stopPropagation();
       var s = sRef.current;
 
       if (s.inTransition) {

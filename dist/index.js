@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
-var useInViewport = require('react-use-lib/es/useInViewport');
+require('intersection-observer');
 var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var clsx = require('clsx');
 var styled = require('styled-components');
@@ -18,7 +18,6 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
-var useInViewport__default = /*#__PURE__*/_interopDefaultLegacy(useInViewport);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
@@ -378,6 +377,54 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
+function useInViewport(ref) {
+  var rootRef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var options = arguments.length > 2 ? arguments[2] : undefined;
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      inViewPort = _useState2[0],
+      setInViewport = _useState2[1];
+
+  React.useEffect(function () {
+    if (ref.current) {
+      // eslint-disable-next-line no-undef
+      var opt = _objectSpread2({}, options);
+
+      if (rootRef) {
+        opt.root = rootRef.current;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var _iterator = _createForOfIteratorHelper(entries),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var entry = _step.value;
+
+            if (entry.isIntersecting) {
+              setInViewport(true);
+            } else {
+              setInViewport(false);
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }, opt);
+      observer.observe(ref.current);
+      return function () {
+        observer.disconnect();
+      };
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, []);
+  return inViewPort;
+}
+
 var getClassName = function getClassName(state, c) {
   var fromClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'from';
   var toClass = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'to';
@@ -403,7 +450,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
       toClass = _props$toClass === void 0 ? 'to' : _props$toClass;
   var childrenRef = React.useRef();
   var lsRef = React.useRef(true);
-  var isInViewport = useInViewport__default['default'](childrenRef);
+  var isInViewport = useInViewport(childrenRef);
   React.useImperativeHandle(ref, function () {
     return childrenRef.current;
   });
@@ -510,7 +557,7 @@ try {
 var passiveIfSupported = _passiveIfSupported;
 
 var _templateObject$1;
-var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.9);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.9);\n    }\n  }\n"])));
+var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"])));
 
 // type MousePosition = {
 //   x: number;
@@ -782,14 +829,11 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
       _props$iterationCount = props.iterationCount,
       iterationCount = _props$iterationCount === void 0 ? 1 : _props$iterationCount,
       _props$fillMode = props.fillMode,
-      fillMode = _props$fillMode === void 0 ? 'backwards' : _props$fillMode,
-      _props$once = props.once,
-      once = _props$once === void 0 ? true : _props$once;
-  var innerRef = React.useRef();
-  var vRef = React.useRef();
-  var isInViewport = useInViewport__default['default'](innerRef);
+      fillMode = _props$fillMode === void 0 ? 'backwards' : _props$fillMode;
+  var elRef = React.useRef();
+  var isInViewport = useInViewport(elRef);
   React.useImperativeHandle(ref, function () {
-    return innerRef.current;
+    return elRef.current;
   });
 
   var _ref = (children === null || children === void 0 ? void 0 : children.props) || {},
@@ -797,32 +841,9 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
       style = _ref$style === void 0 ? {} : _ref$style;
 
   var newStyle = _objectSpread2(_objectSpread2({}, style), {}, {
-    animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " running ").concat(name)
+    animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
   });
 
-  React.useEffect(function () {
-    if (innerRef.current) {
-      var dom = innerRef.current;
-      dom.addEventListener('animationend', function () {
-        dom.style.animationName = 'none';
-      });
-      dom.addEventListener('webkitAnimationEnd', function () {
-        dom.style.webkitAnimationName = 'none';
-      });
-    }
-  }, []);
-  React.useEffect(function () {
-    if (innerRef.current) {
-      var dom = innerRef.current;
-
-      if (!vRef.current && isInViewport && !once) {
-        dom.style.webkitAnimationName = name;
-        dom.style.animationName = name;
-      }
-
-      vRef.current = isInViewport;
-    }
-  }, [isInViewport, name, once]);
   var count = React__default['default'].Children.count(children);
 
   if (count > 1) {
@@ -831,7 +852,7 @@ var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(functio
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].cloneElement(children, {
-      ref: innerRef,
+      ref: elRef,
       style: newStyle
     });
   } else {
@@ -855,7 +876,7 @@ var LazyLoadElement = /*#__PURE__*/React__default['default'].forwardRef(function
       rest = _objectWithoutProperties(props, _excluded$2);
 
   var elRef = React.useRef();
-  var isInViewport = useInViewport__default['default'](elRef);
+  var isInViewport = useInViewport(elRef);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -898,7 +919,7 @@ var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (
       rest = _objectWithoutProperties(props, _excluded$3);
 
   var elRef = React.useRef();
-  var isInViewport = useInViewport__default['default'](elRef);
+  var isInViewport = useInViewport(elRef);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1008,7 +1029,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   var waypointRef = React.useRef();
   var containerRef = React.useRef();
-  var isAtBottom = useInViewport__default['default'](waypointRef, useWindowScroll ? null : containerRef);
+  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
   var lastIsAtBottom = usePrevious__default['default'](isAtBottom);
   React.useImperativeHandle(ref, function () {
     return containerRef.current;
@@ -2253,7 +2274,7 @@ var _excluded$g = ["onVisible", "onInVisible"];
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var wpRef = React.useRef();
-  var visible = useInViewport__default['default'](wpRef);
+  var visible = useInViewport(wpRef);
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
@@ -5037,7 +5058,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       }
     },
     onPressMove: function onPressMove(e) {
-      e.stopPropagation();
       var s = sRef.current;
 
       if (s.inTransition) {

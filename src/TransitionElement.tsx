@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle } from 'react';
 import { Transition } from 'react-transition-group';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
 import clsx from 'clsx';
 

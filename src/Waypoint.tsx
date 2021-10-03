@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, HTMLAttributes, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 
 type Props = {
   /** 可见回调 */

@@ -28,7 +28,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useRef, useState, useEffect, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 /** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 
 var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {

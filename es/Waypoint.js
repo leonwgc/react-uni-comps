@@ -28,7 +28,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useRef, useEffect, useImperativeHandle } from 'react';
-import useInViewport from 'react-use-lib/es/useInViewport';
+import useInViewport from './hooks/useInViewport';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
