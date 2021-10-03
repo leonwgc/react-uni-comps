@@ -1,4 +1,4 @@
-import React, { useState, useref, useRef } from 'react';
+import React, { useState } from 'react';
 import { Toast, Button, Picker } from '../src';
 
 const oneColData = [
@@ -149,7 +149,7 @@ export default function App() {
         onClose={() => setVisible(false)}
         onOk={(v) => {
           setValue(v);
-          Toast.show(JSON.stringify(v), 1000);
+          Toast.show({ content: JSON.stringify(v), duration: 1000 });
         }}
         value={value}
         cols={1}
@@ -161,7 +161,7 @@ export default function App() {
         value={value1}
         onOk={(v) => {
           setValue1(v);
-          Toast.show(JSON.stringify(v), 1000);
+          Toast.show({ content: JSON.stringify(v), duration: 1000 });
         }}
         cols={2}
         data={twoColsData}
@@ -172,7 +172,7 @@ export default function App() {
         value={value2}
         onOk={(v) => {
           setValue2(v);
-          Toast.show(JSON.stringify(v), 1000);
+          Toast.show({ content: JSON.stringify(v), duration: 1000 });
         }}
         cols={3}
         data={areas}

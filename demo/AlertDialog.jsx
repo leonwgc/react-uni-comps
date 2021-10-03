@@ -28,7 +28,7 @@ export default function App() {
               'sure to leave china',
               'yes',
               () => {
-                Toast.show('no');
+                Toast.show({ content: 'no' });
               },
               'no'
             )
