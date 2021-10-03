@@ -1,5 +1,5 @@
-import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
-import { observe, unobserve } from './defaultIntersectionObserver';
+import React, { useRef, useImperativeHandle, useState } from 'react';
+import useVisibleObserve from './hooks/useVisibleObserve';
 
 type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
@@ -38,21 +38,7 @@ const AnimationElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   useImperativeHandle(ref, () => elRef.current);
   const { style = {} } = children?.props || {};
 
-  useEffect(() => {
-    observe(elRef.current, (isIn) => {
-      setIsInViewport(isIn);
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-
-    return () => {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
 
   const newStyle = {
     ...style,

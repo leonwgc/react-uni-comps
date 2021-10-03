@@ -1,6 +1,6 @@
-import React, { useRef, useImperativeHandle, useState, useEffect } from 'react';
+import React, { useRef, useImperativeHandle, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import { observe, unobserve } from './defaultIntersectionObserver';
+import useVisibleObserve from './hooks/useVisibleObserve';
 import clsx from 'clsx';
 
 type Props = {
@@ -30,21 +30,7 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => elRef.current);
 
-  useEffect(() => {
-    observe(elRef.current, (isIn) => {
-      setIsInViewport(isIn);
-      if (isIn) {
-        unobserve(elRef.current);
-      }
-    });
-
-    return () => {
-      if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
+  useVisibleObserve(elRef, setIsInViewport);
 
   const count = React.Children.count(children);
 
