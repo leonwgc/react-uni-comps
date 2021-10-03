@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import * as colors from './colors';
-import useThisRef from './hooks/useThisRef';
 import clsx from 'clsx';
 
 type Props = {
@@ -87,14 +86,8 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
   useImperativeHandle(ref, () => inputRef.current);
 
-  const thisRef = useThisRef({
-    textarea,
-    autoHeight,
-  });
-
   useEffect(() => {
-    const v = thisRef.current;
-    if (v.textarea && v.autoHeight) {
+    if (textarea && autoHeight) {
       inputRef.current.style.height = 'auto';
       inputRef.current.scrollTop = 0;
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
