@@ -1,10 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FingerGestureElement, Toast } from '../src';
 import dog from './images/dog.jpg';
 
 export default function App() {
   const ref = useRef();
   const [data, setData] = useState();
+
+  useEffect(() => {
+    const handler = (e) => e.preventDefault();
+    window.addEventListener('touchmove', handler, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', handler);
+    };
+  }, []);
 
   const thisRef = useRef({
     x: 0,
