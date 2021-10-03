@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TransitionElement, Space, Button, Switch } from '../src';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 
 const StyledUCButton = styled(Button)`
   height: 100px;
@@ -59,7 +59,6 @@ const StyledButton = styled.div`
 
 const Tansition = () => {
   let arr = Array.from(new Array(20), (v, k) => k + 1);
-  const [once, setOnce] = useState(true);
 
   return (
     <div>
@@ -70,14 +69,9 @@ const Tansition = () => {
 
         <StyledButton>Two</StyledButton>
       </Space>
-      <div>
-        <Space>
-          <Switch defaultChecked onChange={setOnce} />
-          once
-        </Space>
-      </div>
+
       {arr.map((item, k) => (
-        <TransitionElement key={k} once={once}>
+        <TransitionElement key={k}>
           <StyledUCButton type="primary" style={{ width: k * 10 }}>
             {item}
           </StyledUCButton>

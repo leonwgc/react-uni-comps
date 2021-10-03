@@ -58,11 +58,7 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
         {(state) =>
           React.cloneElement(children, {
             ref: elRef,
-            className: clsx(
-              children.props?.className,
-              state,
-              getClassName(state, fromClass, toClass)
-            ),
+            className: clsx(children.props?.className, getClassName(state, fromClass, toClass)),
             style: {
               ...children.props?.style,
               transitionDuration: duration + 'ms',
