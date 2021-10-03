@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import useInViewport from 'react-use-lib/es/useInViewport';
 
 type Props = {
@@ -18,8 +18,6 @@ type Props = {
   fillMode?: 'none' | 'forwards' | 'backwards' | 'both';
   /** animation动画 animation-iteration-count,默认1 */
   iterationCount?: 'infinite' | number;
-  /** 默认从第一次载入并可见/不可见到可见会执行动画 | once=true 只会第一次载入执行动画 | once=false 元素从不可见到可见状态就会执行动画*/
-  once?: boolean;
 };
 
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
@@ -33,40 +31,19 @@ const AnimationElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
     direction = 'normal',
     iterationCount = 1,
     fillMode = 'backwards',
-    /** 执行一次，还是每次从不可见到可见状态执行动画,默认执行一次 */
-    once = true,
   } = props;
 
   const innerRef = useRef();
-  const vRef = useRef();
   const isInViewport = useInViewport(innerRef);
   useImperativeHandle(ref, () => innerRef.current);
   const { style = {} } = children?.props || {};
 
   const newStyle = {
     ...style,
-    animation: `${duration} ${timingFunc} ${delay} ${iterationCount} ${direction} ${fillMode} running ${name}`,
+    animation: `${duration} ${timingFunc} ${delay} ${iterationCount} ${direction} ${fillMode} ${
+      isInViewport ? 'running' : 'paused'
+    } ${name}`,
   };
-
-  useEffect(() => {
-    if (innerRef.current) {
-      const dom = innerRef.current as HTMLElement;
-      dom.addEventListener('animationend', () => {
-        dom.style.animationName = 'none';
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (innerRef.current) {
-      const dom = innerRef.current as HTMLElement;
-      if (!vRef.current && isInViewport && !once) {
-        dom.style.webkitAnimationName = name;
-        dom.style.animationName = name;
-      }
-      vRef.current = isInViewport;
-    }
-  }, [isInViewport, name, once]);
 
   const count = React.Children.count(children);
 

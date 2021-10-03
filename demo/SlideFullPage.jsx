@@ -41,8 +41,6 @@ export default function SlideFullPage() {
             <AnimationElement
               name="fadeInLeft"
               delay="200ms"
-              once={false}
-              fillMode="both"
               timingFunc="ease-in-out"
               duration="300ms"
             >
