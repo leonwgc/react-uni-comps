@@ -99,10 +99,10 @@ const StyledWrapper = styled.div`
   &.center-exited,
   &.center-exiting {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.5);
     &.pc {
       top: 200px;
-      transform: translate(-50%, 0) scale(0.9);
+      transform: translate(-50%, 0) scale(0.5);
     }
   }
 `;
