@@ -39,7 +39,7 @@ export default function SlideFullPage() {
             }}
           >
             <AnimationElement
-              name="fadeInLeft"
+              name={'fadeIn' + ['Left', 'Down', 'Right', 'Up'][idx]}
               delay="200ms"
               timingFunc="ease-in-out"
               duration="300ms"

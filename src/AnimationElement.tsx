@@ -33,9 +33,9 @@ const AnimationElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
     fillMode = 'backwards',
   } = props;
 
-  const innerRef = useRef();
-  const isInViewport = useInViewport(innerRef);
-  useImperativeHandle(ref, () => innerRef.current);
+  const elRef = useRef<HTMLElement>();
+  const isInViewport = useInViewport(elRef);
+  useImperativeHandle(ref, () => elRef.current);
   const { style = {} } = children?.props || {};
 
   const newStyle = {
@@ -53,7 +53,7 @@ const AnimationElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   if (React.isValidElement(children)) {
     return React.cloneElement(children, {
-      ref: innerRef,
+      ref: elRef,
       style: newStyle,
     });
   } else {
