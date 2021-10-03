@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { RefObject, useEffect } from 'react';
+import { RefObject, useLayoutEffect } from 'react';
 import { observe, unobserve } from '../defaultIntersectionObserver';
 
 /**
@@ -12,7 +12,8 @@ const useVisibleObserve = (
   elRef: RefObject<HTMLElement>,
   setVisible: (v: boolean) => void
 ): void => {
-  useEffect(() => {
+  // layout for cleanup
+  useLayoutEffect(() => {
     observe(elRef.current, (visible) => {
       setVisible(visible);
       if (visible) {
@@ -22,7 +23,6 @@ const useVisibleObserve = (
 
     return () => {
       if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         unobserve(elRef.current);
       }
     };

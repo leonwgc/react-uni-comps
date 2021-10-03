@@ -26,8 +26,10 @@ if (isBrowser) {
  * @param {Element} el
  */
 export const observe = (el: Element, action: Handler): void => {
-  intersectionObserver.observe?.(el);
-  handlers.set(el, action);
+  if (el) {
+    intersectionObserver.observe?.(el);
+    handlers.set(el, action);
+  }
 };
 
 /**
@@ -36,8 +38,10 @@ export const observe = (el: Element, action: Handler): void => {
  * @param {Element} el
  */
 export const unobserve = (el: Element): void => {
-  intersectionObserver.unobserve?.(el);
-  handlers.delete(el);
+  if (el) {
+    intersectionObserver.unobserve?.(el);
+    handlers.delete(el);
+  }
 };
 
 export const disconnect = (): void => intersectionObserver.disconnect?.();
