@@ -62,10 +62,16 @@ export type Props = {
   /**  关闭回调 */
   onClose?: () => void;
   className?: string;
-  /** mask是否显示 */
+  /** 是否显示遮罩 */
   mask?: boolean;
+  /** 遮罩样式 */
+  maskStyle?: React.CSSProperties;
+  /** 遮罩class*/
+  maskClass?: string;
   /** 弹框自定义偏移 */
   offset?: Offset;
+  /** 弹框mount位置，默认为document.body */
+  mountContainer?: () => HTMLElement;
 } & React.HTMLAttributes<HTMLElement>;
 
 /**
@@ -86,6 +92,9 @@ const Popover = (props: Props): React.ReactElement => {
     style,
     children,
     mask,
+    maskStyle,
+    maskClass,
+    mountContainer,
     offset = {},
     ...rest
   } = props;
@@ -97,6 +106,8 @@ const Popover = (props: Props): React.ReactElement => {
 
   const [modalStyle, setModalStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
+
+  const mountNode = mountContainer?.() || document.body;
 
   useEffect(() => {
     offsetRef.current = offset;
@@ -149,8 +160,8 @@ const Popover = (props: Props): React.ReactElement => {
       {React.cloneElement(children, { ref: childrenRef })}
       {visible
         ? ReactDOM.createPortal(
-            <>
-              {mask ? <Mask onClick={onClose} /> : null}
+            <div className={clsx('uc-popover-wrap')}>
+              {mask && <Mask className={maskClass} style={maskStyle} onClick={onClose} />}
 
               <StyledPopover
                 ref={popoverRef}
@@ -169,8 +180,8 @@ const Popover = (props: Props): React.ReactElement => {
                 {/** content */}
                 <div className={clsx('uc-popover-content')}>{content}</div>
               </StyledPopover>
-            </>,
-            document.body
+            </div>,
+            mountNode
           )
         : null}
     </>

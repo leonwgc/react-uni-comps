@@ -117,6 +117,7 @@ export default function App() {
       <Popover
         placement="bottom"
         mask
+        maskStyle={{ opacity: 0.1 }}
         closable
         onClose={() => setV1(false)}
         visible={v1}
