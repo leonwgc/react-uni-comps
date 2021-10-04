@@ -3,7 +3,7 @@ import { Space, Popover, Button } from '../src';
 
 const places = [
   {
-    title: 'placement: top',
+    title: 'placement: top,closeOnClickOutside',
     content: 'modal放到内容的上面',
     placement: 'top',
     selector: '#top',
@@ -137,6 +137,7 @@ export default function App() {
             <Popover
               placement={placement}
               visible={visible[placement]}
+              closeOnClickOutside={idx === 0}
               closable
               key={idx}
               onClose={() => setVisible({ [placement]: false })}

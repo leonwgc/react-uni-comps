@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import IconCross from '../IconCross';
 import { Placement } from './types';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
+import useValueRef from '../hooks/useValueRef';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -72,6 +73,10 @@ export type Props = {
   offset?: Offset;
   /** 弹框mount位置，默认为document.body */
   mountContainer?: () => HTMLElement;
+  /** 点击外部区域是否关闭*/
+  closeOnClickOutside?: boolean;
+  /** 点击遮罩是否关闭,默认true*/
+  closeOnClickMask?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 /**
@@ -95,14 +100,17 @@ const Popover = (props: Props): React.ReactElement => {
     maskStyle,
     maskClass,
     mountContainer,
+    closeOnClickOutside,
+    closeOnClickMask = true,
     offset = {},
     ...rest
   } = props;
 
-  const childrenRef = useRef();
+  const childrenRef = useRef<HTMLElement>();
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
   const offsetRef = useRef<Offset>(offset);
+  const onCloseRef = useValueRef(onClose);
 
   const [modalStyle, setModalStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
@@ -155,13 +163,42 @@ const Popover = (props: Props): React.ReactElement => {
     }
   }, [visible, placement, mask]);
 
+  const closeOutsideHandler = useCallback(
+    (e) => {
+      const el = popoverRef.current;
+      const anchor = childrenRef.current;
+      if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
+        onCloseRef.current?.();
+      }
+    },
+    [onCloseRef]
+  );
+
+  useEffect(() => {
+    if (closeOnClickOutside) {
+      window.addEventListener('click', closeOutsideHandler);
+
+      return () => {
+        window.removeEventListener('click', closeOutsideHandler);
+      };
+    }
+  }, [closeOnClickOutside, closeOutsideHandler]);
+
   return (
     <>
       {React.cloneElement(children, { ref: childrenRef })}
       {visible
         ? ReactDOM.createPortal(
             <div className={clsx('uc-popover-wrap')}>
-              {mask && <Mask className={maskClass} style={maskStyle} onClick={onClose} />}
+              {mask && (
+                <Mask
+                  className={maskClass}
+                  style={maskStyle}
+                  onClick={() => {
+                    closeOnClickMask && onClose?.();
+                  }}
+                />
+              )}
 
               <StyledPopover
                 ref={popoverRef}
