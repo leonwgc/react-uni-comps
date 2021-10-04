@@ -43,21 +43,23 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Button from './Button';
-var StyledNumberKeyboard = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n      }\n    }\n  }\n"], ["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n      }\n    }\n  }\n"])));
+var StyledNumberKeyboard = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.no-dot {\n          display: none;\n        }\n      }\n    }\n  }\n"], ["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.no-dot {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
 var Styledkey = styled(Button)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"], ["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
 
 var getKeys = function getKeys() {
-  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '.'];
+  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 };
-/** 数字/身份证键盘 */
+/** 数字键盘 */
 
 
 var NumberKeyboard = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _onClick = props.onClick,
       _a = props.okText,
       okText = _a === void 0 ? '确定' : _a,
+      _b = props.dot,
+      dot = _b === void 0 ? false : _b,
       className = props.className,
-      rest = __rest(props, ["onClick", "okText", "className"]);
+      rest = __rest(props, ["onClick", "okText", "dot", "className"]);
 
   var keys = getKeys();
   return /*#__PURE__*/React.createElement(StyledNumberKeyboard, __assign({}, rest, {
@@ -69,7 +71,10 @@ var NumberKeyboard = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: "keys"
   }, keys.map(function (key) {
     return /*#__PURE__*/React.createElement("div", {
-      className: clsx('key'),
+      className: clsx('key', {
+        'zero': key === '0',
+        'no-dot': key === '.' && !dot
+      }),
       key: key
     }, /*#__PURE__*/React.createElement(Styledkey, {
       onClick: function onClick() {

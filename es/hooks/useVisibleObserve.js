@@ -2,17 +2,17 @@
 import { useLayoutEffect } from 'react';
 import { observe, unobserve } from '../defaultIntersectionObserver';
 /**
- *  observe el's visibility & do sth then unobserve el
+ *  observe el's visibility ,when it's visible ,do sth then unobserve el
  *
  * @param {RefObject<HTMLElement>} elRef
- * @param {(v: boolean) => void} setVisible
+ * @param {(v: boolean) => void} onVisibleChange
  */
 
-var useVisibleObserve = function useVisibleObserve(elRef, setVisible) {
+var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
   // layout for cleanup
   useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
-      setVisible(visible);
+      onVisibleChange(visible);
 
       if (visible) {
         unobserve(elRef.current);

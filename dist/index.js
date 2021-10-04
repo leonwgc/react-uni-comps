@@ -472,17 +472,17 @@ var unobserve = function unobserve(el) {
 
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
- *  observe el's visibility & do sth then unobserve el
+ *  observe el's visibility ,when it's visible ,do sth then unobserve el
  *
  * @param {RefObject<HTMLElement>} elRef
- * @param {(v: boolean) => void} setVisible
+ * @param {(v: boolean) => void} onVisibleChange
  */
 
-var useVisibleObserve = function useVisibleObserve(elRef, setVisible) {
+var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
   // layout for cleanup
   React.useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
-      setVisible(visible);
+      onVisibleChange(visible);
 
       if (visible) {
         unobserve(elRef.current);
@@ -4058,22 +4058,24 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PasswordInput.displayName = 'UC-PasswordInput';
 
-var _excluded$r = ["onClick", "okText", "className"];
+var _excluded$r = ["onClick", "okText", "dot", "className"];
 
 var _templateObject$t, _templateObject2$4;
-var StyledNumberKeyboard = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n      }\n    }\n  }\n"])));
+var StyledNumberKeyboard = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.no-dot {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
 var Styledkey = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
 
 var getKeys = function getKeys() {
-  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '.'];
+  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 };
-/** 数字/身份证键盘 */
+/** 数字键盘 */
 
 
 var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _onClick = props.onClick,
       _props$okText = props.okText,
       okText = _props$okText === void 0 ? '确定' : _props$okText,
+      _props$dot = props.dot,
+      dot = _props$dot === void 0 ? false : _props$dot,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$r);
 
@@ -4087,7 +4089,10 @@ var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function 
     className: "keys"
   }, keys.map(function (key) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('key'),
+      className: clsx__default['default']('key', {
+        'zero': key === '0',
+        'no-dot': key === '.' && !dot
+      }),
       key: key
     }, /*#__PURE__*/React__default['default'].createElement(Styledkey, {
       onClick: function onClick() {
@@ -4136,14 +4141,15 @@ var useUpdateEffect = function useUpdateEffect(effect) {
   }, deps);
 };
 
-var _excluded$s = ["visible", "onClose", "onChange", "className"];
+var _excluded$s = ["visible", "dot", "onClose", "onChange", "className"];
 
 var _templateObject$u;
 var StyledNumberKeyboardPicker = styled__default['default'](Popup)(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
-/** 数字/身份证键盘底部弹出 */
+/** 数字键盘弹出 */
 
 var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   var visible = props.visible,
+      dot = props.dot,
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
@@ -4157,16 +4163,16 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardPicker, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardPicker, _extends({}, rest, {
     visible: visible,
     onMaskClick: onClose,
     maskStyle: {
       backgroundColor: 'transparent'
     },
-    position: "bottom"
-  }, rest, {
+    position: "bottom",
     className: clsx__default['default']('uc-number-keyboard-picker', className)
   }), /*#__PURE__*/React__default['default'].createElement(NumberKeyboard, {
+    dot: dot,
     onClick: function onClick(k) {
       if (k === 'ok') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
@@ -5187,6 +5193,67 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Slide.displayName = 'UC-Slide';
 
+var _excluded$B = ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"];
+
+var _templateObject$D;
+var StyledProgressCircle = styled__default['default'].div(_templateObject$D || (_templateObject$D = _taggedTemplateLiteral(["\n  position: relative;\n  .child {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
+/** 环形进度条 */
+
+var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      _props$progress = props.progress,
+      progress = _props$progress === void 0 ? 0 : _props$progress,
+      _props$strokeLinecap = props.strokeLinecap,
+      strokeLinecap = _props$strokeLinecap === void 0 ? 'round' : _props$strokeLinecap,
+      _props$strokeWidth = props.strokeWidth,
+      strokeWidth = _props$strokeWidth === void 0 ? 10 : _props$strokeWidth,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 120 : _props$size,
+      className = props.className,
+      style = props.style,
+      rest = _objectWithoutProperties(props, _excluded$B);
+
+  var theme = styled.useTheme();
+  var color = props.color || theme.color || primary;
+  return /*#__PURE__*/React__default['default'].createElement(StyledProgressCircle, _extends({
+    className: clsx__default['default'](className, 'uc-progress-circle'),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      width: size,
+      height: size
+    })
+  }, rest, {
+    ref: ref
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
+    height: size,
+    width: size,
+    viewBox: "0 0 120 120",
+    "x-mlns": "http://www.w3.org/200/svg"
+  }, /*#__PURE__*/React__default['default'].createElement("circle", {
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: "#d9d9d9",
+    strokeWidth: strokeWidth,
+    fill: "none"
+  }), progress > 0 ? /*#__PURE__*/React__default['default'].createElement("circle", {
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: color,
+    strokeDasharray: "".concat(progress * 314 / 100, ",314"),
+    strokeWidth: strokeWidth,
+    fill: "none",
+    transform: "rotate(-90,60,60)",
+    strokeLinecap: strokeLinecap,
+    style: {
+      transition: "stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s"
+    }
+  }) : null), children && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "child"
+  }, children));
+});
+ProgressCircle.displayName = 'UC-ProgressCircle';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -5217,6 +5284,7 @@ exports.PasswordInput = PasswordInput;
 exports.Picker = Picker;
 exports.Popover = Popover;
 exports.Popup = Popup;
+exports.ProgressCircle = ProgressCircle;
 exports.Pullup = Pullup;
 exports.Rate = Rate;
 exports.ScrollTop = ScrollTop;

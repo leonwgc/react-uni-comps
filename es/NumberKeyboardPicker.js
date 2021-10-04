@@ -46,14 +46,15 @@ import NumberKeyboard from './NumberKeyboard';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
 var StyledNumberKeyboardPicker = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  height: 300px;\n"], ["\n  width: 100%;\n  height: 300px;\n"])));
-/** 数字/身份证键盘底部弹出 */
+/** 数字键盘弹出 */
 
 var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   var visible = props.visible,
+      dot = props.dot,
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = __rest(props, ["visible", "onClose", "onChange", "className"]);
+      rest = __rest(props, ["visible", "dot", "onClose", "onChange", "className"]);
 
   var _a = useState(''),
       value = _a[0],
@@ -62,16 +63,16 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
-  return /*#__PURE__*/React.createElement(StyledNumberKeyboardPicker, __assign({
+  return /*#__PURE__*/React.createElement(StyledNumberKeyboardPicker, __assign({}, rest, {
     visible: visible,
     onMaskClick: onClose,
     maskStyle: {
       backgroundColor: 'transparent'
     },
-    position: "bottom"
-  }, rest, {
+    position: "bottom",
     className: clsx('uc-number-keyboard-picker', className)
   }), /*#__PURE__*/React.createElement(NumberKeyboard, {
+    dot: dot,
     onClick: function onClick(k) {
       if (k === 'ok') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
