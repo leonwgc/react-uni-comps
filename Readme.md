@@ -16,7 +16,7 @@ yarn add react-uni-comps
 5. 样式采用 css-in-js 方案 (styled-components)
 6. 方便扩展样式风格,二次开发/定制属于自己的组件库
 7. 使用 typescript 编写，良好的智能提示
-8. 体积小，可以和桌面端组件库如antd，移动端antd-mobile/zarm作为补充，搭配使用
+8. 体积小，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 作为补充，搭配使用
 
 ### 组件列表
 
@@ -111,6 +111,9 @@ yarn add react-uni-comps
 #### 45. NoticeList (多条信息垂直滚动通知栏)
 
 #### 46. Slide (轮播)
+
+#### 46. ProgressCircle (环形进度条)
+
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
@@ -160,8 +163,8 @@ const StyledButton = styled(Button)`
 </StyledButton>;
 ```
 
-
 ### 参考
+
 - [Ant Design](https://ant.design/)
 - [Ant Design Mobile](https://next.mobile.ant.design/)
 - [Zarm](https://zarm.gitee.io/)
