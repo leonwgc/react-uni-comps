@@ -3,19 +3,19 @@ import { RefObject, useLayoutEffect } from 'react';
 import { observe, unobserve } from '../defaultIntersectionObserver';
 
 /**
- *  observe el's visibility & do sth then unobserve el
+ *  observe el's visibility ,when it's visible ,do sth then unobserve el
  *
  * @param {RefObject<HTMLElement>} elRef
- * @param {(v: boolean) => void} setVisible
+ * @param {(v: boolean) => void} onVisibleChange
  */
 const useVisibleObserve = (
   elRef: RefObject<HTMLElement>,
-  setVisible: (v: boolean) => void
+  onVisibleChange: (v: boolean) => void
 ): void => {
   // layout for cleanup
   useLayoutEffect(() => {
     observe(elRef.current, (visible) => {
-      setVisible(visible);
+      onVisibleChange(visible);
       if (visible) {
         unobserve(elRef.current);
       }
