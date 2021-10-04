@@ -25,7 +25,7 @@ export default function SlideFullPage() {
     <div>
       <Slide
         autoPlay={false}
-        direction="vertical"
+        direction="horizontal"
         height="100vh"
         showDot={false}
         loop={false}

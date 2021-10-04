@@ -17,7 +17,7 @@ export default function App() {
           setVisible(false);
           console.log('PasswordInput:' + v);
           setTimeout(() => {
-            Toast.show('输入完成:' + v, 2000);
+            Toast.show({ content: '输入完成:' + v });
           }, 500);
         }}
         mask={false}
@@ -30,7 +30,7 @@ export default function App() {
         onClose={() => setVisible(false)}
         visible={visible}
         onChange={(value) => {
-          Toast.show(value, 200);
+          Toast.show({ content: value, duration: 200 });
           setV(value);
         }}
       />

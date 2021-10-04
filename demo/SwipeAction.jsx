@@ -17,7 +17,7 @@ export default function App() {
             {
               text: '收藏',
               onClick: () => {
-                Toast.show('收藏', 1000);
+                Toast.show({ content: '收藏' });
               },
             },
           ]}
@@ -26,21 +26,21 @@ export default function App() {
               text: '取消关注',
               color: '#ccc',
               onClick: () => {
-                Toast.show('取消关注', 1000);
+                Toast.show({ content: '取消关注' });
               },
             },
             {
               text: '免打扰',
               color: 'orange',
               onClick: () => {
-                Toast.show('免打扰', 1000);
+                Toast.show({ content: '免打扰' });
               },
             },
             {
               text: '删除',
               color: 'red',
               onClick: () => {
-                Toast.show('删除', 1000);
+                Toast.show({ content: '删除' });
               },
             },
           ]}
@@ -66,21 +66,21 @@ export default function App() {
               text: '取消关注',
               color: '#ccc',
               onClick: () => {
-                Toast.show('取消关注', 1000);
+                Toast.show({ content: '取消关注' });
               },
             },
             {
               text: '免打扰',
               color: 'orange',
               onClick: () => {
-                Toast.show('免打扰', 1000);
+                Toast.show({ content: '免打扰' });
               },
             },
             {
               text: '删除',
               color: 'red',
               onClick: () => {
-                Toast.show('删除', 1000);
+                Toast.show({ content: '删除' });
               },
             },
           ]}
@@ -105,21 +105,21 @@ export default function App() {
             text: '取消关注',
             color: '#ccc',
             onClick: () => {
-              Toast.show('取消关注', 1000);
+              Toast.show({ content: '取消关注' });
             },
           },
           {
             text: '免打扰',
             color: 'orange',
             onClick: () => {
-              Toast.show('免打扰', 1000);
+              Toast.show({ content: '免打扰' });
             },
           },
           {
             text: '删除',
             color: 'red',
             onClick: () => {
-              Toast.show('删除', 1000);
+              Toast.show({ content: '删除' });
             },
           },
         ]}

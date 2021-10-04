@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { Input, Form } from 'antd';
-import { NumberKeyboard, Toast, Button, Space } from '../src';
+import { NumberKeyboard, Toast, Button, Space, Switch } from '../src';
 
 export default function App() {
   const [form] = Form.useForm();
-  const [text, setText] = useState('OK');
+  const [data, setData] = useState({});
+
+  const { text = '确定', dot } = data;
 
   return (
-    <div className="app">
-      <Form
-        form={form}
-        onFinish={(v) => {
-          setText(v.text);
-        }}
-      >
-        <Space direction="vertical" style={{ width: '100%' }}>
-          <Form.Item name="text" initialValue={text}>
-            <Input />
-          </Form.Item>
-          <Button block type="primary" htmlType="submit">
-            ok
-          </Button>
-        </Space>
+    <div style={{ padding: 16 }}>
+      <Form form={form} onFinish={setData} layout="vertical">
+        <Form.Item name="text" initialValue={text}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="显示小数点" name="dot" initialValue={false} valuePropName="checked">
+          <Switch />
+        </Form.Item>
+        <Button block type="primary" htmlType="submit">
+          ok
+        </Button>
       </Form>
-      <NumberKeyboard okText={text} onClick={(k) => Toast.show(k, 200)} />
+      <NumberKeyboard
+        dot={dot}
+        okText={text}
+        onClick={(k) => Toast.show({ content: k, duration: 200 })}
+      />
     </div>
   );
 }
