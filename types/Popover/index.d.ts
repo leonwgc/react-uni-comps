@@ -19,10 +19,20 @@ export declare type Props = {
     /**  关闭回调 */
     onClose?: () => void;
     className?: string;
-    /** mask是否显示 */
+    /** 是否显示遮罩 */
     mask?: boolean;
+    /** 遮罩样式 */
+    maskStyle?: React.CSSProperties;
+    /** 遮罩class*/
+    maskClass?: string;
     /** 弹框自定义偏移 */
     offset?: Offset;
+    /** 弹框mount位置，默认为document.body */
+    mountContainer?: () => HTMLElement;
+    /** 点击外部区域是否关闭*/
+    closeOnClickOutside?: boolean;
+    /** 点击遮罩是否关闭,默认true*/
+    closeOnClickMask?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层

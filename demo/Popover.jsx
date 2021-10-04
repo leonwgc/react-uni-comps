@@ -106,6 +106,7 @@ export default function App() {
         mask
         closable
         onClose={() => setV(false)}
+        closeOnClickMask={false}
         visible={v}
         content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
       >

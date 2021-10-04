@@ -2941,7 +2941,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "offset"];
+var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnClickMask", "offset"];
 
 var _templateObject$k;
 
@@ -2966,6 +2966,12 @@ var Popover = function Popover(props) {
       style = props.style,
       children = props.children,
       mask = props.mask,
+      maskStyle = props.maskStyle,
+      maskClass = props.maskClass,
+      mountContainer = props.mountContainer,
+      closeOnClickOutside = props.closeOnClickOutside,
+      _props$closeOnClickMa = props.closeOnClickMask,
+      closeOnClickMask = _props$closeOnClickMa === void 0 ? true : _props$closeOnClickMa,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
       rest = _objectWithoutProperties(props, _excluded$i);
@@ -2974,6 +2980,7 @@ var Popover = function Popover(props) {
   var popoverRef = React.useRef(null);
   var resizeTimerRef = React.useRef(0);
   var offsetRef = React.useRef(offset);
+  var onCloseRef = useValueRef(onClose);
 
   var _useState = React.useState({}),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2985,6 +2992,7 @@ var Popover = function Popover(props) {
       arrowStyle = _useState4[0],
       setArrowStyle = _useState4[1];
 
+  var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   React.useEffect(function () {
     offsetRef.current = offset;
   }, [offset]);
@@ -3018,11 +3026,35 @@ var Popover = function Popover(props) {
       };
     }
   }, [visible, placement, mask]);
+  var closeOutsideHandler = React.useCallback(function (e) {
+    var el = popoverRef.current;
+    var anchor = childrenRef.current;
+
+    if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
+      var _onCloseRef$current;
+
+      (_onCloseRef$current = onCloseRef.current) === null || _onCloseRef$current === void 0 ? void 0 : _onCloseRef$current.call(onCloseRef);
+    }
+  }, [onCloseRef]);
+  React.useEffect(function () {
+    if (closeOnClickOutside) {
+      window.addEventListener('click', closeOutsideHandler);
+      return function () {
+        window.removeEventListener('click', closeOutsideHandler);
+      };
+    }
+  }, [closeOnClickOutside, closeOutsideHandler]);
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: childrenRef
-  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, mask ? /*#__PURE__*/React__default['default'].createElement(Mask, {
-    onClick: onClose
-  }) : null, /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
+  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('uc-popover-wrap')
+  }, mask && /*#__PURE__*/React__default['default'].createElement(Mask, {
+    className: maskClass,
+    style: maskStyle,
+    onClick: function onClick() {
+      closeOnClickMask && (onClose === null || onClose === void 0 ? void 0 : onClose());
+    }
+  }), /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
     ref: popoverRef,
     className: clsx__default['default'](className, 'uc-popover', {
       mask: mask
@@ -3037,7 +3069,7 @@ var Popover = function Popover(props) {
     onClick: onClose
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popover-content')
-  }, content))), document.body) : null);
+  }, content))), mountNode) : null);
 };
 
 var _templateObject$l;
