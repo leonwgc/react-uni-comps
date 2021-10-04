@@ -112,7 +112,7 @@ yarn add react-uni-comps
 
 #### 46. Slide (轮播)
 
-#### 46. ProgressCircle (环形进度条)
+#### 47. ProgressCircle (环形进度条)
 
 ### 按需加载
 
