@@ -1,13 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Divider, Cell, Button, Checkbox, Switch, Input } from '../src';
+import { Divider, Cell, Button, Checkbox, Switch, Input, NumberKeyboardPicker } from '../src';
 import useBgColor from './hooks/useBgColor';
 
 const StyledApp = styled.div``;
 
 export default function App() {
   const [v, setV] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const [data, setData] = useState({});
+
+  const { tel } = data;
 
   useBgColor('#f7f8fa');
 
@@ -32,6 +37,23 @@ export default function App() {
         }
       >
         <Input type="text" placeholder="username" />
+      </Cell>
+      <Cell
+        title={
+          <span>
+            <span style={{ color: 'red' }}>*</span> 手机号
+          </span>
+        }
+      >
+        <Input
+          type="text"
+          onFocus={(e) => {
+            e.target.blur();
+            setVisible(true);
+          }}
+          value={tel}
+          placeholder="请输入手机号"
+        />
       </Cell>
       <Cell title="antd输入框" description="antd">
         <Input placeholder="输入框" suffix={<QuestionCircleOutlined />} />
@@ -75,6 +97,14 @@ export default function App() {
           submit
         </Button>
       </div>
+      <NumberKeyboardPicker
+        dot
+        onClose={() => setVisible(false)}
+        visible={visible}
+        onChange={(value) => {
+          setData((d) => ({ ...d, tel: value }));
+        }}
+      />
     </StyledApp>
   );
 }

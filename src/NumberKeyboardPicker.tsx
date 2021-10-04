@@ -11,6 +11,8 @@ type Props = {
   /** 关闭 */
   onClose: () => void;
   className?: string;
+  /** 显示小数点,默认false */
+  dot?: boolean;
   /** 按键回调,返回输入的字符串 */
   onChange: (str: string) => void;
 };
@@ -20,9 +22,9 @@ const StyledNumberKeyboardPicker = styled(Popup)`
   height: 300px;
 `;
 
-/** 数字/身份证键盘底部弹出 */
+/** 数字键盘弹出 */
 const NumberKeyboardPicker = (props: Props): React.ReactElement => {
-  const { visible, onClose, onChange, className, ...rest } = props;
+  const { visible, dot, onClose, onChange, className, ...rest } = props;
   const [value, setValue] = useState('');
 
   useUpdateEffect(() => {
@@ -31,14 +33,15 @@ const NumberKeyboardPicker = (props: Props): React.ReactElement => {
 
   return (
     <StyledNumberKeyboardPicker
+      {...rest}
       visible={visible}
       onMaskClick={onClose}
       maskStyle={{ backgroundColor: 'transparent' }}
       position="bottom"
-      {...rest}
       className={clsx('uc-number-keyboard-picker', className)}
     >
       <NumberKeyboard
+        dot={dot}
         onClick={(k) => {
           if (k === 'ok') {
             onClose?.();

@@ -79,7 +79,7 @@ const getKeys = () => {
   return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 };
 
-/** 数字/身份证键盘 */
+/** 数字键盘 */
 const NumberKeyboard = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { onClick, okText = '确定', dot = false, className, ...rest } = props;
 
