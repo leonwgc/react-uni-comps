@@ -48,3 +48,4 @@ export { default as SignaturePad } from './SignaturePad';
 export { default as Rate } from './Rate';
 export { default as NoticeList } from './NoticeList';
 export { default as Slide } from './Slide';
+export { default as ProgressCircle } from './ProgressCircle';

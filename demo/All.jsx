@@ -13,6 +13,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> ProgressCircle
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ProgressCircle')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Slide FullPage
           </Space>
         }

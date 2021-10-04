@@ -186,6 +186,10 @@ const routes = [
     path: '/SlideFullPage',
     component: lazy(() => import('./SlideFullPage')),
   },
+  {
+    path: '/ProgressCircle',
+    component: lazy(() => import('./ProgressCircle')),
+  },
 ];
 
 export default routes;
