@@ -50,15 +50,16 @@ var StyledNumberKeyboardPicker = styled(Popup)(templateObject_1 || (templateObje
 
 var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   var visible = props.visible,
-      dot = props.dot,
+      _a = props.customKey,
+      customKey = _a === void 0 ? '' : _a,
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = __rest(props, ["visible", "dot", "onClose", "onChange", "className"]);
+      rest = __rest(props, ["visible", "customKey", "onClose", "onChange", "className"]);
 
-  var _a = useState(''),
-      value = _a[0],
-      setValue = _a[1];
+  var _b = useState(''),
+      value = _b[0],
+      setValue = _b[1];
 
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
@@ -72,7 +73,7 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
     position: "bottom",
     className: clsx('uc-number-keyboard-picker', className)
   }), /*#__PURE__*/React.createElement(NumberKeyboard, {
-    dot: dot,
+    customKey: customKey,
     onClick: function onClick(k) {
       if (k === 'ok') {
         onClose === null || onClose === void 0 ? void 0 : onClose();

@@ -5,8 +5,8 @@ declare type Props = {
     /** 关闭 */
     onClose: () => void;
     className?: string;
-    /** 显示小数点,默认false */
-    dot?: boolean;
+    /** 自定义按钮 ./X */
+    customKey?: '.' | 'X' | '';
     /** 按键回调,返回输入的字符串 */
     onChange: (str: string) => void;
 };
