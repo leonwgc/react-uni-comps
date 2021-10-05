@@ -1,13 +1,19 @@
-import React, { useState, useref, useRef } from 'react';
-import { Space, Divider, Input } from '../src';
+import React, { useState, useref, useRef, useCallback } from 'react';
+import { Divider, Input } from '../src';
 import { SoundOutlined } from '@ant-design/icons';
 
 export default function App() {
   const [v, setV] = useState('');
+
   return (
     <div className="app" style={{ margin: '20px' }}>
       <Divider>default</Divider>
-      <Input placeholder="请输入内容"></Input>
+      <Input
+        placeholder="请输入内容"
+        onCompositionEnd={(e) => {
+          setV(e.target.value);
+        }}
+      ></Input>
       <Divider>prefix/suffix</Divider>
       <Input
         value={v}
