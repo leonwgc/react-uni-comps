@@ -2350,7 +2350,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
 };
 
 /**
- *  get the latest value from ref
+ *  get the latest callback from ref
  *
  * @export
  * @template T
@@ -4242,7 +4242,7 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
 /**
- *  get latest values from ref
+ *  get latest values from ref, value will always be synced automatically with props & states
  *
  * @export
  * @template T

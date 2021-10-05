@@ -1,6 +1,6 @@
 import { MutableRefObject, useRef } from 'react';
 /**
- *  get latest values from ref
+ *  get latest values from ref, value will always be synced automatically with props & states
  *
  * @export
  * @template T

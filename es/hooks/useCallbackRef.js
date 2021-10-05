@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 /**
- *  get the latest value from ref
+ *  get the latest callback from ref
  *
  * @export
  * @template T
