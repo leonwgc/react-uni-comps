@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { Image } from 'antd';
-import { Space, FileInputTrigger, Button } from '../src';
+import { Space, FileInputTrigger, Button, IconCross } from '../src';
 import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import clsx from 'clsx';
 import { upload } from 'xhr-fetch-lib';
@@ -49,6 +49,22 @@ const StyledImageUpload = styled.div`
       color: #fff;
       font-size: 12px;
       bottom: -2px;
+    }
+    .del {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 14px;
+      height: 14px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 0 0 0 12px;
+      font-size: 8px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;
@@ -119,6 +135,9 @@ export default function App() {
       {/* company style  */}
       {files.length ? (
         <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
+          <div className="del" onClick={() => setFiles([])}>
+            <IconCross size={12} />
+          </div>
           <Image width={108} height={108} src={url} />
           <FileInputTrigger
             accept="image/*"
