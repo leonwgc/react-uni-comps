@@ -13,6 +13,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> WaterMark
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('WaterMark')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> ProgressCircle
           </Space>
         }

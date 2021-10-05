@@ -190,6 +190,10 @@ const routes = [
     path: '/ProgressCircle',
     component: lazy(() => import('./ProgressCircle')),
   },
+  {
+    path: '/WaterMark',
+    component: lazy(() => import('./WaterMark')),
+  },
 ];
 
 export default routes;

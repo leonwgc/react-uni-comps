@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Space } from 'react-uni-comps';
+import { Spinner, Space } from '../src';
 
 export default function App() {
   return (
