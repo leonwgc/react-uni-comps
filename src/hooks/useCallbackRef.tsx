@@ -7,7 +7,7 @@ import { MutableRefObject, useRef, useEffect } from 'react';
  * @param {T} value
  * @return {*}  {MutableRefObject<T>}
  */
-export default function useValueRef<T>(value: T): MutableRefObject<T> {
+export default function useCallbackRef<T>(value: T): MutableRefObject<T> {
   const ref = useRef(value);
   useEffect(() => {
     ref.current = value;

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
 
 const StyledRate = styled.div`
@@ -78,7 +78,7 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const [val, setVal] = useState(typeof value === 'number' ? value : defaultValue);
   const starList = Array(count).fill(null);
 
-  const onChangeRef = useValueRef(onChange);
+  const onChangeRef = useCallbackRef(onChange);
 
   useUpdateEffect(() => {
     onChangeRef.current?.(val);

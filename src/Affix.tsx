@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
 
@@ -48,7 +48,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     height: 0,
   });
 
-  const onChangeRef = useValueRef(onChange);
+  const onChangeRef = useCallbackRef(onChange);
   const targetRef = useRef<() => HTMLElement | Window>(target);
   const wrapElRef = useRef<HTMLDivElement>();
   const fixedElRef = useRef<HTMLDivElement>();

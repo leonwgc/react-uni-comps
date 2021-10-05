@@ -47,7 +47,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN } from './utils/getModalStyle';
-import useValueRef from '../hooks/useValueRef'; // port from https://github.com/bytedance/guide and refactor
+import useCallbackRef from '../hooks/useCallbackRef'; // port from https://github.com/bytedance/guide and refactor
 
 var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 8px;\n    right: 8px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 /**
@@ -84,7 +84,7 @@ var Popover = function Popover(props) {
   var popoverRef = useRef(null);
   var resizeTimerRef = useRef(0);
   var offsetRef = useRef(offset);
-  var onCloseRef = useValueRef(onClose);
+  var onCloseRef = useCallbackRef(onClose);
 
   var _e = useState({}),
       modalStyle = _e[0],

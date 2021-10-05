@@ -28,7 +28,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useEffect, useRef, useState, useCallback, useImperativeHandle } from 'react';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
 /** 将页面元素钉在可视范围*/
@@ -54,7 +54,7 @@ var Affix = /*#__PURE__*/React.forwardRef(function (props, ref) {
       data = _a[0],
       setData = _a[1];
 
-  var onChangeRef = useValueRef(onChange);
+  var onChangeRef = useCallbackRef(onChange);
   var targetRef = useRef(target);
   var wrapElRef = useRef();
   var fixedElRef = useRef();

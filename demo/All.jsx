@@ -151,15 +151,6 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> NumberKeyboardPicker
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('NumberKeyboardPicker')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
             <SoundOutlined /> NumberKeyboard
           </Space>
         }

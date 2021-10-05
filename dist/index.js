@@ -2358,7 +2358,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
  * @return {*}  {MutableRefObject<T>}
  */
 
-function useValueRef(value) {
+function useCallbackRef(value) {
   var ref = React.useRef(value);
   React.useEffect(function () {
     ref.current = value;
@@ -2376,8 +2376,8 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
       onInVisible = props.onInVisible,
       rest = _objectWithoutProperties(props, _excluded$g);
 
-  var vv = useValueRef(onVisible);
-  var vi = useValueRef(onInVisible);
+  var vv = useCallbackRef(onVisible);
+  var vi = useCallbackRef(onInVisible);
   React.useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
@@ -2980,7 +2980,7 @@ var Popover = function Popover(props) {
   var popoverRef = React.useRef(null);
   var resizeTimerRef = React.useRef(0);
   var offsetRef = React.useRef(offset);
-  var onCloseRef = useValueRef(onClose);
+  var onCloseRef = useCallbackRef(onClose);
 
   var _useState = React.useState({}),
       _useState2 = _slicedToArray(_useState, 2),
@@ -3604,7 +3604,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       data = _useState2[0],
       setData = _useState2[1];
 
-  var onChangeRef = useValueRef(onChange);
+  var onChangeRef = useCallbackRef(onChange);
   var targetRef = React.useRef(target);
   var wrapElRef = React.useRef();
   var fixedElRef = React.useRef();
@@ -4013,10 +4013,10 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 
   var arRef = React.useRef(getArray(length));
   var inputRefArray = React.useRef([]);
-  var autoFocusRef = useValueRef(autoFocus);
-  var vRef = useValueRef(value);
-  var inputValueRef = useValueRef(value.split(''));
-  var onFinishRef = useValueRef(onFinish);
+  var autoFocusRef = useCallbackRef(autoFocus);
+  var vRef = useCallbackRef(value);
+  var inputValueRef = useCallbackRef(value.split(''));
+  var onFinishRef = useCallbackRef(onFinish);
   React.useImperativeHandle(ref, function () {
     return {
       focus: function focus() {
@@ -4852,7 +4852,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       setVal = _useState2[1];
 
   var starList = Array(count).fill(null);
-  var onChangeRef = useValueRef(onChange);
+  var onChangeRef = useCallbackRef(onChange);
   useUpdateEffect(function () {
     var _onChangeRef$current;
 

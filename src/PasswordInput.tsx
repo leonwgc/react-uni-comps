@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as colors from './colors';
 import clsx from 'clsx';
 import { isMobile } from './dom';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 
 type Props = {
   /** 值 */
@@ -119,10 +119,10 @@ const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref
   const arRef = useRef<Array<number>>(getArray(length));
   const inputRefArray = useRef<Array<HTMLInputElement>>([]);
 
-  const autoFocusRef = useValueRef(autoFocus);
-  const vRef = useValueRef(value);
-  const inputValueRef = useValueRef<string[]>(value.split(''));
-  const onFinishRef = useValueRef(onFinish);
+  const autoFocusRef = useCallbackRef(autoFocus);
+  const vRef = useCallbackRef(value);
+  const inputValueRef = useCallbackRef<string[]>(value.split(''));
+  const onFinishRef = useCallbackRef(onFinish);
 
   useImperativeHandle(ref, () => ({
     focus: () => {

@@ -28,7 +28,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 import { observe, unobserve } from './defaultIntersectionObserver';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
@@ -39,8 +39,8 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onInVisible = props.onInVisible,
       rest = __rest(props, ["onVisible", "onInVisible"]);
 
-  var vv = useValueRef(onVisible);
-  var vi = useValueRef(onInVisible);
+  var vv = useCallbackRef(onVisible);
+  var vi = useCallbackRef(onInVisible);
   useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       var _a, _b;

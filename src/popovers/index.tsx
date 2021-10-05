@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
-import useValueRef from '../hooks/useValueRef';
+import useCallbackRef from '../hooks/useCallbackRef';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -110,7 +110,7 @@ const Popover = (props: Props): React.ReactElement => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
   const offsetRef = useRef<Offset>(offset);
-  const onCloseRef = useValueRef(onClose);
+  const onCloseRef = useCallbackRef(onClose);
 
   const [modalStyle, setModalStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});

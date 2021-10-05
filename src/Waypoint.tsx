@@ -1,5 +1,5 @@
 import React, { useRef, HTMLAttributes, useImperativeHandle, useLayoutEffect } from 'react';
-import useValueRef from './hooks/useValueRef';
+import useCallbackRef from './hooks/useCallbackRef';
 import { observe, unobserve } from './defaultIntersectionObserver';
 
 type Props = {
@@ -14,8 +14,8 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const elRef = useRef<HTMLElement>();
   const { onVisible, onInVisible, ...rest } = props;
 
-  const vv = useValueRef(onVisible);
-  const vi = useValueRef(onInVisible);
+  const vv = useCallbackRef(onVisible);
+  const vi = useCallbackRef(onInVisible);
 
   useLayoutEffect(() => {
     observe(elRef.current, (visible) => {
