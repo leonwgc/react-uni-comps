@@ -11,8 +11,8 @@ type Props = {
   /** 关闭 */
   onClose: () => void;
   className?: string;
-  /** 显示小数点,默认false */
-  dot?: boolean;
+  /** 自定义按钮 ./X */
+  customKey?: '.' | 'X' | '';
   /** 按键回调,返回输入的字符串 */
   onChange: (str: string) => void;
 };
@@ -24,7 +24,7 @@ const StyledNumberKeyboardPicker = styled(Popup)`
 
 /** 数字键盘弹出 */
 const NumberKeyboardPicker = (props: Props): React.ReactElement => {
-  const { visible, dot, onClose, onChange, className, ...rest } = props;
+  const { visible, customKey = '', onClose, onChange, className, ...rest } = props;
   const [value, setValue] = useState('');
 
   useUpdateEffect(() => {
@@ -41,7 +41,7 @@ const NumberKeyboardPicker = (props: Props): React.ReactElement => {
       className={clsx('uc-number-keyboard-picker', className)}
     >
       <NumberKeyboard
-        dot={dot}
+        customKey={customKey}
         onClick={(k) => {
           if (k === 'ok') {
             onClose?.();

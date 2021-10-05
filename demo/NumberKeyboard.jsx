@@ -6,7 +6,7 @@ export default function App() {
   const [form] = Form.useForm();
   const [data, setData] = useState({});
 
-  const { text = '确定', dot } = data;
+  const { text = '确定', custkey = '.' } = data;
 
   return (
     <div style={{ padding: 16 }}>
@@ -14,15 +14,15 @@ export default function App() {
         <Form.Item name="text" initialValue={text}>
           <Input />
         </Form.Item>
-        <Form.Item label="显示小数点" name="dot" initialValue={false} valuePropName="checked">
-          <Switch />
+        <Form.Item name="custkey" initialValue={custkey}>
+          <Input />
         </Form.Item>
         <Button block type="primary" htmlType="submit">
           ok
         </Button>
       </Form>
       <NumberKeyboard
-        dot={dot}
+        customKey={custkey}
         okText={text}
         onClick={(k) => Toast.show({ content: k, duration: 200 })}
       />

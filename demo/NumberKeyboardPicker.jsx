@@ -1,5 +1,5 @@
-import React, { useState, useref, useRef, useEffect } from 'react';
-import { NumberKeyboardPicker, Button, Toast, PasswordInput, Popup } from '../src';
+import React, { useState, useEffect } from 'react';
+import { NumberKeyboardPicker, Toast, PasswordInput } from '../src';
 
 export default function App() {
   const [v, setV] = useState('');
@@ -27,6 +27,7 @@ export default function App() {
       />
 
       <NumberKeyboardPicker
+        customKey="X"
         onClose={() => setVisible(false)}
         visible={visible}
         onChange={(value) => {

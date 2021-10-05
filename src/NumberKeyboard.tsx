@@ -7,6 +7,8 @@ type Props = {
   className?: string;
   /** 确定按钮文字,默认：确定 */
   okText?: React.ReactNode;
+  /** 自定义按钮 ./X */
+  customKey?: '.' | 'X' | '';
   /** 显示小数点,默认false */
   dot?: boolean;
   onClick: (key: string) => void;
@@ -52,7 +54,7 @@ const StyledNumberKeyboard = styled.div`
         &.zero {
           flex-basis: 66%;
         }
-        &.no-dot {
+        &.empty {
           display: none;
         }
       }
@@ -75,15 +77,11 @@ const Styledkey = styled(Button)`
   border: 0;
 `;
 
-const getKeys = () => {
-  return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-};
-
 /** 数字键盘 */
 const NumberKeyboard = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { onClick, okText = '确定', dot = false, className, ...rest } = props;
+  const { onClick, okText = '确定', customKey = '', className, ...rest } = props;
 
-  const keys = getKeys();
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
 
   return (
     <StyledNumberKeyboard {...rest} ref={ref} className={clsx('uc-number-keyboard', className)}>
@@ -91,7 +89,11 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div className="keys">
           {keys.map((key) => (
             <div
-              className={clsx('key', { 'zero': key === '0', 'no-dot': key === '.' && !dot })}
+              className={clsx('key', {
+                'zero': key === '0',
+                'custom-key': key === customKey,
+                'empty': key === '',
+              })}
               key={key}
             >
               <Styledkey
