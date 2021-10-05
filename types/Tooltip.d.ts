@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placement } from './Popover/types';
+import { Placement } from './popovers/types';
 export declare type Props = {
     title?: React.ReactNode;
     arrow?: boolean;

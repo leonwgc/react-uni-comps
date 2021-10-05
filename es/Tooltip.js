@@ -27,7 +27,7 @@ var __assign = this && this.__assign || function () {
 };
 
 import React, { useState, useRef } from 'react';
-import Popover from './Popover/index';
+import Popover from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"], ["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
