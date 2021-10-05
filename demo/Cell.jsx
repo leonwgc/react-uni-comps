@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from '../src/styled';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Divider, Cell, Button, Checkbox, Switch, Input, NumberKeyboardPicker } from '../src';
+import { Divider, Cell, Button, Checkbox, Switch, Input, NumberKeyboard } from '../src';
 import useBgColor from './hooks/useBgColor';
 
 const StyledApp = styled.div``;
@@ -97,8 +97,7 @@ export default function App() {
           submit
         </Button>
       </div>
-      <NumberKeyboardPicker
-        dot
+      <NumberKeyboard
         onClose={() => setVisible(false)}
         visible={visible}
         onChange={(value) => {
