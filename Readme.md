@@ -94,9 +94,9 @@ yarn add react-uni-comps
 
 #### 37. PasswordInput (移动端/pc, 密码输入框 )
 
-#### 38. NumberKeyboard (移动端,数字/身份证虚拟键盘 )
+#### 38. NumberKeyboardBase (数字键盘,非弹出 )
 
-#### 39. NumberKeyboardPicker (移动端, 数字/身份证虚拟键盘底部弹出)
+#### 39. NumberKeyboard (数字键盘)
 
 #### 40. FingerGestureElement (移动端手势操作,onTap,onDoubleTap,onLongTap,onPinch, onSwipe,onPressMove 等手势支持)
 

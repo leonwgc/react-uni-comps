@@ -1,30 +1,40 @@
-import React, { useState } from 'react';
-import { Input, Form } from 'antd';
-import { NumberKeyboard, Toast, Button, Space, Switch } from '../src';
+import React, { useState, useEffect } from 'react';
+import { NumberKeyboard, Toast, PasswordInput } from '../src';
 
 export default function App() {
-  const [form] = Form.useForm();
-  const [data, setData] = useState({});
+  const [v, setV] = useState('');
+  const [visible, setVisible] = useState(false);
 
-  const { text = '确定', custkey = '.' } = data;
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   return (
-    <div style={{ padding: 16 }}>
-      <Form form={form} onFinish={setData} layout="vertical">
-        <Form.Item name="text" initialValue={text}>
-          <Input />
-        </Form.Item>
-        <Form.Item name="custkey" initialValue={custkey}>
-          <Input />
-        </Form.Item>
-        <Button block type="primary" htmlType="submit">
-          ok
-        </Button>
-      </Form>
+    <div className="app">
+      <PasswordInput
+        style={{ marginTop: 30 }}
+        onFinish={() => {
+          setVisible(false);
+          console.log('PasswordInput:' + v);
+          setTimeout(() => {
+            Toast.show({ content: '输入完成:' + v });
+          }, 500);
+        }}
+        mask={false}
+        value={v}
+        onChange={setV}
+        // onFocus={() => setVisible(true)}
+      />
+
       <NumberKeyboard
-        customKey={custkey}
-        okText={text}
-        onClick={(k) => Toast.show({ content: k, duration: 200 })}
+        customKey="."
+        onClose={() => setVisible(false)}
+        okText="Ok"
+        visible={visible}
+        onChange={(value) => {
+          Toast.show({ content: value, duration: 200 });
+          setV(value);
+        }}
       />
     </div>
   );

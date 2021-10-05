@@ -4093,11 +4093,11 @@ PasswordInput.displayName = 'UC-PasswordInput';
 var _excluded$r = ["onClick", "okText", "customKey", "className"];
 
 var _templateObject$t, _templateObject2$4;
-var StyledNumberKeyboard = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.empty {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
+var StyledNumberKeyboardBase = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.empty {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
 var Styledkey = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
-/** 数字键盘 */
+/** 数字键盘基础 */
 
-var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _onClick = props.onClick,
       _props$okText = props.okText,
       okText = _props$okText === void 0 ? '确定' : _props$okText,
@@ -4107,7 +4107,7 @@ var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function 
       rest = _objectWithoutProperties(props, _excluded$r);
 
   var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
-  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardBase, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-number-keyboard', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -4153,7 +4153,7 @@ var NumberKeyboard = /*#__PURE__*/React__default['default'].forwardRef(function 
     }
   }, okText)))));
 });
-NumberKeyboard.displayName = 'UC-NumberKeyboard';
+NumberKeyboardBase.displayName = 'UC-NumberKeyboardBase';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -4169,14 +4169,15 @@ var useUpdateEffect = function useUpdateEffect(effect) {
   }, deps);
 };
 
-var _excluded$s = ["visible", "customKey", "onClose", "onChange", "className"];
+var _excluded$s = ["visible", "okText", "customKey", "onClose", "onChange", "className"];
 
 var _templateObject$u;
-var StyledNumberKeyboardPicker = styled__default['default'](Popup)(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
-/** 数字键盘弹出 */
+var StyledNumberKeyboard = styled__default['default'](Popup)(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
+/** 数字键盘 */
 
-var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
+var NumberKeyboard = function NumberKeyboard(props) {
   var visible = props.visible,
+      okText = props.okText,
       _props$customKey = props.customKey,
       customKey = _props$customKey === void 0 ? '' : _props$customKey,
       onClose = props.onClose,
@@ -4192,7 +4193,7 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardPicker, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
     visible: visible,
     onMaskClick: onClose,
     maskStyle: {
@@ -4200,7 +4201,8 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
     },
     position: "bottom",
     className: clsx__default['default']('uc-number-keyboard-picker', className)
-  }), /*#__PURE__*/React__default['default'].createElement(NumberKeyboard, {
+  }), /*#__PURE__*/React__default['default'].createElement(NumberKeyboardBase, {
+    okText: okText,
     customKey: customKey,
     onClick: function onClick(k) {
       if (k === 'ok') {
@@ -4218,7 +4220,7 @@ var NumberKeyboardPicker = function NumberKeyboardPicker(props) {
   }));
 };
 
-NumberKeyboardPicker.displayName = 'UC-NumberKeyboardPicker';
+NumberKeyboard.displayName = 'UC-NumberKeyboard';
 
 var _excluded$t = ["children"];
 
@@ -5404,7 +5406,7 @@ exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
 exports.NoticeList = NoticeList;
 exports.NumberKeyboard = NumberKeyboard;
-exports.NumberKeyboardPicker = NumberKeyboardPicker;
+exports.NumberKeyboardBase = NumberKeyboardBase;
 exports.PasswordInput = PasswordInput;
 exports.Picker = Picker;
 exports.Popover = Popover;
