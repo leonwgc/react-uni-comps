@@ -72,9 +72,13 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var vIndex = value.indexOf(v);
 
     if (!checked) {
-      value.splice(vIndex, 1);
+      if (vIndex > -1) {
+        value.splice(vIndex, 1);
+      }
     } else {
-      value.push(v);
+      if (vIndex === -1) {
+        value.push(v);
+      }
     }
 
     (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, __spreadArray([], value));

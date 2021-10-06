@@ -2199,9 +2199,13 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
     var vIndex = value.indexOf(v);
 
     if (!checked) {
-      value.splice(vIndex, 1);
+      if (vIndex > -1) {
+        value.splice(vIndex, 1);
+      }
     } else {
-      value.push(v);
+      if (vIndex === -1) {
+        value.push(v);
+      }
     }
 
     (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, _toConsumableArray(value));
@@ -2284,7 +2288,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
         onChange: function onChange(c) {
           return onCheckboxChange(c, option);
         },
-        checked: value.indexOf(option) > -1
+        checked: value === option
       }, option);
     } else {
       return /*#__PURE__*/React__default['default'].createElement(Radio, {
@@ -2293,7 +2297,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
         onChange: function onChange(c) {
           return onCheckboxChange(c, option.value);
         },
-        checked: value.indexOf(option.value) > -1
+        checked: value === option.value
       }, option.label);
     }
   }));

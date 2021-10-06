@@ -34,9 +34,13 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     (checked, v) => {
       const vIndex = value.indexOf(v);
       if (!checked) {
-        value.splice(vIndex, 1);
+        if (vIndex > -1) {
+          value.splice(vIndex, 1);
+        }
       } else {
-        value.push(v);
+        if (vIndex === -1) {
+          value.push(v);
+        }
       }
       onChangeRef.current?.([...value]);
     },

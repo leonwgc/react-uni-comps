@@ -76,7 +76,7 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
         onChange: function onChange(c) {
           return onCheckboxChange(c, option);
         },
-        checked: value.indexOf(option) > -1
+        checked: value === option
       }, option);
     } else {
       return /*#__PURE__*/React.createElement(Radio, {
@@ -85,7 +85,7 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
         onChange: function onChange(c) {
           return onCheckboxChange(c, option.value);
         },
-        checked: value.indexOf(option.value) > -1
+        checked: value === option.value
       }, option.label);
     }
   }));
