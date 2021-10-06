@@ -1,7 +1,7 @@
 import React from 'react';
-/** 复选框 */
-declare const Checkbox: React.ForwardRefExoticComponent<{
-    /** box宽高，默认18 */
+/** 单选框 */
+declare const Radio: React.ForwardRefExoticComponent<{
+    /** box宽高，默认20 */
     size?: number;
     /** checked状态改变回调 */
     onChange?: (checked: boolean) => void;
@@ -18,4 +18,4 @@ declare const Checkbox: React.ForwardRefExoticComponent<{
     /** box style */
     style?: React.CSSProperties;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
-export default Checkbox;
+export default Radio;

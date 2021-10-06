@@ -52,7 +52,7 @@ yarn add react-uni-comps
 
 #### 16. Divider (分割线)
 
-#### 17. Checkbox (选择状态)
+#### 17. Checkbox (复选框)
 
 #### 18. ErrorBoudary （错误边界）
 
@@ -115,6 +115,12 @@ yarn add react-uni-comps
 #### 47. ProgressCircle (环形进度条)
 
 #### 48. WaterMark (图片/文字水印 )
+
+#### 49. Radio (单选框)
+
+#### 50. RadioGroup (单选框列表)
+
+#### 51. CheckboxGroup (复选框列表)
 
 ### 按需加载
 

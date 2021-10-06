@@ -23,13 +23,6 @@ export default function App() {
         uncontrolled check
       </Checkbox>
 
-      <Divider>radio</Divider>
-      <Checkbox mode="radio" defaultChecked onChange={(c) => console.log(c)}>
-        radio
-      </Checkbox>
-      <Checkbox mode="radio" onChange={(c) => console.log(c)}>
-        radio1
-      </Checkbox>
       <Divider>others</Divider>
       <Space wrap>
         <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>

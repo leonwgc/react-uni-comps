@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react';
 import CheckboxBase from './CheckboxBase';
 
 type Props = {
-  /** box宽高，默认18 */
+  /** box宽高，默认20 */
   size?: number;
   /** checked状态改变回调 */
   onChange?: (checked: boolean) => void;
@@ -20,11 +20,12 @@ type Props = {
   style?: React.CSSProperties;
 } & HTMLAttributes<HTMLDivElement>;
 
-/** 复选框 */
-const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  return <CheckboxBase {...props} mode="checkbox" ref={ref} />;
+/** 单选框 */
+const Radio = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { size = 20, ...rest } = props;
+  return <CheckboxBase {...rest} size={size} mode="radio" ref={ref} />;
 });
 
-Checkbox.displayName = 'UC-Checkbox';
+Radio.displayName = 'UC-Radio';
 
-export default Checkbox;
+export default Radio;

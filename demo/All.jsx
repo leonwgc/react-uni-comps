@@ -13,6 +13,42 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Radio
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Radio')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> RadioGroup
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('RadioGroup')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> CheckboxGroup
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('CheckboxGroup')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> Checkbox
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Checkbox')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> WaterMark
           </Space>
         }
@@ -238,15 +274,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Skeleton')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> Checkbox
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Checkbox')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

@@ -190,6 +190,18 @@ const routes = [
     path: '/WaterMark',
     component: lazy(() => import('./WaterMark')),
   },
+  {
+    path: '/CheckboxGroup',
+    component: lazy(() => import('./CheckboxGroup')),
+  },
+  {
+    path: '/Radio',
+    component: lazy(() => import('./Radio')),
+  },
+  {
+    path: '/RadioGroup',
+    component: lazy(() => import('./RadioGroup')),
+  },
 ];
 
 export default routes;

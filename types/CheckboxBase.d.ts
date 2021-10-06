@@ -1,6 +1,6 @@
 import React from 'react';
-/** 复选框 */
-declare const Checkbox: React.ForwardRefExoticComponent<{
+/** Checkbox/Radiobox 的基础 */
+declare const CheckboxBase: React.ForwardRefExoticComponent<{
     /** box宽高，默认18 */
     size?: number;
     /** checked状态改变回调 */
@@ -17,5 +17,9 @@ declare const Checkbox: React.ForwardRefExoticComponent<{
     className?: string;
     /** box style */
     style?: React.CSSProperties;
+    /** 展示为checkbox/radio,默认checkbox */
+    mode?: 'checkbox' | 'radio';
+    /** 根据 value 进行比较，判断是否选中, 用于list */
+    value?: string | number;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
-export default Checkbox;
+export default CheckboxBase;
