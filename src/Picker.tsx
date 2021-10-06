@@ -226,7 +226,6 @@ const Wheel = (props) => {
       }}
       onTouchEnd={onTouchEnd}
       onPressMove={(e) => {
-        e.preventDefault();
         yRef.current += e.deltaY;
         elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
       }}
