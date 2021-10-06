@@ -11,6 +11,8 @@ declare type Props = {
     onChange: (str: string) => void;
     /** 确定按钮文字,默认：确定 */
     okText?: React.ReactNode;
+    /** 点击遮罩是否关闭,默认true*/
+    closeOnMaskClick?: boolean;
 };
 /** 数字键盘 */
 declare const NumberKeyboard: {

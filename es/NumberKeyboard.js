@@ -51,23 +51,26 @@ var StyledNumberKeyboard = styled(Popup)(templateObject_1 || (templateObject_1 =
 var NumberKeyboard = function NumberKeyboard(props) {
   var visible = props.visible,
       okText = props.okText,
-      _a = props.customKey,
-      customKey = _a === void 0 ? '' : _a,
+      _a = props.closeOnMaskClick,
+      closeOnMaskClick = _a === void 0 ? true : _a,
+      _b = props.customKey,
+      customKey = _b === void 0 ? '' : _b,
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = __rest(props, ["visible", "okText", "customKey", "onClose", "onChange", "className"]);
+      rest = __rest(props, ["visible", "okText", "closeOnMaskClick", "customKey", "onClose", "onChange", "className"]);
 
-  var _b = useState(''),
-      value = _b[0],
-      setValue = _b[1];
+  var _c = useState(''),
+      value = _c[0],
+      setValue = _c[1];
 
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
   return /*#__PURE__*/React.createElement(StyledNumberKeyboard, __assign({}, rest, {
+    closeOnMaskClick: closeOnMaskClick,
     visible: visible,
-    onMaskClick: onClose,
+    onClose: onClose,
     maskStyle: {
       backgroundColor: 'transparent'
     },

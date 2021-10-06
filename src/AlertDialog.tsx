@@ -28,6 +28,7 @@ type Props = {
   onClose?: () => void;
   /** 取消回调 */
   onCancel?: () => void;
+  /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
   className?: string;
   /** 按钮间距，默认8 */
@@ -192,15 +193,12 @@ const AlertDialog = (props: Props): React.ReactElement => {
       {...rest}
       className={clsx('uc-alert-dialog', className, { mobile: isMobile })}
       visible={visible}
+      onClose={onClose}
       position="center"
       mask={mask}
       maskStyle={maskStyle}
       maskClass={maskClass}
-      onMaskClick={() => {
-        if (closeOnMaskClick) {
-          onClose?.();
-        }
-      }}
+      closeOnMaskClick={closeOnMaskClick}
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
         {closable && <IconCross className="close" size={24} onClick={onClose} />}

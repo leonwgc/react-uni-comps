@@ -76,7 +76,7 @@ export type Props = {
   /** 点击外部区域是否关闭*/
   closeOnClickOutside?: boolean;
   /** 点击遮罩是否关闭,默认true*/
-  closeOnClickMask?: boolean;
+  closeOnMaskClick?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 /**
@@ -101,7 +101,7 @@ const Popover = (props: Props): React.ReactElement => {
     maskClass,
     mountContainer,
     closeOnClickOutside,
-    closeOnClickMask = true,
+    closeOnMaskClick = true,
     offset = {},
     ...rest
   } = props;
@@ -195,7 +195,7 @@ const Popover = (props: Props): React.ReactElement => {
                   className={maskClass}
                   style={maskStyle}
                   onClick={() => {
-                    closeOnClickMask && onClose?.();
+                    closeOnMaskClick && onClose?.();
                   }}
                 />
               )}

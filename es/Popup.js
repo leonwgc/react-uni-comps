@@ -56,15 +56,17 @@ var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTem
 var Popup = function Popup(props) {
   var children = props.children,
       visible = props.visible,
-      _a = props.mask,
-      mask = _a === void 0 ? true : _a,
+      onClose = props.onClose,
+      _a = props.closeOnMaskClick,
+      closeOnMaskClick = _a === void 0 ? true : _a,
+      _b = props.mask,
+      mask = _b === void 0 ? true : _b,
       maskStyle = props.maskStyle,
       maskClass = props.maskClass,
-      onMaskClick = props.onMaskClick,
-      _b = props.position,
-      position = _b === void 0 ? 'bottom' : _b,
-      _c = props.duration,
-      duration = _c === void 0 ? 160 : _c,
+      _c = props.position,
+      position = _c === void 0 ? 'bottom' : _c,
+      _d = props.duration,
+      duration = _d === void 0 ? 160 : _d,
       mountContainer = props.mountContainer,
       style = props.style,
       className = props.className;
@@ -95,11 +97,13 @@ var Popup = function Popup(props) {
 
   return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popup-container-' + position)
-  }, mask && visible ? /*#__PURE__*/React.createElement(Mask, {
+  }, mask && visible && /*#__PURE__*/React.createElement(Mask, {
     className: maskClass,
     style: maskStyle,
-    onClick: onMaskClick
-  }) : null, /*#__PURE__*/React.createElement(Transition, {
+    onClick: function onClick() {
+      return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
+    }
+  }), /*#__PURE__*/React.createElement(Transition, {
     in: visible,
     timeout: duration
   }, function (status) {

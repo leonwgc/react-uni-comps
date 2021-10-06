@@ -24,9 +24,7 @@ type Props = {
   cancelText?: string;
   /** 关闭时触发   */
   onClose?: () => void;
-  /** 点击遮罩层时触发   */
-  onMaskClick?: () => void;
-  /** 点击遮罩层后是否关闭   */
+  /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
 } & HTMLAttributes<HTMLElement>;
 
@@ -122,7 +120,6 @@ const ActionSheet = (props: Props): React.ReactElement => {
     actions = [],
     cancelText = '',
     closeOnMaskClick = true,
-    onMaskClick,
     onClose,
     extra,
     ...rest
@@ -133,12 +130,8 @@ const ActionSheet = (props: Props): React.ReactElement => {
       className={clsx('uc-actionsheet')}
       visible={visible}
       position="bottom"
-      onMaskClick={() => {
-        onMaskClick?.();
-        if (closeOnMaskClick) {
-          onClose?.();
-        }
-      }}
+      closeOnMaskClick={closeOnMaskClick}
+      onClose={onClose}
       {...rest}
     >
       <div className="wrap">

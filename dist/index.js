@@ -562,7 +562,7 @@ TransitionElement.displayName = 'UC-TransitionElement';
 var _excluded = ["children", "className", "hideOverflow"];
 
 var _templateObject;
-var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
 
 /** 遮罩层 */
 var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -614,11 +614,13 @@ var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templa
 var Popup = function Popup(props) {
   var children = props.children,
       visible = props.visible,
+      onClose = props.onClose,
+      _props$closeOnMaskCli = props.closeOnMaskClick,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
       _props$mask = props.mask,
       mask = _props$mask === void 0 ? true : _props$mask,
       maskStyle = props.maskStyle,
       maskClass = props.maskClass,
-      onMaskClick = props.onMaskClick,
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
@@ -653,11 +655,13 @@ var Popup = function Popup(props) {
 
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popup-container-' + position)
-  }, mask && visible ? /*#__PURE__*/React__default['default'].createElement(Mask, {
+  }, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
     className: maskClass,
     style: maskStyle,
-    onClick: onMaskClick
-  }) : null, /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
+    onClick: function onClick() {
+      return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
+    }
+  }), /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
     timeout: duration
   }, function (status) {
@@ -2941,7 +2945,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnClickMask", "offset"];
+var _excluded$i = ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "offset"];
 
 var _templateObject$k;
 
@@ -2970,8 +2974,8 @@ var Popover = function Popover(props) {
       maskClass = props.maskClass,
       mountContainer = props.mountContainer,
       closeOnClickOutside = props.closeOnClickOutside,
-      _props$closeOnClickMa = props.closeOnClickMask,
-      closeOnClickMask = _props$closeOnClickMa === void 0 ? true : _props$closeOnClickMa,
+      _props$closeOnMaskCli = props.closeOnMaskClick,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
       rest = _objectWithoutProperties(props, _excluded$i);
@@ -3052,7 +3056,7 @@ var Popover = function Popover(props) {
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {
-      closeOnClickMask && (onClose === null || onClose === void 0 ? void 0 : onClose());
+      closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
   }), /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
     ref: popoverRef,
@@ -3734,7 +3738,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
-var _excluded$o = ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"];
+var _excluded$o = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "extra"];
 
 var _templateObject$q;
 var StyledActionSheet = styled__default['default'](Popup)(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
@@ -3749,7 +3753,6 @@ var ActionSheet = function ActionSheet(props) {
       cancelText = _props$cancelText === void 0 ? '' : _props$cancelText,
       _props$closeOnMaskCli = props.closeOnMaskClick,
       closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
-      _onMaskClick = props.onMaskClick,
       onClose = props.onClose,
       extra = props.extra,
       rest = _objectWithoutProperties(props, _excluded$o);
@@ -3758,13 +3761,8 @@ var ActionSheet = function ActionSheet(props) {
     className: clsx__default['default']('uc-actionsheet'),
     visible: visible,
     position: "bottom",
-    onMaskClick: function onMaskClick() {
-      _onMaskClick === null || _onMaskClick === void 0 ? void 0 : _onMaskClick();
-
-      if (closeOnMaskClick) {
-        onClose === null || onClose === void 0 ? void 0 : onClose();
-      }
-    }
+    closeOnMaskClick: closeOnMaskClick,
+    onClose: onClose
   }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "wrap"
   }, extra && /*#__PURE__*/React__default['default'].createElement("div", {
@@ -3847,15 +3845,12 @@ var AlertDialog = function AlertDialog(props) {
       mobile: isMobile
     }),
     visible: visible,
+    onClose: onClose,
     position: "center",
     mask: mask,
     maskStyle: maskStyle,
     maskClass: maskClass,
-    onMaskClick: function onMaskClick() {
-      if (closeOnMaskClick) {
-        onClose === null || onClose === void 0 ? void 0 : onClose();
-      }
-    }
+    closeOnMaskClick: closeOnMaskClick
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-alert-dialog-wrap')
   }, closable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
@@ -4169,7 +4164,7 @@ var useUpdateEffect = function useUpdateEffect(effect) {
   }, deps);
 };
 
-var _excluded$s = ["visible", "okText", "customKey", "onClose", "onChange", "className"];
+var _excluded$s = ["visible", "okText", "closeOnMaskClick", "customKey", "onClose", "onChange", "className"];
 
 var _templateObject$u;
 var StyledNumberKeyboard = styled__default['default'](Popup)(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
@@ -4178,6 +4173,8 @@ var StyledNumberKeyboard = styled__default['default'](Popup)(_templateObject$u |
 var NumberKeyboard = function NumberKeyboard(props) {
   var visible = props.visible,
       okText = props.okText,
+      _props$closeOnMaskCli = props.closeOnMaskClick,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
       _props$customKey = props.customKey,
       customKey = _props$customKey === void 0 ? '' : _props$customKey,
       onClose = props.onClose,
@@ -4194,8 +4191,9 @@ var NumberKeyboard = function NumberKeyboard(props) {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
   return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
+    closeOnMaskClick: closeOnMaskClick,
     visible: visible,
-    onMaskClick: onClose,
+    onClose: onClose,
     maskStyle: {
       backgroundColor: 'transparent'
     },
@@ -4226,6 +4224,8 @@ var _excluded$t = ["children"];
 
 /** 手势操作元素 */
 var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _children$props;
+
   var children = props.children,
       rest = _objectWithoutProperties(props, _excluded$t);
 
@@ -4236,7 +4236,10 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
   useGesture(elRef, rest);
   return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, getProps(rest, supportedGestures, false)), {}, {
     // filter out gesture evts
-    ref: elRef
+    ref: elRef,
+    style: _objectSpread2(_objectSpread2({}, children === null || children === void 0 ? void 0 : (_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.style), {}, {
+      touchAction: 'none'
+    })
   }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
@@ -4472,8 +4475,8 @@ Input.displayName = 'UC-Input';
 var _excluded$v = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "value", "data", "cols"];
 
 var _templateObject$x, _templateObject2$6;
-var StyledBar = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
-var StyledPicker = styled__default['default'].div(_templateObject2$6 || (_templateObject2$6 = _taggedTemplateLiteral(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  width: 100%;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border: 1px solid #d8d8d8;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .content {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n\n      .wrapper {\n        transform: translate3d(0px, 105px, 0px);\n        transition-duration: 0.24s;\n        transition-property: transform;\n        transition-timing-function: ease-in-out;\n        .item {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 35px;\n          color: #000;\n        }\n      }\n    }\n  }\n"])));
+var StyledBar = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+var StyledPicker = styled__default['default'].div(_templateObject2$6 || (_templateObject2$6 = _taggedTemplateLiteral(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  width: 100%;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border: 1px solid #d8d8d8;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .content {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n\n      .wrapper {\n        transform: translate3d(0px, 105px, 0px);\n        transition-duration: 0.24s;\n        transition-property: transform;\n        transition-timing-function: ease-in-out;\n        .item {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 35px;\n          color: #000;\n        }\n      }\n    }\n  }\n"])));
 var itemHeight = 35;
 var firstItemY = 105;
 
@@ -4609,14 +4612,14 @@ var Wheel = function Wheel(props) {
     },
     onTouchEnd: onTouchEnd,
     onPressMove: function onPressMove(e) {
-      e.preventDefault();
       yRef.current += e.deltaY;
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "wrapper",
     style: {
-      width: 100 / cols + '%'
+      width: 100 / cols + '%',
+      touchAction: 'none'
     }
   }, data.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
@@ -4661,9 +4664,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       width: '100%'
     },
     visible: visible,
-    onMaskClick: function onMaskClick() {
-      return onClose === null || onClose === void 0 ? void 0 : onClose();
-    }
+    onClose: onClose
   }, /*#__PURE__*/React__default['default'].createElement(StyledBar, {
     className: "bar"
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -4996,7 +4997,7 @@ NoticeList.displayName = 'UC-NoticeList';
 var _excluded$A = ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"];
 
 var _templateObject$C;
-var StyledSlide = styled__default['default'].div(_templateObject$C || (_templateObject$C = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
+var StyledSlide = styled__default['default'].div(_templateObject$C || (_templateObject$C = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),

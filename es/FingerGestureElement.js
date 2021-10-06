@@ -34,6 +34,8 @@ import { getProps } from './helper';
 /** 手势操作元素 */
 
 var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var _a;
+
   var children = props.children,
       rest = __rest(props, ["children"]);
 
@@ -43,7 +45,10 @@ var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
   useGesture(elRef, rest);
   return /*#__PURE__*/React.cloneElement(children, __assign(__assign({}, getProps(rest, supportedGestures, false)), {
-    ref: elRef
+    ref: elRef,
+    style: __assign(__assign({}, (_a = children === null || children === void 0 ? void 0 : children.props) === null || _a === void 0 ? void 0 : _a.style), {
+      touchAction: 'none'
+    })
   }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';

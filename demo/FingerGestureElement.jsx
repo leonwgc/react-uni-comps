@@ -6,15 +6,6 @@ export default function App() {
   const ref = useRef();
   const [data, setData] = useState();
 
-  useEffect(() => {
-    const handler = (e) => e.preventDefault();
-    window.addEventListener('touchmove', handler, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', handler);
-    };
-  }, []);
-
   const thisRef = useRef({
     x: 0,
     y: 0,

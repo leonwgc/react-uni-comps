@@ -85,15 +85,12 @@ var AlertDialog = function AlertDialog(props) {
       mobile: isMobile
     }),
     visible: visible,
+    onClose: onClose,
     position: "center",
     mask: mask,
     maskStyle: maskStyle,
     maskClass: maskClass,
-    onMaskClick: function onMaskClick() {
-      if (closeOnMaskClick) {
-        onClose === null || onClose === void 0 ? void 0 : onClose();
-      }
-    }
+    closeOnMaskClick: closeOnMaskClick
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-alert-dialog-wrap')
   }, closable && /*#__PURE__*/React.createElement(IconCross, {

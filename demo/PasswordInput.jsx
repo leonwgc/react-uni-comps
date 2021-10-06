@@ -13,7 +13,7 @@ export default function App() {
         length={6}
         onChange={setV}
         onFinish={(v) => {
-          Toast.show(v);
+          Toast.show({ content: v });
           console.log(v);
         }}
         ref={ref}

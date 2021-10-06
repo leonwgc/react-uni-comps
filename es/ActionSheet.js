@@ -57,22 +57,16 @@ var ActionSheet = function ActionSheet(props) {
       cancelText = _c === void 0 ? '' : _c,
       _d = props.closeOnMaskClick,
       closeOnMaskClick = _d === void 0 ? true : _d,
-      _onMaskClick = props.onMaskClick,
       onClose = props.onClose,
       extra = props.extra,
-      rest = __rest(props, ["visible", "actions", "cancelText", "closeOnMaskClick", "onMaskClick", "onClose", "extra"]);
+      rest = __rest(props, ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "extra"]);
 
   return /*#__PURE__*/React.createElement(StyledActionSheet, __assign({
     className: clsx('uc-actionsheet'),
     visible: visible,
     position: "bottom",
-    onMaskClick: function onMaskClick() {
-      _onMaskClick === null || _onMaskClick === void 0 ? void 0 : _onMaskClick();
-
-      if (closeOnMaskClick) {
-        onClose === null || onClose === void 0 ? void 0 : onClose();
-      }
-    }
+    closeOnMaskClick: closeOnMaskClick,
+    onClose: onClose
   }, rest), /*#__PURE__*/React.createElement("div", {
     className: "wrap"
   }, extra && /*#__PURE__*/React.createElement("div", {

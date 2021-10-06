@@ -74,11 +74,11 @@ var Popover = function Popover(props) {
       maskClass = props.maskClass,
       mountContainer = props.mountContainer,
       closeOnClickOutside = props.closeOnClickOutside,
-      _c = props.closeOnClickMask,
-      closeOnClickMask = _c === void 0 ? true : _c,
+      _c = props.closeOnMaskClick,
+      closeOnMaskClick = _c === void 0 ? true : _c,
       _d = props.offset,
       offset = _d === void 0 ? {} : _d,
-      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnClickMask", "offset"]);
+      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "offset"]);
 
   var childrenRef = useRef();
   var popoverRef = useRef(null);
@@ -154,7 +154,7 @@ var Popover = function Popover(props) {
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {
-      closeOnClickMask && (onClose === null || onClose === void 0 ? void 0 : onClose());
+      closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
   }), /*#__PURE__*/React.createElement(StyledPopover, __assign({
     ref: popoverRef,

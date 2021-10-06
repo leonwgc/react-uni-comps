@@ -268,7 +268,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         width: '100%',
       }}
       visible={visible}
-      onMaskClick={() => onClose?.()}
+      onClose={onClose}
     >
       <StyledBar className="bar">
         <div className="cancel" onClick={onClose}>

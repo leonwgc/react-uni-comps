@@ -131,7 +131,7 @@ export type Props = {
   /** 弹框className */
   className?: string;
   /** 点击遮罩是否关闭,默认true*/
-  closeOnClickMask?: boolean;
+  closeOnMaskClick?: boolean;
 };
 
 // type MousePosition = {
@@ -161,7 +161,7 @@ const Popup = (props: Props): React.ReactElement => {
     children,
     visible,
     onClose,
-    closeOnClickMask = true,
+    closeOnMaskClick = true,
     mask = true,
     maskStyle,
     maskClass,
@@ -206,7 +206,7 @@ const Popup = (props: Props): React.ReactElement => {
         <Mask
           className={maskClass}
           style={maskStyle}
-          onClick={() => closeOnClickMask && onClose?.()}
+          onClick={() => closeOnMaskClick && onClose?.()}
         />
       )}
       <Transition in={visible} timeout={duration}>

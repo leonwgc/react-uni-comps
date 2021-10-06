@@ -17,9 +17,7 @@ declare type Props = {
     cancelText?: string;
     /** 关闭时触发   */
     onClose?: () => void;
-    /** 点击遮罩层时触发   */
-    onMaskClick?: () => void;
-    /** 点击遮罩层后是否关闭   */
+    /** 点击遮罩是否关闭,默认true*/
     closeOnMaskClick?: boolean;
 } & HTMLAttributes<HTMLElement>;
 /** 动作面板 */
