@@ -123,7 +123,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       })}
       onClick={() => {
         if (disabled) return;
-        if (mode === 'checkbox' || c === false) {
+        if (mode === 'checkbox' || c !== true) {
           setC(!c);
         }
       }}

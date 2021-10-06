@@ -25,7 +25,10 @@ export default function App() {
 
       <Divider>radio</Divider>
       <Checkbox mode="radio" defaultChecked onChange={(c) => console.log(c)}>
-        uncontrolled check
+        radio
+      </Checkbox>
+      <Checkbox mode="radio" onChange={(c) => console.log(c)}>
+        radio1
       </Checkbox>
       <Divider>others</Divider>
       <Space wrap>
