@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled  from '../src/styled';
-import { Space, Checkbox } from '../src';
+import styled from '../src/styled';
+import { Space, Checkbox, Divider, Button } from '../src';
 
 const StyledContent = styled.div`
   .uc-checkbox {
@@ -9,16 +9,26 @@ const StyledContent = styled.div`
 `;
 
 export default function App() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   return (
     <StyledContent>
-      <Space wrap>
-        <Checkbox checked={checked} onChange={setChecked}>
-          hello
-        </Checkbox>
+      <Divider>controlled</Divider>
+      <Checkbox checked={checked} onChange={setChecked}>
+        controlled check
+      </Checkbox>
+      <Button onClick={() => setChecked(!checked)}>toggle checked outside</Button>
+      <Divider>uncontrolled</Divider>
+      <Checkbox defaultChecked onChange={(c) => console.log(c)}>
+        uncontrolled check
+      </Checkbox>
 
-        <Checkbox size={32} defaultChecked />
+      <Divider>radio</Divider>
+      <Checkbox mode="radio" defaultChecked onChange={(c) => console.log(c)}>
+        uncontrolled check
+      </Checkbox>
+      <Divider>others</Divider>
+      <Space wrap>
         <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
           good
         </Checkbox>
