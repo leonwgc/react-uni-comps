@@ -110,14 +110,14 @@ const StyledWrapper = styled.div`
 export type Props = {
   /** 是否可见 */
   visible?: boolean;
+  /**  关闭回调 */
+  onClose?: () => void;
   /** 是否显示遮罩，默认显示 */
   mask?: boolean;
   /** 遮罩样式 */
   maskStyle?: React.CSSProperties;
   /** 遮罩class*/
   maskClass?: string;
-  /** 遮罩点击事件 */
-  onMaskClick?: () => void;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
   position: 'top' | 'bottom' | 'left' | 'center' | 'right';
   /** 弹出动画时间，默认280ms */
@@ -130,6 +130,8 @@ export type Props = {
   style?: React.CSSProperties;
   /** 弹框className */
   className?: string;
+  /** 点击遮罩是否关闭,默认true*/
+  closeOnClickMask?: boolean;
 };
 
 // type MousePosition = {
@@ -158,10 +160,11 @@ const Popup = (props: Props): React.ReactElement => {
   const {
     children,
     visible,
+    onClose,
+    closeOnClickMask = true,
     mask = true,
     maskStyle,
     maskClass,
-    onMaskClick,
     position = 'bottom',
     duration = 160,
     mountContainer,
@@ -171,7 +174,6 @@ const Popup = (props: Props): React.ReactElement => {
   const wrapRef = useRef<HTMLDivElement>();
 
   // const lastMousePositionRef = useRef<MousePosition>();
-
   const mountNode = mountContainer?.() || document.body;
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
 
@@ -200,9 +202,13 @@ const Popup = (props: Props): React.ReactElement => {
 
   return ReactDOM.createPortal(
     <div className={clsx('uc-popup-container-' + position)}>
-      {mask && visible ? (
-        <Mask className={maskClass} style={maskStyle} onClick={onMaskClick} />
-      ) : null}
+      {mask && visible && (
+        <Mask
+          className={maskClass}
+          style={maskStyle}
+          onClick={() => closeOnClickMask && onClose?.()}
+        />
+      )}
       <Transition in={visible} timeout={duration}>
         {(status) => (
           <StyledWrapper

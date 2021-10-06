@@ -33,7 +33,7 @@ export default function App() {
         <Button onClick={() => setT(true)}>show top</Button>
       </Space>
 
-      <StyleedPopupBottom position="bottom" visible={b} onMaskClick={() => setB(false)}>
+      <StyleedPopupBottom position="bottom" visible={b} onClose={() => setB(false)}>
         <div className="content" ref={bRef}>
           <Button type="primary" onClick={() => setA(true)}>
             open alert
@@ -72,7 +72,7 @@ export default function App() {
         position="center"
         style={{ width: 300, height: 150, backgroundColor: '#fff' }}
         visible={c}
-        onMaskClick={() => setC(false)}
+        onClose={() => setC(false)}
       >
         <div
           style={{
@@ -88,13 +88,13 @@ export default function App() {
         position="left"
         style={{ width: '50vw', padding: 16, backgroundColor: '#fff' }}
         visible={l}
-        onMaskClick={() => setL(false)}
+        onClose={() => setL(false)}
       >
         <div>
           <Button onClick={() => setL(false)}>click to close</Button>
         </div>
       </Popup>
-      <Popup position="top" visible={t} onMaskClick={() => setT(false)}>
+      <Popup position="top" visible={t} onClose={() => setT(false)}>
         <div
           style={{
             display: 'flex',
