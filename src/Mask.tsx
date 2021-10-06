@@ -13,6 +13,7 @@ const StyledMask = styled.div`
   right: 0;
   width: 100%;
   transition: opacity 0.24s linear;
+  touch-action: none;
 
   &.from {
     opacity: 0.4;

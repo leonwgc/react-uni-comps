@@ -34,6 +34,7 @@ const StyledBar = styled.div`
   width: 100%;
   background-color: #fff;
   font-size: 16px;
+  touch-action: none;
 
   .ok {
     ${getThemeColorCss('color')}
@@ -52,6 +53,7 @@ const StyledPicker = styled.div`
   background-color: #fff;
   height: 245px;
   width: 100%;
+  touch-action: none;
 
   .mask {
     position: absolute;
