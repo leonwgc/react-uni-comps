@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Spinner, Slide, Switch, Space, Divider, Button, Cell } from '../src';
+import { Spinner, Slide, Switch, Space, Divider, Button, Cell, Toast } from '../src';
 import clsx from 'clsx';
 
 export default function App() {
@@ -9,15 +9,6 @@ export default function App() {
   const [isH, setisH] = useState(true);
   const ref = useRef();
   const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
-
-  useEffect(() => {
-    const handler = (e) => e.preventDefault();
-    window.addEventListener('touchmove', handler, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', handler);
-    };
-  }, []);
 
   return (
     <div className="app">
@@ -50,6 +41,7 @@ export default function App() {
               fontSize: 40,
               justifyContent: 'center',
             }}
+            onClick={() => Toast.show({ content: 'page' + (idx + 1) })}
           >
             page {idx + 1}
           </div>

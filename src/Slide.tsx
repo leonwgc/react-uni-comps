@@ -20,6 +20,7 @@ const StyledSlide = styled.div`
     display: flex;
     flex-wrap: nowrap;
     transition: transform 0.3s ease-in-out;
+    touch-action: none;
 
     &.vertical {
       flex-direction: column;

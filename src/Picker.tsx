@@ -231,7 +231,7 @@ const Wheel = (props) => {
         elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
       }}
     >
-      <div className="wrapper" style={{ width: 100 / cols + '%' }}>
+      <div className="wrapper" style={{ width: 100 / cols + '%', touchAction: 'none' }}>
         {data.map((item) => (
           <div className="item" key={item.value}>
             {item.label}

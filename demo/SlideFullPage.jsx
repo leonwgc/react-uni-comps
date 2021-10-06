@@ -12,20 +12,11 @@ const StyledSlidePage = styled.div`
 `;
 
 export default function SlideFullPage() {
-  useEffect(() => {
-    const handler = (e) => e.preventDefault();
-    window.addEventListener('touchmove', handler, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', handler);
-    };
-  }, []);
-
   return (
     <div>
       <Slide
         autoPlay={false}
-        direction="horizontal"
+        direction="vertical"
         height="100vh"
         showDot={false}
         loop={false}
