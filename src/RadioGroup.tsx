@@ -48,7 +48,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               disabled={disabled}
               key={option}
               onChange={(c) => onCheckboxChange(c, option)}
-              checked={value.indexOf(option) > -1}
+              checked={value === option}
             >
               {option}
             </Radio>
@@ -59,7 +59,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               disabled={disabled}
               key={option.value}
               onChange={(c) => onCheckboxChange(c, option.value)}
-              checked={value.indexOf(option.value) > -1}
+              checked={value === option.value}
             >
               {option.label}
             </Radio>
