@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Spinner, Space } from '../src';
+import { CSSTransition, Transition, TransitionGroup } from '../src/transition';
 
 export default function App() {
   return (
@@ -11,6 +12,14 @@ export default function App() {
         <Spinner color="red" size={48}></Spinner>
         <Spinner color="#004bcc"></Spinner>
         <Spinner color="#004bcc" size={48}></Spinner>
+        <TransitionGroup>
+          <CSSTransition>
+            <Spinner></Spinner>
+          </CSSTransition>
+          <Transition>
+            <Spinner></Spinner>
+          </Transition>
+        </TransitionGroup>
       </Space>
     </div>
   );
