@@ -28,6 +28,7 @@ const options2 = [
 export default function App() {
   const [v, setV] = useState('');
   const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
   const [data, setData] = useState({});
 
@@ -38,7 +39,7 @@ export default function App() {
     defaultCountdown: 15,
   });
 
-  const { tel } = data;
+  const { tel, id } = data;
 
   useBgColor('#f7f8fa');
 
@@ -72,14 +73,28 @@ export default function App() {
         }
       >
         <Input
-          type="text"
-          maxLength={11}
           onFocus={(e) => {
             e.target.blur();
             setVisible(true);
           }}
           value={tel}
           placeholder="请输入手机号"
+        />
+      </Cell>
+      <Cell
+        title={
+          <span>
+            <span style={{ color: 'red' }}>*</span> 身份证
+          </span>
+        }
+      >
+        <Input
+          onFocus={(e) => {
+            e.target.blur();
+            setVisible1(true);
+          }}
+          value={id}
+          placeholder="请输入身份证"
         />
       </Cell>
       <Cell title="antd输入框" description="antd">
@@ -153,6 +168,18 @@ export default function App() {
         visible={visible}
         onChange={(value) => {
           setData((d) => ({ ...d, tel: value }));
+        }}
+        onOk={(val) => {
+          Toast.show({ content: val, duration: 1000 });
+        }}
+      />
+      <NumberKeyboard
+        onClose={() => setVisible1(false)}
+        maxLength={18}
+        visible={visible1}
+        customKey="X"
+        onChange={(value) => {
+          setData((d) => ({ ...d, id: value }));
         }}
         onOk={(val) => {
           Toast.show({ content: val, duration: 1000 });
