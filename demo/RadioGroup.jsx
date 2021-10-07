@@ -8,9 +8,16 @@ const StyledContent = styled.div`
   }
 `;
 
+const options1 = [
+  { label: 'apple', value: 0 },
+  { label: 'banana', value: 1 },
+  { label: 'orange', value: 2 },
+];
+
 export default function App() {
   const [value, setValue] = useState();
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
+  const [v, setV] = useState();
 
   return (
     <StyledContent>
@@ -32,6 +39,15 @@ export default function App() {
         disabled
         value={value}
         onChange={(v) => setValue(v)}
+      ></RadioGroup>
+      <Divider>label/value options </Divider>
+      <RadioGroup
+        options={options1}
+        value={v}
+        onChange={(v) => {
+          console.log(v);
+          setV(v);
+        }}
       ></RadioGroup>
     </StyledContent>
   );
