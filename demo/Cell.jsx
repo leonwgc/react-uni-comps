@@ -1,16 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from '../src/styled';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Divider, Cell, Button, Checkbox, Switch, Input, NumberKeyboard } from '../src';
+import {
+  Divider,
+  Cell,
+  Button,
+  Checkbox,
+  Switch,
+  Input,
+  NumberKeyboard,
+  RadioGroup,
+  CheckboxGroup,
+} from '../src';
 import useBgColor from './hooks/useBgColor';
 
 const StyledApp = styled.div``;
 
+const options = [
+  { label: '选项A', value: 0 },
+  { label: '选项B', value: 1 },
+  { label: '选项C', value: 2 },
+];
+
 export default function App() {
   const [v, setV] = useState('');
   const [visible, setVisible] = useState(false);
-
+  const [options, setOptions] = useState(['item1', 'item2', 'item3']);
   const [data, setData] = useState({});
+
+  const [v1, setV1] = useState(1);
+  const [v2, setV2] = useState([]);
 
   const { tel } = data;
 
@@ -87,6 +106,18 @@ export default function App() {
       <Cell title="Switch" content={<Switch />}></Cell>
       <Cell title="Checkbox">
         <Checkbox>Checkbox</Checkbox>
+      </Cell>
+      <Cell title="多选">
+        <CheckboxGroup options={options} value={v2} onChange={setV2} />
+      </Cell>
+      <Cell title="多选按钮">
+        <CheckboxGroup options={options} value={v2} onChange={setV2} button />
+      </Cell>
+      <Cell title="单选">
+        <RadioGroup options={options} value={v1} onChange={setV1} />
+      </Cell>
+      <Cell title="单选按钮">
+        <RadioGroup options={options} value={v1} onChange={setV1} button="fill" />
       </Cell>
       <Cell title="Switch" lineColor="transparent">
         <Switch />

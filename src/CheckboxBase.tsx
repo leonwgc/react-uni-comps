@@ -60,6 +60,10 @@ const StyledCheckboxBaseWrapper = styled.div`
   user-select: none;
   vertical-align: middle;
 
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+
   .text {
     margin-left: 8px;
   }
