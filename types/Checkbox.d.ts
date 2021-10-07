@@ -1,6 +1,8 @@
 import React from 'react';
 /** 复选框 */
 declare const Checkbox: React.ForwardRefExoticComponent<{
+    /** 按钮风格，默认false */
+    button?: boolean | 'fill' | 'outline';
     /** box宽高，默认18 */
     size?: number;
     /** checked状态改变回调 */

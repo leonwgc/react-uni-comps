@@ -53,12 +53,14 @@ var NumberKeyboard = function NumberKeyboard(props) {
       okText = props.okText,
       _a = props.closeOnMaskClick,
       closeOnMaskClick = _a === void 0 ? true : _a,
+      maxLength = props.maxLength,
       _b = props.customKey,
       customKey = _b === void 0 ? '' : _b,
+      onOk = props.onOk,
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = __rest(props, ["visible", "okText", "closeOnMaskClick", "customKey", "onClose", "onChange", "className"]);
+      rest = __rest(props, ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"]);
 
   var _c = useState(''),
       value = _c[0],
@@ -81,15 +83,18 @@ var NumberKeyboard = function NumberKeyboard(props) {
     customKey: customKey,
     onClick: function onClick(k) {
       if (k === 'ok') {
+        onOk === null || onOk === void 0 ? void 0 : onOk(value);
         onClose === null || onClose === void 0 ? void 0 : onClose();
       } else if (k === 'backspace') {
         if (value.length) {
           setValue(value.slice(0, value.length - 1));
         }
       } else {
-        setValue(function (v) {
-          return v + k;
-        });
+        if (typeof maxLength === 'number' && value.length < maxLength || typeof maxLength === 'undefined') {
+          setValue(function (v) {
+            return v + k;
+          });
+        }
       }
     }
   }));

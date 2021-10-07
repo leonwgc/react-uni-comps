@@ -4,6 +4,8 @@ declare type labelValue = {
     value: string | number;
 };
 declare type Props = {
+    /** 按钮风格，默认false */
+    button?: boolean | 'fill' | 'outline';
     /** 受控模式下的默认值 */
     value?: string[];
     /** 禁用 */

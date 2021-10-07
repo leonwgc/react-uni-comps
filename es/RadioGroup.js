@@ -49,13 +49,14 @@ var StyledRadioGroup = styled.div(templateObject_1 || (templateObject_1 = __make
 
 var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
+      button = props.button,
       onChange = props.onChange,
       _a = props.options,
       options = _a === void 0 ? [] : _a,
       _b = props.value,
       value = _b === void 0 ? [] : _b,
       disabled = props.disabled,
-      rest = __rest(props, ["className", "onChange", "options", "value", "disabled"]);
+      rest = __rest(props, ["className", "button", "onChange", "options", "value", "disabled"]);
 
   var onChangeRef = useCallbackRef(onChange);
   var onCheckboxChange = useCallback(function (checked, v) {
@@ -71,6 +72,7 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), options.map(function (option) {
     if (typeof option === 'string') {
       return /*#__PURE__*/React.createElement(Radio, {
+        button: button,
         disabled: disabled,
         key: option,
         onChange: function onChange(c) {
@@ -80,6 +82,7 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }, option);
     } else {
       return /*#__PURE__*/React.createElement(Radio, {
+        button: button,
         disabled: disabled,
         key: option.value,
         onChange: function onChange(c) {
