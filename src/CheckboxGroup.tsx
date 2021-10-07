@@ -10,6 +10,8 @@ type labelValue = {
 };
 
 type Props = {
+  /** 按钮风格，默认false */
+  button?: boolean | 'fill' | 'outline';
   /** 受控模式下的默认值 */
   value?: string[];
   /** 禁用 */
@@ -26,7 +28,7 @@ const StyledCheckboxGroup = styled.div``;
 
 /** 一组复选框 */
 const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, onChange, options = [], value = [], disabled, ...rest } = props;
+  const { className, button, onChange, options = [], value = [], disabled, ...rest } = props;
 
   const onChangeRef = useCallbackRef(onChange);
 
@@ -53,6 +55,7 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         if (typeof option === 'string') {
           return (
             <Checkbox
+              button={button}
               disabled={disabled}
               key={option}
               onChange={(c) => onCheckboxChange(c, option)}
@@ -64,6 +67,7 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         } else {
           return (
             <Checkbox
+              button={button}
               disabled={disabled}
               key={option.value}
               onChange={(c) => onCheckboxChange(c, option.value)}

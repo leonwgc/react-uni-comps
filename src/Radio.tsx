@@ -2,6 +2,8 @@ import React, { HTMLAttributes } from 'react';
 import CheckboxBase from './CheckboxBase';
 
 type Props = {
+  /** 按钮风格，默认false */
+  button?: boolean | 'fill' | 'outline';
   /** box宽高，默认20 */
   size?: number;
   /** checked状态改变回调 */

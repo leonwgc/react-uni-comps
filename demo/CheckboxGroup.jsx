@@ -8,6 +8,12 @@ const StyledContent = styled.div`
   }
 `;
 
+const StyledCheckboxGroup = styled(CheckboxGroup)`
+  .uc-btn {
+    border-radius: 30px;
+  }
+`;
+
 const options1 = [
   { label: 'apple', value: 0 },
   { label: 'banana', value: 1 },
@@ -17,7 +23,7 @@ const options1 = [
 export default function App() {
   const [value, setValue] = useState();
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
-  const [v, setV] = useState();
+  const [v, setV] = useState([1]);
 
   return (
     <StyledContent>
@@ -50,6 +56,42 @@ export default function App() {
           setV(v);
         }}
       ></CheckboxGroup>
+
+      <Divider>button style </Divider>
+      <CheckboxGroup
+        button
+        options={options1}
+        value={v}
+        onChange={(v) => {
+          console.log(v);
+          setV(v);
+        }}
+      ></CheckboxGroup>
+
+      <div style={{ marginTop: 20 }}>
+        <StyledCheckboxGroup
+          button="fill"
+          options={options1}
+          value={v}
+          onChange={(v) => {
+            console.log(v);
+            setV(v);
+          }}
+        ></StyledCheckboxGroup>
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <StyledCheckboxGroup
+          disabled
+          button="fill"
+          options={options1}
+          value={v}
+          onChange={(v) => {
+            console.log(v);
+            setV(v);
+          }}
+        ></StyledCheckboxGroup>
+      </div>
     </StyledContent>
   );
 }

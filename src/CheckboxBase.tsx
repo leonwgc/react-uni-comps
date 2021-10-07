@@ -7,8 +7,11 @@ import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useCallbackRef from './hooks/useCallbackRef';
+import Button from './Button';
 
 type Props = {
+  /** 按钮风格，默认false */
+  button?: boolean | 'fill' | 'outline';
   /** box宽高，默认18 */
   size?: number;
   /** checked状态改变回调 */
@@ -30,6 +33,25 @@ type Props = {
   /** 根据 value 进行比较，判断是否选中, 用于list */
   value?: string | number;
 } & HTMLAttributes<HTMLDivElement>;
+
+const StyledButton = styled(Button)`
+  &.fill {
+    &.checked {
+      ${getThemeColorCss('background-color')}
+      ${getThemeColorCss('border-color')}
+    color: #fff;
+    }
+  }
+  &.outline {
+    &.checked {
+      ${getThemeColorCss('border-color')}
+      ${getThemeColorCss('color')}
+    }
+  }
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+`;
 
 const StyledCheckboxBaseWrapper = styled.div`
   display: inline-flex;
@@ -89,6 +111,7 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     size = 18,
     className,
+    button = false,
     onChange,
     style,
     defaultChecked,
@@ -112,7 +135,24 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [checked]);
 
-  return (
+  return button ? (
+    <StyledButton
+      onClick={() => {
+        if (disabled) return;
+        if (mode === 'checkbox' || c !== true) {
+          setC(!c);
+        }
+      }}
+      className={clsx({
+        fill: button === 'fill',
+        outline: button === 'outline' || button === true,
+        checked: c,
+        disabled: disabled,
+      })}
+    >
+      {children}
+    </StyledButton>
+  ) : (
     <StyledCheckboxBaseWrapper
       ref={ref}
       className={clsx('uc-checkbox', mode, {
