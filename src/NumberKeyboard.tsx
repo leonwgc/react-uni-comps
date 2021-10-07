@@ -8,6 +8,8 @@ import Popup from './Popup';
 type Props = {
   /** 是否弹出 */
   visible: boolean;
+  /** 输入最长长度 */
+  maxLength?: number;
   /** 关闭 */
   onClose: () => void;
   className?: string;
@@ -32,6 +34,7 @@ const NumberKeyboard = (props: Props): React.ReactElement => {
     visible,
     okText,
     closeOnMaskClick = true,
+    maxLength,
     customKey = '',
     onClose,
     onChange,
@@ -65,7 +68,12 @@ const NumberKeyboard = (props: Props): React.ReactElement => {
               setValue(value.slice(0, value.length - 1));
             }
           } else {
-            setValue((v) => v + k);
+            if (
+              (typeof maxLength === 'number' && value.length < maxLength) ||
+              typeof maxLength === 'undefined'
+            ) {
+              setValue((v) => v + k);
+            }
           }
         }}
       />

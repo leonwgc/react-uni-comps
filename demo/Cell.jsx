@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from '../src/styled';
+import { useCountdown } from 'react-use-lib';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
   Divider,
@@ -11,12 +12,13 @@ import {
   NumberKeyboard,
   RadioGroup,
   CheckboxGroup,
+  Radio,
 } from '../src';
 import useBgColor from './hooks/useBgColor';
 
 const StyledApp = styled.div``;
 
-const options = [
+const options2 = [
   { label: '选项A', value: 0 },
   { label: '选项B', value: 1 },
   { label: '选项C', value: 2 },
@@ -28,8 +30,12 @@ export default function App() {
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
   const [data, setData] = useState({});
 
-  const [v1, setV1] = useState(1);
-  const [v2, setV2] = useState([]);
+  const [v1, setV1] = useState('item2');
+  const [v2, setV2] = useState([2]);
+
+  const { countdown, started, start, stop } = useCountdown({
+    defaultCountdown: 15,
+  });
 
   const { tel } = data;
 
@@ -55,7 +61,7 @@ export default function App() {
           </span>
         }
       >
-        <Input type="text" placeholder="username" />
+        <Input type="text" placeholder="请输入用户名" />
       </Cell>
       <Cell
         title={
@@ -66,6 +72,7 @@ export default function App() {
       >
         <Input
           type="text"
+          maxLength={11}
           onFocus={(e) => {
             e.target.blur();
             setVisible(true);
@@ -102,22 +109,33 @@ export default function App() {
           suffix={<span>{v.length}/60</span>}
         />
       </Cell>
-      <Cell title="Checkbox" content={<Checkbox>Checkbox</Checkbox>}></Cell>
+      <Cell title="Radio" content={<Radio>hello</Radio>}></Cell>
       <Cell title="Switch" content={<Switch />}></Cell>
       <Cell title="Checkbox">
         <Checkbox>Checkbox</Checkbox>
       </Cell>
       <Cell title="多选">
-        <CheckboxGroup options={options} value={v2} onChange={setV2} />
+        <CheckboxGroup options={options2} value={v2} onChange={setV2} />
       </Cell>
       <Cell title="多选按钮">
-        <CheckboxGroup options={options} value={v2} onChange={setV2} button />
+        <CheckboxGroup options={options2} value={v2} onChange={setV2} button />
       </Cell>
       <Cell title="单选">
         <RadioGroup options={options} value={v1} onChange={setV1} />
       </Cell>
       <Cell title="单选按钮">
         <RadioGroup options={options} value={v1} onChange={setV1} button="fill" />
+      </Cell>
+      <Cell title="短信验证码">
+        <Input
+          placeholder="请输入验证码"
+          maxLength={6}
+          suffix={
+            <span style={{ color: '#FF5D0D' }} onClick={started ? null : start}>
+              {started ? countdown + '秒' : '获取验证码'}
+            </span>
+          }
+        />
       </Cell>
       <Cell title="Switch" lineColor="transparent">
         <Switch />
@@ -130,6 +148,7 @@ export default function App() {
       </div>
       <NumberKeyboard
         onClose={() => setVisible(false)}
+        maxLength={11}
         visible={visible}
         onChange={(value) => {
           setData((d) => ({ ...d, tel: value }));
