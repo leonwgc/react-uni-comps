@@ -10,6 +10,8 @@ type Props = {
   visible: boolean;
   /** 输入最长长度 */
   maxLength?: number;
+  /** Ok按键回调 */
+  onOk?: (str: string) => void;
   /** 关闭 */
   onClose: () => void;
   className?: string;
@@ -36,6 +38,7 @@ const NumberKeyboard = (props: Props): React.ReactElement => {
     closeOnMaskClick = true,
     maxLength,
     customKey = '',
+    onOk,
     onClose,
     onChange,
     className,
@@ -62,6 +65,7 @@ const NumberKeyboard = (props: Props): React.ReactElement => {
         customKey={customKey}
         onClick={(k) => {
           if (k === 'ok') {
+            onOk?.(value);
             onClose?.();
           } else if (k === 'backspace') {
             if (value.length) {

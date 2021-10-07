@@ -13,6 +13,7 @@ import {
   RadioGroup,
   CheckboxGroup,
   Radio,
+  Toast,
 } from '../src';
 import useBgColor from './hooks/useBgColor';
 
@@ -152,6 +153,9 @@ export default function App() {
         visible={visible}
         onChange={(value) => {
           setData((d) => ({ ...d, tel: value }));
+        }}
+        onOk={(val) => {
+          Toast.show({ content: val, duration: 1000 });
         }}
       />
     </StyledApp>
