@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { Avatar, Image } from 'antd';
-import { Skeleton, Switch, Space } from 'react-uni-comps';
+import { Skeleton, Switch, Space } from '../src';
 
 const StyledContent = styled.div`
   .article {

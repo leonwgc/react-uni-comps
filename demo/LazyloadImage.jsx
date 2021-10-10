@@ -1,5 +1,5 @@
 import React from 'react';
-import { LazyLoadImage, Space } from 'react-uni-comps';
+import { LazyLoadImage, Space } from '../src';
 
 const LazyloadImage = () => {
   let arr = Array.from(new Array(20), (v, k) => k + 1);
