@@ -11159,9 +11159,10 @@ vite@^2.6.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vited@2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/vited/-/vited-2.2.5.tgz#9637a4df9858083b3ff51592db7c37d8a27c0ca4"
+vited@2.2.6:
+  version "2.2.6"
+  resolved "https://registry.npmjs.org/vited/-/vited-2.2.6.tgz#3815d27d1fb084e0ee062a9c0ba6f6fea1393ff2"
+  integrity sha512-iIwbpoDt2U+qaVeEepGcMV5EkXhsXUtcdHM71qKLhDsVpAmZblvHV8xK1eI+Qa9MAzbAos9tziVl0ILJQ7Uxkw==
   dependencies:
     "@babel/cli" "^7.15.7"
     "@babel/core" "^7.15.8"
