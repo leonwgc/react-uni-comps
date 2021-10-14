@@ -1,5 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Space, Popover, Button } from '../src';
+import styled from '../src/styled';
+
+const StyledPopover = styled(Popover)`
+  font-size: 14px;
+  padding: 12px;
+  color: red;
+  background-color: #eee;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const places = [
   {
@@ -101,19 +114,19 @@ export default function App() {
 
   return (
     <div style={{ paddingLeft: '30vw' }}>
-      <Popover
-        placement="bottom-right"
+      <StyledPopover
+        placement="right"
         mask
         closable
         onClose={() => setV(false)}
         closeOnClickMask={false}
         visible={v}
-        content={<div style={{ height: 200, width: 200, background: '#fff' }}>menus</div>}
+        content={'hello,popover'}
       >
         <Button style={{ position: 'fixed', top: 200, left: 100 }} onClick={() => setV(true)}>
           back drop fixed
         </Button>
-      </Popover>
+      </StyledPopover>
 
       <Popover
         placement="bottom"
