@@ -1,13 +1,23 @@
 import React from 'react';
 import { Placement } from './popovers/types';
-export declare type Props = {
-    title?: React.ReactNode;
-    arrow?: boolean;
-    bgColor?: string;
-    placement?: Placement;
-    children: React.ReactElement;
+declare type Offset = {
+    x?: number;
+    y?: number;
 };
-/** 文字提示 */
+export declare type Props = {
+    className?: string;
+    /** tooltip显示的内容 */
+    title?: React.ReactNode;
+    /** 显示箭头,默认显示 */
+    arrow?: boolean;
+    /** 显示位置,参考popover */
+    placement?: Placement;
+    /** 需要tooltip的子元素 */
+    children: React.ReactElement;
+    /** 弹框自定义偏移 */
+    offset?: Offset;
+};
+/** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {
     (props: Props): React.ReactElement;
     displayName: string;

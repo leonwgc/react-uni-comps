@@ -6,27 +6,31 @@ import clsx from 'clsx';
 
 const StylePopover = styled(Popover)`
   color: #fff;
-  padding: 8px;
   opacity: 0.85;
-
-  .uc-tooltip-content {
-    display: inline-block;
-    min-width: 30px;
-    max-width: 240px;
-  }
+  background-color: rgb(0, 0, 0);
+  padding: 12px;
+  width: 240px;
 `;
 
+type Offset = { x?: number; y?: number };
+
 export type Props = {
+  className?: string;
+  /** tooltip显示的内容 */
   title?: React.ReactNode;
+  /** 显示箭头,默认显示 */
   arrow?: boolean;
-  bgColor?: string;
+  /** 显示位置,参考popover */
   placement?: Placement;
+  /** 需要tooltip的子元素 */
   children: React.ReactElement;
+  /** 弹框自定义偏移 */
+  offset?: Offset;
 };
 
-/** 文字提示 */
+/** 文字提示气泡框, 基于Popover */
 const Tooltip = (props: Props): React.ReactElement => {
-  const { title, bgColor = 'black', placement = 'top', arrow = true, children } = props;
+  const { title, placement = 'top', arrow = true, offset, className, children } = props;
   // 鼠标移到popover内容区，不关闭popover
   const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
@@ -51,25 +55,14 @@ const Tooltip = (props: Props): React.ReactElement => {
     },
   };
 
-  const titleRender = () => {
-    const otherProps = {
-      className: clsx('uc-tooltip-content'),
-    };
-    if (React.isValidElement(title)) {
-      return React.cloneElement(title, otherProps);
-    } else {
-      return <span {...otherProps}>{title}</span>;
-    }
-  };
-
   return (
     <StylePopover
-      className={clsx('uc-tooltip')}
-      style={{ background: bgColor }}
+      className={clsx('uc-tooltip', className)}
       visible={visible}
       placement={placement}
-      content={titleRender()}
+      content={title}
       arrow={arrow}
+      offset={offset}
       {...actionProps}
     >
       {React.isValidElement(children) ? (

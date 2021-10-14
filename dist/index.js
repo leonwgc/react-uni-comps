@@ -3256,17 +3256,17 @@ var Popover = function Popover(props) {
 };
 
 var _templateObject$n;
-var StylePopover = styled__default['default'](Popover)(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 8px;\n  opacity: 0.85;\n\n  .uc-tooltip-content {\n    display: inline-block;\n    min-width: 30px;\n    max-width: 240px;\n  }\n"])));
+var StylePopover = styled__default['default'](Popover)(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n  width: 240px;\n"])));
 
-/** 文字提示 */
+/** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
   var title = props.title,
-      _props$bgColor = props.bgColor,
-      bgColor = _props$bgColor === void 0 ? 'black' : _props$bgColor,
       _props$placement = props.placement,
       placement = _props$placement === void 0 ? 'top' : _props$placement,
       _props$arrow = props.arrow,
       arrow = _props$arrow === void 0 ? true : _props$arrow,
+      offset = props.offset,
+      className = props.className,
       children = props.children; // 鼠标移到popover内容区，不关闭popover
 
   var ref = React.useRef(0);
@@ -3297,28 +3297,13 @@ var Tooltip = function Tooltip(props) {
       setVisible(true);
     }
   };
-
-  var titleRender = function titleRender() {
-    var otherProps = {
-      className: clsx__default['default']('uc-tooltip-content')
-    };
-
-    if ( /*#__PURE__*/React__default['default'].isValidElement(title)) {
-      return /*#__PURE__*/React__default['default'].cloneElement(title, otherProps);
-    } else {
-      return /*#__PURE__*/React__default['default'].createElement("span", otherProps, title);
-    }
-  };
-
   return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({
-    className: clsx__default['default']('uc-tooltip'),
-    style: {
-      background: bgColor
-    },
+    className: clsx__default['default']('uc-tooltip', className),
     visible: visible,
     placement: placement,
-    content: titleRender(),
-    arrow: arrow
+    content: title,
+    arrow: arrow,
+    offset: offset
   }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, actionProps) : /*#__PURE__*/React__default['default'].createElement("span", actionProps, children));
 };
 
