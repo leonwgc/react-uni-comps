@@ -31,7 +31,7 @@ export default function App() {
             })
           }
         >
-          Toast.show loading
+          loading & maskStyle
         </Button>
 
         <Button
@@ -105,7 +105,6 @@ export default function App() {
           onClick={() =>
             Toast.show({
               content: 'hello,world',
-              modal: true,
               style: {
                 top: 'unset',
                 bottom: 10,
@@ -115,7 +114,7 @@ export default function App() {
             })
           }
         >
-          Toast.show, modal
+          Toast.show, buttom
         </Button>
 
         <Button onClick={() => setV((v) => !v)}>Toast comp toggle</Button>

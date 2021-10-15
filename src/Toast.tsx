@@ -86,10 +86,10 @@ Toast.show = (props: StaticToastProps) => {
   const { duration = 3000, ...rest } = props;
   const container = getContainer();
 
-  ReactDOM.render(<Toast {...rest} visible />, container);
+  ReactDOM.render(<Toast modal {...rest} visible />, container);
 
   window.setTimeout(() => {
-    ReactDOM.render(<Toast {...rest} visible={false} />, container);
+    ReactDOM.unmountComponentAtNode(container);
   }, duration);
 };
 
