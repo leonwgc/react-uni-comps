@@ -198,7 +198,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           }
         }}
         onPressMove={(e) => {
-          e.preventDefault();
           const v = thisRef.current;
           v.x += e.deltaX;
           // x<0:swipe left & show right

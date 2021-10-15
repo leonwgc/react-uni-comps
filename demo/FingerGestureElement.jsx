@@ -27,22 +27,17 @@ export default function App() {
           console.log('tap');
         }}
         onPinch={(e) => {
-          e.preventDefault();
           thisRef.current.scale = e.scale;
           e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
         }}
         onRotate={(e) => {
-          e.preventDefault();
-
           thisRef.current.rotate += e.angle;
           e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
         }}
         onSwipe={(e) => {
-          e.preventDefault();
           console.log('swipe', e.direction);
         }}
         onPressMove={(e) => {
-          e.preventDefault();
           thisRef.current.x += e.deltaX;
           thisRef.current.y += e.deltaY;
           e.target.style.transform = `scale(${thisRef.current.scale}) rotate(${thisRef.current.rotate}deg) translate(${thisRef.current.x}px,${thisRef.current.y}px)`;
