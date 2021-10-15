@@ -9,10 +9,12 @@ const StylePopover = styled(Popover)`
   opacity: 0.85;
   background-color: rgb(0, 0, 0);
   padding: 12px;
-  width: 240px;
 `;
 
 type Offset = { x?: number; y?: number };
+
+// 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
+const mouseLeaveDelay = 100;
 
 export type Props = {
   className?: string;
@@ -45,7 +47,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     onMouseLeave: () => {
       ref.current = window.setTimeout(() => {
         setVisible(false);
-      }, 300);
+      }, mouseLeaveDelay);
     },
     onFocus: () => {
       if (ref.current) {

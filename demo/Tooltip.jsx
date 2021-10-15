@@ -7,8 +7,8 @@ const StyledToolTip = styled(Tooltip)`
   padding: 12px;
   color: red;
   background-color: #eee;
-  width: 300px;
-  height: 150px;
+  width: 200px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,20 +17,15 @@ const StyledToolTip = styled(Tooltip)`
 export default function App() {
   return (
     <Space direction="vertical" size={50} style={{ margin: '40vw 0 0 20vw' }}>
-      <StyledToolTip title="modal的bottom-border紧贴内容的top-border，right-borders水平对齐">
+      <StyledToolTip title="Tooltip text">
         <Button>hello</Button>
       </StyledToolTip>
 
-      <Tooltip
-        offset={{ x: -10, y: 15 }}
-        arrow={false}
-        placement="right"
-        title="modal的bottom-border紧贴内容的top-border，right-borders水平对齐"
-      >
+      <Tooltip offset={{ x: -10, y: 15 }} arrow={false} placement="right" title="Tooltip text">
         <Button>right</Button>
       </Tooltip>
 
-      <Tooltip title="modal的bottom-border紧贴内容的top-border，right-borders水平对齐">
+      <Tooltip title="Tooltip text">
         <Button>hello</Button>
       </Tooltip>
     </Space>
