@@ -11,6 +11,7 @@ declare type Props = {
     visible: boolean;
     /** 面板选项列表   */
     actions: Action[];
+    className?: string;
     /** 顶部的额外区域   */
     extra?: React.ReactNode;
     /** 取消按钮文字，如果设置为空则不显示取消按钮   */

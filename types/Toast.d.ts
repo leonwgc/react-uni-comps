@@ -21,7 +21,7 @@ declare const Toast: {
 declare type StaticToastProps = {
     /** 内容 */
     content: React.ReactNode;
-    /** 持续显示时间，默认3000ms */
+    /** 持续显示时间，默认2000ms */
     duration?: number;
     /** 模态, 默认true */
     modal?: boolean;

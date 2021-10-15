@@ -96,17 +96,17 @@ var Toast = function Toast(props) {
 
 Toast.show = function (props) {
   var _a = props.duration,
-      duration = _a === void 0 ? 3000 : _a,
+      duration = _a === void 0 ? 2000 : _a,
       rest = __rest(props, ["duration"]);
 
   var container = getContainer();
-  ReactDOM.render( /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {
+  ReactDOM.render( /*#__PURE__*/React.createElement(Toast, __assign({
+    modal: true
+  }, rest, {
     visible: true
   })), container);
   window.setTimeout(function () {
-    ReactDOM.render( /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {
-      visible: false
-    })), container);
+    ReactDOM.unmountComponentAtNode(container);
   }, duration);
 };
 

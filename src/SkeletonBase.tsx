@@ -46,10 +46,10 @@ const SkeletonBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <StyledSkeletonBase
+      {...rest}
       ref={ref}
       className={clsx('uc-skeleton', shape, { pulse: animate }, className)}
       style={{ width, height, ...style }}
-      {...rest}
     />
   );
 });

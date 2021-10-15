@@ -58,7 +58,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       className = props.className,
       rest = __rest(props, ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"]);
 
-  return /*#__PURE__*/React.createElement(StyledFileInputTrigger, __assign({
+  return /*#__PURE__*/React.createElement(StyledFileInputTrigger, __assign({}, rest, {
     onClick: function onClick() {
       inputRef.current.value = '';
       inputRef.current.click();
@@ -66,7 +66,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
     className: clsx('uc-file-input-trigger', className, {
       disabled: disabled
     })
-  }, rest), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("input", {
     style: {
       display: 'none'
     },

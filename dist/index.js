@@ -1197,11 +1197,11 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       color = _props$color === void 0 ? '#dcdcdc' : _props$color,
       rest = _objectWithoutProperties(props, _excluded$5);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({}, rest, {
     ref: ref,
     position: position,
     color: color
-  }, rest));
+  }));
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 
@@ -1935,7 +1935,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       className = _other$className === void 0 ? '' : _other$className,
       rest = _objectWithoutProperties(other, _excluded2);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-skeleton', shape, {
       pulse: animate
@@ -1944,7 +1944,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       width: width,
       height: height
     }, style)
-  }, rest));
+  }));
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 
@@ -1999,11 +1999,11 @@ var Skeleton = function Skeleton(props) {
       className = _other$className === void 0 ? '' : _other$className,
       rest = _objectWithoutProperties(other, _excluded2$1);
 
-  return loading ? avatar ? /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({
+  return loading ? avatar ? /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
     className: clsx__default['default']({
       avatar: avatar
     }, className)
-  }, rest), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
+  }), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
     animate: animate,
     shape: "circle",
     className: "avatar",
@@ -2019,14 +2019,14 @@ var Skeleton = function Skeleton(props) {
       width: v,
       height: rowHeight
     });
-  }))) : /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({
+  }))) : /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
     style: {
       display: 'block'
     },
     className: clsx__default['default']({
       avatar: avatar
     }, className)
-  }, rest), rowWidthAr.map(function (v, idx) {
+  }), rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
       animate: animate,
       key: idx,
@@ -2056,11 +2056,11 @@ var IconTick = /*#__PURE__*/React__default['default'].forwardRef(function (props
       size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$a);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledTick, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledTick, _extends({}, rest, {
     className: clsx__default['default']('uc-icon-tick'),
     ref: ref,
     size: size
-  }, rest), /*#__PURE__*/React__default['default'].createElement("svg", {
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
     width: size,
     viewBox: "0 0 12 12",
     xmlns: "http://www.w3.org/2000/svg"
@@ -2126,7 +2126,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spinner, {
     color: type === 'primary' ? '#fff' : '#999'
   }) : null);
-  return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
     ref: ref,
     disabled: disabled,
     type: htmlType,
@@ -2141,7 +2141,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       pc: !isMobile,
       anchor: rest.as === 'a'
     }, className)
-  }, rest), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : icon ? icon : children);
+  }), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : icon ? icon : children);
 });
 Button.displayName = 'UC-Button';
 
@@ -2520,7 +2520,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$i);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({}, rest, {
     onClick: function onClick() {
       inputRef.current.value = '';
       inputRef.current.click();
@@ -2528,7 +2528,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
     className: clsx__default['default']('uc-file-input-trigger', className, {
       disabled: disabled
     })
-  }, rest), /*#__PURE__*/React__default['default'].createElement("input", {
+  }), /*#__PURE__*/React__default['default'].createElement("input", {
     style: {
       display: 'none'
     },
@@ -2769,11 +2769,11 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       color = _props$color === void 0 ? 'currentColor' : _props$color,
       rest = _objectWithoutProperties(props, _excluded$k);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledCross, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledCross, _extends({}, rest, {
     className: clsx__default['default']('uc-icon-cross'),
     ref: ref,
     size: size
-  }, rest), /*#__PURE__*/React__default['default'].createElement("svg", {
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
     width: size,
     height: size,
     viewBox: "0 0 48 48",
@@ -3237,13 +3237,13 @@ var Popover = function Popover(props) {
     onClick: function onClick() {
       closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
-  }), /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({
+  }), /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({}, rest, {
     ref: popoverRef,
     className: clsx__default['default'](className, 'uc-popover', {
       mask: mask
     }),
     style: _objectSpread2(_objectSpread2({}, modalStyle), style)
-  }, rest), arrow && /*#__PURE__*/React__default['default'].createElement("span", {
+  }), arrow && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('uc-popover-arrow'),
     style: arrowStyle
   }), closable && /*#__PURE__*/React__default['default'].createElement(IconCross, {
@@ -3256,7 +3256,9 @@ var Popover = function Popover(props) {
 };
 
 var _templateObject$n;
-var StylePopover = styled__default['default'](Popover)(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n  width: 240px;\n"])));
+var StylePopover = styled__default['default'](Popover)(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"])));
+// 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
+var mouseLeaveDelay = 100;
 
 /** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
@@ -3287,7 +3289,7 @@ var Tooltip = function Tooltip(props) {
     onMouseLeave: function onMouseLeave() {
       ref.current = window.setTimeout(function () {
         setVisible(false);
-      }, 300);
+      }, mouseLeaveDelay);
     },
     onFocus: function onFocus() {
       if (ref.current) {
@@ -3601,17 +3603,17 @@ var Toast = function Toast(props) {
 /** 黑背景提示,静态调用 */
 Toast.show = function (props) {
   var _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 3000 : _props$duration,
+      duration = _props$duration === void 0 ? 2000 : _props$duration,
       rest = _objectWithoutProperties(props, _excluded2$2);
 
   var container = getContainer();
-  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
+  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({
+    modal: true
+  }, rest, {
     visible: true
   })), container);
   window.setTimeout(function () {
-    ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
-      visible: false
-    })), container);
+    ReactDOM__default['default'].unmountComponentAtNode(container);
   }, duration);
 };
 
@@ -3712,12 +3714,12 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     text.style.transitionDuration = "".concat(Math.round((container.offsetWidth + text.offsetWidth) / speed), "s");
     text.style.transform = "translateX(-".concat(text.offsetWidth, "px)"); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [v]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeBar, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeBar, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className, 'uc-noticebar', {
       hide: !visible
     })
-  }, rest), icon && /*#__PURE__*/React__default['default'].createElement("div", {
+  }), icon && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content-wrap",
@@ -3902,7 +3904,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
-var _excluded$r = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "extra"];
+var _excluded$r = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
 
 var _templateObject$s;
 var StyledActionSheet = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
@@ -3918,16 +3920,17 @@ var ActionSheet = function ActionSheet(props) {
       _props$closeOnMaskCli = props.closeOnMaskClick,
       closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
       onClose = props.onClose,
+      className = props.className,
       extra = props.extra,
       rest = _objectWithoutProperties(props, _excluded$r);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({
-    className: clsx__default['default']('uc-actionsheet'),
+  return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
+    className: clsx__default['default']('uc-actionsheet', className),
     visible: visible,
     position: "bottom",
     closeOnMaskClick: closeOnMaskClick,
     onClose: onClose
-  }, rest), /*#__PURE__*/React__default['default'].createElement("div", {
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "wrap"
   }, extra && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "extra"
@@ -4547,7 +4550,6 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       }
     },
     onPressMove: function onPressMove(e) {
-      e.preventDefault();
       var v = thisRef.current;
       v.x += e.deltaX; // x<0:swipe left & show right
 
@@ -5099,12 +5101,12 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       };
     }
   }, [stayTime, data, visible]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeList, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledNoticeList, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className, 'uc-noticelist', {
       hide: !visible
     })
-  }, rest), icon && /*#__PURE__*/React__default['default'].createElement("div", {
+  }), icon && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content-wrap",

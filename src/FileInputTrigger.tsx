@@ -31,12 +31,12 @@ const FileInputTrigger = (props: Props): React.ReactElement => {
 
   return (
     <StyledFileInputTrigger
+      {...rest}
       onClick={() => {
         inputRef.current.value = '';
         inputRef.current.click();
       }}
       className={clsx('uc-file-input-trigger', className, { disabled: disabled })}
-      {...rest}
     >
       <input
         style={{ display: 'none' }}

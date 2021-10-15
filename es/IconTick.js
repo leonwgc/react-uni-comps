@@ -58,11 +58,11 @@ var IconTick = /*#__PURE__*/React.forwardRef(function (props, ref) {
       size = _b === void 0 ? 16 : _b,
       rest = __rest(props, ["color", "size"]);
 
-  return /*#__PURE__*/React.createElement(StyledTick, __assign({
+  return /*#__PURE__*/React.createElement(StyledTick, __assign({}, rest, {
     className: clsx('uc-icon-tick'),
     ref: ref,
     size: size
-  }, rest), /*#__PURE__*/React.createElement("svg", {
+  }), /*#__PURE__*/React.createElement("svg", {
     width: size,
     viewBox: "0 0 12 12",
     xmlns: "http://www.w3.org/2000/svg"

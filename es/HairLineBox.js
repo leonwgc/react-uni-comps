@@ -57,11 +57,11 @@ var HairLineBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
       color = _b === void 0 ? '#dcdcdc' : _b,
       rest = __rest(props, ["position", "color"]);
 
-  return /*#__PURE__*/React.createElement(StyledDiv, __assign({
+  return /*#__PURE__*/React.createElement(StyledDiv, __assign({}, rest, {
     ref: ref,
     position: position,
     color: color
-  }, rest));
+  }));
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 export default HairLineBox;

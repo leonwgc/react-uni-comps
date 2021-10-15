@@ -68,7 +68,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var icon = props.icon || (loading ? /*#__PURE__*/React.createElement(Spinner, {
     color: type === 'primary' ? '#fff' : '#999'
   }) : null);
-  return /*#__PURE__*/React.createElement(StyledButton, __assign({
+  return /*#__PURE__*/React.createElement(StyledButton, __assign({}, rest, {
     ref: ref,
     disabled: disabled,
     type: htmlType,
@@ -83,7 +83,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       pc: !isMobile,
       anchor: rest.as === 'a'
     }, className)
-  }, rest), icon && children ? /*#__PURE__*/React.createElement(Space, null, icon, children) : icon ? icon : children);
+  }), icon && children ? /*#__PURE__*/React.createElement(Space, null, icon, children) : icon ? icon : children);
 });
 Button.displayName = 'UC-Button';
 export default Button;

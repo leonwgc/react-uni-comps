@@ -80,7 +80,7 @@ const Skeleton = (props: Props): React.ReactNode => {
 
   return loading ? (
     avatar ? (
-      <StyledSkeleton className={clsx({ avatar: avatar }, className)} {...rest}>
+      <StyledSkeleton {...rest} className={clsx({ avatar: avatar }, className)}>
         <SkeletonBase
           animate={animate}
           shape="circle"
@@ -96,9 +96,9 @@ const Skeleton = (props: Props): React.ReactNode => {
       </StyledSkeleton>
     ) : (
       <StyledSkeleton
+        {...rest}
         style={{ display: 'block' }}
         className={clsx({ avatar: avatar }, className)}
-        {...rest}
       >
         {rowWidthAr.map((v, idx) => (
           <SkeletonBase animate={animate} key={idx} shape="rect" width={v} height={rowHeight} />

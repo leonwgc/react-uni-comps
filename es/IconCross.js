@@ -58,11 +58,11 @@ var IconCross = /*#__PURE__*/React.forwardRef(function (props, ref) {
       color = _b === void 0 ? 'currentColor' : _b,
       rest = __rest(props, ["size", "color"]);
 
-  return /*#__PURE__*/React.createElement(StyledCross, __assign({
+  return /*#__PURE__*/React.createElement(StyledCross, __assign({}, rest, {
     className: clsx('uc-icon-cross'),
     ref: ref,
     size: size
-  }, rest), /*#__PURE__*/React.createElement("svg", {
+  }), /*#__PURE__*/React.createElement("svg", {
     width: size,
     height: size,
     viewBox: "0 0 48 48",

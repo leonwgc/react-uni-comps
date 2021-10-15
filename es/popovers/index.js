@@ -156,13 +156,13 @@ var Popover = function Popover(props) {
     onClick: function onClick() {
       closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
-  }), /*#__PURE__*/React.createElement(StyledPopover, __assign({
+  }), /*#__PURE__*/React.createElement(StyledPopover, __assign({}, rest, {
     ref: popoverRef,
     className: clsx(className, 'uc-popover', {
       mask: mask
     }),
     style: __assign(__assign({}, modalStyle), style)
-  }, rest), arrow && /*#__PURE__*/React.createElement("span", {
+  }), arrow && /*#__PURE__*/React.createElement("span", {
     className: clsx('uc-popover-arrow'),
     style: arrowStyle
   }), closable && /*#__PURE__*/React.createElement(IconCross, {

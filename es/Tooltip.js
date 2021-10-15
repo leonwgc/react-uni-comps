@@ -30,7 +30,9 @@ import React, { useState, useRef } from 'react';
 import Popover from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n  width: 240px;\n"], ["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n  width: 240px;\n"])));
+var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"], ["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"]))); // 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
+
+var mouseLeaveDelay = 100;
 /** 文字提示气泡框, 基于Popover */
 
 var Tooltip = function Tooltip(props) {
@@ -60,7 +62,7 @@ var Tooltip = function Tooltip(props) {
     onMouseLeave: function onMouseLeave() {
       ref.current = window.setTimeout(function () {
         setVisible(false);
-      }, 300);
+      }, mouseLeaveDelay);
     },
     onFocus: function onFocus() {
       if (ref.current) {

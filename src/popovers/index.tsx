@@ -201,10 +201,10 @@ const Popover = (props: Props): React.ReactElement => {
               )}
 
               <StyledPopover
+                {...rest}
                 ref={popoverRef}
                 className={clsx(className, 'uc-popover', { mask: mask })}
                 style={{ ...modalStyle, ...style }}
-                {...rest}
               >
                 {/* arrow */}
                 {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}

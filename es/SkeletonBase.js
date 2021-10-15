@@ -61,7 +61,7 @@ var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = _e === void 0 ? '' : _e,
       rest = __rest(other, ["style", "className"]);
 
-  return /*#__PURE__*/React.createElement(StyledSkeletonBase, __assign({
+  return /*#__PURE__*/React.createElement(StyledSkeletonBase, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-skeleton', shape, {
       pulse: animate
@@ -70,7 +70,7 @@ var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
       width: width,
       height: height
     }, style)
-  }, rest));
+  }));
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 export default SkeletonBase;

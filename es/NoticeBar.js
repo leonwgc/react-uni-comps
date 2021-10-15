@@ -96,12 +96,12 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     text.style.transitionDuration = Math.round((container.offsetWidth + text.offsetWidth) / speed) + "s";
     text.style.transform = "translateX(-" + text.offsetWidth + "px)"; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [v]);
-  return /*#__PURE__*/React.createElement(StyledNoticeBar, __assign({
+  return /*#__PURE__*/React.createElement(StyledNoticeBar, __assign({}, rest, {
     ref: ref,
     className: clsx(className, 'uc-noticebar', {
       hide: !visible
     })
-  }, rest), icon && /*#__PURE__*/React.createElement("div", {
+  }), icon && /*#__PURE__*/React.createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React.createElement("div", {
     className: "content-wrap",

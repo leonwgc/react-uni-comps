@@ -24,7 +24,7 @@ const StyledCross = styled.div<{
 const IconCross = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { size = 16, color = 'currentColor', ...rest } = props;
   return (
-    <StyledCross className={clsx('uc-icon-cross')} ref={ref} size={size} {...rest}>
+    <StyledCross {...rest} className={clsx('uc-icon-cross')} ref={ref} size={size}>
       <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <g>
           <g>

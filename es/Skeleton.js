@@ -89,11 +89,11 @@ var Skeleton = function Skeleton(props) {
       className = _g === void 0 ? '' : _g,
       rest = __rest(other, ["className"]);
 
-  return loading ? avatar ? /*#__PURE__*/React.createElement(StyledSkeleton, __assign({
+  return loading ? avatar ? /*#__PURE__*/React.createElement(StyledSkeleton, __assign({}, rest, {
     className: clsx({
       avatar: avatar
     }, className)
-  }, rest), /*#__PURE__*/React.createElement(SkeletonBase, {
+  }), /*#__PURE__*/React.createElement(SkeletonBase, {
     animate: animate,
     shape: "circle",
     className: "avatar",
@@ -109,14 +109,14 @@ var Skeleton = function Skeleton(props) {
       width: v,
       height: rowHeight
     });
-  }))) : /*#__PURE__*/React.createElement(StyledSkeleton, __assign({
+  }))) : /*#__PURE__*/React.createElement(StyledSkeleton, __assign({}, rest, {
     style: {
       display: 'block'
     },
     className: clsx({
       avatar: avatar
     }, className)
-  }, rest), rowWidthAr.map(function (v, idx) {
+  }), rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React.createElement(SkeletonBase, {
       animate: animate,
       key: idx,

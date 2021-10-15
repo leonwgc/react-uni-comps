@@ -18,6 +18,7 @@ type Props = {
   visible: boolean;
   /** 面板选项列表   */
   actions: Action[];
+  className?: string;
   /** 顶部的额外区域   */
   extra?: React.ReactNode;
   /** 取消按钮文字，如果设置为空则不显示取消按钮   */
@@ -121,18 +122,19 @@ const ActionSheet = (props: Props): React.ReactElement => {
     cancelText = '',
     closeOnMaskClick = true,
     onClose,
+    className,
     extra,
     ...rest
   } = props;
 
   return (
     <StyledActionSheet
-      className={clsx('uc-actionsheet')}
+      {...rest}
+      className={clsx('uc-actionsheet', className)}
       visible={visible}
       position="bottom"
       closeOnMaskClick={closeOnMaskClick}
       onClose={onClose}
-      {...rest}
     >
       <div className="wrap">
         {extra && <div className={`extra`}>{extra}</div>}

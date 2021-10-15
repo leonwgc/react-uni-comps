@@ -107,9 +107,9 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
 
   return (
     <StyledNoticeList
+      {...rest}
       ref={ref}
       className={clsx(className, 'uc-noticelist', { hide: !visible })}
-      {...rest}
     >
       {icon && <div className="icon-part">{icon}</div>}
       <div className="content-wrap" ref={wrapRef}>

@@ -35,7 +35,7 @@ const StyledDiv = styled.div<{ position: Position; color: string }>`
 /** 包含1px的边的容器div */
 const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { position = 'bottom', color = '#dcdcdc', ...rest } = props;
-  return <StyledDiv ref={ref} position={position} color={color} {...rest}></StyledDiv>;
+  return <StyledDiv {...rest} ref={ref} position={position} color={color}></StyledDiv>;
 });
 
 HairLineBox.displayName = 'UC-HairLineBox';

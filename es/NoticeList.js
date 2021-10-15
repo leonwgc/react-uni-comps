@@ -98,12 +98,12 @@ var NoticeList = /*#__PURE__*/React.forwardRef(function (props, ref) {
       };
     }
   }, [stayTime, data, visible]);
-  return /*#__PURE__*/React.createElement(StyledNoticeList, __assign({
+  return /*#__PURE__*/React.createElement(StyledNoticeList, __assign({}, rest, {
     ref: ref,
     className: clsx(className, 'uc-noticelist', {
       hide: !visible
     })
-  }, rest), icon && /*#__PURE__*/React.createElement("div", {
+  }), icon && /*#__PURE__*/React.createElement("div", {
     className: "icon-part"
   }, icon), /*#__PURE__*/React.createElement("div", {
     className: "content-wrap",
