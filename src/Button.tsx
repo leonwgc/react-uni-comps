@@ -167,6 +167,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   return (
     <StyledButton
+      {...rest}
       ref={ref}
       disabled={disabled}
       type={htmlType}
@@ -186,7 +187,6 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
         },
         className
       )}
-      {...rest}
     >
       {icon && children ? (
         <Space>
