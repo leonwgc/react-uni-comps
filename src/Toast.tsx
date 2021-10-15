@@ -69,7 +69,7 @@ const Toast = (props: Props): React.ReactElement => {
 type StaticToastProps = {
   /** 内容 */
   content: React.ReactNode;
-  /** 持续显示时间，默认3000ms */
+  /** 持续显示时间，默认2000ms */
   duration?: number;
   /** 模态, 默认true */
   modal?: boolean;
@@ -83,7 +83,7 @@ type StaticToastProps = {
 
 /** 黑背景提示,静态调用 */
 Toast.show = (props: StaticToastProps) => {
-  const { duration = 3000, ...rest } = props;
+  const { duration = 2000, ...rest } = props;
   const container = getContainer();
 
   ReactDOM.render(<Toast modal {...rest} visible />, container);

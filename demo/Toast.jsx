@@ -74,7 +74,6 @@ export default function App() {
           onClick={() =>
             Toast.show({
               content: 'hello,world',
-              duration: 10000,
               style: {
                 top: 100,
               },
