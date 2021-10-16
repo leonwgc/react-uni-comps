@@ -22,6 +22,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Toast
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Toast')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Radio
           </Space>
         }
@@ -401,15 +410,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Popup')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> Toast
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Toast')}
-      ></Cell>
+
       <Cell
         title={
           <Space>
