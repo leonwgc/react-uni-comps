@@ -3579,34 +3579,25 @@ var _excluded$n = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2$2 = ["duration"];
 
 var _templateObject$p;
-var StyleToast = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
+var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
 
 /** 黑背景轻提示 */
 var Toast = function Toast(props) {
   var content = props.content,
       visible = props.visible,
-      modal = props.modal,
+      _props$modal = props.modal,
+      modal = _props$modal === void 0 ? true : _props$modal,
       maskStyle = props.maskStyle,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$n);
 
-  var toastProps = {};
-
-  if (modal) {
-    toastProps.mask = true;
-    toastProps.maskStyle = _objectSpread2({
-      opacity: 0,
-      zIndex: 500
-    }, maskStyle);
-  } else {
-    toastProps.mask = false;
-  }
-
-  return /*#__PURE__*/React__default['default'].createElement(StyleToast, _extends({}, rest, {
-    position: "center",
-    visible: visible,
+  return visible ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, modal && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
+    style: _objectSpread2({
+      opacity: 0
+    }, maskStyle)
+  }), /*#__PURE__*/React__default['default'].createElement(StyledToast, _extends({}, rest, {
     className: clsx__default['default']('uc-toast', className)
-  }, toastProps), content);
+  }), content)) : null;
 };
 
 /** 黑背景提示,静态调用 */
@@ -3615,9 +3606,7 @@ Toast.show = function (props) {
       duration = _props$duration === void 0 ? 2000 : _props$duration,
       rest = _objectWithoutProperties(props, _excluded2$2);
 
-  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({
-    modal: true
-  }, rest, {
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
     visible: true
   })));
   window.setTimeout(dispose, duration);

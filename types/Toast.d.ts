@@ -27,7 +27,7 @@ declare type StaticToastProps = {
     modal?: boolean;
     /** toast class */
     className?: string;
-    /** toast style */
+    /** 内容样式, 应用于StyledToast */
     style?: React.CSSProperties;
     /** 模态时 mask style */
     maskStyle: React.CSSProperties;
