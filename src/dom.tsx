@@ -86,7 +86,7 @@ try {
 
 export const passiveIfSupported = _passiveIfSupported;
 /**
- * render element into doc & return func to remove it from doc
+ * render element into doc & return dispose func
  *
  * @param {ReactElement} element
  * @return {*}  {(() => void)}
