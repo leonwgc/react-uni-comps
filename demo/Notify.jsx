@@ -25,7 +25,9 @@ export default function App() {
               icon: <InfoCircleFilled />,
               duration: 1000,
               style: {
-                backgroundColor: 'red',
+                width: 300,
+                border: '1px solid #ccc',
+                backgroundColor: '#00bc8d',
                 borderRadius: 8,
                 margin: '50px 20px 0',
               },
