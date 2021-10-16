@@ -413,6 +413,22 @@ try {
 } catch (err) {}
 
 var passiveIfSupported = _passiveIfSupported;
+/**
+ * render element into doc & return dispose func
+ *
+ * @param {ReactElement} element
+ * @return {*}  {(() => void)}
+ */
+
+var renderElement = function renderElement(element) {
+  var container = document.createElement('div');
+  document.body.appendChild(container);
+  ReactDOM__default['default'].render(element, container);
+  return function () {
+    ReactDOM__default['default'].unmountComponentAtNode(container);
+    container.parentNode.removeChild(container);
+  };
+};
 
 var intersectionObserver;
 var handlers = new Map();
@@ -3555,24 +3571,7 @@ var _excluded$n = ["content", "visible", "modal", "maskStyle", "className"],
 var _templateObject$p;
 var StyleToast = styled__default['default'](Popup)(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
 
-var getContainer = function getContainer() {
-  if (isBrowser) {
-    var div = document.querySelector('.uc-toast-static');
-
-    if (!div) {
-      div = document.createElement('div');
-      div.className = 'uc-toast-static';
-      document.body.appendChild(div);
-    }
-
-    return div;
-  }
-
-  return null;
-};
-/** 黑背景提示 */
-
-
+/** 黑背景轻提示 */
 var Toast = function Toast(props) {
   var content = props.content,
       visible = props.visible,
@@ -3606,15 +3605,12 @@ Toast.show = function (props) {
       duration = _props$duration === void 0 ? 2000 : _props$duration,
       rest = _objectWithoutProperties(props, _excluded2$2);
 
-  var container = getContainer();
-  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({
     modal: true
   }, rest, {
     visible: true
-  })), container);
-  window.setTimeout(function () {
-    ReactDOM__default['default'].unmountComponentAtNode(container);
-  }, duration);
+  })));
+  window.setTimeout(dispose, duration);
 };
 
 Toast.displayName = 'UC-Toast';
@@ -4087,7 +4083,7 @@ var AlertDialog = function AlertDialog(props) {
 
 AlertDialog.displayName = 'UC-AlertDialog';
 
-var getContainer$1 = function getContainer() {
+var getContainer = function getContainer() {
   if (isBrowser) {
     var div = document.querySelector('.uc-alert-dialog-static');
 
@@ -4121,7 +4117,7 @@ AlertDialog.show = function (title, content) {
 
   var cancelText = arguments.length > 4 ? arguments[4] : undefined;
   if (!content) return;
-  var container = getContainer$1();
+  var container = getContainer();
   ReactDOM__default['default'].unmountComponentAtNode(container);
   ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
     title: title,

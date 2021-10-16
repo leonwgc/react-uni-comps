@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 var flexGapSupported;
 export var detectFlexGapSupported = function detectFlexGapSupported() {
   if (flexGapSupported !== undefined) {
@@ -76,3 +77,19 @@ try {
 } catch (err) {}
 
 export var passiveIfSupported = _passiveIfSupported;
+/**
+ * render element into doc & return dispose func
+ *
+ * @param {ReactElement} element
+ * @return {*}  {(() => void)}
+ */
+
+export var renderElement = function renderElement(element) {
+  var container = document.createElement('div');
+  document.body.appendChild(container);
+  ReactDOM.render(element, container);
+  return function () {
+    ReactDOM.unmountComponentAtNode(container);
+    container.parentNode.removeChild(container);
+  };
+};

@@ -40,30 +40,12 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Popup from './Popup';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { isBrowser } from './dom';
+import { renderElement } from './dom';
 var StyleToast = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n"])));
-
-var getContainer = function getContainer() {
-  if (isBrowser) {
-    var div = document.querySelector('.uc-toast-static');
-
-    if (!div) {
-      div = document.createElement('div');
-      div.className = 'uc-toast-static';
-      document.body.appendChild(div);
-    }
-
-    return div;
-  }
-
-  return null;
-};
-/** 黑背景提示 */
-
+/** 黑背景轻提示 */
 
 var Toast = function Toast(props) {
   var content = props.content,
@@ -99,15 +81,12 @@ Toast.show = function (props) {
       duration = _a === void 0 ? 2000 : _a,
       rest = __rest(props, ["duration"]);
 
-  var container = getContainer();
-  ReactDOM.render( /*#__PURE__*/React.createElement(Toast, __assign({
+  var dispose = renderElement( /*#__PURE__*/React.createElement(Toast, __assign({
     modal: true
   }, rest, {
     visible: true
-  })), container);
-  window.setTimeout(function () {
-    ReactDOM.unmountComponentAtNode(container);
-  }, duration);
+  })));
+  window.setTimeout(dispose, duration);
 };
 
 Toast.displayName = 'UC-Toast';

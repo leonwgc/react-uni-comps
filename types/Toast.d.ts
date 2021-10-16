@@ -11,7 +11,7 @@ declare type Props = {
     /** className */
     className?: string;
 };
-/** 黑背景提示 */
+/** 黑背景轻提示 */
 declare const Toast: {
     (props: Props): React.ReactElement;
     /** 黑背景提示,静态调用 */
