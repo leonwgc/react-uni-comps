@@ -1,16 +1,22 @@
 import React from 'react';
-import Popup, { Props as PopupProps } from './Popup';
 import styled from 'styled-components';
+import Mask from './Mask';
 import clsx from 'clsx';
 import { renderElement } from './dom';
 
-const StyleToast = styled(Popup)`
+const StyledToast = styled.div`
   z-index: 1000;
   padding: 12px 16px;
+  display: inline-block;
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
   border-radius: 2px;
   text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 type Props = {
@@ -28,27 +34,16 @@ type Props = {
 
 /** 黑背景轻提示 */
 const Toast = (props: Props): React.ReactElement => {
-  const { content, visible, modal, maskStyle, className, ...rest } = props;
+  const { content, visible, modal = true, maskStyle, className, ...rest } = props;
 
-  const toastProps: Partial<PopupProps> = {};
-  if (modal) {
-    toastProps.mask = true;
-    toastProps.maskStyle = { opacity: 0, zIndex: 500, ...maskStyle };
-  } else {
-    toastProps.mask = false;
-  }
-
-  return (
-    <StyleToast
-      {...rest}
-      position="center"
-      visible={visible}
-      className={clsx('uc-toast', className)}
-      {...toastProps}
-    >
-      {content}
-    </StyleToast>
-  );
+  return visible ? (
+    <>
+      {modal && visible && <Mask style={{ opacity: 0, ...maskStyle }} />}
+      <StyledToast {...rest} className={clsx('uc-toast', className)}>
+        {content}
+      </StyledToast>
+    </>
+  ) : null;
 };
 
 type StaticToastProps = {
@@ -60,7 +55,7 @@ type StaticToastProps = {
   modal?: boolean;
   /** toast class */
   className?: string;
-  /** toast style */
+  /** 内容样式, 应用于StyledToast */
   style?: React.CSSProperties;
   /** 模态时 mask style */
   maskStyle: React.CSSProperties;
@@ -70,7 +65,7 @@ type StaticToastProps = {
 Toast.show = (props: StaticToastProps) => {
   const { duration = 2000, ...rest } = props;
 
-  const dispose = renderElement(<Toast modal {...rest} visible />);
+  const dispose = renderElement(<Toast {...rest} visible />);
   window.setTimeout(dispose, duration);
 };
 

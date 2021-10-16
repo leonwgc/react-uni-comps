@@ -1,37 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Spinner, Space, Toast, Button, IconTick } from '../src';
 
 export default function App() {
-  const [v, setV] = useState(false);
   return (
     <div className="app">
-      <Toast content="中华人民共和国" visible={v} />
-
       <Space direction="vertical" size={50}>
         <Button
           type="primary"
           onClick={() =>
             Toast.show({
               content: (
-                <div
-                  style={{
-                    width: 160,
-                    height: 80,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div>
                   <Space>
-                    <Spinner color="rgba(255,255,255,.5)" /> 加载中
+                    <Spinner color="rgba(255,255,255,.5)" size={30} /> 加载中
                   </Space>
                 </div>
               ),
               maskStyle: { backgroundColor: 'red', opacity: 0.1 },
+              style: { borderRadius: 8, top: 100 },
             })
           }
         >
-          loading & maskStyle
+          loading & maskStyle & style
         </Button>
 
         <Button
@@ -40,19 +30,7 @@ export default function App() {
             Toast.show({
               content: (
                 <Space direction="vertical" size={12} style={{ width: 120, textAlign: 'center' }}>
-                  <div
-                    style={{
-                      borderRadius: '50%',
-                      width: 40,
-                      height: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      display: 'inline-flex',
-                      backgroundColor: '#fff',
-                    }}
-                  >
-                    <IconTick size={40 * 0.5} color="#333" />
-                  </div>
+                  <IconTick size={30} color="#fff" />
                   认证成功
                 </Space>
               ),
@@ -115,8 +93,6 @@ export default function App() {
         >
           Toast.show, buttom
         </Button>
-
-        <Button onClick={() => setV((v) => !v)}>Toast comp toggle</Button>
       </Space>
     </div>
   );
