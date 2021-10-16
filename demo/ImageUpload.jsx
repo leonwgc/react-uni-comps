@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '../src/styled';
 import { Image } from 'antd';
 import { Space, FileInputTrigger, Button, IconCross } from '../src';
-import { PlusOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import clsx from 'clsx';
-import { upload } from 'xhr-fetch-lib';
+import { PlusOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -82,57 +80,7 @@ export default function App() {
   }, [files]);
 
   return (
-    <Space size={[24, 24]} wrap>
-      {files.length === 0 ? (
-        <FileInputTrigger
-          accept="image/*"
-          onChange={(files) => {
-            setFiles(files);
-            const file = files[0];
-
-            upload(
-              'https://t-api.xxx.com/api/customer/v2/attach/upload4NoLogin',
-              {
-                storeType: 'I',
-                type: '29',
-                creator: 'system',
-              },
-              file
-            ).then(({ responseText }) => {
-              try {
-                const res = JSON.parse(responseText);
-                setUrl(res.result[0].href);
-              } catch (ex) {}
-            });
-          }}
-        >
-          <StyledImageUpload>
-            <PlusOutlined
-              style={{ width: 20, height: 20, color: '#909399', fontSize: 20, marginTop: 25 }}
-            />
-            <div style={{ marginTop: 14, color: '#4d4d4d', fontSize: 14 }}>上传图片</div>
-          </StyledImageUpload>
-        </FileInputTrigger>
-      ) : (
-        <StyledImageUpload>
-          <img src={url} />
-          <CloseCircleOutlined
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              transform: 'translate(50%, -50%)',
-              zIndex: 10,
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setFiles([]);
-            }}
-          />
-        </StyledImageUpload>
-      )}
-
-      {/* company style  */}
+    <Space size={24} wrap>
       {files.length ? (
         <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
           <div className="del" onClick={() => setFiles([])}>
