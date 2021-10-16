@@ -1,3 +1,6 @@
+import { ReactElement, ReactNode } from 'react';
+import ReactDOM from 'react-dom';
+
 let flexGapSupported: boolean;
 
 export const detectFlexGapSupported = (): boolean => {
@@ -82,3 +85,21 @@ try {
 } catch (err) {}
 
 export const passiveIfSupported = _passiveIfSupported;
+/**
+ * render element into doc & return func to remove it from doc
+ *
+ * @param {ReactElement} element
+ * @return {*}  {(() => void)}
+ */
+export const renderElement = (element: ReactElement): (() => void) => {
+  const container = document.createElement('div');
+  container.setAttribute('data-for', 'toast');
+  document.body.appendChild(container);
+
+  ReactDOM.render(element, container);
+
+  return () => {
+    ReactDOM.unmountComponentAtNode(container);
+    container.parentNode.removeChild(container);
+  };
+};

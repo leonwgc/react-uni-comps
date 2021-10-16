@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Popup, { Props as PopupProps } from './Popup';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { isBrowser } from './dom';
+import { renderElement } from './dom';
 
 const StyleToast = styled(Popup)`
   z-index: 1000;
@@ -27,21 +26,7 @@ type Props = {
   className?: string;
 };
 
-const getContainer = () => {
-  if (isBrowser) {
-    let div = document.querySelector('.uc-toast-static') as HTMLElement;
-    if (!div) {
-      div = document.createElement('div');
-      div.className = 'uc-toast-static';
-      document.body.appendChild(div);
-    }
-
-    return div;
-  }
-  return null;
-};
-
-/** 黑背景提示 */
+/** 黑背景轻提示 */
 const Toast = (props: Props): React.ReactElement => {
   const { content, visible, modal, maskStyle, className, ...rest } = props;
 
@@ -84,13 +69,9 @@ type StaticToastProps = {
 /** 黑背景提示,静态调用 */
 Toast.show = (props: StaticToastProps) => {
   const { duration = 2000, ...rest } = props;
-  const container = getContainer();
 
-  ReactDOM.render(<Toast modal {...rest} visible />, container);
-
-  window.setTimeout(() => {
-    ReactDOM.unmountComponentAtNode(container);
-  }, duration);
+  const dispose = renderElement(<Toast modal {...rest} visible />);
+  window.setTimeout(dispose, duration);
 };
 
 Toast.displayName = 'UC-Toast';
