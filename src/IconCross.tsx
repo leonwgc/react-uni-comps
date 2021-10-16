@@ -7,6 +7,7 @@ type Props = {
   size?: number;
   /** 颜色 */
   color?: string;
+  className?: string;
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 const StyledCross = styled.div<{
@@ -22,9 +23,9 @@ const StyledCross = styled.div<{
 
 /** 用于关闭的 x */
 const IconCross = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { size = 16, color = 'currentColor', ...rest } = props;
+  const { size = 16, color = 'currentColor', className, ...rest } = props;
   return (
-    <StyledCross {...rest} className={clsx('uc-icon-cross')} ref={ref} size={size}>
+    <StyledCross {...rest} className={clsx('uc-icon-cross', className)} ref={ref} size={size}>
       <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <g>
           <g>

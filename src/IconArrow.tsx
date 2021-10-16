@@ -7,6 +7,7 @@ type Props = {
   size?: number;
   /** 颜色 */
   color?: string;
+  className?: string;
   /** 箭头方向，默认朝下 */
   direction: 'right' | 'bottom' | 'left' | 'top';
 };
@@ -44,12 +45,12 @@ const StyledArrow = styled.div<{
 
 /** 勾勾 */
 const IconArrow = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { color = 'currentColor', direction = 'bottom', size = 16, ...rest } = props;
+  const { color = 'currentColor', direction = 'bottom', className, size = 16, ...rest } = props;
 
   return (
     <StyledArrow
       ref={ref}
-      className={clsx('uc-icon-arrow', { [direction]: direction })}
+      className={clsx('uc-icon-arrow', className, { [direction]: direction })}
       size={size}
       {...rest}
     >
