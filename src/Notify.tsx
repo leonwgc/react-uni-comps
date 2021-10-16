@@ -54,24 +54,11 @@ type Props = {
   icon?: React.ReactNode;
   /** 内容 */
   content?: React.ReactNode;
+  /** 内容样式 */
   style?: React.CSSProperties;
+  /** wrap class */
   className?: string;
 };
-
-/** 顶部全局消息通知 */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Notify: any = forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { content, icon, style, className, ...rest } = props;
-
-  return (
-    <StyledNotify {...rest} ref={ref} className={clsx('uc-notify', className)}>
-      <div className={clsx('content', { mobile: isMobile, pc: !isMobile })} style={style}>
-        {icon && <span className="icon">{icon}</span>}
-        {content}
-      </div>
-    </StyledNotify>
-  );
-});
 
 type StaticProps = {
   /** 图标*/
@@ -84,7 +71,27 @@ type StaticProps = {
   style?: React.CSSProperties;
 };
 
-/** 黑背景提示,静态调用 */
+/** 顶部全局消息通知 */
+const Notify: React.ForwardRefExoticComponent<Props> & {
+  /**顶部全局消息通知静态调用  */ show?: (props: StaticProps) => void;
+} = forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { content, icon, style, className, ...rest } = props;
+
+  return (
+    <StyledNotify {...rest} ref={ref} className={clsx('uc-notify', className)}>
+      <div className={clsx('content', { mobile: isMobile, pc: !isMobile })} style={style}>
+        {icon && <span className="icon">{icon}</span>}
+        {content}
+      </div>
+    </StyledNotify>
+  );
+});
+
+/**
+ * 顶部全局消息通知静态调用
+ *
+ * @param {StaticProps} props
+ */
 Notify.show = (props: StaticProps) => {
   const { duration = 2000, ...rest } = props;
   const dispose = renderElement(

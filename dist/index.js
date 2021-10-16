@@ -522,7 +522,14 @@ var getClassName = function getClassName(state) {
     return fromClass;
   }
 };
-/** 子元素执行从from到to类名过渡 */
+/**
+ *  子元素执行transition过渡动画
+ *  fromClass定义初始状态类名，默认:from
+ *  toClass 定义最终状态类名，默认:to
+ *  执行时机:
+ *  1.初次mount并在可视区域
+ *  2.从不可见到可见状态
+ */
 
 
 var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -607,7 +614,6 @@ Mask.displayName = 'UC-Mask';
 
 var _templateObject$1;
 var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"])));
-
 // type MousePosition = {
 //   x: number;
 //   y: number;
@@ -627,7 +633,7 @@ var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templa
 // }
 
 /** 弹框，可以从上，下，左，右，中间弹出 */
-var Popup = function Popup(props) {
+var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       visible = props.visible,
       onClose = props.onClose,
@@ -644,7 +650,10 @@ var Popup = function Popup(props) {
       mountContainer = props.mountContainer,
       style = props.style,
       className = props.className;
-  var wrapRef = React.useRef(); // const lastMousePositionRef = useRef<MousePosition>();
+  var wrapRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  }); // const lastMousePositionRef = useRef<MousePosition>();
 
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute'; // const resetTransformOrigin = useCallback(() => {
@@ -693,7 +702,8 @@ var Popup = function Popup(props) {
       })
     }, children);
   })), mountNode);
-};
+});
+Popup.displayName = 'UC-Popup';
 
 function toArray(children) {
   var ret = [];
@@ -5535,6 +5545,53 @@ var WaterMark = function WaterMark(props) {
 
 WaterMark.displayName = 'UC-WaterMark';
 
+var _excluded$F = ["content", "icon", "style", "className"],
+    _excluded2$3 = ["duration"];
+
+var _templateObject$H;
+var transitionDuration = 180;
+var StyledNotify = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration, getThemeColorCss('background-color'));
+
+/** 顶部全局消息通知 */
+var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var content = props.content,
+      icon = props.icon,
+      style = props.style,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$F);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledNotify, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-notify', className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content', {
+      mobile: isMobile,
+      pc: !isMobile
+    }),
+    style: style
+  }, icon && /*#__PURE__*/React__default['default'].createElement("span", {
+    className: "icon"
+  }, icon), content));
+});
+/**
+ * 顶部全局消息通知静态调用
+ *
+ * @param {StaticProps} props
+ */
+
+Notify.show = function (props) {
+  var _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 2000 : _props$duration,
+      rest = _objectWithoutProperties(props, _excluded2$3);
+
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
+    duration: transitionDuration
+  }, /*#__PURE__*/React__default['default'].createElement(Notify, rest)));
+  window.setTimeout(dispose, duration);
+};
+
+Notify.displayName = 'UC-Notify';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -5560,6 +5617,7 @@ exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
 exports.NoticeBar = NoticeBar;
 exports.NoticeList = NoticeList;
+exports.Notify = Notify;
 exports.NumberKeyboard = NumberKeyboard;
 exports.NumberKeyboardBase = NumberKeyboardBase;
 exports.PasswordInput = PasswordInput;

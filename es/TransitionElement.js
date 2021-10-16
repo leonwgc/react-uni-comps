@@ -34,7 +34,14 @@ var getClassName = function getClassName(state, fromClass, toClass) {
     return fromClass;
   }
 };
-/** 子元素执行从from到to类名过渡 */
+/**
+ *  子元素执行transition过渡动画
+ *  fromClass定义初始状态类名，默认:from
+ *  toClass 定义最终状态类名，默认:to
+ *  执行时机:
+ *  1.初次mount并在可视区域
+ *  2.从不可见到可见状态
+ */
 
 
 var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {

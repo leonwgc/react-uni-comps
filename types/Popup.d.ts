@@ -26,5 +26,5 @@ export declare type Props = {
     closeOnMaskClick?: boolean;
 };
 /** 弹框，可以从上，下，左，右，中间弹出 */
-declare const Popup: (props: Props) => React.ReactElement;
+declare const Popup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default Popup;

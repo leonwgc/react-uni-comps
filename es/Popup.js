@@ -26,7 +26,7 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
@@ -53,7 +53,7 @@ var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTem
 
 /** 弹框，可以从上，下，左，右，中间弹出 */
 
-var Popup = function Popup(props) {
+var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
   var children = props.children,
       visible = props.visible,
       onClose = props.onClose,
@@ -70,7 +70,10 @@ var Popup = function Popup(props) {
       mountContainer = props.mountContainer,
       style = props.style,
       className = props.className;
-  var wrapRef = useRef(); // const lastMousePositionRef = useRef<MousePosition>();
+  var wrapRef = useRef();
+  useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  }); // const lastMousePositionRef = useRef<MousePosition>();
 
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute'; // const resetTransformOrigin = useCallback(() => {
@@ -119,7 +122,7 @@ var Popup = function Popup(props) {
       })
     }, children);
   })), mountNode);
-};
-
+});
+Popup.displayName = 'UC-Popup';
 export default Popup;
 var templateObject_1;
