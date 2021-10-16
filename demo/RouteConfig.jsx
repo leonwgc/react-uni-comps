@@ -202,6 +202,10 @@ const routes = [
     path: '/RadioGroup',
     component: lazy(() => import('./RadioGroup')),
   },
+  {
+    path: '/Notify',
+    component: lazy(() => import('./Notify')),
+  },
 ];
 
 export default routes;

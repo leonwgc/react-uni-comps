@@ -22,7 +22,14 @@ const getClassName = (state, fromClass = 'from', toClass = 'to') => {
   }
 };
 
-/** 子元素执行从from到to类名过渡 */
+/**
+ *  子元素执行transition过渡动画
+ *  fromClass定义初始状态类名，默认:from
+ *  toClass 定义最终状态类名，默认:to
+ *  执行时机:
+ *  1.初次mount并在可视区域
+ *  2.从不可见到可见状态
+ */
 const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { children, duration = 240, fromClass = 'from', toClass = 'to' } = props;
   const elRef = useRef<HTMLElement>();

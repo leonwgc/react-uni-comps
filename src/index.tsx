@@ -53,3 +53,4 @@ export { default as NoticeList } from './NoticeList';
 export { default as Slide } from './Slide';
 export { default as ProgressCircle } from './ProgressCircle';
 export { default as WaterMark } from './WaterMark';
+export { default as Notify } from './Notify';

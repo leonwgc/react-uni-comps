@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
@@ -156,7 +156,7 @@ export type Props = {
 // }
 
 /** 弹框，可以从上，下，左，右，中间弹出 */
-const Popup = (props: Props): React.ReactElement => {
+const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     children,
     visible,
@@ -172,6 +172,8 @@ const Popup = (props: Props): React.ReactElement => {
     className,
   } = props;
   const wrapRef = useRef<HTMLDivElement>();
+
+  useImperativeHandle(ref, () => wrapRef.current);
 
   // const lastMousePositionRef = useRef<MousePosition>();
   const mountNode = mountContainer?.() || document.body;
@@ -226,6 +228,8 @@ const Popup = (props: Props): React.ReactElement => {
     </div>,
     mountNode
   );
-};
+});
+
+Popup.displayName = 'UC-Popup';
 
 export default Popup;
