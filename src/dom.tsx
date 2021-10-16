@@ -93,7 +93,6 @@ export const passiveIfSupported = _passiveIfSupported;
  */
 export const renderElement = (element: ReactElement): (() => void) => {
   const container = document.createElement('div');
-  container.setAttribute('data-for', 'toast');
   document.body.appendChild(container);
 
   ReactDOM.render(element, container);
