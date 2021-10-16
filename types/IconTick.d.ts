@@ -2,6 +2,7 @@ import React from 'react';
 declare type Props = {
     /** 大小, 默认16 */
     size?: number;
+    className?: string;
     /** 勾勾颜色 */
     color?: string;
 };

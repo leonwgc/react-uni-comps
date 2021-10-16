@@ -5,5 +5,6 @@ declare const IconCross: React.ForwardRefExoticComponent<{
     size?: number;
     /** 颜色 */
     color?: string;
+    className?: string;
 } & React.HtmlHTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default IconCross;

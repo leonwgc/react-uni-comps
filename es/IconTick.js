@@ -54,12 +54,13 @@ var StyledTick = styled.div(templateObject_1 || (templateObject_1 = __makeTempla
 var IconTick = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.color,
       color = _a === void 0 ? 'currentColor' : _a,
+      className = props.className,
       _b = props.size,
       size = _b === void 0 ? 16 : _b,
-      rest = __rest(props, ["color", "size"]);
+      rest = __rest(props, ["color", "className", "size"]);
 
   return /*#__PURE__*/React.createElement(StyledTick, __assign({}, rest, {
-    className: clsx('uc-icon-tick'),
+    className: clsx('uc-icon-tick', className),
     ref: ref,
     size: size
   }), /*#__PURE__*/React.createElement("svg", {

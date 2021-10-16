@@ -2063,7 +2063,7 @@ var Skeleton = function Skeleton(props) {
   })) : children;
 };
 
-var _excluded$a = ["color", "size"];
+var _excluded$a = ["color", "className", "size"];
 
 var _templateObject$c;
 var StyledTick = styled__default['default'].div(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
@@ -2078,12 +2078,13 @@ var StyledTick = styled__default['default'].div(_templateObject$c || (_templateO
 var IconTick = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
+      className = props.className,
       _props$size = props.size,
       size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$a);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledTick, _extends({}, rest, {
-    className: clsx__default['default']('uc-icon-tick'),
+    className: clsx__default['default']('uc-icon-tick', className),
     ref: ref,
     size: size
   }), /*#__PURE__*/React__default['default'].createElement("svg", {
@@ -2776,7 +2777,7 @@ var ScrollTop = function ScrollTop(props) {
 
 ScrollTop.displayName = 'UC-ScrollTop';
 
-var _excluded$k = ["size", "color"];
+var _excluded$k = ["size", "color", "className"];
 
 var _templateObject$l;
 var StyledCross = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
@@ -2793,10 +2794,11 @@ var IconCross = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       size = _props$size === void 0 ? 16 : _props$size,
       _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
+      className = props.className,
       rest = _objectWithoutProperties(props, _excluded$k);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledCross, _extends({}, rest, {
-    className: clsx__default['default']('uc-icon-cross'),
+    className: clsx__default['default']('uc-icon-cross', className),
     ref: ref,
     size: size
   }), /*#__PURE__*/React__default['default'].createElement("svg", {
@@ -3614,7 +3616,7 @@ Toast.show = function (props) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$o = ["color", "direction", "size"];
+var _excluded$o = ["color", "direction", "className", "size"];
 
 var _templateObject$q;
 var StyledArrow = styled__default['default'].div(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
@@ -3631,13 +3633,14 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       color = _props$color === void 0 ? 'currentColor' : _props$color,
       _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
+      className = props.className,
       _props$size = props.size,
       size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$o);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({
     ref: ref,
-    className: clsx__default['default']('uc-icon-arrow', _defineProperty({}, direction, direction)),
+    className: clsx__default['default']('uc-icon-arrow', className, _defineProperty({}, direction, direction)),
     size: size
   }, rest), /*#__PURE__*/React__default['default'].createElement("svg", {
     width: size,

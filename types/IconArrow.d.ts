@@ -4,6 +4,7 @@ declare type Props = {
     size?: number;
     /** 颜色 */
     color?: string;
+    className?: string;
     /** 箭头方向，默认朝下 */
     direction: 'right' | 'bottom' | 'left' | 'top';
 };

@@ -58,13 +58,14 @@ var IconArrow = /*#__PURE__*/React.forwardRef(function (props, ref) {
       color = _b === void 0 ? 'currentColor' : _b,
       _c = props.direction,
       direction = _c === void 0 ? 'bottom' : _c,
+      className = props.className,
       _d = props.size,
       size = _d === void 0 ? 16 : _d,
-      rest = __rest(props, ["color", "direction", "size"]);
+      rest = __rest(props, ["color", "direction", "className", "size"]);
 
   return /*#__PURE__*/React.createElement(StyledArrow, __assign({
     ref: ref,
-    className: clsx('uc-icon-arrow', (_a = {}, _a[direction] = direction, _a)),
+    className: clsx('uc-icon-arrow', className, (_a = {}, _a[direction] = direction, _a)),
     size: size
   }, rest), /*#__PURE__*/React.createElement("svg", {
     width: size,
