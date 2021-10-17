@@ -93,7 +93,7 @@ export type Dispose = (beforeDispose?: () => Promise<void>) => void;
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]
- * @return {*}  {*}
+ * @return {Dispose}  dispose
  */
 export const renderElement: (element: ReactElement, container?: HTMLElement) => Dispose = (
   element,
