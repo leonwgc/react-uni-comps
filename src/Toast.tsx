@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
-import { renderElement } from './dom';
+import { Dispose, renderElement } from './dom';
+import TransitionElement from './TransitionElement';
 
 const StyledToast = styled.div`
   z-index: 1000;
@@ -17,6 +18,14 @@ const StyledToast = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  &.from {
+    opacity: 0;
+  }
+
+  &.to {
+    opacity: 1;
+  }
 `;
 
 type Props = {
@@ -30,20 +39,6 @@ type Props = {
   maskStyle?: React.CSSProperties;
   /** className */
   className?: string;
-};
-
-/** 黑背景轻提示 */
-const Toast = (props: Props): React.ReactElement => {
-  const { content, visible, modal = true, maskStyle, className, ...rest } = props;
-
-  return visible ? (
-    <>
-      {modal && visible && <Mask style={{ opacity: 0, ...maskStyle }} />}
-      <StyledToast {...rest} className={clsx('uc-toast', className)}>
-        {content}
-      </StyledToast>
-    </>
-  ) : null;
 };
 
 type StaticToastProps = {
@@ -61,12 +56,51 @@ type StaticToastProps = {
   maskStyle: React.CSSProperties;
 };
 
+/** 黑背景轻提示 */
+const Toast: React.ForwardRefExoticComponent<Props> & {
+  /** 黑背景提示,静态调用 */ show?: (props: StaticToastProps) => void;
+} = forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { content, visible, modal = true, maskStyle, className, ...rest } = props;
+
+  return visible ? (
+    <>
+      {modal && visible && <Mask style={{ opacity: 0, ...maskStyle }} />}
+      <StyledToast {...rest} ref={ref} className={clsx('uc-toast', className)}>
+        {content}
+      </StyledToast>
+    </>
+  ) : null;
+});
+
+const transitionDuration = 240;
+
 /** 黑背景提示,静态调用 */
 Toast.show = (props: StaticToastProps) => {
   const { duration = 2000, ...rest } = props;
 
-  const dispose = renderElement(<Toast {...rest} visible />);
-  window.setTimeout(dispose, duration);
+  const container = document.createElement('div');
+
+  const beforeDispose: () => Promise<void> = () => {
+    return new Promise((dispose) => {
+      const el = container.querySelector('.uc-toast');
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, transitionDuration);
+    });
+  };
+
+  const dispose: Dispose = renderElement(
+    <TransitionElement duration={transitionDuration}>
+      <Toast {...rest} visible />
+    </TransitionElement>,
+    container
+  );
+  window.setTimeout(() => {
+    dispose(beforeDispose);
+  }, duration);
 };
 
 Toast.displayName = 'UC-Toast';
