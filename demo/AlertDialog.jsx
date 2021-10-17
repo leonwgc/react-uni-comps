@@ -16,7 +16,18 @@ export default function App() {
         </Button>
         <Button
           onClick={() =>
-            AlertDialog.show('are you sure?', 'sure to leave china', 'yes', null, 'no')
+            AlertDialog.show(
+              'are you sure?',
+              'sure to leave china',
+              'yes',
+              () => {
+                alert('you confirmed');
+              },
+              'no',
+              () => {
+                alert('you canceled');
+              }
+            )
           }
         >
           show Alert dialog via static show ok/cancel

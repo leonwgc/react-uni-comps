@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 declare type Props = {
     /** 是否显示 */
     visible?: boolean;
@@ -9,7 +9,7 @@ declare type Props = {
     /** 确认文本 */
     confirmText?: string;
     /** 取消文本 */
-    cancelText?: boolean;
+    cancelText?: string;
     /** 确认回调 */
     onConfirm?: () => void;
     /** 取消，关闭默认调用onClose */
@@ -32,21 +32,20 @@ declare type Props = {
     maskStyle?: React.CSSProperties;
     /** 遮罩class*/
     maskClass?: string;
-} & HTMLAttributes<HTMLElement>;
-/** 移动端/pc端两种风格的 alert/confirm弹窗 */
-declare const AlertDialog: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-    /**
-     *
-     *
-     * @param {*} title
-     * @param {*} content
-     * @param {string} [confirmText='确定']
-     * @param {*} onConfirm ()=>void
-     * @param {*} cancelText
-     * @return {*}
-     */
-    show(title: any, content: any, confirmText: string, onConfirm: any, cancelText: any): void;
 };
+declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
+    /**
+     *  AlertDialog静态调用
+     *
+     * @param {*} title 标题
+     * @param {*} content 内容
+     * @param {string} [confirmText='确定'] 确定按钮文本
+     * @param {*} onConfirm 确定回调
+     * @param {*} cancelText 取消文本
+     * @param {*} onCancel 取消回调
+     * @return {*}
+     */ show?: (title?: React.ReactNode, content?: React.ReactNode, confirmText?: string, onConfirm?: () => void, cancelText?: string, onCancel?: () => void) => void;
+};
+/** 移动端/pc端两种风格的 alert/confirm弹窗 */
+declare const AlertDialog: AlertDialogType;
 export default AlertDialog;

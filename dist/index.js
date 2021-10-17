@@ -3976,10 +3976,10 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$s = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "mask", "maskStyle", "maskClass", "onClose", "className"];
 
 var _templateObject$t;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  z-index: 300;\n\n  &.mobile {\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      border-radius: 8px;\n      width: 280px;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          ", "\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n    width: 420px;\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), border, border);
-/** 移动端/pc端两种风格的 alert/confirm弹窗 */
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  z-index: 300;\n\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      border-radius: 8px;\n      width: 280px;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          ", "\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n    width: 420px;\n\n    .close {\n      top: 16px;\n      right: 12px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), border, border);
 
-var AlertDialog = function AlertDialog(props) {
+/** 移动端/pc端两种风格的 alert/confirm弹窗 */
+var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _props$visible = props.visible,
       visible = _props$visible === void 0 ? true : _props$visible,
       title = props.title,
@@ -4006,6 +4006,7 @@ var AlertDialog = function AlertDialog(props) {
       rest = _objectWithoutProperties(props, _excluded$s);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({}, rest, {
+    ref: ref,
     className: clsx__default['default']('uc-alert-dialog', className, {
       mobile: isMobile
     }),
@@ -4081,60 +4082,53 @@ var AlertDialog = function AlertDialog(props) {
       }
     }
   }, confirmText)))));
-};
-
+});
 AlertDialog.displayName = 'UC-AlertDialog';
-
-var getContainer = function getContainer() {
-  if (isBrowser) {
-    var div = document.querySelector('.uc-alert-dialog-static');
-
-    if (!div) {
-      div = document.createElement('div');
-      div.className = 'uc-alert-dialog-static';
-      document.body.appendChild(div);
-    }
-
-    return div;
-  }
-
-  return null;
-};
-/**
- *
- *
- * @param {*} title
- * @param {*} content
- * @param {string} [confirmText='确定']
- * @param {*} onConfirm ()=>void
- * @param {*} cancelText
- * @return {*}
- */
-
 
 AlertDialog.show = function (title, content) {
   var confirmText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '确定';
-
-  var _onConfirm = arguments.length > 3 ? arguments[3] : undefined;
-
+  var onConfirm = arguments.length > 3 ? arguments[3] : undefined;
   var cancelText = arguments.length > 4 ? arguments[4] : undefined;
+  var onCancel = arguments.length > 5 ? arguments[5] : undefined;
   if (!content) return;
-  var container = getContainer();
-  ReactDOM__default['default'].unmountComponentAtNode(container);
-  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
     title: title,
     content: content,
     visible: true,
     confirmText: confirmText,
     cancelText: cancelText,
-    onConfirm: function onConfirm() {
-      _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm();
-      ReactDOM__default['default'].unmountComponentAtNode(container);
-    },
+    onConfirm: function (_onConfirm) {
+      function onConfirm() {
+        return _onConfirm.apply(this, arguments);
+      }
+
+      onConfirm.toString = function () {
+        return _onConfirm.toString();
+      };
+
+      return onConfirm;
+    }(function () {
+      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+      dispose();
+    }),
     onClose: function onClose() {
-      ReactDOM__default['default'].unmountComponentAtNode(container);
-    }
-  }), container);
+      dispose();
+    },
+    onCancel: function (_onCancel) {
+      function onCancel() {
+        return _onCancel.apply(this, arguments);
+      }
+
+      onCancel.toString = function () {
+        return _onCancel.toString();
+      };
+
+      return onCancel;
+    }(function () {
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+      dispose();
+    })
+  })));
 };
 
 var _excluded$t = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];

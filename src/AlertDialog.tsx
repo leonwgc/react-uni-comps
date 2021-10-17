@@ -1,5 +1,4 @@
-import React, { HTMLAttributes } from 'react';
-import ReactDOM from 'react-dom';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
@@ -7,8 +6,9 @@ import Divider from './Divider';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
-import { isBrowser, isMobile } from './dom';
+import { isMobile, renderElement } from './dom';
 import { getThemeColorCss } from './themeHelper';
+import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
 
 type Props = {
@@ -21,7 +21,7 @@ type Props = {
   /** 确认文本 */
   confirmText?: string;
   /** 取消文本 */
-  cancelText?: boolean;
+  cancelText?: string;
   /** 确认回调 */
   onConfirm?: () => void;
   /** 取消，关闭默认调用onClose */
@@ -44,10 +44,30 @@ type Props = {
   maskStyle?: React.CSSProperties;
   /** 遮罩class*/
   maskClass?: string;
-} & HTMLAttributes<HTMLElement>;
+};
 
 const StyledAlertDialog = styled(Popup)`
   z-index: 300;
+
+  // effect
+  &.from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    &.pc {
+      top: 200px;
+      transform: translate(-50%, 0) scale(0.5);
+    }
+  }
+
+  &.to {
+    transform: translate(-50%, -50%) scale(1);
+    &.pc {
+      top: 200px;
+      transform: translate(-50%, 0) scale(1);
+    }
+    opacity: 1;
+  }
+  // end effect
 
   &.mobile {
     .uc-alert-dialog-wrap {
@@ -166,8 +186,29 @@ const StyledAlertDialog = styled(Popup)`
   }
 `;
 
+type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
+  /**
+   *  AlertDialog静态调用
+   *
+   * @param {*} title 标题
+   * @param {*} content 内容
+   * @param {string} [confirmText='确定'] 确定按钮文本
+   * @param {*} onConfirm 确定回调
+   * @param {*} cancelText 取消文本
+   * @param {*} onCancel 取消回调
+   * @return {*}
+   */ show?: (
+    title?: React.ReactNode,
+    content?: React.ReactNode,
+    confirmText?: string,
+    onConfirm?: () => void,
+    cancelText?: string,
+    onCancel?: () => void
+  ) => void;
+};
+
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
-const AlertDialog = (props: Props): React.ReactElement => {
+const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     visible = true,
     title,
@@ -191,6 +232,7 @@ const AlertDialog = (props: Props): React.ReactElement => {
   return (
     <StyledAlertDialog
       {...rest}
+      ref={ref}
       className={clsx('uc-alert-dialog', className, { mobile: isMobile })}
       visible={visible}
       onClose={onClose}
@@ -275,54 +317,34 @@ const AlertDialog = (props: Props): React.ReactElement => {
       </div>
     </StyledAlertDialog>
   );
-};
+});
 
 AlertDialog.displayName = 'UC-AlertDialog';
 
-const getContainer = () => {
-  if (isBrowser) {
-    let div = document.querySelector('.uc-alert-dialog-static') as HTMLElement;
-    if (!div) {
-      div = document.createElement('div');
-      div.className = 'uc-alert-dialog-static';
-      document.body.appendChild(div);
-    }
-
-    return div;
-  }
-  return null;
-};
-/**
- *
- *
- * @param {*} title
- * @param {*} content
- * @param {string} [confirmText='确定']
- * @param {*} onConfirm ()=>void
- * @param {*} cancelText
- * @return {*}
- */
-AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText) => {
+AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText, onCancel) => {
   if (!content) return;
-  const container = getContainer();
-  ReactDOM.unmountComponentAtNode(container);
 
-  ReactDOM.render(
-    <AlertDialog
-      title={title}
-      content={content}
-      visible
-      confirmText={confirmText}
-      cancelText={cancelText}
-      onConfirm={() => {
-        onConfirm?.();
-        ReactDOM.unmountComponentAtNode(container);
-      }}
-      onClose={() => {
-        ReactDOM.unmountComponentAtNode(container);
-      }}
-    />,
-    container
+  const dispose: () => void = renderElement(
+    <TransitionElement>
+      <AlertDialog
+        title={title}
+        content={content}
+        visible
+        confirmText={confirmText}
+        cancelText={cancelText}
+        onConfirm={() => {
+          onConfirm?.();
+          dispose();
+        }}
+        onClose={() => {
+          dispose();
+        }}
+        onCancel={() => {
+          onCancel?.();
+          dispose();
+        }}
+      />
+    </TransitionElement>
   );
 };
 
