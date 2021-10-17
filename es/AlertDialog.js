@@ -166,6 +166,16 @@ AlertDialog.show = function (title, content, confirmText, _onConfirm, cancelText
   }
 
   if (!content) return;
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      container.querySelector('.uc-popup-wrap').classList.remove('to');
+      container.querySelector('.uc-popup-wrap').classList.add('from');
+      setTimeout(dispose, 160);
+    });
+  };
+
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, null, /*#__PURE__*/React.createElement(AlertDialog, {
     title: title,
     content: content,
@@ -174,16 +184,19 @@ AlertDialog.show = function (title, content, confirmText, _onConfirm, cancelText
     cancelText: cancelText,
     onConfirm: function onConfirm() {
       _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm();
-      dispose();
+      dispose(beforeDispose);
     },
     onClose: function onClose() {
-      dispose();
+      dispose(beforeDispose);
     },
     onCancel: function onCancel() {
       _onCancel === null || _onCancel === void 0 ? void 0 : _onCancel();
-      dispose();
+      dispose(beforeDispose);
+    },
+    mountContainer: function mountContainer() {
+      return container;
     }
-  })));
+  })), container);
 };
 
 export default AlertDialog;

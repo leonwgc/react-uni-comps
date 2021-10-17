@@ -81,15 +81,29 @@ export var passiveIfSupported = _passiveIfSupported;
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element
- * @return {*}  {(() => void)}
+ * @param {HTMLElement} [container]
+ * @return {*}  {*}
  */
 
-export var renderElement = function renderElement(element) {
-  var container = document.createElement('div');
-  document.body.appendChild(container);
-  ReactDOM.render(element, container);
-  return function () {
-    ReactDOM.unmountComponentAtNode(container);
-    container.parentNode.removeChild(container);
+export var renderElement = function renderElement(element, container) {
+  var dom = container || document.createElement('div');
+  document.body.appendChild(dom);
+  ReactDOM.render(element, dom);
+
+  var dispose = function dispose() {
+    ReactDOM.unmountComponentAtNode(dom);
+
+    if (dom && dom.parentNode) {
+      dom.parentNode.removeChild(dom);
+    }
+  };
+
+  return function (beforeDispose) {
+    if (typeof beforeDispose === 'function') {
+      // play transition here before unmount
+      beforeDispose().then(dispose);
+    } else {
+      dispose();
+    }
   };
 };

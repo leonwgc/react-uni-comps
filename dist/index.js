@@ -413,20 +413,34 @@ try {
 } catch (err) {}
 
 var passiveIfSupported = _passiveIfSupported;
+
 /**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element
- * @return {*}  {(() => void)}
+ * @param {HTMLElement} [container]
+ * @return {*}  {*}
  */
+var renderElement = function renderElement(element, container) {
+  var dom = container || document.createElement('div');
+  document.body.appendChild(dom);
+  ReactDOM__default['default'].render(element, dom);
 
-var renderElement = function renderElement(element) {
-  var container = document.createElement('div');
-  document.body.appendChild(container);
-  ReactDOM__default['default'].render(element, container);
-  return function () {
-    ReactDOM__default['default'].unmountComponentAtNode(container);
-    container.parentNode.removeChild(container);
+  var dispose = function dispose() {
+    ReactDOM__default['default'].unmountComponentAtNode(dom);
+
+    if (dom && dom.parentNode) {
+      dom.parentNode.removeChild(dom);
+    }
+  };
+
+  return function (beforeDispose) {
+    if (typeof beforeDispose === 'function') {
+      // play transition here before unmount
+      beforeDispose().then(dispose);
+    } else {
+      dispose();
+    }
   };
 };
 
@@ -4091,6 +4105,16 @@ AlertDialog.show = function (title, content) {
   var cancelText = arguments.length > 4 ? arguments[4] : undefined;
   var onCancel = arguments.length > 5 ? arguments[5] : undefined;
   if (!content) return;
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      container.querySelector('.uc-popup-wrap').classList.remove('to');
+      container.querySelector('.uc-popup-wrap').classList.add('from');
+      setTimeout(dispose, 160);
+    });
+  };
+
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
     title: title,
     content: content,
@@ -4109,10 +4133,10 @@ AlertDialog.show = function (title, content) {
       return onConfirm;
     }(function () {
       onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
-      dispose();
+      dispose(beforeDispose);
     }),
     onClose: function onClose() {
-      dispose();
+      dispose(beforeDispose);
     },
     onCancel: function (_onCancel) {
       function onCancel() {
@@ -4126,9 +4150,12 @@ AlertDialog.show = function (title, content) {
       return onCancel;
     }(function () {
       onCancel === null || onCancel === void 0 ? void 0 : onCancel();
-      dispose();
-    })
-  })));
+      dispose(beforeDispose);
+    }),
+    mountContainer: function mountContainer() {
+      return container;
+    }
+  })), container);
 };
 
 var _excluded$t = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];

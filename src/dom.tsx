@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 
 let flexGapSupported: boolean;
@@ -85,20 +85,38 @@ try {
 } catch (err) {}
 
 export const passiveIfSupported = _passiveIfSupported;
+
+export type Dispose = (beforeDispose?: () => Promise<void>) => void;
+
 /**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element
- * @return {*}  {(() => void)}
+ * @param {HTMLElement} [container]
+ * @return {*}  {*}
  */
-export const renderElement = (element: ReactElement): (() => void) => {
-  const container = document.createElement('div');
-  document.body.appendChild(container);
+export const renderElement: (element: ReactElement, container?: HTMLElement) => Dispose = (
+  element,
+  container
+) => {
+  const dom = container || document.createElement('div');
+  document.body.appendChild(dom);
 
-  ReactDOM.render(element, container);
+  ReactDOM.render(element, dom);
 
-  return () => {
-    ReactDOM.unmountComponentAtNode(container);
-    container.parentNode.removeChild(container);
+  const dispose = () => {
+    ReactDOM.unmountComponentAtNode(dom);
+    if (dom && dom.parentNode) {
+      dom.parentNode.removeChild(dom);
+    }
+  };
+
+  return (beforeDispose) => {
+    if (typeof beforeDispose === 'function') {
+      // play transition here before unmount
+      beforeDispose().then(dispose);
+    } else {
+      dispose();
+    }
   };
 };

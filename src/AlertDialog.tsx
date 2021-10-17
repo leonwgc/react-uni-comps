@@ -6,7 +6,7 @@ import Divider from './Divider';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
-import { isMobile, renderElement } from './dom';
+import { Dispose, isMobile, renderElement } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
@@ -324,7 +324,17 @@ AlertDialog.displayName = 'UC-AlertDialog';
 AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText, onCancel) => {
   if (!content) return;
 
-  const dispose: () => void = renderElement(
+  const container = document.createElement('div');
+
+  const beforeDispose: () => Promise<void> = () => {
+    return new Promise((dispose) => {
+      container.querySelector('.uc-popup-wrap').classList.remove('to');
+      container.querySelector('.uc-popup-wrap').classList.add('from');
+      setTimeout(dispose, 160);
+    });
+  };
+
+  const dispose: Dispose = renderElement(
     <TransitionElement>
       <AlertDialog
         title={title}
@@ -334,17 +344,19 @@ AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelTex
         cancelText={cancelText}
         onConfirm={() => {
           onConfirm?.();
-          dispose();
+          dispose(beforeDispose);
         }}
         onClose={() => {
-          dispose();
+          dispose(beforeDispose);
         }}
         onCancel={() => {
           onCancel?.();
-          dispose();
+          dispose(beforeDispose);
         }}
+        mountContainer={() => container}
       />
-    </TransitionElement>
+    </TransitionElement>,
+    container
   );
 };
 

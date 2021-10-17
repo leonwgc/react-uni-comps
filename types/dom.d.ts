@@ -22,10 +22,12 @@ export declare const isSupportStyleProp: (prop: string) => boolean;
  */
 export declare const isSupportStyleValue: (prop: string, value: string) => boolean;
 export declare const passiveIfSupported = false;
+export declare type Dispose = (beforeDispose?: () => Promise<void>) => void;
 /**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element
- * @return {*}  {(() => void)}
+ * @param {HTMLElement} [container]
+ * @return {*}  {*}
  */
-export declare const renderElement: (element: ReactElement) => (() => void);
+export declare const renderElement: (element: ReactElement, container?: HTMLElement) => Dispose;
