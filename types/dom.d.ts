@@ -24,6 +24,15 @@ export declare const isSupportStyleValue: (prop: string, value: string) => boole
 export declare const passiveIfSupported = false;
 export declare type Dispose = (beforeDispose?: () => Promise<void>) => void;
 /**
+ *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
+ *
+ * @param {HTMLElement} container
+ * @param {string} selector
+ * @param {number} timeout
+ * @return {*}  {Promise<void>}
+ */
+export declare const beforeDisposeGen: (container: HTMLElement, selector: string, timeout: number) => (() => Promise<void>);
+/**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element

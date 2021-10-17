@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
-import { Dispose, renderElement } from './dom';
+import { beforeDisposeGen, Dispose, renderElement } from './dom';
 import TransitionElement from './TransitionElement';
 
 const StyledToast = styled.div`
@@ -80,17 +80,7 @@ Toast.show = (props: StaticToastProps) => {
 
   const container = document.createElement('div');
 
-  const beforeDispose: () => Promise<void> = () => {
-    return new Promise((dispose) => {
-      const el = container.querySelector('.uc-toast');
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, transitionDuration);
-    });
-  };
+  const beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
 
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>

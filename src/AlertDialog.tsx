@@ -6,7 +6,7 @@ import Divider from './Divider';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
-import { Dispose, isMobile, renderElement } from './dom';
+import { Dispose, isMobile, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
@@ -28,7 +28,7 @@ type Props = {
   onClose?: () => void;
   /** 取消回调 */
   onCancel?: () => void;
-  /** 点击遮罩是否关闭,默认true*/
+  /** 点击遮罩是否关闭,默认false*/
   closeOnMaskClick?: boolean;
   className?: string;
   /** 按钮间距，默认8 */
@@ -217,7 +217,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
     onCancel,
     confirmText = '确定',
     cancelText,
-    closeOnMaskClick = true,
+    closeOnMaskClick = false,
     buttonSpace = 8,
     buttonWidth = 62,
     closable = false,
@@ -321,21 +321,17 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
 
 AlertDialog.displayName = 'UC-AlertDialog';
 
+const transitionDuration = 240;
+
 AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText, onCancel) => {
   if (!content) return;
 
   const container = document.createElement('div');
 
-  const beforeDispose: () => Promise<void> = () => {
-    return new Promise((dispose) => {
-      container.querySelector('.uc-popup-wrap').classList.remove('to');
-      container.querySelector('.uc-popup-wrap').classList.add('from');
-      setTimeout(dispose, 160);
-    });
-  };
+  const beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration);
 
   const dispose: Dispose = renderElement(
-    <TransitionElement>
+    <TransitionElement duration={transitionDuration}>
       <AlertDialog
         title={title}
         content={content}

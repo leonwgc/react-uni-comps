@@ -16,7 +16,7 @@ declare type Props = {
     onClose?: () => void;
     /** 取消回调 */
     onCancel?: () => void;
-    /** 点击遮罩是否关闭,默认true*/
+    /** 点击遮罩是否关闭,默认false*/
     closeOnMaskClick?: boolean;
     className?: string;
     /** 按钮间距，默认8 */

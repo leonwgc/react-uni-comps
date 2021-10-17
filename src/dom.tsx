@@ -89,6 +89,28 @@ export const passiveIfSupported = _passiveIfSupported;
 export type Dispose = (beforeDispose?: () => Promise<void>) => void;
 
 /**
+ *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
+ *
+ * @param {HTMLElement} container
+ * @param {string} selector
+ * @param {number} timeout
+ * @return {*}  {Promise<void>}
+ */
+export const beforeDisposeGen =
+  (container: HTMLElement, selector: string, timeout: number): (() => Promise<void>) =>
+  () => {
+    return new Promise((dispose) => {
+      const el = container.querySelector(selector);
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, timeout);
+    });
+  };
+
+/**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element

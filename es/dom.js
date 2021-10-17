@@ -78,6 +78,29 @@ try {
 
 export var passiveIfSupported = _passiveIfSupported;
 /**
+ *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
+ *
+ * @param {HTMLElement} container
+ * @param {string} selector
+ * @param {number} timeout
+ * @return {*}  {Promise<void>}
+ */
+
+export var beforeDisposeGen = function beforeDisposeGen(container, selector, timeout) {
+  return function () {
+    return new Promise(function (dispose) {
+      var el = container.querySelector(selector);
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, timeout);
+    });
+  };
+};
+/**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element

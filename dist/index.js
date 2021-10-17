@@ -415,12 +415,35 @@ try {
 var passiveIfSupported = _passiveIfSupported;
 
 /**
+ *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
+ *
+ * @param {HTMLElement} container
+ * @param {string} selector
+ * @param {number} timeout
+ * @return {*}  {Promise<void>}
+ */
+var beforeDisposeGen = function beforeDisposeGen(container, selector, timeout) {
+  return function () {
+    return new Promise(function (dispose) {
+      var el = container.querySelector(selector);
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, timeout);
+    });
+  };
+};
+/**
  * render element into doc & return dispose func
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]
  * @return {Dispose}  dispose
  */
+
 var renderElement = function renderElement(element, container) {
   var dom = container || document.createElement('div');
   document.body.appendChild(dom);
@@ -3625,20 +3648,7 @@ Toast.show = function (props) {
       rest = _objectWithoutProperties(props, _excluded2$2);
 
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      var el = container.querySelector('.uc-toast');
-
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, transitionDuration);
-    });
-  };
-
+  var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration
   }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
@@ -4025,7 +4035,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       confirmText = _props$confirmText === void 0 ? '确定' : _props$confirmText,
       cancelText = props.cancelText,
       _props$closeOnMaskCli = props.closeOnMaskClick,
-      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
+      closeOnMaskClick = _props$closeOnMaskCli === void 0 ? false : _props$closeOnMaskCli,
       _props$buttonSpace = props.buttonSpace,
       buttonSpace = _props$buttonSpace === void 0 ? 8 : _props$buttonSpace,
       _props$buttonWidth = props.buttonWidth,
@@ -4119,6 +4129,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, confirmText)))));
 });
 AlertDialog.displayName = 'UC-AlertDialog';
+var transitionDuration$1 = 240;
 
 AlertDialog.show = function (title, content) {
   var confirmText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '确定';
@@ -4127,16 +4138,10 @@ AlertDialog.show = function (title, content) {
   var onCancel = arguments.length > 5 ? arguments[5] : undefined;
   if (!content) return;
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      container.querySelector('.uc-popup-wrap').classList.remove('to');
-      container.querySelector('.uc-popup-wrap').classList.add('from');
-      setTimeout(dispose, 160);
-    });
-  };
-
-  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
+  var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration$1);
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
+    duration: transitionDuration$1
+  }, /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
     title: title,
     content: content,
     visible: true,
@@ -5583,8 +5588,8 @@ var _excluded$F = ["content", "icon", "style", "className"],
     _excluded2$3 = ["duration"];
 
 var _templateObject$H;
-var transitionDuration$1 = 180;
-var StyledNotify = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration$1, getThemeColorCss('background-color'));
+var transitionDuration$2 = 240;
+var StyledNotify = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration$2, getThemeColorCss('background-color'));
 
 /** 顶部全局消息通知 */
 var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -5619,22 +5624,9 @@ Notify.show = function (props) {
       rest = _objectWithoutProperties(props, _excluded2$3);
 
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      var el = container.querySelector('.uc-notify');
-
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, 160);
-    });
-  };
-
+  var beforeDispose = beforeDisposeGen(container, '.uc-notify', transitionDuration$2);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
-    duration: transitionDuration$1
+    duration: transitionDuration$2
   }, /*#__PURE__*/React__default['default'].createElement(Notify, rest)), container);
   window.setTimeout(function () {
     dispose(beforeDispose);

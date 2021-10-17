@@ -13,6 +13,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> AlertDialog
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('AlertDialog')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Notify
           </Space>
         }
@@ -456,15 +465,6 @@ export default function All() {
         }
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ActionSheet')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> AlertDialog
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('AlertDialog')}
       ></Cell>
     </div>
   );

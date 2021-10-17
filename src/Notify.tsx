@@ -2,10 +2,10 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
-import { renderElement, isMobile, Dispose } from './dom';
+import { renderElement, isMobile, Dispose, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
 
-const transitionDuration = 180;
+const transitionDuration = 240;
 
 const StyledNotify = styled.div`
   position: fixed;
@@ -97,17 +97,7 @@ Notify.show = (props: StaticProps) => {
 
   const container = document.createElement('div');
 
-  const beforeDispose: () => Promise<void> = () => {
-    return new Promise((dispose) => {
-      const el = container.querySelector('.uc-notify');
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, 160);
-    });
-  };
+  const beforeDispose = beforeDisposeGen(container, '.uc-notify', transitionDuration);
 
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>

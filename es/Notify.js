@@ -43,9 +43,9 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
-import { renderElement, isMobile } from './dom';
+import { renderElement, isMobile, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
-var transitionDuration = 180;
+var transitionDuration = 240;
 var StyledNotify = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration, getThemeColorCss('background-color'));
 /** 顶部全局消息通知 */
 
@@ -81,20 +81,7 @@ Notify.show = function (props) {
       rest = __rest(props, ["duration"]);
 
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      var el = container.querySelector('.uc-notify');
-
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, 160);
-    });
-  };
-
+  var beforeDispose = beforeDisposeGen(container, '.uc-notify', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
   }, /*#__PURE__*/React.createElement(Notify, __assign({}, rest))), container);

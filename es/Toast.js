@@ -43,7 +43,7 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
-import { renderElement } from './dom';
+import { beforeDisposeGen, renderElement } from './dom';
 import TransitionElement from './TransitionElement';
 var StyledToast = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
 /** 黑背景轻提示 */
@@ -75,20 +75,7 @@ Toast.show = function (props) {
       rest = __rest(props, ["duration"]);
 
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      var el = container.querySelector('.uc-toast');
-
-      if (el) {
-        el.classList.remove('to');
-        el.classList.add('from');
-      }
-
-      setTimeout(dispose, transitionDuration);
-    });
-  };
-
+  var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
   }, /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {

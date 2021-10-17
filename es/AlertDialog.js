@@ -47,7 +47,7 @@ import Divider from './Divider';
 import Space from './Space';
 import IconCross from './IconCross';
 import * as colors from './colors';
-import { isMobile, renderElement } from './dom';
+import { isMobile, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
@@ -65,7 +65,7 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
       confirmText = _b === void 0 ? '确定' : _b,
       cancelText = props.cancelText,
       _c = props.closeOnMaskClick,
-      closeOnMaskClick = _c === void 0 ? true : _c,
+      closeOnMaskClick = _c === void 0 ? false : _c,
       _d = props.buttonSpace,
       buttonSpace = _d === void 0 ? 8 : _d,
       _e = props.buttonWidth,
@@ -159,6 +159,7 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
   }, confirmText)))));
 });
 AlertDialog.displayName = 'UC-AlertDialog';
+var transitionDuration = 240;
 
 AlertDialog.show = function (title, content, confirmText, _onConfirm, cancelText, _onCancel) {
   if (confirmText === void 0) {
@@ -167,16 +168,10 @@ AlertDialog.show = function (title, content, confirmText, _onConfirm, cancelText
 
   if (!content) return;
   var container = document.createElement('div');
-
-  var beforeDispose = function beforeDispose() {
-    return new Promise(function (dispose) {
-      container.querySelector('.uc-popup-wrap').classList.remove('to');
-      container.querySelector('.uc-popup-wrap').classList.add('from');
-      setTimeout(dispose, 160);
-    });
-  };
-
-  var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, null, /*#__PURE__*/React.createElement(AlertDialog, {
+  var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration);
+  var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
+    duration: transitionDuration
+  }, /*#__PURE__*/React.createElement(AlertDialog, {
     title: title,
     content: content,
     visible: true,

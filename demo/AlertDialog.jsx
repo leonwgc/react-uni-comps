@@ -39,9 +39,12 @@ export default function App() {
               'sure to leave china',
               'yes',
               () => {
-                Toast.show({ content: 'no' });
+                Toast.show({ content: 'yes' });
               },
-              'no'
+              'no',
+              () => {
+                Toast.show({ content: 'no' });
+              }
             )
           }
         >
