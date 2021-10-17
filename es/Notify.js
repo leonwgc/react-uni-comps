@@ -80,10 +80,27 @@ Notify.show = function (props) {
       duration = _a === void 0 ? 2000 : _a,
       rest = __rest(props, ["duration"]);
 
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      var el = container.querySelector('.uc-notify');
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, 160);
+    });
+  };
+
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
-  }, /*#__PURE__*/React.createElement(Notify, __assign({}, rest))));
-  window.setTimeout(dispose, duration);
+  }, /*#__PURE__*/React.createElement(Notify, __assign({}, rest))), container);
+  window.setTimeout(function () {
+    dispose(beforeDispose);
+  }, duration);
 };
 
 Notify.displayName = 'UC-Notify';

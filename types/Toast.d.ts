@@ -11,13 +11,6 @@ declare type Props = {
     /** className */
     className?: string;
 };
-/** 黑背景轻提示 */
-declare const Toast: {
-    (props: Props): React.ReactElement;
-    /** 黑背景提示,静态调用 */
-    show(props: StaticToastProps): void;
-    displayName: string;
-};
 declare type StaticToastProps = {
     /** 内容 */
     content: React.ReactNode;
@@ -31,5 +24,9 @@ declare type StaticToastProps = {
     style?: React.CSSProperties;
     /** 模态时 mask style */
     maskStyle: React.CSSProperties;
+};
+/** 黑背景轻提示 */
+declare const Toast: React.ForwardRefExoticComponent<Props> & {
+    /** 黑背景提示,静态调用 */ show?: (props: StaticToastProps) => void;
 };
 export default Toast;

@@ -39,15 +39,16 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
 import { renderElement } from './dom';
-var StyledToast = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
+import TransitionElement from './TransitionElement';
+var StyledToast = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
 /** 黑背景轻提示 */
 
-var Toast = function Toast(props) {
+var Toast = /*#__PURE__*/forwardRef(function (props, ref) {
   var content = props.content,
       visible = props.visible,
       _a = props.modal,
@@ -61,21 +62,41 @@ var Toast = function Toast(props) {
       opacity: 0
     }, maskStyle)
   }), /*#__PURE__*/React.createElement(StyledToast, __assign({}, rest, {
+    ref: ref,
     className: clsx('uc-toast', className)
   }), content)) : null;
-};
+});
+var transitionDuration = 240;
 /** 黑背景提示,静态调用 */
-
 
 Toast.show = function (props) {
   var _a = props.duration,
       duration = _a === void 0 ? 2000 : _a,
       rest = __rest(props, ["duration"]);
 
-  var dispose = renderElement( /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      var el = container.querySelector('.uc-toast');
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, transitionDuration);
+    });
+  };
+
+  var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
+    duration: transitionDuration
+  }, /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {
     visible: true
-  })));
-  window.setTimeout(dispose, duration);
+  }))), container);
+  window.setTimeout(function () {
+    dispose(beforeDispose);
+  }, duration);
 };
 
 Toast.displayName = 'UC-Toast';

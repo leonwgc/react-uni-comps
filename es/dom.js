@@ -82,7 +82,7 @@ export var passiveIfSupported = _passiveIfSupported;
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]
- * @return {*}  {*}
+ * @return {Dispose}  dispose
  */
 
 export var renderElement = function renderElement(element, container) {

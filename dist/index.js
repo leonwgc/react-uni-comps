@@ -419,7 +419,7 @@ var passiveIfSupported = _passiveIfSupported;
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]
- * @return {*}  {*}
+ * @return {Dispose}  dispose
  */
 var renderElement = function renderElement(element, container) {
   var dom = container || document.createElement('div');
@@ -3595,10 +3595,10 @@ var _excluded$n = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2$2 = ["duration"];
 
 var _templateObject$p;
-var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
+var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
 
 /** 黑背景轻提示 */
-var Toast = function Toast(props) {
+var Toast = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var content = props.content,
       visible = props.visible,
       _props$modal = props.modal,
@@ -3612,20 +3612,41 @@ var Toast = function Toast(props) {
       opacity: 0
     }, maskStyle)
   }), /*#__PURE__*/React__default['default'].createElement(StyledToast, _extends({}, rest, {
+    ref: ref,
     className: clsx__default['default']('uc-toast', className)
   }), content)) : null;
-};
-
+});
+var transitionDuration = 240;
 /** 黑背景提示,静态调用 */
+
 Toast.show = function (props) {
   var _props$duration = props.duration,
       duration = _props$duration === void 0 ? 2000 : _props$duration,
       rest = _objectWithoutProperties(props, _excluded2$2);
 
-  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      var el = container.querySelector('.uc-toast');
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, transitionDuration);
+    });
+  };
+
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
+    duration: transitionDuration
+  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
     visible: true
-  })));
-  window.setTimeout(dispose, duration);
+  }))), container);
+  window.setTimeout(function () {
+    dispose(beforeDispose);
+  }, duration);
 };
 
 Toast.displayName = 'UC-Toast';
@@ -5562,8 +5583,8 @@ var _excluded$F = ["content", "icon", "style", "className"],
     _excluded2$3 = ["duration"];
 
 var _templateObject$H;
-var transitionDuration = 180;
-var StyledNotify = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration, getThemeColorCss('background-color'));
+var transitionDuration$1 = 180;
+var StyledNotify = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration$1, getThemeColorCss('background-color'));
 
 /** 顶部全局消息通知 */
 var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -5597,10 +5618,27 @@ Notify.show = function (props) {
       duration = _props$duration === void 0 ? 2000 : _props$duration,
       rest = _objectWithoutProperties(props, _excluded2$3);
 
+  var container = document.createElement('div');
+
+  var beforeDispose = function beforeDispose() {
+    return new Promise(function (dispose) {
+      var el = container.querySelector('.uc-notify');
+
+      if (el) {
+        el.classList.remove('to');
+        el.classList.add('from');
+      }
+
+      setTimeout(dispose, 160);
+    });
+  };
+
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
-    duration: transitionDuration
-  }, /*#__PURE__*/React__default['default'].createElement(Notify, rest)));
-  window.setTimeout(dispose, duration);
+    duration: transitionDuration$1
+  }, /*#__PURE__*/React__default['default'].createElement(Notify, rest)), container);
+  window.setTimeout(function () {
+    dispose(beforeDispose);
+  }, duration);
 };
 
 Notify.displayName = 'UC-Notify';
