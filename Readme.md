@@ -27,6 +27,7 @@ yarn add react-uni-comps
 - Divider (分割线)
 - Space (间距容器)
 - HairLineBox (包含 1px 的边的容器 div)
+- Avatar (头像)
 - Icon (IconTick [勾勾],IconCross[x],IconArrow[箭头])
 
 #### 操作反馈
@@ -69,6 +70,7 @@ yarn add react-uni-comps
 - Rate (评分/几颗星)
 - IndexList (索引列表)
 - FileInputTrigger (触发文件上传)
+- Signature (手写签名)
 
 ### 数据展示
 - Cell（列表项，多用于移动端,可以和 input/textarea 组合使用）

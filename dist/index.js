@@ -4973,10 +4973,10 @@ Steps.displayName = 'UC-Steps';
 var _excluded$A = ["padColor", "penColor", "className"];
 
 var _templateObject$B;
-var StyledSignaturePad = styled__default['default'].div(_templateObject$B || (_templateObject$B = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), border);
-/** 签名面板 */
+var StyledSignature = styled__default['default'].div(_templateObject$B || (_templateObject$B = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), border);
+/** 签名 */
 
-var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var padColor = props.padColor,
       penColor = props.penColor,
       className = props.className,
@@ -5008,14 +5008,14 @@ var SignaturePad = /*#__PURE__*/React__default['default'].forwardRef(function (p
     canvasRef.current.width = elRef.current.offsetWidth;
     canvasRef.current.height = elRef.current.offsetHeight;
   }, []);
-  return /*#__PURE__*/React__default['default'].createElement(StyledSignaturePad, _extends({}, rest, {
-    className: clsx__default['default']('uc-sigpad', className),
+  return /*#__PURE__*/React__default['default'].createElement(StyledSignature, _extends({}, rest, {
+    className: clsx__default['default']('uc-signature', className),
     ref: elRef
   }), /*#__PURE__*/React__default['default'].createElement("canvas", {
     ref: canvasRef
   }));
 });
-SignaturePad.displayName = 'UC-SignaturePad';
+Signature.displayName = 'UC-Signature';
 
 var _excluded$B = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
 
@@ -5661,10 +5661,40 @@ var Badge = function Badge(props) {
 
 Badge.displayName = 'UC-Badge';
 
+var _excluded$H = ["size", "className", "shape", "style", "children"];
+
+var _templateObject$J;
+var StyledAvatar = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 16px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
+/** 头像 */
+
+var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$size = props.size,
+      size = _props$size === void 0 ? 40 : _props$size,
+      className = props.className,
+      _props$shape = props.shape,
+      shape = _props$shape === void 0 ? 'circle' : _props$shape,
+      style = props.style,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$H);
+
+  var s = _objectSpread2(_objectSpread2({}, style), {}, {
+    width: size,
+    height: size
+  });
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledAvatar, _extends({}, rest, {
+    ref: ref,
+    style: s,
+    className: clsx__default['default']('uc-avatar', className, shape)
+  }), children);
+});
+Avatar.displayName = 'UC-Avatar';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
+exports.Avatar = Avatar;
 exports.Badge = Badge;
 exports.Button = Button;
 exports.Cell = Cell;
@@ -5700,7 +5730,7 @@ exports.Radio = Radio;
 exports.RadioGroup = RadioGroup;
 exports.Rate = Rate;
 exports.ScrollTop = ScrollTop;
-exports.SignaturePad = SignaturePad;
+exports.Signature = Signature;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Slide = Slide;

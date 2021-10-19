@@ -16,14 +16,14 @@ type Props = {
   style: React.CSSProperties;
 } & RefAttributes<SigPadRefProps>;
 
-const StyledSignaturePad = styled.div`
+const StyledSignature = styled.div`
   position: relative;
   border: 1px solid ${colors.border};
   box-sizing: border-box;
 `;
 
-/** 签名面板 */
-const SignaturePad = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
+/** 签名 */
+const Signature = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
   const { padColor, penColor, className, ...rest } = props;
   const elRef = useRef<HTMLDivElement>();
   const canvasRef = useRef<HTMLCanvasElement>();
@@ -48,12 +48,12 @@ const SignaturePad = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
     canvasRef.current.height = elRef.current.offsetHeight;
   }, []);
   return (
-    <StyledSignaturePad {...rest} className={clsx('uc-sigpad', className)} ref={elRef}>
+    <StyledSignature {...rest} className={clsx('uc-signature', className)} ref={elRef}>
       <canvas ref={canvasRef}></canvas>
-    </StyledSignaturePad>
+    </StyledSignature>
   );
 });
 
-SignaturePad.displayName = 'UC-SignaturePad';
+Signature.displayName = 'UC-Signature';
 
-export default SignaturePad;
+export default Signature;

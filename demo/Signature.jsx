@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { SignaturePad, Divider, Button, Space } from '../src';
+import { Signature, Divider, Button, Space } from '../src';
 
 export default function App() {
   const ref = useRef();
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div className="app" style={{ margin: '20px' }}>
       <Divider>竖屏</Divider>
-      <SignaturePad ref={ref} style={{ width: '100%', height: 200, border: '1px solid #eee' }} />
+      <Signature ref={ref} style={{ width: '100%', height: 200, border: '1px solid #eee' }} />
       <Space style={{ marginTop: 30 }}>
         <Button
           onClick={() => {

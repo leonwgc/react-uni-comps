@@ -44,10 +44,10 @@ import styled from 'styled-components';
 import useSigPad from 'react-use-lib/es/useSigPad';
 import clsx from 'clsx';
 import * as colors from './colors';
-var StyledSignaturePad = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), colors.border);
-/** 签名面板 */
+var StyledSignature = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), colors.border);
+/** 签名 */
 
-var SignaturePad = /*#__PURE__*/React.forwardRef(function (props, ref) {
+var Signature = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var padColor = props.padColor,
       penColor = props.penColor,
       className = props.className,
@@ -79,13 +79,13 @@ var SignaturePad = /*#__PURE__*/React.forwardRef(function (props, ref) {
     canvasRef.current.width = elRef.current.offsetWidth;
     canvasRef.current.height = elRef.current.offsetHeight;
   }, []);
-  return /*#__PURE__*/React.createElement(StyledSignaturePad, __assign({}, rest, {
-    className: clsx('uc-sigpad', className),
+  return /*#__PURE__*/React.createElement(StyledSignature, __assign({}, rest, {
+    className: clsx('uc-signature', className),
     ref: elRef
   }), /*#__PURE__*/React.createElement("canvas", {
     ref: canvasRef
   }));
 });
-SignaturePad.displayName = 'UC-SignaturePad';
-export default SignaturePad;
+Signature.displayName = 'UC-Signature';
+export default Signature;
 var templateObject_1;

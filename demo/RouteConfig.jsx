@@ -159,12 +159,12 @@ const routes = [
     component: lazy(() => import('./Steps')),
   },
   {
-    path: '/SignaturePad',
-    component: lazy(() => import('./SignaturePad')),
+    path: '/Signature',
+    component: lazy(() => import('./Signature')),
   },
   {
-    path: '/SignaturePadLandscape',
-    component: lazy(() => import('./SignaturePadLandscape')),
+    path: '/SignatureLandscape',
+    component: lazy(() => import('./SignatureLandscape')),
   },
   {
     path: '/Rate',

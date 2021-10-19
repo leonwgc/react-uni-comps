@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { SignaturePad, Button, Space } from '../src';
-import styled  from '../src/styled';
+import { Signature, Button, Space } from '../src';
+import styled from '../src/styled';
 
 // simulate landscape mode
 
@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <div>
-      <SignaturePad style={{ width: '100vw', height: '60vh' }} ref={ref} />
+      <Signature style={{ width: '100vw', height: '60vh' }} ref={ref} />
       <StyledOps>
         <Space>
           <Button

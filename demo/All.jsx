@@ -14,6 +14,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Avatar
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Avatar')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Badge
           </Space>
         }
@@ -149,20 +158,20 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> SignaturePad/Landscape
+            <SoundOutlined /> Signature/Landscape
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SignaturePadLandscape')}
+        onClick={() => gotoPage('SignatureLandscape')}
       ></Cell>
       <Cell
         title={
           <Space>
-            <SoundOutlined /> SignaturePad
+            <SoundOutlined /> Signature
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SignaturePad')}
+        onClick={() => gotoPage('Signature')}
       ></Cell>
       <Cell
         title={
