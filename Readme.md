@@ -124,6 +124,8 @@ yarn add react-uni-comps
 
 #### 52. Notify (顶部全局消息通知)
 
+#### 53. Badge (徽标)
+
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
@@ -173,19 +175,18 @@ const StyledButton = styled(Button)`
 </StyledButton>;
 ```
 
-### 引用内部三方库 
+### 引用内部三方库
 
 ```js
 // styled-components
 import styled from 'react-uni-comps/es/styled';
 
-// clsx 
+// clsx
 import clsx from 'react-uni-comps/es/clsx';
 
 // react-transition-group
 import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps/es/transition';
 ```
-
 
 ### 参考
 

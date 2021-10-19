@@ -206,6 +206,10 @@ const routes = [
     path: '/Notify',
     component: lazy(() => import('./Notify')),
   },
+  {
+    path: '/Badge',
+    component: lazy(() => import('./Badge')),
+  },
 ];
 
 export default routes;

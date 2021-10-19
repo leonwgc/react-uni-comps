@@ -13,6 +13,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Badge
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Badge')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> AlertDialog
           </Space>
         }

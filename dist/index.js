@@ -5635,10 +5635,37 @@ Notify.show = function (props) {
 
 Notify.displayName = 'UC-Notify';
 
+var _excluded$G = ["children", "className", "content", "badgeStyle"];
+
+var _templateObject$I;
+var StyledBadge = styled__default['default'].div(_templateObject$I || (_templateObject$I = _taggedTemplateLiteral(["\n  display: inline-block;\n  position: relative;\n\n  .badge {\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    vertical-align: middle;\n    box-sizing: border-box;\n    border-radius: 100px;\n    padding: 0 4px;\n    font-size: 9px;\n    line-height: 1.2;\n    white-space: nowrap;\n    position: absolute;\n    z-index: 1;\n    transform: translate(50%, -50%);\n    top: 0;\n    right: 0;\n    ", "\n\n    &.dot {\n      padding: 0;\n      width: 10px;\n      height: 10px;\n      border-radius: 50%;\n    }\n    &.without-children {\n      position: static;\n      transform: none;\n    }\n  }\n"])), getThemeColorCss('background-color'));
+/** 徽标:右上角添加标记 */
+
+var Badge = function Badge(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      badgeStyle = props.badgeStyle,
+      rest = _objectWithoutProperties(props, _excluded$G);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledBadge, _extends({}, rest, {
+    className: clsx__default['default']('uc-badge', className)
+  }), children, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('badge', {
+      'dot': !content,
+      'without-children': !children
+    }),
+    style: badgeStyle
+  }, content));
+};
+
+Badge.displayName = 'UC-Badge';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
+exports.Badge = Badge;
 exports.Button = Button;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
