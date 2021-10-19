@@ -27,6 +27,7 @@ export default function App() {
         ref={ref}
         height={200}
         onPageChange={console.log}
+        defaultPageIndex={2}
         interval={3000}
       >
         {ar.map((item, idx) => (

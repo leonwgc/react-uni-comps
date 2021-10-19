@@ -77,6 +77,7 @@ yarn add react-uni-comps
 - Badge (徽标)
 - WaterMark (图片/文字水印 )
 - Text (文本显示,单行/多行截断显示省略)
+- ImageViewer (图片查看器)
 
 ### 动画/过渡
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)

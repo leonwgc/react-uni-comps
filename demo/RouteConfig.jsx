@@ -214,6 +214,10 @@ const routes = [
     path: '/Avatar',
     component: lazy(() => import('./Avatar')),
   },
+  {
+    path: '/ImageViewer',
+    component: lazy(() => import('./ImageViewer')),
+  },
 ];
 
 export default routes;

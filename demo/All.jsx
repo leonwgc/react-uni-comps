@@ -14,6 +14,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> ImageViewer
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ImageViewer')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Avatar
           </Space>
         }

@@ -74,35 +74,33 @@ var getItems = function getItems(children, loop, height) {
 
 var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.autoPlay,
-      autoPlay = _a === void 0 ? true : _a,
+      autoPlay = _a === void 0 ? false : _a,
       _b = props.loop,
       loop = _b === void 0 ? true : _b,
-      _c = props.defaultPageIndex,
-      defaultPageIndex = _c === void 0 ? 0 : _c,
       onPageChange = props.onPageChange,
-      _d = props.direction,
-      direction = _d === void 0 ? 'horizontal' : _d,
-      _e = props.interval,
-      interval = _e === void 0 ? 3000 : _e,
+      _c = props.direction,
+      direction = _c === void 0 ? 'horizontal' : _c,
+      _d = props.interval,
+      interval = _d === void 0 ? 3000 : _d,
       children = props.children,
       className = props.className,
-      _f = props.height,
-      height = _f === void 0 ? 160 : _f,
+      _e = props.height,
+      height = _e === void 0 ? 160 : _e,
       style = props.style,
-      _g = props.showDot,
-      showDot = _g === void 0 ? true : _g,
-      _h = props.ratio,
-      ratio = _h === void 0 ? 0.25 : _h,
-      rest = __rest(props, ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"]);
+      _f = props.showDot,
+      showDot = _f === void 0 ? true : _f,
+      _g = props.ratio,
+      ratio = _g === void 0 ? 0.1 : _g,
+      rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"]);
 
   var containerRef = useRef();
   var wrapElRef = useRef();
 
-  var _j = useState(function () {
+  var _h = useState(function () {
     return getItems(children, loop, height);
   }),
-      items = _j[0],
-      setItems = _j[1];
+      items = _h[0],
+      setItems = _h[1];
 
   var count = items.length;
   var len = React.Children.count(children);
@@ -116,9 +114,9 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     inTransition: false
   });
 
-  var _k = useState(defaultPageIndex),
-      pageIndex = _k[0],
-      setPageIndex = _k[1]; // !loop:0~len-1, loop: -1~len
+  var _j = useState(0),
+      pageIndex = _j[0],
+      setPageIndex = _j[1]; // !loop:0~len-1, loop: -1~len
 
 
   var slideToPageLoc = useCallback(function (newPageIndex, transition) {

@@ -80,10 +80,8 @@ const StyledSlide = styled.div`
 `;
 
 export type Props = {
-  /** 自动播放 */
+  /** 自动播放,默认false */
   autoPlay?: boolean;
-  /** 初始显示第几页 */
-  defaultPageIndex?: number;
   // /** 水平还是垂直播放 */
   direction?: 'horizontal' | 'vertical';
   /** 距离下一次播放的间隔毫秒, 默认 3000 */
@@ -93,17 +91,17 @@ export type Props = {
   height?: number | string;
   className?: string;
   style?: React.CSSProperties;
-  /** 循环播放 */
+  /** 循环播放,默认true */
   loop?: boolean;
   /** 页面切换后回调 */
   onPageChange?: (pageIndex: number) => void;
-  /** 是否显示分页圆点 */
+  /** 是否显示分页圆点,默认true */
   showDot?: boolean;
-  /** 滑动比例多少切换，默认0.25 */
+  /** 滑动比例多少切换，默认0.1 */
   ratio?: number;
 };
 
-interface RefType {
+export interface SlideRefType {
   prev: () => void;
   next: () => void;
 }
@@ -130,11 +128,10 @@ const getItems = (children, loop, height) => {
 };
 
 /**  轮播 */
-const Slide = React.forwardRef<RefType, Props>((props, ref) => {
+const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const {
-    autoPlay = true,
+    autoPlay = false,
     loop = true,
-    defaultPageIndex = 0,
     onPageChange,
     direction = 'horizontal',
     interval = 3000,
@@ -143,7 +140,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
     height = 160,
     style,
     showDot = true,
-    ratio = 0.25,
+    ratio = 0.1,
     ...rest
   } = props;
 
@@ -165,7 +162,7 @@ const Slide = React.forwardRef<RefType, Props>((props, ref) => {
     wrapWidth: 0,
     inTransition: false,
   });
-  const [pageIndex, setPageIndex] = useState(defaultPageIndex); // !loop:0~len-1, loop: -1~len
+  const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
 
   const slideToPageLoc = useCallback(
     (newPageIndex: number, transition = true) => {

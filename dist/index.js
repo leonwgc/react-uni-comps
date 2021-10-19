@@ -5196,7 +5196,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$D = ["autoPlay", "loop", "defaultPageIndex", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"];
+var _excluded$D = ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"];
 
 var _templateObject$E;
 var StyledSlide = styled__default['default'].div(_templateObject$E || (_templateObject$E = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
@@ -5229,11 +5229,9 @@ var getItems = function getItems(children, loop, height) {
 
 var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$autoPlay = props.autoPlay,
-      autoPlay = _props$autoPlay === void 0 ? true : _props$autoPlay,
+      autoPlay = _props$autoPlay === void 0 ? false : _props$autoPlay,
       _props$loop = props.loop,
       loop = _props$loop === void 0 ? true : _props$loop,
-      _props$defaultPageInd = props.defaultPageIndex,
-      defaultPageIndex = _props$defaultPageInd === void 0 ? 0 : _props$defaultPageInd,
       onPageChange = props.onPageChange,
       _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
@@ -5247,7 +5245,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       _props$showDot = props.showDot,
       showDot = _props$showDot === void 0 ? true : _props$showDot,
       _props$ratio = props.ratio,
-      ratio = _props$ratio === void 0 ? 0.25 : _props$ratio,
+      ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
       rest = _objectWithoutProperties(props, _excluded$D);
 
   var containerRef = React.useRef();
@@ -5272,7 +5270,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     inTransition: false
   });
 
-  var _useState3 = React.useState(defaultPageIndex),
+  var _useState3 = React.useState(0),
       _useState4 = _slicedToArray(_useState3, 2),
       pageIndex = _useState4[0],
       setPageIndex = _useState4[1]; // !loop:0~len-1, loop: -1~len
@@ -5690,6 +5688,78 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
+var _excluded$I = ["className", "visible", "maskStyle", "onClose", "images", "onIndexChange"];
+
+var _templateObject$K;
+var StyledImageViewer = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 101;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    height: 100%;\n  }\n  .image {\n    z-index: 101;\n    width: 100%;\n    max-height: 80vh;\n    object-fit: contain;\n    object-position: center;\n    touch-action: none;\n  }\n"])));
+/** 图片查看器 */
+
+var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      visible = props.visible,
+      maskStyle = props.maskStyle,
+      onClose = props.onClose,
+      images = props.images,
+      onIndexChange = props.onIndexChange,
+      rest = _objectWithoutProperties(props, _excluded$I);
+
+  var _useState = React.useState(Array.isArray(images) ? images : [images]),
+      _useState2 = _slicedToArray(_useState, 2),
+      urls = _useState2[0],
+      setUrls = _useState2[1];
+
+  var _useState3 = React.useState(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      index = _useState4[0],
+      setIndex = _useState4[1];
+
+  var onIndexChangeRef = useCallbackRef(onIndexChange);
+  React.useEffect(function () {
+    setUrls(Array.isArray(images) ? images : [images]);
+  }, [images]);
+  var slides = React.useMemo(function () {
+    return /*#__PURE__*/React__default['default'].createElement(Slide, {
+      ref: ref,
+      showDot: false,
+      style: {
+        zIndex: 101,
+        width: '100%'
+      },
+      direction: "horizontal",
+      height: "60vh",
+      onPageChange: function onPageChange(index) {
+        var _onIndexChangeRef$cur;
+
+        setIndex(index);
+        (_onIndexChangeRef$cur = onIndexChangeRef.current) === null || _onIndexChangeRef$cur === void 0 ? void 0 : _onIndexChangeRef$cur.call(onIndexChangeRef, index);
+      },
+      loop: false,
+      autoPlay: false,
+      ratio: 0.1
+    }, urls.map(function (url) {
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        className: "slide-page",
+        key: url
+      }, /*#__PURE__*/React__default['default'].createElement("img", {
+        className: "image",
+        src: url
+      }));
+    }));
+  }, [urls, onIndexChangeRef, ref]);
+  return visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({}, rest, {
+    className: clsx__default['default']('uc-image-viewer', className),
+    onClick: onClose
+  }), /*#__PURE__*/React__default['default'].createElement(Mask, {
+    style: maskStyle
+  }), urls.length > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('text')
+  }, index + 1, " / ", urls.length), urls.length > 1 && slides, urls.length === 1 && /*#__PURE__*/React__default['default'].createElement("img", {
+    className: "image",
+    src: urls[0]
+  }));
+});
+ImageViewer.displayName = 'UC-ImageViewer';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -5710,6 +5780,7 @@ exports.HairLineBox = HairLineBox;
 exports.IconArrow = IconArrow;
 exports.IconCross = IconCross;
 exports.IconTick = IconTick;
+exports.ImageViewer = ImageViewer;
 exports.IndexList = IndexList;
 exports.Input = Input;
 exports.LazyLoadElement = LazyLoadElement;
