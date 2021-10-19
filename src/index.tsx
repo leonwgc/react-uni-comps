@@ -55,3 +55,4 @@ export { default as ProgressCircle } from './ProgressCircle';
 export { default as WaterMark } from './WaterMark';
 export { default as Notify } from './Notify';
 export { default as Badge } from './Badge';
+export { default as Avatar } from './Avatar';

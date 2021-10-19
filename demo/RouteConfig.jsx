@@ -210,6 +210,10 @@ const routes = [
     path: '/Badge',
     component: lazy(() => import('./Badge')),
   },
+  {
+    path: '/Avatar',
+    component: lazy(() => import('./Avatar')),
+  },
 ];
 
 export default routes;
