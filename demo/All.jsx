@@ -6,6 +6,7 @@ import { Space, Cell, IconArrow } from '../src';
 export default function All() {
   const history = useHistory();
   const gotoPage = useCallback((page) => {
+    document.title = page;
     history.push(`/${page}`);
   }, []);
   return (
