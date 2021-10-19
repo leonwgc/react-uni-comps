@@ -39,8 +39,8 @@ yarn add react-uni-comps
 - Popover (弹出带箭头的浮层)
 - Drag (拖拽)
 - Tooltip (文字提示)
-- Toast (黑背景提示)
-- Notify (顶部全局消息通知)
+- Toast (黑背景提示,支持静态调用)
+- Notify (顶部全局消息通知,支持静态调用)
 - Steps (步骤条)
 - ActionSheet (移动端,动作面板)
 - Slide (轮播)
@@ -79,7 +79,7 @@ yarn add react-uni-comps
 - Text (文本显示,单行/多行截断显示省略)
 
 ### 动画/过渡
-- TransitionElement (给子元素添加出场过渡,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
+- TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
 - AnimationElement(元素应用 animation 动画,和TransitionElement一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
 
 ### 其他 
