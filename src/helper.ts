@@ -1,6 +1,6 @@
 export type F = (...args) => void;
 /**
- * 防抖函数
+ * 防抖
  *
  * @param {F} fn
  * @param {number} [timeout=100]
