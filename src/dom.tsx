@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 
 let flexGapSupported: boolean;
 
+/**
+ * 检查浏览器支持gap
+ *
+ * @return {*}  {boolean}
+ */
 export const detectFlexGapSupported = (): boolean => {
   if (flexGapSupported !== undefined) {
     return flexGapSupported;
@@ -26,7 +31,12 @@ export const detectFlexGapSupported = (): boolean => {
 
   return flexGapSupported;
 };
-
+/**
+ * 取得元素偏移值
+ *
+ * @param {(HTMLElement | null)} el
+ * @return {*}  {{ top: number; left: number }}
+ */
 export const offset = (el: HTMLElement | null): { top: number; left: number } => {
   let top = 0;
   let left = 0;
@@ -38,10 +48,12 @@ export const offset = (el: HTMLElement | null): { top: number; left: number } =>
 
   return { top, left };
 };
-
+/** 是否是浏览器 */
 export const isBrowser = !!(typeof window !== 'undefined' && window);
 
+/** 是否是移动端 */
 export const isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+
 /**
  *
  * 判断是否支持某个css属性
@@ -84,6 +96,7 @@ try {
     );
 } catch (err) {}
 
+/** 是否支持passive事件选项 */
 export const passiveIfSupported = _passiveIfSupported;
 
 export type Dispose = (beforeDispose?: () => Promise<void>) => void;
@@ -111,7 +124,7 @@ export const beforeDisposeGen =
   };
 
 /**
- * render element into doc & return dispose func
+ * 自定义渲染元素到容器
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]

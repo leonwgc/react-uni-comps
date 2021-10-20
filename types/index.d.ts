@@ -57,3 +57,5 @@ export { default as Notify } from './Notify';
 export { default as Badge } from './Badge';
 export { default as Avatar } from './Avatar';
 export { default as ImageViewer } from './ImageViewer';
+export * from './helper';
+export * from './dom';

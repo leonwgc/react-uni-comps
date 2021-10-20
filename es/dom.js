@@ -1,5 +1,11 @@
 import ReactDOM from 'react-dom';
 var flexGapSupported;
+/**
+ * 检查浏览器支持gap
+ *
+ * @return {*}  {boolean}
+ */
+
 export var detectFlexGapSupported = function detectFlexGapSupported() {
   if (flexGapSupported !== undefined) {
     return flexGapSupported;
@@ -20,6 +26,13 @@ export var detectFlexGapSupported = function detectFlexGapSupported() {
   document.body.removeChild(flex);
   return flexGapSupported;
 };
+/**
+ * 取得元素偏移值
+ *
+ * @param {(HTMLElement | null)} el
+ * @return {*}  {{ top: number; left: number }}
+ */
+
 export var offset = function offset(el) {
   var top = 0;
   var left = 0;
@@ -35,7 +48,11 @@ export var offset = function offset(el) {
     left: left
   };
 };
+/** 是否是浏览器 */
+
 export var isBrowser = !!(typeof window !== 'undefined' && window);
+/** 是否是移动端 */
+
 export var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 /**
  *
@@ -75,6 +92,8 @@ try {
     }
   }));
 } catch (err) {}
+/** 是否支持passive事件选项 */
+
 
 export var passiveIfSupported = _passiveIfSupported;
 /**
@@ -101,7 +120,7 @@ export var beforeDisposeGen = function beforeDisposeGen(container, selector, tim
   };
 };
 /**
- * render element into doc & return dispose func
+ * 自定义渲染元素到容器
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]

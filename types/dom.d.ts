@@ -1,10 +1,23 @@
 import { ReactElement } from 'react';
+/**
+ * 检查浏览器支持gap
+ *
+ * @return {*}  {boolean}
+ */
 export declare const detectFlexGapSupported: () => boolean;
+/**
+ * 取得元素偏移值
+ *
+ * @param {(HTMLElement | null)} el
+ * @return {*}  {{ top: number; left: number }}
+ */
 export declare const offset: (el: HTMLElement | null) => {
     top: number;
     left: number;
 };
+/** 是否是浏览器 */
 export declare const isBrowser: boolean;
+/** 是否是移动端 */
 export declare const isMobile: boolean;
 /**
  *
@@ -21,6 +34,7 @@ export declare const isSupportStyleProp: (prop: string) => boolean;
  * @return {*}
  */
 export declare const isSupportStyleValue: (prop: string, value: string) => boolean;
+/** 是否支持passive事件选项 */
 export declare const passiveIfSupported = false;
 export declare type Dispose = (beforeDispose?: () => Promise<void>) => void;
 /**
@@ -33,7 +47,7 @@ export declare type Dispose = (beforeDispose?: () => Promise<void>) => void;
  */
 export declare const beforeDisposeGen: (container: HTMLElement, selector: string, timeout: number) => (() => Promise<void>);
 /**
- * render element into doc & return dispose func
+ * 自定义渲染元素到容器
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]

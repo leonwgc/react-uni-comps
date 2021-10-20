@@ -1,5 +1,11 @@
 export type F = (...args) => void;
-
+/**
+ * 防抖函数
+ *
+ * @param {F} fn
+ * @param {number} [timeout=100]
+ * @return {*}  {F}
+ */
 export const debounce = (fn: F, timeout = 100): F => {
   let timer = 0;
 
@@ -52,7 +58,14 @@ export const throttle = (fn: F, timeout = 200, last = true): F => {
   };
 };
 
-/** get filterd props */
+/**
+ *  获取部分props
+ *
+ * @param {*} [props={}]
+ * @param {string[]} propKeys
+ * @param {boolean} [isIncluded=true]
+ * @return {*}  {Record<string, unknown>}
+ */
 export const getProps = (
   props = {},
   propKeys: string[],

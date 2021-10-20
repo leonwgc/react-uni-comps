@@ -378,6 +378,12 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
 }
 
 var flexGapSupported;
+/**
+ * 检查浏览器支持gap
+ *
+ * @return {*}  {boolean}
+ */
+
 var detectFlexGapSupported = function detectFlexGapSupported() {
   if (flexGapSupported !== undefined) {
     return flexGapSupported;
@@ -398,8 +404,61 @@ var detectFlexGapSupported = function detectFlexGapSupported() {
   document.body.removeChild(flex);
   return flexGapSupported;
 };
+/**
+ * 取得元素偏移值
+ *
+ * @param {(HTMLElement | null)} el
+ * @return {*}  {{ top: number; left: number }}
+ */
+
+var offset = function offset(el) {
+  var top = 0;
+  var left = 0;
+
+  while (el) {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  }
+
+  return {
+    top: top,
+    left: left
+  };
+};
+/** 是否是浏览器 */
+
 var isBrowser = !!(typeof window !== 'undefined' && window);
+/** 是否是移动端 */
+
 var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+/**
+ *
+ * 判断是否支持某个css属性
+ * @param {string} prop
+ * @return {*}  {boolean}
+ */
+
+var isSupportStyleProp = function isSupportStyleProp(prop) {
+  return prop && prop in document.documentElement.style;
+};
+/**
+ * 判断是否支持某个css属性的值，比如position: sticky
+ *
+ * @param {*} prop
+ * @param {*} value
+ * @return {*}
+ */
+
+var isSupportStyleValue = function isSupportStyleValue(prop, value) {
+  if (isSupportStyleProp(prop)) {
+    var d = document.createElement('div');
+    d.style[prop] = value;
+    return !!d.style[prop];
+  }
+
+  return false;
+};
 var _passiveIfSupported = false;
 
 try {
@@ -411,6 +470,8 @@ try {
     }
   }));
 } catch (err) {}
+/** 是否支持passive事件选项 */
+
 
 var passiveIfSupported = _passiveIfSupported;
 
@@ -437,7 +498,7 @@ var beforeDisposeGen = function beforeDisposeGen(container, selector, timeout) {
   };
 };
 /**
- * render element into doc & return dispose func
+ * 自定义渲染元素到容器
  *
  * @param {ReactElement} element
  * @param {HTMLElement} [container]
@@ -1655,6 +1716,33 @@ FingerGesture.prototype = {
 };
 
 /**
+ * 防抖函数
+ *
+ * @param {F} fn
+ * @param {number} [timeout=100]
+ * @return {*}  {F}
+ */
+var debounce = function debounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+  var timer = 0;
+  return function a() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var that = this;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+    }, timeout);
+  };
+};
+/**
  * 截流
  *
  * @param {F} fn
@@ -1704,7 +1792,14 @@ var throttle = function throttle(fn) {
     }
   };
 };
-/** get filterd props */
+/**
+ *  获取部分props
+ *
+ * @param {*} [props={}]
+ * @param {string[]} propKeys
+ * @param {boolean} [isIncluded=true]
+ * @return {*}  {Record<string, unknown>}
+ */
 
 var getProps = function getProps() {
   var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -5823,3 +5918,15 @@ exports.TransitionElement = TransitionElement;
 exports.WaitLoading = WaitLoading;
 exports.WaterMark = WaterMark;
 exports.Waypoint = Waypoint;
+exports.beforeDisposeGen = beforeDisposeGen;
+exports.debounce = debounce;
+exports.detectFlexGapSupported = detectFlexGapSupported;
+exports.getProps = getProps;
+exports.isBrowser = isBrowser;
+exports.isMobile = isMobile;
+exports.isSupportStyleProp = isSupportStyleProp;
+exports.isSupportStyleValue = isSupportStyleValue;
+exports.offset = offset;
+exports.passiveIfSupported = passiveIfSupported;
+exports.renderElement = renderElement;
+exports.throttle = throttle;

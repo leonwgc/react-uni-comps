@@ -1,3 +1,10 @@
+/**
+ * 防抖函数
+ *
+ * @param {F} fn
+ * @param {number} [timeout=100]
+ * @return {*}  {F}
+ */
 export var debounce = function debounce(fn, timeout) {
   if (timeout === void 0) {
     timeout = 100;
@@ -81,7 +88,14 @@ export var throttle = function throttle(fn, timeout, last) {
     }
   };
 };
-/** get filterd props */
+/**
+ *  获取部分props
+ *
+ * @param {*} [props={}]
+ * @param {string[]} propKeys
+ * @param {boolean} [isIncluded=true]
+ * @return {*}  {Record<string, unknown>}
+ */
 
 export var getProps = function getProps(props, propKeys, isIncluded) {
   if (props === void 0) {
