@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
