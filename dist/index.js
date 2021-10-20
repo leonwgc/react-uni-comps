@@ -478,6 +478,46 @@ var renderElement = function renderElement(element, container) {
     }
   };
 };
+var cssRegex = /\.css$/i;
+var resourceRegex = /\.(css|js)$/i;
+var resourceLoadedList = new Set();
+/**
+ * 动态加载 js/css文件
+ *
+ * @param {string} url
+ * @return {*}  {Promise<void>}
+ */
+
+var loadResource = function loadResource(url) {
+  if (resourceRegex.test(url) && !resourceLoadedList.has(url)) {
+    resourceLoadedList.add(url);
+    return new Promise(function (resolve) {
+      var el;
+      var isCss = cssRegex.test(url);
+
+      if (isCss) {
+        el = document.createElement('link');
+        el.rel = 'stylesheet';
+        el.href = url;
+      } else {
+        el = document.createElement('script');
+        el.setAttribute('data-namespace', url);
+        el.src = url;
+      }
+
+      el.onload = resolve;
+
+      if (isCss) {
+        var head = document.getElementsByTagName('head')[0];
+        head.appendChild(el);
+      } else {
+        document.body.appendChild(el);
+      }
+    });
+  } else {
+    return Promise.reject('请输入js/css文件地址');
+  }
+};
 
 var intersectionObserver;
 var handlers = new Map();
@@ -1694,7 +1734,7 @@ var debounce = function debounce(fn) {
   };
 };
 /**
- * 截流
+ * 节流
  *
  * @param {F} fn
  * @param {number} [timeout=200]
@@ -5810,6 +5850,40 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
+var _excluded$J = ["type", "className"];
+
+var _templateObject$L;
+var StyledIcon = styled__default['default'].span(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  display: inline-block;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"])));
+var SVGProps = {
+  width: '1em',
+  height: '1em',
+  fill: 'currentColor'
+};
+/** 图标 */
+
+var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var type = props.type,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$J);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-icon', className)
+  }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
+    xlinkHref: "#".concat(type)
+  })));
+});
+Icon.displayName = 'UC-Icon';
+/**
+ * 加载在 iconfont.cn 上自行管理的图标
+ *
+ * @param {string} scriptUrl
+ */
+
+Icon.loadFromIconfontCN = function (scriptUrl) {
+  isBrowser && loadResource(scriptUrl);
+};
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -5827,6 +5901,7 @@ exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.FingerGestureElement = FingerGestureElement;
 exports.HairLineBox = HairLineBox;
+exports.Icon = Icon;
 exports.IconArrow = IconArrow;
 exports.IconCross = IconCross;
 exports.IconTick = IconTick;
@@ -5872,4 +5947,5 @@ exports.Waypoint = Waypoint;
 exports.debounce = debounce;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
+exports.loadResource = loadResource;
 exports.throttle = throttle;

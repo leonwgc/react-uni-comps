@@ -149,3 +149,43 @@ export var renderElement = function renderElement(element, container) {
     }
   };
 };
+var cssRegex = /\.css$/i;
+var resourceRegex = /\.(css|js)$/i;
+var resourceLoadedList = new Set();
+/**
+ * 动态加载 js/css文件
+ *
+ * @param {string} url
+ * @return {*}  {Promise<void>}
+ */
+
+export var loadResource = function loadResource(url) {
+  if (resourceRegex.test(url) && !resourceLoadedList.has(url)) {
+    resourceLoadedList.add(url);
+    return new Promise(function (resolve) {
+      var el;
+      var isCss = cssRegex.test(url);
+
+      if (isCss) {
+        el = document.createElement('link');
+        el.rel = 'stylesheet';
+        el.href = url;
+      } else {
+        el = document.createElement('script');
+        el.setAttribute('data-namespace', url);
+        el.src = url;
+      }
+
+      el.onload = resolve;
+
+      if (isCss) {
+        var head = document.getElementsByTagName('head')[0];
+        head.appendChild(el);
+      } else {
+        document.body.appendChild(el);
+      }
+    });
+  } else {
+    return Promise.reject('请输入js/css文件地址');
+  }
+};

@@ -54,3 +54,10 @@ export declare const beforeDisposeGen: (container: HTMLElement, selector: string
  * @return {Dispose}  dispose
  */
 export declare const renderElement: (element: ReactElement, container?: HTMLElement) => Dispose;
+/**
+ * 动态加载 js/css文件
+ *
+ * @param {string} url
+ * @return {*}  {Promise<void>}
+ */
+export declare const loadResource: (url: string) => Promise<void>;

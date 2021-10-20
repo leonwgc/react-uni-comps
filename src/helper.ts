@@ -21,7 +21,7 @@ export const debounce = (fn: F, timeout = 100): F => {
   };
 };
 /**
- * 截流
+ * 节流
  *
  * @param {F} fn
  * @param {number} [timeout=200]

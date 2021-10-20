@@ -31,7 +31,7 @@ export var debounce = function debounce(fn, timeout) {
   };
 };
 /**
- * 截流
+ * 节流
  *
  * @param {F} fn
  * @param {number} [timeout=200]

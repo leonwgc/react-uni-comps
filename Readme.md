@@ -28,7 +28,7 @@ yarn add react-uni-comps
 - Space (间距容器)
 - HairLineBox (包含 1px 的边的容器 div)
 - Avatar (头像)
-- Icon (IconTick [勾勾],IconCross[x],IconArrow[箭头])
+- Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
 
 #### 操作反馈
 
@@ -83,13 +83,22 @@ yarn add react-uni-comps
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
 - AnimationElement(元素应用 animation 动画,和TransitionElement一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
 
-### 其他 
+### 其他组件
 - ThemeProvider (全局主题色配置)
 - LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 - LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
 - WaitLoading (延时显示 Loading/Spinner 防止闪烁)
 - ErrorBoudary （错误边界）
 - Waypoint （可见/不可见指示）
+
+### 工具函数
+- debounce (防抖)
+- throttle (节流)
+- loadResource(动态加载 js/css文件)
+
+### 常量
+- isBrowser(是否是浏览器)
+- isMobile (是否是移动端)
 
 ### 按需加载
 

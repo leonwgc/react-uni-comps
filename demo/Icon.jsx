@@ -1,9 +1,20 @@
 import React from 'react';
-import { IconTick, Cell, IconCross, IconArrow, Space } from '../src';
+import { IconTick, Cell, Icon, IconCross, IconArrow, Space } from '../src';
+import styled from '../src/styled';
+
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js'); // misc-icons
+
+const StyledIcon = styled(Icon)`
+  font-size: 36px;
+  color: red;
+`;
 
 export default function App() {
   return (
     <div>
+      <Cell title="IconFont"></Cell>
+      <StyledIcon type="icon-yonghu" />
+      <Icon type="icon-lock_filled_regular" style={{ color: '#00bc8d', fontSize: 20 }} />
       <Cell title="IconTick"></Cell>
       <IconTick></IconTick>
       <IconTick size={40}></IconTick>

@@ -8,7 +8,7 @@ export declare type F = (...args: any[]) => void;
  */
 export declare const debounce: (fn: F, timeout?: number) => F;
 /**
- * 截流
+ * 节流
  *
  * @param {F} fn
  * @param {number} [timeout=200]
