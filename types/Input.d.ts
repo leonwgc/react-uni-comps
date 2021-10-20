@@ -9,6 +9,8 @@ declare const Input: React.ForwardRefExoticComponent<{
     textarea?: boolean;
     className?: string;
     style?: React.CSSProperties;
+    /** 值变化时触发的回调函数 */
+    onChange?: (value: string) => void;
     /** textarea 是否高度自适应,默认true */
     autoHeight?: boolean;
 } & React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & React.RefAttributes<HTMLInputElement | HTMLTextAreaElement>>;

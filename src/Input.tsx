@@ -14,6 +14,8 @@ type Props = {
   textarea?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  /** 值变化时触发的回调函数 */
+  onChange?: (value: string) => void;
   /** textarea 是否高度自适应,默认true */
   autoHeight?: boolean;
 } & HTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
@@ -67,7 +69,6 @@ const StyledInput = styled.div`
     -webkit-appearance: none;
     box-shadow: none;
     width: 100%;
-    line-height: 1.5715;
   }
 
   textarea {
@@ -82,7 +83,16 @@ const StyledInput = styled.div`
 
 /** 单行/多行输入框 input/textarea */
 const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((props, ref) => {
-  const { className, style, prefix, suffix, autoHeight = true, textarea, ...rest } = props;
+  const {
+    className,
+    style,
+    prefix,
+    onChange,
+    suffix,
+    autoHeight = true,
+    textarea,
+    ...rest
+  } = props;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
   useImperativeHandle(ref, () => inputRef.current);
 
@@ -105,6 +115,9 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
       {React.createElement(textarea ? 'textarea' : 'input', {
         ...rest,
+        onChange: (e) => {
+          onChange?.(e.target.value);
+        },
         ref: inputRef,
       })}
 

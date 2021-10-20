@@ -19,7 +19,7 @@ export default function App() {
         value={v}
         maxLength={10}
         style={{ marginBottom: 10 }}
-        onChange={(e) => setV(e.target.value)}
+        onChange={setV}
         prefix={
           <span>
             <SoundOutlined />
@@ -33,31 +33,21 @@ export default function App() {
 
       <Input style={{ marginBottom: 10 }} prefix={'password'} type="password"></Input>
 
-      <Input style={{ marginBottom: 10 }} prefix={'number'} type="number"></Input>
+      <Input
+        style={{ marginBottom: 10 }}
+        prefix={'number'}
+        type="number"
+        onChange={(v) => {
+          console.log(v);
+        }}
+      ></Input>
 
       <Divider>suffix</Divider>
-      <Input
-        value={v}
-        maxLength={10}
-        onChange={(e) => setV(e.target.value)}
-        suffix={v.length + ' / 10'}
-      ></Input>
+      <Input value={v} maxLength={10} onChange={setV} suffix={v.length + ' / 10'}></Input>
       <Divider>textarea</Divider>
-      <Input
-        style={{ marginBottom: 20 }}
-        textarea
-        value={v}
-        maxLength={10}
-        onChange={(e) => setV(e.target.value)}
-      ></Input>
+      <Input style={{ marginBottom: 20 }} textarea value={v} maxLength={10} onChange={setV}></Input>
 
-      <Input
-        textarea
-        value={v}
-        maxLength={10}
-        onChange={(e) => setV(e.target.value)}
-        suffix={v.length + ' / 10'}
-      ></Input>
+      <Input textarea value={v} maxLength={10} onChange={setV} suffix={v.length + ' / 10'}></Input>
     </div>
   );
 }
