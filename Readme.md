@@ -1,4 +1,4 @@
-适用于桌面和移动端的 react 组件库
+桌面和移动端 react 组件库
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 

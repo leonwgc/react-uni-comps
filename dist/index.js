@@ -3393,7 +3393,7 @@ var ThemeProvider = function ThemeProvider(props) {
   var _props$color = props.color,
       color = _props$color === void 0 ? primary : _props$color,
       children = props.children;
-  React.useEffect(function () {
+  React.useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
   }, [color]);
   return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {

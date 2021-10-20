@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import * as colors from './colors';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 /**
@@ -19,7 +19,7 @@ var ThemeProvider = function ThemeProvider(props) {
   var _a = props.color,
       color = _a === void 0 ? colors.primary : _a,
       children = props.children;
-  useEffect(function () {
+  useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
   }, [color]);
   return /*#__PURE__*/React.createElement(StyledProvider, {
