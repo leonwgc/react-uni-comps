@@ -218,6 +218,10 @@ const routes = [
     path: '/ImageViewer',
     component: lazy(() => import('./ImageViewer')),
   },
+  {
+    path: '/Calendar',
+    component: lazy(() => import('./Calendar')),
+  },
 ];
 
 export default routes;
