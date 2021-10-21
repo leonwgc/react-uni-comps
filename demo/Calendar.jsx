@@ -23,7 +23,11 @@ export default function App() {
           onChange(v);
           console.log(v);
         }}
+        onClickMonth={(v) => {
+          console.log(v);
+        }}
         value={value}
+        view="year"
       />
     </div>
   );
