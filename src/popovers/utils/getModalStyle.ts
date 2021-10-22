@@ -136,7 +136,7 @@ export const getModalStyle = (
 
   return {
     position: isAnchorFixed ? 'fixed' : 'absolute',
-    top: position.top + offset.y,
-    left: position.left + offset.x,
+    top: Math.max(position.top + offset.y, 0), // keep in view
+    left: Math.max(position.left + offset.x, 0),
   };
 };
