@@ -225,8 +225,8 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
       <ReactCalendar
         {...rest}
         onChange={setVal}
-        onClickMonth={setVal}
-        onClickYear={setVal}
+        // onClickMonth={setVal}
+        // onClickYear={setVal}
         calendarType={calendarType}
         locale={locale}
         minDetail={minDetail}

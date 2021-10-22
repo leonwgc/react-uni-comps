@@ -8,10 +8,21 @@ import Popover from './Popover';
 import Input from './Input';
 import Popup from './Popup';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import dayjs from 'dayjs';
 
 const offset = {
   x: 86,
   y: 2,
+};
+
+const formatDate = (v, dateFormat) => {
+  if (Array.isArray(v)) {
+    if (v.length === 2) {
+      return dayjs(v[0]).format(dateFormat) + '~' + dayjs(v[1]).format(dateFormat);
+    }
+  } else {
+    return v && dayjs(v).format(dateFormat);
+  }
 };
 
 type Props = {
@@ -22,7 +33,6 @@ type Props = {
   /** 移动端不会触发onChange, 请使用onOk 点击确认触发*/
   onChange?: (val: Date | Date[]) => void;
   value?: Date | Date[];
-  defaultValue?: Date | Date[];
   style?: React.CSSProperties;
   className?: string;
   /** 自定义头  */
@@ -46,6 +56,9 @@ type Props = {
   prefix?: React.ReactNode;
   /** input右边内容 */
   suffix?: React.ReactNode;
+  /** 自定义日期格式, YYYY-MM-DD */
+  format?: string;
+  todayText?: string;
 };
 
 // header for mobile
@@ -92,12 +105,14 @@ const DatePicker = (props: Props): React.ReactNode => {
     okText = '确定',
     cancelText = '取消',
     title = '日期选择',
+    todayText = '今天',
     value,
     onChange,
     onOk,
     style,
     prefix,
     suffix,
+    format = 'YYYY-MM-DD',
     ...rest
   } = props;
 
@@ -141,7 +156,7 @@ const DatePicker = (props: Props): React.ReactNode => {
           onClose();
         }}
       >
-        今天
+        {todayText}
       </span>
     </StyledToday>
   );
@@ -153,37 +168,37 @@ const DatePicker = (props: Props): React.ReactNode => {
       className={clsx('uc-datepick', className)}
       style={style}
       readOnly
-      value={val ? (val as Date).toLocaleDateString() : ''}
+      value={formatDate(val, format)}
       onFocus={() => setV(true)}
     />
   );
+
+  const calendarProps = {
+    ...rest,
+    value: val,
+    ref: cRef,
+  };
 
   // mobile do't trigger onChange
   return isMobile ? (
     <>
       {inputRender}
       <Popup visible={v} onClose={onClose} position="bottom">
-        <Calendar
-          {...rest}
-          value={val}
-          ref={cRef}
-          header={popHeader}
-          footer={<StyledMobileFooter />}
-        />
+        <Calendar {...calendarProps} header={popHeader} footer={<StyledMobileFooter />} />
       </Popup>
     </>
   ) : (
     <Popover
-      closeOnClickOutside
       onClose={onClose}
       visible={v}
       arrow={false}
       offset={offset}
+      closeOnMaskClick
+      mask
+      maskStyle={{ backgroundColor: 'transparent' }}
       content={
         <Calendar
-          {...rest}
-          ref={cRef}
-          value={val}
+          {...calendarProps}
           onChange={(v) => {
             setVal(v);
             onChange?.(v);
