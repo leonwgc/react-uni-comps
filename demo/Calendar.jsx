@@ -17,6 +17,14 @@ export default function App() {
         selectRange
       />
       <Calendar
+        style={{ marginTop: 30, width: 400 }}
+        onChange={(v) => {
+          onChange1(v);
+          console.log(v);
+        }}
+        value={value1}
+      />
+      <Calendar
         style={{ marginTop: 30 }}
         // showWeekNumbers
         onChange={(v) => {

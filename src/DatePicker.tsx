@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 
 const offset = {
   x: 86,
-  y: 2,
+  y: 0,
 };
 
 const formatDate = (v, dateFormat) => {
@@ -64,12 +64,12 @@ type Props = {
 // header for mobile
 const StyledHeader = styled.div`
   display: flex;
-  height: 56px;
+  height: 45px;
   align-items: center;
   justify-content: space-between;
   padding: 15px;
   width: 100%;
-  background-color: #fff;
+  background-color: #f7f7f7;
   font-size: 16px;
   touch-action: none;
 
@@ -94,8 +94,7 @@ const StyledToday = styled.div`
 `;
 
 const StyledMobileFooter = styled.div`
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+  height: 30px;
 `;
 
 /** 日期选择  */

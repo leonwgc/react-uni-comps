@@ -5,6 +5,7 @@ import { getThemeColorCss } from './themeHelper';
 import { isMobile } from './dom';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
+import * as colors from './colors';
 
 // props refer: https://www.npmjs.com/package/react-calendar
 export type DateType = Date | Date[];
@@ -28,7 +29,7 @@ type Props = {
 };
 
 const StyledCalendar = styled.div`
-  width: 350px;
+  width: 280px;
   font-size: 14px;
   background: #fff;
   box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);
@@ -81,21 +82,26 @@ const StyledCalendar = styled.div`
   .react-calendar__navigation {
     display: flex;
     height: 44px;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid ${colors.border};
 
     button {
       min-width: 44px;
       background: none;
+      color: #999;
+      white-space: nowrap;
+      user-select: none;
+      padding: 0;
 
       &:enabled {
         &:hover,
         &:focus {
-          background-color: rgb(230, 230, 230);
+          color: #333;
         }
       }
 
       &[disabled] {
-        background-color: rgb(240, 240, 240);
+        color: #999;
       }
     }
   }
@@ -149,7 +155,7 @@ const StyledCalendar = styled.div`
     max-width: 100%;
     text-align: center;
     cursor: pointer;
-    padding: 0.75em 0.5em;
+    padding: 0.5em;
     background: none;
 
     &:disabled {
@@ -225,8 +231,6 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
       <ReactCalendar
         {...rest}
         onChange={setVal}
-        // onClickMonth={setVal}
-        // onClickYear={setVal}
         calendarType={calendarType}
         locale={locale}
         minDetail={minDetail}
