@@ -58,5 +58,7 @@ export { default as Badge } from './Badge';
 export { default as Avatar } from './Avatar';
 export { default as ImageViewer } from './ImageViewer';
 export { default as Icon } from './Icon';
+export { default as DatePicker } from './DatePicker';
+export { default as Calendar } from './Calendar';
 export { debounce, throttle } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';

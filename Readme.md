@@ -71,6 +71,8 @@ yarn add react-uni-comps
 - IndexList (索引列表)
 - FileInputTrigger (触发文件上传)
 - Signature (手写签名)
+- DatePicker (日期选择)
+- Calendar (日历,基于react-calendar )
 
 ### 数据展示
 - Cell（列表项，多用于移动端,可以和 input/textarea 组合使用）

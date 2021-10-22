@@ -13,6 +13,7 @@ var usePrevious = require('react-use-lib/es/usePrevious');
 var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
 var useSigPad = require('react-use-lib/es/useSigPad');
+var ReactCalendar = require('react-calendar');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -24,6 +25,7 @@ var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
+var ReactCalendar__default = /*#__PURE__*/_interopDefaultLegacy(ReactCalendar);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -3220,8 +3222,9 @@ var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, scrollCo
   var position = transform[placement];
   return {
     position: isAnchorFixed ? 'fixed' : 'absolute',
-    top: position.top + offset.y,
-    left: position.left + offset.x
+    top: Math.max(position.top + offset.y, 0),
+    // keep in view
+    left: Math.max(position.left + offset.x, 0)
   };
 };
 
@@ -5884,6 +5887,177 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
   isBrowser && loadResource(scriptUrl);
 };
 
+var _excluded$K = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
+
+var _templateObject$M;
+
+var StyledCalendar = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  width: 350px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 1em;\n\n    button {\n      min-width: 44px;\n      background: none;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          background-color: rgb(230, 230, 230);\n        }\n      }\n\n      &[disabled] {\n        background-color: rgb(240, 240, 240);\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.75em 0.5em;\n    background: none;\n\n    &:disabled {\n      background-color: rgb(240, 240, 240);\n    }\n\n    &:hover,\n    &:focus {\n      background-color: rgb(230, 230, 230);\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
+
+var _formatDay = function _formatDay(locale, date) {
+  return date.getDate();
+};
+
+/** 日历,基于react-calendar  */
+var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$formatDay = props.formatDay,
+      formatDay = _props$formatDay === void 0 ? _formatDay : _props$formatDay,
+      _props$locale = props.locale,
+      locale = _props$locale === void 0 ? 'zh-CN' : _props$locale,
+      _props$calendarType = props.calendarType,
+      calendarType = _props$calendarType === void 0 ? 'US' : _props$calendarType,
+      _props$minDetail = props.minDetail,
+      minDetail = _props$minDetail === void 0 ? 'decade' : _props$minDetail,
+      value = props.value,
+      defaultValue = props.defaultValue,
+      onChange = props.onChange,
+      header = props.header,
+      footer = props.footer,
+      style = props.style,
+      rest = _objectWithoutProperties(props, _excluded$K);
+
+  var _useState = React.useState(value || defaultValue || new Date()),
+      _useState2 = _slicedToArray(_useState, 2),
+      val = _useState2[0],
+      setVal = _useState2[1];
+
+  React.useImperativeHandle(ref, function () {
+    return {
+      value: val
+    };
+  });
+  useUpdateEffect(function () {
+    onChange === null || onChange === void 0 ? void 0 : onChange(val);
+  }, [val, onChange]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledCalendar, {
+    className: clsx__default['default']('uc-calendar', className, {
+      mobile: isMobile
+    }),
+    style: style
+  }, header, /*#__PURE__*/React__default['default'].createElement(ReactCalendar__default['default'], _extends({}, rest, {
+    onChange: setVal,
+    onClickMonth: setVal,
+    onClickYear: setVal,
+    calendarType: calendarType,
+    locale: locale,
+    minDetail: minDetail,
+    formatDay: formatDay
+  })), footer);
+});
+Calendar.displayName = 'UC-Calendar';
+
+var _excluded$L = ["className", "okText", "cancelText", "title", "value", "onChange", "onOk", "style", "prefix", "suffix"];
+
+var _templateObject$N, _templateObject2$7, _templateObject3;
+var offset = {
+  x: 86,
+  y: 2
+};
+// header for mobile
+var StyledHeader = styled__default['default'].div(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+var StyledToday = styled__default['default'].div(_templateObject2$7 || (_templateObject2$7 = _taggedTemplateLiteral(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
+var StyledMobileFooter = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  padding-bottom: constant(safe-area-inset-bottom);\n  padding-bottom: env(safe-area-inset-bottom);\n"])));
+/** 日期选择  */
+
+var DatePicker = function DatePicker(props) {
+  var className = props.className,
+      _props$okText = props.okText,
+      okText = _props$okText === void 0 ? '确定' : _props$okText,
+      _props$cancelText = props.cancelText,
+      cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
+      _props$title = props.title,
+      title = _props$title === void 0 ? '日期选择' : _props$title,
+      value = props.value,
+      _onChange = props.onChange,
+      onOk = props.onOk,
+      style = props.style,
+      prefix = props.prefix,
+      suffix = props.suffix,
+      rest = _objectWithoutProperties(props, _excluded$L);
+
+  var cRef = React.useRef();
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      v = _useState2[0],
+      setV = _useState2[1];
+
+  var _useState3 = React.useState(value),
+      _useState4 = _slicedToArray(_useState3, 2),
+      val = _useState4[0],
+      setVal = _useState4[1];
+
+  var onClose = function onClose() {
+    return setV(false);
+  };
+
+  useUpdateEffect(function () {
+    if (value !== val) {
+      setVal(value);
+    }
+  }, [value]);
+  var popHeader = isMobile && /*#__PURE__*/React__default['default'].createElement(StyledHeader, null, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "cancel",
+    onClick: onClose
+  }, cancelText), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "title"
+  }, title), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "ok",
+    onClick: function onClick() {
+      var v = cRef.current.value;
+      onOk === null || onOk === void 0 ? void 0 : onOk(v);
+      setVal(v);
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }, okText));
+  var todayFooter = !isMobile && /*#__PURE__*/React__default['default'].createElement(StyledToday, null, /*#__PURE__*/React__default['default'].createElement("span", {
+    onClick: function onClick() {
+      setVal(new Date());
+      onClose();
+    }
+  }, "\u4ECA\u5929"));
+  var inputRender = /*#__PURE__*/React__default['default'].createElement(Input, {
+    prefix: prefix,
+    suffix: suffix,
+    className: clsx__default['default']('uc-datepick', className),
+    style: style,
+    readOnly: true,
+    value: val ? val.toLocaleDateString() : '',
+    onFocus: function onFocus() {
+      return setV(true);
+    }
+  }); // mobile do't trigger onChange
+
+  return isMobile ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, inputRender, /*#__PURE__*/React__default['default'].createElement(Popup, {
+    visible: v,
+    onClose: onClose,
+    position: "bottom"
+  }, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
+    value: val,
+    ref: cRef,
+    header: popHeader,
+    footer: /*#__PURE__*/React__default['default'].createElement(StyledMobileFooter, null)
+  })))) : /*#__PURE__*/React__default['default'].createElement(Popover, {
+    closeOnClickOutside: true,
+    onClose: onClose,
+    visible: v,
+    arrow: false,
+    offset: offset,
+    content: /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
+      ref: cRef,
+      value: val,
+      onChange: function onChange(v) {
+        setVal(v);
+        _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);
+        onClose();
+      },
+      footer: todayFooter
+    }))
+  }, inputRender);
+};
+
+DatePicker.displayName = 'UC-DatePicker';
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -5891,10 +6065,12 @@ exports.AnimationElement = AnimationElement;
 exports.Avatar = Avatar;
 exports.Badge = Badge;
 exports.Button = Button;
+exports.Calendar = Calendar;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
 exports.CopyToClipboard = CopyToClipboard;
+exports.DatePicker = DatePicker;
 exports.Divider = Divider;
 exports.Drag = Drag;
 exports.ErrorBoundary = ErrorBoundary;

@@ -1,4 +1,5 @@
 import React from 'react';
+export declare type DateType = Date | Date[];
 declare type Props = {
     style?: React.CSSProperties;
     className?: string;
@@ -12,11 +13,10 @@ declare type Props = {
     locale?: string;
     formatDay?: (locale: string, date: Date) => number;
     minDetail?: string;
-    onChange?: (val: Date | Date[]) => void;
-    value?: Date | Date[];
-    defaultValue?: Date | Date[];
+    onChange?: (val: DateType) => void;
+    value?: DateType;
+    defaultValue?: DateType;
 };
-export declare type DateType = Date | Date[];
 export declare type ValueRefType = {
     value?: DateType;
 };

@@ -113,7 +113,7 @@ export var getModalStyle = function getModalStyle(modalEl, anchorEl, parentEl, s
   var position = transform[placement];
   return {
     position: isAnchorFixed ? 'fixed' : 'absolute',
-    top: position.top + offset.y,
-    left: position.left + offset.x
+    top: Math.max(position.top + offset.y, 0),
+    left: Math.max(position.left + offset.x, 0)
   };
 };
