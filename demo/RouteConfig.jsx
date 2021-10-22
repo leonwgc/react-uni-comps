@@ -222,6 +222,10 @@ const routes = [
     path: '/Calendar',
     component: lazy(() => import('./Calendar')),
   },
+  {
+    path: '/DatePicker',
+    component: lazy(() => import('./DatePicker')),
+  },
 ];
 
 export default routes;

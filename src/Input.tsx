@@ -1,11 +1,14 @@
-import React, { HTMLAttributes, useEffect, useRef, useImperativeHandle } from 'react';
+import React, { useEffect, useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import * as colors from './colors';
 import clsx from 'clsx';
 
-type Props = {
+export type Props = {
+  readOnly?: boolean;
+  value?: string;
+  defaultValue?: string;
   /** input左边内容 */
   prefix?: React.ReactNode;
   /** input右边内容 */
@@ -16,9 +19,10 @@ type Props = {
   style?: React.CSSProperties;
   /** 值变化时触发的回调函数 */
   onChange?: (value: string) => void;
+  onFocus?: () => void;
   /** textarea 是否高度自适应,默认true */
   autoHeight?: boolean;
-} & HTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
+};
 
 const StyledInput = styled.div`
   display: flex;

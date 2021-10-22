@@ -1,6 +1,8 @@
 import React from 'react';
-/** 单行/多行输入框 input/textarea */
-declare const Input: React.ForwardRefExoticComponent<{
+export declare type Props = {
+    readOnly?: boolean;
+    value?: string;
+    defaultValue?: string;
     /** input左边内容 */
     prefix?: React.ReactNode;
     /** input右边内容 */
@@ -11,7 +13,10 @@ declare const Input: React.ForwardRefExoticComponent<{
     style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
+    onFocus?: () => void;
     /** textarea 是否高度自适应,默认true */
     autoHeight?: boolean;
-} & React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & React.RefAttributes<HTMLInputElement | HTMLTextAreaElement>>;
+};
+/** 单行/多行输入框 input/textarea */
+declare const Input: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLInputElement | HTMLTextAreaElement>>;
 export default Input;

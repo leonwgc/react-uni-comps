@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import ReactCalendar from 'react-calendar';
 import { getThemeColorCss } from './themeHelper';
 import { isMobile } from './dom';
+import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 
 // props refer: https://www.npmjs.com/package/react-calendar
+export type DateType = Date | Date[];
 
 type Props = {
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   className?: string;
+  /** 自定义头  */
+  header?: React.ReactNode;
+  /** 自定义底部  */
+  footer?: React.ReactNode;
   /** US */
   calendarType?: string;
   /** zh-CN */
   locale?: string;
   formatDay?: (locale: string, date: Date) => number;
   minDetail?: string;
+  onChange?: (val: DateType) => void;
+  value?: DateType;
+  defaultValue?: DateType;
 };
 
 const StyledCalendar = styled.div`
@@ -180,28 +189,50 @@ const _formatDay = (locale: string, date: Date) => {
   return date.getDate();
 };
 
+export type ValueRefType = {
+  value?: DateType;
+};
+
 /** 日历,基于react-calendar  */
-const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
   const {
     className,
     formatDay = _formatDay,
     locale = 'zh-CN',
     calendarType = 'US',
     minDetail = 'decade',
+    value,
+    defaultValue,
+    onChange,
+    header,
+    footer,
     style,
     ...rest
   } = props;
+  const [val, setVal] = useState<DateType>(value || defaultValue || new Date());
+
+  useImperativeHandle(ref, () => ({
+    value: val,
+  }));
+
+  useUpdateEffect(() => {
+    onChange?.(val);
+  }, [val, onChange]);
 
   return (
     <StyledCalendar className={clsx('uc-calendar', className, { mobile: isMobile })} style={style}>
+      {header}
       <ReactCalendar
-        ref={ref}
         {...rest}
+        onChange={setVal}
+        onClickMonth={setVal}
+        onClickYear={setVal}
         calendarType={calendarType}
         locale={locale}
         minDetail={minDetail}
         formatDay={formatDay}
       />
+      {footer}
     </StyledCalendar>
   );
 });
