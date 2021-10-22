@@ -40,7 +40,7 @@ type Props = {
   okText?: React.ReactNode;
   title?: React.ReactNode;
   cancelText?: React.ReactNode;
-  /** 点击确认触发*/
+  /** 移动端点击确认触发*/
   onOk?: (value: Date | Date[]) => void;
   /** input左边内容 */
   prefix?: React.ReactNode;
@@ -78,6 +78,11 @@ const StyledToday = styled.div`
     cursor: pointer;
     ${getThemeColorCss('color')}
   }
+`;
+
+const StyledMobileFooter = styled.div`
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 `;
 
 /** 日期选择  */
@@ -158,7 +163,13 @@ const DatePicker = (props: Props): React.ReactNode => {
     <>
       {inputRender}
       <Popup visible={v} onClose={onClose} position="bottom">
-        <Calendar {...rest} value={val} ref={cRef} header={popHeader} />
+        <Calendar
+          {...rest}
+          value={val}
+          ref={cRef}
+          header={popHeader}
+          footer={<StyledMobileFooter />}
+        />
       </Popup>
     </>
   ) : (
