@@ -23,6 +23,8 @@ export default function App() {
           onChange={setVal}
           onOk={(v) => Toast.show({ content: v.toLocaleDateString() })}
           suffix={<CalendarOutlined />}
+          prev2Label={null}
+          next2Label={null}
         />
       </Cell>
       <Button onClick={() => setVal(new Date(2023, 2, 24))}>set Date</Button>
