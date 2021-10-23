@@ -4,7 +4,7 @@ import Popup from './Popup';
 import Button from './Button';
 import Divider from './Divider';
 import Space from './Space';
-import IconCross from './IconCross';
+import Icon from './Icon';
 import * as colors from './colors';
 import { Dispose, isMobile, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
@@ -137,12 +137,13 @@ const StyledAlertDialog = styled(Popup)`
     width: 420px;
 
     .close {
-      top: 16px;
-      right: 12px;
+      top: 18px;
+      right: 16px;
       color: #999;
       position: absolute;
       display: inline-block;
       cursor: pointer;
+      font-size: 16px;
 
       &:hover {
         color: #666;
@@ -243,7 +244,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
       closeOnMaskClick={closeOnMaskClick}
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
-        {closable && <IconCross className="close" size={24} onClick={onClose} />}
+        {closable && <Icon type="icon-guanbi" className="close" onClick={onClose} />}
         {title && <div className={clsx('title')}>{title}</div>}
         <div className={clsx('content')}>{content}</div>
         <div className={clsx('footer')}>

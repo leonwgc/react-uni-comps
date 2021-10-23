@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import IconCross from '../IconCross';
+import Icon from '../Icon';
 import { Placement } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
@@ -25,11 +25,12 @@ const StyledPopover = styled.div`
   .uc-popover-close {
     position: absolute;
     z-index: 10;
-    top: 8px;
-    right: 8px;
+    top: 12px;
+    right: 12px;
     cursor: pointer;
     color: #000;
     opacity: 0.35;
+    font-size: 16px;
 
     :hover {
       opacity: 0.75;
@@ -211,7 +212,7 @@ const Popover = (props: Props): React.ReactElement => {
 
                 {/* close */}
                 {closable && (
-                  <IconCross className={clsx('uc-popover-close')} size={20} onClick={onClose} />
+                  <Icon type="icon-guanbi" className={clsx('uc-popover-close')} onClick={onClose} />
                 )}
 
                 {/** content */}

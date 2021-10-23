@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 declare type Props = {
     className?: string;
     style?: React.CSSProperties;
     /** 图标类型 */
     type: string;
-};
+} & HTMLAttributes<HTMLSpanElement>;
 /** 图标 */
 declare const Icon: React.ForwardRefExoticComponent<Props> & {
     /**

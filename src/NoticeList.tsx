@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React, { HTMLAttributes, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
-import IconCross from './IconCross';
+import Icon from './Icon';
 import Text from './Text';
 
 const StyledNoticeList = styled.div`
@@ -150,8 +150,8 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
           <Space>
             {props.extra}
             {props.closeable && (
-              <IconCross
-                size={20}
+              <Icon
+                type="icon-guanbi"
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
                   setVisible(false);

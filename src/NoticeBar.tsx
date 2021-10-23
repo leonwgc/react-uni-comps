@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import React, { HTMLAttributes, useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
-import IconCross from './IconCross';
 import Icon from './Icon';
 
 const StyledNoticeBar = styled.div`
@@ -134,8 +133,8 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
           <Space>
             {props.extra}
             {props.closeable && (
-              <IconCross
-                size={20}
+              <Icon
+                type="icon-guanbi"
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
                   setVisible(false);

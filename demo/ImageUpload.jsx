@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '../src/styled';
 import { Image } from 'antd';
-import { Space, FileInputTrigger, Button, IconCross } from '../src';
+import { Space, FileInputTrigger, Button, Icon } from '../src';
 import { PlusOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
@@ -84,7 +84,7 @@ export default function App() {
       {files.length ? (
         <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
           <div className="del" onClick={() => setFiles([])}>
-            <IconCross size={12} />
+            <Icon type="icon-guanbi" />
           </div>
           <Image width={108} height={108} src={url} />
           <FileInputTrigger
