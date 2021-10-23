@@ -14,7 +14,7 @@ const StyledPage = styled.div`
   &.pc {
     padding: 46px 40px 40px;
     background-color: #fff;
-    margin-top: 150px;
+    margin: 150px auto 0;
     width: 419px;
     border-radius: 12px;
     box-sizing: border-box;
