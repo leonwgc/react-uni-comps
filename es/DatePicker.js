@@ -49,14 +49,26 @@ import Popover from './Popover';
 import Input from './Input';
 import Popup from './Popup';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import dayjs from 'dayjs';
 var offset = {
   x: 86,
-  y: 2
+  y: 0
+};
+
+var formatDate = function formatDate(v, dateFormat) {
+  if (Array.isArray(v)) {
+    if (v.length === 2) {
+      return dayjs(v[0]).format(dateFormat) + '~' + dayjs(v[1]).format(dateFormat);
+    }
+  } else {
+    return v && dayjs(v).format(dateFormat);
+  }
 }; // header for mobile
 
-var StyledHeader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"], ["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+
+var StyledHeader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"], ["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
 var StyledToday = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"], ["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
-var StyledMobileFooter = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-bottom: constant(safe-area-inset-bottom);\n  padding-bottom: env(safe-area-inset-bottom);\n"], ["\n  padding-bottom: constant(safe-area-inset-bottom);\n  padding-bottom: env(safe-area-inset-bottom);\n"])));
+var StyledMobileFooter = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  height: 30px;\n"], ["\n  height: 30px;\n"])));
 /** 日期选择  */
 
 var DatePicker = function DatePicker(props) {
@@ -67,23 +79,27 @@ var DatePicker = function DatePicker(props) {
       cancelText = _b === void 0 ? '取消' : _b,
       _c = props.title,
       title = _c === void 0 ? '日期选择' : _c,
+      _d = props.todayText,
+      todayText = _d === void 0 ? '今天' : _d,
       value = props.value,
       _onChange = props.onChange,
       onOk = props.onOk,
       style = props.style,
       prefix = props.prefix,
       suffix = props.suffix,
-      rest = __rest(props, ["className", "okText", "cancelText", "title", "value", "onChange", "onOk", "style", "prefix", "suffix"]);
+      _e = props.format,
+      format = _e === void 0 ? 'YYYY-MM-DD' : _e,
+      rest = __rest(props, ["className", "okText", "cancelText", "title", "todayText", "value", "onChange", "onOk", "style", "prefix", "suffix", "format"]);
 
   var cRef = useRef();
 
-  var _d = useState(false),
-      v = _d[0],
-      setV = _d[1];
+  var _f = useState(false),
+      v = _f[0],
+      setV = _f[1];
 
-  var _e = useState(value),
-      val = _e[0],
-      setVal = _e[1];
+  var _g = useState(value),
+      val = _g[0],
+      setVal = _g[1];
 
   var onClose = function onClose() {
     return setV(false);
@@ -113,37 +129,43 @@ var DatePicker = function DatePicker(props) {
       setVal(new Date());
       onClose();
     }
-  }, "\u4ECA\u5929"));
+  }, todayText));
   var inputRender = /*#__PURE__*/React.createElement(Input, {
     prefix: prefix,
     suffix: suffix,
     className: clsx('uc-datepick', className),
     style: style,
     readOnly: true,
-    value: val ? val.toLocaleDateString() : '',
+    value: formatDate(val, format),
     onFocus: function onFocus() {
       return setV(true);
     }
+  });
+
+  var calendarProps = __assign(__assign({}, rest), {
+    value: val,
+    ref: cRef
   }); // mobile do't trigger onChange
+
 
   return isMobile ? /*#__PURE__*/React.createElement(React.Fragment, null, inputRender, /*#__PURE__*/React.createElement(Popup, {
     visible: v,
     onClose: onClose,
     position: "bottom"
-  }, /*#__PURE__*/React.createElement(Calendar, __assign({}, rest, {
-    value: val,
-    ref: cRef,
+  }, /*#__PURE__*/React.createElement(Calendar, __assign({}, calendarProps, {
     header: popHeader,
     footer: /*#__PURE__*/React.createElement(StyledMobileFooter, null)
   })))) : /*#__PURE__*/React.createElement(Popover, {
-    closeOnClickOutside: true,
     onClose: onClose,
     visible: v,
     arrow: false,
     offset: offset,
-    content: /*#__PURE__*/React.createElement(Calendar, __assign({}, rest, {
-      ref: cRef,
-      value: val,
+    closeOnMaskClick: true,
+    mask: true,
+    maskStyle: {
+      backgroundColor: 'transparent'
+    },
+    content: /*#__PURE__*/React.createElement(Calendar, __assign({}, calendarProps, {
       onChange: function onChange(v) {
         setVal(v);
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);

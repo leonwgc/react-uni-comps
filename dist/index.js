@@ -14,6 +14,7 @@ var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
 var useSigPad = require('react-use-lib/es/useSigPad');
 var ReactCalendar = require('react-calendar');
+var dayjs = require('dayjs');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -26,6 +27,7 @@ var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffec
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
 var ReactCalendar__default = /*#__PURE__*/_interopDefaultLegacy(ReactCalendar);
+var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -491,31 +493,33 @@ var resourceLoadedList = new Set();
  */
 
 var loadResource = function loadResource(url) {
-  if (resourceRegex.test(url) && !resourceLoadedList.has(url)) {
-    resourceLoadedList.add(url);
-    return new Promise(function (resolve) {
-      var el;
-      var isCss = cssRegex.test(url);
+  if (resourceRegex.test(url)) {
+    if (!resourceLoadedList.has(url)) {
+      resourceLoadedList.add(url);
+      return new Promise(function (resolve) {
+        var el;
+        var isCss = cssRegex.test(url);
 
-      if (isCss) {
-        el = document.createElement('link');
-        el.rel = 'stylesheet';
-        el.href = url;
-      } else {
-        el = document.createElement('script');
-        el.setAttribute('data-namespace', url);
-        el.src = url;
-      }
+        if (isCss) {
+          el = document.createElement('link');
+          el.rel = 'stylesheet';
+          el.href = url;
+        } else {
+          el = document.createElement('script');
+          el.setAttribute('data-namespace', url);
+          el.src = url;
+        }
 
-      el.onload = resolve;
+        el.onload = resolve;
 
-      if (isCss) {
-        var head = document.getElementsByTagName('head')[0];
-        head.appendChild(el);
-      } else {
-        document.body.appendChild(el);
-      }
-    });
+        if (isCss) {
+          var head = document.getElementsByTagName('head')[0];
+          head.appendChild(el);
+        } else {
+          document.body.appendChild(el);
+        }
+      });
+    }
   } else {
     return Promise.reject('请输入js/css文件地址');
   }
@@ -2188,41 +2192,6 @@ var Skeleton = function Skeleton(props) {
   })) : children;
 };
 
-var _excluded$a = ["color", "className", "size"];
-
-var _templateObject$c;
-var StyledTick = styled__default['default'].div(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n"])), function (_ref) {
-  var size = _ref.size;
-  return size;
-}, function (_ref2) {
-  var size = _ref2.size;
-  return size;
-});
-/** 勾勾 */
-
-var IconTick = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$color = props.color,
-      color = _props$color === void 0 ? 'currentColor' : _props$color,
-      className = props.className,
-      _props$size = props.size,
-      size = _props$size === void 0 ? 16 : _props$size,
-      rest = _objectWithoutProperties(props, _excluded$a);
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledTick, _extends({}, rest, {
-    className: clsx__default['default']('uc-icon-tick', className),
-    ref: ref,
-    size: size
-  }), /*#__PURE__*/React__default['default'].createElement("svg", {
-    width: size,
-    viewBox: "0 0 12 12",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/React__default['default'].createElement("path", {
-    d: "M10.113 1.273a1.085 1.085 0 011.526-.082c.433.386.481 1.041.118 1.485l-.035.04-7.245 8.01a1.083 1.083 0 01-1.474.126l-.047-.039-2.59-2.277A1.076 1.076 0 01.274 7.01a1.085 1.085 0 011.483-.126l.042.035 1.786 1.57 6.528-7.216z",
-    fill: color
-  })));
-});
-IconTick.displayName = 'UC-IconTick';
-
 /* eslint-disable react-hooks/exhaustive-deps */
 
 var useUpdateEffect = function useUpdateEffect(effect) {
@@ -2254,10 +2223,10 @@ function useCallbackRef(value) {
   return ref;
 }
 
-var _excluded$b = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost"];
+var _excluded$a = ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost"];
 
-var _templateObject$d;
-var StyledButton = styled__default['default'].button(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n    &.pc:hover {\n      ", "\n      ", "\n    }\n\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.anchor {\n    border: none;\n    ", "\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n    pointer-events: none;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
+var _templateObject$c;
+var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  -moz-appearance: none;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n    &.pc:hover {\n      ", "\n      ", "\n    }\n\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.anchor {\n    border: none;\n    ", "\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n    pointer-events: none;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2273,7 +2242,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       danger = props.danger,
       loading = props.loading,
       ghost = props.ghost,
-      rest = _objectWithoutProperties(props, _excluded$b);
+      rest = _objectWithoutProperties(props, _excluded$a);
 
   var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spinner, {
     color: type === 'primary' ? '#fff' : '#999'
@@ -2296,6 +2265,43 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : icon ? icon : children);
 });
 Button.displayName = 'UC-Button';
+
+var _excluded$b = ["type", "className"];
+
+var _templateObject$d;
+var StyledIcon = styled__default['default'].span(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  display: inline-block;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"])));
+var SVGProps = {
+  width: '1em',
+  height: '1em',
+  fill: 'currentColor'
+};
+/** 图标 */
+
+var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var type = props.type,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$b);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-icon', className)
+  }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
+    xlinkHref: "#".concat(type)
+  })));
+});
+Icon.displayName = 'UC-Icon';
+/**
+ * 加载在 iconfont.cn 上自行管理的图标
+ *
+ * @param {string} scriptUrl
+ */
+
+Icon.loadFromIconfontCN = function (scriptUrl) {
+  isBrowser && loadResource(scriptUrl);
+}; // load ruc icons
+
+
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_vzc79u42a8.js');
 
 var _excluded$c = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
@@ -2369,10 +2375,11 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
     className: clsx__default['default']('checkbox', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       width: size,
-      height: size
+      height: size,
+      fontSize: size
     })
-  }), /*#__PURE__*/React__default['default'].createElement(IconTick, {
-    size: size * 0.6
+  }), /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "icon-tick"
   })), children && /*#__PURE__*/React__default['default'].createElement("span", {
     className: "text"
   }, children));
@@ -3750,21 +3757,16 @@ Toast.show = function (props) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$o = ["color", "direction", "className", "size"];
+var _excluded$o = ["color", "style", "direction", "className", "size"];
 
 var _templateObject$q;
-var StyledArrow = styled__default['default'].div(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_ref) {
-  var size = _ref.size;
-  return size;
-}, function (_ref2) {
-  var size = _ref2.size;
-  return size;
-});
-/** 勾勾 */
+var StyledArrow = styled__default['default'].div(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])));
+/** 箭头 */
 
 var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
+      style = props.style,
       _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       className = props.className,
@@ -3772,11 +3774,14 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$o);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-icon-arrow', className, _defineProperty({}, direction, direction)),
-    size: size
-  }, rest), /*#__PURE__*/React__default['default'].createElement("svg", {
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      width: size,
+      height: size
+    })
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
     width: size,
     height: size,
     xmlns: "http://www.w3.org/2000/svg",
@@ -3799,7 +3804,10 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var content = props.content,
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 2000 : _props$delay,
-      icon = props.icon,
+      _props$icon = props.icon,
+      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "icon-horn"
+  }) : _props$icon,
       _props$speed = props.speed,
       speed = _props$speed === void 0 ? 50 : _props$speed,
       _props$closeable = props.closeable,
@@ -5729,7 +5737,7 @@ Notify.displayName = 'UC-Notify';
 var _excluded$G = ["children", "className", "content", "badgeStyle"];
 
 var _templateObject$I;
-var StyledBadge = styled__default['default'].div(_templateObject$I || (_templateObject$I = _taggedTemplateLiteral(["\n  display: inline-block;\n  position: relative;\n\n  .badge {\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    vertical-align: middle;\n    box-sizing: border-box;\n    border-radius: 100px;\n    padding: 0 4px;\n    font-size: 9px;\n    line-height: 1.2;\n    white-space: nowrap;\n    position: absolute;\n    z-index: 1;\n    transform: translate(50%, -50%);\n    top: 0;\n    right: 0;\n    ", "\n\n    &.dot {\n      padding: 0;\n      width: 10px;\n      height: 10px;\n      border-radius: 50%;\n    }\n    &.without-children {\n      position: static;\n      transform: none;\n    }\n  }\n"])), getThemeColorCss('background-color'));
+var StyledBadge = styled__default['default'].div(_templateObject$I || (_templateObject$I = _taggedTemplateLiteral(["\n  display: inline-block;\n  position: relative;\n\n  .badge {\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    vertical-align: middle;\n    box-sizing: border-box;\n    border-radius: 100px;\n    padding: 2px 4px;\n    font-size: 9px;\n    line-height: 1.2;\n    white-space: nowrap;\n    position: absolute;\n    z-index: 1;\n    transform: translate(50%, -50%);\n    top: 0;\n    right: 0;\n    ", "\n\n    &.dot {\n      padding: 0;\n      width: 10px;\n      height: 10px;\n      border-radius: 50%;\n    }\n    &.without-children {\n      position: static;\n      transform: none;\n    }\n  }\n"])), getThemeColorCss('background-color'));
 /** 徽标:右上角添加标记 */
 
 var Badge = function Badge(props) {
@@ -5755,7 +5763,7 @@ Badge.displayName = 'UC-Badge';
 var _excluded$H = ["size", "className", "shape", "style", "children"];
 
 var _templateObject$J;
-var StyledAvatar = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 16px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
+var StyledAvatar = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 24px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
 /** 头像 */
 
 var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -5777,14 +5785,16 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     ref: ref,
     style: s,
     className: clsx__default['default']('uc-avatar', className, shape)
-  }), children);
+  }), children || /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "icon-avatar"
+  }));
 });
 Avatar.displayName = 'UC-Avatar';
 
 var _excluded$I = ["className", "visible", "maskStyle", "onClose", "images", "onIndexChange"];
 
 var _templateObject$K;
-var StyledImageViewer = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 101;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    height: 100%;\n  }\n  .image {\n    z-index: 101;\n    width: 100%;\n    max-height: 80vh;\n    object-fit: contain;\n    object-position: center;\n    touch-action: none;\n  }\n"])));
+var StyledImageViewer = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 101;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    height: 100%;\n  }\n  .image {\n    z-index: 101;\n    width: 100%;\n    max-height: 80vh;\n    object-fit: contain;\n    object-position: center;\n    touch-action: none;\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -5807,12 +5817,13 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       setIndex = _useState4[1];
 
   var onIndexChangeRef = useCallbackRef(onIndexChange);
+  var slideRef = React.useRef();
   React.useEffect(function () {
     setUrls(Array.isArray(images) ? images : [images]);
   }, [images]);
   var slides = React.useMemo(function () {
     return /*#__PURE__*/React__default['default'].createElement(Slide, {
-      ref: ref,
+      ref: slideRef,
       showDot: false,
       style: {
         zIndex: 101,
@@ -5838,60 +5849,72 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         src: url
       }));
     }));
-  }, [urls, onIndexChangeRef, ref]);
+  }, [urls, onIndexChangeRef, slideRef]);
+
+  var textRender = function textRender() {
+    if (urls.length > 1) {
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        className: clsx__default['default']('text')
+      }, /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Button, {
+        style: {
+          border: 'none'
+        },
+        ghost: true,
+        onClick: function onClick(e) {
+          var _slideRef$current;
+
+          e.stopPropagation();
+          (_slideRef$current = slideRef.current) === null || _slideRef$current === void 0 ? void 0 : _slideRef$current.prev();
+        },
+        icon: /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+          direction: "left",
+          title: "\u4E0A\u4E00\u5F20",
+          style: {
+            cursor: 'pointer'
+          },
+          size: 24
+        })
+      }), /*#__PURE__*/React__default['default'].createElement("span", null, index + 1, " / ", urls.length), /*#__PURE__*/React__default['default'].createElement(Button, {
+        ghost: true,
+        style: {
+          border: 'none'
+        },
+        onClick: function onClick(e) {
+          var _slideRef$current2;
+
+          e.stopPropagation();
+          (_slideRef$current2 = slideRef.current) === null || _slideRef$current2 === void 0 ? void 0 : _slideRef$current2.next();
+        },
+        icon: /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+          direction: "right",
+          title: "\u4E0B\u4E00\u5F20",
+          style: {
+            cursor: 'pointer'
+          },
+          size: 24
+        })
+      })));
+    }
+  };
+
   return visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({}, rest, {
+    ref: ref,
     className: clsx__default['default']('uc-image-viewer', className),
     onClick: onClose
   }), /*#__PURE__*/React__default['default'].createElement(Mask, {
     style: maskStyle
-  }), urls.length > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('text')
-  }, index + 1, " / ", urls.length), urls.length > 1 && slides, urls.length === 1 && /*#__PURE__*/React__default['default'].createElement("img", {
+  }), textRender(), urls.length > 1 && slides, urls.length === 1 && /*#__PURE__*/React__default['default'].createElement("img", {
     className: "image",
     src: urls[0]
   }));
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _excluded$J = ["type", "className"];
+var _excluded$J = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
 
 var _templateObject$L;
-var StyledIcon = styled__default['default'].span(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  display: inline-block;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"])));
-var SVGProps = {
-  width: '1em',
-  height: '1em',
-  fill: 'currentColor'
-};
-/** 图标 */
 
-var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var type = props.type,
-      className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$J);
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
-    ref: ref,
-    className: clsx__default['default']('uc-icon', className)
-  }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
-    xlinkHref: "#".concat(type)
-  })));
-});
-Icon.displayName = 'UC-Icon';
-/**
- * 加载在 iconfont.cn 上自行管理的图标
- *
- * @param {string} scriptUrl
- */
-
-Icon.loadFromIconfontCN = function (scriptUrl) {
-  isBrowser && loadResource(scriptUrl);
-};
-
-var _excluded$K = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
-
-var _templateObject$M;
-
-var StyledCalendar = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  width: 350px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 1em;\n\n    button {\n      min-width: 44px;\n      background: none;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          background-color: rgb(230, 230, 230);\n        }\n      }\n\n      &[disabled] {\n        background-color: rgb(240, 240, 240);\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.75em 0.5em;\n    background: none;\n\n    &:disabled {\n      background-color: rgb(240, 240, 240);\n    }\n\n    &:hover,\n    &:focus {\n      background-color: rgb(230, 230, 230);\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
+var StyledCalendar = styled__default['default'].div(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  width: 280px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 0.5em;\n    border-bottom: 1px solid ", ";\n\n    button {\n      min-width: 44px;\n      background: none;\n      color: #999;\n      white-space: nowrap;\n      user-select: none;\n      padding: 0;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          color: #333;\n        }\n      }\n\n      &[disabled] {\n        color: #999;\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.5em;\n    background: none;\n\n    &:disabled {\n      background-color: rgb(240, 240, 240);\n    }\n\n    &:hover,\n    &:focus {\n      background-color: rgb(230, 230, 230);\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), border, getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
 
 var _formatDay = function _formatDay(locale, date) {
   return date.getDate();
@@ -5914,7 +5937,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       header = props.header,
       footer = props.footer,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$K);
+      rest = _objectWithoutProperties(props, _excluded$J);
 
   var _useState = React.useState(value || defaultValue || new Date()),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5936,8 +5959,6 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
     style: style
   }, header, /*#__PURE__*/React__default['default'].createElement(ReactCalendar__default['default'], _extends({}, rest, {
     onChange: setVal,
-    onClickMonth: setVal,
-    onClickYear: setVal,
     calendarType: calendarType,
     locale: locale,
     minDetail: minDetail,
@@ -5946,17 +5967,28 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Calendar.displayName = 'UC-Calendar';
 
-var _excluded$L = ["className", "okText", "cancelText", "title", "value", "onChange", "onOk", "style", "prefix", "suffix"];
+var _excluded$K = ["className", "okText", "cancelText", "title", "todayText", "value", "onChange", "onOk", "style", "prefix", "suffix", "format"];
 
-var _templateObject$N, _templateObject2$7, _templateObject3;
+var _templateObject$M, _templateObject2$7, _templateObject3;
 var offset = {
   x: 86,
-  y: 2
+  y: 0
 };
+
+var formatDate = function formatDate(v, dateFormat) {
+  if (Array.isArray(v)) {
+    if (v.length === 2) {
+      return dayjs__default['default'](v[0]).format(dateFormat) + '~' + dayjs__default['default'](v[1]).format(dateFormat);
+    }
+  } else {
+    return v && dayjs__default['default'](v).format(dateFormat);
+  }
+};
+
 // header for mobile
-var StyledHeader = styled__default['default'].div(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+var StyledHeader = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
 var StyledToday = styled__default['default'].div(_templateObject2$7 || (_templateObject2$7 = _taggedTemplateLiteral(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
-var StyledMobileFooter = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  padding-bottom: constant(safe-area-inset-bottom);\n  padding-bottom: env(safe-area-inset-bottom);\n"])));
+var StyledMobileFooter = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  height: 30px;\n"])));
 /** 日期选择  */
 
 var DatePicker = function DatePicker(props) {
@@ -5967,13 +5999,17 @@ var DatePicker = function DatePicker(props) {
       cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
       _props$title = props.title,
       title = _props$title === void 0 ? '日期选择' : _props$title,
+      _props$todayText = props.todayText,
+      todayText = _props$todayText === void 0 ? '今天' : _props$todayText,
       value = props.value,
       _onChange = props.onChange,
       onOk = props.onOk,
       style = props.style,
       prefix = props.prefix,
       suffix = props.suffix,
-      rest = _objectWithoutProperties(props, _excluded$L);
+      _props$format = props.format,
+      format = _props$format === void 0 ? 'YYYY-MM-DD' : _props$format,
+      rest = _objectWithoutProperties(props, _excluded$K);
 
   var cRef = React.useRef();
 
@@ -6015,37 +6051,43 @@ var DatePicker = function DatePicker(props) {
       setVal(new Date());
       onClose();
     }
-  }, "\u4ECA\u5929"));
+  }, todayText));
   var inputRender = /*#__PURE__*/React__default['default'].createElement(Input, {
     prefix: prefix,
     suffix: suffix,
     className: clsx__default['default']('uc-datepick', className),
     style: style,
     readOnly: true,
-    value: val ? val.toLocaleDateString() : '',
+    value: formatDate(val, format),
     onFocus: function onFocus() {
       return setV(true);
     }
+  });
+
+  var calendarProps = _objectSpread2(_objectSpread2({}, rest), {}, {
+    value: val,
+    ref: cRef
   }); // mobile do't trigger onChange
+
 
   return isMobile ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, inputRender, /*#__PURE__*/React__default['default'].createElement(Popup, {
     visible: v,
     onClose: onClose,
     position: "bottom"
-  }, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
-    value: val,
-    ref: cRef,
+  }, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, calendarProps, {
     header: popHeader,
     footer: /*#__PURE__*/React__default['default'].createElement(StyledMobileFooter, null)
   })))) : /*#__PURE__*/React__default['default'].createElement(Popover, {
-    closeOnClickOutside: true,
     onClose: onClose,
     visible: v,
     arrow: false,
     offset: offset,
-    content: /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
-      ref: cRef,
-      value: val,
+    closeOnMaskClick: true,
+    mask: true,
+    maskStyle: {
+      backgroundColor: 'transparent'
+    },
+    content: /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, calendarProps, {
       onChange: function onChange(v) {
         setVal(v);
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);
@@ -6080,7 +6122,6 @@ exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;
 exports.IconArrow = IconArrow;
 exports.IconCross = IconCross;
-exports.IconTick = IconTick;
 exports.ImageViewer = ImageViewer;
 exports.IndexList = IndexList;
 exports.Input = Input;

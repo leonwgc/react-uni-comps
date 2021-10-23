@@ -1,13 +1,13 @@
 import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import IconTick from './IconTick';
 import * as colors from './colors';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useCallbackRef from './hooks/useCallbackRef';
 import Button from './Button';
+import Icon from './Icon';
 
 type Props = {
   /** 按钮风格，默认false */
@@ -179,9 +179,10 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           ...style,
           width: size,
           height: size,
+          fontSize: size,
         }}
       >
-        <IconTick size={size * 0.6} />
+        <Icon type="icon-tick" />
       </div>
       {children && <span className="text">{children}</span>}
     </StyledCheckboxBaseWrapper>

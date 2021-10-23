@@ -7,7 +7,6 @@ declare type Props = {
     /** 移动端不会触发onChange, 请使用onOk 点击确认触发*/
     onChange?: (val: Date | Date[]) => void;
     value?: Date | Date[];
-    defaultValue?: Date | Date[];
     style?: React.CSSProperties;
     className?: string;
     /** 自定义头  */
@@ -31,6 +30,9 @@ declare type Props = {
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
+    /** 自定义日期格式, YYYY-MM-DD */
+    format?: string;
+    todayText?: string;
 };
 /** 日期选择  */
 declare const DatePicker: {

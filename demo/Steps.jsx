@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled  from '../src/styled';
+import styled from '../src/styled';
 import { SmileOutlined, GithubOutlined } from '@ant-design/icons';
-import { Steps, Divider, Button, IconTick } from '../src';
+import { Steps, Divider, Button, Icon } from '../src';
 
 const StyledSteps = styled(Steps)`
   &.vertical {
@@ -65,7 +65,7 @@ export default function App() {
         current={index}
         steps={[
           { title: '步骤1', description: '步骤1desc', icon: <SmileOutlined /> },
-          { title: '步骤2', description: '', icon: <IconTick /> },
+          { title: '步骤2', description: '', icon: <Icon type="icon-tick" /> },
           { title: '步骤3', description: '步骤3desc', icon: <GithubOutlined /> },
           { title: '步骤4', description: '步骤4desc' },
         ]}

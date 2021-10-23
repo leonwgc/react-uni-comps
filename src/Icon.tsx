@@ -60,6 +60,6 @@ Icon.loadFromIconfontCN = (scriptUrl: string): void => {
 };
 
 // load ruc icons
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_ikiwdju6oqd.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_vzc79u42a8.js');
 
 export default Icon;

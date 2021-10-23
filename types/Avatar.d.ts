@@ -6,7 +6,7 @@ declare type Props = {
     shape?: 'circle' | 'square';
     className?: string;
     style?: React.CSSProperties;
-    /** 文字/icon/img */
+    /** 文字/icon/img 不设置，则为默认头像icon */
     children?: React.ReactNode;
 };
 /** 头像 */

@@ -42,32 +42,30 @@ var __rest = this && this.__rest || function (s, e) {
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledArrow = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n  width: ", "px;\n  height: ", "px;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), function (_a) {
-  var size = _a.size;
-  return size;
-}, function (_a) {
-  var size = _a.size;
-  return size;
-});
-/** 勾勾 */
+var StyledArrow = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])));
+/** 箭头 */
 
 var IconArrow = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a;
 
   var _b = props.color,
       color = _b === void 0 ? 'currentColor' : _b,
+      style = props.style,
       _c = props.direction,
       direction = _c === void 0 ? 'bottom' : _c,
       className = props.className,
       _d = props.size,
       size = _d === void 0 ? 16 : _d,
-      rest = __rest(props, ["color", "direction", "className", "size"]);
+      rest = __rest(props, ["color", "style", "direction", "className", "size"]);
 
-  return /*#__PURE__*/React.createElement(StyledArrow, __assign({
+  return /*#__PURE__*/React.createElement(StyledArrow, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-icon-arrow', className, (_a = {}, _a[direction] = direction, _a)),
-    size: size
-  }, rest), /*#__PURE__*/React.createElement("svg", {
+    style: __assign(__assign({}, style), {
+      width: size,
+      height: size
+    })
+  }), /*#__PURE__*/React.createElement("svg", {
     width: size,
     height: size,
     xmlns: "http://www.w3.org/2000/svg",

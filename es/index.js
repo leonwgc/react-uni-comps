@@ -32,7 +32,6 @@ export { default as CopyToClipboard } from './CopyToClipboard';
 export { default as Text } from './Text';
 export { default as Mask } from './Mask';
 export { default as Toast } from './Toast';
-export { default as IconTick } from './IconTick';
 export { default as IconCross } from './IconCross';
 export { default as IconArrow } from './IconArrow';
 export { default as NoticeBar } from './NoticeBar';

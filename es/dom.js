@@ -160,31 +160,35 @@ var resourceLoadedList = new Set();
  */
 
 export var loadResource = function loadResource(url) {
-  if (resourceRegex.test(url) && !resourceLoadedList.has(url)) {
-    resourceLoadedList.add(url);
-    return new Promise(function (resolve) {
-      var el;
-      var isCss = cssRegex.test(url);
+  if (resourceRegex.test(url)) {
+    if (!resourceLoadedList.has(url)) {
+      resourceLoadedList.add(url);
+      return new Promise(function (resolve) {
+        var el;
+        var isCss = cssRegex.test(url);
 
-      if (isCss) {
-        el = document.createElement('link');
-        el.rel = 'stylesheet';
-        el.href = url;
-      } else {
-        el = document.createElement('script');
-        el.setAttribute('data-namespace', url);
-        el.src = url;
-      }
+        if (isCss) {
+          el = document.createElement('link');
+          el.rel = 'stylesheet';
+          el.href = url;
+        } else {
+          el = document.createElement('script');
+          el.setAttribute('data-namespace', url);
+          el.src = url;
+        }
 
-      el.onload = resolve;
+        el.onload = resolve;
 
-      if (isCss) {
-        var head = document.getElementsByTagName('head')[0];
-        head.appendChild(el);
-      } else {
-        document.body.appendChild(el);
-      }
-    });
+        if (isCss) {
+          var head = document.getElementsByTagName('head')[0];
+          head.appendChild(el);
+        } else {
+          document.body.appendChild(el);
+        }
+      });
+    } else {
+      Promise.resolve('已经加载');
+    }
   } else {
     return Promise.reject('请输入js/css文件地址');
   }

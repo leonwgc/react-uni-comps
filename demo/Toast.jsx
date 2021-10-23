@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Space, Toast, Button, IconTick } from '../src';
+import { Spinner, Space, Toast, Button, Icon } from '../src';
 
 export default function App() {
   return (
@@ -29,8 +29,12 @@ export default function App() {
           onClick={() =>
             Toast.show({
               content: (
-                <Space direction="vertical" size={12} style={{ width: 120, textAlign: 'center' }}>
-                  <IconTick size={30} color="#fff" />
+                <Space
+                  direction="vertical"
+                  size={12}
+                  style={{ width: 120, textAlign: 'center', color: '#fff' }}
+                >
+                  <Icon type="icon-tick" style={{ fontSize: 40 }} />
                   认证成功
                 </Space>
               ),

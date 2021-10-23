@@ -42,7 +42,8 @@ var __rest = this && this.__rest || function (s, e) {
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledAvatar = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 16px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"], ["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 16px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
+import Icon from './Icon';
+var StyledAvatar = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 24px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"], ["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 24px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
 /** 头像 */
 
 var Avatar = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -64,7 +65,9 @@ var Avatar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: ref,
     style: s,
     className: clsx('uc-avatar', className, shape)
-  }), children);
+  }), children || /*#__PURE__*/React.createElement(Icon, {
+    type: "icon-avatar"
+  }));
 });
 Avatar.displayName = 'UC-Avatar';
 export default Avatar;

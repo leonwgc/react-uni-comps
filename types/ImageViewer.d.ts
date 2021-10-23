@@ -1,5 +1,4 @@
 import React from 'react';
-import { SlideRefType } from './Slide';
 declare type Props = {
     /** 是否可见 */
     visible?: boolean;
@@ -15,5 +14,5 @@ declare type Props = {
     style?: React.CSSProperties;
 };
 /** 图片查看器 */
-declare const ImageViewer: React.ForwardRefExoticComponent<Props & React.RefAttributes<SlideRefType>>;
+declare const ImageViewer: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;
