@@ -7,6 +7,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
 import IconArrow from './IconArrow';
 import Button from './Button';
+import useUpdateEffect from './hooks/useUpdateEffect';
 
 type Props = {
   /** 是否可见 */
@@ -72,6 +73,12 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useEffect(() => {
     setUrls(Array.isArray(images) ? images : [images]);
   }, [images]);
+
+  useUpdateEffect(() => {
+    if (!visible) {
+      setIndex(0);
+    }
+  }, [visible]);
 
   const slides = useMemo(() => {
     return (
