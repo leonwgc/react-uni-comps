@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from '../src/styled';
-import { ProgressCircle, Button, Space } from '../src';
+import { ProgressCircle, Button, Icon } from '../src';
 
 const StyledProgressCircle = styled(ProgressCircle)`
-  .child {
+  .content {
     font-size: 32px;
     color: #666;
   }
@@ -12,7 +12,7 @@ const StyledProgressCircle = styled(ProgressCircle)`
 export default function App() {
   const [v, setV] = useState(50);
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <ProgressCircle progress={0}>0%</ProgressCircle>
       <ProgressCircle progress={v}>{v}%</ProgressCircle>
       <ProgressCircle progress={100}>100%</ProgressCircle>
@@ -25,26 +25,24 @@ export default function App() {
       >
         {v}%
       </StyledProgressCircle>
-      <Space>
-        <Button
-          onClick={() =>
-            setV((v) => {
-              return v - 10 >= 0 ? v - 10 : 0;
-            })
-          }
-        >
-          -
-        </Button>
-        <Button
-          onClick={() =>
-            setV((v) => {
-              return v + 10 <= 100 ? v + 10 : 100;
-            })
-          }
-        >
-          +
-        </Button>
-      </Space>
+      <Button
+        onClick={() =>
+          setV((v) => {
+            return v - 10 >= 0 ? v - 10 : 0;
+          })
+        }
+      >
+        <Icon type="icon-jian2" />
+      </Button>
+      <Button
+        onClick={() =>
+          setV((v) => {
+            return v + 10 <= 100 ? v + 10 : 100;
+          })
+        }
+      >
+        <Icon type="icon-jia2" />
+      </Button>
     </div>
   );
 }

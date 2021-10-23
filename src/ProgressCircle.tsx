@@ -22,7 +22,7 @@ type Props = {
 
 const StyledProgressCircle = styled.div`
   position: relative;
-  .child {
+  .content {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -76,7 +76,7 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           ></circle>
         ) : null}
       </svg>
-      {children && <div className="child">{children}</div>}
+      {children && <div className="content">{children}</div>}
     </StyledProgressCircle>
   );
 });
