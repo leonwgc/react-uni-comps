@@ -32,7 +32,7 @@ const StyledCalendar = styled.div`
   width: 280px;
   font-size: 14px;
   background: #fff;
-  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   line-height: inherit;
   box-sizing: border-box;
 
