@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import Icon from './Icon';
 
 type Props = {
   /** 尺寸，默认40 */
@@ -9,7 +10,7 @@ type Props = {
   shape?: 'circle' | 'square';
   className?: string;
   style?: React.CSSProperties;
-  /** 文字/icon/img */
+  /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
 };
 
@@ -17,7 +18,7 @@ const StyledAvatar = styled.div`
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 24px;
   list-style: none;
   position: relative;
   display: inline-flex;
@@ -52,7 +53,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const s = { ...style, width: size, height: size };
   return (
     <StyledAvatar {...rest} ref={ref} style={s} className={clsx('uc-avatar', className, shape)}>
-      {children}
+      {children || <Icon type="icon-avatar" />}
     </StyledAvatar>
   );
 });

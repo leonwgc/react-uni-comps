@@ -1,21 +1,13 @@
 import React from 'react';
-import { Avatar, Space } from '../src';
-import styled from '../src/styled';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from '../src';
 
 export default function App() {
   return (
     <div style={{ margin: 50 }}>
-      <Avatar>
-        <UserOutlined />
-      </Avatar>
-      <Avatar size={64} style={{ margin: '0 16px' }}>
-        <UserOutlined />
-      </Avatar>
+      <Avatar></Avatar>
+      <Avatar size={64} style={{ margin: '0 16px', fontSize: 40, color: 'red' }}></Avatar>
 
-      <Avatar size={64} style={{ margin: '0 16px', fontSize: 24 }}>
-        <UserOutlined />
-      </Avatar>
+      <Avatar size={64} style={{ margin: '0 16px', fontSize: (60 * 24) / 40 }}></Avatar>
 
       <Avatar style={{ margin: '0 16px' }}>W</Avatar>
 
