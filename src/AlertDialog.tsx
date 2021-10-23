@@ -137,7 +137,7 @@ const StyledAlertDialog = styled(Popup)`
     width: 420px;
 
     .close {
-      top: 18px;
+      top: 16px;
       right: 16px;
       color: #999;
       position: absolute;

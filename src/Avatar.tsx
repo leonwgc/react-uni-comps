@@ -18,7 +18,6 @@ const StyledAvatar = styled.div`
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 24px;
   list-style: none;
   position: relative;
   display: inline-flex;
@@ -50,7 +49,7 @@ const StyledAvatar = styled.div`
 const Avatar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { size = 40, className, shape = 'circle', style, children, ...rest } = props;
 
-  const s = { ...style, width: size, height: size };
+  const s = { width: size, height: size, fontSize: size * 0.6, ...style };
   return (
     <StyledAvatar {...rest} ref={ref} style={s} className={clsx('uc-avatar', className, shape)}>
       {children || <Icon type="icon-avatar" />}
