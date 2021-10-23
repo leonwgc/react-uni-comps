@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cell, Icon, IconCross, IconArrow, Space } from '../src';
+import { Cell, Icon, IconCross, IconArrow } from '../src';
 import styled from '../src/styled';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js'); // misc-icons
@@ -40,12 +40,6 @@ export default function App() {
       <IconArrow size={40} direction="bottom"></IconArrow>
       <IconArrow size={40} color="#004bcc" direction="bottom"></IconArrow>
       <IconArrow size={60} color="#00bc8d" direction="bottom"></IconArrow>
-
-      <div style={{ color: 'red' }}>
-        <Space>
-          <IconArrow size={24} /> <IconCross size={24} /> <IconTick size={24} />
-        </Space>
-      </div>
     </div>
   );
 }
