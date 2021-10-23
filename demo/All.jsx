@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SoundOutlined } from '@ant-design/icons';
-import { Space, Cell, IconArrow } from '../src';
+// import { SoundOutlined } from '@ant-design/icons';
+import { Space, Cell, IconArrow, Icon } from '../src';
+
+const SoundOutlined = () => <Icon type="icon-zujian" />;
 
 export default function All() {
   const history = useHistory();

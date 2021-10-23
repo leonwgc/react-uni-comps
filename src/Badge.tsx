@@ -26,7 +26,7 @@ const StyledBadge = styled.div`
     vertical-align: middle;
     box-sizing: border-box;
     border-radius: 100px;
-    padding: 0 4px;
+    padding: 2px 4px;
     font-size: 9px;
     line-height: 1.2;
     white-space: nowrap;

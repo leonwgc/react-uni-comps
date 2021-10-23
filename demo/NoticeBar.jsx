@@ -1,25 +1,14 @@
 import React from 'react';
-import { SoundOutlined } from '@ant-design/icons';
-import { NoticeBar } from '../src';
+import { NoticeBar, Icon } from '../src';
 
 export default function App() {
   return (
     <div className="app">
-      <NoticeBar
-        icon={<SoundOutlined />}
-        closeable
-        extra={
-          <div>
-            <SoundOutlined /> hello
-          </div>
-        }
-        content="各位请注意，当前文本超出了屏幕宽度"
-      />
+      <NoticeBar closeable content="各位请注意，当前文本超出了屏幕宽度" />
       <NoticeBar
         speed={100}
         closeable
         style={{ backgroundColor: '#eee', color: '#333', marginTop: 30 }}
-        icon={<SoundOutlined />}
         content="各位请注意，当前文本超出了屏幕宽度，组件会自动开启滚动功能，前后停留时间和滚动速度可以自定义设置"
       />
 
@@ -31,7 +20,6 @@ export default function App() {
           height: 50,
         }}
         closeable
-        icon={<SoundOutlined />}
         content="各位请注意，当前文本超出了屏幕宽度，组件会自动开启滚动功能，前后停留时间和滚动速度可以自定义设置，更多用法请参见使用文档"
       />
 
@@ -45,10 +33,10 @@ export default function App() {
         delay={100}
         extra={
           <div>
-            <SoundOutlined /> hello
+            <Icon type="icon-zujian" /> extra
           </div>
         }
-        icon={<SoundOutlined />}
+        icon={<Icon type="icon-tips" />}
         content="各位请注意，当前文本超出了屏幕宽度，组件会自动开启滚动功能，前后停留时间和滚动速度可以自定义设置，更多用法请参见使用文档"
       />
     </div>

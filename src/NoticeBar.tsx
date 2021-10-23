@@ -3,6 +3,7 @@ import React, { HTMLAttributes, useRef, useState, useLayoutEffect } from 'react'
 import styled from 'styled-components';
 import Space from './Space';
 import IconCross from './IconCross';
+import Icon from './Icon';
 
 const StyledNoticeBar = styled.div`
   height: 30px;
@@ -68,7 +69,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
   const {
     content,
     delay = 2000,
-    icon,
+    icon = <Icon type="icon-horn" />,
     speed = 50,
     closeable = false,
     className,

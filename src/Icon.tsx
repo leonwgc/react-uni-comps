@@ -59,4 +59,7 @@ Icon.loadFromIconfontCN = (scriptUrl: string): void => {
   isBrowser && loadResource(scriptUrl);
 };
 
+// load ruc icons
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_6bua9u873ib.js');
+
 export default Icon;
