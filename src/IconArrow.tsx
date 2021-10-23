@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
@@ -7,20 +7,17 @@ type Props = {
   size?: number;
   /** 颜色 */
   color?: string;
+  style?: React.CSSProperties;
   className?: string;
   /** 箭头方向，默认朝下 */
   direction: 'right' | 'bottom' | 'left' | 'top';
-};
+} & HTMLAttributes<HTMLDivElement>;
 
-const StyledArrow = styled.div<{
-  size: number;
-}>`
+const StyledArrow = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
-  width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
 
   &.right {
     svg {
@@ -43,16 +40,23 @@ const StyledArrow = styled.div<{
   }
 `;
 
-/** 勾勾 */
+/** 箭头 */
 const IconArrow = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { color = 'currentColor', direction = 'bottom', className, size = 16, ...rest } = props;
+  const {
+    color = 'currentColor',
+    style,
+    direction = 'bottom',
+    className,
+    size = 16,
+    ...rest
+  } = props;
 
   return (
     <StyledArrow
+      {...rest}
       ref={ref}
       className={clsx('uc-icon-arrow', className, { [direction]: direction })}
-      size={size}
-      {...rest}
+      style={{ ...style, width: size, height: size }}
     >
       <svg
         width={size}

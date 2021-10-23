@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from './Mask';
 import Slide, { SlideRefType } from './Slide';
 import useCallbackRef from './hooks/useCallbackRef';
+import Space from './Space';
+import IconArrow from './IconArrow';
 
 type Props = {
   /** 是否可见 */
@@ -39,7 +41,7 @@ const StyledImageViewer = styled.div`
     top: 12px;
     transform: translateX(-50%);
     color: #e6e6e6;
-    font-size: 14px;
+    font-size: 18px;
   }
   .slide-page {
     display: flex;
@@ -57,13 +59,14 @@ const StyledImageViewer = styled.div`
 `;
 
 /** 图片查看器 */
-const ImageViewer = React.forwardRef<SlideRefType, Props>((props, ref) => {
+const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, visible, maskStyle, onClose, images, onIndexChange, ...rest } = props;
 
   const [urls, setUrls] = useState(Array.isArray(images) ? images : [images]);
   const [index, setIndex] = useState<number>(0);
 
   const onIndexChangeRef = useCallbackRef(onIndexChange);
+  const slideRef = useRef<SlideRefType>();
 
   useEffect(() => {
     setUrls(Array.isArray(images) ? images : [images]);
@@ -72,7 +75,7 @@ const ImageViewer = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const slides = useMemo(() => {
     return (
       <Slide
-        ref={ref}
+        ref={slideRef}
         showDot={false}
         style={{ zIndex: 101, width: '100%' }}
         direction="horizontal"
@@ -92,17 +95,52 @@ const ImageViewer = React.forwardRef<SlideRefType, Props>((props, ref) => {
         ))}
       </Slide>
     );
-  }, [urls, onIndexChangeRef, ref]);
+  }, [urls, onIndexChangeRef, slideRef]);
+
+  const textRender = () => {
+    if (urls.length > 1) {
+      return (
+        <div className={clsx('text')}>
+          <Space size={20} align="flex-start">
+            <IconArrow
+              direction="left"
+              title="上一张"
+              style={{ cursor: 'pointer' }}
+              size={24}
+              onClick={(e: SyntheticEvent) => {
+                e.stopPropagation();
+                slideRef.current?.prev();
+              }}
+            />
+            <span>
+              {index + 1} / {urls.length}
+            </span>
+            <IconArrow
+              direction="right"
+              title="下一张"
+              style={{ cursor: 'pointer' }}
+              size={24}
+              onClick={(e: SyntheticEvent) => {
+                e.stopPropagation();
+                slideRef.current?.next();
+              }}
+            />
+          </Space>
+        </div>
+      );
+    }
+  };
 
   return (
     visible && (
-      <StyledImageViewer {...rest} className={clsx('uc-image-viewer', className)} onClick={onClose}>
+      <StyledImageViewer
+        {...rest}
+        ref={ref}
+        className={clsx('uc-image-viewer', className)}
+        onClick={onClose}
+      >
         <Mask style={maskStyle} />
-        {urls.length > 1 && (
-          <div className={clsx('text')}>
-            {index + 1} / {urls.length}
-          </div>
-        )}
+        {textRender()}
         {urls.length > 1 && slides}
         {urls.length === 1 && <img className="image" src={urls[0]} />}
       </StyledImageViewer>
