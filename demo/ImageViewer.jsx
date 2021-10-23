@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, ImageViewer, Toast } from '../src';
-import styled from '../src/styled';
 
 const demoImages = [
   'https://t7.baidu.com/it/u=2141219545,3103086273&fm=193&f=GIF',
@@ -19,9 +18,6 @@ export default function App() {
       <ImageViewer
         images={demoImages}
         visible={visible}
-        onIndexChange={(index) =>
-          Toast.show({ content: index + 1, duration: 400, style: { color: '#fff' } })
-        }
         onClose={() => {
           setVisible(false);
         }}
@@ -30,9 +26,6 @@ export default function App() {
       <ImageViewer
         images={demoImages[2]}
         visible={v}
-        onIndexChange={(index) =>
-          Toast.show({ content: index + 1, duration: 400, style: { color: '#fff' } })
-        }
         onClose={() => {
           setV(false);
         }}

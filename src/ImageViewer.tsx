@@ -6,6 +6,7 @@ import Slide, { SlideRefType } from './Slide';
 import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
 import IconArrow from './IconArrow';
+import Button from './Button';
 
 type Props = {
   /** 是否可见 */
@@ -101,30 +102,42 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     if (urls.length > 1) {
       return (
         <div className={clsx('text')}>
-          <Space size={20} align="flex-start">
-            <IconArrow
-              direction="left"
-              title="上一张"
-              style={{ cursor: 'pointer' }}
-              size={24}
+          <Space>
+            <Button
+              style={{ border: 'none' }}
+              ghost
               onClick={(e: SyntheticEvent) => {
                 e.stopPropagation();
                 slideRef.current?.prev();
               }}
+              icon={
+                <IconArrow
+                  direction="left"
+                  title="上一张"
+                  style={{ cursor: 'pointer' }}
+                  size={24}
+                />
+              }
             />
             <span>
               {index + 1} / {urls.length}
             </span>
-            <IconArrow
-              direction="right"
-              title="下一张"
-              style={{ cursor: 'pointer' }}
-              size={24}
+            <Button
+              ghost
+              style={{ border: 'none' }}
               onClick={(e: SyntheticEvent) => {
                 e.stopPropagation();
                 slideRef.current?.next();
               }}
-            />
+              icon={
+                <IconArrow
+                  direction="right"
+                  title="下一张"
+                  style={{ cursor: 'pointer' }}
+                  size={24}
+                />
+              }
+            ></Button>
           </Space>
         </div>
       );
