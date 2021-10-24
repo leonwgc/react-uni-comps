@@ -11,7 +11,7 @@ import {
 } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
-const className = 'react-calendar__year-view__months__month';
+const className = 'year-view__months__month';
 
 export default function Month({
   classes,

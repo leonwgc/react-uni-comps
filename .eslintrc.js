@@ -68,7 +68,7 @@ module.exports = {
     'require-yield': 0,
     'no-empty': 0,
     'no-inner-declarations': 0,
-    '@typescript-eslint/no-explicit-any': 2,
+    '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-this-alias': 0,
   },
 };

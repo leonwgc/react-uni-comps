@@ -18,7 +18,7 @@ import {
 } from '../shared/dateFormatter';
 import { isView, isViews } from '../shared/propTypes';
 
-const className = 'react-calendar__navigation';
+const className = 'navigation';
 
 export default function Navigation({
   activeStartDate,

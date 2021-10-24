@@ -8,5 +8,5 @@ export default function CenturyView(props) {
     return <Decades {...props} />;
   }
 
-  return <div className="react-calendar__century-view">{renderDecades()}</div>;
+  return <div className="century-view">{renderDecades()}</div>;
 }

@@ -12,7 +12,7 @@ import {
 } from '../shared/dateFormatter';
 import { isCalendarType } from '../shared/propTypes';
 
-const className = 'react-calendar__month-view__weekdays';
+const className = 'month-view__weekdays';
 
 export default function Weekdays(props) {
   const {

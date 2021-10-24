@@ -1,32 +1,29 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 function toPercent(num) {
   return `${num}%`;
 }
 
-export default function Flex({
-  children,
-  className,
-  direction,
-  count,
-  offset,
-  style,
-  wrap,
-  ...otherProps
-}) {
+type Props = {
+  children?: React.ReactElement;
+  className?: string;
+  direction?: any;
+  count?: number;
+  offset?: number;
+  style?: React.CSSProperties;
+  wrap?: boolean;
+};
+
+export default function Flex(props: Props): React.ReactElement {
+  const { children, className, direction, count, offset, style, wrap, ...otherProps } = props;
+  const st = {
+    display: 'flex',
+    flexDirection: direction,
+    flexWrap: wrap ? 'wrap' : 'no-wrap',
+    ...style,
+  };
   return (
-    <div
-      className={className}
-      style={{
-        display: 'flex',
-        flexDirection: direction,
-        flexWrap: wrap ? 'wrap' : 'no-wrap',
-        ...style,
-      }}
-      {...otherProps}
-    >
+    <div className={className} style={st} {...otherProps}>
       {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           ...child.props,
@@ -41,13 +38,3 @@ export default function Flex({
     </div>
   );
 }
-
-Flex.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  count: PropTypes.number.isRequired,
-  direction: PropTypes.string,
-  offset: PropTypes.number,
-  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  wrap: PropTypes.bool,
-};

@@ -6,7 +6,6 @@ import TileGroup from '../TileGroup';
 import Decade from './Decade';
 
 import { getBeginOfCenturyYear } from '../shared/dates';
-import { tileGroupProps } from '../shared/propTypes';
 
 export default function Decades(props) {
   const { activeStartDate } = props;
@@ -16,7 +15,7 @@ export default function Decades(props) {
   return (
     <TileGroup
       {...props}
-      className="react-calendar__century-view__decades"
+      className="century-view__decades"
       dateTransform={getDecadeStart}
       dateType="decade"
       end={end}
@@ -26,7 +25,3 @@ export default function Decades(props) {
     />
   );
 }
-
-Decades.propTypes = {
-  ...tileGroupProps,
-};

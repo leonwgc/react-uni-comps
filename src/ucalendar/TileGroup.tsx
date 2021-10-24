@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import Flex from './Flex';
-
 import { getTileClasses } from './shared/utils';
-import { tileGroupProps } from './shared/propTypes';
 
 export default function TileGroup({
   className,
@@ -22,14 +18,14 @@ export default function TileGroup({
   valueType,
   ...tileProps
 }) {
-  const tiles = [];
+  const tiles: any = [];
   for (let point = start; point <= end; point += step) {
     const date = dateTransform(point);
 
     tiles.push(
       <Tile
         key={date.getTime()}
-        classes={getTileClasses({
+        className={getTileClasses({
           value,
           valueType,
           date,
@@ -49,14 +45,3 @@ export default function TileGroup({
     </Flex>
   );
 }
-
-TileGroup.propTypes = {
-  ...tileGroupProps,
-  activeStartDate: PropTypes.instanceOf(Date),
-  count: PropTypes.number,
-  dateTransform: PropTypes.func.isRequired,
-  dateType: PropTypes.string,
-  offset: PropTypes.number,
-  step: PropTypes.number,
-  tile: PropTypes.func.isRequired,
-};

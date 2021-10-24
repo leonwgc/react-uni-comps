@@ -41,7 +41,7 @@ export default function WeekNumbers(props) {
 
   return (
     <Flex
-      className="react-calendar__month-view__weekNumbers"
+      className="month-view__weekNumbers"
       count={numberOfWeeks}
       direction="column"
       onFocus={onMouseLeave}

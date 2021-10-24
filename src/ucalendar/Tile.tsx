@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-
-import { tileProps } from './shared/propTypes';
 
 function getValue(nextProps, prop) {
   const { activeStartDate, date, view } = nextProps;
@@ -11,11 +8,11 @@ function getValue(nextProps, prop) {
   return typeof prop === 'function' ? prop({ activeStartDate, date, view }) : prop;
 }
 
-export default class Tile extends Component {
+export default class Tile extends Component<any, any> {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { tileClassName, tileContent } = nextProps;
 
-    const nextState = {};
+    const nextState: any = {};
 
     if (tileClassName !== prevState.tileClassNameProps) {
       nextState.tileClassName = getValue(nextProps, tileClassName);
@@ -36,7 +33,7 @@ export default class Tile extends Component {
     const {
       activeStartDate,
       children,
-      classes,
+      className,
       date,
       formatAbbr,
       locale,
@@ -50,11 +47,11 @@ export default class Tile extends Component {
       tileDisabled,
       view,
     } = this.props;
-    const { tileClassName, tileContent } = this.state;
+    const { tileClassName = '', tileContent = '' } = this.state as any;
 
     return (
       <button
-        className={clsx(classes, tileClassName)}
+        className={clsx(className, tileClassName)}
         disabled={
           (minDate && minDateTransform(minDate) > date) ||
           (maxDate && maxDateTransform(maxDate) < date) ||
@@ -72,11 +69,3 @@ export default class Tile extends Component {
     );
   }
 }
-
-Tile.propTypes = {
-  ...tileProps,
-  children: PropTypes.node.isRequired,
-  formatAbbr: PropTypes.func,
-  maxDateTransform: PropTypes.func.isRequired,
-  minDateTransform: PropTypes.func.isRequired,
-};

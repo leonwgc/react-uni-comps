@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Days from './MonthView/Days';
 import Weekdays from './MonthView/Weekdays';
 import WeekNumbers from './MonthView/WeekNumbers';
-
 import { CALENDAR_TYPES, CALENDAR_TYPE_LOCALES } from './shared/const';
-import { isCalendarType } from './shared/propTypes';
 
 function getCalendarTypeFromLocale(locale) {
   return (
@@ -58,7 +55,7 @@ export default function MonthView(props) {
     return <Days calendarType={calendarType} {...childProps} />;
   }
 
-  const className = 'react-calendar__month-view';
+  const className = 'month-view';
 
   return (
     <div className={clsx(className, showWeekNumbers ? `${className}--weekNumbers` : '')}>
@@ -82,14 +79,3 @@ export default function MonthView(props) {
     </div>
   );
 }
-
-MonthView.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType,
-  formatShortWeekday: PropTypes.func,
-  locale: PropTypes.string,
-  onClickWeekNumber: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showWeekNumbers: PropTypes.bool,
-};

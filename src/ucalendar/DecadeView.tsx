@@ -8,5 +8,5 @@ export default function DecadeView(props) {
     return <Years {...props} />;
   }
 
-  return <div className="react-calendar__decade-view">{renderYears()}</div>;
+  return <div className="decade-view">{renderYears()}</div>;
 }

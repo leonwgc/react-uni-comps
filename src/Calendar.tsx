@@ -49,7 +49,7 @@ const StyledCalendar = styled.div`
   .react-calendar--doubleView {
     width: 700px;
 
-    .react-calendar__viewContainer {
+    .viewContainer {
       display: flex;
       margin: -0.5em;
 
@@ -79,7 +79,7 @@ const StyledCalendar = styled.div`
     }
   }
 
-  .react-calendar__navigation {
+  .navigation {
     display: flex;
     height: 44px;
     margin-bottom: 0.5em;
@@ -106,20 +106,20 @@ const StyledCalendar = styled.div`
     }
   }
 
-  .react-calendar__month-view {
-    .react-calendar__month-view__weekdays {
+  .month-view {
+    .month-view__weekdays {
       text-align: center;
       text-transform: uppercase;
       font-weight: bold;
       font-size: 0.75em;
 
-      .react-calendar__month-view__weekdays__weekday {
+      .month-view__weekdays__weekday {
         padding: 0.5em;
       }
     }
 
-    .react-calendar__weekNumbers {
-      .react-calendar__tile {
+    .weekNumbers {
+      .tile {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -129,29 +129,29 @@ const StyledCalendar = styled.div`
       }
     }
   }
-  .react-calendar__month-view__days__day--weekend {
+  .month-view__days__day--weekend {
     /* color: rgb(209, 0, 0); */
   }
-  .react-calendar__month-view__days__day--neighboringMonth {
+  .month-view__days__day--neighboringMonth {
     color: #ccc;
   }
 
-  .react-calendar__year-view,
-  .react-calendar__decade-view,
-  .react-calendar__century-view {
-    .react-calendar__tile {
+  .year-view,
+  .decade-view,
+  .century-view {
+    .tile {
       padding: 1em 0.5em;
     }
   }
 
-  .react-calendar__century-view {
-    .react-calendar__tile {
+  .century-view {
+    .tile {
       padding: 1em 0;
       font-size: 12px;
     }
   }
 
-  .react-calendar__tile {
+  .tile {
     max-width: 100%;
     text-align: center;
     cursor: pointer;
@@ -173,8 +173,8 @@ const StyledCalendar = styled.div`
       }
     }
 
-    &.react-calendar__tile--active,
-    &.react-calendar__tile--hasActive {
+    &.tile--active,
+    &.tile--hasActive {
       ${getThemeColorCss('background-color')}
       color:#fff;
       &:hover,
@@ -184,12 +184,12 @@ const StyledCalendar = styled.div`
       }
     }
 
-    &.react-calendar__tile--range {
+    &.tile--range {
       ${getThemeColorCss('background-color')}
       opacity: 0.4;
     }
-    &.react-calendar__tile--rangeStart,
-    &.react-calendar__tile--rangeEnd {
+    &.tile--rangeStart,
+    &.tile--rangeEnd {
       ${getThemeColorCss('background-color')}
       opacity: 1;
       color: #fff;

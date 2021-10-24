@@ -8,7 +8,7 @@ import Tile from '../Tile';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
 import { tileProps } from '../shared/propTypes';
 
-const className = 'react-calendar__decade-view__years__year';
+const className = 'decade-view__years__year';
 
 export default function Year({ classes, formatYear = defaultFormatYear, ...otherProps }) {
   const { date, locale } = otherProps;

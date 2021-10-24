@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function WeekNumber({ date, onClickWeekNumber, weekNumber }) {
   const props = {
-    className: 'react-calendar__tile',
+    className: 'tile',
     style: { flexGrow: 1 },
   };
 

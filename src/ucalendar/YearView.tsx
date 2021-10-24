@@ -8,5 +8,5 @@ export default function YearView(props) {
     return <Months {...props} />;
   }
 
-  return <div className="react-calendar__year-view">{renderMonths()}</div>;
+  return <div className="year-view">{renderMonths()}</div>;
 }

@@ -25,8 +25,8 @@ export const CALENDAR_TYPE_LOCALES = {
     'es-PR',
     'es-SV',
     'es-VE',
-    'pt-BR'
-  ];
+    'pt-BR',
+  ],
   Arabic: [
     // ar-LB, ar-MA intentionally missing
     'ar',
@@ -47,9 +47,9 @@ export const CALENDAR_TYPE_LOCALES = {
     'dv',
     'dv-MV',
     'ps',
-    'ps-AR'
-  ];
-  Hebrew: ['he', 'he-IL'];
+    'ps-AR',
+  ],
+  Hebrew: ['he', 'he-IL'],
 };
 
 export const WEEKDAYS = [...Array(7)].map((el, index) => index);

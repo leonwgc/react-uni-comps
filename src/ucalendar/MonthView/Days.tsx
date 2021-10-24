@@ -55,7 +55,7 @@ export default function Days(props) {
   return (
     <TileGroup
       {...otherProps}
-      className="react-calendar__month-view__days"
+      className="month-view__days"
       count={7}
       currentMonthIndex={monthIndex}
       dateTransform={(day) => {
