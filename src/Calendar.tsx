@@ -159,12 +159,18 @@ const StyledCalendar = styled.div`
     background: none;
 
     &:disabled {
-      background-color: rgb(240, 240, 240);
+      color: #ccc;
+      cursor: not-allowed;
+      abbr {
+        cursor: not-allowed;
+      }
     }
 
-    &:hover,
-    &:focus {
-      background-color: rgb(230, 230, 230);
+    &:enabled {
+      &:hover,
+      &:focus {
+        background-color: rgb(230, 230, 230);
+      }
     }
 
     &.react-calendar__tile--active,
