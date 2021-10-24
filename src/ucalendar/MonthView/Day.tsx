@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
@@ -10,7 +10,6 @@ import {
   formatDay as defaultFormatDay,
   formatLongDate as defaultFormatLongDate,
 } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
 
 const className = 'month-view__days__day';
 
@@ -43,9 +42,9 @@ export default function Day({
   );
 }
 
-Day.propTypes = {
-  ...tileProps,
-  currentMonthIndex: PropTypes.number.isRequired,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func,
-};
+// Day.propTypes = {
+//   ...tileProps,
+//   currentMonthIndex: PropTypes.number.isRequired,
+//   formatDay: PropTypes.func,
+//   formatLongDate: PropTypes.func,
+// };

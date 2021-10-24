@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   getCenturyLabel,
@@ -16,7 +15,6 @@ import {
   formatMonthYear as defaultFormatMonthYear,
   formatYear as defaultFormatYear,
 } from '../shared/dateFormatter';
-import { isView, isViews } from '../shared/propTypes';
 
 const className = 'navigation';
 
@@ -196,27 +194,27 @@ export default function Navigation({
   );
 }
 
-Navigation.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  drillUp: PropTypes.func.isRequired,
-  formatMonthYear: PropTypes.func,
-  formatYear: PropTypes.func,
-  locale: PropTypes.string,
-  maxDate: PropTypes.instanceOf(Date),
-  minDate: PropTypes.instanceOf(Date),
-  navigationAriaLabel: PropTypes.string,
-  navigationAriaLive: PropTypes.string,
-  navigationLabel: PropTypes.func,
-  next2AriaLabel: PropTypes.string,
-  next2Label: PropTypes.node,
-  nextAriaLabel: PropTypes.string,
-  nextLabel: PropTypes.node,
-  prev2AriaLabel: PropTypes.string,
-  prev2Label: PropTypes.node,
-  prevAriaLabel: PropTypes.string,
-  prevLabel: PropTypes.node,
-  setActiveStartDate: PropTypes.func.isRequired,
-  showDoubleView: PropTypes.bool,
-  view: isView.isRequired,
-  views: isViews.isRequired,
-};
+// Navigation.propTypes = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   drillUp: PropTypes.func.isRequired,
+//   formatMonthYear: PropTypes.func,
+//   formatYear: PropTypes.func,
+//   locale: PropTypes.string,
+//   maxDate: PropTypes.instanceOf(Date),
+//   minDate: PropTypes.instanceOf(Date),
+//   navigationAriaLabel: PropTypes.string,
+//   navigationAriaLive: PropTypes.string,
+//   navigationLabel: PropTypes.func,
+//   next2AriaLabel: PropTypes.string,
+//   next2Label: PropTypes.node,
+//   nextAriaLabel: PropTypes.string,
+//   nextLabel: PropTypes.node,
+//   prev2AriaLabel: PropTypes.string,
+//   prev2Label: PropTypes.node,
+//   prevAriaLabel: PropTypes.string,
+//   prevLabel: PropTypes.node,
+//   setActiveStartDate: PropTypes.func.isRequired,
+//   showDoubleView: PropTypes.bool,
+//   view: isView.isRequired,
+//   views: isViews.isRequired,
+// };

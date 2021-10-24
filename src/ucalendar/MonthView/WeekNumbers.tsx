@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear, getMonth, getDate, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import WeekNumber from './WeekNumber';
 import Flex from '../Flex';
 
 import { getBeginOfWeek, getDayOfWeek, getWeekNumber } from '../shared/dates';
-import { isCalendarType } from '../shared/propTypes';
 
 export default function WeekNumbers(props) {
   const { activeStartDate, calendarType, onClickWeekNumber, onMouseLeave, showFixedNumberOfWeeks } =
@@ -60,10 +58,10 @@ export default function WeekNumbers(props) {
   );
 }
 
-WeekNumbers.propTypes = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  calendarType: isCalendarType.isRequired,
-  onClickWeekNumber: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  showFixedNumberOfWeeks: PropTypes.bool,
-};
+// WeekNumbers.propTypes = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   calendarType: isCalendarType.isRequired,
+//   onClickWeekNumber: PropTypes.func,
+//   onMouseLeave: PropTypes.func,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+// };

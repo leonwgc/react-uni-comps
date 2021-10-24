@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYearStart, getYearEnd } from '@wojtekmaj/date-utils';
-
 import Tile from '../Tile';
-
+import clsx from 'clsx';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
 
 const className = 'decade-view__years__year';
 
@@ -16,7 +13,7 @@ export default function Year({ classes, formatYear = defaultFormatYear, ...other
   return (
     <Tile
       {...otherProps}
-      classes={[].concat(classes, className)}
+      classes={clsx(classes, className)}
       maxDateTransform={getYearEnd}
       minDateTransform={getYearStart}
       view="decade"
@@ -25,8 +22,3 @@ export default function Year({ classes, formatYear = defaultFormatYear, ...other
     </Tile>
   );
 }
-
-Year.propTypes = {
-  ...tileProps,
-  formatYear: PropTypes.func,
-};

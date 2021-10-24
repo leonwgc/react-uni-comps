@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import clsx from 'clsx';
 
 import Navigation from './Calendar/Navigation';
@@ -10,15 +10,6 @@ import YearView from './YearView';
 import MonthView from './MonthView';
 
 import { getBegin, getBeginNext, getEnd, getValueRange } from './shared/dates';
-import {
-  isCalendarType,
-  isClassName,
-  isMaxDate,
-  isMinDate,
-  isRef,
-  isValue,
-  isView,
-} from './shared/propTypes';
 import { between } from './shared/utils';
 
 const defaultMinDate = new Date();
@@ -166,7 +157,7 @@ function getInitialActiveStartDate(props) {
 
 const getIsSingleValue = (value) => value && [].concat(value).length === 1;
 
-export default class Calendar extends Component {
+class Calendar extends Component<any, any> {
   state = {
     /* eslint-disable react/destructuring-assignment */
     activeStartDate: this.props.defaultActiveStartDate,
@@ -630,60 +621,59 @@ Calendar.defaultProps = {
   showNeighboringMonth: true,
 };
 
-const isActiveStartDate = PropTypes.instanceOf(Date);
-const isLooseValue = PropTypes.oneOfType([PropTypes.string, isValue]);
+export default Calendar;
 
-Calendar.propTypes = {
-  activeStartDate: isActiveStartDate,
-  allowPartialRange: PropTypes.bool,
-  calendarType: isCalendarType,
-  className: isClassName,
-  defaultActiveStartDate: isActiveStartDate,
-  defaultValue: isLooseValue,
-  defaultView: isView,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func,
-  formatMonth: PropTypes.func,
-  formatMonthYear: PropTypes.func,
-  formatShortWeekday: PropTypes.func,
-  formatYear: PropTypes.func,
-  inputRef: isRef,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  maxDetail: PropTypes.oneOf(allViews),
-  minDate: isMinDate,
-  minDetail: PropTypes.oneOf(allViews),
-  navigationAriaLabel: PropTypes.string,
-  navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
-  navigationLabel: PropTypes.func,
-  next2AriaLabel: PropTypes.string,
-  next2Label: PropTypes.node,
-  nextAriaLabel: PropTypes.string,
-  nextLabel: PropTypes.node,
-  onActiveStartDateChange: PropTypes.func,
-  onChange: PropTypes.func,
-  onClickDay: PropTypes.func,
-  onClickDecade: PropTypes.func,
-  onClickMonth: PropTypes.func,
-  onClickWeekNumber: PropTypes.func,
-  onClickYear: PropTypes.func,
-  onDrillDown: PropTypes.func,
-  onDrillUp: PropTypes.func,
-  onViewChange: PropTypes.func,
-  prev2AriaLabel: PropTypes.string,
-  prev2Label: PropTypes.node,
-  prevAriaLabel: PropTypes.string,
-  prevLabel: PropTypes.node,
-  returnValue: PropTypes.oneOf(['start', 'end', 'range']),
-  selectRange: PropTypes.bool,
-  showDoubleView: PropTypes.bool,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showNavigation: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool,
-  showWeekNumbers: PropTypes.bool,
-  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
-  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  tileDisabled: PropTypes.func,
-  value: isLooseValue,
-  view: isView,
-};
+// Calendar.propTypes = {
+//   activeStartDate: isActiveStartDate,
+//   allowPartialRange: PropTypes.bool,
+//   calendarType: isCalendarType,
+//   className: isClassName,
+//   defaultActiveStartDate: isActiveStartDate,
+//   defaultValue: isLooseValue,
+//   defaultView: isView,
+//   formatDay: PropTypes.func,
+//   formatLongDate: PropTypes.func,
+//   formatMonth: PropTypes.func,
+//   formatMonthYear: PropTypes.func,
+//   formatShortWeekday: PropTypes.func,
+//   formatYear: PropTypes.func,
+//   inputRef: isRef,
+//   locale: PropTypes.string,
+//   maxDate: isMaxDate,
+//   maxDetail: PropTypes.oneOf(allViews),
+//   minDate: isMinDate,
+//   minDetail: PropTypes.oneOf(allViews),
+//   navigationAriaLabel: PropTypes.string,
+//   navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
+//   navigationLabel: PropTypes.func,
+//   next2AriaLabel: PropTypes.string,
+//   next2Label: PropTypes.node,
+//   nextAriaLabel: PropTypes.string,
+//   nextLabel: PropTypes.node,
+//   onActiveStartDateChange: PropTypes.func,
+//   onChange: PropTypes.func,
+//   onClickDay: PropTypes.func,
+//   onClickDecade: PropTypes.func,
+//   onClickMonth: PropTypes.func,
+//   onClickWeekNumber: PropTypes.func,
+//   onClickYear: PropTypes.func,
+//   onDrillDown: PropTypes.func,
+//   onDrillUp: PropTypes.func,
+//   onViewChange: PropTypes.func,
+//   prev2AriaLabel: PropTypes.string,
+//   prev2Label: PropTypes.node,
+//   prevAriaLabel: PropTypes.string,
+//   prevLabel: PropTypes.node,
+//   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
+//   selectRange: PropTypes.bool,
+//   showDoubleView: PropTypes.bool,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+//   showNavigation: PropTypes.bool,
+//   showNeighboringMonth: PropTypes.bool,
+//   showWeekNumbers: PropTypes.bool,
+//   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+//   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+//   tileDisabled: PropTypes.func,
+//   value: isLooseValue,
+//   view: isView,
+// };

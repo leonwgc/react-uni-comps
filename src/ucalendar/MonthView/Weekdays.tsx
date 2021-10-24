@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear, getMonth, getMonthStart } from '@wojtekmaj/date-utils';
 
 import Flex from '../Flex';
@@ -10,7 +9,6 @@ import {
   formatWeekday,
   formatShortWeekday as defaultFormatShortWeekday,
 } from '../shared/dateFormatter';
-import { isCalendarType } from '../shared/propTypes';
 
 const className = 'month-view__weekdays';
 
@@ -27,7 +25,7 @@ export default function Weekdays(props) {
   const year = getYear(beginOfMonth);
   const monthIndex = getMonth(beginOfMonth);
 
-  const weekdays = [];
+  const weekdays: any = [];
 
   for (let weekday = 1; weekday <= 7; weekday += 1) {
     const weekdayDate = new Date(
@@ -54,9 +52,9 @@ export default function Weekdays(props) {
   );
 }
 
-Weekdays.propTypes = {
-  calendarType: isCalendarType.isRequired,
-  formatShortWeekday: PropTypes.func,
-  locale: PropTypes.string,
-  onMouseLeave: PropTypes.func,
-};
+// Weekdays.propTypes = {
+//   calendarType: isCalendarType.isRequired,
+//   formatShortWeekday: PropTypes.func,
+//   locale: PropTypes.string,
+//   onMouseLeave: PropTypes.func,
+// };

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getDecadeStart, getDecadeEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';

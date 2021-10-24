@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear, getMonth, getDaysInMonth } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Day from './Day';
 
 import { getDayOfWeek } from '../shared/dates';
-import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 
 export default function Days(props) {
   const { activeStartDate, calendarType } = props;
@@ -73,9 +71,9 @@ export default function Days(props) {
   );
 }
 
-Days.propTypes = {
-  calendarType: isCalendarType.isRequired,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool,
-  ...tileGroupProps,
-};
+// Days.propTypes = {
+//   calendarType: isCalendarType.isRequired,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+//   showNeighboringMonth: PropTypes.bool,
+//   ...tileGroupProps,
+// };

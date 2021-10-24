@@ -1,17 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import PropTypes from 'prop-types';
 
-import { CALENDAR_TYPES } from './const';
-
-const calendarTypes = Object.values(CALENDAR_TYPES);
 const allViews = ['century', 'decade', 'year', 'month'];
-
-export const isCalendarType = PropTypes.oneOf(calendarTypes);
-
-export const isClassName = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.arrayOf(PropTypes.string),
-]);
 
 export const isMinDate = (props, propName, componentName) => {
   const { [propName]: minDate } = props;
@@ -61,21 +50,6 @@ export const isMaxDate = (props, propName, componentName) => {
   return null;
 };
 
-export const isRef = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.shape({
-    // eslint-disable-next-line react/forbid-prop-types
-    current: PropTypes.any,
-  }),
-]);
-
-export const isValue = PropTypes.oneOfType([
-  PropTypes.instanceOf(Date),
-  PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-]);
-
-export const isViews = PropTypes.arrayOf(PropTypes.oneOf(allViews));
-
 export const isView = (props, propName, componentName) => {
   const { [propName]: view } = props;
   const { views } = props;
@@ -106,31 +80,31 @@ isView.isRequired = (props, propName, componentName) => {
   return isView(props, propName, componentName);
 };
 
-export const tileGroupProps = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  hover: PropTypes.instanceOf(Date),
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  onMouseOver: PropTypes.func,
-  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
-  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  value: isValue,
-  valueType: PropTypes.string,
-};
+// export const tileGroupProps = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   hover: PropTypes.instanceOf(Date),
+//   locale: PropTypes.string,
+//   maxDate: isMaxDate,
+//   minDate: isMinDate,
+//   onClick: PropTypes.func,
+//   onMouseOver: PropTypes.func,
+//   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+//   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+//   value: isValue,
+//   valueType: PropTypes.string,
+// };
 
-export const tileProps = {
-  activeStartDate: PropTypes.instanceOf(Date).isRequired,
-  classes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
-  locale: PropTypes.string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes.func,
-  onMouseOver: PropTypes.func,
-  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
-  tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  tileDisabled: PropTypes.func,
-};
+// export const tileProps = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   classes: PropTypes.arrayOf(PropTypes.string).isRequired,
+//   date: PropTypes.instanceOf(Date).isRequired,
+//   locale: PropTypes.string,
+//   maxDate: isMaxDate,
+//   minDate: isMinDate,
+//   onClick: PropTypes.func,
+//   onMouseOver: PropTypes.func,
+//   style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+//   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+//   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+//   tileDisabled: PropTypes.func,
+// };

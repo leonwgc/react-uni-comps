@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
 
 import Tile from '../Tile';
@@ -9,7 +9,6 @@ import {
   formatMonth as defaultFormatMonth,
   formatMonthYear as defaultFormatMonthYear,
 } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
 
 const className = 'year-view__months__month';
 
@@ -35,8 +34,8 @@ export default function Month({
   );
 }
 
-Month.propTypes = {
-  ...tileProps,
-  formatMonth: PropTypes.func,
-  formatMonthYear: PropTypes.func,
-};
+// Month.propTypes = {
+//   ...tileProps,
+//   formatMonth: PropTypes.func,
+//   formatMonthYear: PropTypes.func,
+// };

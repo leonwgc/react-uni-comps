@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export default function WeekNumber({ date, onClickWeekNumber, weekNumber }) {
   const props = {
@@ -23,8 +22,8 @@ export default function WeekNumber({ date, onClickWeekNumber, weekNumber }) {
   );
 }
 
-WeekNumber.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  onClickWeekNumber: PropTypes.func,
-  weekNumber: PropTypes.node.isRequired,
-};
+// WeekNumber.propTypes = {
+//   date: PropTypes.instanceOf(Date).isRequired,
+//   onClickWeekNumber: PropTypes.func,
+//   weekNumber: PropTypes.node.isRequired,
+// };

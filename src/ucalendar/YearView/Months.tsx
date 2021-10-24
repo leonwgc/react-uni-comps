@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear } from '@wojtekmaj/date-utils';
 
 import TileGroup from '../TileGroup';
 import Month from './Month';
-
-import { tileGroupProps } from '../shared/propTypes';
 
 export default function Months(props) {
   const { activeStartDate } = props;
@@ -32,7 +29,7 @@ export default function Months(props) {
   );
 }
 
-Months.propTypes = {
-  ...tileGroupProps,
-  locale: PropTypes.string,
-};
+// Months.propTypes = {
+//   ...tileGroupProps,
+//   locale: PropTypes.string,
+// };

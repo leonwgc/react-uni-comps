@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
 function toPercent(num) {
   return `${num}%`;
 }
 
 type Props = {
-  children?: React.ReactElement;
+  children?: any;
   className?: string;
   direction?: any;
   count?: number;
   offset?: number;
-  style?: React.CSSProperties;
+  style?: any;
   wrap?: boolean;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 export default function Flex(props: Props): React.ReactElement {
   const { children, className, direction, count, offset, style, wrap, ...otherProps } = props;
