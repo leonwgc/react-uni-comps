@@ -25,11 +25,11 @@ export default function App() {
             return <StyledDate>生日</StyledDate>;
           }
         }}
-        maxDate={new Date(2021, 9, 20)}
+        maxDate={new Date(2021, 9, 30)}
         minDate={new Date(2021, 9, 5)}
         // showNavigation={false}
         tileDisabled={({ activeStartDate, date, view }) => {
-          return date.getDate() > 16;
+          return date.getDate() > 16 && date.getDate() < 22;
         }}
       />
       <Calendar
