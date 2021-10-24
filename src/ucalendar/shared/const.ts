@@ -6,7 +6,7 @@ export const CALENDAR_TYPES = {
 };
 
 export const CALENDAR_TYPE_LOCALES = {
-  [CALENDAR_TYPES.US]: [
+  US: [
     'en-CA',
     'en-US',
     'es-AR',
@@ -25,9 +25,9 @@ export const CALENDAR_TYPE_LOCALES = {
     'es-PR',
     'es-SV',
     'es-VE',
-    'pt-BR',
-  ],
-  [CALENDAR_TYPES.ARABIC]: [
+    'pt-BR'
+  ];
+  Arabic: [
     // ar-LB, ar-MA intentionally missing
     'ar',
     'ar-AE',
@@ -47,12 +47,9 @@ export const CALENDAR_TYPE_LOCALES = {
     'dv',
     'dv-MV',
     'ps',
-    'ps-AR',
-  ],
-  [CALENDAR_TYPES.HEBREW]: [
-    'he',
-    'he-IL',
-  ],
+    'ps-AR'
+  ];
+  Hebrew: ['he', 'he-IL'];
 };
 
 export const WEEKDAYS = [...Array(7)].map((el, index) => index);

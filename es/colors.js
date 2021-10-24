@@ -6,3 +6,4 @@ export var disabledBg = '#f5f5f5';
 export var primary = '#004bcc';
 export var danger = '#ff4d4f';
 export var activeBg = 'rgba(0, 0, 0, 0.1)';
+export var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';

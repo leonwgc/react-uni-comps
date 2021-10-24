@@ -43,7 +43,7 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
 import * as colors from './colors';
-var StyledProgressCircle = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  .child {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"], ["\n  position: relative;\n  .child {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
+var StyledProgressCircle = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"], ["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
 /** 环形进度条 */
 
 var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -96,7 +96,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
       transition: "stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s"
     }
   }) : null), children && /*#__PURE__*/React.createElement("div", {
-    className: "child"
+    className: "content"
   }, children));
 });
 ProgressCircle.displayName = 'UC-ProgressCircle';

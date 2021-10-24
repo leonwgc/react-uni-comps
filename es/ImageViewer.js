@@ -48,6 +48,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
 import IconArrow from './IconArrow';
 import Button from './Button';
+import useUpdateEffect from './hooks/useUpdateEffect';
 var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 101;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    height: 100%;\n  }\n  .image {\n    z-index: 101;\n    width: 100%;\n    max-height: 80vh;\n    object-fit: contain;\n    object-position: center;\n    touch-action: none;\n  }\n"], ["\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 101;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    height: 100%;\n  }\n  .image {\n    z-index: 101;\n    width: 100%;\n    max-height: 80vh;\n    object-fit: contain;\n    object-position: center;\n    touch-action: none;\n  }\n"])));
 /** 图片查看器 */
 
@@ -73,6 +74,11 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useEffect(function () {
     setUrls(Array.isArray(images) ? images : [images]);
   }, [images]);
+  useUpdateEffect(function () {
+    if (!visible) {
+      setIndex(0);
+    }
+  }, [visible]);
   var slides = useMemo(function () {
     return /*#__PURE__*/React.createElement(Slide, {
       ref: slideRef,

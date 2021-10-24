@@ -13,7 +13,8 @@ var usePrevious = require('react-use-lib/es/usePrevious');
 var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
 var useSigPad = require('react-use-lib/es/useSigPad');
-var ReactCalendar = require('react-calendar');
+var PropTypes = require('prop-types');
+var dateUtils = require('@wojtekmaj/date-utils');
 var dayjs = require('dayjs');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -26,7 +27,7 @@ var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
-var ReactCalendar__default = /*#__PURE__*/_interopDefaultLegacy(ReactCalendar);
+var PropTypes__default = /*#__PURE__*/_interopDefaultLegacy(PropTypes);
 var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
 
 function ownKeys(object, enumerableOnly) {
@@ -65,6 +66,22 @@ function _objectSpread2(target) {
   }
 
   return target;
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -4059,7 +4076,7 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$r = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "mask", "maskStyle", "maskClass", "onClose", "className"];
 
 var _templateObject$s;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  z-index: 300;\n\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      border-radius: 8px;\n      width: 280px;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          ", "\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n    width: 420px;\n\n    .close {\n      top: 18px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), border, border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  z-index: 300;\n\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    .uc-alert-dialog-wrap {\n      padding-bottom: 0;\n      border-radius: 8px;\n      width: 280px;\n\n      .title {\n        text-align: center;\n        border-bottom: none;\n      }\n\n      .footer {\n        position: relative;\n        display: flex;\n        height: 48px;\n        padding: 0;\n        overflow: hidden;\n        .confirm {\n          ", "\n        }\n\n        .m-btn {\n          height: 48px;\n          line-height: 48px;\n          text-align: center;\n          flex: 1;\n          user-select: none;\n          &:active {\n            background-color: rgba(0, 0, 0, 0.1);\n          }\n        }\n\n        &:after {\n          content: '';\n          pointer-events: none;\n          position: absolute;\n          width: 100%;\n          height: 100%;\n          left: 0;\n          top: 0;\n          border-top: 1px solid ", ";\n\n          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n            width: 200%;\n            height: 200%;\n            transform: scale(0.5);\n            transform-origin: 0 0;\n          }\n        }\n      }\n    }\n  }\n\n  .uc-alert-dialog-wrap {\n    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n    background-color: #fff;\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    text-align: initial;\n    border-radius: 4px;\n    padding: 16px 0;\n    box-sizing: border-box;\n    white-space: normal;\n    max-width: calc(100vw - 56px);\n    max-height: calc(100vh - 112px);\n    width: 420px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .title {\n      font-size: 16px;\n      line-height: 24px;\n      border-bottom-color: ", ";\n      color: #333;\n      padding: 0 16px 15px;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      margin: 0;\n      box-sizing: border-box;\n      font-weight: 500;\n    }\n    .content {\n      font-size: 14px;\n      line-height: 20px;\n      color: #333;\n      padding: 16px;\n      min-height: 46px;\n      max-height: calc(100vh - 256px);\n\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n    .footer {\n      text-align: right;\n      padding: 8px 16px 0;\n\n      button {\n        width: 62px;\n      }\n    }\n  }\n"])), getThemeColorCss('color'), border, border);
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -5470,7 +5487,7 @@ Slide.displayName = 'UC-Slide';
 var _excluded$D = ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"];
 
 var _templateObject$E;
-var StyledProgressCircle = styled__default['default'].div(_templateObject$E || (_templateObject$E = _taggedTemplateLiteral(["\n  position: relative;\n  .child {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
+var StyledProgressCircle = styled__default['default'].div(_templateObject$E || (_templateObject$E = _taggedTemplateLiteral(["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
 /** 环形进度条 */
 
 var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -5523,7 +5540,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
       transition: "stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s"
     }
   }) : null), children && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "child"
+    className: "content"
   }, children));
 });
 ProgressCircle.displayName = 'UC-ProgressCircle';
@@ -5704,7 +5721,7 @@ Badge.displayName = 'UC-Badge';
 var _excluded$G = ["size", "className", "shape", "style", "children"];
 
 var _templateObject$I;
-var StyledAvatar = styled__default['default'].div(_templateObject$I || (_templateObject$I = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-size: 24px;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
+var StyledAvatar = styled__default['default'].div(_templateObject$I || (_templateObject$I = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
 /** 头像 */
 
 var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -5717,10 +5734,11 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$G);
 
-  var s = _objectSpread2(_objectSpread2({}, style), {}, {
+  var s = _objectSpread2({
     width: size,
-    height: size
-  });
+    height: size,
+    fontSize: size * 0.6
+  }, style);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAvatar, _extends({}, rest, {
     ref: ref,
@@ -5762,6 +5780,11 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   React.useEffect(function () {
     setUrls(Array.isArray(images) ? images : [images]);
   }, [images]);
+  useUpdateEffect(function () {
+    if (!visible) {
+      setIndex(0);
+    }
+  }, [visible]);
   var slides = React.useMemo(function () {
     return /*#__PURE__*/React__default['default'].createElement(Slide, {
       ref: slideRef,
@@ -5851,18 +5874,2204 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _excluded$I = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
+var _CALENDAR_TYPE_LOCALE;
+
+var CALENDAR_TYPES = {
+  ARABIC: 'Arabic',
+  HEBREW: 'Hebrew',
+  ISO_8601: 'ISO 8601',
+  US: 'US'
+};
+var CALENDAR_TYPE_LOCALES = (_CALENDAR_TYPE_LOCALE = {}, _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.US, ['en-CA', 'en-US', 'es-AR', 'es-BO', 'es-CL', 'es-CO', 'es-CR', 'es-DO', 'es-EC', 'es-GT', 'es-HN', 'es-MX', 'es-NI', 'es-PA', 'es-PE', 'es-PR', 'es-SV', 'es-VE', 'pt-BR']), _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.ARABIC, [// ar-LB, ar-MA intentionally missing
+'ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW', 'ar-LY', 'ar-OM', 'ar-QA', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-YE', 'dv', 'dv-MV', 'ps', 'ps-AR']), _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.HEBREW, ['he', 'he-IL']), _CALENDAR_TYPE_LOCALE);
+var WEEKDAYS = _toConsumableArray(Array(7)).map(function (el, index) {
+  return index;
+});
+
+function getFormatter(options) {
+  return function (locale, date) {
+    return date.toLocaleString(locale || 'zh-CN', options);
+  };
+}
+/**
+ * Changes the hour in a Date to ensure right date formatting even if DST is messed up.
+ * Workaround for bug in WebKit and Firefox with historical dates.
+ * For more details, see:
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=750465
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1385643
+ *
+ * @param {Date} date Date.
+ */
+
+
+function toSafeHour(date) {
+  var safeDate = new Date(date);
+  return new Date(safeDate.setHours(12));
+}
+
+function getSafeFormatter(options) {
+  return function (locale, date) {
+    return getFormatter(options)(locale, toSafeHour(date));
+  };
+}
+var formatDayOptions = {
+  day: 'numeric'
+};
+var formatLongDateOptions = {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+};
+var formatMonthOptions = {
+  month: 'long'
+};
+var formatMonthYearOptions = {
+  month: 'long',
+  year: 'numeric'
+};
+var formatShortWeekdayOptions = {
+  weekday: 'short'
+};
+var formatWeekdayOptions = {
+  weekday: 'long'
+};
+var formatYearOptions = {
+  year: 'numeric'
+};
+var formatDay = getSafeFormatter(formatDayOptions);
+var formatLongDate = getSafeFormatter(formatLongDateOptions);
+var formatMonth = getSafeFormatter(formatMonthOptions);
+var formatMonthYear = getSafeFormatter(formatMonthYearOptions);
+var formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
+var formatWeekday = getSafeFormatter(formatWeekdayOptions);
+var formatYear = getSafeFormatter(formatYearOptions);
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+var SUNDAY = WEEKDAYS[0];
+var FRIDAY = WEEKDAYS[5];
+var SATURDAY = WEEKDAYS[6];
+/* Simple getters - getting a property of a given point in time */
+
+function getDayOfWeek(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
+  var weekday = date.getDay();
+
+  switch (calendarType) {
+    case CALENDAR_TYPES.ISO_8601:
+      // Shifts days of the week so that Monday is 0, Sunday is 6
+      return (weekday + 6) % 7;
+
+    case CALENDAR_TYPES.ARABIC:
+      return (weekday + 1) % 7;
+
+    case CALENDAR_TYPES.HEBREW:
+    case CALENDAR_TYPES.US:
+      return weekday;
+
+    default:
+      throw new Error('Unsupported calendar type.');
+  }
+}
+/**
+ * Century
+ */
+
+function getBeginOfCenturyYear(date) {
+  var beginOfCentury = dateUtils.getCenturyStart(date);
+  return dateUtils.getYear(beginOfCentury);
+}
+/**
+ * Decade
+ */
+
+function getBeginOfDecadeYear(date) {
+  var beginOfDecade = dateUtils.getDecadeStart(date);
+  return dateUtils.getYear(beginOfDecade);
+}
+/**
+ * Week
+ */
+
+/**
+ * Returns the beginning of a given week.
+ *
+ * @param {Date} date Date.
+ * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
+ */
+
+function getBeginOfWeek(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
+  var year = dateUtils.getYear(date);
+  var monthIndex = dateUtils.getMonth(date);
+  var day = date.getDate() - getDayOfWeek(date, calendarType);
+  return new Date(year, monthIndex, day);
+}
+/**
+ * Gets week number according to ISO 8601 or US standard.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
+ */
+
+function getWeekNumber(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
+  var calendarTypeForWeekNumber = calendarType === CALENDAR_TYPES.US ? CALENDAR_TYPES.US : CALENDAR_TYPES.ISO_8601;
+  var beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
+  var year = dateUtils.getYear(date) + 1;
+  var dayInWeekOne;
+  var beginOfFirstWeek; // Look for the first week one that does not come after a given date
+
+  do {
+    dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
+    beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarTypeForWeekNumber);
+    year -= 1;
+  } while (date - beginOfFirstWeek < 0);
+
+  return Math.round((beginOfWeek - beginOfFirstWeek) / (8.64e7 * 7)) + 1;
+}
+/**
+ * Others
+ */
+
+/**
+ * Returns the beginning of a given range.
+ *
+ * @param {string} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
+
+function getBegin(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getCenturyStart(date);
+
+    case 'decade':
+      return dateUtils.getDecadeStart(date);
+
+    case 'year':
+      return dateUtils.getYearStart(date);
+
+    case 'month':
+      return dateUtils.getMonthStart(date);
+
+    case 'day':
+      return dateUtils.getDayStart(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+function getBeginPrevious(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getPreviousCenturyStart(date);
+
+    case 'decade':
+      return dateUtils.getPreviousDecadeStart(date);
+
+    case 'year':
+      return dateUtils.getPreviousYearStart(date);
+
+    case 'month':
+      return dateUtils.getPreviousMonthStart(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+function getBeginNext(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getNextCenturyStart(date);
+
+    case 'decade':
+      return dateUtils.getNextDecadeStart(date);
+
+    case 'year':
+      return dateUtils.getNextYearStart(date);
+
+    case 'month':
+      return dateUtils.getNextMonthStart(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+var getBeginPrevious2 = function getBeginPrevious2(rangeType, date) {
+  switch (rangeType) {
+    case 'decade':
+      return dateUtils.getPreviousDecadeStart(date, -100);
+
+    case 'year':
+      return dateUtils.getPreviousYearStart(date, -10);
+
+    case 'month':
+      return dateUtils.getPreviousMonthStart(date, -12);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+};
+var getBeginNext2 = function getBeginNext2(rangeType, date) {
+  switch (rangeType) {
+    case 'decade':
+      return dateUtils.getNextDecadeStart(date, 100);
+
+    case 'year':
+      return dateUtils.getNextYearStart(date, 10);
+
+    case 'month':
+      return dateUtils.getNextMonthStart(date, 12);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+};
+/**
+ * Returns the end of a given range.
+ *
+ * @param {string} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
+
+function getEnd(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getCenturyEnd(date);
+
+    case 'decade':
+      return dateUtils.getDecadeEnd(date);
+
+    case 'year':
+      return dateUtils.getYearEnd(date);
+
+    case 'month':
+      return dateUtils.getMonthEnd(date);
+
+    case 'day':
+      return dateUtils.getDayEnd(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+function getEndPrevious(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getPreviousCenturyEnd(date);
+
+    case 'decade':
+      return dateUtils.getPreviousDecadeEnd(date);
+
+    case 'year':
+      return dateUtils.getPreviousYearEnd(date);
+
+    case 'month':
+      return dateUtils.getPreviousMonthEnd(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+var getEndPrevious2 = function getEndPrevious2(rangeType, date) {
+  switch (rangeType) {
+    case 'decade':
+      return dateUtils.getPreviousDecadeEnd(date, -100);
+
+    case 'year':
+      return dateUtils.getPreviousYearEnd(date, -10);
+
+    case 'month':
+      return dateUtils.getPreviousMonthEnd(date, -12);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+};
+/**
+ * Returns an array with the beginning and the end of a given range.
+ *
+ * @param {string} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ */
+
+function getRange(rangeType, date) {
+  switch (rangeType) {
+    case 'century':
+      return dateUtils.getCenturyRange(date);
+
+    case 'decade':
+      return dateUtils.getDecadeRange(date);
+
+    case 'year':
+      return dateUtils.getYearRange(date);
+
+    case 'month':
+      return dateUtils.getMonthRange(date);
+
+    case 'day':
+      return dateUtils.getDayRange(date);
+
+    default:
+      throw new Error("Invalid rangeType: ".concat(rangeType));
+  }
+}
+/**
+ * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
+ *
+ * @param {string} rangeType Range type (e.g. 'day')
+ * @param {Date} date1 First date.
+ * @param {Date} date2 Second date.
+ */
+
+function getValueRange(rangeType, date1, date2) {
+  var rawNextValue = [date1, date2].sort(function (a, b) {
+    return a - b;
+  });
+  return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
+}
+
+function toYearLabel(locale) {
+  var formatYear$1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : formatYear;
+  var dates = arguments.length > 2 ? arguments[2] : undefined;
+  return dates.map(function (date) {
+    return formatYear$1(locale, date);
+  }).join(' – ');
+}
+/**
+ * Returns a string labelling a century of a given date.
+ * For example, for 2017 it will return 2001-2100.
+ *
+ * @param {Date|String|Number} date Date or a year as a string or as a number.
+ */
+
+
+function getCenturyLabel(locale, formatYear, date) {
+  return toYearLabel(locale, formatYear, dateUtils.getCenturyRange(date));
+}
+/**
+ * Returns a string labelling a century of a given date.
+ * For example, for 2017 it will return 2011-2020.
+ *
+ * @param {Date|String|Number} date Date or a year as a string or as a number.
+ */
+
+function getDecadeLabel(locale, formatYear, date) {
+  return toYearLabel(locale, formatYear, dateUtils.getDecadeRange(date));
+}
+/**
+ * Returns a boolean determining whether a given date is on Saturday or Sunday.
+ *
+ * @param {Date} date Date.
+ */
+
+function isWeekend(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
+  var weekday = date.getDay();
+
+  switch (calendarType) {
+    case CALENDAR_TYPES.ARABIC:
+    case CALENDAR_TYPES.HEBREW:
+      return weekday === FRIDAY || weekday === SATURDAY;
+
+    case CALENDAR_TYPES.ISO_8601:
+    case CALENDAR_TYPES.US:
+      return weekday === SATURDAY || weekday === SUNDAY;
+
+    default:
+      throw new Error('Unsupported calendar type.');
+  }
+}
+
+var calendarTypes = Object.values(CALENDAR_TYPES);
+var allViews = ['century', 'decade', 'year', 'month'];
+var isCalendarType = PropTypes__default['default'].oneOf(calendarTypes);
+var isClassName = PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].arrayOf(PropTypes__default['default'].string)]);
+var isMinDate = function isMinDate(props, propName, componentName) {
+  var minDate = props[propName];
+
+  if (!minDate) {
+    return null;
+  }
+
+  if (!(minDate instanceof Date)) {
+    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(minDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
+  }
+
+  var maxDate = props.maxDate;
+
+  if (maxDate && minDate > maxDate) {
+    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(minDate), "` supplied to `").concat(componentName, "`, minDate cannot be larger than maxDate."));
+  }
+
+  return null;
+};
+var isMaxDate = function isMaxDate(props, propName, componentName) {
+  var maxDate = props[propName];
+
+  if (!maxDate) {
+    return null;
+  }
+
+  if (!(maxDate instanceof Date)) {
+    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(maxDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
+  }
+
+  var minDate = props.minDate;
+
+  if (minDate && maxDate < minDate) {
+    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(maxDate), "` supplied to `").concat(componentName, "`, maxDate cannot be smaller than minDate."));
+  }
+
+  return null;
+};
+var isRef = PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].shape({
+  // eslint-disable-next-line react/forbid-prop-types
+  current: PropTypes__default['default'].any
+})]);
+var isValue = PropTypes__default['default'].oneOfType([PropTypes__default['default'].instanceOf(Date), PropTypes__default['default'].arrayOf(PropTypes__default['default'].instanceOf(Date))]);
+var isViews = PropTypes__default['default'].arrayOf(PropTypes__default['default'].oneOf(allViews));
+var isView = function isView(props, propName, componentName) {
+  var view = props[propName];
+  var views = props.views;
+  var allowedViews = views || allViews;
+
+  if (view !== undefined && allowedViews.indexOf(view) === -1) {
+    return new Error("Invalid prop `".concat(propName, "` of value `").concat(view, "` supplied to `").concat(componentName, "`, expected one of [").concat(allowedViews.map(function (a) {
+      return "\"".concat(a, "\"");
+    }).join(', '), "]."));
+  } // Everything is fine
+
+
+  return null;
+};
+
+isView.isRequired = function (props, propName, componentName) {
+  var view = props[propName];
+
+  if (!view) {
+    return new Error("The prop `".concat(propName, "` is marked as required in `").concat(componentName, "`, but its value is `").concat(view, "`."));
+  }
+
+  return isView(props, propName, componentName);
+};
+
+var tileGroupProps = {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
+  hover: PropTypes__default['default'].instanceOf(Date),
+  locale: PropTypes__default['default'].string,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
+  onClick: PropTypes__default['default'].func,
+  onMouseOver: PropTypes__default['default'].func,
+  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
+  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
+  value: isValue,
+  valueType: PropTypes__default['default'].string
+};
+var tileProps = {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
+  classes: PropTypes__default['default'].arrayOf(PropTypes__default['default'].string).isRequired,
+  date: PropTypes__default['default'].instanceOf(Date).isRequired,
+  locale: PropTypes__default['default'].string,
+  maxDate: isMaxDate,
+  minDate: isMinDate,
+  onClick: PropTypes__default['default'].func,
+  onMouseOver: PropTypes__default['default'].func,
+  style: PropTypes__default['default'].objectOf(PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].number])),
+  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
+  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
+  tileDisabled: PropTypes__default['default'].func
+};
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+var className = 'react-calendar__navigation';
+function Navigation(_ref) {
+  var activeStartDate = _ref.activeStartDate,
+      drillUp = _ref.drillUp,
+      _ref$formatMonthYear = _ref.formatMonthYear,
+      formatMonthYear$1 = _ref$formatMonthYear === void 0 ? formatMonthYear : _ref$formatMonthYear,
+      _ref$formatYear = _ref.formatYear,
+      formatYear$1 = _ref$formatYear === void 0 ? formatYear : _ref$formatYear,
+      locale = _ref.locale,
+      maxDate = _ref.maxDate,
+      minDate = _ref.minDate,
+      _ref$navigationAriaLa = _ref.navigationAriaLabel,
+      navigationAriaLabel = _ref$navigationAriaLa === void 0 ? '' : _ref$navigationAriaLa,
+      navigationAriaLive = _ref.navigationAriaLive,
+      navigationLabel = _ref.navigationLabel,
+      _ref$next2AriaLabel = _ref.next2AriaLabel,
+      next2AriaLabel = _ref$next2AriaLabel === void 0 ? '' : _ref$next2AriaLabel,
+      _ref$next2Label = _ref.next2Label,
+      next2Label = _ref$next2Label === void 0 ? '»' : _ref$next2Label,
+      _ref$nextAriaLabel = _ref.nextAriaLabel,
+      nextAriaLabel = _ref$nextAriaLabel === void 0 ? '' : _ref$nextAriaLabel,
+      _ref$nextLabel = _ref.nextLabel,
+      nextLabel = _ref$nextLabel === void 0 ? '›' : _ref$nextLabel,
+      _ref$prev2AriaLabel = _ref.prev2AriaLabel,
+      prev2AriaLabel = _ref$prev2AriaLabel === void 0 ? '' : _ref$prev2AriaLabel,
+      _ref$prev2Label = _ref.prev2Label,
+      prev2Label = _ref$prev2Label === void 0 ? '«' : _ref$prev2Label,
+      _ref$prevAriaLabel = _ref.prevAriaLabel,
+      prevAriaLabel = _ref$prevAriaLabel === void 0 ? '' : _ref$prevAriaLabel,
+      _ref$prevLabel = _ref.prevLabel,
+      prevLabel = _ref$prevLabel === void 0 ? '‹' : _ref$prevLabel,
+      setActiveStartDate = _ref.setActiveStartDate,
+      showDoubleView = _ref.showDoubleView,
+      view = _ref.view,
+      views = _ref.views;
+  var drillUpAvailable = views.indexOf(view) > 0;
+  var shouldShowPrevNext2Buttons = view !== 'century';
+  var previousActiveStartDate = getBeginPrevious(view, activeStartDate);
+  var previousActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginPrevious2(view, activeStartDate);
+  var nextActiveStartDate = getBeginNext(view, activeStartDate);
+  var nextActiveStartDate2 = shouldShowPrevNext2Buttons && getBeginNext2(view, activeStartDate);
+
+  var prevButtonDisabled = function () {
+    if (previousActiveStartDate.getFullYear() < 0) {
+      return true;
+    }
+
+    var previousActiveEndDate = getEndPrevious(view, activeStartDate);
+    return minDate && minDate >= previousActiveEndDate;
+  }();
+
+  var prev2ButtonDisabled = shouldShowPrevNext2Buttons && function () {
+    if (previousActiveStartDate2.getFullYear() < 0) {
+      return true;
+    }
+
+    var previousActiveEndDate = getEndPrevious2(view, activeStartDate);
+    return minDate && minDate >= previousActiveEndDate;
+  }();
+
+  var nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
+  var next2ButtonDisabled = shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
+
+  function onClickPrevious() {
+    setActiveStartDate(previousActiveStartDate, 'prev');
+  }
+
+  function onClickPrevious2() {
+    setActiveStartDate(previousActiveStartDate2, 'prev2');
+  }
+
+  function onClickNext() {
+    setActiveStartDate(nextActiveStartDate, 'next');
+  }
+
+  function onClickNext2() {
+    setActiveStartDate(nextActiveStartDate2, 'next2');
+  }
+
+  function renderLabel(date) {
+    var label = function () {
+      switch (view) {
+        case 'century':
+          return getCenturyLabel(locale, formatYear$1, date);
+
+        case 'decade':
+          return getDecadeLabel(locale, formatYear$1, date);
+
+        case 'year':
+          return formatYear$1(locale, date);
+
+        case 'month':
+          return formatMonthYear$1(locale, date);
+
+        default:
+          throw new Error("Invalid view: ".concat(view, "."));
+      }
+    }();
+
+    return navigationLabel ? navigationLabel({
+      date: date,
+      label: label,
+      locale: locale || 'zh-CN',
+      view: view
+    }) : label;
+  }
+
+  function renderButton() {
+    var labelClassName = "".concat(className, "__label");
+    return /*#__PURE__*/React__default['default'].createElement("button", {
+      "aria-label": navigationAriaLabel,
+      "aria-live": navigationAriaLive,
+      className: labelClassName,
+      disabled: !drillUpAvailable,
+      onClick: drillUp,
+      style: {
+        flexGrow: 1
+      },
+      type: "button"
+    }, /*#__PURE__*/React__default['default'].createElement("span", {
+      className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--from")
+    }, renderLabel(activeStartDate)), showDoubleView && /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement("span", {
+      className: "".concat(labelClassName, "__divider")
+    }, " \u2013 "), /*#__PURE__*/React__default['default'].createElement("span", {
+      className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--to")
+    }, renderLabel(nextActiveStartDate))));
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: className
+  }, prev2Label !== null && shouldShowPrevNext2Buttons && /*#__PURE__*/React__default['default'].createElement("button", {
+    "aria-label": prev2AriaLabel,
+    className: "".concat(className, "__arrow ").concat(className, "__prev2-button"),
+    disabled: prev2ButtonDisabled,
+    onClick: onClickPrevious2,
+    type: "button"
+  }, prev2Label), prevLabel !== null && /*#__PURE__*/React__default['default'].createElement("button", {
+    "aria-label": prevAriaLabel,
+    className: "".concat(className, "__arrow ").concat(className, "__prev-button"),
+    disabled: prevButtonDisabled,
+    onClick: onClickPrevious,
+    type: "button"
+  }, prevLabel), renderButton(), nextLabel !== null && /*#__PURE__*/React__default['default'].createElement("button", {
+    "aria-label": nextAriaLabel,
+    className: "".concat(className, "__arrow ").concat(className, "__next-button"),
+    disabled: nextButtonDisabled,
+    onClick: onClickNext,
+    type: "button"
+  }, nextLabel), next2Label !== null && shouldShowPrevNext2Buttons && /*#__PURE__*/React__default['default'].createElement("button", {
+    "aria-label": next2AriaLabel,
+    className: "".concat(className, "__arrow ").concat(className, "__next2-button"),
+    disabled: next2ButtonDisabled,
+    onClick: onClickNext2,
+    type: "button"
+  }, next2Label));
+}
+Navigation.propTypes = {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
+  drillUp: PropTypes__default['default'].func.isRequired,
+  formatMonthYear: PropTypes__default['default'].func,
+  formatYear: PropTypes__default['default'].func,
+  locale: PropTypes__default['default'].string,
+  maxDate: PropTypes__default['default'].instanceOf(Date),
+  minDate: PropTypes__default['default'].instanceOf(Date),
+  navigationAriaLabel: PropTypes__default['default'].string,
+  navigationAriaLive: PropTypes__default['default'].string,
+  navigationLabel: PropTypes__default['default'].func,
+  next2AriaLabel: PropTypes__default['default'].string,
+  next2Label: PropTypes__default['default'].node,
+  nextAriaLabel: PropTypes__default['default'].string,
+  nextLabel: PropTypes__default['default'].node,
+  prev2AriaLabel: PropTypes__default['default'].string,
+  prev2Label: PropTypes__default['default'].node,
+  prevAriaLabel: PropTypes__default['default'].string,
+  prevLabel: PropTypes__default['default'].node,
+  setActiveStartDate: PropTypes__default['default'].func.isRequired,
+  showDoubleView: PropTypes__default['default'].bool,
+  view: isView.isRequired,
+  views: isViews.isRequired
+};
+
+var _excluded$I = ["children", "className", "direction", "count", "offset", "style", "wrap"];
+
+function toPercent(num) {
+  return "".concat(num, "%");
+}
+
+function Flex(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      direction = _ref.direction,
+      count = _ref.count,
+      offset = _ref.offset,
+      style = _ref.style,
+      wrap = _ref.wrap,
+      otherProps = _objectWithoutProperties(_ref, _excluded$I);
+
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({
+    className: className,
+    style: _objectSpread2({
+      display: 'flex',
+      flexDirection: direction,
+      flexWrap: wrap ? 'wrap' : 'no-wrap'
+    }, style)
+  }, otherProps), React__default['default'].Children.map(children, function (child, index) {
+    return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
+      style: {
+        flexBasis: toPercent(100 / count),
+        maxWidth: toPercent(100 / count),
+        overflow: 'hidden',
+        marginLeft: offset && index === 0 ? toPercent(100 * offset / count) : null
+      }
+    }));
+  }));
+}
+Flex.propTypes = {
+  children: PropTypes__default['default'].node,
+  className: PropTypes__default['default'].string,
+  count: PropTypes__default['default'].number.isRequired,
+  direction: PropTypes__default['default'].string,
+  offset: PropTypes__default['default'].number,
+  style: PropTypes__default['default'].objectOf(PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].number])),
+  wrap: PropTypes__default['default'].bool
+};
+
+/**
+ * Returns a value no smaller than min and no larger than max.
+ *
+ * @param {*} value Value to return.
+ * @param {*} min Minimum return value.
+ * @param {*} max Maximum return value.
+ */
+
+function between(value, min, max) {
+  if (min && min > value) {
+    return min;
+  }
+
+  if (max && max < value) {
+    return max;
+  }
+
+  return value;
+}
+function isValueWithinRange(value, range) {
+  return range[0] <= value && range[1] >= value;
+}
+function isRangeWithinRange(greaterRange, smallerRange) {
+  return greaterRange[0] <= smallerRange[0] && greaterRange[1] >= smallerRange[1];
+}
+function doRangesOverlap(range1, range2) {
+  return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
+}
+
+function getRangeClassNames(valueRange, dateRange, baseClassName) {
+  var isRange = doRangesOverlap(dateRange, valueRange);
+  var classes = [];
+
+  if (isRange) {
+    classes.push(baseClassName);
+    var isRangeStart = isValueWithinRange(valueRange[0], dateRange);
+    var isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
+
+    if (isRangeStart) {
+      classes.push("".concat(baseClassName, "Start"));
+    }
+
+    if (isRangeEnd) {
+      classes.push("".concat(baseClassName, "End"));
+    }
+
+    if (isRangeStart && isRangeEnd) {
+      classes.push("".concat(baseClassName, "BothEnds"));
+    }
+  }
+
+  return classes;
+}
+
+function getTileClasses() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      value = _ref.value,
+      valueType = _ref.valueType,
+      date = _ref.date,
+      dateType = _ref.dateType,
+      hover = _ref.hover;
+
+  var className = 'react-calendar__tile';
+  var classes = [className];
+
+  if (!date) {
+    return classes;
+  }
+
+  if (!Array.isArray(date) && !dateType) {
+    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
+  }
+
+  var now = new Date();
+  var dateRange = Array.isArray(date) ? date : getRange(dateType, date);
+
+  if (isValueWithinRange(now, dateRange)) {
+    classes.push("".concat(className, "--now"));
+  }
+
+  if (!value) {
+    return classes;
+  }
+
+  if (!Array.isArray(value) && !valueType) {
+    throw new Error('getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.');
+  }
+
+  var valueRange = Array.isArray(value) ? value : getRange(valueType, value);
+
+  if (isRangeWithinRange(valueRange, dateRange)) {
+    classes.push("".concat(className, "--active"));
+  } else if (doRangesOverlap(valueRange, dateRange)) {
+    classes.push("".concat(className, "--hasActive"));
+  }
+
+  var valueRangeClassNames = getRangeClassNames(valueRange, dateRange, "".concat(className, "--range"));
+  classes.push.apply(classes, _toConsumableArray(valueRangeClassNames));
+  var valueArray = [].concat(value);
+
+  if (hover && valueArray.length === 1) {
+    var hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
+    var hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, "".concat(className, "--hover"));
+    classes.push.apply(classes, _toConsumableArray(hoverRangeClassNames));
+  }
+
+  return classes;
+}
+
+var _excluded$J = ["className", "count", "dateTransform", "dateType", "end", "hover", "offset", "start", "step", "tile", "value", "valueType"];
+function TileGroup(_ref) {
+  var className = _ref.className,
+      _ref$count = _ref.count,
+      count = _ref$count === void 0 ? 3 : _ref$count,
+      dateTransform = _ref.dateTransform,
+      dateType = _ref.dateType,
+      end = _ref.end,
+      hover = _ref.hover,
+      offset = _ref.offset,
+      start = _ref.start,
+      _ref$step = _ref.step,
+      step = _ref$step === void 0 ? 1 : _ref$step,
+      Tile = _ref.tile,
+      value = _ref.value,
+      valueType = _ref.valueType,
+      tileProps = _objectWithoutProperties(_ref, _excluded$J);
+
+  var tiles = [];
+
+  for (var point = start; point <= end; point += step) {
+    var date = dateTransform(point);
+    tiles.push( /*#__PURE__*/React__default['default'].createElement(Tile, _extends({
+      key: date.getTime(),
+      classes: getTileClasses({
+        value: value,
+        valueType: valueType,
+        date: date,
+        dateType: dateType,
+        hover: hover
+      }),
+      date: date,
+      point: point
+    }, tileProps)));
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(Flex, {
+    className: className,
+    count: count,
+    offset: offset,
+    wrap: true
+  }, tiles);
+}
+TileGroup.propTypes = _objectSpread2(_objectSpread2({}, tileGroupProps), {}, {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date),
+  count: PropTypes__default['default'].number,
+  dateTransform: PropTypes__default['default'].func.isRequired,
+  dateType: PropTypes__default['default'].string,
+  offset: PropTypes__default['default'].number,
+  step: PropTypes__default['default'].number,
+  tile: PropTypes__default['default'].func.isRequired
+});
+
+function getValue(nextProps, prop) {
+  var activeStartDate = nextProps.activeStartDate,
+      date = nextProps.date,
+      view = nextProps.view;
+  return typeof prop === 'function' ? prop({
+    activeStartDate: activeStartDate,
+    date: date,
+    view: view
+  }) : prop;
+}
+
+var Tile = /*#__PURE__*/function (_Component) {
+  _inherits(Tile, _Component);
+
+  var _super = _createSuper(Tile);
+
+  function Tile() {
+    var _this;
+
+    _classCallCheck(this, Tile);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {});
+
+    return _this;
+  }
+
+  _createClass(Tile, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          activeStartDate = _this$props.activeStartDate,
+          children = _this$props.children,
+          classes = _this$props.classes,
+          date = _this$props.date,
+          formatAbbr = _this$props.formatAbbr,
+          locale = _this$props.locale,
+          maxDate = _this$props.maxDate,
+          maxDateTransform = _this$props.maxDateTransform,
+          minDate = _this$props.minDate,
+          minDateTransform = _this$props.minDateTransform,
+          onClick = _this$props.onClick,
+          onMouseOver = _this$props.onMouseOver,
+          style = _this$props.style,
+          tileDisabled = _this$props.tileDisabled,
+          view = _this$props.view;
+      var _this$state = this.state,
+          tileClassName = _this$state.tileClassName,
+          tileContent = _this$state.tileContent;
+      return /*#__PURE__*/React__default['default'].createElement("button", {
+        className: clsx__default['default'](classes, tileClassName),
+        disabled: minDate && minDateTransform(minDate) > date || maxDate && maxDateTransform(maxDate) < date || tileDisabled && tileDisabled({
+          activeStartDate: activeStartDate,
+          date: date,
+          view: view
+        }),
+        onClick: onClick && function (event) {
+          return onClick(date, event);
+        },
+        onFocus: onMouseOver && function () {
+          return onMouseOver(date);
+        },
+        onMouseOver: onMouseOver && function () {
+          return onMouseOver(date);
+        },
+        style: style,
+        type: "button"
+      }, formatAbbr ? /*#__PURE__*/React__default['default'].createElement("abbr", {
+        "aria-label": formatAbbr(locale, date)
+      }, children) : children, tileContent);
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      var tileClassName = nextProps.tileClassName,
+          tileContent = nextProps.tileContent;
+      var nextState = {};
+
+      if (tileClassName !== prevState.tileClassNameProps) {
+        nextState.tileClassName = getValue(nextProps, tileClassName);
+        nextState.tileClassNameProps = tileClassName;
+      }
+
+      if (tileContent !== prevState.tileContentProps) {
+        nextState.tileContent = getValue(nextProps, tileContent);
+        nextState.tileContentProps = tileContent;
+      }
+
+      return nextState;
+    }
+  }]);
+
+  return Tile;
+}(React.Component);
+Tile.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
+  children: PropTypes__default['default'].node.isRequired,
+  formatAbbr: PropTypes__default['default'].func,
+  maxDateTransform: PropTypes__default['default'].func.isRequired,
+  minDateTransform: PropTypes__default['default'].func.isRequired
+});
+
+var _excluded$K = ["classes", "formatYear"];
+var className$1 = 'react-calendar__century-view__decades__decade';
+function Decade(_ref) {
+  var classes = _ref.classes,
+      _ref$formatYear = _ref.formatYear,
+      formatYear$1 = _ref$formatYear === void 0 ? formatYear : _ref$formatYear,
+      otherProps = _objectWithoutProperties(_ref, _excluded$K);
+
+  var date = otherProps.date,
+      locale = otherProps.locale;
+  return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
+    classes: [].concat(classes, className$1),
+    maxDateTransform: dateUtils.getDecadeEnd,
+    minDateTransform: dateUtils.getDecadeStart,
+    view: "century"
+  }), getDecadeLabel(locale, formatYear$1, date));
+}
+Decade.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
+  formatYear: PropTypes__default['default'].func
+});
+
+function Decades(props) {
+  var activeStartDate = props.activeStartDate;
+  var start = getBeginOfCenturyYear(activeStartDate);
+  var end = start + 99;
+  return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
+    className: "react-calendar__century-view__decades",
+    dateTransform: dateUtils.getDecadeStart,
+    dateType: "decade",
+    end: end,
+    start: start,
+    step: 10,
+    tile: Decade
+  }));
+}
+Decades.propTypes = _objectSpread2({}, tileGroupProps);
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+function CenturyView(props) {
+  function renderDecades() {
+    return /*#__PURE__*/React__default['default'].createElement(Decades, props);
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "react-calendar__century-view"
+  }, renderDecades());
+}
+
+var _excluded$L = ["classes", "formatYear"];
+var className$2 = 'react-calendar__decade-view__years__year';
+function Year(_ref) {
+  var classes = _ref.classes,
+      _ref$formatYear = _ref.formatYear,
+      formatYear$1 = _ref$formatYear === void 0 ? formatYear : _ref$formatYear,
+      otherProps = _objectWithoutProperties(_ref, _excluded$L);
+
+  var date = otherProps.date,
+      locale = otherProps.locale;
+  return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
+    classes: [].concat(classes, className$2),
+    maxDateTransform: dateUtils.getYearEnd,
+    minDateTransform: dateUtils.getYearStart,
+    view: "decade"
+  }), formatYear$1(locale, date));
+}
+Year.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
+  formatYear: PropTypes__default['default'].func
+});
+
+function Years(props) {
+  var activeStartDate = props.activeStartDate;
+  var start = getBeginOfDecadeYear(activeStartDate);
+  var end = start + 9;
+  return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
+    className: "react-calendar__decade-view__years",
+    dateTransform: function dateTransform(year) {
+      var date = new Date();
+      date.setFullYear(year, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    },
+    dateType: "year",
+    end: end,
+    start: start,
+    tile: Year
+  }));
+}
+Years.propTypes = _objectSpread2({}, tileGroupProps);
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+function DecadeView(props) {
+  function renderYears() {
+    return /*#__PURE__*/React__default['default'].createElement(Years, props);
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "react-calendar__decade-view"
+  }, renderYears());
+}
+
+var _excluded$M = ["classes", "formatMonth", "formatMonthYear"];
+var className$3 = 'react-calendar__year-view__months__month';
+function Month(_ref) {
+  var classes = _ref.classes,
+      _ref$formatMonth = _ref.formatMonth,
+      formatMonth$1 = _ref$formatMonth === void 0 ? formatMonth : _ref$formatMonth,
+      _ref$formatMonthYear = _ref.formatMonthYear,
+      formatMonthYear$1 = _ref$formatMonthYear === void 0 ? formatMonthYear : _ref$formatMonthYear,
+      otherProps = _objectWithoutProperties(_ref, _excluded$M);
+
+  var date = otherProps.date,
+      locale = otherProps.locale;
+  return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
+    classes: [].concat(classes, className$3),
+    formatAbbr: formatMonthYear$1,
+    maxDateTransform: dateUtils.getMonthEnd,
+    minDateTransform: dateUtils.getMonthStart,
+    view: "year"
+  }), formatMonth$1(locale, date));
+}
+Month.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
+  formatMonth: PropTypes__default['default'].func,
+  formatMonthYear: PropTypes__default['default'].func
+});
+
+function Months(props) {
+  var activeStartDate = props.activeStartDate;
+  var start = 0;
+  var end = 11;
+  var year = dateUtils.getYear(activeStartDate);
+  return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
+    className: "react-calendar__year-view__months",
+    dateTransform: function dateTransform(monthIndex) {
+      var date = new Date();
+      date.setFullYear(year, monthIndex, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    },
+    dateType: "month",
+    end: end,
+    start: start,
+    tile: Month
+  }));
+}
+Months.propTypes = _objectSpread2(_objectSpread2({}, tileGroupProps), {}, {
+  locale: PropTypes__default['default'].string
+});
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+function YearView(props) {
+  function renderMonths() {
+    return /*#__PURE__*/React__default['default'].createElement(Months, props);
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "react-calendar__year-view"
+  }, renderMonths());
+}
+
+var _excluded$N = ["formatDay", "formatLongDate", "calendarType", "classes", "currentMonthIndex"];
+var className$4 = 'react-calendar__month-view__days__day';
+function Day(_ref) {
+  var _ref$formatDay = _ref.formatDay,
+      formatDay$1 = _ref$formatDay === void 0 ? formatDay : _ref$formatDay,
+      _ref$formatLongDate = _ref.formatLongDate,
+      formatLongDate$1 = _ref$formatLongDate === void 0 ? formatLongDate : _ref$formatLongDate,
+      calendarType = _ref.calendarType,
+      classes = _ref.classes,
+      currentMonthIndex = _ref.currentMonthIndex,
+      otherProps = _objectWithoutProperties(_ref, _excluded$N);
+
+  var date = otherProps.date,
+      locale = otherProps.locale;
+  return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
+    classes: [].concat(classes, className$4, isWeekend(date, calendarType) ? "".concat(className$4, "--weekend") : null, date.getMonth() !== currentMonthIndex ? "".concat(className$4, "--neighboringMonth") : null),
+    formatAbbr: formatLongDate$1,
+    maxDateTransform: dateUtils.getDayEnd,
+    minDateTransform: dateUtils.getDayStart,
+    view: "month"
+  }), formatDay$1(locale, date));
+}
+Day.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
+  currentMonthIndex: PropTypes__default['default'].number.isRequired,
+  formatDay: PropTypes__default['default'].func,
+  formatLongDate: PropTypes__default['default'].func
+});
+
+var _excluded$O = ["showFixedNumberOfWeeks", "showNeighboringMonth"];
+function Days(props) {
+  var activeStartDate = props.activeStartDate,
+      calendarType = props.calendarType;
+
+  var showFixedNumberOfWeeks = props.showFixedNumberOfWeeks,
+      showNeighboringMonth = props.showNeighboringMonth,
+      otherProps = _objectWithoutProperties(props, _excluded$O);
+
+  var year = dateUtils.getYear(activeStartDate);
+  var monthIndex = dateUtils.getMonth(activeStartDate);
+  var hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
+  var dayOfWeek = getDayOfWeek(activeStartDate, calendarType);
+  var offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
+  /**
+   * Defines on which day of the month the grid shall start. If we simply show current
+   * month, we obviously start on day one, but if showNeighboringMonth is set to
+   * true, we need to find the beginning of the week the first day of the month is in.
+   */
+
+  var start = (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
+  /**
+   * Defines on which day of the month the grid shall end. If we simply show current
+   * month, we need to stop on the last day of the month, but if showNeighboringMonth
+   * is set to true, we need to find the end of the week the last day of the month is in.
+   */
+
+  var end = function () {
+    if (showFixedNumberOfWeeks) {
+      // Always show 6 weeks
+      return start + 6 * 7 - 1;
+    }
+
+    var daysInMonth = dateUtils.getDaysInMonth(activeStartDate);
+
+    if (showNeighboringMonth) {
+      var activeEndDate = new Date();
+      activeEndDate.setFullYear(year, monthIndex, daysInMonth);
+      activeEndDate.setHours(0, 0, 0, 0);
+      var daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
+      return daysInMonth + daysUntilEndOfTheWeek;
+    }
+
+    return daysInMonth;
+  }();
+
+  return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, otherProps, {
+    className: "react-calendar__month-view__days",
+    count: 7,
+    currentMonthIndex: monthIndex,
+    dateTransform: function dateTransform(day) {
+      var date = new Date();
+      date.setFullYear(year, monthIndex, day);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    },
+    dateType: "day",
+    end: end,
+    offset: offset,
+    start: start,
+    tile: Day
+  }));
+}
+Days.propTypes = _objectSpread2({
+  calendarType: isCalendarType.isRequired,
+  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
+  showNeighboringMonth: PropTypes__default['default'].bool
+}, tileGroupProps);
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+var className$5 = 'react-calendar__month-view__weekdays';
+function Weekdays(props) {
+  var calendarType = props.calendarType,
+      _props$formatShortWee = props.formatShortWeekday,
+      formatShortWeekday$1 = _props$formatShortWee === void 0 ? formatShortWeekday : _props$formatShortWee,
+      locale = props.locale,
+      onMouseLeave = props.onMouseLeave;
+  var anyDate = new Date();
+  var beginOfMonth = dateUtils.getMonthStart(anyDate);
+  var year = dateUtils.getYear(beginOfMonth);
+  var monthIndex = dateUtils.getMonth(beginOfMonth);
+  var weekdays = [];
+
+  for (var weekday = 1; weekday <= 7; weekday += 1) {
+    var weekdayDate = new Date(year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType));
+    var abbr = formatWeekday(locale, weekdayDate);
+    weekdays.push( /*#__PURE__*/React__default['default'].createElement("div", {
+      key: weekday,
+      className: "".concat(className$5, "__weekday")
+    }, /*#__PURE__*/React__default['default'].createElement("abbr", {
+      "aria-label": abbr,
+      title: abbr
+    }, formatShortWeekday$1(locale, weekdayDate).replace('.', ''))));
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(Flex, {
+    className: className$5,
+    count: 7,
+    onFocus: onMouseLeave,
+    onMouseOver: onMouseLeave
+  }, weekdays);
+}
+Weekdays.propTypes = {
+  calendarType: isCalendarType.isRequired,
+  formatShortWeekday: PropTypes__default['default'].func,
+  locale: PropTypes__default['default'].string,
+  onMouseLeave: PropTypes__default['default'].func
+};
+
+function WeekNumber(_ref) {
+  var date = _ref.date,
+      onClickWeekNumber = _ref.onClickWeekNumber,
+      weekNumber = _ref.weekNumber;
+  var props = {
+    className: 'react-calendar__tile',
+    style: {
+      flexGrow: 1
+    }
+  };
+  var children = /*#__PURE__*/React__default['default'].createElement("span", null, weekNumber);
+  return onClickWeekNumber ? /*#__PURE__*/React__default['default'].createElement("button", _extends({}, props, {
+    onClick: function onClick(event) {
+      return onClickWeekNumber(weekNumber, date, event);
+    },
+    type: "button"
+  }), children) : /*#__PURE__*/React__default['default'].createElement("div", props, children);
+}
+WeekNumber.propTypes = {
+  date: PropTypes__default['default'].instanceOf(Date).isRequired,
+  onClickWeekNumber: PropTypes__default['default'].func,
+  weekNumber: PropTypes__default['default'].node.isRequired
+};
+
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+function WeekNumbers(props) {
+  var activeStartDate = props.activeStartDate,
+      calendarType = props.calendarType,
+      onClickWeekNumber = props.onClickWeekNumber,
+      onMouseLeave = props.onMouseLeave,
+      showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
+
+  var numberOfWeeks = function () {
+    if (showFixedNumberOfWeeks) {
+      return 6;
+    }
+
+    var numberOfDays = dateUtils.getDaysInMonth(activeStartDate);
+    var startWeekday = getDayOfWeek(activeStartDate, calendarType);
+    var days = numberOfDays - (7 - startWeekday);
+    return 1 + Math.ceil(days / 7);
+  }();
+
+  var dates = function () {
+    var year = dateUtils.getYear(activeStartDate);
+    var monthIndex = dateUtils.getMonth(activeStartDate);
+    var day = dateUtils.getDate(activeStartDate);
+    var result = [];
+
+    for (var index = 0; index < numberOfWeeks; index += 1) {
+      result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
+    }
+
+    return result;
+  }();
+
+  var weekNumbers = dates.map(function (date) {
+    return getWeekNumber(date, calendarType);
+  });
+  return /*#__PURE__*/React__default['default'].createElement(Flex, {
+    className: "react-calendar__month-view__weekNumbers",
+    count: numberOfWeeks,
+    direction: "column",
+    onFocus: onMouseLeave,
+    onMouseOver: onMouseLeave,
+    style: {
+      flexBasis: 'calc(100% * (1 / 8)',
+      flexShrink: 0
+    }
+  }, weekNumbers.map(function (weekNumber, weekIndex) {
+    return /*#__PURE__*/React__default['default'].createElement(WeekNumber, {
+      key: weekNumber,
+      date: dates[weekIndex],
+      onClickWeekNumber: onClickWeekNumber,
+      weekNumber: weekNumber
+    });
+  }));
+}
+WeekNumbers.propTypes = {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
+  calendarType: isCalendarType.isRequired,
+  onClickWeekNumber: PropTypes__default['default'].func,
+  onMouseLeave: PropTypes__default['default'].func,
+  showFixedNumberOfWeeks: PropTypes__default['default'].bool
+};
+
+var _excluded$P = ["calendarType", "formatShortWeekday", "onClickWeekNumber", "showWeekNumbers"];
+
+function getCalendarTypeFromLocale(locale) {
+  return Object.keys(CALENDAR_TYPE_LOCALES).find(function (calendarType) {
+    return CALENDAR_TYPE_LOCALES[calendarType].includes(locale);
+  }) || CALENDAR_TYPES.ISO_8601;
+}
+
+function MonthView(props) {
+  var activeStartDate = props.activeStartDate,
+      locale = props.locale,
+      onMouseLeave = props.onMouseLeave,
+      showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
+
+  var _props$calendarType = props.calendarType,
+      calendarType = _props$calendarType === void 0 ? getCalendarTypeFromLocale(locale) : _props$calendarType,
+      formatShortWeekday = props.formatShortWeekday,
+      onClickWeekNumber = props.onClickWeekNumber,
+      showWeekNumbers = props.showWeekNumbers,
+      childProps = _objectWithoutProperties(props, _excluded$P);
+
+  function renderWeekdays() {
+    return /*#__PURE__*/React__default['default'].createElement(Weekdays, {
+      calendarType: calendarType,
+      formatShortWeekday: formatShortWeekday,
+      locale: locale,
+      onMouseLeave: onMouseLeave
+    });
+  }
+
+  function renderWeekNumbers() {
+    if (!showWeekNumbers) {
+      return null;
+    }
+
+    return /*#__PURE__*/React__default['default'].createElement(WeekNumbers, {
+      activeStartDate: activeStartDate,
+      calendarType: calendarType,
+      onClickWeekNumber: onClickWeekNumber,
+      onMouseLeave: onMouseLeave,
+      showFixedNumberOfWeeks: showFixedNumberOfWeeks
+    });
+  }
+
+  function renderDays() {
+    return /*#__PURE__*/React__default['default'].createElement(Days, _extends({
+      calendarType: calendarType
+    }, childProps));
+  }
+
+  var className = 'react-calendar__month-view';
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default'](className, showWeekNumbers ? "".concat(className, "--weekNumbers") : '')
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-end'
+    }
+  }, renderWeekNumbers(), /*#__PURE__*/React__default['default'].createElement("div", {
+    style: {
+      flexGrow: 1,
+      width: '100%'
+    }
+  }, renderWeekdays(), renderDays())));
+}
+MonthView.propTypes = {
+  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
+  calendarType: isCalendarType,
+  formatShortWeekday: PropTypes__default['default'].func,
+  locale: PropTypes__default['default'].string,
+  onClickWeekNumber: PropTypes__default['default'].func,
+  onMouseLeave: PropTypes__default['default'].func,
+  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
+  showWeekNumbers: PropTypes__default['default'].bool
+};
+
+var _excluded$Q = ["activeStartDate", "defaultActiveStartDate", "defaultValue", "defaultView", "maxDetail", "minDetail", "value", "view"];
+var defaultMinDate = new Date();
+defaultMinDate.setFullYear(1, 0, 1);
+defaultMinDate.setHours(0, 0, 0, 0);
+var defaultMaxDate = new Date(8.64e15);
+var baseClassName = 'react-calendar';
+var allViews$1 = ['century', 'decade', 'year', 'month'];
+var allValueTypes = [].concat(_toConsumableArray(allViews$1.slice(1)), ['day']);
+
+function toDate(value) {
+  if (value instanceof Date) {
+    return value;
+  }
+
+  return new Date(value);
+}
+/**
+ * Returns views array with disallowed values cut off.
+ */
+
+
+function getLimitedViews(minDetail, maxDetail) {
+  return allViews$1.slice(allViews$1.indexOf(minDetail), allViews$1.indexOf(maxDetail) + 1);
+}
+/**
+ * Determines whether a given view is allowed with currently applied settings.
+ */
+
+
+function isViewAllowed(view, minDetail, maxDetail) {
+  var views = getLimitedViews(minDetail, maxDetail);
+  return views.indexOf(view) !== -1;
+}
+/**
+ * Gets either provided view if allowed by minDetail and maxDetail, or gets
+ * the default view if not allowed.
+ */
+
+
+function getView(view, minDetail, maxDetail) {
+  if (isViewAllowed(view, minDetail, maxDetail)) {
+    return view;
+  }
+
+  return maxDetail;
+}
+/**
+ * Returns value type that can be returned with currently applied settings.
+ */
+
+
+function getValueType(maxDetail) {
+  return allValueTypes[allViews$1.indexOf(maxDetail)];
+}
+
+function getValue$1(value, index) {
+  if (!value) {
+    return null;
+  }
+
+  var rawValue = Array.isArray(value) && value.length === 2 ? value[index] : value;
+
+  if (!rawValue) {
+    return null;
+  }
+
+  var valueDate = toDate(rawValue);
+
+  if (isNaN(valueDate.getTime())) {
+    throw new Error("Invalid date: ".concat(value));
+  }
+
+  return valueDate;
+}
+
+function getDetailValue(_ref, index) {
+  var value = _ref.value,
+      minDate = _ref.minDate,
+      maxDate = _ref.maxDate,
+      maxDetail = _ref.maxDetail;
+  var valuePiece = getValue$1(value, index);
+
+  if (!valuePiece) {
+    return null;
+  }
+
+  var valueType = getValueType(maxDetail);
+  var detailValueFrom = [getBegin, getEnd][index](valueType, valuePiece);
+  return between(detailValueFrom, minDate, maxDate);
+}
+
+var getDetailValueFrom = function getDetailValueFrom(args) {
+  return getDetailValue(args, 0);
+};
+
+var getDetailValueTo = function getDetailValueTo(args) {
+  return getDetailValue(args, 1);
+};
+
+var getDetailValueArray = function getDetailValueArray(args) {
+  var value = args.value;
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return [getDetailValueFrom, getDetailValueTo].map(function (fn) {
+    return fn(args);
+  });
+};
+
+function getActiveStartDate(props) {
+  var maxDate = props.maxDate,
+      maxDetail = props.maxDetail,
+      minDate = props.minDate,
+      minDetail = props.minDetail,
+      value = props.value,
+      view = props.view;
+  var rangeType = getView(view, minDetail, maxDetail);
+  var valueFrom = getDetailValueFrom({
+    value: value,
+    minDate: minDate,
+    maxDate: maxDate,
+    maxDetail: maxDetail
+  }) || new Date();
+  return getBegin(rangeType, valueFrom);
+}
+
+function getInitialActiveStartDate(props) {
+  var activeStartDate = props.activeStartDate,
+      defaultActiveStartDate = props.defaultActiveStartDate,
+      defaultValue = props.defaultValue,
+      defaultView = props.defaultView,
+      maxDetail = props.maxDetail,
+      minDetail = props.minDetail,
+      value = props.value,
+      view = props.view,
+      otherProps = _objectWithoutProperties(props, _excluded$Q);
+
+  var rangeType = getView(view, minDetail, maxDetail);
+  var valueFrom = activeStartDate || defaultActiveStartDate;
+
+  if (valueFrom) {
+    return getBegin(rangeType, valueFrom);
+  }
+
+  return getActiveStartDate(_objectSpread2({
+    maxDetail: maxDetail,
+    minDetail: minDetail,
+    value: value || defaultValue,
+    view: view || defaultView
+  }, otherProps));
+}
+
+var getIsSingleValue = function getIsSingleValue(value) {
+  return value && [].concat(value).length === 1;
+};
+
+var Calendar = /*#__PURE__*/function (_Component) {
+  _inherits(Calendar, _Component);
+
+  var _super = _createSuper(Calendar);
+
+  function Calendar() {
+    var _this;
+
+    _classCallCheck(this, Calendar);
+
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(_args));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      /* eslint-disable react/destructuring-assignment */
+      activeStartDate: _this.props.defaultActiveStartDate,
+      value: _this.props.defaultValue,
+      view: _this.props.defaultView
+      /* eslint-enable react/destructuring-assignment */
+
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setStateAndCallCallbacks", function (nextState, event, callback) {
+      var _assertThisInitialize = _assertThisInitialized(_this),
+          previousActiveStartDate = _assertThisInitialize.activeStartDate,
+          previousView = _assertThisInitialize.view;
+
+      var _this$props = _this.props,
+          allowPartialRange = _this$props.allowPartialRange,
+          onActiveStartDateChange = _this$props.onActiveStartDateChange,
+          onChange = _this$props.onChange,
+          onViewChange = _this$props.onViewChange,
+          selectRange = _this$props.selectRange;
+      var prevArgs = {
+        activeStartDate: previousActiveStartDate,
+        view: previousView
+      };
+
+      _this.setState(nextState, function () {
+        var args = {
+          action: nextState.action,
+          activeStartDate: nextState.activeStartDate || _this.activeStartDate,
+          value: nextState.value || _this.value,
+          view: nextState.view || _this.view
+        };
+
+        function shouldUpdate(key) {
+          return (// Key must exist, and…
+            key in nextState && ( // …key changed from undefined to defined or the other way around, or…
+            _typeof(nextState[key]) !== _typeof(prevArgs[key]) || ( // …value changed.
+            nextState[key] instanceof Date ? nextState[key].getTime() !== prevArgs[key].getTime() : nextState[key] !== prevArgs[key]))
+          );
+        }
+
+        if (shouldUpdate('activeStartDate')) {
+          if (onActiveStartDateChange) onActiveStartDateChange(args);
+        }
+
+        if (shouldUpdate('view')) {
+          if (onViewChange) onViewChange(args);
+        }
+
+        if (shouldUpdate('value')) {
+          if (onChange) {
+            if (selectRange) {
+              var isSingleValue = getIsSingleValue(nextState.value);
+
+              if (!isSingleValue) {
+                onChange(nextState.value, event);
+              } else if (allowPartialRange) {
+                onChange([nextState.value], event);
+              }
+            } else {
+              onChange(nextState.value, event);
+            }
+          }
+        }
+
+        if (callback) callback(args);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setActiveStartDate", function (nextActiveStartDate, action) {
+      _this.setStateAndCallCallbacks({
+        action: action,
+        activeStartDate: nextActiveStartDate
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "drillDown", function (nextActiveStartDate, event) {
+      if (!_this.drillDownAvailable) {
+        return;
+      }
+
+      _this.onClickTile(nextActiveStartDate, event);
+
+      var _assertThisInitialize2 = _assertThisInitialized(_this),
+          view = _assertThisInitialize2.view,
+          views = _assertThisInitialize2.views;
+
+      var onDrillDown = _this.props.onDrillDown;
+      var nextView = views[views.indexOf(view) + 1];
+
+      _this.setStateAndCallCallbacks({
+        action: 'drillDown',
+        activeStartDate: nextActiveStartDate,
+        view: nextView
+      }, undefined, onDrillDown);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "drillUp", function () {
+      if (!_this.drillUpAvailable) {
+        return;
+      }
+
+      var _assertThisInitialize3 = _assertThisInitialized(_this),
+          activeStartDate = _assertThisInitialize3.activeStartDate,
+          view = _assertThisInitialize3.view,
+          views = _assertThisInitialize3.views;
+
+      var onDrillUp = _this.props.onDrillUp;
+      var nextView = views[views.indexOf(view) - 1];
+      var nextActiveStartDate = getBegin(nextView, activeStartDate);
+
+      _this.setStateAndCallCallbacks({
+        action: 'drillUp',
+        activeStartDate: nextActiveStartDate,
+        view: nextView
+      }, undefined, onDrillUp);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onChange", function (value, event) {
+      var selectRange = _this.props.selectRange;
+
+      _this.onClickTile(value, event);
+
+      var nextValue;
+
+      if (selectRange) {
+        // Range selection turned on
+        var _assertThisInitialize4 = _assertThisInitialized(_this),
+            previousValue = _assertThisInitialize4.value,
+            valueType = _assertThisInitialize4.valueType;
+
+        if (!getIsSingleValue(previousValue)) {
+          // Value has 0 or 2 elements - either way we're starting a new array
+          // First value
+          nextValue = getBegin(valueType, value);
+        } else {
+          // Second value
+          nextValue = getValueRange(valueType, previousValue, value);
+        }
+      } else {
+        // Range selection turned off
+        nextValue = _this.getProcessedValue(value);
+      }
+
+      var nextActiveStartDate = getActiveStartDate(_objectSpread2(_objectSpread2({}, _this.props), {}, {
+        value: nextValue
+      }));
+      event.persist();
+
+      _this.setStateAndCallCallbacks({
+        action: 'onChange',
+        activeStartDate: nextActiveStartDate,
+        value: nextValue
+      }, event);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onClickTile", function (value, event) {
+      var _assertThisInitialize5 = _assertThisInitialized(_this),
+          view = _assertThisInitialize5.view;
+
+      var _this$props2 = _this.props,
+          onClickDay = _this$props2.onClickDay,
+          onClickDecade = _this$props2.onClickDecade,
+          onClickMonth = _this$props2.onClickMonth,
+          onClickYear = _this$props2.onClickYear;
+
+      var callback = function () {
+        switch (view) {
+          case 'century':
+            return onClickDecade;
+
+          case 'decade':
+            return onClickYear;
+
+          case 'year':
+            return onClickMonth;
+
+          case 'month':
+            return onClickDay;
+
+          default:
+            throw new Error("Invalid view: ".concat(view, "."));
+        }
+      }();
+
+      if (callback) callback(value, event);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onMouseOver", function (value) {
+      _this.setState(function (prevState) {
+        if (prevState.hover && prevState.hover.getTime() === value.getTime()) {
+          return null;
+        }
+
+        return {
+          hover: value
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onMouseLeave", function () {
+      _this.setState({
+        hover: null
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(Calendar, [{
+    key: "activeStartDate",
+    get: function get() {
+      var activeStartDateProps = this.props.activeStartDate;
+      var activeStartDateState = this.state.activeStartDate;
+      return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      var _this$props3 = this.props,
+          selectRange = _this$props3.selectRange,
+          valueProps = _this$props3.value;
+      var valueState = this.state.value; // In the middle of range selection, use value from state
+
+      if (selectRange && getIsSingleValue(valueState)) {
+        return valueState;
+      }
+
+      return valueProps !== undefined ? valueProps : valueState;
+    }
+  }, {
+    key: "valueType",
+    get: function get() {
+      var maxDetail = this.props.maxDetail;
+      return getValueType(maxDetail);
+    }
+  }, {
+    key: "view",
+    get: function get() {
+      var _this$props4 = this.props,
+          minDetail = _this$props4.minDetail,
+          maxDetail = _this$props4.maxDetail,
+          viewProps = _this$props4.view;
+      var viewState = this.state.view;
+      return getView(viewProps || viewState, minDetail, maxDetail);
+    }
+  }, {
+    key: "views",
+    get: function get() {
+      var _this$props5 = this.props,
+          minDetail = _this$props5.minDetail,
+          maxDetail = _this$props5.maxDetail;
+      return getLimitedViews(minDetail, maxDetail);
+    }
+  }, {
+    key: "hover",
+    get: function get() {
+      var selectRange = this.props.selectRange;
+      var hover = this.state.hover;
+      return selectRange ? hover : null;
+    }
+  }, {
+    key: "drillDownAvailable",
+    get: function get() {
+      var view = this.view,
+          views = this.views;
+      return views.indexOf(view) < views.length - 1;
+    }
+  }, {
+    key: "drillUpAvailable",
+    get: function get() {
+      var view = this.view,
+          views = this.views;
+      return views.indexOf(view) > 0;
+    }
+    /**
+     * Gets current value in a desired format.
+     */
+
+  }, {
+    key: "getProcessedValue",
+    value: function getProcessedValue(value) {
+      var _this$props6 = this.props,
+          minDate = _this$props6.minDate,
+          maxDate = _this$props6.maxDate,
+          maxDetail = _this$props6.maxDetail,
+          returnValue = _this$props6.returnValue;
+
+      var processFunction = function () {
+        switch (returnValue) {
+          case 'start':
+            return getDetailValueFrom;
+
+          case 'end':
+            return getDetailValueTo;
+
+          case 'range':
+            return getDetailValueArray;
+
+          default:
+            throw new Error('Invalid returnValue.');
+        }
+      }();
+
+      return processFunction({
+        value: value,
+        minDate: minDate,
+        maxDate: maxDate,
+        maxDetail: maxDetail
+      });
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent(next) {
+      var currentActiveStartDate = this.activeStartDate,
+          onMouseOver = this.onMouseOver,
+          valueType = this.valueType,
+          value = this.value,
+          view = this.view;
+      var _this$props7 = this.props,
+          calendarType = _this$props7.calendarType,
+          locale = _this$props7.locale,
+          maxDate = _this$props7.maxDate,
+          minDate = _this$props7.minDate,
+          selectRange = _this$props7.selectRange,
+          tileClassName = _this$props7.tileClassName,
+          tileContent = _this$props7.tileContent,
+          tileDisabled = _this$props7.tileDisabled;
+      var hover = this.hover;
+      var activeStartDate = next ? getBeginNext(view, currentActiveStartDate) : getBegin(view, currentActiveStartDate);
+      var onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
+      var commonProps = {
+        activeStartDate: activeStartDate,
+        hover: hover,
+        locale: locale,
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        onMouseOver: selectRange ? onMouseOver : null,
+        tileClassName: tileClassName,
+        tileContent: tileContent,
+        tileDisabled: tileDisabled,
+        value: value,
+        valueType: valueType
+      };
+
+      switch (view) {
+        case 'century':
+          {
+            var formatYear = this.props.formatYear;
+            return /*#__PURE__*/React__default['default'].createElement(CenturyView, _extends({
+              formatYear: formatYear
+            }, commonProps));
+          }
+
+        case 'decade':
+          {
+            var _formatYear = this.props.formatYear;
+            return /*#__PURE__*/React__default['default'].createElement(DecadeView, _extends({
+              formatYear: _formatYear
+            }, commonProps));
+          }
+
+        case 'year':
+          {
+            var _this$props8 = this.props,
+                formatMonth = _this$props8.formatMonth,
+                formatMonthYear = _this$props8.formatMonthYear;
+            return /*#__PURE__*/React__default['default'].createElement(YearView, _extends({
+              formatMonth: formatMonth,
+              formatMonthYear: formatMonthYear
+            }, commonProps));
+          }
+
+        case 'month':
+          {
+            var _this$props9 = this.props,
+                formatDay = _this$props9.formatDay,
+                formatLongDate = _this$props9.formatLongDate,
+                formatShortWeekday = _this$props9.formatShortWeekday,
+                onClickWeekNumber = _this$props9.onClickWeekNumber,
+                showDoubleView = _this$props9.showDoubleView,
+                showFixedNumberOfWeeks = _this$props9.showFixedNumberOfWeeks,
+                showNeighboringMonth = _this$props9.showNeighboringMonth,
+                showWeekNumbers = _this$props9.showWeekNumbers;
+            var onMouseLeave = this.onMouseLeave;
+            return /*#__PURE__*/React__default['default'].createElement(MonthView, _extends({
+              calendarType: calendarType,
+              formatDay: formatDay,
+              formatLongDate: formatLongDate,
+              formatShortWeekday: formatShortWeekday,
+              onClickWeekNumber: onClickWeekNumber,
+              onMouseLeave: selectRange ? onMouseLeave : null,
+              showFixedNumberOfWeeks: showFixedNumberOfWeeks || showDoubleView,
+              showNeighboringMonth: showNeighboringMonth,
+              showWeekNumbers: showWeekNumbers
+            }, commonProps));
+          }
+
+        default:
+          throw new Error("Invalid view: ".concat(view, "."));
+      }
+    }
+  }, {
+    key: "renderNavigation",
+    value: function renderNavigation() {
+      var showNavigation = this.props.showNavigation;
+
+      if (!showNavigation) {
+        return null;
+      }
+
+      var activeStartDate = this.activeStartDate,
+          view = this.view,
+          views = this.views;
+      var _this$props10 = this.props,
+          formatMonthYear = _this$props10.formatMonthYear,
+          formatYear = _this$props10.formatYear,
+          locale = _this$props10.locale,
+          maxDate = _this$props10.maxDate,
+          minDate = _this$props10.minDate,
+          navigationAriaLabel = _this$props10.navigationAriaLabel,
+          navigationAriaLive = _this$props10.navigationAriaLive,
+          navigationLabel = _this$props10.navigationLabel,
+          next2AriaLabel = _this$props10.next2AriaLabel,
+          next2Label = _this$props10.next2Label,
+          nextAriaLabel = _this$props10.nextAriaLabel,
+          nextLabel = _this$props10.nextLabel,
+          prev2AriaLabel = _this$props10.prev2AriaLabel,
+          prev2Label = _this$props10.prev2Label,
+          prevAriaLabel = _this$props10.prevAriaLabel,
+          prevLabel = _this$props10.prevLabel,
+          showDoubleView = _this$props10.showDoubleView;
+      return /*#__PURE__*/React__default['default'].createElement(Navigation, {
+        activeStartDate: activeStartDate,
+        drillUp: this.drillUp,
+        formatMonthYear: formatMonthYear,
+        formatYear: formatYear,
+        locale: locale,
+        maxDate: maxDate,
+        minDate: minDate,
+        navigationAriaLabel: navigationAriaLabel,
+        navigationAriaLive: navigationAriaLive,
+        navigationLabel: navigationLabel,
+        next2AriaLabel: next2AriaLabel,
+        next2Label: next2Label,
+        nextAriaLabel: nextAriaLabel,
+        nextLabel: nextLabel,
+        prev2AriaLabel: prev2AriaLabel,
+        prev2Label: prev2Label,
+        prevAriaLabel: prevAriaLabel,
+        prevLabel: prevLabel,
+        setActiveStartDate: this.setActiveStartDate,
+        showDoubleView: showDoubleView,
+        view: view,
+        views: views
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props11 = this.props,
+          className = _this$props11.className,
+          inputRef = _this$props11.inputRef,
+          selectRange = _this$props11.selectRange,
+          showDoubleView = _this$props11.showDoubleView;
+      var onMouseLeave = this.onMouseLeave,
+          value = this.value;
+      var valueArray = [].concat(value);
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        className: clsx__default['default'](baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "".concat(baseClassName, "--doubleView"), className),
+        ref: inputRef
+      }, this.renderNavigation(), /*#__PURE__*/React__default['default'].createElement("div", {
+        className: "".concat(baseClassName, "__viewContainer"),
+        onBlur: selectRange ? onMouseLeave : null,
+        onMouseLeave: selectRange ? onMouseLeave : null
+      }, this.renderContent(), showDoubleView && this.renderContent(true)));
+    }
+  }]);
+
+  return Calendar;
+}(React.Component);
+Calendar.defaultProps = {
+  maxDate: defaultMaxDate,
+  maxDetail: 'month',
+  minDate: defaultMinDate,
+  minDetail: 'century',
+  returnValue: 'start',
+  showNavigation: true,
+  showNeighboringMonth: true
+};
+var isActiveStartDate = PropTypes__default['default'].instanceOf(Date);
+var isLooseValue = PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, isValue]);
+Calendar.propTypes = {
+  activeStartDate: isActiveStartDate,
+  allowPartialRange: PropTypes__default['default'].bool,
+  calendarType: isCalendarType,
+  className: isClassName,
+  defaultActiveStartDate: isActiveStartDate,
+  defaultValue: isLooseValue,
+  defaultView: isView,
+  formatDay: PropTypes__default['default'].func,
+  formatLongDate: PropTypes__default['default'].func,
+  formatMonth: PropTypes__default['default'].func,
+  formatMonthYear: PropTypes__default['default'].func,
+  formatShortWeekday: PropTypes__default['default'].func,
+  formatYear: PropTypes__default['default'].func,
+  inputRef: isRef,
+  locale: PropTypes__default['default'].string,
+  maxDate: isMaxDate,
+  maxDetail: PropTypes__default['default'].oneOf(allViews$1),
+  minDate: isMinDate,
+  minDetail: PropTypes__default['default'].oneOf(allViews$1),
+  navigationAriaLabel: PropTypes__default['default'].string,
+  navigationAriaLive: PropTypes__default['default'].oneOf(['off', 'polite', 'assertive']),
+  navigationLabel: PropTypes__default['default'].func,
+  next2AriaLabel: PropTypes__default['default'].string,
+  next2Label: PropTypes__default['default'].node,
+  nextAriaLabel: PropTypes__default['default'].string,
+  nextLabel: PropTypes__default['default'].node,
+  onActiveStartDateChange: PropTypes__default['default'].func,
+  onChange: PropTypes__default['default'].func,
+  onClickDay: PropTypes__default['default'].func,
+  onClickDecade: PropTypes__default['default'].func,
+  onClickMonth: PropTypes__default['default'].func,
+  onClickWeekNumber: PropTypes__default['default'].func,
+  onClickYear: PropTypes__default['default'].func,
+  onDrillDown: PropTypes__default['default'].func,
+  onDrillUp: PropTypes__default['default'].func,
+  onViewChange: PropTypes__default['default'].func,
+  prev2AriaLabel: PropTypes__default['default'].string,
+  prev2Label: PropTypes__default['default'].node,
+  prevAriaLabel: PropTypes__default['default'].string,
+  prevLabel: PropTypes__default['default'].node,
+  returnValue: PropTypes__default['default'].oneOf(['start', 'end', 'range']),
+  selectRange: PropTypes__default['default'].bool,
+  showDoubleView: PropTypes__default['default'].bool,
+  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
+  showNavigation: PropTypes__default['default'].bool,
+  showNeighboringMonth: PropTypes__default['default'].bool,
+  showWeekNumbers: PropTypes__default['default'].bool,
+  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
+  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
+  tileDisabled: PropTypes__default['default'].func,
+  value: isLooseValue,
+  view: isView
+};
+
+var _excluded$R = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
 
 var _templateObject$K;
 
-var StyledCalendar = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  width: 280px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 16px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 0.5em;\n    border-bottom: 1px solid ", ";\n\n    button {\n      min-width: 44px;\n      background: none;\n      color: #999;\n      white-space: nowrap;\n      user-select: none;\n      padding: 0;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          color: #333;\n        }\n      }\n\n      &[disabled] {\n        color: #999;\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.5em;\n    background: none;\n\n    &:disabled {\n      background-color: rgb(240, 240, 240);\n    }\n\n    &:hover,\n    &:focus {\n      background-color: rgb(230, 230, 230);\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), border, getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
+var StyledCalendar = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  width: 280px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 0.5em;\n    border-bottom: 1px solid ", ";\n\n    button {\n      min-width: 44px;\n      background: none;\n      color: #999;\n      white-space: nowrap;\n      user-select: none;\n      padding: 0;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          color: #333;\n        }\n      }\n\n      &[disabled] {\n        color: #999;\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.5em;\n    background: none;\n\n    &:disabled {\n      color: #ccc;\n      cursor: not-allowed;\n      abbr {\n        cursor: not-allowed;\n      }\n    }\n\n    &:enabled {\n      &:hover,\n      &:focus {\n        background-color: rgb(230, 230, 230);\n      }\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), border, getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
 
 var _formatDay = function _formatDay(locale, date) {
   return date.getDate();
 };
 
 /** 日历,基于react-calendar  */
-var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var Calendar$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       _props$formatDay = props.formatDay,
       formatDay = _props$formatDay === void 0 ? _formatDay : _props$formatDay,
@@ -5878,7 +8087,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       header = props.header,
       footer = props.footer,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$I);
+      rest = _objectWithoutProperties(props, _excluded$R);
 
   var _useState = React.useState(value || defaultValue || new Date()),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5898,7 +8107,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       mobile: isMobile
     }),
     style: style
-  }, header, /*#__PURE__*/React__default['default'].createElement(ReactCalendar__default['default'], _extends({}, rest, {
+  }, header, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
     onChange: setVal,
     calendarType: calendarType,
     locale: locale,
@@ -5906,9 +8115,9 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
     formatDay: formatDay
   })), footer);
 });
-Calendar.displayName = 'UC-Calendar';
+Calendar$1.displayName = 'UC-Calendar';
 
-var _excluded$J = ["className", "okText", "cancelText", "title", "todayText", "value", "onChange", "onOk", "style", "prefix", "suffix", "format"];
+var _excluded$S = ["className", "okText", "cancelText", "title", "todayText", "value", "onChange", "onOk", "style", "prefix", "suffix", "format"];
 
 var _templateObject$L, _templateObject2$7, _templateObject3;
 var offset = {
@@ -5950,7 +8159,7 @@ var DatePicker = function DatePicker(props) {
       suffix = props.suffix,
       _props$format = props.format,
       format = _props$format === void 0 ? 'YYYY-MM-DD' : _props$format,
-      rest = _objectWithoutProperties(props, _excluded$J);
+      rest = _objectWithoutProperties(props, _excluded$S);
 
   var cRef = React.useRef();
 
@@ -6015,7 +8224,7 @@ var DatePicker = function DatePicker(props) {
     visible: v,
     onClose: onClose,
     position: "bottom"
-  }, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, calendarProps, {
+  }, /*#__PURE__*/React__default['default'].createElement(Calendar$1, _extends({}, calendarProps, {
     header: popHeader,
     footer: /*#__PURE__*/React__default['default'].createElement(StyledMobileFooter, null)
   })))) : /*#__PURE__*/React__default['default'].createElement(Popover, {
@@ -6028,7 +8237,7 @@ var DatePicker = function DatePicker(props) {
     maskStyle: {
       backgroundColor: 'transparent'
     },
-    content: /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, calendarProps, {
+    content: /*#__PURE__*/React__default['default'].createElement(Calendar$1, _extends({}, calendarProps, {
       onChange: function onChange(v) {
         setVal(v);
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);
@@ -6048,7 +8257,7 @@ exports.AnimationElement = AnimationElement;
 exports.Avatar = Avatar;
 exports.Badge = Badge;
 exports.Button = Button;
-exports.Calendar = Calendar;
+exports.Calendar = Calendar$1;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
