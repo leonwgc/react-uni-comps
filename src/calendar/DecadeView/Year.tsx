@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getYearStart, getYearEnd } from '@wojtekmaj/date-utils';
@@ -9,11 +10,7 @@ import { tileProps } from '../shared/propTypes';
 
 const className = 'react-calendar__decade-view__years__year';
 
-export default function Year({
-  classes,
-  formatYear = defaultFormatYear,
-  ...otherProps
-}) {
+export default function Year({ classes, formatYear = defaultFormatYear, ...otherProps }) {
   const { date, locale } = otherProps;
 
   return (

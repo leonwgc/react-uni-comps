@@ -1,7 +1,5 @@
-import getUserLocale from 'get-user-locale';
-
 function getFormatter(options) {
-  return (locale, date) => date.toLocaleString(locale || getUserLocale(), options);
+  return (locale, date) => date.toLocaleString(locale || 'zh-CN', options);
 }
 
 /**

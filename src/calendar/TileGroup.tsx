@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -29,22 +30,21 @@ export default function TileGroup({
       <Tile
         key={date.getTime()}
         classes={getTileClasses({
-          value, valueType, date, dateType, hover,
+          value,
+          valueType,
+          date,
+          dateType,
+          hover,
         })}
         date={date}
         point={point}
         {...tileProps}
-      />,
+      />
     );
   }
 
   return (
-    <Flex
-      className={className}
-      count={count}
-      offset={offset}
-      wrap
-    >
+    <Flex className={className} count={count} offset={offset} wrap>
       {tiles}
     </Flex>
   );

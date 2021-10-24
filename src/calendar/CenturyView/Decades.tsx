@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { getDecadeStart } from '@wojtekmaj/date-utils';
 

@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import mergeClassNames from 'merge-class-names';
+import clsx from 'clsx';
 
 import { tileProps } from './shared/propTypes';
 
 function getValue(nextProps, prop) {
   const { activeStartDate, date, view } = nextProps;
 
-  return typeof prop === 'function'
-    ? prop({ activeStartDate, date, view })
-    : prop;
+  return typeof prop === 'function' ? prop({ activeStartDate, date, view }) : prop;
 }
 
 export default class Tile extends Component {
@@ -55,11 +54,11 @@ export default class Tile extends Component {
 
     return (
       <button
-        className={mergeClassNames(classes, tileClassName)}
+        className={clsx(classes, tileClassName)}
         disabled={
-          (minDate && minDateTransform(minDate) > date)
-          || (maxDate && maxDateTransform(maxDate) < date)
-          || (tileDisabled && tileDisabled({ activeStartDate, date, view }))
+          (minDate && minDateTransform(minDate) > date) ||
+          (maxDate && maxDateTransform(maxDate) < date) ||
+          (tileDisabled && tileDisabled({ activeStartDate, date, view }))
         }
         onClick={onClick && ((event) => onClick(date, event))}
         onFocus={onMouseOver && (() => onMouseOver(date))}
@@ -67,13 +66,7 @@ export default class Tile extends Component {
         style={style}
         type="button"
       >
-        {formatAbbr
-          ? (
-            <abbr aria-label={formatAbbr(locale, date)}>
-              {children}
-            </abbr>
-          )
-          : children}
+        {formatAbbr ? <abbr aria-label={formatAbbr(locale, date)}>{children}</abbr> : children}
         {tileContent}
       </button>
     );

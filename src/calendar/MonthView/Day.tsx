@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
@@ -30,7 +31,7 @@ export default function Day({
         classes,
         className,
         isWeekend(date, calendarType) ? `${className}--weekend` : null,
-        date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null,
+        date.getMonth() !== currentMonthIndex ? `${className}--neighboringMonth` : null
       )}
       formatAbbr={formatLongDate}
       maxDateTransform={getDayEnd}
