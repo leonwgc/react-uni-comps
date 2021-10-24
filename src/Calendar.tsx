@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
-import ReactCalendar from 'react-calendar';
+import ReactCalendar from './ucalendar';
 import { getThemeColorCss } from './themeHelper';
 import { isMobile } from './dom';
 import useUpdateEffect from './hooks/useUpdateEffect';
