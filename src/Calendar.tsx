@@ -46,8 +46,8 @@ const StyledCalendar = styled.div`
     cursor: default;
   }
 
-  .react-calendar--doubleView {
-    width: 700px;
+  .uc-calendar--doubleView {
+    width: 560px;
 
     .viewContainer {
       display: flex;
@@ -232,7 +232,10 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
   }, [val, onChange]);
 
   return (
-    <StyledCalendar className={clsx('uc-calendar', className, { mobile: isMobile })} style={style}>
+    <StyledCalendar
+      className={clsx('uc-calendar-wrap', className, { mobile: isMobile })}
+      style={style}
+    >
       {header}
       <ReactCalendar
         {...rest}

@@ -31,6 +31,7 @@ export default function App() {
         tileDisabled={({ activeStartDate, date, view }) => {
           return date.getDate() > 16 && date.getDate() < 22;
         }}
+        // showDoubleView
       />
       <Calendar
         style={{ marginTop: 30, width: 400 }}
