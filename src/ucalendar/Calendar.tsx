@@ -592,14 +592,14 @@ class Calendar extends Component<any, any> {
         className={clsx(
           baseClassName,
           selectRange && valueArray.length === 1 && `${baseClassName}--selectRange`,
-          showDoubleView && `${baseClassName}--doubleView`,
+          showDoubleView && `double-view`,
           className
         )}
         ref={inputRef}
       >
         {this.renderNavigation()}
         <div
-          className={`${baseClassName}__viewContainer`}
+          className={`viewContainer`}
           onBlur={selectRange ? onMouseLeave : null}
           onMouseLeave={selectRange ? onMouseLeave : null}
         >

@@ -14,12 +14,9 @@ export default function App() {
   const [value1, onChange1] = useState();
   return (
     <div>
+      <Calendar style={{ marginTop: 30, width: 280 }} />
       <Calendar
-        onChange={(v) => {
-          onChange1(v);
-          console.log(v);
-        }}
-        value={value1}
+        style={{ marginTop: 30 }}
         tileContent={({ activeStartDate, date, view }) => {
           if (view === 'month' && date.getDate() === 15) {
             return <StyledDate>生日</StyledDate>;
@@ -31,17 +28,9 @@ export default function App() {
         tileDisabled={({ activeStartDate, date, view }) => {
           return date.getDate() > 16 && date.getDate() < 22;
         }}
-        // showDoubleView
+        showDoubleView
       />
-      <Calendar
-        style={{ marginTop: 30, width: 400 }}
-        onChange={(v) => {
-          onChange1(v);
-          console.log(v);
-        }}
-        value={value1}
-        selectRange
-      />
+      <Calendar style={{ marginTop: 30, width: 280 }} selectRange />
       <Calendar
         style={{ marginTop: 30 }}
         // showWeekNumbers

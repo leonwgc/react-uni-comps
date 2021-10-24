@@ -28,36 +28,34 @@ type Props = {
   defaultValue?: DateType;
 };
 
-const StyledCalendar = styled.div`
-  width: 280px;
+const StyledCalendarWrap = styled.div`
   font-size: 14px;
   background: #fff;
-  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+
   line-height: inherit;
   box-sizing: border-box;
+`;
 
-  &.mobile {
-    width: 100%;
-  }
-
-  abbr {
-    font-size: 1em;
-    text-decoration: none;
-    cursor: default;
-  }
-
-  .uc-calendar--doubleView {
-    width: 560px;
-
+const StyledCalendar = styled(ReactCalendar)`
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  &.double-view {
+    min-width: 520px;
     .viewContainer {
       display: flex;
       margin: -0.5em;
+      flex-wrap: nowrap;
 
       > * {
         width: 50%;
         margin: 0.5em;
       }
     }
+  }
+
+  abbr {
+    font-size: 1em;
+    text-decoration: none;
+    cursor: default;
   }
 
   &,
@@ -232,12 +230,12 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
   }, [val, onChange]);
 
   return (
-    <StyledCalendar
+    <StyledCalendarWrap
       className={clsx('uc-calendar-wrap', className, { mobile: isMobile })}
       style={style}
     >
       {header}
-      <ReactCalendar
+      <StyledCalendar
         {...rest}
         onChange={setVal}
         calendarType={calendarType}
@@ -246,7 +244,7 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
         formatDay={formatDay}
       />
       {footer}
-    </StyledCalendar>
+    </StyledCalendarWrap>
   );
 });
 
