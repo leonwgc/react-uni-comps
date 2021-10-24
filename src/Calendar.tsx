@@ -31,9 +31,11 @@ type Props = {
 const StyledCalendarWrap = styled.div`
   font-size: 14px;
   background: #fff;
-
   line-height: inherit;
   box-sizing: border-box;
+  &.pc {
+    width: 280px;
+  }
 `;
 
 const StyledCalendar = styled(ReactCalendar)`
@@ -231,7 +233,7 @@ const Calendar = React.forwardRef<ValueRefType, Props>((props, ref) => {
 
   return (
     <StyledCalendarWrap
-      className={clsx('uc-calendar-wrap', className, { mobile: isMobile })}
+      className={clsx('uc-calendar-wrap', className, { mobile: isMobile, pc: !isMobile })}
       style={style}
     >
       {header}

@@ -25,6 +25,12 @@ const formatDate = (v, dateFormat) => {
   }
 };
 
+const StyledCalendar = styled(Calendar)`
+  .uc-calendar {
+    box-shadow: none;
+  }
+`;
+
 type Props = {
   /** 是否弹出 */
   visible?: boolean;
@@ -183,7 +189,7 @@ const DatePicker = (props: Props): React.ReactNode => {
     <>
       {inputRender}
       <Popup visible={v} onClose={onClose} position="bottom">
-        <Calendar {...calendarProps} header={popHeader} footer={<StyledMobileFooter />} />
+        <StyledCalendar {...calendarProps} header={popHeader} footer={<StyledMobileFooter />} />
       </Popup>
     </>
   ) : (
@@ -196,7 +202,7 @@ const DatePicker = (props: Props): React.ReactNode => {
       mask
       maskStyle={{ backgroundColor: 'transparent' }}
       content={
-        <Calendar
+        <StyledCalendar
           {...calendarProps}
           onChange={(v) => {
             setVal(v);
