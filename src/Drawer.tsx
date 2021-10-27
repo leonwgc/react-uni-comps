@@ -40,9 +40,12 @@ const Drawer = (props: Props): React.ReactNode => {
     ...rest
   } = props;
 
+  const sty =
+    position === 'left' || position === 'right' ? { height: '100vh' } : { width: '100vw' };
+
   return (
     <StyledDrawerContent {...rest} className={clsx('uc-drawer', className)} position={position}>
-      <div className={clsx('content', wrapClassName)} style={wrapStyle}>
+      <div className={clsx('content', wrapClassName)} style={{ ...sty, ...wrapStyle }}>
         {header && <div className="header">{header}</div>}
         <div className="body">{children}</div>
         {footer && <div className="footer">{footer}</div>}
