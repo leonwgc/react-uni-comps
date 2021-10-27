@@ -4,10 +4,13 @@ import clsx from 'clsx';
 import Popup, { Props as PopupProps } from './Popup';
 
 type Props = PopupProps & {
+  /** 头部 */
   header?: React.ReactNode;
-  //   body?: React.ReactNode;
+  /** 尾部 */
   footer?: React.ReactNode;
+  /** 内容 */
   children?: React.ReactNode;
+  /** 包裹元素样式 */
   wrapStyle?: React.CSSProperties;
   wrapClassName?: string;
 };
