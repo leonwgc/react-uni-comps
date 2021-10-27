@@ -16,6 +16,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> Drawer
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Drawer')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> DatePicker
           </Space>
         }
