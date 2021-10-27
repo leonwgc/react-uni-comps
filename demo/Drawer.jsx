@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Icon, Tabs, Popup, Space, Button, Avatar } from '../src';
+import Drawer from '../src/Drawer';
 import styled from '../src/styled';
 
 // example to implement Drawer
@@ -101,7 +102,48 @@ export default function RightDrawer(props) {
       <Button type="primary" onClick={() => setVisible(true)}>
         open drawer
       </Button>
-      <Popup position="right" width={640} onClose={onClose} visible={visible}>
+
+      <Drawer
+        position="right"
+        wrapStyle={{ width: 600, height: '100vh' }}
+        onClose={onClose}
+        visible={visible}
+        header={
+          <StyledTabs underline={false} value={index} onChange={setIndex}>
+            <Tabs.Tab title="权限设置" />
+            <Tabs.Tab title="权限组管理" />
+          </StyledTabs>
+        }
+        footer={
+          <StyledFooter>
+            <Space size={16}>
+              <Button type="primary" style={{ width: 80 }}>
+                保存
+              </Button>
+              <Button style={{ width: 80 }}>取消</Button>
+            </Space>
+          </StyledFooter>
+        }
+      >
+        <StyledRightGroup style={{ padding: 20 }}>
+          <Button className="btn-new" icon={<Icon type="icon-jia2" />}>
+            新建权限组
+          </Button>
+          <div className="card-list">
+            {list.map((item, idx) => (
+              <div className="card-item" key={idx}>
+                <Avatar size={28} style={{ marginRight: 12 }}></Avatar>
+                <div className="content">
+                  <div className="title">{item?.title}</div>
+                  <div className="desc">{item?.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </StyledRightGroup>
+      </Drawer>
+
+      {/* <Popup position="right" width={640} onClose={onClose} visible={visible}>
         <StyledPopupContent>
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="权限设置" />
@@ -135,7 +177,7 @@ export default function RightDrawer(props) {
             </Space>
           </StyledFooter>
         </StyledPopupContent>
-      </Popup>
+      </Popup> */}
     </>
   );
 }
