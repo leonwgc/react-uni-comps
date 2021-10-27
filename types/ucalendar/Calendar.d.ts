@@ -1,5 +1,5 @@
 import { Component } from 'react';
-export default class Calendar extends Component {
+declare class Calendar extends Component<any, any> {
     state: {
         activeStartDate: any;
         value: any;
@@ -32,3 +32,4 @@ export default class Calendar extends Component {
     renderNavigation(): JSX.Element;
     render(): JSX.Element;
 }
+export default Calendar;

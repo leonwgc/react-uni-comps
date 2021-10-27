@@ -13,7 +13,6 @@ var usePrevious = require('react-use-lib/es/usePrevious');
 var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
 var useSigPad = require('react-use-lib/es/useSigPad');
-var PropTypes = require('prop-types');
 var dateUtils = require('@wojtekmaj/date-utils');
 var dayjs = require('dayjs');
 
@@ -27,7 +26,6 @@ var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
 var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
-var PropTypes__default = /*#__PURE__*/_interopDefaultLegacy(PropTypes);
 var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
 
 function ownKeys(object, enumerableOnly) {
@@ -5874,16 +5872,18 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _CALENDAR_TYPE_LOCALE;
-
 var CALENDAR_TYPES = {
   ARABIC: 'Arabic',
   HEBREW: 'Hebrew',
   ISO_8601: 'ISO 8601',
   US: 'US'
 };
-var CALENDAR_TYPE_LOCALES = (_CALENDAR_TYPE_LOCALE = {}, _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.US, ['en-CA', 'en-US', 'es-AR', 'es-BO', 'es-CL', 'es-CO', 'es-CR', 'es-DO', 'es-EC', 'es-GT', 'es-HN', 'es-MX', 'es-NI', 'es-PA', 'es-PE', 'es-PR', 'es-SV', 'es-VE', 'pt-BR']), _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.ARABIC, [// ar-LB, ar-MA intentionally missing
-'ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW', 'ar-LY', 'ar-OM', 'ar-QA', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-YE', 'dv', 'dv-MV', 'ps', 'ps-AR']), _defineProperty(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.HEBREW, ['he', 'he-IL']), _CALENDAR_TYPE_LOCALE);
+var CALENDAR_TYPE_LOCALES = {
+  US: ['en-CA', 'en-US', 'es-AR', 'es-BO', 'es-CL', 'es-CO', 'es-CR', 'es-DO', 'es-EC', 'es-GT', 'es-HN', 'es-MX', 'es-NI', 'es-PA', 'es-PE', 'es-PR', 'es-SV', 'es-VE', 'pt-BR'],
+  Arabic: [// ar-LB, ar-MA intentionally missing
+  'ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW', 'ar-LY', 'ar-OM', 'ar-QA', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-YE', 'dv', 'dv-MV', 'ps', 'ps-AR'],
+  Hebrew: ['he', 'he-IL']
+};
 var WEEKDAYS = _toConsumableArray(Array(7)).map(function (el, index) {
   return index;
 });
@@ -6285,109 +6285,8 @@ function isWeekend(date) {
   }
 }
 
-var calendarTypes = Object.values(CALENDAR_TYPES);
-var allViews = ['century', 'decade', 'year', 'month'];
-var isCalendarType = PropTypes__default['default'].oneOf(calendarTypes);
-var isClassName = PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].arrayOf(PropTypes__default['default'].string)]);
-var isMinDate = function isMinDate(props, propName, componentName) {
-  var minDate = props[propName];
-
-  if (!minDate) {
-    return null;
-  }
-
-  if (!(minDate instanceof Date)) {
-    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(minDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-  }
-
-  var maxDate = props.maxDate;
-
-  if (maxDate && minDate > maxDate) {
-    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(minDate), "` supplied to `").concat(componentName, "`, minDate cannot be larger than maxDate."));
-  }
-
-  return null;
-};
-var isMaxDate = function isMaxDate(props, propName, componentName) {
-  var maxDate = props[propName];
-
-  if (!maxDate) {
-    return null;
-  }
-
-  if (!(maxDate instanceof Date)) {
-    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(maxDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-  }
-
-  var minDate = props.minDate;
-
-  if (minDate && maxDate < minDate) {
-    return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof(maxDate), "` supplied to `").concat(componentName, "`, maxDate cannot be smaller than minDate."));
-  }
-
-  return null;
-};
-var isRef = PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].shape({
-  // eslint-disable-next-line react/forbid-prop-types
-  current: PropTypes__default['default'].any
-})]);
-var isValue = PropTypes__default['default'].oneOfType([PropTypes__default['default'].instanceOf(Date), PropTypes__default['default'].arrayOf(PropTypes__default['default'].instanceOf(Date))]);
-var isViews = PropTypes__default['default'].arrayOf(PropTypes__default['default'].oneOf(allViews));
-var isView = function isView(props, propName, componentName) {
-  var view = props[propName];
-  var views = props.views;
-  var allowedViews = views || allViews;
-
-  if (view !== undefined && allowedViews.indexOf(view) === -1) {
-    return new Error("Invalid prop `".concat(propName, "` of value `").concat(view, "` supplied to `").concat(componentName, "`, expected one of [").concat(allowedViews.map(function (a) {
-      return "\"".concat(a, "\"");
-    }).join(', '), "]."));
-  } // Everything is fine
-
-
-  return null;
-};
-
-isView.isRequired = function (props, propName, componentName) {
-  var view = props[propName];
-
-  if (!view) {
-    return new Error("The prop `".concat(propName, "` is marked as required in `").concat(componentName, "`, but its value is `").concat(view, "`."));
-  }
-
-  return isView(props, propName, componentName);
-};
-
-var tileGroupProps = {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
-  hover: PropTypes__default['default'].instanceOf(Date),
-  locale: PropTypes__default['default'].string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes__default['default'].func,
-  onMouseOver: PropTypes__default['default'].func,
-  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
-  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
-  value: isValue,
-  valueType: PropTypes__default['default'].string
-};
-var tileProps = {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
-  classes: PropTypes__default['default'].arrayOf(PropTypes__default['default'].string).isRequired,
-  date: PropTypes__default['default'].instanceOf(Date).isRequired,
-  locale: PropTypes__default['default'].string,
-  maxDate: isMaxDate,
-  minDate: isMinDate,
-  onClick: PropTypes__default['default'].func,
-  onMouseOver: PropTypes__default['default'].func,
-  style: PropTypes__default['default'].objectOf(PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].number])),
-  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
-  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
-  tileDisabled: PropTypes__default['default'].func
-};
-
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-var className = 'react-calendar__navigation';
+var className = 'navigation';
 function Navigation(_ref) {
   var activeStartDate = _ref.activeStartDate,
       drillUp = _ref.drillUp,
@@ -6542,31 +6441,30 @@ function Navigation(_ref) {
     onClick: onClickNext2,
     type: "button"
   }, next2Label));
-}
-Navigation.propTypes = {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
-  drillUp: PropTypes__default['default'].func.isRequired,
-  formatMonthYear: PropTypes__default['default'].func,
-  formatYear: PropTypes__default['default'].func,
-  locale: PropTypes__default['default'].string,
-  maxDate: PropTypes__default['default'].instanceOf(Date),
-  minDate: PropTypes__default['default'].instanceOf(Date),
-  navigationAriaLabel: PropTypes__default['default'].string,
-  navigationAriaLive: PropTypes__default['default'].string,
-  navigationLabel: PropTypes__default['default'].func,
-  next2AriaLabel: PropTypes__default['default'].string,
-  next2Label: PropTypes__default['default'].node,
-  nextAriaLabel: PropTypes__default['default'].string,
-  nextLabel: PropTypes__default['default'].node,
-  prev2AriaLabel: PropTypes__default['default'].string,
-  prev2Label: PropTypes__default['default'].node,
-  prevAriaLabel: PropTypes__default['default'].string,
-  prevLabel: PropTypes__default['default'].node,
-  setActiveStartDate: PropTypes__default['default'].func.isRequired,
-  showDoubleView: PropTypes__default['default'].bool,
-  view: isView.isRequired,
-  views: isViews.isRequired
-};
+} // Navigation.propTypes = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   drillUp: PropTypes.func.isRequired,
+//   formatMonthYear: PropTypes.func,
+//   formatYear: PropTypes.func,
+//   locale: PropTypes.string,
+//   maxDate: PropTypes.instanceOf(Date),
+//   minDate: PropTypes.instanceOf(Date),
+//   navigationAriaLabel: PropTypes.string,
+//   navigationAriaLive: PropTypes.string,
+//   navigationLabel: PropTypes.func,
+//   next2AriaLabel: PropTypes.string,
+//   next2Label: PropTypes.node,
+//   nextAriaLabel: PropTypes.string,
+//   nextLabel: PropTypes.node,
+//   prev2AriaLabel: PropTypes.string,
+//   prev2Label: PropTypes.node,
+//   prevAriaLabel: PropTypes.string,
+//   prevLabel: PropTypes.node,
+//   setActiveStartDate: PropTypes.func.isRequired,
+//   showDoubleView: PropTypes.bool,
+//   view: isView.isRequired,
+//   views: isViews.isRequired,
+// };
 
 var _excluded$I = ["children", "className", "direction", "count", "offset", "style", "wrap"];
 
@@ -6574,23 +6472,25 @@ function toPercent(num) {
   return "".concat(num, "%");
 }
 
-function Flex(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      direction = _ref.direction,
-      count = _ref.count,
-      offset = _ref.offset,
-      style = _ref.style,
-      wrap = _ref.wrap,
-      otherProps = _objectWithoutProperties(_ref, _excluded$I);
+function Flex(props) {
+  var children = props.children,
+      className = props.className,
+      direction = props.direction,
+      count = props.count,
+      offset = props.offset,
+      style = props.style,
+      wrap = props.wrap,
+      otherProps = _objectWithoutProperties(props, _excluded$I);
+
+  var st = _objectSpread2({
+    display: 'flex',
+    flexDirection: direction,
+    flexWrap: wrap ? 'wrap' : 'no-wrap'
+  }, style);
 
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({
     className: className,
-    style: _objectSpread2({
-      display: 'flex',
-      flexDirection: direction,
-      flexWrap: wrap ? 'wrap' : 'no-wrap'
-    }, style)
+    style: st
   }, otherProps), React__default['default'].Children.map(children, function (child, index) {
     return /*#__PURE__*/React__default['default'].cloneElement(child, _objectSpread2(_objectSpread2({}, child.props), {}, {
       style: {
@@ -6602,15 +6502,6 @@ function Flex(_ref) {
     }));
   }));
 }
-Flex.propTypes = {
-  children: PropTypes__default['default'].node,
-  className: PropTypes__default['default'].string,
-  count: PropTypes__default['default'].number.isRequired,
-  direction: PropTypes__default['default'].string,
-  offset: PropTypes__default['default'].number,
-  style: PropTypes__default['default'].objectOf(PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, PropTypes__default['default'].number])),
-  wrap: PropTypes__default['default'].bool
-};
 
 /**
  * Returns a value no smaller than min and no larger than max.
@@ -6666,15 +6557,13 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
   return classes;
 }
 
-function getTileClasses() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      value = _ref.value,
+function getTileClasses(_ref) {
+  var value = _ref.value,
       valueType = _ref.valueType,
       date = _ref.date,
       dateType = _ref.dateType,
       hover = _ref.hover;
-
-  var className = 'react-calendar__tile';
+  var className = 'tile';
   var classes = [className];
 
   if (!date) {
@@ -6718,7 +6607,7 @@ function getTileClasses() {
     classes.push.apply(classes, _toConsumableArray(hoverRangeClassNames));
   }
 
-  return classes;
+  return clsx__default['default'](classes);
 }
 
 var _excluded$J = ["className", "count", "dateTransform", "dateType", "end", "hover", "offset", "start", "step", "tile", "value", "valueType"];
@@ -6745,7 +6634,7 @@ function TileGroup(_ref) {
     var date = dateTransform(point);
     tiles.push( /*#__PURE__*/React__default['default'].createElement(Tile, _extends({
       key: date.getTime(),
-      classes: getTileClasses({
+      className: getTileClasses({
         value: value,
         valueType: valueType,
         date: date,
@@ -6764,15 +6653,6 @@ function TileGroup(_ref) {
     wrap: true
   }, tiles);
 }
-TileGroup.propTypes = _objectSpread2(_objectSpread2({}, tileGroupProps), {}, {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date),
-  count: PropTypes__default['default'].number,
-  dateTransform: PropTypes__default['default'].func.isRequired,
-  dateType: PropTypes__default['default'].string,
-  offset: PropTypes__default['default'].number,
-  step: PropTypes__default['default'].number,
-  tile: PropTypes__default['default'].func.isRequired
-});
 
 function getValue(nextProps, prop) {
   var activeStartDate = nextProps.activeStartDate,
@@ -6812,7 +6692,7 @@ var Tile = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           activeStartDate = _this$props.activeStartDate,
           children = _this$props.children,
-          classes = _this$props.classes,
+          className = _this$props.className,
           date = _this$props.date,
           formatAbbr = _this$props.formatAbbr,
           locale = _this$props.locale,
@@ -6825,11 +6705,13 @@ var Tile = /*#__PURE__*/function (_Component) {
           style = _this$props.style,
           tileDisabled = _this$props.tileDisabled,
           view = _this$props.view;
-      var _this$state = this.state,
-          tileClassName = _this$state.tileClassName,
-          tileContent = _this$state.tileContent;
+      var _ref = this.state,
+          _ref$tileClassName = _ref.tileClassName,
+          tileClassName = _ref$tileClassName === void 0 ? '' : _ref$tileClassName,
+          _ref$tileContent = _ref.tileContent,
+          tileContent = _ref$tileContent === void 0 ? '' : _ref$tileContent;
       return /*#__PURE__*/React__default['default'].createElement("button", {
-        className: clsx__default['default'](classes, tileClassName),
+        className: clsx__default['default'](className, tileClassName),
         disabled: minDate && minDateTransform(minDate) > date || maxDate && maxDateTransform(maxDate) < date || tileDisabled && tileDisabled({
           activeStartDate: activeStartDate,
           date: date,
@@ -6873,17 +6755,10 @@ var Tile = /*#__PURE__*/function (_Component) {
 
   return Tile;
 }(React.Component);
-Tile.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
-  children: PropTypes__default['default'].node.isRequired,
-  formatAbbr: PropTypes__default['default'].func,
-  maxDateTransform: PropTypes__default['default'].func.isRequired,
-  minDateTransform: PropTypes__default['default'].func.isRequired
-});
 
-var _excluded$K = ["classes", "formatYear"];
-var className$1 = 'react-calendar__century-view__decades__decade';
+var _excluded$K = ["className", "formatYear"];
 function Decade(_ref) {
-  var classes = _ref.classes,
+  var className = _ref.className,
       _ref$formatYear = _ref.formatYear,
       formatYear$1 = _ref$formatYear === void 0 ? formatYear : _ref$formatYear,
       otherProps = _objectWithoutProperties(_ref, _excluded$K);
@@ -6891,22 +6766,19 @@ function Decade(_ref) {
   var date = otherProps.date,
       locale = otherProps.locale;
   return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
-    classes: [].concat(classes, className$1),
+    className: clsx__default['default']('century-view__decades__decade', className),
     maxDateTransform: dateUtils.getDecadeEnd,
     minDateTransform: dateUtils.getDecadeStart,
     view: "century"
   }), getDecadeLabel(locale, formatYear$1, date));
 }
-Decade.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
-  formatYear: PropTypes__default['default'].func
-});
 
 function Decades(props) {
   var activeStartDate = props.activeStartDate;
   var start = getBeginOfCenturyYear(activeStartDate);
   var end = start + 99;
   return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
-    className: "react-calendar__century-view__decades",
+    className: "century-view__decades",
     dateTransform: dateUtils.getDecadeStart,
     dateType: "decade",
     end: end,
@@ -6915,7 +6787,6 @@ function Decades(props) {
     tile: Decade
   }));
 }
-Decades.propTypes = _objectSpread2({}, tileGroupProps);
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 function CenturyView(props) {
@@ -6924,12 +6795,12 @@ function CenturyView(props) {
   }
 
   return /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "react-calendar__century-view"
+    className: "century-view"
   }, renderDecades());
 }
 
 var _excluded$L = ["classes", "formatYear"];
-var className$2 = 'react-calendar__decade-view__years__year';
+var className$1 = 'decade-view__years__year';
 function Year(_ref) {
   var classes = _ref.classes,
       _ref$formatYear = _ref.formatYear,
@@ -6939,22 +6810,19 @@ function Year(_ref) {
   var date = otherProps.date,
       locale = otherProps.locale;
   return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
-    classes: [].concat(classes, className$2),
+    classes: clsx__default['default'](classes, className$1),
     maxDateTransform: dateUtils.getYearEnd,
     minDateTransform: dateUtils.getYearStart,
     view: "decade"
   }), formatYear$1(locale, date));
 }
-Year.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
-  formatYear: PropTypes__default['default'].func
-});
 
 function Years(props) {
   var activeStartDate = props.activeStartDate;
   var start = getBeginOfDecadeYear(activeStartDate);
   var end = start + 9;
   return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
-    className: "react-calendar__decade-view__years",
+    className: "decade-view__years",
     dateTransform: function dateTransform(year) {
       var date = new Date();
       date.setFullYear(year, 0, 1);
@@ -6966,8 +6834,9 @@ function Years(props) {
     start: start,
     tile: Year
   }));
-}
-Years.propTypes = _objectSpread2({}, tileGroupProps);
+} // Years.propTypes = {
+//   ...tileGroupProps,
+// };
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 function DecadeView(props) {
@@ -6976,12 +6845,12 @@ function DecadeView(props) {
   }
 
   return /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "react-calendar__decade-view"
+    className: "decade-view"
   }, renderYears());
 }
 
 var _excluded$M = ["classes", "formatMonth", "formatMonthYear"];
-var className$3 = 'react-calendar__year-view__months__month';
+var className$2 = 'year-view__months__month';
 function Month(_ref) {
   var classes = _ref.classes,
       _ref$formatMonth = _ref.formatMonth,
@@ -6993,17 +6862,17 @@ function Month(_ref) {
   var date = otherProps.date,
       locale = otherProps.locale;
   return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
-    classes: [].concat(classes, className$3),
+    classes: [].concat(classes, className$2),
     formatAbbr: formatMonthYear$1,
     maxDateTransform: dateUtils.getMonthEnd,
     minDateTransform: dateUtils.getMonthStart,
     view: "year"
   }), formatMonth$1(locale, date));
-}
-Month.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
-  formatMonth: PropTypes__default['default'].func,
-  formatMonthYear: PropTypes__default['default'].func
-});
+} // Month.propTypes = {
+//   ...tileProps,
+//   formatMonth: PropTypes.func,
+//   formatMonthYear: PropTypes.func,
+// };
 
 function Months(props) {
   var activeStartDate = props.activeStartDate;
@@ -7011,7 +6880,7 @@ function Months(props) {
   var end = 11;
   var year = dateUtils.getYear(activeStartDate);
   return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, props, {
-    className: "react-calendar__year-view__months",
+    className: "year-view__months",
     dateTransform: function dateTransform(monthIndex) {
       var date = new Date();
       date.setFullYear(year, monthIndex, 1);
@@ -7023,10 +6892,10 @@ function Months(props) {
     start: start,
     tile: Month
   }));
-}
-Months.propTypes = _objectSpread2(_objectSpread2({}, tileGroupProps), {}, {
-  locale: PropTypes__default['default'].string
-});
+} // Months.propTypes = {
+//   ...tileGroupProps,
+//   locale: PropTypes.string,
+// };
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 function YearView(props) {
@@ -7035,12 +6904,12 @@ function YearView(props) {
   }
 
   return /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "react-calendar__year-view"
+    className: "year-view"
   }, renderMonths());
 }
 
 var _excluded$N = ["formatDay", "formatLongDate", "calendarType", "classes", "currentMonthIndex"];
-var className$4 = 'react-calendar__month-view__days__day';
+var className$3 = 'month-view__days__day';
 function Day(_ref) {
   var _ref$formatDay = _ref.formatDay,
       formatDay$1 = _ref$formatDay === void 0 ? formatDay : _ref$formatDay,
@@ -7054,18 +6923,18 @@ function Day(_ref) {
   var date = otherProps.date,
       locale = otherProps.locale;
   return /*#__PURE__*/React__default['default'].createElement(Tile, _extends({}, otherProps, {
-    classes: [].concat(classes, className$4, isWeekend(date, calendarType) ? "".concat(className$4, "--weekend") : null, date.getMonth() !== currentMonthIndex ? "".concat(className$4, "--neighboringMonth") : null),
+    classes: [].concat(classes, className$3, isWeekend(date, calendarType) ? "".concat(className$3, "--weekend") : null, date.getMonth() !== currentMonthIndex ? "".concat(className$3, "--neighboringMonth") : null),
     formatAbbr: formatLongDate$1,
     maxDateTransform: dateUtils.getDayEnd,
     minDateTransform: dateUtils.getDayStart,
     view: "month"
   }), formatDay$1(locale, date));
-}
-Day.propTypes = _objectSpread2(_objectSpread2({}, tileProps), {}, {
-  currentMonthIndex: PropTypes__default['default'].number.isRequired,
-  formatDay: PropTypes__default['default'].func,
-  formatLongDate: PropTypes__default['default'].func
-});
+} // Day.propTypes = {
+//   ...tileProps,
+//   currentMonthIndex: PropTypes.number.isRequired,
+//   formatDay: PropTypes.func,
+//   formatLongDate: PropTypes.func,
+// };
 
 var _excluded$O = ["showFixedNumberOfWeeks", "showNeighboringMonth"];
 function Days(props) {
@@ -7114,7 +6983,7 @@ function Days(props) {
   }();
 
   return /*#__PURE__*/React__default['default'].createElement(TileGroup, _extends({}, otherProps, {
-    className: "react-calendar__month-view__days",
+    className: "month-view__days",
     count: 7,
     currentMonthIndex: monthIndex,
     dateTransform: function dateTransform(day) {
@@ -7129,15 +6998,15 @@ function Days(props) {
     start: start,
     tile: Day
   }));
-}
-Days.propTypes = _objectSpread2({
-  calendarType: isCalendarType.isRequired,
-  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
-  showNeighboringMonth: PropTypes__default['default'].bool
-}, tileGroupProps);
+} // Days.propTypes = {
+//   calendarType: isCalendarType.isRequired,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+//   showNeighboringMonth: PropTypes.bool,
+//   ...tileGroupProps,
+// };
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-var className$5 = 'react-calendar__month-view__weekdays';
+var className$4 = 'month-view__weekdays';
 function Weekdays(props) {
   var calendarType = props.calendarType,
       _props$formatShortWee = props.formatShortWeekday,
@@ -7155,7 +7024,7 @@ function Weekdays(props) {
     var abbr = formatWeekday(locale, weekdayDate);
     weekdays.push( /*#__PURE__*/React__default['default'].createElement("div", {
       key: weekday,
-      className: "".concat(className$5, "__weekday")
+      className: "".concat(className$4, "__weekday")
     }, /*#__PURE__*/React__default['default'].createElement("abbr", {
       "aria-label": abbr,
       title: abbr
@@ -7163,25 +7032,24 @@ function Weekdays(props) {
   }
 
   return /*#__PURE__*/React__default['default'].createElement(Flex, {
-    className: className$5,
+    className: className$4,
     count: 7,
     onFocus: onMouseLeave,
     onMouseOver: onMouseLeave
   }, weekdays);
-}
-Weekdays.propTypes = {
-  calendarType: isCalendarType.isRequired,
-  formatShortWeekday: PropTypes__default['default'].func,
-  locale: PropTypes__default['default'].string,
-  onMouseLeave: PropTypes__default['default'].func
-};
+} // Weekdays.propTypes = {
+//   calendarType: isCalendarType.isRequired,
+//   formatShortWeekday: PropTypes.func,
+//   locale: PropTypes.string,
+//   onMouseLeave: PropTypes.func,
+// };
 
 function WeekNumber(_ref) {
   var date = _ref.date,
       onClickWeekNumber = _ref.onClickWeekNumber,
       weekNumber = _ref.weekNumber;
   var props = {
-    className: 'react-calendar__tile',
+    className: 'tile',
     style: {
       flexGrow: 1
     }
@@ -7193,12 +7061,11 @@ function WeekNumber(_ref) {
     },
     type: "button"
   }), children) : /*#__PURE__*/React__default['default'].createElement("div", props, children);
-}
-WeekNumber.propTypes = {
-  date: PropTypes__default['default'].instanceOf(Date).isRequired,
-  onClickWeekNumber: PropTypes__default['default'].func,
-  weekNumber: PropTypes__default['default'].node.isRequired
-};
+} // WeekNumber.propTypes = {
+//   date: PropTypes.instanceOf(Date).isRequired,
+//   onClickWeekNumber: PropTypes.func,
+//   weekNumber: PropTypes.node.isRequired,
+// };
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 function WeekNumbers(props) {
@@ -7236,7 +7103,7 @@ function WeekNumbers(props) {
     return getWeekNumber(date, calendarType);
   });
   return /*#__PURE__*/React__default['default'].createElement(Flex, {
-    className: "react-calendar__month-view__weekNumbers",
+    className: "month-view__weekNumbers",
     count: numberOfWeeks,
     direction: "column",
     onFocus: onMouseLeave,
@@ -7253,14 +7120,13 @@ function WeekNumbers(props) {
       weekNumber: weekNumber
     });
   }));
-}
-WeekNumbers.propTypes = {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
-  calendarType: isCalendarType.isRequired,
-  onClickWeekNumber: PropTypes__default['default'].func,
-  onMouseLeave: PropTypes__default['default'].func,
-  showFixedNumberOfWeeks: PropTypes__default['default'].bool
-};
+} // WeekNumbers.propTypes = {
+//   activeStartDate: PropTypes.instanceOf(Date).isRequired,
+//   calendarType: isCalendarType.isRequired,
+//   onClickWeekNumber: PropTypes.func,
+//   onMouseLeave: PropTypes.func,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+// };
 
 var _excluded$P = ["calendarType", "formatShortWeekday", "onClickWeekNumber", "showWeekNumbers"];
 
@@ -7312,7 +7178,7 @@ function MonthView(props) {
     }, childProps));
   }
 
-  var className = 'react-calendar__month-view';
+  var className = 'month-view';
   return /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default'](className, showWeekNumbers ? "".concat(className, "--weekNumbers") : '')
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -7327,25 +7193,15 @@ function MonthView(props) {
     }
   }, renderWeekdays(), renderDays())));
 }
-MonthView.propTypes = {
-  activeStartDate: PropTypes__default['default'].instanceOf(Date).isRequired,
-  calendarType: isCalendarType,
-  formatShortWeekday: PropTypes__default['default'].func,
-  locale: PropTypes__default['default'].string,
-  onClickWeekNumber: PropTypes__default['default'].func,
-  onMouseLeave: PropTypes__default['default'].func,
-  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
-  showWeekNumbers: PropTypes__default['default'].bool
-};
 
 var _excluded$Q = ["activeStartDate", "defaultActiveStartDate", "defaultValue", "defaultView", "maxDetail", "minDetail", "value", "view"];
 var defaultMinDate = new Date();
 defaultMinDate.setFullYear(1, 0, 1);
 defaultMinDate.setHours(0, 0, 0, 0);
 var defaultMaxDate = new Date(8.64e15);
-var baseClassName = 'react-calendar';
-var allViews$1 = ['century', 'decade', 'year', 'month'];
-var allValueTypes = [].concat(_toConsumableArray(allViews$1.slice(1)), ['day']);
+var baseClassName = 'uc-calendar';
+var allViews = ['century', 'decade', 'year', 'month'];
+var allValueTypes = [].concat(_toConsumableArray(allViews.slice(1)), ['day']);
 
 function toDate(value) {
   if (value instanceof Date) {
@@ -7360,7 +7216,7 @@ function toDate(value) {
 
 
 function getLimitedViews(minDetail, maxDetail) {
-  return allViews$1.slice(allViews$1.indexOf(minDetail), allViews$1.indexOf(maxDetail) + 1);
+  return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
 }
 /**
  * Determines whether a given view is allowed with currently applied settings.
@@ -7390,7 +7246,7 @@ function getView(view, minDetail, maxDetail) {
 
 
 function getValueType(maxDetail) {
-  return allValueTypes[allViews$1.indexOf(maxDetail)];
+  return allValueTypes[allViews.indexOf(maxDetail)];
 }
 
 function getValue$1(value, index) {
@@ -7982,10 +7838,10 @@ var Calendar = /*#__PURE__*/function (_Component) {
           value = this.value;
       var valueArray = [].concat(value);
       return /*#__PURE__*/React__default['default'].createElement("div", {
-        className: clsx__default['default'](baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "".concat(baseClassName, "--doubleView"), className),
+        className: clsx__default['default'](baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "double-view", className),
         ref: inputRef
       }, this.renderNavigation(), /*#__PURE__*/React__default['default'].createElement("div", {
-        className: "".concat(baseClassName, "__viewContainer"),
+        className: "viewContainer",
         onBlur: selectRange ? onMouseLeave : null,
         onMouseLeave: selectRange ? onMouseLeave : null
       }, this.renderContent(), showDoubleView && this.renderContent(true)));
@@ -7994,6 +7850,7 @@ var Calendar = /*#__PURE__*/function (_Component) {
 
   return Calendar;
 }(React.Component);
+
 Calendar.defaultProps = {
   maxDate: defaultMaxDate,
   maxDetail: 'month',
@@ -8003,68 +7860,66 @@ Calendar.defaultProps = {
   showNavigation: true,
   showNeighboringMonth: true
 };
-var isActiveStartDate = PropTypes__default['default'].instanceOf(Date);
-var isLooseValue = PropTypes__default['default'].oneOfType([PropTypes__default['default'].string, isValue]);
-Calendar.propTypes = {
-  activeStartDate: isActiveStartDate,
-  allowPartialRange: PropTypes__default['default'].bool,
-  calendarType: isCalendarType,
-  className: isClassName,
-  defaultActiveStartDate: isActiveStartDate,
-  defaultValue: isLooseValue,
-  defaultView: isView,
-  formatDay: PropTypes__default['default'].func,
-  formatLongDate: PropTypes__default['default'].func,
-  formatMonth: PropTypes__default['default'].func,
-  formatMonthYear: PropTypes__default['default'].func,
-  formatShortWeekday: PropTypes__default['default'].func,
-  formatYear: PropTypes__default['default'].func,
-  inputRef: isRef,
-  locale: PropTypes__default['default'].string,
-  maxDate: isMaxDate,
-  maxDetail: PropTypes__default['default'].oneOf(allViews$1),
-  minDate: isMinDate,
-  minDetail: PropTypes__default['default'].oneOf(allViews$1),
-  navigationAriaLabel: PropTypes__default['default'].string,
-  navigationAriaLive: PropTypes__default['default'].oneOf(['off', 'polite', 'assertive']),
-  navigationLabel: PropTypes__default['default'].func,
-  next2AriaLabel: PropTypes__default['default'].string,
-  next2Label: PropTypes__default['default'].node,
-  nextAriaLabel: PropTypes__default['default'].string,
-  nextLabel: PropTypes__default['default'].node,
-  onActiveStartDateChange: PropTypes__default['default'].func,
-  onChange: PropTypes__default['default'].func,
-  onClickDay: PropTypes__default['default'].func,
-  onClickDecade: PropTypes__default['default'].func,
-  onClickMonth: PropTypes__default['default'].func,
-  onClickWeekNumber: PropTypes__default['default'].func,
-  onClickYear: PropTypes__default['default'].func,
-  onDrillDown: PropTypes__default['default'].func,
-  onDrillUp: PropTypes__default['default'].func,
-  onViewChange: PropTypes__default['default'].func,
-  prev2AriaLabel: PropTypes__default['default'].string,
-  prev2Label: PropTypes__default['default'].node,
-  prevAriaLabel: PropTypes__default['default'].string,
-  prevLabel: PropTypes__default['default'].node,
-  returnValue: PropTypes__default['default'].oneOf(['start', 'end', 'range']),
-  selectRange: PropTypes__default['default'].bool,
-  showDoubleView: PropTypes__default['default'].bool,
-  showFixedNumberOfWeeks: PropTypes__default['default'].bool,
-  showNavigation: PropTypes__default['default'].bool,
-  showNeighboringMonth: PropTypes__default['default'].bool,
-  showWeekNumbers: PropTypes__default['default'].bool,
-  tileClassName: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, isClassName]),
-  tileContent: PropTypes__default['default'].oneOfType([PropTypes__default['default'].func, PropTypes__default['default'].node]),
-  tileDisabled: PropTypes__default['default'].func,
-  value: isLooseValue,
-  view: isView
-};
+//   activeStartDate: isActiveStartDate,
+//   allowPartialRange: PropTypes.bool,
+//   calendarType: isCalendarType,
+//   className: isClassName,
+//   defaultActiveStartDate: isActiveStartDate,
+//   defaultValue: isLooseValue,
+//   defaultView: isView,
+//   formatDay: PropTypes.func,
+//   formatLongDate: PropTypes.func,
+//   formatMonth: PropTypes.func,
+//   formatMonthYear: PropTypes.func,
+//   formatShortWeekday: PropTypes.func,
+//   formatYear: PropTypes.func,
+//   inputRef: isRef,
+//   locale: PropTypes.string,
+//   maxDate: isMaxDate,
+//   maxDetail: PropTypes.oneOf(allViews),
+//   minDate: isMinDate,
+//   minDetail: PropTypes.oneOf(allViews),
+//   navigationAriaLabel: PropTypes.string,
+//   navigationAriaLive: PropTypes.oneOf(['off', 'polite', 'assertive']),
+//   navigationLabel: PropTypes.func,
+//   next2AriaLabel: PropTypes.string,
+//   next2Label: PropTypes.node,
+//   nextAriaLabel: PropTypes.string,
+//   nextLabel: PropTypes.node,
+//   onActiveStartDateChange: PropTypes.func,
+//   onChange: PropTypes.func,
+//   onClickDay: PropTypes.func,
+//   onClickDecade: PropTypes.func,
+//   onClickMonth: PropTypes.func,
+//   onClickWeekNumber: PropTypes.func,
+//   onClickYear: PropTypes.func,
+//   onDrillDown: PropTypes.func,
+//   onDrillUp: PropTypes.func,
+//   onViewChange: PropTypes.func,
+//   prev2AriaLabel: PropTypes.string,
+//   prev2Label: PropTypes.node,
+//   prevAriaLabel: PropTypes.string,
+//   prevLabel: PropTypes.node,
+//   returnValue: PropTypes.oneOf(['start', 'end', 'range']),
+//   selectRange: PropTypes.bool,
+//   showDoubleView: PropTypes.bool,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+//   showNavigation: PropTypes.bool,
+//   showNeighboringMonth: PropTypes.bool,
+//   showWeekNumbers: PropTypes.bool,
+//   tileClassName: PropTypes.oneOfType([PropTypes.func, isClassName]),
+//   tileContent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+//   tileDisabled: PropTypes.func,
+//   value: isLooseValue,
+//   view: isView,
+// };
 
 var _excluded$R = ["className", "formatDay", "locale", "calendarType", "minDetail", "value", "defaultValue", "onChange", "header", "footer", "style"];
 
-var _templateObject$K;
+var _templateObject$K, _templateObject2$7;
 
-var StyledCalendar = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  width: 280px;\n  font-size: 14px;\n  background: #fff;\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  line-height: inherit;\n  box-sizing: border-box;\n\n  &.mobile {\n    width: 100%;\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  .react-calendar--doubleView {\n    width: 700px;\n\n    .react-calendar__viewContainer {\n      display: flex;\n      margin: -0.5em;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .react-calendar__navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 0.5em;\n    border-bottom: 1px solid ", ";\n\n    button {\n      min-width: 44px;\n      background: none;\n      color: #999;\n      white-space: nowrap;\n      user-select: none;\n      padding: 0;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          color: #333;\n        }\n      }\n\n      &[disabled] {\n        color: #999;\n      }\n    }\n  }\n\n  .react-calendar__month-view {\n    .react-calendar__month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .react-calendar__month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .react-calendar__weekNumbers {\n      .react-calendar__tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .react-calendar__month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .react-calendar__month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .react-calendar__year-view,\n  .react-calendar__decade-view,\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .react-calendar__century-view {\n    .react-calendar__tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .react-calendar__tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.5em;\n    background: none;\n\n    &:disabled {\n      color: #ccc;\n      cursor: not-allowed;\n      abbr {\n        cursor: not-allowed;\n      }\n    }\n\n    &:enabled {\n      &:hover,\n      &:focus {\n        background-color: rgb(230, 230, 230);\n      }\n    }\n\n    &.react-calendar__tile--active,\n    &.react-calendar__tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.react-calendar__tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.react-calendar__tile--rangeStart,\n    &.react-calendar__tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), border, getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
+var StyledCalendarWrap = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  font-size: 14px;\n  background: #fff;\n  line-height: inherit;\n  box-sizing: border-box;\n  &.pc {\n    width: 280px;\n  }\n"])));
+var StyledCalendar = styled__default['default'](Calendar)(_templateObject2$7 || (_templateObject2$7 = _taggedTemplateLiteral(["\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  &.double-view {\n    min-width: 520px;\n    .viewContainer {\n      display: flex;\n      margin: -0.5em;\n      flex-wrap: nowrap;\n\n      > * {\n        width: 50%;\n        margin: 0.5em;\n      }\n    }\n  }\n\n  abbr {\n    font-size: 1em;\n    text-decoration: none;\n    cursor: default;\n  }\n\n  &,\n  & *,\n  & *:before,\n  & *:after {\n    box-sizing: border-box;\n  }\n\n  button {\n    margin: 0;\n    border: 0;\n    outline: none;\n\n    &:enabled {\n      &:hover {\n        cursor: pointer;\n      }\n    }\n  }\n\n  .navigation {\n    display: flex;\n    height: 44px;\n    margin-bottom: 0.5em;\n    border-bottom: 1px solid ", ";\n\n    button {\n      min-width: 44px;\n      background: none;\n      color: #999;\n      white-space: nowrap;\n      user-select: none;\n      padding: 0;\n\n      &:enabled {\n        &:hover,\n        &:focus {\n          color: #333;\n        }\n      }\n\n      &[disabled] {\n        color: #999;\n      }\n    }\n  }\n\n  .month-view {\n    .month-view__weekdays {\n      text-align: center;\n      text-transform: uppercase;\n      font-weight: bold;\n      font-size: 0.75em;\n\n      .month-view__weekdays__weekday {\n        padding: 0.5em;\n      }\n    }\n\n    .weekNumbers {\n      .tile {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 0.75em;\n        font-weight: bold;\n        padding: calc(0.75em / 0.75) calc(0.5em / 0.75);\n      }\n    }\n  }\n  .month-view__days__day--weekend {\n    /* color: rgb(209, 0, 0); */\n  }\n  .month-view__days__day--neighboringMonth {\n    color: #ccc;\n  }\n\n  .year-view,\n  .decade-view,\n  .century-view {\n    .tile {\n      padding: 1em 0.5em;\n    }\n  }\n\n  .century-view {\n    .tile {\n      padding: 1em 0;\n      font-size: 12px;\n    }\n  }\n\n  .tile {\n    max-width: 100%;\n    text-align: center;\n    cursor: pointer;\n    padding: 0.5em;\n    background: none;\n\n    &:disabled {\n      color: #ccc;\n      cursor: not-allowed;\n      abbr {\n        cursor: not-allowed;\n      }\n    }\n\n    &:enabled {\n      &:hover,\n      &:focus {\n        background-color: rgb(230, 230, 230);\n      }\n    }\n\n    &.tile--active,\n    &.tile--hasActive {\n      ", "\n      color:#fff;\n      &:hover,\n      &:focus {\n        ", "\n        color: #fff;\n      }\n    }\n\n    &.tile--range {\n      ", "\n      opacity: 0.4;\n    }\n    &.tile--rangeStart,\n    &.tile--rangeEnd {\n      ", "\n      opacity: 1;\n      color: #fff;\n    }\n  }\n"])), border, getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'), getThemeColorCss('background-color'));
 
 var _formatDay = function _formatDay(locale, date) {
   return date.getDate();
@@ -8102,12 +7957,13 @@ var Calendar$1 = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(val);
   }, [val, onChange]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledCalendar, {
-    className: clsx__default['default']('uc-calendar', className, {
-      mobile: isMobile
+  return /*#__PURE__*/React__default['default'].createElement(StyledCalendarWrap, {
+    className: clsx__default['default']('uc-calendar-wrap', className, {
+      mobile: isMobile,
+      pc: !isMobile
     }),
     style: style
-  }, header, /*#__PURE__*/React__default['default'].createElement(Calendar, _extends({}, rest, {
+  }, header, /*#__PURE__*/React__default['default'].createElement(StyledCalendar, _extends({}, rest, {
     onChange: setVal,
     calendarType: calendarType,
     locale: locale,
@@ -8119,7 +7975,7 @@ Calendar$1.displayName = 'UC-Calendar';
 
 var _excluded$S = ["className", "okText", "cancelText", "title", "todayText", "value", "onChange", "onOk", "style", "prefix", "suffix", "format"];
 
-var _templateObject$L, _templateObject2$7, _templateObject3;
+var _templateObject$L, _templateObject2$8, _templateObject3, _templateObject4;
 var offset = {
   x: 86,
   y: 0
@@ -8135,10 +7991,11 @@ var formatDate = function formatDate(v, dateFormat) {
   }
 };
 
+var StyledCalendar$1 = styled__default['default'](Calendar$1)(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  .uc-calendar {\n    box-shadow: none;\n  }\n"])));
 // header for mobile
-var StyledHeader = styled__default['default'].div(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
-var StyledToday = styled__default['default'].div(_templateObject2$7 || (_templateObject2$7 = _taggedTemplateLiteral(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
-var StyledMobileFooter = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  height: 30px;\n"])));
+var StyledHeader = styled__default['default'].div(_templateObject2$8 || (_templateObject2$8 = _taggedTemplateLiteral(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+var StyledToday = styled__default['default'].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
+var StyledMobileFooter = styled__default['default'].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  height: 30px;\n"])));
 /** 日期选择  */
 
 var DatePicker = function DatePicker(props) {
@@ -8224,7 +8081,7 @@ var DatePicker = function DatePicker(props) {
     visible: v,
     onClose: onClose,
     position: "bottom"
-  }, /*#__PURE__*/React__default['default'].createElement(Calendar$1, _extends({}, calendarProps, {
+  }, /*#__PURE__*/React__default['default'].createElement(StyledCalendar$1, _extends({}, calendarProps, {
     header: popHeader,
     footer: /*#__PURE__*/React__default['default'].createElement(StyledMobileFooter, null)
   })))) : /*#__PURE__*/React__default['default'].createElement(Popover, {
@@ -8237,7 +8094,7 @@ var DatePicker = function DatePicker(props) {
     maskStyle: {
       backgroundColor: 'transparent'
     },
-    content: /*#__PURE__*/React__default['default'].createElement(Calendar$1, _extends({}, calendarProps, {
+    content: /*#__PURE__*/React__default['default'].createElement(StyledCalendar$1, _extends({}, calendarProps, {
       onChange: function onChange(v) {
         setVal(v);
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);

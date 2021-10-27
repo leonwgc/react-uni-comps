@@ -17,18 +17,16 @@ var __assign = this && this.__assign || function () {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear } from '@wojtekmaj/date-utils';
 import TileGroup from '../TileGroup';
 import Month from './Month';
-import { tileGroupProps } from '../shared/propTypes';
 export default function Months(props) {
   var activeStartDate = props.activeStartDate;
   var start = 0;
   var end = 11;
   var year = getYear(activeStartDate);
   return /*#__PURE__*/React.createElement(TileGroup, __assign({}, props, {
-    className: "react-calendar__year-view__months",
+    className: "year-view__months",
     dateTransform: function dateTransform(monthIndex) {
       var date = new Date();
       date.setFullYear(year, monthIndex, 1);
@@ -40,7 +38,7 @@ export default function Months(props) {
     start: start,
     tile: Month
   }));
-}
-Months.propTypes = __assign(__assign({}, tileGroupProps), {
-  locale: PropTypes.string
-});
+} // Months.propTypes = {
+//   ...tileGroupProps,
+//   locale: PropTypes.string,
+// };

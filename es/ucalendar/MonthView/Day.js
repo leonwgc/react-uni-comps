@@ -30,13 +30,11 @@ var __rest = this && this.__rest || function (s, e) {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getDayStart, getDayEnd } from '@wojtekmaj/date-utils';
 import Tile from '../Tile';
 import { isWeekend } from '../shared/dates';
 import { formatDay as defaultFormatDay, formatLongDate as defaultFormatLongDate } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
-var className = 'react-calendar__month-view__days__day';
+var className = 'month-view__days__day';
 export default function Day(_a) {
   var _b = _a.formatDay,
       formatDay = _b === void 0 ? defaultFormatDay : _b,
@@ -56,9 +54,9 @@ export default function Day(_a) {
     minDateTransform: getDayStart,
     view: "month"
   }), formatDay(locale, date));
-}
-Day.propTypes = __assign(__assign({}, tileProps), {
-  currentMonthIndex: PropTypes.number.isRequired,
-  formatDay: PropTypes.func,
-  formatLongDate: PropTypes.func
-});
+} // Day.propTypes = {
+//   ...tileProps,
+//   currentMonthIndex: PropTypes.number.isRequired,
+//   formatDay: PropTypes.func,
+//   formatLongDate: PropTypes.func,
+// };

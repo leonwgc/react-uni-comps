@@ -21,13 +21,12 @@ import { getDecadeStart } from '@wojtekmaj/date-utils';
 import TileGroup from '../TileGroup';
 import Decade from './Decade';
 import { getBeginOfCenturyYear } from '../shared/dates';
-import { tileGroupProps } from '../shared/propTypes';
 export default function Decades(props) {
   var activeStartDate = props.activeStartDate;
   var start = getBeginOfCenturyYear(activeStartDate);
   var end = start + 99;
   return /*#__PURE__*/React.createElement(TileGroup, __assign({}, props, {
-    className: "react-calendar__century-view__decades",
+    className: "century-view__decades",
     dateTransform: getDecadeStart,
     dateType: "decade",
     end: end,
@@ -36,4 +35,3 @@ export default function Decades(props) {
     tile: Decade
   }));
 }
-Decades.propTypes = __assign({}, tileGroupProps);

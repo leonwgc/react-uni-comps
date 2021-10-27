@@ -26,33 +26,32 @@ var __rest = this && this.__rest || function (s, e) {
   }
   return t;
 };
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 function toPercent(num) {
   return num + "%";
 }
 
-export default function Flex(_a) {
-  var children = _a.children,
-      className = _a.className,
-      direction = _a.direction,
-      count = _a.count,
-      offset = _a.offset,
-      style = _a.style,
-      wrap = _a.wrap,
-      otherProps = __rest(_a, ["children", "className", "direction", "count", "offset", "style", "wrap"]);
+export default function Flex(props) {
+  var children = props.children,
+      className = props.className,
+      direction = props.direction,
+      count = props.count,
+      offset = props.offset,
+      style = props.style,
+      wrap = props.wrap,
+      otherProps = __rest(props, ["children", "className", "direction", "count", "offset", "style", "wrap"]);
+
+  var st = __assign({
+    display: 'flex',
+    flexDirection: direction,
+    flexWrap: wrap ? 'wrap' : 'no-wrap'
+  }, style);
 
   return /*#__PURE__*/React.createElement("div", __assign({
     className: className,
-    style: __assign({
-      display: 'flex',
-      flexDirection: direction,
-      flexWrap: wrap ? 'wrap' : 'no-wrap'
-    }, style)
+    style: st
   }, otherProps), React.Children.map(children, function (child, index) {
     return /*#__PURE__*/React.cloneElement(child, __assign(__assign({}, child.props), {
       style: {
@@ -64,12 +63,3 @@ export default function Flex(_a) {
     }));
   }));
 }
-Flex.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  count: PropTypes.number.isRequired,
-  direction: PropTypes.string,
-  offset: PropTypes.number,
-  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  wrap: PropTypes.bool
-};

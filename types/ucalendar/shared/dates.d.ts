@@ -16,7 +16,7 @@ export declare function getBeginOfDecadeYear(date: any): any;
  * @param {Date} date Date.
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export declare function getBeginOfWeek(date: any, calendarType?: string): Date;
+export declare function getBeginOfWeek(date: Date, calendarType?: string): Date;
 /**
  * Gets week number according to ISO 8601 or US standard.
  * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
@@ -55,7 +55,7 @@ export declare const getEndPrevious2: (rangeType: any, date: any) => any;
  * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
-export declare function getRange(rangeType: any, date: any): any;
+export declare function getRange(rangeType: string, date: Date | Date[]): any;
 /**
  * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
  *
@@ -63,7 +63,7 @@ export declare function getRange(rangeType: any, date: any): any;
  * @param {Date} date1 First date.
  * @param {Date} date2 Second date.
  */
-export declare function getValueRange(rangeType: any, date1: any, date2: any): any[];
+export declare function getValueRange(rangeType: string, date1: Date, date2: Date): any[];
 /**
  * Returns a string labelling a century of a given date.
  * For example, for 2017 it will return 2001-2100.

@@ -30,12 +30,10 @@ var __rest = this && this.__rest || function (s, e) {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYear, getMonth, getDaysInMonth } from '@wojtekmaj/date-utils';
 import TileGroup from '../TileGroup';
 import Day from './Day';
 import { getDayOfWeek } from '../shared/dates';
-import { isCalendarType, tileGroupProps } from '../shared/propTypes';
 export default function Days(props) {
   var activeStartDate = props.activeStartDate,
       calendarType = props.calendarType;
@@ -82,7 +80,7 @@ export default function Days(props) {
   }();
 
   return /*#__PURE__*/React.createElement(TileGroup, __assign({}, otherProps, {
-    className: "react-calendar__month-view__days",
+    className: "month-view__days",
     count: 7,
     currentMonthIndex: monthIndex,
     dateTransform: function dateTransform(day) {
@@ -97,9 +95,9 @@ export default function Days(props) {
     start: start,
     tile: Day
   }));
-}
-Days.propTypes = __assign({
-  calendarType: isCalendarType.isRequired,
-  showFixedNumberOfWeeks: PropTypes.bool,
-  showNeighboringMonth: PropTypes.bool
-}, tileGroupProps);
+} // Days.propTypes = {
+//   calendarType: isCalendarType.isRequired,
+//   showFixedNumberOfWeeks: PropTypes.bool,
+//   showNeighboringMonth: PropTypes.bool,
+//   ...tileGroupProps,
+// };

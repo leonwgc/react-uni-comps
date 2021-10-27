@@ -25,29 +25,11 @@ var __extends = this && this.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { tileProps } from './shared/propTypes';
 
 function getValue(nextProps, prop) {
   var activeStartDate = nextProps.activeStartDate,
@@ -94,7 +76,7 @@ function (_super) {
     var _a = this.props,
         activeStartDate = _a.activeStartDate,
         children = _a.children,
-        classes = _a.classes,
+        className = _a.className,
         date = _a.date,
         formatAbbr = _a.formatAbbr,
         locale = _a.locale,
@@ -108,10 +90,12 @@ function (_super) {
         tileDisabled = _a.tileDisabled,
         view = _a.view;
     var _b = this.state,
-        tileClassName = _b.tileClassName,
-        tileContent = _b.tileContent;
+        _c = _b.tileClassName,
+        tileClassName = _c === void 0 ? '' : _c,
+        _d = _b.tileContent,
+        tileContent = _d === void 0 ? '' : _d;
     return /*#__PURE__*/React.createElement("button", {
-      className: clsx(classes, tileClassName),
+      className: clsx(className, tileClassName),
       disabled: minDate && minDateTransform(minDate) > date || maxDate && maxDateTransform(maxDate) < date || tileDisabled && tileDisabled({
         activeStartDate: activeStartDate,
         date: date,
@@ -137,9 +121,3 @@ function (_super) {
 }(Component);
 
 export default Tile;
-Tile.propTypes = __assign(__assign({}, tileProps), {
-  children: PropTypes.node.isRequired,
-  formatAbbr: PropTypes.func,
-  maxDateTransform: PropTypes.func.isRequired,
-  minDateTransform: PropTypes.func.isRequired
-});

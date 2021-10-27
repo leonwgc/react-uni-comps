@@ -24,6 +24,6 @@ export default function CenturyView(props) {
   }
 
   return /*#__PURE__*/React.createElement("div", {
-    className: "react-calendar__century-view"
+    className: "century-view"
   }, renderDecades());
 }

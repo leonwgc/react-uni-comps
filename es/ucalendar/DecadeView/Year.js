@@ -30,12 +30,11 @@ var __rest = this && this.__rest || function (s, e) {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getYearStart, getYearEnd } from '@wojtekmaj/date-utils';
 import Tile from '../Tile';
+import clsx from 'clsx';
 import { formatYear as defaultFormatYear } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
-var className = 'react-calendar__decade-view__years__year';
+var className = 'decade-view__years__year';
 export default function Year(_a) {
   var classes = _a.classes,
       _b = _a.formatYear,
@@ -45,12 +44,9 @@ export default function Year(_a) {
   var date = otherProps.date,
       locale = otherProps.locale;
   return /*#__PURE__*/React.createElement(Tile, __assign({}, otherProps, {
-    classes: [].concat(classes, className),
+    classes: clsx(classes, className),
     maxDateTransform: getYearEnd,
     minDateTransform: getYearStart,
     view: "decade"
   }), formatYear(locale, date));
 }
-Year.propTypes = __assign(__assign({}, tileProps), {
-  formatYear: PropTypes.func
-});

@@ -30,12 +30,10 @@ var __rest = this && this.__rest || function (s, e) {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getMonthStart, getMonthEnd } from '@wojtekmaj/date-utils';
 import Tile from '../Tile';
 import { formatMonth as defaultFormatMonth, formatMonthYear as defaultFormatMonthYear } from '../shared/dateFormatter';
-import { tileProps } from '../shared/propTypes';
-var className = 'react-calendar__year-view__months__month';
+var className = 'year-view__months__month';
 export default function Month(_a) {
   var classes = _a.classes,
       _b = _a.formatMonth,
@@ -53,8 +51,8 @@ export default function Month(_a) {
     minDateTransform: getMonthStart,
     view: "year"
   }), formatMonth(locale, date));
-}
-Month.propTypes = __assign(__assign({}, tileProps), {
-  formatMonth: PropTypes.func,
-  formatMonthYear: PropTypes.func
-});
+} // Month.propTypes = {
+//   ...tileProps,
+//   formatMonth: PropTypes.func,
+//   formatMonthYear: PropTypes.func,
+// };

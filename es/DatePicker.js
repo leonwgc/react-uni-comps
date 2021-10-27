@@ -63,12 +63,13 @@ var formatDate = function formatDate(v, dateFormat) {
   } else {
     return v && dayjs(v).format(dateFormat);
   }
-}; // header for mobile
+};
 
+var StyledCalendar = styled(Calendar)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .uc-calendar {\n    box-shadow: none;\n  }\n"], ["\n  .uc-calendar {\n    box-shadow: none;\n  }\n"]))); // header for mobile
 
-var StyledHeader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"], ["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
-var StyledToday = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"], ["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
-var StyledMobileFooter = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  height: 30px;\n"], ["\n  height: 30px;\n"])));
+var StyledHeader = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"], ["\n  display: flex;\n  height: 45px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #f7f7f7;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
+var StyledToday = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"], ["\n  padding: 12px;\n  text-align: right;\n  span {\n    cursor: pointer;\n    ", "\n  }\n"])), getThemeColorCss('color'));
+var StyledMobileFooter = styled.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  height: 30px;\n"], ["\n  height: 30px;\n"])));
 /** 日期选择  */
 
 var DatePicker = function DatePicker(props) {
@@ -152,7 +153,7 @@ var DatePicker = function DatePicker(props) {
     visible: v,
     onClose: onClose,
     position: "bottom"
-  }, /*#__PURE__*/React.createElement(Calendar, __assign({}, calendarProps, {
+  }, /*#__PURE__*/React.createElement(StyledCalendar, __assign({}, calendarProps, {
     header: popHeader,
     footer: /*#__PURE__*/React.createElement(StyledMobileFooter, null)
   })))) : /*#__PURE__*/React.createElement(Popover, {
@@ -165,7 +166,7 @@ var DatePicker = function DatePicker(props) {
     maskStyle: {
       backgroundColor: 'transparent'
     },
-    content: /*#__PURE__*/React.createElement(Calendar, __assign({}, calendarProps, {
+    content: /*#__PURE__*/React.createElement(StyledCalendar, __assign({}, calendarProps, {
       onChange: function onChange(v) {
         setVal(v);
         _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);
@@ -178,4 +179,4 @@ var DatePicker = function DatePicker(props) {
 
 DatePicker.displayName = 'UC-DatePicker';
 export default DatePicker;
-var templateObject_1, templateObject_2, templateObject_3;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;

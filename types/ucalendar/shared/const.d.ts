@@ -5,6 +5,8 @@ export declare const CALENDAR_TYPES: {
     US: string;
 };
 export declare const CALENDAR_TYPE_LOCALES: {
-    [x: string]: string[];
+    US: string[];
+    Arabic: string[];
+    Hebrew: string[];
 };
 export declare const WEEKDAYS: number[];

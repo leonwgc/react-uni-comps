@@ -30,10 +30,8 @@ var __rest = this && this.__rest || function (s, e) {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Flex from './Flex';
 import { getTileClasses } from './shared/utils';
-import { tileGroupProps } from './shared/propTypes';
 export default function TileGroup(_a) {
   var className = _a.className,
       _b = _a.count,
@@ -57,7 +55,7 @@ export default function TileGroup(_a) {
     var date = dateTransform(point);
     tiles.push( /*#__PURE__*/React.createElement(Tile, __assign({
       key: date.getTime(),
-      classes: getTileClasses({
+      className: getTileClasses({
         value: value,
         valueType: valueType,
         date: date,
@@ -76,12 +74,3 @@ export default function TileGroup(_a) {
     wrap: true
   }, tiles);
 }
-TileGroup.propTypes = __assign(__assign({}, tileGroupProps), {
-  activeStartDate: PropTypes.instanceOf(Date),
-  count: PropTypes.number,
-  dateTransform: PropTypes.func.isRequired,
-  dateType: PropTypes.string,
-  offset: PropTypes.number,
-  step: PropTypes.number,
-  tile: PropTypes.func.isRequired
-});

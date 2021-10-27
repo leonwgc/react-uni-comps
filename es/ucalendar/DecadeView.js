@@ -24,6 +24,6 @@ export default function DecadeView(props) {
   }
 
   return /*#__PURE__*/React.createElement("div", {
-    className: "react-calendar__decade-view"
+    className: "decade-view"
   }, renderYears());
 }

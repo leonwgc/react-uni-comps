@@ -17,13 +17,12 @@ var __assign = this && this.__assign || function () {
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
 export default function WeekNumber(_a) {
   var date = _a.date,
       onClickWeekNumber = _a.onClickWeekNumber,
       weekNumber = _a.weekNumber;
   var props = {
-    className: 'react-calendar__tile',
+    className: 'tile',
     style: {
       flexGrow: 1
     }
@@ -35,9 +34,8 @@ export default function WeekNumber(_a) {
     },
     type: "button"
   }), children) : /*#__PURE__*/React.createElement("div", __assign({}, props), children);
-}
-WeekNumber.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  onClickWeekNumber: PropTypes.func,
-  weekNumber: PropTypes.node.isRequired
-};
+} // WeekNumber.propTypes = {
+//   date: PropTypes.instanceOf(Date).isRequired,
+//   onClickWeekNumber: PropTypes.func,
+//   weekNumber: PropTypes.node.isRequired,
+// };

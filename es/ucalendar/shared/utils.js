@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { getRange } from './dates';
+import clsx from 'clsx';
 /**
  * Returns a value no smaller than min and no larger than max.
  *
@@ -55,14 +56,12 @@ function getRangeClassNames(valueRange, dateRange, baseClassName) {
 }
 
 export function getTileClasses(_a) {
-  var _b = _a === void 0 ? {} : _a,
-      value = _b.value,
-      valueType = _b.valueType,
-      date = _b.date,
-      dateType = _b.dateType,
-      hover = _b.hover;
-
-  var className = 'react-calendar__tile';
+  var value = _a.value,
+      valueType = _a.valueType,
+      date = _a.date,
+      dateType = _a.dateType,
+      hover = _a.hover;
+  var className = 'tile';
   var classes = [className];
 
   if (!date) {
@@ -106,5 +105,5 @@ export function getTileClasses(_a) {
     classes.push.apply(classes, hoverRangeClassNames);
   }
 
-  return classes;
+  return clsx(classes);
 }

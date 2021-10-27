@@ -24,6 +24,6 @@ export default function YearView(props) {
   }
 
   return /*#__PURE__*/React.createElement("div", {
-    className: "react-calendar__year-view"
+    className: "year-view"
   }, renderMonths());
 }
