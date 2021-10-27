@@ -84,7 +84,7 @@ export function getBeginOfDecadeYear(date) {
  * @param {Date} date Date.
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
-export function getBeginOfWeek(date: Date, calendarType = CALENDAR_TYPES.ISO_8601) {
+export function getBeginOfWeek(date, calendarType = CALENDAR_TYPES.ISO_8601) {
   const year = getYear(date);
   const monthIndex = getMonthIndex(date);
   const day = date.getDate() - getDayOfWeek(date, calendarType);
@@ -257,7 +257,7 @@ export const getEndPrevious2 = (rangeType, date) => {
  * @param {string} rangeType Range type (e.g. 'day')
  * @param {Date} date Date.
  */
-export function getRange(rangeType: string, date: Date | Date[]) {
+export function getRange(rangeType, date) {
   switch (rangeType) {
     case 'century':
       return getCenturyRange(date);
@@ -281,7 +281,7 @@ export function getRange(rangeType: string, date: Date | Date[]) {
  * @param {Date} date1 First date.
  * @param {Date} date2 Second date.
  */
-export function getValueRange(rangeType: string, date1: Date, date2: Date) {
+export function getValueRange(rangeType, date1, date2) {
   const rawNextValue = [date1, date2].sort((a, b) => a - b);
   return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
 }

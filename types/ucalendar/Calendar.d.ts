@@ -1,10 +1,7 @@
-import { Component } from 'react';
-declare class Calendar extends Component<any, any> {
-    state: {
-        activeStartDate: any;
-        value: any;
-        view: any;
-    };
+export default Calendar;
+declare class Calendar extends React.Component<any, any, any> {
+    constructor(props: any);
+    constructor(props: any, context: any);
     get activeStartDate(): any;
     get value(): any;
     get valueType(): string;
@@ -30,6 +27,18 @@ declare class Calendar extends Component<any, any> {
     onMouseLeave: () => void;
     renderContent(next: any): JSX.Element;
     renderNavigation(): JSX.Element;
-    render(): JSX.Element;
 }
-export default Calendar;
+declare namespace Calendar {
+    namespace defaultProps {
+        export { defaultMaxDate as maxDate };
+        export const maxDetail: string;
+        export { defaultMinDate as minDate };
+        export const minDetail: string;
+        export const returnValue: string;
+        export const showNavigation: boolean;
+        export const showNeighboringMonth: boolean;
+    }
+}
+import React from "react";
+declare const defaultMaxDate: Date;
+declare const defaultMinDate: Date;

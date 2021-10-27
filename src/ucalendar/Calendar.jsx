@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable  */
 import React, { Component } from 'react';
 
 import clsx from 'clsx';
@@ -157,7 +157,7 @@ function getInitialActiveStartDate(props) {
 
 const getIsSingleValue = (value) => value && [].concat(value).length === 1;
 
-class Calendar extends Component<any, any> {
+class Calendar extends Component {
   state = {
     /* eslint-disable react/destructuring-assignment */
     activeStartDate: this.props.defaultActiveStartDate,

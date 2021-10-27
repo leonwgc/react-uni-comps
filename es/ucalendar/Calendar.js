@@ -1,72 +1,52 @@
+var _excluded = ["activeStartDate", "defaultActiveStartDate", "defaultValue", "defaultView", "maxDetail", "minDetail", "value", "view"];
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var __extends = this && this.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return _extendStatics(d, b);
-  };
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    _extendStatics(d, b);
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-    function __() {
-      this.constructor = d;
-    }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    return t;
-  };
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-  return __assign.apply(this, arguments);
-};
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var __rest = this && this.__rest || function (s, e) {
-  var t = {};
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var __spreadArray = this && this.__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) {
-    to[j] = from[i];
-  }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
-  return to;
-};
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/* eslint-disable  */
 import React, { Component } from 'react';
 import clsx from 'clsx';
 import Navigation from './Calendar/Navigation';
@@ -82,8 +62,7 @@ defaultMinDate.setHours(0, 0, 0, 0);
 var defaultMaxDate = new Date(8.64e15);
 var baseClassName = 'uc-calendar';
 var allViews = ['century', 'decade', 'year', 'month'];
-
-var allValueTypes = __spreadArray(__spreadArray([], allViews.slice(1)), ['day']);
+var allValueTypes = [].concat(_toConsumableArray(allViews.slice(1)), ['day']);
 
 function toDate(value) {
   if (value instanceof Date) {
@@ -145,17 +124,17 @@ function getValue(value, index) {
   var valueDate = toDate(rawValue);
 
   if (isNaN(valueDate.getTime())) {
-    throw new Error("Invalid date: " + value);
+    throw new Error("Invalid date: ".concat(value));
   }
 
   return valueDate;
 }
 
-function getDetailValue(_a, index) {
-  var value = _a.value,
-      minDate = _a.minDate,
-      maxDate = _a.maxDate,
-      maxDetail = _a.maxDetail;
+function getDetailValue(_ref, index) {
+  var value = _ref.value,
+      minDate = _ref.minDate,
+      maxDate = _ref.maxDate,
+      maxDetail = _ref.maxDetail;
   var valuePiece = getValue(value, index);
 
   if (!valuePiece) {
@@ -213,7 +192,7 @@ function getInitialActiveStartDate(props) {
       minDetail = props.minDetail,
       value = props.value,
       view = props.view,
-      otherProps = __rest(props, ["activeStartDate", "defaultActiveStartDate", "defaultValue", "defaultView", "maxDetail", "minDetail", "value", "view"]);
+      otherProps = _objectWithoutProperties(props, _excluded);
 
   var rangeType = getView(view, minDetail, maxDetail);
   var valueFrom = activeStartDate || defaultActiveStartDate;
@@ -222,7 +201,7 @@ function getInitialActiveStartDate(props) {
     return getBegin(rangeType, valueFrom);
   }
 
-  return getActiveStartDate(__assign({
+  return getActiveStartDate(_objectSpread({
     maxDetail: maxDetail,
     minDetail: minDetail,
     value: value || defaultValue,
@@ -234,14 +213,21 @@ var getIsSingleValue = function getIsSingleValue(value) {
   return value && [].concat(value).length === 1;
 };
 
-var Calendar =
-/** @class */
-function (_super) {
-  __extends(Calendar, _super);
+var Calendar = /*#__PURE__*/function (_Component) {
+  _inherits(Calendar, _Component);
+
+  var _super = _createSuper(Calendar);
 
   function Calendar() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
+    var _this;
 
+    _classCallCheck(this, Calendar);
+
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(_args));
     _this.state = {
       /* eslint-disable react/destructuring-assignment */
       activeStartDate: _this.props.defaultActiveStartDate,
@@ -252,15 +238,16 @@ function (_super) {
     };
 
     _this.setStateAndCallCallbacks = function (nextState, event, callback) {
-      var _a = _this,
-          previousActiveStartDate = _a.activeStartDate,
-          previousView = _a.view;
-      var _b = _this.props,
-          allowPartialRange = _b.allowPartialRange,
-          onActiveStartDateChange = _b.onActiveStartDateChange,
-          onChange = _b.onChange,
-          onViewChange = _b.onViewChange,
-          selectRange = _b.selectRange;
+      var _assertThisInitialize = _assertThisInitialized(_this),
+          previousActiveStartDate = _assertThisInitialize.activeStartDate,
+          previousView = _assertThisInitialize.view;
+
+      var _this$props = _this.props,
+          allowPartialRange = _this$props.allowPartialRange,
+          onActiveStartDateChange = _this$props.onActiveStartDateChange,
+          onChange = _this$props.onChange,
+          onViewChange = _this$props.onViewChange,
+          selectRange = _this$props.selectRange;
       var prevArgs = {
         activeStartDate: previousActiveStartDate,
         view: previousView
@@ -309,10 +296,6 @@ function (_super) {
         if (callback) callback(args);
       });
     };
-    /**
-     * Called when the user uses navigation buttons.
-     */
-
 
     _this.setActiveStartDate = function (nextActiveStartDate, action) {
       _this.setStateAndCallCallbacks({
@@ -328,9 +311,10 @@ function (_super) {
 
       _this.onClickTile(nextActiveStartDate, event);
 
-      var _a = _this,
-          view = _a.view,
-          views = _a.views;
+      var _assertThisInitialize2 = _assertThisInitialized(_this),
+          view = _assertThisInitialize2.view,
+          views = _assertThisInitialize2.views;
+
       var onDrillDown = _this.props.onDrillDown;
       var nextView = views[views.indexOf(view) + 1];
 
@@ -346,10 +330,11 @@ function (_super) {
         return;
       }
 
-      var _a = _this,
-          activeStartDate = _a.activeStartDate,
-          view = _a.view,
-          views = _a.views;
+      var _assertThisInitialize3 = _assertThisInitialized(_this),
+          activeStartDate = _assertThisInitialize3.activeStartDate,
+          view = _assertThisInitialize3.view,
+          views = _assertThisInitialize3.views;
+
       var onDrillUp = _this.props.onDrillUp;
       var nextView = views[views.indexOf(view) - 1];
       var nextActiveStartDate = getBegin(nextView, activeStartDate);
@@ -370,9 +355,9 @@ function (_super) {
 
       if (selectRange) {
         // Range selection turned on
-        var _a = _this,
-            previousValue = _a.value,
-            valueType = _a.valueType;
+        var _assertThisInitialize4 = _assertThisInitialized(_this),
+            previousValue = _assertThisInitialize4.value,
+            valueType = _assertThisInitialize4.valueType;
 
         if (!getIsSingleValue(previousValue)) {
           // Value has 0 or 2 elements - either way we're starting a new array
@@ -387,7 +372,7 @@ function (_super) {
         nextValue = _this.getProcessedValue(value);
       }
 
-      var nextActiveStartDate = getActiveStartDate(__assign(__assign({}, _this.props), {
+      var nextActiveStartDate = getActiveStartDate(_objectSpread(_objectSpread({}, _this.props), {}, {
         value: nextValue
       }));
       event.persist();
@@ -400,12 +385,14 @@ function (_super) {
     };
 
     _this.onClickTile = function (value, event) {
-      var view = _this.view;
-      var _a = _this.props,
-          onClickDay = _a.onClickDay,
-          onClickDecade = _a.onClickDecade,
-          onClickMonth = _a.onClickMonth,
-          onClickYear = _a.onClickYear;
+      var _assertThisInitialize5 = _assertThisInitialized(_this),
+          view = _assertThisInitialize5.view;
+
+      var _this$props2 = _this.props,
+          onClickDay = _this$props2.onClickDay,
+          onClickDecade = _this$props2.onClickDecade,
+          onClickMonth = _this$props2.onClickMonth,
+          onClickYear = _this$props2.onClickYear;
 
       var callback = function () {
         switch (view) {
@@ -422,7 +409,7 @@ function (_super) {
             return onClickDay;
 
           default:
-            throw new Error("Invalid view: " + view + ".");
+            throw new Error("Invalid view: ".concat(view, "."));
         }
       }();
 
@@ -450,20 +437,19 @@ function (_super) {
     return _this;
   }
 
-  Object.defineProperty(Calendar.prototype, "activeStartDate", {
+  _createClass(Calendar, [{
+    key: "activeStartDate",
     get: function get() {
       var activeStartDateProps = this.props.activeStartDate;
       var activeStartDateState = this.state.activeStartDate;
       return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "value", {
+    }
+  }, {
+    key: "value",
     get: function get() {
-      var _a = this.props,
-          selectRange = _a.selectRange,
-          valueProps = _a.value;
+      var _this$props3 = this.props,
+          selectRange = _this$props3.selectRange,
+          valueProps = _this$props3.value;
       var valueState = this.state.value; // In the middle of range selection, use value from state
 
       if (selectRange && getIsSingleValue(valueState)) {
@@ -471,276 +457,256 @@ function (_super) {
       }
 
       return valueProps !== undefined ? valueProps : valueState;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "valueType", {
+    }
+  }, {
+    key: "valueType",
     get: function get() {
       var maxDetail = this.props.maxDetail;
       return getValueType(maxDetail);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "view", {
+    }
+  }, {
+    key: "view",
     get: function get() {
-      var _a = this.props,
-          minDetail = _a.minDetail,
-          maxDetail = _a.maxDetail,
-          viewProps = _a.view;
+      var _this$props4 = this.props,
+          minDetail = _this$props4.minDetail,
+          maxDetail = _this$props4.maxDetail,
+          viewProps = _this$props4.view;
       var viewState = this.state.view;
       return getView(viewProps || viewState, minDetail, maxDetail);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "views", {
+    }
+  }, {
+    key: "views",
     get: function get() {
-      var _a = this.props,
-          minDetail = _a.minDetail,
-          maxDetail = _a.maxDetail;
+      var _this$props5 = this.props,
+          minDetail = _this$props5.minDetail,
+          maxDetail = _this$props5.maxDetail;
       return getLimitedViews(minDetail, maxDetail);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "hover", {
+    }
+  }, {
+    key: "hover",
     get: function get() {
       var selectRange = this.props.selectRange;
       var hover = this.state.hover;
       return selectRange ? hover : null;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "drillDownAvailable", {
+    }
+  }, {
+    key: "drillDownAvailable",
     get: function get() {
-      var _a = this,
-          view = _a.view,
-          views = _a.views;
-
+      var view = this.view,
+          views = this.views;
       return views.indexOf(view) < views.length - 1;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Calendar.prototype, "drillUpAvailable", {
+    }
+  }, {
+    key: "drillUpAvailable",
     get: function get() {
-      var _a = this,
-          view = _a.view,
-          views = _a.views;
-
+      var view = this.view,
+          views = this.views;
       return views.indexOf(view) > 0;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  /**
-   * Gets current value in a desired format.
-   */
+    }
+    /**
+     * Gets current value in a desired format.
+     */
 
-  Calendar.prototype.getProcessedValue = function (value) {
-    var _a = this.props,
-        minDate = _a.minDate,
-        maxDate = _a.maxDate,
-        maxDetail = _a.maxDetail,
-        returnValue = _a.returnValue;
+  }, {
+    key: "getProcessedValue",
+    value: function getProcessedValue(value) {
+      var _this$props6 = this.props,
+          minDate = _this$props6.minDate,
+          maxDate = _this$props6.maxDate,
+          maxDetail = _this$props6.maxDetail,
+          returnValue = _this$props6.returnValue;
 
-    var processFunction = function () {
-      switch (returnValue) {
-        case 'start':
-          return getDetailValueFrom;
+      var processFunction = function () {
+        switch (returnValue) {
+          case 'start':
+            return getDetailValueFrom;
 
-        case 'end':
-          return getDetailValueTo;
+          case 'end':
+            return getDetailValueTo;
 
-        case 'range':
-          return getDetailValueArray;
+          case 'range':
+            return getDetailValueArray;
+
+          default:
+            throw new Error('Invalid returnValue.');
+        }
+      }();
+
+      return processFunction({
+        value: value,
+        minDate: minDate,
+        maxDate: maxDate,
+        maxDetail: maxDetail
+      });
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent(next) {
+      var currentActiveStartDate = this.activeStartDate,
+          onMouseOver = this.onMouseOver,
+          valueType = this.valueType,
+          value = this.value,
+          view = this.view;
+      var _this$props7 = this.props,
+          calendarType = _this$props7.calendarType,
+          locale = _this$props7.locale,
+          maxDate = _this$props7.maxDate,
+          minDate = _this$props7.minDate,
+          selectRange = _this$props7.selectRange,
+          tileClassName = _this$props7.tileClassName,
+          tileContent = _this$props7.tileContent,
+          tileDisabled = _this$props7.tileDisabled;
+      var hover = this.hover;
+      var activeStartDate = next ? getBeginNext(view, currentActiveStartDate) : getBegin(view, currentActiveStartDate);
+      var onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
+      var commonProps = {
+        activeStartDate: activeStartDate,
+        hover: hover,
+        locale: locale,
+        maxDate: maxDate,
+        minDate: minDate,
+        onClick: onClick,
+        onMouseOver: selectRange ? onMouseOver : null,
+        tileClassName: tileClassName,
+        tileContent: tileContent,
+        tileDisabled: tileDisabled,
+        value: value,
+        valueType: valueType
+      };
+
+      switch (view) {
+        case 'century':
+          {
+            var formatYear = this.props.formatYear;
+            return /*#__PURE__*/React.createElement(CenturyView, _extends({
+              formatYear: formatYear
+            }, commonProps));
+          }
+
+        case 'decade':
+          {
+            var _formatYear = this.props.formatYear;
+            return /*#__PURE__*/React.createElement(DecadeView, _extends({
+              formatYear: _formatYear
+            }, commonProps));
+          }
+
+        case 'year':
+          {
+            var _this$props8 = this.props,
+                formatMonth = _this$props8.formatMonth,
+                formatMonthYear = _this$props8.formatMonthYear;
+            return /*#__PURE__*/React.createElement(YearView, _extends({
+              formatMonth: formatMonth,
+              formatMonthYear: formatMonthYear
+            }, commonProps));
+          }
+
+        case 'month':
+          {
+            var _this$props9 = this.props,
+                formatDay = _this$props9.formatDay,
+                formatLongDate = _this$props9.formatLongDate,
+                formatShortWeekday = _this$props9.formatShortWeekday,
+                onClickWeekNumber = _this$props9.onClickWeekNumber,
+                showDoubleView = _this$props9.showDoubleView,
+                showFixedNumberOfWeeks = _this$props9.showFixedNumberOfWeeks,
+                showNeighboringMonth = _this$props9.showNeighboringMonth,
+                showWeekNumbers = _this$props9.showWeekNumbers;
+            var onMouseLeave = this.onMouseLeave;
+            return /*#__PURE__*/React.createElement(MonthView, _extends({
+              calendarType: calendarType,
+              formatDay: formatDay,
+              formatLongDate: formatLongDate,
+              formatShortWeekday: formatShortWeekday,
+              onClickWeekNumber: onClickWeekNumber,
+              onMouseLeave: selectRange ? onMouseLeave : null,
+              showFixedNumberOfWeeks: showFixedNumberOfWeeks || showDoubleView,
+              showNeighboringMonth: showNeighboringMonth,
+              showWeekNumbers: showWeekNumbers
+            }, commonProps));
+          }
 
         default:
-          throw new Error('Invalid returnValue.');
+          throw new Error("Invalid view: ".concat(view, "."));
       }
-    }();
-
-    return processFunction({
-      value: value,
-      minDate: minDate,
-      maxDate: maxDate,
-      maxDetail: maxDetail
-    });
-  };
-
-  Calendar.prototype.renderContent = function (next) {
-    var _a = this,
-        currentActiveStartDate = _a.activeStartDate,
-        onMouseOver = _a.onMouseOver,
-        valueType = _a.valueType,
-        value = _a.value,
-        view = _a.view;
-
-    var _b = this.props,
-        calendarType = _b.calendarType,
-        locale = _b.locale,
-        maxDate = _b.maxDate,
-        minDate = _b.minDate,
-        selectRange = _b.selectRange,
-        tileClassName = _b.tileClassName,
-        tileContent = _b.tileContent,
-        tileDisabled = _b.tileDisabled;
-    var hover = this.hover;
-    var activeStartDate = next ? getBeginNext(view, currentActiveStartDate) : getBegin(view, currentActiveStartDate);
-    var onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
-    var commonProps = {
-      activeStartDate: activeStartDate,
-      hover: hover,
-      locale: locale,
-      maxDate: maxDate,
-      minDate: minDate,
-      onClick: onClick,
-      onMouseOver: selectRange ? onMouseOver : null,
-      tileClassName: tileClassName,
-      tileContent: tileContent,
-      tileDisabled: tileDisabled,
-      value: value,
-      valueType: valueType
-    };
-
-    switch (view) {
-      case 'century':
-        {
-          var formatYear = this.props.formatYear;
-          return /*#__PURE__*/React.createElement(CenturyView, __assign({
-            formatYear: formatYear
-          }, commonProps));
-        }
-
-      case 'decade':
-        {
-          var formatYear = this.props.formatYear;
-          return /*#__PURE__*/React.createElement(DecadeView, __assign({
-            formatYear: formatYear
-          }, commonProps));
-        }
-
-      case 'year':
-        {
-          var _c = this.props,
-              formatMonth = _c.formatMonth,
-              formatMonthYear = _c.formatMonthYear;
-          return /*#__PURE__*/React.createElement(YearView, __assign({
-            formatMonth: formatMonth,
-            formatMonthYear: formatMonthYear
-          }, commonProps));
-        }
-
-      case 'month':
-        {
-          var _d = this.props,
-              formatDay = _d.formatDay,
-              formatLongDate = _d.formatLongDate,
-              formatShortWeekday = _d.formatShortWeekday,
-              onClickWeekNumber = _d.onClickWeekNumber,
-              showDoubleView = _d.showDoubleView,
-              showFixedNumberOfWeeks = _d.showFixedNumberOfWeeks,
-              showNeighboringMonth = _d.showNeighboringMonth,
-              showWeekNumbers = _d.showWeekNumbers;
-          var onMouseLeave = this.onMouseLeave;
-          return /*#__PURE__*/React.createElement(MonthView, __assign({
-            calendarType: calendarType,
-            formatDay: formatDay,
-            formatLongDate: formatLongDate,
-            formatShortWeekday: formatShortWeekday,
-            onClickWeekNumber: onClickWeekNumber,
-            onMouseLeave: selectRange ? onMouseLeave : null,
-            showFixedNumberOfWeeks: showFixedNumberOfWeeks || showDoubleView,
-            showNeighboringMonth: showNeighboringMonth,
-            showWeekNumbers: showWeekNumbers
-          }, commonProps));
-        }
-
-      default:
-        throw new Error("Invalid view: " + view + ".");
     }
-  };
+  }, {
+    key: "renderNavigation",
+    value: function renderNavigation() {
+      var showNavigation = this.props.showNavigation;
 
-  Calendar.prototype.renderNavigation = function () {
-    var showNavigation = this.props.showNavigation;
+      if (!showNavigation) {
+        return null;
+      }
 
-    if (!showNavigation) {
-      return null;
+      var activeStartDate = this.activeStartDate,
+          view = this.view,
+          views = this.views;
+      var _this$props10 = this.props,
+          formatMonthYear = _this$props10.formatMonthYear,
+          formatYear = _this$props10.formatYear,
+          locale = _this$props10.locale,
+          maxDate = _this$props10.maxDate,
+          minDate = _this$props10.minDate,
+          navigationAriaLabel = _this$props10.navigationAriaLabel,
+          navigationAriaLive = _this$props10.navigationAriaLive,
+          navigationLabel = _this$props10.navigationLabel,
+          next2AriaLabel = _this$props10.next2AriaLabel,
+          next2Label = _this$props10.next2Label,
+          nextAriaLabel = _this$props10.nextAriaLabel,
+          nextLabel = _this$props10.nextLabel,
+          prev2AriaLabel = _this$props10.prev2AriaLabel,
+          prev2Label = _this$props10.prev2Label,
+          prevAriaLabel = _this$props10.prevAriaLabel,
+          prevLabel = _this$props10.prevLabel,
+          showDoubleView = _this$props10.showDoubleView;
+      return /*#__PURE__*/React.createElement(Navigation, {
+        activeStartDate: activeStartDate,
+        drillUp: this.drillUp,
+        formatMonthYear: formatMonthYear,
+        formatYear: formatYear,
+        locale: locale,
+        maxDate: maxDate,
+        minDate: minDate,
+        navigationAriaLabel: navigationAriaLabel,
+        navigationAriaLive: navigationAriaLive,
+        navigationLabel: navigationLabel,
+        next2AriaLabel: next2AriaLabel,
+        next2Label: next2Label,
+        nextAriaLabel: nextAriaLabel,
+        nextLabel: nextLabel,
+        prev2AriaLabel: prev2AriaLabel,
+        prev2Label: prev2Label,
+        prevAriaLabel: prevAriaLabel,
+        prevLabel: prevLabel,
+        setActiveStartDate: this.setActiveStartDate,
+        showDoubleView: showDoubleView,
+        view: view,
+        views: views
+      });
     }
-
-    var _a = this,
-        activeStartDate = _a.activeStartDate,
-        view = _a.view,
-        views = _a.views;
-
-    var _b = this.props,
-        formatMonthYear = _b.formatMonthYear,
-        formatYear = _b.formatYear,
-        locale = _b.locale,
-        maxDate = _b.maxDate,
-        minDate = _b.minDate,
-        navigationAriaLabel = _b.navigationAriaLabel,
-        navigationAriaLive = _b.navigationAriaLive,
-        navigationLabel = _b.navigationLabel,
-        next2AriaLabel = _b.next2AriaLabel,
-        next2Label = _b.next2Label,
-        nextAriaLabel = _b.nextAriaLabel,
-        nextLabel = _b.nextLabel,
-        prev2AriaLabel = _b.prev2AriaLabel,
-        prev2Label = _b.prev2Label,
-        prevAriaLabel = _b.prevAriaLabel,
-        prevLabel = _b.prevLabel,
-        showDoubleView = _b.showDoubleView;
-    return /*#__PURE__*/React.createElement(Navigation, {
-      activeStartDate: activeStartDate,
-      drillUp: this.drillUp,
-      formatMonthYear: formatMonthYear,
-      formatYear: formatYear,
-      locale: locale,
-      maxDate: maxDate,
-      minDate: minDate,
-      navigationAriaLabel: navigationAriaLabel,
-      navigationAriaLive: navigationAriaLive,
-      navigationLabel: navigationLabel,
-      next2AriaLabel: next2AriaLabel,
-      next2Label: next2Label,
-      nextAriaLabel: nextAriaLabel,
-      nextLabel: nextLabel,
-      prev2AriaLabel: prev2AriaLabel,
-      prev2Label: prev2Label,
-      prevAriaLabel: prevAriaLabel,
-      prevLabel: prevLabel,
-      setActiveStartDate: this.setActiveStartDate,
-      showDoubleView: showDoubleView,
-      view: view,
-      views: views
-    });
-  };
-
-  Calendar.prototype.render = function () {
-    var _a = this.props,
-        className = _a.className,
-        inputRef = _a.inputRef,
-        selectRange = _a.selectRange,
-        showDoubleView = _a.showDoubleView;
-
-    var _b = this,
-        onMouseLeave = _b.onMouseLeave,
-        value = _b.value;
-
-    var valueArray = [].concat(value);
-    return /*#__PURE__*/React.createElement("div", {
-      className: clsx(baseClassName, selectRange && valueArray.length === 1 && baseClassName + "--selectRange", showDoubleView && "double-view", className),
-      ref: inputRef
-    }, this.renderNavigation(), /*#__PURE__*/React.createElement("div", {
-      className: "viewContainer",
-      onBlur: selectRange ? onMouseLeave : null,
-      onMouseLeave: selectRange ? onMouseLeave : null
-    }, this.renderContent(), showDoubleView && this.renderContent(true)));
-  };
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props11 = this.props,
+          className = _this$props11.className,
+          inputRef = _this$props11.inputRef,
+          selectRange = _this$props11.selectRange,
+          showDoubleView = _this$props11.showDoubleView;
+      var onMouseLeave = this.onMouseLeave,
+          value = this.value;
+      var valueArray = [].concat(value);
+      return /*#__PURE__*/React.createElement("div", {
+        className: clsx(baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "double-view", className),
+        ref: inputRef
+      }, this.renderNavigation(), /*#__PURE__*/React.createElement("div", {
+        className: "viewContainer",
+        onBlur: selectRange ? onMouseLeave : null,
+        onMouseLeave: selectRange ? onMouseLeave : null
+      }, this.renderContent(), showDoubleView && this.renderContent(true)));
+    }
+  }]);
 
   return Calendar;
 }(Component);

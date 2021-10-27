@@ -7,11 +7,8 @@ var FRIDAY = WEEKDAYS[5];
 var SATURDAY = WEEKDAYS[6];
 /* Simple getters - getting a property of a given point in time */
 
-export function getDayOfWeek(date, calendarType) {
-  if (calendarType === void 0) {
-    calendarType = CALENDAR_TYPES.ISO_8601;
-  }
-
+export function getDayOfWeek(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
   var weekday = date.getDay();
 
   switch (calendarType) {
@@ -57,11 +54,8 @@ export function getBeginOfDecadeYear(date) {
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
 
-export function getBeginOfWeek(date, calendarType) {
-  if (calendarType === void 0) {
-    calendarType = CALENDAR_TYPES.ISO_8601;
-  }
-
+export function getBeginOfWeek(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
   var year = getYear(date);
   var monthIndex = getMonthIndex(date);
   var day = date.getDate() - getDayOfWeek(date, calendarType);
@@ -76,11 +70,8 @@ export function getBeginOfWeek(date, calendarType) {
  * @param {string} calendarType Calendar type. Can be ISO 8601 or US.
  */
 
-export function getWeekNumber(date, calendarType) {
-  if (calendarType === void 0) {
-    calendarType = CALENDAR_TYPES.ISO_8601;
-  }
-
+export function getWeekNumber(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
   var calendarTypeForWeekNumber = calendarType === CALENDAR_TYPES.US ? CALENDAR_TYPES.US : CALENDAR_TYPES.ISO_8601;
   var beginOfWeek = getBeginOfWeek(date, calendarTypeForWeekNumber);
   var year = getYear(date) + 1;
@@ -124,7 +115,7 @@ export function getBegin(rangeType, date) {
       return getDayStart(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 export function getBeginPrevious(rangeType, date) {
@@ -142,7 +133,7 @@ export function getBeginPrevious(rangeType, date) {
       return getPreviousMonthStart(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 export function getBeginNext(rangeType, date) {
@@ -160,7 +151,7 @@ export function getBeginNext(rangeType, date) {
       return getNextMonthStart(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 export var getBeginPrevious2 = function getBeginPrevious2(rangeType, date) {
@@ -175,7 +166,7 @@ export var getBeginPrevious2 = function getBeginPrevious2(rangeType, date) {
       return getPreviousMonthStart(date, -12);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 };
 export var getBeginNext2 = function getBeginNext2(rangeType, date) {
@@ -190,7 +181,7 @@ export var getBeginNext2 = function getBeginNext2(rangeType, date) {
       return getNextMonthStart(date, 12);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 };
 /**
@@ -218,7 +209,7 @@ export function getEnd(rangeType, date) {
       return getDayEnd(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 export function getEndPrevious(rangeType, date) {
@@ -236,7 +227,7 @@ export function getEndPrevious(rangeType, date) {
       return getPreviousMonthEnd(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 export var getEndPrevious2 = function getEndPrevious2(rangeType, date) {
@@ -251,7 +242,7 @@ export var getEndPrevious2 = function getEndPrevious2(rangeType, date) {
       return getPreviousMonthEnd(date, -12);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 };
 /**
@@ -279,7 +270,7 @@ export function getRange(rangeType, date) {
       return getDayRange(date);
 
     default:
-      throw new Error("Invalid rangeType: " + rangeType);
+      throw new Error("Invalid rangeType: ".concat(rangeType));
   }
 }
 /**
@@ -297,11 +288,9 @@ export function getValueRange(rangeType, date1, date2) {
   return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
 }
 
-function toYearLabel(locale, formatYear, dates) {
-  if (formatYear === void 0) {
-    formatYear = defaultFormatYear;
-  }
-
+function toYearLabel(locale) {
+  var formatYear = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultFormatYear;
+  var dates = arguments.length > 2 ? arguments[2] : undefined;
   return dates.map(function (date) {
     return formatYear(locale, date);
   }).join(' – ');
@@ -333,11 +322,8 @@ export function getDecadeLabel(locale, formatYear, date) {
  * @param {Date} date Date.
  */
 
-export function isWeekend(date, calendarType) {
-  if (calendarType === void 0) {
-    calendarType = CALENDAR_TYPES.ISO_8601;
-  }
-
+export function isWeekend(date) {
+  var calendarType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CALENDAR_TYPES.ISO_8601;
   var weekday = date.getDay();
 
   switch (calendarType) {
