@@ -124,7 +124,7 @@ export default function RightDrawer(props) {
         }
       >
         <StyledRightGroup style={{ padding: 20 }}>
-          <Button className="btn-new" icon={<Icon type="icon-jia2" />}>
+          <Button className="btn-new" icon={<Icon type="uc-icon-jia2" />}>
             新建权限组
           </Button>
           <div className="card-list">

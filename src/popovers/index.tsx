@@ -212,7 +212,11 @@ const Popover = (props: Props): React.ReactElement => {
 
                 {/* close */}
                 {closable && (
-                  <Icon type="icon-guanbi" className={clsx('uc-popover-close')} onClick={onClose} />
+                  <Icon
+                    type="uc-icon-guanbi"
+                    className={clsx('uc-popover-close')}
+                    onClick={onClose}
+                  />
                 )}
 
                 {/** content */}

@@ -245,7 +245,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
       closeOnMaskClick={closeOnMaskClick}
     >
       <div className={clsx('uc-alert-dialog-wrap')}>
-        {closable && <Icon type="icon-guanbi" className="close" onClick={onClose} />}
+        {closable && <Icon type="uc-icon-guanbi" className="close" onClick={onClose} />}
         {title && <div className={clsx('title')}>{title}</div>}
         <div className={clsx('content')}>{content}</div>
         <div className={clsx('footer')}>

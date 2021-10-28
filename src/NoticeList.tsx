@@ -151,7 +151,7 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
             {props.extra}
             {props.closeable && (
               <Icon
-                type="icon-guanbi"
+                type="uc-icon-guanbi"
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
                   setVisible(false);

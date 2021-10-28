@@ -41,7 +41,7 @@ const Icon: React.ForwardRefExoticComponent<Props> & {
   const { type, className, ...rest } = props;
 
   return (
-    <StyledIcon {...rest} ref={ref} className={clsx('uc-icon', className)}>
+    <StyledIcon {...rest} ref={ref} className={clsx('uc-icon', className, type)}>
       <svg {...SVGProps}>
         <use xlinkHref={`#${type}`} />
       </svg>
@@ -60,6 +60,6 @@ Icon.loadFromIconfontCN = (scriptUrl: string): void => {
 };
 
 // load ruc icons
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_vzc79u42a8.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
 
 export default Icon;
