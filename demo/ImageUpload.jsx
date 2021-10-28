@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '../src/styled';
 import { Image } from 'antd';
-import { Space, FileInputTrigger, Button, Icon } from '../src';
+import { Space, FileInputTrigger, Button, Icon, ImageViewer } from '../src';
 import { PlusOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
@@ -70,6 +70,7 @@ const StyledImageUpload = styled.div`
 export default function App() {
   const [files, setFiles] = useState([]);
   const [url, setUrl] = useState('');
+  const [v, setV] = useState(false);
 
   useEffect(() => {
     if (files.length) {
@@ -84,9 +85,16 @@ export default function App() {
       {files.length ? (
         <StyledImageUpload className={'with-image'} style={{ overflow: 'hidden' }}>
           <div className="del" onClick={() => setFiles([])}>
-            <Icon type="icon-guanbi" />
+            <Icon type="uc-icon-guanbi" />
           </div>
-          <Image width={108} height={108} src={url} />
+          <img width={108} height={108} src={url} onClick={() => setV(true)} />
+          <ImageViewer
+            images={[url]}
+            visible={v}
+            onClose={() => {
+              setV(false);
+            }}
+          />
           <FileInputTrigger
             accept="image/*"
             onChange={(files) => {
