@@ -182,7 +182,7 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           fontSize: size,
         }}
       >
-        <Icon type="icon-tick" />
+        <Icon type="uc-icon-tick" />
       </div>
       {children && <span className="text">{children}</span>}
     </StyledCheckboxBaseWrapper>

@@ -33,10 +33,10 @@ export default function App() {
         delay={100}
         extra={
           <div>
-            <Icon type="icon-zujian" /> extra
+            <Icon type="uc-icon-zujian" /> extra
           </div>
         }
-        icon={<Icon type="icon-tips" />}
+        icon={<Icon type="uc-icon-tips" />}
         content="各位请注意，当前文本超出了屏幕宽度，组件会自动开启滚动功能，前后停留时间和滚动速度可以自定义设置，更多用法请参见使用文档"
       />
     </div>

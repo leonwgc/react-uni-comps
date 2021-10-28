@@ -68,7 +68,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
   const {
     content,
     delay = 2000,
-    icon = <Icon type="icon-horn" />,
+    icon = <Icon type="uc-icon-horn" />,
     speed = 50,
     closeable = false,
     className,
