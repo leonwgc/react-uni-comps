@@ -52,6 +52,7 @@ yarn add react-uni-comps
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
 - Spinner（加载中）
+- Drawer (抽屉)
 
 #### 导航组件
 - Tabs (选项卡切换)

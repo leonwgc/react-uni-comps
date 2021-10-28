@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Icon, Tabs, Popup, Space, Button, Avatar } from '../src';
-import Drawer from '../src/Drawer';
+import { Icon, Tabs, Space, Button, Avatar, Drawer } from '../src';
 import styled from '../src/styled';
 
 // example to implement Drawer
