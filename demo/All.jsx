@@ -495,15 +495,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Button')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> Clickable Effect
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => console.log(1)}
-      ></Cell>
 
       <Cell
         title={

@@ -32,7 +32,7 @@ export default function App() {
           })
         }
       >
-        <Icon type="icon-jian2" />
+        <Icon type="uc-icon-jian2" />
       </Button>
       <Button
         onClick={() =>
@@ -41,7 +41,7 @@ export default function App() {
           })
         }
       >
-        <Icon type="icon-jia2" />
+        <Icon type="uc-icon-jia2" />
       </Button>
     </div>
   );

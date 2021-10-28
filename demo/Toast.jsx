@@ -34,7 +34,7 @@ export default function App() {
                   size={12}
                   style={{ width: 120, textAlign: 'center', color: '#fff' }}
                 >
-                  <Icon type="icon-tick" style={{ fontSize: 40 }} />
+                  <Icon type="uc-icon-tick" style={{ fontSize: 40 }} />
                   认证成功
                 </Space>
               ),
