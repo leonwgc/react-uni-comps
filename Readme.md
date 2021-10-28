@@ -103,6 +103,13 @@ yarn add react-uni-comps
 - isBrowser(是否是浏览器)
 - isMobile (是否是移动端)
 
+### Hooks
+- useUpdateEffect (执行更新 effect) 
+- useDebounce （返回memorized防抖函数）
+- useThrottle （返回memorized节流函数）
+- useInViewport (监听元素是否在视口内)
+- useCallbackRef (保存最新的值在ref中)
+
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载

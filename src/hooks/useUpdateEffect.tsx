@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 /**
- *  非第一次加载执行 effect
+ *  执行更新 effect
  *
  * @param {() => void} effect
  * @param {Array<unknown>} [deps=[]]

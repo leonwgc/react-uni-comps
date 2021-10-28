@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 /**
- *  get the latest callback from ref
+ *  保存最新的值在ref中
  *
  * @export
  * @template T

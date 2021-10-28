@@ -1178,6 +1178,18 @@ var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, 
 });
 Spinner.displayName = 'UC-Spinner';
 
+/**
+ * 监听元素是否在视口内
+ *
+ * @param {RefObject<HTMLElement>} ref
+ * @param {*} [rootRef=null]
+ * @param {({
+ *     rootMargin?: string;
+ *     threshold?: number | number[];
+ *   })} [options]
+ * @return {*}  {boolean}
+ */
+
 function useInViewport(ref) {
   var rootRef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   var options = arguments.length > 2 ? arguments[2] : undefined;
@@ -2208,6 +2220,12 @@ var Skeleton = function Skeleton(props) {
 };
 
 /* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  执行更新 effect
+ *
+ * @param {() => void} effect
+ * @param {Array<unknown>} [deps=[]]
+ */
 
 var useUpdateEffect = function useUpdateEffect(effect) {
   var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -2222,7 +2240,7 @@ var useUpdateEffect = function useUpdateEffect(effect) {
 };
 
 /**
- *  get the latest callback from ref
+ *  保存最新的值在ref中
  *
  * @export
  * @template T
@@ -8107,6 +8125,81 @@ var DatePicker = function DatePicker(props) {
 
 DatePicker.displayName = 'UC-DatePicker';
 
+var _excluded$T = ["wrapClassName", "wrapStyle", "className", "header", "children", "footer", "position"];
+
+var _templateObject$M;
+var StyledDrawerContent = styled__default['default'](Popup)(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  .content {\n    display: flex;\n    flex-direction: column;\n    background-color: #fff;\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
+/** 抽屉 */
+
+var Drawer = function Drawer(props) {
+  var wrapClassName = props.wrapClassName,
+      wrapStyle = props.wrapStyle,
+      className = props.className,
+      header = props.header,
+      children = props.children,
+      footer = props.footer,
+      _props$position = props.position,
+      position = _props$position === void 0 ? 'right' : _props$position,
+      rest = _objectWithoutProperties(props, _excluded$T);
+
+  var sty = position === 'left' || position === 'right' ? {
+    height: '100vh'
+  } : {
+    width: '100vw'
+  };
+  return /*#__PURE__*/React__default['default'].createElement(StyledDrawerContent, _extends({}, rest, {
+    className: clsx__default['default']('uc-drawer', className),
+    position: position
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content', wrapClassName),
+    style: _objectSpread2(_objectSpread2({}, sty), wrapStyle)
+  }, header && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "header"
+  }, header), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "body"
+  }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "footer"
+  }, footer)));
+};
+
+Drawer.displayName = 'UC-Drawer';
+
+/**
+ * 返回防抖函数
+ *
+ * @param {F} fn fn改变debounce fn不会变
+ * @param {number} [timeout=180]
+ * @param {Array<unknown>} [fnDeps=[]]
+ * @return {*}  {F}
+ */
+var useDebounce = function useDebounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
+  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  return (// eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useMemo(function () {
+      return debounce(fn, timeout);
+    }, fnDeps)
+  );
+};
+
+/**
+ * 返回节流函数
+ *
+ * @param {F} fn fn改变throttle fn不会变
+ * @param {number} [timeout=180]
+ * @param {Array<unknown>} [fnDeps=[]]
+ * @return {*}  {F}
+ */
+var useThrottle = function useThrottle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
+  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  return (// eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useMemo(function () {
+      return throttle(fn, timeout);
+    }, fnDeps)
+  );
+};
+
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -8122,6 +8215,7 @@ exports.CopyToClipboard = CopyToClipboard;
 exports.DatePicker = DatePicker;
 exports.Divider = Divider;
 exports.Drag = Drag;
+exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.FingerGestureElement = FingerGestureElement;
@@ -8172,3 +8266,8 @@ exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
 exports.loadResource = loadResource;
 exports.throttle = throttle;
+exports.useCallbackRef = useCallbackRef;
+exports.useDebounce = useDebounce;
+exports.useInViewport = useInViewport;
+exports.useThrottle = useThrottle;
+exports.useUpdateEffect = useUpdateEffect;
