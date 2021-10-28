@@ -1,6 +1,16 @@
 import { RefObject, useEffect, useState } from 'react';
 import 'intersection-observer';
-
+/**
+ * 监听元素是否在视口内
+ *
+ * @param {RefObject<HTMLElement>} ref
+ * @param {*} [rootRef=null]
+ * @param {({
+ *     rootMargin?: string;
+ *     threshold?: number | number[];
+ *   })} [options]
+ * @return {*}  {boolean}
+ */
 function useInViewport(
   ref: RefObject<HTMLElement>,
   rootRef = null,
