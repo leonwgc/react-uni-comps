@@ -95,7 +95,7 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-alert-dialog-wrap')
   }, closable && /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
   }), title && /*#__PURE__*/React.createElement("div", {

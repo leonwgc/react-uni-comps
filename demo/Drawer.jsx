@@ -106,6 +106,7 @@ export default function RightDrawer(props) {
         position="right"
         onClose={onClose}
         visible={visible}
+        wrapStyle={{ width: 600 }}
         header={
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="权限设置" />

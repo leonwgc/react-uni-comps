@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 // import { SoundOutlined } from '@ant-design/icons';
 import { Space, Cell, IconArrow, Icon } from '../src';
 
-const SoundOutlined = () => <Icon type="icon-zujian" />;
+const SoundOutlined = () => <Icon type="uc-icon-zujian" />;
 
 export default function All() {
   const history = useHistory();
@@ -13,6 +13,15 @@ export default function All() {
   }, []);
   return (
     <div>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> Modal
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Modal')}
+      ></Cell>
       <Cell
         title={
           <Space>

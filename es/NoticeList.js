@@ -136,7 +136,7 @@ var NoticeList = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }))), (closeable || extra) && /*#__PURE__*/React.createElement("div", {
     className: clsx('content-extra')
   }, /*#__PURE__*/React.createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
     },

@@ -67,7 +67,7 @@ var Avatar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: s,
     className: clsx('uc-avatar', className, shape)
   }), children || /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-avatar"
+    type: "uc-icon-avatar"
   }));
 });
 Avatar.displayName = 'UC-Avatar';

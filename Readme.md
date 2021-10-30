@@ -53,6 +53,7 @@ yarn add react-uni-comps
 - CopyToClipboard (复制文本到剪贴板)
 - Spinner（加载中）
 - Drawer (抽屉)
+- Modal (对话框)
 
 #### 导航组件
 - Tabs (选项卡切换)

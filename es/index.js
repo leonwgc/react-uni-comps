@@ -59,6 +59,7 @@ export { default as Icon } from './Icon';
 export { default as DatePicker } from './DatePicker';
 export { default as Calendar } from './Calendar';
 export { default as Drawer } from './Drawer';
+export { default as Modal } from './Modal';
 /** helper & dom */
 
 export { debounce, throttle } from './helper';

@@ -166,7 +166,7 @@ var Popover = function Popover(props) {
     className: clsx('uc-popover-arrow'),
     style: arrowStyle
   }), closable && /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     className: clsx('uc-popover-close'),
     onClick: onClose
   }), /*#__PURE__*/React.createElement("div", {

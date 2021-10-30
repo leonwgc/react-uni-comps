@@ -227,8 +227,12 @@ const routes = [
     component: lazy(() => import('./DatePicker')),
   },
   {
-  path: '/Drawer',
+    path: '/Drawer',
     component: lazy(() => import('./Drawer')),
+  },
+  {
+    path: '/Modal',
+    component: lazy(() => import('./Modal')),
   },
 ];
 

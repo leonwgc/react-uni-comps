@@ -53,7 +53,7 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       delay = _a === void 0 ? 2000 : _a,
       _b = props.icon,
       icon = _b === void 0 ? /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-horn"
+    type: "uc-icon-horn"
   }) : _b,
       _c = props.speed,
       speed = _c === void 0 ? 50 : _c,
@@ -121,7 +121,7 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, content)), (closeable || extra) && /*#__PURE__*/React.createElement("div", {
     className: clsx('content-extra')
   }, /*#__PURE__*/React.createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
     },

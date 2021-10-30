@@ -2317,7 +2317,7 @@ var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 
   return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-icon', className)
+    className: clsx__default['default']('uc-icon', className, type)
   }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
     xlinkHref: "#".concat(type)
   })));
@@ -2334,7 +2334,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_vzc79u42a8.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
 
 var _excluded$c = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
@@ -2412,7 +2412,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       fontSize: size
     })
   }), /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-tick"
+    type: "uc-icon-tick"
   })), children && /*#__PURE__*/React__default['default'].createElement("span", {
     className: "text"
   }, children));
@@ -3382,7 +3382,7 @@ var Popover = function Popover(props) {
     className: clsx__default['default']('uc-popover-arrow'),
     style: arrowStyle
   }), closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     className: clsx__default['default']('uc-popover-close'),
     onClick: onClose
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -3780,7 +3780,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       delay = _props$delay === void 0 ? 2000 : _props$delay,
       _props$icon = props.icon,
       icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-horn"
+    type: "uc-icon-horn"
   }) : _props$icon,
       _props$speed = props.speed,
       speed = _props$speed === void 0 ? 50 : _props$speed,
@@ -3850,7 +3850,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, content)), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content-extra')
   }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
     },
@@ -4136,7 +4136,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-alert-dialog-wrap')
   }, closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
   }), title && /*#__PURE__*/React__default['default'].createElement("div", {
@@ -5259,7 +5259,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   }))), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content-extra')
   }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-guanbi",
+    type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
     },
@@ -5761,7 +5761,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     style: s,
     className: clsx__default['default']('uc-avatar', className, shape)
   }), children || /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "icon-avatar"
+    type: "uc-icon-avatar"
   }));
 });
 Avatar.displayName = 'UC-Avatar';
@@ -8164,6 +8164,48 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
+var _excluded$U = ["wrapClassName", "closable", "visible", "onClose", "wrapStyle", "className", "header", "children", "footer"];
+
+var _templateObject$N;
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
+/** 对话框 */
+
+var Modal = function Modal(props) {
+  var wrapClassName = props.wrapClassName,
+      closable = props.closable,
+      visible = props.visible,
+      onClose = props.onClose,
+      wrapStyle = props.wrapStyle,
+      className = props.className,
+      header = props.header,
+      children = props.children,
+      footer = props.footer,
+      rest = _objectWithoutProperties(props, _excluded$U);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({
+    visible: visible,
+    onClose: onClose
+  }, rest, {
+    className: clsx__default['default']('uc-modal', className),
+    position: 'center'
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content', wrapClassName),
+    style: _objectSpread2({}, wrapStyle)
+  }, closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-guanbi",
+    className: "close",
+    onClick: onClose
+  }), header && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "header"
+  }, header), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "body"
+  }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "footer"
+  }, footer)));
+};
+
+Modal.displayName = 'UC-Modal';
+
 /**
  * 返回防抖函数
  *
@@ -8228,6 +8270,7 @@ exports.Input = Input;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Mask = Mask;
+exports.Modal = Modal;
 exports.NoticeBar = NoticeBar;
 exports.NoticeList = NoticeList;
 exports.Notify = Notify;

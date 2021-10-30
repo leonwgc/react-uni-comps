@@ -58,7 +58,7 @@ var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   return /*#__PURE__*/React.createElement(StyledIcon, __assign({}, rest, {
     ref: ref,
-    className: clsx('uc-icon', className)
+    className: clsx('uc-icon', className, type)
   }), /*#__PURE__*/React.createElement("svg", __assign({}, SVGProps), /*#__PURE__*/React.createElement("use", {
     xlinkHref: "#" + type
   })));
@@ -75,6 +75,6 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_vzc79u42a8.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
 export default Icon;
 var templateObject_1;

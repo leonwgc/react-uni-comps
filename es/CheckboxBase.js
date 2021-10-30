@@ -121,7 +121,7 @@ var CheckboxBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
       fontSize: size
     })
   }), /*#__PURE__*/React.createElement(Icon, {
-    type: "icon-tick"
+    type: "uc-icon-tick"
   })), children && /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, children));
