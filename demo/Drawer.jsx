@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Icon, Tabs, Space, Button, Avatar, Drawer } from '../src';
+import { Icon, Tabs, Space, Button, Avatar, Drawer, isMobile } from '../src';
 import styled from '../src/styled';
 
 // example to implement Drawer
@@ -106,7 +106,7 @@ export default function RightDrawer(props) {
         position="right"
         onClose={onClose}
         visible={visible}
-        wrapStyle={{ width: 600 }}
+        wrapStyle={{ width: isMobile ? '80vw' : 600 }}
         header={
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="权限设置" />
@@ -119,7 +119,9 @@ export default function RightDrawer(props) {
               <Button type="primary" style={{ width: 80 }}>
                 保存
               </Button>
-              <Button style={{ width: 80 }}>取消</Button>
+              <Button style={{ width: 80 }} onClick={onClose}>
+                取消
+              </Button>
             </Space>
           </StyledFooter>
         }
@@ -131,7 +133,7 @@ export default function RightDrawer(props) {
           <div className="card-list">
             {list.map((item, idx) => (
               <div className="card-item" key={idx}>
-                <Avatar size={28} style={{ marginRight: 12 }}></Avatar>
+                <Avatar size={28} style={{ marginRight: 12, flex: 'none' }}></Avatar>
                 <div className="content">
                   <div className="title">{item?.title}</div>
                   <div className="desc">{item?.desc}</div>
