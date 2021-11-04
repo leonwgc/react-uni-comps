@@ -8167,8 +8167,50 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
+var _excluded$U = ["wrapClassName", "closable", "visible", "onClose", "wrapStyle", "className", "header", "children", "footer"];
+
 var _templateObject$N;
-var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
+/** 对话框 */
+
+var Modal = function Modal(props) {
+  var wrapClassName = props.wrapClassName,
+      closable = props.closable,
+      visible = props.visible,
+      onClose = props.onClose,
+      wrapStyle = props.wrapStyle,
+      className = props.className,
+      header = props.header,
+      children = props.children,
+      footer = props.footer,
+      rest = _objectWithoutProperties(props, _excluded$U);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({
+    visible: visible,
+    onClose: onClose
+  }, rest, {
+    className: clsx__default['default']('uc-modal', className),
+    position: 'center'
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content', wrapClassName),
+    style: _objectSpread2({}, wrapStyle)
+  }, closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-guanbi",
+    className: "close",
+    onClick: onClose
+  }), header && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "header"
+  }, header), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "body"
+  }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "footer"
+  }, footer)));
+};
+
+Modal.displayName = 'UC-Modal';
+
+var _templateObject$O;
+var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$O || (_templateObject$O = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 
 /** click/hover 弹出菜单, 默认click, 基于Popover */
 var PopMenu = function PopMenu(props) {
