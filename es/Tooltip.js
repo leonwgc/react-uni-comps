@@ -30,26 +30,26 @@ import React, { useState, useRef } from 'react';
 import Popover from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"], ["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"]))); // 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
-
-var mouseLeaveDelay = 100;
+var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"], ["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"])));
 /** 文字提示气泡框, 基于Popover */
 
 var Tooltip = function Tooltip(props) {
   var title = props.title,
-      _a = props.placement,
-      placement = _a === void 0 ? 'top' : _a,
-      _b = props.arrow,
-      arrow = _b === void 0 ? true : _b,
+      _a = props.hoverDelay,
+      hoverDelay = _a === void 0 ? 100 : _a,
+      _b = props.placement,
+      placement = _b === void 0 ? 'top' : _b,
+      _c = props.arrow,
+      arrow = _c === void 0 ? true : _c,
       offset = props.offset,
       className = props.className,
       children = props.children; // 鼠标移到popover内容区，不关闭popover
 
   var ref = useRef(0);
 
-  var _c = useState(false),
-      visible = _c[0],
-      setVisible = _c[1];
+  var _d = useState(false),
+      visible = _d[0],
+      setVisible = _d[1];
 
   var actionProps = {
     onMouseEnter: function onMouseEnter() {
@@ -62,7 +62,7 @@ var Tooltip = function Tooltip(props) {
     onMouseLeave: function onMouseLeave() {
       ref.current = window.setTimeout(function () {
         setVisible(false);
-      }, mouseLeaveDelay);
+      }, hoverDelay);
     },
     onFocus: function onFocus() {
       if (ref.current) {

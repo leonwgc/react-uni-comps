@@ -6,15 +6,11 @@ import clsx from 'clsx';
 
 const StylePopover = styled(Popover)`
   color: #fff;
-  opacity: 0.85;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0, 0.85);
   padding: 12px;
 `;
 
 type Offset = { x?: number; y?: number };
-
-// 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
-const mouseLeaveDelay = 100;
 
 export type Props = {
   className?: string;
@@ -28,11 +24,21 @@ export type Props = {
   children: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
+  /** hover触发显示，关闭的timeout时间，默认100 (ms) */
+  hoverDelay?: number;
 };
 
 /** 文字提示气泡框, 基于Popover */
 const Tooltip = (props: Props): React.ReactElement => {
-  const { title, placement = 'top', arrow = true, offset, className, children } = props;
+  const {
+    title,
+    hoverDelay = 100,
+    placement = 'top',
+    arrow = true,
+    offset,
+    className,
+    children,
+  } = props;
   // 鼠标移到popover内容区，不关闭popover
   const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
@@ -47,7 +53,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     onMouseLeave: () => {
       ref.current = window.setTimeout(() => {
         setVisible(false);
-      }, mouseLeaveDelay);
+      }, hoverDelay);
     },
     onFocus: () => {
       if (ref.current) {

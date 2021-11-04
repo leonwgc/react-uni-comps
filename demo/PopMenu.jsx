@@ -20,6 +20,7 @@ const StyledPopMenu = styled(PopMenu)`
       height: 50px;
       line-height: 50px;
       user-select: none;
+      cursor: pointer;
       &:hover {
         color: #004bcc;
         background: rgba(0, 75, 204, 0.08);
@@ -33,8 +34,8 @@ export default function App() {
   return (
     <StyledPopMenu
       arrow={true}
-      closeOnClick={false}
-      trigger="hover"
+      // closeOnClick={false}
+      // trigger="hover"
       content={
         <div className="list">
           {arr.map((i) => (

@@ -16,6 +16,8 @@ export declare type Props = {
     children: React.ReactElement;
     /** 弹框自定义偏移 */
     offset?: Offset;
+    /** hover触发显示，关闭的timeout时间，默认100 (ms) */
+    hoverDelay?: number;
 };
 /** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {

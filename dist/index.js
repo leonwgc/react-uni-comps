@@ -3394,13 +3394,13 @@ var Popover = function Popover(props) {
 };
 
 var _templateObject$m;
-var StylePopover = styled__default['default'](Popover)(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  color: #fff;\n  opacity: 0.85;\n  background-color: rgb(0, 0, 0);\n  padding: 12px;\n"])));
-// 鼠标移出后延时多少才隐藏 Tooltip，单位：ms
-var mouseLeaveDelay = 100;
+var StylePopover = styled__default['default'](Popover)(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"])));
 
 /** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
   var title = props.title,
+      _props$hoverDelay = props.hoverDelay,
+      hoverDelay = _props$hoverDelay === void 0 ? 100 : _props$hoverDelay,
       _props$placement = props.placement,
       placement = _props$placement === void 0 ? 'top' : _props$placement,
       _props$arrow = props.arrow,
@@ -3427,7 +3427,7 @@ var Tooltip = function Tooltip(props) {
     onMouseLeave: function onMouseLeave() {
       ref.current = window.setTimeout(function () {
         setVisible(false);
-      }, mouseLeaveDelay);
+      }, hoverDelay);
     },
     onFocus: function onFocus() {
       if (ref.current) {
@@ -8170,7 +8170,7 @@ Drawer.displayName = 'UC-Drawer';
 var _templateObject$N;
 var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 
-/** click/hover/focus 弹出菜单, 默认click, 基于Popover */
+/** click/hover 弹出菜单, 默认click, 基于Popover */
 var PopMenu = function PopMenu(props) {
   var content = props.content,
       _props$trigger = props.trigger,

@@ -33,7 +33,7 @@ export type Props = {
   hoverDelay?: number;
 };
 
-/** click/hover/focus 弹出菜单, 默认click, 基于Popover */
+/** click/hover 弹出菜单, 默认click, 基于Popover */
 const PopMenu = (props: Props): React.ReactElement => {
   const {
     content,

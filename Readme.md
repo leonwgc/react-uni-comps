@@ -39,6 +39,7 @@ yarn add react-uni-comps
 - Popover (弹出带箭头的浮层)
 - Drag (拖拽)
 - Tooltip (文字提示)
+- PopMenu (click/hover 弹出菜单)
 - Toast (黑背景提示,支持静态调用)
 - Notify (顶部全局消息通知,支持静态调用)
 - Steps (步骤条)

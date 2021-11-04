@@ -23,7 +23,7 @@ export declare type Props = {
     /** hover触发显示，关闭的timeout时间，默认100 (ms) */
     hoverDelay?: number;
 };
-/** click/hover/focus 弹出菜单, 默认click, 基于Popover */
+/** click/hover 弹出菜单, 默认click, 基于Popover */
 declare const PopMenu: {
     (props: Props): React.ReactElement;
     displayName: string;
