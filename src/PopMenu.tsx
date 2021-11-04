@@ -1,11 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, SyntheticEvent } from 'react';
 import Popover from './Popover';
 import { Placement } from './popovers/types';
+import styled from 'styled-components';
 import clsx from 'clsx';
+import { boxShadow } from './colors';
 
 type Offset = { x?: number; y?: number };
 
-const mouseLeaveDelay = 100;
+const StyledPopover = styled(Popover)`
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: ${boxShadow};
+`;
 
 export type Props = {
   className?: string;
@@ -13,14 +19,18 @@ export type Props = {
   content?: React.ReactNode;
   /** 显示箭头,默认不显示 */
   arrow?: boolean;
-  /** 显示位置,默认bottom底部,参考popover */
+  /** 显示位置,默认bottom-right底部,参考popover */
   placement?: Placement;
   /** 需要tooltip的子元素 */
   children: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
   /** 触发方式 */
-  trigger: 'click' | 'hover' | 'focus';
+  trigger: 'click' | 'hover';
+  /** 点击内容区域关闭,默认true */
+  closeOnClick?: boolean;
+  /** hover触发显示，关闭的timeout时间，默认100 (ms) */
+  hoverDelay?: number;
 };
 
 /** click/hover/focus 弹出菜单, 默认click, 基于Popover */
@@ -28,10 +38,12 @@ const PopMenu = (props: Props): React.ReactElement => {
   const {
     content,
     trigger = 'click',
-    placement = 'bottom',
+    placement = 'bottom-right',
     arrow = false,
     offset,
     className,
+    closeOnClick = true,
+    hoverDelay = 100,
     children,
   } = props;
   const ref = useRef<number>(0);
@@ -56,38 +68,33 @@ const PopMenu = (props: Props): React.ReactElement => {
       onMouseLeave: () => {
         ref.current = window.setTimeout(() => {
           setVisible(false);
-        }, mouseLeaveDelay);
-      },
-    };
-  } else {
-    actionProps = {
-      onFocus: () => {
-        if (ref.current) {
-          clearTimeout(ref.current);
-        }
-        setVisible(true);
+        }, hoverDelay);
       },
     };
   }
 
+  const onClose = useCallback(() => {
+    setVisible(false);
+  }, []);
+
   return (
-    <Popover
+    <StyledPopover
       className={clsx('uc-popmenu', className)}
       visible={visible}
-      onClose={() => setVisible(false)}
+      onClose={onClose}
       placement={placement}
       closeOnClickOutside
       content={
-        <span
-          onClick={() => {
-            clearTimeout(ref.current);
-            setTimeout(() => {
-              setVisible(false);
-            }, mouseLeaveDelay);
+        <div
+          onClick={(e: SyntheticEvent) => {
+            e.stopPropagation();
+            if (closeOnClick) {
+              onClose();
+            }
           }}
         >
           {content}
-        </span>
+        </div>
       }
       arrow={arrow}
       offset={offset}
@@ -98,7 +105,7 @@ const PopMenu = (props: Props): React.ReactElement => {
       ) : (
         <span {...actionProps}>{children}</span>
       )}
-    </Popover>
+    </StyledPopover>
   );
 };
 PopMenu.displayName = 'UC-PopMenu';

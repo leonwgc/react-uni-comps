@@ -41,6 +41,7 @@ const StyledPopover = styled.div`
     position: absolute;
     width: 6px;
     height: 6px;
+    z-index: -1;
     background: inherit;
     transform: rotate(45deg);
   }

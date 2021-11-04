@@ -4,26 +4,46 @@ import styled from '../src/styled';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;
-  height: 195px;
-  background: #ffffff;
-  border: 1px solid #f5f5f5;
   border-radius: 4px;
-  box-shadow: 0px 6px 24px 0px undefined;
+  background-color: #eee;
+
+  .list {
+    height: 195px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .item {
+      padding: 0 12px;
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
+      &:hover {
+        color: #004bcc;
+        background: rgba(0, 75, 204, 0.08);
+      }
+    }
+  }
 `;
 
 export default function App() {
-  const arr = Array.from(new Array(10), (i) => i);
+  const arr = Array.from(new Array(10), (e, i) => i);
   return (
     <StyledPopMenu
+      arrow={true}
+      trigger="hover"
       content={
-        <div>
+        <div className="list">
           {arr.map((i) => (
-            <div key={i}>menu{i}</div>
+            <div className="item" key={i}>
+              {`menu${i}`}
+            </div>
           ))}
         </div>
       }
     >
-      <Button>hello</Button>
+      <Button style={{ position: 'fixed', left: 200, top: 300 }}>hello</Button>
     </StyledPopMenu>
   );
 }
