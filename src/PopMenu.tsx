@@ -1,15 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Popover from './Popover';
 import { Placement } from './popovers/types';
-import styled from 'styled-components';
 import clsx from 'clsx';
-
-const StylePopover = styled(Popover)`
-  color: #fff;
-  opacity: 0.85;
-  background-color: rgb(0, 0, 0);
-  padding: 12px;
-`;
 
 type Offset = { x?: number; y?: number };
 
@@ -79,7 +71,7 @@ const PopMenu = (props: Props): React.ReactElement => {
   }
 
   return (
-    <StylePopover
+    <Popover
       className={clsx('uc-popmenu', className)}
       visible={visible}
       onClose={() => setVisible(false)}
@@ -106,7 +98,7 @@ const PopMenu = (props: Props): React.ReactElement => {
       ) : (
         <span {...actionProps}>{children}</span>
       )}
-    </StylePopover>
+    </Popover>
   );
 };
 PopMenu.displayName = 'UC-PopMenu';
