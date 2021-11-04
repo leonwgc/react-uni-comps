@@ -60,6 +60,7 @@ export { default as DatePicker } from './DatePicker';
 export { default as Calendar } from './Calendar';
 export { default as Drawer } from './Drawer';
 export { default as Modal } from './Modal';
+export { default as PopMenu } from './PopMenu';
 /** helper & dom */
 
 export { debounce, throttle } from './helper';

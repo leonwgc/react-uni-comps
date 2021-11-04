@@ -5,4 +5,5 @@ export declare const disabledBg = "#f5f5f5";
 export declare const primary = "#004bcc";
 export declare const danger = "#ff4d4f";
 export declare const activeBg = "rgba(0, 0, 0, 0.1)";
+/** common box-shadow */
 export declare const boxShadow = "0 2px 12px 0 rgba(0, 0, 0, 0.1)";

@@ -1397,6 +1397,9 @@ var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
 var primary = '#004bcc';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
+/** common box-shadow */
+
+var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
 
 var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
 
@@ -3263,7 +3266,7 @@ var _excluded$k = ["placement", "content", "arrow", "visible", "closable", "onCl
 
 var _templateObject$l;
 
-var StyledPopover = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -8164,47 +8167,81 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-var _excluded$U = ["wrapClassName", "closable", "visible", "onClose", "wrapStyle", "className", "header", "children", "footer"];
-
 var _templateObject$N;
-var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
-/** 对话框 */
+var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 
-var Modal = function Modal(props) {
-  var wrapClassName = props.wrapClassName,
-      closable = props.closable,
-      visible = props.visible,
-      onClose = props.onClose,
-      wrapStyle = props.wrapStyle,
+/** click/hover/focus 弹出菜单, 默认click, 基于Popover */
+var PopMenu = function PopMenu(props) {
+  var content = props.content,
+      _props$trigger = props.trigger,
+      trigger = _props$trigger === void 0 ? 'click' : _props$trigger,
+      _props$placement = props.placement,
+      placement = _props$placement === void 0 ? 'bottom-right' : _props$placement,
+      _props$arrow = props.arrow,
+      arrow = _props$arrow === void 0 ? false : _props$arrow,
+      offset = props.offset,
       className = props.className,
-      header = props.header,
-      children = props.children,
-      footer = props.footer,
-      rest = _objectWithoutProperties(props, _excluded$U);
+      _props$closeOnClick = props.closeOnClick,
+      closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
+      _props$hoverDelay = props.hoverDelay,
+      hoverDelay = _props$hoverDelay === void 0 ? 100 : _props$hoverDelay,
+      children = props.children;
+  var ref = React.useRef(0);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      visible = _useState2[0],
+      setVisible = _useState2[1];
+
+  var actionProps = {};
+
+  if (trigger === 'click') {
+    actionProps = {
+      onClick: function onClick() {
+        setVisible(true);
+      }
+    };
+  } else if (trigger === 'hover') {
+    actionProps = {
+      onMouseEnter: function onMouseEnter() {
+        if (ref.current) {
+          clearTimeout(ref.current);
+        }
+
+        setVisible(true);
+      },
+      onMouseLeave: function onMouseLeave() {
+        ref.current = window.setTimeout(function () {
+          setVisible(false);
+        }, hoverDelay);
+      }
+    };
+  }
+
+  var onClose = React.useCallback(function () {
+    setVisible(false);
+  }, []);
+  return /*#__PURE__*/React__default['default'].createElement(StyledPopover$1, _extends({
+    className: clsx__default['default']('uc-popmenu', className),
     visible: visible,
-    onClose: onClose
-  }, rest, {
-    className: clsx__default['default']('uc-modal', className),
-    position: 'center'
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('content', wrapClassName),
-    style: _objectSpread2({}, wrapStyle)
-  }, closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "uc-icon-guanbi",
-    className: "close",
-    onClick: onClose
-  }), header && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "header"
-  }, header), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "body"
-  }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "footer"
-  }, footer)));
+    onClose: onClose,
+    placement: placement,
+    closeOnClickOutside: true,
+    content: /*#__PURE__*/React__default['default'].createElement("div", {
+      onClick: function onClick(e) {
+        e.stopPropagation();
+
+        if (closeOnClick) {
+          onClose();
+        }
+      }
+    }, content),
+    arrow: arrow,
+    offset: offset
+  }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, actionProps) : /*#__PURE__*/React__default['default'].createElement("span", actionProps, children));
 };
 
-Modal.displayName = 'UC-Modal';
+PopMenu.displayName = 'UC-PopMenu';
 
 /**
  * 返回防抖函数
@@ -8278,6 +8315,7 @@ exports.NumberKeyboard = NumberKeyboard;
 exports.NumberKeyboardBase = NumberKeyboardBase;
 exports.PasswordInput = PasswordInput;
 exports.Picker = Picker;
+exports.PopMenu = PopMenu;
 exports.Popover = Popover;
 exports.Popup = Popup;
 exports.ProgressCircle = ProgressCircle;
