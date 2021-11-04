@@ -234,6 +234,10 @@ const routes = [
     path: '/Modal',
     component: lazy(() => import('./Modal')),
   },
+  {
+    path: '/PopMenu',
+    component: lazy(() => import('./PopMenu')),
+  },
 ];
 
 export default routes;

@@ -16,6 +16,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> PopMenu
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PopMenu')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> Modal
           </Space>
         }
@@ -367,7 +376,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Skeleton')}
       ></Cell>
-
       <Cell
         title={
           <Space>
@@ -485,7 +493,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Popup')}
       ></Cell>
-
       <Cell
         title={
           <Space>
@@ -504,7 +511,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Button')}
       ></Cell>
-
       <Cell
         title={
           <Space>
