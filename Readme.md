@@ -20,7 +20,8 @@ yarn add react-uni-comps
 
 ### 适用场景
 1. 需要支持pc/h5动态切换主题色，pc组件库如antd不支持js动态切换主题，本库采用styled-components定义样式，可以使用导出的ThemeProvider动态设置主题色
-```js 
+
+```js
 <ThemeProvider color="#409eff">
   <App/>
 </ThemeProvider>
