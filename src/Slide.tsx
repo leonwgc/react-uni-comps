@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 
 const StyledSlide = styled.div`

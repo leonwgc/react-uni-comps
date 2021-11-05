@@ -5,16 +5,17 @@ import Waypoint from './Waypoint';
 import { getThemeColorCss } from './themeHelper';
 
 type Item = {
-  label: string;
+  label: React.ReactNode;
   value?: string;
   subItems: Item[];
 };
 
 type Props = {
+  className?: string;
   /** 数据 */
   data: Item[];
   /** 点击数据项回调 */
-  onChange?: (item: Omit<Item, 'subItems'>) => void;
+  onItemClick?: (item: Omit<Item, 'subItems'>) => void;
 };
 
 const StyledContainer = styled.div`
@@ -104,7 +105,7 @@ const renderItem = (
   activeIndex: number,
   setIndex,
   containerRef: MutableRefObject<HTMLElement>,
-  onChange
+  onItemClick
 ) => {
   const { label, subItems = [] } = item;
   return (
@@ -131,9 +132,7 @@ const renderItem = (
         <dd
           className="bar-item"
           onClick={() => {
-            if (typeof onChange === 'function') {
-              onChange(item);
-            }
+            onItemClick?.(item);
           }}
           key={idx}
           data-value={item.value}
@@ -147,13 +146,13 @@ const renderItem = (
 
 /** 索引列表 */
 const IndexList = (props: Props): React.ReactElement => {
-  const { data = [], onChange } = props;
+  const { data = [], onItemClick, className } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
 
   return (
-    <StyledContainer className={clsx('uc-indexlist')} ref={ref}>
-      <dl>{data.map((item, idx) => renderItem(item, idx, index, setIndex, ref, onChange))}</dl>
+    <StyledContainer className={clsx('uc-indexlist', className)} ref={ref}>
+      <dl>{data.map((item, idx) => renderItem(item, idx, index, setIndex, ref, onItemClick))}</dl>
       <div className="uc-indexlist-side">
         {data.map((item, idx) => (
           <div

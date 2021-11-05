@@ -43,7 +43,7 @@ import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
 import Spinner from './Spinner';
 import Space from './Space';
 import useInViewport from './hooks/useInViewport';
-import usePrevious from 'react-use-lib/es/usePrevious';
+import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
 var StyledPullupContainer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction

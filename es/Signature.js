@@ -41,7 +41,7 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React, { useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
-import useSigPad from 'react-use-lib/es/useSigPad';
+import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as colors from './colors';
 var StyledSignature = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), colors.border);

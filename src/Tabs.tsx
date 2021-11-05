@@ -5,7 +5,7 @@ import * as colors from './colors';
 import useGesture from './hooks/useGesture';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
-import useUpdateEffect from 'react-use-lib/es/useUpdateEffect';
+import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
 
 const isMobileEnv = isMobile;

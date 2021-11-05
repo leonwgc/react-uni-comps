@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useImperativeHandle, RefAttributes } from 'react';
 import styled from 'styled-components';
-import useSigPad from 'react-use-lib/es/useSigPad';
+import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as colors from './colors';
 

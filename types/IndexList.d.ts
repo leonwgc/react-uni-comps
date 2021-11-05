@@ -1,14 +1,15 @@
 import React from 'react';
 declare type Item = {
-    label: string;
+    label: React.ReactNode;
     value?: string;
     subItems: Item[];
 };
 declare type Props = {
+    className?: string;
     /** 数据 */
     data: Item[];
     /** 点击数据项回调 */
-    onChange?: (item: Omit<Item, 'subItems'>) => void;
+    onItemClick?: (item: Omit<Item, 'subItems'>) => void;
 };
 /** 索引列表 */
 declare const IndexList: {

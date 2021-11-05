@@ -58,7 +58,20 @@ type StaticToastProps = {
 
 /** 黑背景轻提示 */
 const Toast: React.ForwardRefExoticComponent<Props> & {
-  /** 黑背景提示,静态调用 */ show?: (props: StaticToastProps) => void;
+  /** 黑背景提示,静态调用 */ show?: (props: {
+    /** 内容 */
+    content: React.ReactNode;
+    /** 持续显示时间，默认2000ms */
+    duration?: number;
+    /** 模态, 默认true */
+    modal?: boolean;
+    /** toast class */
+    className?: string;
+    /** 内容样式, 应用于StyledToast */
+    style?: React.CSSProperties;
+    /** 模态时 mask style */
+    maskStyle: React.CSSProperties;
+  }) => void;
 } = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { content, visible, modal = true, maskStyle, className, ...rest } = props;
 

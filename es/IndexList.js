@@ -38,7 +38,7 @@ var setActiveIndex = function setActiveIndex(containerRef, setIndex) {
   }
 };
 
-var renderItem = function renderItem(item, index, activeIndex, setIndex, containerRef, onChange) {
+var renderItem = function renderItem(item, index, activeIndex, setIndex, containerRef, onItemClick) {
   var label = item.label,
       _a = item.subItems,
       subItems = _a === void 0 ? [] : _a;
@@ -64,9 +64,7 @@ var renderItem = function renderItem(item, index, activeIndex, setIndex, contain
     return /*#__PURE__*/React.createElement("dd", {
       className: "bar-item",
       onClick: function onClick() {
-        if (typeof onChange === 'function') {
-          onChange(item);
-        }
+        onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
       },
       key: idx,
       "data-value": item.value
@@ -79,7 +77,8 @@ var renderItem = function renderItem(item, index, activeIndex, setIndex, contain
 var IndexList = function IndexList(props) {
   var _a = props.data,
       data = _a === void 0 ? [] : _a,
-      onChange = props.onChange;
+      onItemClick = props.onItemClick,
+      className = props.className;
   var ref = useRef();
 
   var _b = useState(0),
@@ -87,10 +86,10 @@ var IndexList = function IndexList(props) {
       setIndex = _b[1];
 
   return /*#__PURE__*/React.createElement(StyledContainer, {
-    className: clsx('uc-indexlist'),
+    className: clsx('uc-indexlist', className),
     ref: ref
   }, /*#__PURE__*/React.createElement("dl", null, data.map(function (item, idx) {
-    return renderItem(item, idx, index, setIndex, ref, onChange);
+    return renderItem(item, idx, index, setIndex, ref, onItemClick);
   })), /*#__PURE__*/React.createElement("div", {
     className: "uc-indexlist-side"
   }, data.map(function (item, idx) {

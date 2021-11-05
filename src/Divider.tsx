@@ -1,18 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import * as colors from './colors';
 
 // refer to https://ant.design/components/divider-cn/ antd Divider
 
 type Props = {
+  /** 分割线水平还是垂直 */
   type?: 'horizontal' | 'vertical';
+  /** 分割线标题的位置 */
   textPosition?: 'left' | 'right' | 'center';
   className?: string;
   children?: React.ReactNode;
+  /** 是否虚线 */
   dashed?: boolean;
   style?: React.CSSProperties;
-  plain?: boolean;
-  color?: string /** 默认 rgba(0, 0, 0, 0.06) */;
+  /**  分割线颜色，默认 #eee */
+  color?: string;
 };
 
 const StyledDivider = styled.div`
@@ -33,7 +37,6 @@ const StyledDivider = styled.div`
     clear: both;
     width: 100%;
     min-width: 100%;
-    margin: 16px 0;
   }
 
   &.dashed {
@@ -46,7 +49,6 @@ const StyledDivider = styled.div`
       display: inline-block;
       padding: 0 1em;
       white-space: nowrap;
-      margin: 16px 0;
       text-align: center;
     }
 
@@ -102,7 +104,7 @@ const Divider = (props: Props): React.ReactElement => {
     textPosition = 'center',
     className,
     dashed,
-    color = 'rgba(0, 0, 0, 0.06)',
+    color = colors.border,
     children,
     ...rest
   } = props;

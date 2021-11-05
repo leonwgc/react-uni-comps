@@ -1,12 +1,12 @@
 import React from 'react';
-import { Spinner, Space, IndexList } from '../src';
+import { IndexList, Toast } from '../src';
 
 export default function App() {
   const data = [
     {
       label: 'A',
       subItems: [
-        { label: 'Apple', value: 'Apple' },
+        { label: <span style={{ color: 'red', fontSize: 16 }}>Apple</span>, value: 'Apple' },
         { label: 'Ant', value: 'Ant' },
         { label: 'Altimeter', value: 'Altimeter' },
         { label: 'Apple1', value: 'Apple1' },
@@ -62,7 +62,10 @@ export default function App() {
   ];
   return (
     <div className="app">
-      <IndexList data={data} onChange={(item) => alert(item.value)} />
+      <IndexList
+        data={data}
+        onItemClick={(item) => Toast.show({ content: item.value, duration: 1000 })}
+      />
     </div>
   );
 }

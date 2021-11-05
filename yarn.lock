@@ -2804,6 +2804,7 @@ alphanum-sort@^1.0.0, alphanum-sort@^1.0.2:
 animate.css@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -6620,10 +6621,6 @@ jest-worker@^27.0.2:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-js-cookie@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
-
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.nlark.com/js-tokens/download/js-tokens-4.0.0.tgz?cache=0&sync_timestamp=1619345098261&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjs-tokens%2Fdownload%2Fjs-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -9367,19 +9364,6 @@ react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-use-lib@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/react-use-lib/-/react-use-lib-1.1.0.tgz#b278e6209a830ed8e6b91980c7f9985aab30d703"
-  dependencies:
-    animate.css "^4.1.1"
-    intersection-observer "^0.12.0"
-    js-cookie "^2.2.1"
-    json-bigint "^1.0.0"
-    nanoid "^3.1.23"
-    qs "^6.10.1"
-    signature_pad "^3.0.0-beta.4"
-    sortablejs "^1.13.0"
-
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -10065,6 +10049,7 @@ signale@1.4.0:
 signature_pad@^3.0.0-beta.4:
   version "3.0.0-beta.4"
   resolved "https://registry.npmjs.org/signature_pad/-/signature_pad-3.0.0-beta.4.tgz#2a8441559e9f439e7f2f525da3ee630ef973ecf6"
+  integrity sha512-cOf2NhVuTiuNqe2X/ycEmizvCDXk0DoemhsEpnkcGnA4kS5iJYTCqZ9As7tFBbsch45Q1EdX61833+6sjJ8rrw==
 
 simple-redux-store@^1.0.2:
   version "1.0.2"
@@ -10165,10 +10150,6 @@ sort-keys@^2.0.0:
   resolved "https://registry.npm.taobao.org/sort-keys/download/sort-keys-2.0.0.tgz#658535584861ec97d730d6cf41822e1f56684128"
   dependencies:
     is-plain-obj "^1.0.0"
-
-sortablejs@^1.13.0:
-  version "1.14.0"
-  resolved "https://registry.npmjs.org/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
 
 source-map-js@^0.6.2:
   version "0.6.2"

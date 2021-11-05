@@ -9,10 +9,8 @@ require('intersection-observer');
 var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
-var usePrevious = require('react-use-lib/es/usePrevious');
-var useUpdateEffect$1 = require('react-use-lib/es/useUpdateEffect');
 var copy = require('copy-text-to-clipboard');
-var useSigPad = require('react-use-lib/es/useSigPad');
+var SignaturePad = require('signature_pad');
 var dateUtils = require('@wojtekmaj/date-utils');
 var dayjs = require('dayjs');
 
@@ -22,10 +20,8 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
-var usePrevious__default = /*#__PURE__*/_interopDefaultLegacy(usePrevious);
-var useUpdateEffect__default = /*#__PURE__*/_interopDefaultLegacy(useUpdateEffect$1);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
-var useSigPad__default = /*#__PURE__*/_interopDefaultLegacy(useSigPad);
+var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
 
 function ownKeys(object, enumerableOnly) {
@@ -1238,6 +1234,23 @@ function useInViewport(ref) {
   return inViewPort;
 }
 
+/**
+ * 使用value的前一个值
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {T}
+ */
+
+function usePrevious(value) {
+  var ref = React.useRef();
+  React.useEffect(function () {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 var _excluded$4 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
 
 var _templateObject$5;
@@ -1286,7 +1299,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var waypointRef = React.useRef();
   var containerRef = React.useRef();
   var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
-  var lastIsAtBottom = usePrevious__default['default'](isAtBottom);
+  var lastIsAtBottom = usePrevious(isAtBottom);
   React.useImperativeHandle(ref, function () {
     return containerRef.current;
   });
@@ -1890,6 +1903,26 @@ var getThemeColorCss = function getThemeColorCss(prop) {
   }
 };
 
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  执行更新 effect
+ *
+ * @param {() => void} effect
+ * @param {Array<unknown>} [deps=[]]
+ */
+
+var useUpdateEffect = function useUpdateEffect(effect) {
+  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var isMounted = React.useRef(false);
+  React.useEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+    } else {
+      return effect();
+    }
+  }, deps);
+};
+
 var _excluded$6 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2$1;
@@ -1959,7 +1992,7 @@ var Tabs = function Tabs(_ref2) {
       }
     }
   });
-  useUpdateEffect__default['default'](function () {
+  useUpdateEffect(function () {
     if (value !== _v) {
       _setV(value);
     }
@@ -2220,26 +2253,6 @@ var Skeleton = function Skeleton(props) {
       height: rowHeight
     });
   })) : children;
-};
-
-/* eslint-disable react-hooks/exhaustive-deps */
-/**
- *  执行更新 effect
- *
- * @param {() => void} effect
- * @param {Array<unknown>} [deps=[]]
- */
-
-var useUpdateEffect = function useUpdateEffect(effect) {
-  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var isMounted = React.useRef(false);
-  React.useEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-    } else {
-      return effect();
-    }
-  }, deps);
 };
 
 /**
@@ -2661,7 +2674,7 @@ var _excluded$h = ["type", "textPosition", "className", "dashed", "color", "chil
 
 var _templateObject$i;
 
-var StyledDivider = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n    margin: 16px 0;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      margin: 16px 0;\n      text-align: center;\n    }\n\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
+var StyledDivider = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      text-align: center;\n    }\n\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
@@ -2681,7 +2694,7 @@ var Divider = function Divider(props) {
       className = props.className,
       dashed = props.dashed,
       _props$color = props.color,
-      color = _props$color === void 0 ? 'rgba(0, 0, 0, 0.06)' : _props$color,
+      color = _props$color === void 0 ? border : _props$color,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$h);
 
@@ -2813,7 +2826,7 @@ var setActiveIndex = function setActiveIndex(containerRef, setIndex) {
   }
 };
 
-var renderItem = function renderItem(item, index, activeIndex, setIndex, containerRef, onChange) {
+var renderItem = function renderItem(item, index, activeIndex, setIndex, containerRef, onItemClick) {
   var label = item.label,
       _item$subItems = item.subItems,
       subItems = _item$subItems === void 0 ? [] : _item$subItems;
@@ -2839,9 +2852,7 @@ var renderItem = function renderItem(item, index, activeIndex, setIndex, contain
     return /*#__PURE__*/React__default['default'].createElement("dd", {
       className: "bar-item",
       onClick: function onClick() {
-        if (typeof onChange === 'function') {
-          onChange(item);
-        }
+        onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
       },
       key: idx,
       "data-value": item.value
@@ -2854,7 +2865,8 @@ var renderItem = function renderItem(item, index, activeIndex, setIndex, contain
 var IndexList = function IndexList(props) {
   var _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      onChange = props.onChange;
+      onItemClick = props.onItemClick,
+      className = props.className;
   var ref = React.useRef();
 
   var _useState = React.useState(0),
@@ -2863,10 +2875,10 @@ var IndexList = function IndexList(props) {
       setIndex = _useState2[1];
 
   return /*#__PURE__*/React__default['default'].createElement(StyledContainer, {
-    className: clsx__default['default']('uc-indexlist'),
+    className: clsx__default['default']('uc-indexlist', className),
     ref: ref
   }, /*#__PURE__*/React__default['default'].createElement("dl", null, data.map(function (item, idx) {
-    return renderItem(item, idx, index, setIndex, ref, onChange);
+    return renderItem(item, idx, index, setIndex, ref, onItemClick);
   })), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-indexlist-side"
   }, data.map(function (item, idx) {
@@ -5048,6 +5060,113 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Steps.displayName = 'UC-Steps';
 
+function _dataURLToBlob(dataURL) {
+  var parts = dataURL.split(';base64,');
+  var contentType = parts[0].split(':')[1];
+  var raw = window.atob(parts[1]);
+  var rawLength = raw.length;
+  var uInt8Array = new Uint8Array(rawLength);
+
+  for (var i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i);
+  }
+
+  return new Blob([uInt8Array], {
+    type: contentType
+  });
+}
+
+function _download(dataURL, filename) {
+  var blob = _dataURLToBlob(dataURL);
+
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+function App(cavansRef) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    backgroundColor: 'rgb(255, 255, 255,0)',
+    penColor: 'black',
+    useLandscape: true
+  };
+  var padRef = React.useRef();
+  React.useEffect(function () {
+    var canvas = cavansRef.current;
+    var signaturePad = padRef.current = new SignaturePad__default['default'](canvas, options);
+
+    function resizeCanvas() {
+      var useLandscape = options.useLandscape;
+      var w = canvas.offsetWidth;
+      var h = canvas.offsetHeight;
+      canvas.width = w;
+      canvas.height = h;
+
+      if (useLandscape) {
+        var ctx = canvas.getContext('2d');
+        ctx.rotate(1.5 * Math.PI);
+        ctx.translate(-canvas.height, 0);
+      }
+
+      signaturePad.clear(); // otherwise isEmpty() might return incorrect value
+    }
+
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
+    return function () {
+      window.removeEventListener('resize', resizeCanvas, false);
+    };
+  }, [cavansRef, options]);
+
+  var download = function download(fileName) {
+    var dataURL = padRef.current.toDataURL();
+
+    _download(dataURL, fileName);
+  };
+
+  var undo = function undo() {
+    if (options.useLandscape) {
+      return;
+    }
+
+    var data = padRef.current.toData();
+
+    if (data) {
+      data.pop(); // remove the last dot or line
+
+      padRef.current.fromData(data);
+    }
+  };
+
+  var setPenColor = function setPenColor(color) {
+    padRef.current.penColor = color;
+  };
+
+  var clear = function clear() {
+    padRef.current.clear();
+
+    if (options.useLandscape) {
+      var canvas = cavansRef.current;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.height, canvas.width);
+    }
+  };
+
+  return {
+    download: download,
+    padRef: padRef,
+    undo: undo,
+    setPenColor: setPenColor,
+    clear: clear
+  };
+}
+
 var _excluded$z = ["padColor", "penColor", "className"];
 
 var _templateObject$A;
@@ -5063,7 +5182,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var elRef = React.useRef();
   var canvasRef = React.useRef();
 
-  var _useSigPad = useSigPad__default['default'](canvasRef, {
+  var _useSigPad = App(canvasRef, {
     useLandscape: false,
     penColor: penColor,
     backgroundColor: padColor
@@ -5383,11 +5502,11 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       }
     };
   });
-  useUpdateEffect__default['default'](function () {
+  useUpdateEffect(function () {
     setItems(getItems(children, loop, height));
     slideToPageLoc(0, false);
   }, [children, loop, height, slideToPageLoc]);
-  useUpdateEffect__default['default'](function () {
+  useUpdateEffect(function () {
     if (pageIndex === len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(0);
     } else if (pageIndex === -1) {
