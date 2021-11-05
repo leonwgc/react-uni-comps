@@ -18,6 +18,26 @@ yarn add react-uni-comps
 7. 使用 typescript 编写，良好的类型提示
 8. 体积小，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用
 
+### 适用场景
+1. 需要支持pc/h5动态切换主题色，pc组件库如antd不支持js动态切换主题，本库采用styled-components定义样式，可以使用导出的ThemeProvider动态设置主题色
+```js 
+<ThemeProvider color="#409eff">
+  <App/>
+</ThemeProvider>
+```
+
+2. 需要完全自定义组件样式，antd, zarm等组件库提供了完整的样式风格，antd偏后台，zarm等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义部分组件
+
+3. 不想使用css/less/sass，偏向css-in-js方案的开发者
+
+4. 开发同时支持pc和h5的页面，本库组件同时支持pc和h5，体积小巧
+
+5. 当前使用的组件库不包含某些组件，本库包含的
+
+### 注意点
+
+1. 大部分组件都在生产环境大量使用， 除了Picker等个别组件建议不要使用（还在优化中）
+
 ## 组件列表
 
 #### 基础组件
