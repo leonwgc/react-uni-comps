@@ -29,6 +29,15 @@ const StyledPopMenu = styled(PopMenu)`
   }
 `;
 
+const StyledBtn = styled(Button)`
+  position: fixed;
+  left: 200;
+  top: 300;
+  &.active {
+    border: 1px solid red;
+  }
+`;
+
 export default function App() {
   const arr = Array.from(new Array(10), (e, i) => i);
   return (
@@ -46,7 +55,7 @@ export default function App() {
         </div>
       }
     >
-      <Button style={{ position: 'fixed', left: 200, top: 300 }}>hello</Button>
+      <StyledBtn style={{ position: 'fixed', left: 200, top: 300 }}>hello</StyledBtn>
     </StyledPopMenu>
   );
 }

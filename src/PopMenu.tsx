@@ -77,6 +77,12 @@ const PopMenu = (props: Props): React.ReactElement => {
     setVisible(false);
   }, []);
 
+  const otherProps = {
+    className: clsx(React.isValidElement(children) ? (children.props as Props)?.className : '', {
+      active: visible,
+    }),
+  };
+
   return (
     <StyledPopover
       className={clsx('uc-popmenu', className)}
@@ -101,9 +107,14 @@ const PopMenu = (props: Props): React.ReactElement => {
       {...actionProps}
     >
       {React.isValidElement(children) ? (
-        React.cloneElement(children, actionProps)
+        React.cloneElement(children, {
+          ...actionProps,
+          ...otherProps,
+        })
       ) : (
-        <span {...actionProps}>{children}</span>
+        <span {...actionProps} {...otherProps}>
+          {children}
+        </span>
       )}
     </StyledPopover>
   );
