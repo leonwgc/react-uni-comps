@@ -8333,6 +8333,8 @@ var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$O || (
 
 /** click/hover 弹出菜单, 默认click, 基于Popover */
 var PopMenu = function PopMenu(props) {
+  var _children$props;
+
   var content = props.content,
       _props$trigger = props.trigger,
       trigger = _props$trigger === void 0 ? 'click' : _props$trigger,
@@ -8382,6 +8384,11 @@ var PopMenu = function PopMenu(props) {
   var onClose = React.useCallback(function () {
     setVisible(false);
   }, []);
+  var otherProps = {
+    className: clsx__default['default']( /*#__PURE__*/React__default['default'].isValidElement(children) ? (_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className : '', {
+      active: visible
+    })
+  };
   return /*#__PURE__*/React__default['default'].createElement(StyledPopover$1, _extends({
     className: clsx__default['default']('uc-popmenu', className),
     visible: visible,
@@ -8399,7 +8406,7 @@ var PopMenu = function PopMenu(props) {
     }, content),
     arrow: arrow,
     offset: offset
-  }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, actionProps) : /*#__PURE__*/React__default['default'].createElement("span", actionProps, children));
+  }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, actionProps), otherProps)) : /*#__PURE__*/React__default['default'].createElement("span", _extends({}, actionProps, otherProps), children));
 };
 
 PopMenu.displayName = 'UC-PopMenu';

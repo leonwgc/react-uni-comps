@@ -35,25 +35,27 @@ var StyledPopover = styled(Popover)(templateObject_1 || (templateObject_1 = __ma
 /** click/hover 弹出菜单, 默认click, 基于Popover */
 
 var PopMenu = function PopMenu(props) {
+  var _a;
+
   var content = props.content,
-      _a = props.trigger,
-      trigger = _a === void 0 ? 'click' : _a,
-      _b = props.placement,
-      placement = _b === void 0 ? 'bottom-right' : _b,
-      _c = props.arrow,
-      arrow = _c === void 0 ? false : _c,
+      _b = props.trigger,
+      trigger = _b === void 0 ? 'click' : _b,
+      _c = props.placement,
+      placement = _c === void 0 ? 'bottom-right' : _c,
+      _d = props.arrow,
+      arrow = _d === void 0 ? false : _d,
       offset = props.offset,
       className = props.className,
-      _d = props.closeOnClick,
-      closeOnClick = _d === void 0 ? true : _d,
-      _e = props.hoverDelay,
-      hoverDelay = _e === void 0 ? 100 : _e,
+      _e = props.closeOnClick,
+      closeOnClick = _e === void 0 ? true : _e,
+      _f = props.hoverDelay,
+      hoverDelay = _f === void 0 ? 100 : _f,
       children = props.children;
   var ref = useRef(0);
 
-  var _f = useState(false),
-      visible = _f[0],
-      setVisible = _f[1];
+  var _g = useState(false),
+      visible = _g[0],
+      setVisible = _g[1];
 
   var actionProps = {};
 
@@ -83,6 +85,11 @@ var PopMenu = function PopMenu(props) {
   var onClose = useCallback(function () {
     setVisible(false);
   }, []);
+  var otherProps = {
+    className: clsx( /*#__PURE__*/React.isValidElement(children) ? (_a = children.props) === null || _a === void 0 ? void 0 : _a.className : '', {
+      active: visible
+    })
+  };
   return /*#__PURE__*/React.createElement(StyledPopover, __assign({
     className: clsx('uc-popmenu', className),
     visible: visible,
@@ -100,7 +107,7 @@ var PopMenu = function PopMenu(props) {
     }, content),
     arrow: arrow,
     offset: offset
-  }, actionProps), /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, actionProps) : /*#__PURE__*/React.createElement("span", __assign({}, actionProps), children));
+  }, actionProps), /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, __assign(__assign({}, actionProps), otherProps)) : /*#__PURE__*/React.createElement("span", __assign({}, actionProps, otherProps), children));
 };
 
 PopMenu.displayName = 'UC-PopMenu';
