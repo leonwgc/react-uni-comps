@@ -72,3 +72,7 @@ export { default as useDebounce } from './hooks/useDebounce';
 export { default as useThrottle } from './hooks/useThrottle';
 export { default as useInViewport } from './hooks/useInViewport';
 export { default as useCallbackRef } from './hooks/useCallbackRef';
+/** third-party libs */
+export { default as styled } from 'styled-components';
+export { default as clsx } from 'clsx';
+export * from 'react-transition-group';
