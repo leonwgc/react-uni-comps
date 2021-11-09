@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div style={{ margin: '20px', width: 400 }}>
       <div>
-        <Tooltip title={text} arrow={false} placement="bottom-left">
+        <Tooltip style={{ width: 320 }} title={text} arrow={false} placement="bottom-left">
           <Text style={{ width: 200 }}>
             <span style={{ color: 'red' }}>hello,world</span> <span>{text}</span>
           </Text>

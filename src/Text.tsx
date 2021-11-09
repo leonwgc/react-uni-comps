@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import clsx from 'clsx';
 
 const StyledMultiLines = styled.div<{ lines?: number }>`
   display: -webkit-box;
@@ -26,12 +27,13 @@ type Props = {
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 const Text = React.forwardRef<HTMLSpanElement, Props>((props: Props, ref) => {
-  const { lines = 1, children, ...rest } = props;
+  const { lines = 1, children, className, ...rest } = props;
 
   return React.createElement(
     lines > 1 ? StyledMultiLines : StyledLine,
     {
       ...rest,
+      className: clsx('uc-text', className),
       ref,
       lines,
     },
