@@ -3,7 +3,9 @@ import React from 'react';
 declare const Text: React.ForwardRefExoticComponent<{
     /** 显示几行，超过显示省略号, 默认1 */
     lines?: number;
-    /** 包裹的文本 */
+    /** 包裹的内容 */
     children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLSpanElement> & React.RefAttributes<HTMLSpanElement>>;
+    style?: React.CSSProperties;
+    className?: string;
+} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLSpanElement>>;
 export default Text;

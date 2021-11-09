@@ -3692,10 +3692,10 @@ CopyToClipboard.displayName = 'UC-CopyToClipboard';
 var _excluded$m = ["lines", "children"];
 
 var _templateObject$n, _templateObject2$3;
-var StyledSpanMultiLines = styled__default['default'].span(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
+var StyledMultiLines = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
-var StyledSpanOneline = styled__default['default'].span(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
+var StyledLine = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3704,13 +3704,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$m);
 
-  if (typeof children !== 'string' || typeof lines !== 'number') {
-    return /*#__PURE__*/React__default['default'].createElement("span", {
-      ref: ref
-    }, children);
-  }
-
-  return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledSpanMultiLines : StyledSpanOneline, _objectSpread2(_objectSpread2({}, rest), {}, {
+  return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledMultiLines : StyledLine, _objectSpread2(_objectSpread2({}, rest), {}, {
     ref: ref,
     lines: lines
   }), children);
