@@ -4,3 +4,4 @@ node_modules
 .eslintcache
 *.log
 output
+.umi
