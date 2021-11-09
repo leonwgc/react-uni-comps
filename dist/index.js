@@ -3689,7 +3689,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
-var _excluded$m = ["lines", "children"];
+var _excluded$m = ["lines", "children", "className"];
 
 var _templateObject$n, _templateObject2$3;
 var StyledMultiLines = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
@@ -3702,9 +3702,11 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var _props$lines = props.lines,
       lines = _props$lines === void 0 ? 1 : _props$lines,
       children = props.children,
+      className = props.className,
       rest = _objectWithoutProperties(props, _excluded$m);
 
   return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledMultiLines : StyledLine, _objectSpread2(_objectSpread2({}, rest), {}, {
+    className: clsx__default['default']('uc-text', className),
     ref: ref,
     lines: lines
   }), children);
