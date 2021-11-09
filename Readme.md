@@ -39,7 +39,8 @@ yarn add react-uni-comps
   wrapStyle={{ width: 320 }}
   onClose={onClose}
   header={<h3>头部</h3>} //不定义则没有
-  footer={ //不定义则没有
+  footer={
+    //不定义则没有
     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Space>
         <Button type="primary" onClick={onClose}>
@@ -224,12 +225,15 @@ const StyledButton = styled(Button)`
 
 ```js
 // styled-components
+import { styled } from 'react-uni-comps';
 import styled from 'react-uni-comps/es/styled';
 
 // clsx
+import { clsx } from 'react-uni-comps';
 import clsx from 'react-uni-comps/es/clsx';
 
 // react-transition-group
+import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
 import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps/es/transition';
 ```
 
