@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Space, Popover, Button } from '../src';
-import styled from '../src/styled';
+import React, { useState } from 'react';
+import { Space, Popover, Button, styled } from '../src';
 
 const StyledPopover = styled(Popover)`
   font-size: 14px;

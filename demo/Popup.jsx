@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import styled from '../src/styled';
-import { Space, Popup, Button, AlertDialog } from '../src';
+import { Space, Popup, Button, AlertDialog, styled } from '../src';
 
 const StyleedPopupBottom = styled(Popup)`
   height: 50vh;

@@ -1,10 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import styled from '../src/styled';
-import { Divider, Waypoint } from '../src';
+import React, { useRef } from 'react';
+import { Divider } from '../src';
 
 export default function App() {
-  const ref = useRef();
-
   return (
     <div>
       <p>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled from '../src/styled';
 import { Image } from 'antd';
-import { Space, FileInputTrigger, Button, Icon, ImageViewer } from '../src';
+import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from '../src';
 import { PlusOutlined } from '@ant-design/icons';
 
 function getBase64(file) {

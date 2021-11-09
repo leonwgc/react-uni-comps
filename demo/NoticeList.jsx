@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SoundOutlined } from '@ant-design/icons';
-import { NoticeList, Button } from '../src';
-import styled from '../src/styled';
+import { NoticeList, Button, styled } from '../src';
 
 const StyledNoticeList = styled(NoticeList)`
   background-color: rgb(251, 248, 220);

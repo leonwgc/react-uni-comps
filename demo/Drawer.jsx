@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer } from '../src';
-import styled from '../src/styled';
+import { Tabs, Space, Button, Avatar, Drawer, styled } from '../src';
 
 // example to implement Drawer
 
@@ -77,8 +76,6 @@ export default function RightDrawer(props) {
           <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
         </StyledBody>
       </Drawer>
-
-     
     </>
   );
 }

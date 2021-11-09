@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styled from '../src/styled';
-import { Divider, Button, RadioGroup } from '../src';
+import { Divider, Button, RadioGroup, styled } from '../src';
 
 const StyledContent = styled.div`
   .uc-checkbox {

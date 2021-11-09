@@ -1,6 +1,5 @@
 import React from 'react';
-import { AnimationElement, LazyLoadElement, Space, Button } from '../src';
-import styled from '../src/styled';
+import { AnimationElement, styled, Space, Button } from '../src';
 import 'animate.css';
 import bird from './images/bird.png';
 

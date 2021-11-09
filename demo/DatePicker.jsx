@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Toast, Cell, Button, DatePicker } from '../src';
+import { Toast, Cell, Button, DatePicker, styled } from '../src';
 import dayjs from '../src/dayjs';
-import styled from '../src/styled';
 import { CalendarOutlined } from '@ant-design/icons';
 
 const dateFormat = 'YYYY-MM-DD';

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Button } from '../src';
-import styled from '../src/styled';
-import { UserOutlined } from '@ant-design/icons';
+import { Calendar, styled } from '../src';
 
 const StyledDate = styled.span`
   display: block;

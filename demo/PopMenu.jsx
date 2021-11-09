@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, PopMenu } from '../src';
-import styled from '../src/styled';
+import { Button, PopMenu, styled } from '../src';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;

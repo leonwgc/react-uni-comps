@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from '../src/styled';
-import { Space, Button } from '../src';
+import { Space, Button, styled } from '../src';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`

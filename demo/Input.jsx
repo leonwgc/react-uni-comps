@@ -1,7 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Input, Icon, Button, throttle } from '../src';
-import styled from '../src/styled';
-import clsx from '../src/clsx';
+import { Input, Icon, Button, throttle, styled, clsx } from '../src';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
 

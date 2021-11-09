@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Space, Modal, Button } from '../src';
-import styled from '../src/styled';
+import { styled, Space, Modal, Button } from '../src';
 
 export default function App() {
   const [visible, setVisible] = useState(false);

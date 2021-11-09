@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled from '../src/styled';
+import React, { useState } from 'react';
 import useCountdown from '../src/hooks/useCountdown';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
@@ -14,6 +13,7 @@ import {
   CheckboxGroup,
   Radio,
   Toast,
+  styled,
 } from '../src';
 import useBgColor from './hooks/useBgColor';
 

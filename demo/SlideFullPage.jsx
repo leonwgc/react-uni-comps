@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import styled from '../src/styled';
-import { Slide, AnimationElement } from '../src';
+import React from 'react';
+import { Slide, AnimationElement, styled } from '../src';
 import 'animate.css';
 
 const StyledSlidePage = styled.div`

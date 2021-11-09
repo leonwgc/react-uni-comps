@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { TransitionElement, Space, Button, Switch } from '../src';
-import styled from '../src/styled';
+import React from 'react';
+import { TransitionElement, Space, Button, styled } from '../src';
 
 const StyledUCButton = styled(Button)`
   height: 100px;
