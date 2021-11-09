@@ -13,11 +13,10 @@ export default function App() {
 
       <Modal
         visible={visible}
-        closeOnMaskClick
         closable
         wrapStyle={{ width: 320 }}
         onClose={onClose}
-        header={'title'}
+        header={<h3>头部</h3>}
         footer={
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Space>
@@ -29,7 +28,7 @@ export default function App() {
           </div>
         }
       >
-        <div style={{ padding: '24px 0' }}>this is content</div>
+        <div>body 区域</div>
       </Modal>
     </div>
   );

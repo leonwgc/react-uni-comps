@@ -14,30 +14,55 @@ yarn add react-uni-comps
 3. 支持 js 动态切换主题色
 4. 只支持 react>=16.8 版本，使用 hooks 实现
 5. 样式采用 css-in-js 方案 (styled-components)
-6. 方便扩展样式,二次开发/定制属于自己的组件库
+6. 只提供最基础的样式,方便扩展,二次开发/定制属于自己的组件库
 7. 使用 typescript 编写，良好的类型提示
 8. 体积小，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用
+9. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
+10. 导出了组件库内部实现的一些工具函数/react hooks 函数等，比如 debounce, throttle
 
 ### 适用场景
-1. 需要支持pc/h5动态切换主题色，pc组件库如antd不支持js动态切换主题，本库采用styled-components定义样式，可以使用导出的ThemeProvider动态设置主题色
+
+1. 需要支持 pc/h5 动态切换主题色，pc 组件库如 antd 不支持 js 动态切换主题，本库采用 styled-components 定义样式，可以使用导出的 ThemeProvider 动态设置主题色
 
 ```js
 <ThemeProvider color="#409eff">
-  <App/>
+  <App />
 </ThemeProvider>
 ```
 
-2. 需要完全自定义组件样式，antd, zarm等组件库提供了完整的样式风格，antd偏后台，zarm等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义部分组件
+2. 需要完全自定义组件样式，antd, zarm 等组件库提供了完整的样式风格，antd 偏后台，zarm 等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义组件，本库组件只提供最基础的样式，组件最终的样子需要自定实现，例如 modal 弹窗组件
 
-3. 不想使用css/less/sass，偏向css-in-js方案的开发者
+```js
+<Modal
+  visible={visible}
+  closable
+  wrapStyle={{ width: 320 }}
+  onClose={onClose}
+  header={<h3>头部</h3>} //不定义则没有
+  footer={ //不定义则没有
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Space>
+        <Button type="primary" onClick={onClose}>
+          保存
+        </Button>
+        <Button onClick={onClose}>取消</Button>
+      </Space>
+    </div>
+  }
+>
+  <div>body 区域</div>
+</Modal>
+```
 
-4. 开发同时支持pc和h5的页面，本库组件同时支持pc和h5，体积小巧
+3. 不想使用 css/less/sass，偏向 css-in-js 方案的开发者
+
+4. 开发同时支持 pc 和 h5 的页面，本库组件同时支持 pc 和 h5，体积小巧
 
 5. 当前使用的组件库不包含某些组件，本库包含的
 
 ### 注意点
 
-1. 大部分组件都在生产环境大量使用， 除了Picker等个别组件建议不要使用（还在优化中）
+1. 大部分组件都在生产环境大量使用， 除了 Picker 等个别组件建议不要使用（还在优化中）
 
 ## 组件列表
 
@@ -78,10 +103,12 @@ yarn add react-uni-comps
 - Modal (对话框)
 
 #### 导航组件
+
 - Tabs (选项卡切换)
 - Affix (将页面元素钉在可视范围)
 
 ### 数据录入
+
 - Checkbox (复选框)
 - CheckboxGroup (复选框列表)
 - Radio (单选框)
@@ -99,6 +126,7 @@ yarn add react-uni-comps
 - Calendar (日历)
 
 ### 数据展示
+
 - Cell（列表项，多用于移动端,可以和 input/textarea 组合使用）
 - Badge (徽标)
 - WaterMark (图片/文字水印 )
@@ -106,10 +134,12 @@ yarn add react-uni-comps
 - ImageViewer (图片查看器)
 
 ### 动画/过渡
+
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
-- AnimationElement(元素应用 animation 动画,和TransitionElement一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
+- AnimationElement(元素应用 animation 动画,和 TransitionElement 一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
 
 ### 其他组件
+
 - ThemeProvider (全局主题色配置)
 - LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 - LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
@@ -118,31 +148,34 @@ yarn add react-uni-comps
 - Waypoint （可见/不可见指示）
 
 ### 工具函数
+
 - debounce (防抖)
 - throttle (节流)
-- loadResource(动态加载 js/css文件)
-- observe (使用IntersectionObserver监视dom元素在文档视口的可见性)
-- unobserve (取消observe监控)
+- loadResource(动态加载 js/css 文件)
+- observe (使用 IntersectionObserver 监视 dom 元素在文档视口的可见性)
+- unobserve (取消 observe 监控)
 
 ### 常量
+
 - isBrowser(是否是浏览器)
 - isMobile (是否是移动端)
 
 ### Hooks
-- useUpdateEffect (执行异步更新effect) 
-- useUpdateLayoutEffect (执行同步更新effect)
+
+- useUpdateEffect (执行异步更新 effect)
+- useUpdateLayoutEffect (执行同步更新 effect)
 - usePrevious (使用前一个值)
-- useDebounce （返回memorized防抖函数）
-- useThrottle （返回memorized节流函数）
+- useDebounce （返回 memorized 防抖函数）
+- useThrottle （返回 memorized 节流函数）
 - useInViewport (监听元素是否在视口内)
 - useVisibleObserve (监视元素在文档视口的可见性，可见性变化时触发回调)
-- useCallbackRef (保存最新的值在ref中)
+- useCallbackRef (保存最新的值在 ref 中)
 
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
 
-1. 搭配 babel-plugin-import (不推荐,建议升级到webpack4+/rollup/vite)
+1. 搭配 babel-plugin-import (不推荐,建议升级到 webpack4+/rollup/vite)
 
 ```js
   plugins: [
