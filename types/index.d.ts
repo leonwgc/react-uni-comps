@@ -64,8 +64,10 @@ export { default as PopMenu } from './PopMenu';
 /** helper & dom */
 export { debounce, throttle } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
+export { observe, unobserve } from './defaultIntersectionObserver';
 /** hooks */
 export { default as useUpdateEffect } from './hooks/useUpdateEffect';
+export { default as useUpdateLayoutEffect } from './hooks/useUpdateLayoutEffect';
 export { default as useDebounce } from './hooks/useDebounce';
 export { default as useThrottle } from './hooks/useThrottle';
 export { default as useInViewport } from './hooks/useInViewport';

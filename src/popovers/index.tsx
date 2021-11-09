@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 import useCallbackRef from '../hooks/useCallbackRef';
+import useUpdateEffect from '../hooks/useUpdateEffect';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -56,6 +57,8 @@ export type Props = {
   content?: React.ReactNode;
   /** 弹框内容是否显示 */
   visible?: boolean;
+  /** visible状态变化回调 */
+  onVisibleChange?: (visible: boolean) => void;
   /** arrow是否显示 */
   arrow?: boolean;
   /** 关闭按钮是否显示 */
@@ -94,6 +97,7 @@ const Popover = (props: Props): React.ReactElement => {
     arrow = true,
     visible,
     closable,
+    onVisibleChange,
     onClose,
     className,
     style,
@@ -122,6 +126,10 @@ const Popover = (props: Props): React.ReactElement => {
   useEffect(() => {
     offsetRef.current = offset;
   }, [offset]);
+
+  useUpdateEffect(() => {
+    onVisibleChange?.(visible);
+  }, [visible]);
 
   useEffect(() => {
     const anchorEl = childrenRef.current;

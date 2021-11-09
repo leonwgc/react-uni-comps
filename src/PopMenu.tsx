@@ -31,6 +31,8 @@ export type Props = {
   closeOnClick?: boolean;
   /** hover触发显示，关闭的timeout时间，默认100 (ms) */
   hoverDelay?: number;
+  /** visible状态变化回调 */
+  onVisibleChange?: (visible: boolean) => void;
 };
 
 /** click/hover 弹出菜单, 默认click, 基于Popover */
@@ -45,6 +47,7 @@ const PopMenu = (props: Props): React.ReactElement => {
     closeOnClick = true,
     hoverDelay = 100,
     children,
+    ...popoverRest
   } = props;
   const ref = useRef<number>(0);
   const [visible, setVisible] = useState(false);
@@ -77,6 +80,7 @@ const PopMenu = (props: Props): React.ReactElement => {
     setVisible(false);
   }, []);
 
+  // add active class to trigger el
   const otherProps = {
     className: clsx(React.isValidElement(children) ? (children.props as Props)?.className : '', {
       active: visible,
@@ -85,6 +89,7 @@ const PopMenu = (props: Props): React.ReactElement => {
 
   return (
     <StyledPopover
+      {...popoverRest}
       className={clsx('uc-popmenu', className)}
       visible={visible}
       onClose={onClose}

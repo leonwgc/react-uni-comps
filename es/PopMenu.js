@@ -26,6 +26,19 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
 import React, { useState, useRef, useCallback } from 'react';
 import Popover from './Popover';
 import styled from 'styled-components';
@@ -50,7 +63,9 @@ var PopMenu = function PopMenu(props) {
       closeOnClick = _e === void 0 ? true : _e,
       _f = props.hoverDelay,
       hoverDelay = _f === void 0 ? 100 : _f,
-      children = props.children;
+      children = props.children,
+      popoverRest = __rest(props, ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "children"]);
+
   var ref = useRef(0);
 
   var _g = useState(false),
@@ -84,13 +99,14 @@ var PopMenu = function PopMenu(props) {
 
   var onClose = useCallback(function () {
     setVisible(false);
-  }, []);
+  }, []); // add active class to trigger el
+
   var otherProps = {
     className: clsx( /*#__PURE__*/React.isValidElement(children) ? (_a = children.props) === null || _a === void 0 ? void 0 : _a.className : '', {
       active: visible
     })
   };
-  return /*#__PURE__*/React.createElement(StyledPopover, __assign({
+  return /*#__PURE__*/React.createElement(StyledPopover, __assign({}, popoverRest, {
     className: clsx('uc-popmenu', className),
     visible: visible,
     onClose: onClose,

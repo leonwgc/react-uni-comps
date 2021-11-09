@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button, Space, PopMenu } from '../src';
+import { Button, PopMenu } from '../src';
 import styled from '../src/styled';
 
 const StyledPopMenu = styled(PopMenu)`
@@ -43,6 +43,9 @@ export default function App() {
   return (
     <StyledPopMenu
       arrow={true}
+      onVisibleChange={(v) => {
+        console.log(v ? '可见' : '不可见');
+      }}
       // closeOnClick={false}
       // trigger="hover"
       content={

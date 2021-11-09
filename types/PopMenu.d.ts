@@ -22,6 +22,8 @@ export declare type Props = {
     closeOnClick?: boolean;
     /** hover触发显示，关闭的timeout时间，默认100 (ms) */
     hoverDelay?: number;
+    /** visible状态变化回调 */
+    onVisibleChange?: (visible: boolean) => void;
 };
 /** click/hover 弹出菜单, 默认click, 基于Popover */
 declare const PopMenu: {

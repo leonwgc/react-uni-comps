@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 /**
- * 使用value的前一个值
+ * 使用前一个值
  *
  * @export
  * @template T

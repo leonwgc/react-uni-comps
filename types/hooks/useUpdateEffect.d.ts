@@ -1,5 +1,5 @@
 /**
- *  执行更新 effect
+ *  执行异步更新effect
  *
  * @param {() => void} effect
  * @param {Array<unknown>} [deps=[]]

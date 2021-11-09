@@ -26,6 +26,8 @@ export type Props = {
   offset?: Offset;
   /** hover触发显示，关闭的timeout时间，默认100 (ms) */
   hoverDelay?: number;
+  /** visible状态变化回调 */
+  onVisibleChange?: (visible: boolean) => void;
 };
 
 /** 文字提示气泡框, 基于Popover */
@@ -38,6 +40,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     offset,
     className,
     children,
+    ...popoverRest
   } = props;
   // 鼠标移到popover内容区，不关闭popover
   const ref = useRef<number>(0);
@@ -63,8 +66,16 @@ const Tooltip = (props: Props): React.ReactElement => {
     },
   };
 
+  // add active class to trigger el
+  const otherProps = {
+    className: clsx(React.isValidElement(children) ? (children.props as Props)?.className : '', {
+      active: visible,
+    }),
+  };
+
   return (
     <StylePopover
+      {...popoverRest}
       className={clsx('uc-tooltip', className)}
       visible={visible}
       placement={placement}
@@ -74,9 +85,14 @@ const Tooltip = (props: Props): React.ReactElement => {
       {...actionProps}
     >
       {React.isValidElement(children) ? (
-        React.cloneElement(children, actionProps)
+        React.cloneElement(children, {
+          ...actionProps,
+          ...otherProps,
+        })
       ) : (
-        <span {...actionProps}>{children}</span>
+        <span {...actionProps} {...otherProps}>
+          {children}
+        </span>
       )}
     </StylePopover>
   );

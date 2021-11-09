@@ -18,6 +18,8 @@ export declare type Props = {
     offset?: Offset;
     /** hover触发显示，关闭的timeout时间，默认100 (ms) */
     hoverDelay?: number;
+    /** visible状态变化回调 */
+    onVisibleChange?: (visible: boolean) => void;
 };
 /** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {

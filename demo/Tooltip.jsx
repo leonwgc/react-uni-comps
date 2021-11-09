@@ -17,7 +17,12 @@ const StyledToolTip = styled(Tooltip)`
 export default function App() {
   return (
     <Space direction="vertical" size={50} style={{ margin: '40vw 0 0 20vw' }}>
-      <StyledToolTip title="Tooltip text">
+      <StyledToolTip
+        title="Tooltip text"
+        onVisibleChange={(v) => {
+          console.log(v ? '可见' : '不可见');
+        }}
+      >
         <Button>hello</Button>
       </StyledToolTip>
 

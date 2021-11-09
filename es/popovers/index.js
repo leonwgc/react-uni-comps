@@ -47,7 +47,8 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from '../Mask';
 import { MARGIN } from './utils/getModalStyle';
-import useCallbackRef from '../hooks/useCallbackRef'; // port from https://github.com/bytedance/guide and refactor
+import useCallbackRef from '../hooks/useCallbackRef';
+import useUpdateEffect from '../hooks/useUpdateEffect'; // port from https://github.com/bytedance/guide and refactor
 
 var StyledPopover = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"], ["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
 /**
@@ -65,6 +66,7 @@ var Popover = function Popover(props) {
       arrow = _b === void 0 ? true : _b,
       visible = props.visible,
       closable = props.closable,
+      onVisibleChange = props.onVisibleChange,
       onClose = props.onClose,
       className = props.className,
       style = props.style,
@@ -78,7 +80,7 @@ var Popover = function Popover(props) {
       closeOnMaskClick = _c === void 0 ? true : _c,
       _d = props.offset,
       offset = _d === void 0 ? {} : _d,
-      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "offset"]);
+      rest = __rest(props, ["placement", "content", "arrow", "visible", "closable", "onVisibleChange", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "offset"]);
 
   var childrenRef = useRef();
   var popoverRef = useRef(null);
@@ -98,6 +100,9 @@ var Popover = function Popover(props) {
   useEffect(function () {
     offsetRef.current = offset;
   }, [offset]);
+  useUpdateEffect(function () {
+    onVisibleChange === null || onVisibleChange === void 0 ? void 0 : onVisibleChange(visible);
+  }, [visible]);
   useEffect(function () {
     var anchorEl = childrenRef.current;
     var scrollContainer = getScrollContainer(anchorEl); // todo: support cust scroll container , by now it's window

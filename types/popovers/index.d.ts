@@ -10,6 +10,8 @@ export declare type Props = {
     content?: React.ReactNode;
     /** 弹框内容是否显示 */
     visible?: boolean;
+    /** visible状态变化回调 */
+    onVisibleChange?: (visible: boolean) => void;
     /** arrow是否显示 */
     arrow?: boolean;
     /** 关闭按钮是否显示 */

@@ -121,16 +121,21 @@ yarn add react-uni-comps
 - debounce (防抖)
 - throttle (节流)
 - loadResource(动态加载 js/css文件)
+- observe (使用IntersectionObserver监视dom元素在文档视口的可见性)
+- unobserve (取消observe监控)
 
 ### 常量
 - isBrowser(是否是浏览器)
 - isMobile (是否是移动端)
 
 ### Hooks
-- useUpdateEffect (执行更新 effect) 
+- useUpdateEffect (执行异步更新effect) 
+- useUpdateLayoutEffect (执行同步更新effect)
+- usePrevious (使用前一个值)
 - useDebounce （返回memorized防抖函数）
 - useThrottle （返回memorized节流函数）
 - useInViewport (监听元素是否在视口内)
+- useVisibleObserve (监视元素在文档视口的可见性，可见性变化时触发回调)
 - useCallbackRef (保存最新的值在ref中)
 
 ### 按需加载

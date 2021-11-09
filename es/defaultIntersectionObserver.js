@@ -19,9 +19,10 @@ if (isBrowser) {
   });
 }
 /**
- * observe el
+ * 使用IntersectionObserver监视dom元素在文档视口的可见性
  *
- * @param {Element} el
+ * @param {Element} el 监听dom元素
+ * @param {Handler} action 元素isIntersecting状态变化回调
  */
 
 
@@ -34,7 +35,7 @@ export var observe = function observe(el, action) {
   }
 };
 /**
- * unobserve el
+ * 取消监视
  *
  * @param {Element} el
  */

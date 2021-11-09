@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 /**
- *  执行异步更新effect
+ *  执行同步更新effect
  *
  * @param {() => void} effect
  * @param {Array<unknown>} [deps=[]]
  */
 
-var useUpdateEffect = function useUpdateEffect(effect, deps) {
+var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect, deps) {
   if (deps === void 0) {
     deps = [];
   }
 
   var isMounted = useRef(false);
-  useEffect(function () {
+  useLayoutEffect(function () {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {
@@ -22,4 +22,4 @@ var useUpdateEffect = function useUpdateEffect(effect, deps) {
   }, deps);
 };
 
-export default useUpdateEffect;
+export default useUpdateLayoutEffect;
