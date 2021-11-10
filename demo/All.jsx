@@ -16,6 +16,15 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <SoundOutlined /> PopConfirm
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PopConfirm')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> PopMenu
           </Space>
         }
