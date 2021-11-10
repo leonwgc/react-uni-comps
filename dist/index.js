@@ -2352,7 +2352,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
 var _excluded$c = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
@@ -3742,20 +3742,32 @@ var transitionDuration = 240;
 /** 黑背景提示,静态调用 */
 
 Toast.show = function (props) {
-  var _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 2000 : _props$duration,
-      rest = _objectWithoutProperties(props, _excluded2$2);
+  var toastProps = {};
+  var _duration = 1500;
+
+  if (_typeof(props) === 'object') {
+    var _props$duration = props.duration,
+        duration = _props$duration === void 0 ? 1500 : _props$duration,
+        rest = _objectWithoutProperties(props, _excluded2$2);
+
+    toastProps = rest;
+    _duration = duration;
+  } else {
+    toastProps = {
+      content: props
+    };
+  }
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration
-  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
+  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, toastProps, {
     visible: true
   }))), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Toast.displayName = 'UC-Toast';
@@ -8342,13 +8354,23 @@ var Modal = function Modal(props) {
 
 Modal.displayName = 'UC-Modal';
 
-var _excluded$W = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "children"];
+var _excluded$W = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
 
 var _templateObject$O;
 var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$O || (_templateObject$O = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 
-/** click/hover 弹出菜单, 默认click, 基于Popover */
-var PopMenu = function PopMenu(props) {
+/**
+ * click/hover 弹出菜单, 默认click, 基于Popover
+ * 
+ *  ref: {
+ *      show: () => void;
+ *      hide: () => void;
+ *  }
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
+var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _children$props;
 
   var content = props.content,
@@ -8364,16 +8386,28 @@ var PopMenu = function PopMenu(props) {
       closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
       _props$hoverDelay = props.hoverDelay,
       hoverDelay = _props$hoverDelay === void 0 ? 100 : _props$hoverDelay,
+      _props$closeOnClickOu = props.closeOnClickOutside,
+      closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children,
       popoverRest = _objectWithoutProperties(props, _excluded$W);
 
-  var ref = React.useRef(0);
+  var timerRef = React.useRef(0);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
       visible = _useState2[0],
       setVisible = _useState2[1];
 
+  React.useImperativeHandle(ref, function () {
+    return {
+      show: function show() {
+        return setVisible(true);
+      },
+      hide: function hide() {
+        return setVisible(false);
+      }
+    };
+  });
   var actionProps = {};
 
   if (trigger === 'click') {
@@ -8385,14 +8419,14 @@ var PopMenu = function PopMenu(props) {
   } else if (trigger === 'hover') {
     actionProps = {
       onMouseEnter: function onMouseEnter() {
-        if (ref.current) {
-          clearTimeout(ref.current);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
 
         setVisible(true);
       },
       onMouseLeave: function onMouseLeave() {
-        ref.current = window.setTimeout(function () {
+        timerRef.current = window.setTimeout(function () {
           setVisible(false);
         }, hoverDelay);
       }
@@ -8413,7 +8447,7 @@ var PopMenu = function PopMenu(props) {
     visible: visible,
     onClose: onClose,
     placement: placement,
-    closeOnClickOutside: true,
+    closeOnClickOutside: closeOnClickOutside,
     content: /*#__PURE__*/React__default['default'].createElement("div", {
       onClick: function onClick(e) {
         e.stopPropagation();
@@ -8426,9 +8460,95 @@ var PopMenu = function PopMenu(props) {
     arrow: arrow,
     offset: offset
   }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, actionProps), otherProps)) : /*#__PURE__*/React__default['default'].createElement("span", _extends({}, actionProps, otherProps), children));
-};
-
+});
 PopMenu.displayName = 'UC-PopMenu';
+
+var _excluded$X = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
+
+var _templateObject$P;
+var StyledMenu = styled__default['default'](PopMenu)(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .pop-icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      button {\n        height: 28px;\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"])));
+
+/**
+ * 点击元素，弹出气泡式的确认框。基于PopMenu
+ *
+ * target: pc
+ *
+ *  ref: {
+ *      show: () => void;
+ *      hide: () => void;
+ *  }
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
+var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$placement = props.placement,
+      placement = _props$placement === void 0 ? 'top' : _props$placement,
+      _props$icon = props.icon,
+      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-jinggao"
+  }) : _props$icon,
+      className = props.className,
+      children = props.children,
+      title = props.title,
+      _props$okText = props.okText,
+      okText = _props$okText === void 0 ? '确定' : _props$okText,
+      okButtonProps = props.okButtonProps,
+      cancelButtonProps = props.cancelButtonProps,
+      _props$cancelText = props.cancelText,
+      cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
+      _props$arrow = props.arrow,
+      arrow = _props$arrow === void 0 ? true : _props$arrow,
+      onOk = props.onOk,
+      _props$closeOnClick = props.closeOnClick,
+      closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
+      onCancel = props.onCancel,
+      popomenuRest = _objectWithoutProperties(props, _excluded$X);
+
+  var popmenuRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return popmenuRef.current;
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledMenu, _extends({
+    ref: popmenuRef
+  }, popomenuRest, {
+    className: clsx__default['default']('uc-popconfirm', className),
+    placement: placement,
+    arrow: arrow,
+    content: /*#__PURE__*/React__default['default'].createElement("div", {
+      className: clsx__default['default']('popconfirm-content'),
+      onClick: function onClick(e) {
+        if (!closeOnClick) {
+          e.stopPropagation();
+        }
+      }
+    }, /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "title"
+    }, icon && /*#__PURE__*/React__default['default'].createElement("span", {
+      className: "pop-icon"
+    }, icon), " ", title), /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "ops"
+    }, /*#__PURE__*/React__default['default'].createElement(Button, _extends({}, cancelButtonProps, {
+      onClick: function onClick() {
+        var _popmenuRef$current;
+
+        onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+        (_popmenuRef$current = popmenuRef.current) === null || _popmenuRef$current === void 0 ? void 0 : _popmenuRef$current.hide();
+      }
+    }), cancelText), /*#__PURE__*/React__default['default'].createElement(Button, _extends({
+      type: "primary"
+    }, okButtonProps, {
+      onClick: function onClick(e) {
+        if (!closeOnClick) {
+          e.stopPropagation(); // prevent popmenu closeOnClick in out wrapper
+        }
+
+        onOk === null || onOk === void 0 ? void 0 : onOk();
+      }
+    }), okText)))
+  }), children);
+});
+PopConfirm.displayName = 'UC-PopConfirm';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
@@ -8542,6 +8662,7 @@ exports.NumberKeyboard = NumberKeyboard;
 exports.NumberKeyboardBase = NumberKeyboardBase;
 exports.PasswordInput = PasswordInput;
 exports.Picker = Picker;
+exports.PopConfirm = PopConfirm;
 exports.PopMenu = PopMenu;
 exports.Popover = Popover;
 exports.Popup = Popup;

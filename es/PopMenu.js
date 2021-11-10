@@ -39,15 +39,25 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
 import Popover from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { boxShadow } from './colors';
 var StyledPopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"], ["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
-/** click/hover 弹出菜单, 默认click, 基于Popover */
+/**
+ * click/hover 弹出菜单, 默认click, 基于Popover
+ *
+ *  ref: {
+ *      show: () => void;
+ *      hide: () => void;
+ *  }
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
 
-var PopMenu = function PopMenu(props) {
+var PopMenu = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a;
 
   var content = props.content,
@@ -63,15 +73,27 @@ var PopMenu = function PopMenu(props) {
       closeOnClick = _e === void 0 ? true : _e,
       _f = props.hoverDelay,
       hoverDelay = _f === void 0 ? 100 : _f,
+      _g = props.closeOnClickOutside,
+      closeOnClickOutside = _g === void 0 ? true : _g,
       children = props.children,
-      popoverRest = __rest(props, ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "children"]);
+      popoverRest = __rest(props, ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"]);
 
-  var ref = useRef(0);
+  var timerRef = useRef(0);
 
-  var _g = useState(false),
-      visible = _g[0],
-      setVisible = _g[1];
+  var _h = useState(false),
+      visible = _h[0],
+      setVisible = _h[1];
 
+  useImperativeHandle(ref, function () {
+    return {
+      show: function show() {
+        return setVisible(true);
+      },
+      hide: function hide() {
+        return setVisible(false);
+      }
+    };
+  });
   var actionProps = {};
 
   if (trigger === 'click') {
@@ -83,14 +105,14 @@ var PopMenu = function PopMenu(props) {
   } else if (trigger === 'hover') {
     actionProps = {
       onMouseEnter: function onMouseEnter() {
-        if (ref.current) {
-          clearTimeout(ref.current);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
 
         setVisible(true);
       },
       onMouseLeave: function onMouseLeave() {
-        ref.current = window.setTimeout(function () {
+        timerRef.current = window.setTimeout(function () {
           setVisible(false);
         }, hoverDelay);
       }
@@ -111,7 +133,7 @@ var PopMenu = function PopMenu(props) {
     visible: visible,
     onClose: onClose,
     placement: placement,
-    closeOnClickOutside: true,
+    closeOnClickOutside: closeOnClickOutside,
     content: /*#__PURE__*/React.createElement("div", {
       onClick: function onClick(e) {
         e.stopPropagation();
@@ -124,8 +146,7 @@ var PopMenu = function PopMenu(props) {
     arrow: arrow,
     offset: offset
   }, actionProps), /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, __assign(__assign({}, actionProps), otherProps)) : /*#__PURE__*/React.createElement("span", __assign({}, actionProps, otherProps), children));
-};
-
+});
 PopMenu.displayName = 'UC-PopMenu';
 export default PopMenu;
 var templateObject_1;

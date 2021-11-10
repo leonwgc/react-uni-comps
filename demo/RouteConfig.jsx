@@ -238,6 +238,10 @@ const routes = [
     path: '/PopMenu',
     component: lazy(() => import('./PopMenu')),
   },
+  {
+    path: '/PopConfirm',
+    component: lazy(() => import('./PopConfirm')),
+  },
 ];
 
 export default routes;

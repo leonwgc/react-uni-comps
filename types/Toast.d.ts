@@ -13,7 +13,7 @@ declare type Props = {
 };
 /** 黑背景轻提示 */
 declare const Toast: React.ForwardRefExoticComponent<Props> & {
-    /** 黑背景提示,静态调用 */ show?: (props: {
+    /** 黑背景提示,静态调用 */ show?: (props: string | {
         /** 内容 */
         content: React.ReactNode;
         /** 持续显示时间，默认2000ms */

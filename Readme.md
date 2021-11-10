@@ -102,6 +102,7 @@ yarn add react-uni-comps
 - Spinner（加载中）
 - Drawer (抽屉)
 - Modal (对话框)
+- PopConfirm (弹出气泡式的确认框) 
 
 #### 导航组件
 
