@@ -2352,7 +2352,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
 var _excluded$c = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
@@ -3742,20 +3742,32 @@ var transitionDuration = 240;
 /** 黑背景提示,静态调用 */
 
 Toast.show = function (props) {
-  var _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 2000 : _props$duration,
-      rest = _objectWithoutProperties(props, _excluded2$2);
+  var toastProps = {};
+  var _duration = 1500;
+
+  if (_typeof(props) === 'object') {
+    var _props$duration = props.duration,
+        duration = _props$duration === void 0 ? 1500 : _props$duration,
+        rest = _objectWithoutProperties(props, _excluded2$2);
+
+    toastProps = rest;
+    _duration = duration;
+  } else {
+    toastProps = {
+      content: props
+    };
+  }
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration
-  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, rest, {
+  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, toastProps, {
     visible: true
   }))), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Toast.displayName = 'UC-Toast';
@@ -8342,13 +8354,23 @@ var Modal = function Modal(props) {
 
 Modal.displayName = 'UC-Modal';
 
-var _excluded$W = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "children"];
+var _excluded$W = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
 
 var _templateObject$O;
 var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$O || (_templateObject$O = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 
-/** click/hover 弹出菜单, 默认click, 基于Popover */
-var PopMenu = function PopMenu(props) {
+/**
+ * click/hover 弹出菜单, 默认click, 基于Popover
+ * 
+ *  ref: {
+ *      show: () => void;
+ *      hide: () => void;
+ *  }
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
+var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _children$props;
 
   var content = props.content,
@@ -8364,16 +8386,28 @@ var PopMenu = function PopMenu(props) {
       closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
       _props$hoverDelay = props.hoverDelay,
       hoverDelay = _props$hoverDelay === void 0 ? 100 : _props$hoverDelay,
+      _props$closeOnClickOu = props.closeOnClickOutside,
+      closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children,
       popoverRest = _objectWithoutProperties(props, _excluded$W);
 
-  var ref = React.useRef(0);
+  var timerRef = React.useRef(0);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
       visible = _useState2[0],
       setVisible = _useState2[1];
 
+  React.useImperativeHandle(ref, function () {
+    return {
+      show: function show() {
+        return setVisible(true);
+      },
+      hide: function hide() {
+        return setVisible(false);
+      }
+    };
+  });
   var actionProps = {};
 
   if (trigger === 'click') {
@@ -8385,14 +8419,14 @@ var PopMenu = function PopMenu(props) {
   } else if (trigger === 'hover') {
     actionProps = {
       onMouseEnter: function onMouseEnter() {
-        if (ref.current) {
-          clearTimeout(ref.current);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
 
         setVisible(true);
       },
       onMouseLeave: function onMouseLeave() {
-        ref.current = window.setTimeout(function () {
+        timerRef.current = window.setTimeout(function () {
           setVisible(false);
         }, hoverDelay);
       }
@@ -8413,7 +8447,7 @@ var PopMenu = function PopMenu(props) {
     visible: visible,
     onClose: onClose,
     placement: placement,
-    closeOnClickOutside: true,
+    closeOnClickOutside: closeOnClickOutside,
     content: /*#__PURE__*/React__default['default'].createElement("div", {
       onClick: function onClick(e) {
         e.stopPropagation();
@@ -8426,8 +8460,7 @@ var PopMenu = function PopMenu(props) {
     arrow: arrow,
     offset: offset
   }, actionProps), /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, actionProps), otherProps)) : /*#__PURE__*/React__default['default'].createElement("span", _extends({}, actionProps, otherProps), children));
-};
-
+});
 PopMenu.displayName = 'UC-PopMenu';
 
 /* eslint-disable react-hooks/exhaustive-deps */

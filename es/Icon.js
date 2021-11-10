@@ -75,6 +75,6 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_aq255si230k.js');
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 export default Icon;
 var templateObject_1;

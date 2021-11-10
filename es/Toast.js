@@ -1,3 +1,5 @@
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
   if (Object.defineProperty) {
     Object.defineProperty(cooked, "raw", {
@@ -70,20 +72,32 @@ var transitionDuration = 240;
 /** 黑背景提示,静态调用 */
 
 Toast.show = function (props) {
-  var _a = props.duration,
-      duration = _a === void 0 ? 2000 : _a,
-      rest = __rest(props, ["duration"]);
+  var toastProps = {};
+  var _duration = 1500;
+
+  if (_typeof(props) === 'object') {
+    var _a = props.duration,
+        duration = _a === void 0 ? 1500 : _a,
+        rest = __rest(props, ["duration"]);
+
+    toastProps = rest;
+    _duration = duration;
+  } else {
+    toastProps = {
+      content: props
+    };
+  }
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
-  }, /*#__PURE__*/React.createElement(Toast, __assign({}, rest, {
+  }, /*#__PURE__*/React.createElement(Toast, __assign({}, toastProps, {
     visible: true
   }))), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Toast.displayName = 'UC-Toast';

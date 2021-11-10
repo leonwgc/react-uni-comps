@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, SyntheticEvent } from 'react';
+import React, { useState, useRef, useCallback, SyntheticEvent, useImperativeHandle } from 'react';
 import Popover from './Popover';
 import { Placement } from './popovers/types';
 import styled from 'styled-components';
@@ -33,10 +33,27 @@ export type Props = {
   hoverDelay?: number;
   /** visible状态变化回调 */
   onVisibleChange?: (visible: boolean) => void;
+  /** 点击外部区域是否关闭*/
+  closeOnClickOutside?: boolean;
 };
 
-/** click/hover 弹出菜单, 默认click, 基于Popover */
-const PopMenu = (props: Props): React.ReactElement => {
+export interface PopMenuRefType {
+  show: () => void;
+  hide: () => void;
+}
+
+/**
+ * click/hover 弹出菜单, 默认click, 基于Popover
+ * 
+ *  ref: {
+ *      show: () => void;
+ *      hide: () => void;
+ *  }
+ *
+ * @param {Props} props
+ * @return {*}  {React.ReactElement}
+ */
+const PopMenu = React.forwardRef<PopMenuRefType, Props>((props, ref) => {
   const {
     content,
     trigger = 'click',
@@ -46,11 +63,17 @@ const PopMenu = (props: Props): React.ReactElement => {
     className,
     closeOnClick = true,
     hoverDelay = 100,
+    closeOnClickOutside = true,
     children,
     ...popoverRest
   } = props;
-  const ref = useRef<number>(0);
+  const timerRef = useRef<number>(0);
   const [visible, setVisible] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    show: () => setVisible(true),
+    hide: () => setVisible(false),
+  }));
 
   let actionProps = {};
 
@@ -63,13 +86,13 @@ const PopMenu = (props: Props): React.ReactElement => {
   } else if (trigger === 'hover') {
     actionProps = {
       onMouseEnter: () => {
-        if (ref.current) {
-          clearTimeout(ref.current);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
         }
         setVisible(true);
       },
       onMouseLeave: () => {
-        ref.current = window.setTimeout(() => {
+        timerRef.current = window.setTimeout(() => {
           setVisible(false);
         }, hoverDelay);
       },
@@ -94,7 +117,7 @@ const PopMenu = (props: Props): React.ReactElement => {
       visible={visible}
       onClose={onClose}
       placement={placement}
-      closeOnClickOutside
+      closeOnClickOutside={closeOnClickOutside}
       content={
         <div
           onClick={(e: SyntheticEvent) => {
@@ -123,7 +146,7 @@ const PopMenu = (props: Props): React.ReactElement => {
       )}
     </StyledPopover>
   );
-};
+});
 PopMenu.displayName = 'UC-PopMenu';
 
 export default PopMenu;

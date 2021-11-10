@@ -41,37 +41,43 @@ type Props = {
   className?: string;
 };
 
-type StaticToastProps = {
-  /** 内容 */
-  content: React.ReactNode;
-  /** 持续显示时间，默认2000ms */
-  duration?: number;
-  /** 模态, 默认true */
-  modal?: boolean;
-  /** toast class */
-  className?: string;
-  /** 内容样式, 应用于StyledToast */
-  style?: React.CSSProperties;
-  /** 模态时 mask style */
-  maskStyle: React.CSSProperties;
-};
+type StaticToastProps =
+  | string
+  | {
+      /** 内容 */
+      content: React.ReactNode;
+      /** 持续显示时间，默认2000ms */
+      duration?: number;
+      /** 模态, 默认true */
+      modal?: boolean;
+      /** toast class */
+      className?: string;
+      /** 内容样式, 应用于StyledToast */
+      style?: React.CSSProperties;
+      /** 模态时 mask style */
+      maskStyle: React.CSSProperties;
+    };
 
 /** 黑背景轻提示 */
 const Toast: React.ForwardRefExoticComponent<Props> & {
-  /** 黑背景提示,静态调用 */ show?: (props: {
-    /** 内容 */
-    content: React.ReactNode;
-    /** 持续显示时间，默认2000ms */
-    duration?: number;
-    /** 模态, 默认true */
-    modal?: boolean;
-    /** toast class */
-    className?: string;
-    /** 内容样式, 应用于StyledToast */
-    style?: React.CSSProperties;
-    /** 模态时 mask style */
-    maskStyle: React.CSSProperties;
-  }) => void;
+  /** 黑背景提示,静态调用 */ show?: (
+    props:
+      | string
+      | {
+          /** 内容 */
+          content: React.ReactNode;
+          /** 持续显示时间，默认2000ms */
+          duration?: number;
+          /** 模态, 默认true */
+          modal?: boolean;
+          /** toast class */
+          className?: string;
+          /** 内容样式, 应用于StyledToast */
+          style?: React.CSSProperties;
+          /** 模态时 mask style */
+          maskStyle: React.CSSProperties;
+        }
+  ) => void;
 } = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { content, visible, modal = true, maskStyle, className, ...rest } = props;
 
@@ -88,8 +94,19 @@ const Toast: React.ForwardRefExoticComponent<Props> & {
 const transitionDuration = 240;
 
 /** 黑背景提示,静态调用 */
-Toast.show = (props: StaticToastProps) => {
-  const { duration = 2000, ...rest } = props;
+Toast.show = (props: StaticToastProps | string) => {
+  let toastProps = {};
+  let _duration = 1500;
+
+  if (typeof props === 'object') {
+    const { duration = 1500, ...rest } = props;
+    toastProps = rest;
+    _duration = duration;
+  } else {
+    toastProps = {
+      content: props,
+    };
+  }
 
   const container = document.createElement('div');
 
@@ -97,13 +114,13 @@ Toast.show = (props: StaticToastProps) => {
 
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>
-      <Toast {...rest} visible />
+      <Toast {...toastProps} visible />
     </TransitionElement>,
     container
   );
   window.setTimeout(() => {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Toast.displayName = 'UC-Toast';
