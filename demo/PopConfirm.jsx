@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Toast, Icon } from '../src';
-import PopConfirm from '../src/PopConfirm';
+import { Button, Toast, Icon, PopConfirm } from '../src';
 
 export default function App() {
   const ref = useRef();
