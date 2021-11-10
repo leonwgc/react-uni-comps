@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import PopMenu, { PopMenuRefType } from './PopMenu';
 import Icon from './Icon';
 import Button from './Button';
-import Space from './Space';
 
 type Offset = { x?: number; y?: number };
 
@@ -19,7 +18,7 @@ const StyledMenu = styled(PopMenu)`
       color: #1a1a1a;
       font-size: 14px;
       align-items: center;
-      .icon {
+      .pop-icon {
         margin-right: 8px;
         font-size: 20px;
         color: #fab20a;
@@ -31,7 +30,8 @@ const StyledMenu = styled(PopMenu)`
       justify-content: flex-end;
       margin-top: 24px;
 
-      .uc-button {
+      button {
+        height: 28px;
         &:first-child {
           margin-right: 12px;
         }
@@ -127,33 +127,31 @@ const PopConfirm = React.forwardRef<PopMenuRefType, Props>((props, ref) => {
           }}
         >
           <div className="title">
-            {icon && <span className="icon">{icon}</span>} {title}
+            {icon && <span className="pop-icon">{icon}</span>} {title}
           </div>
           <div className="ops">
-            <Space>
-              <Button
-                {...cancelButtonProps}
-                onClick={() => {
-                  onCancel?.();
-                  popmenuRef.current?.hide();
-                }}
-              >
-                {cancelText}
-              </Button>
-              <Button
-                type="primary"
-                {...okButtonProps}
-                onClick={(e) => {
-                  if (!closeOnClick) {
-                    e.stopPropagation(); // prevent popmenu closeOnClick in out wrapper
-                  }
+            <Button
+              {...cancelButtonProps}
+              onClick={() => {
+                onCancel?.();
+                popmenuRef.current?.hide();
+              }}
+            >
+              {cancelText}
+            </Button>
+            <Button
+              type="primary"
+              {...okButtonProps}
+              onClick={(e) => {
+                if (!closeOnClick) {
+                  e.stopPropagation(); // prevent popmenu closeOnClick in out wrapper
+                }
 
-                  onOk?.();
-                }}
-              >
-                {okText}
-              </Button>
-            </Space>
+                onOk?.();
+              }}
+            >
+              {okText}
+            </Button>
           </div>
         </div>
       }

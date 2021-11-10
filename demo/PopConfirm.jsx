@@ -8,6 +8,8 @@ export default function App() {
     <div style={{ margin: '140px 100px 0' }}>
       <PopConfirm
         ref={ref}
+        placement="right"
+        style={{ width: 300 }}
         icon={<Icon type="uc-icon-yiwen" />}
         title={<span style={{ fontSize: 20 }}>确认删除吗?</span>}
         okText="ok"
@@ -21,8 +23,7 @@ export default function App() {
         cancelButtonProps={{
           style: {
             border: '1px solid green',
-            height: 28,
-            width: 64,
+            height: 30,
           },
         }}
         onCancel={() => Toast.show('you cancelled')}
@@ -31,6 +32,7 @@ export default function App() {
       </PopConfirm>
 
       <PopConfirm
+        placement="right"
         title="确定发布此页面？确定发布此页面？"
         onOk={() => {
           Toast.show('发布中..');
