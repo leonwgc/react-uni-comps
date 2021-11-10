@@ -45,8 +45,7 @@ import clsx from 'clsx';
 import PopMenu from './PopMenu';
 import Icon from './Icon';
 import Button from './Button';
-import Space from './Space';
-var StyledMenu = styled(PopMenu)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      .uc-button {\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"], ["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      .uc-button {\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"])));
+var StyledMenu = styled(PopMenu)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .pop-icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      button {\n        height: 28px;\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"], ["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .pop-icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      button {\n        height: 28px;\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"])));
 /**
  * 点击元素，弹出气泡式的确认框。基于PopMenu
  *
@@ -105,10 +104,10 @@ var PopConfirm = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }, /*#__PURE__*/React.createElement("div", {
       className: "title"
     }, icon && /*#__PURE__*/React.createElement("span", {
-      className: "icon"
+      className: "pop-icon"
     }, icon), " ", title), /*#__PURE__*/React.createElement("div", {
       className: "ops"
-    }, /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Button, __assign({}, cancelButtonProps, {
+    }, /*#__PURE__*/React.createElement(Button, __assign({}, cancelButtonProps, {
       onClick: function onClick() {
         var _a;
 
@@ -125,7 +124,7 @@ var PopConfirm = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
         onOk === null || onOk === void 0 ? void 0 : onOk();
       }
-    }), okText))))
+    }), okText)))
   }), children);
 });
 PopConfirm.displayName = 'UC-PopConfirm';
