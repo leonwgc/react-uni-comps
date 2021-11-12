@@ -108,7 +108,6 @@ export default function App() {
           maxLength={60}
           autoHeight={false}
           value={v}
-          suffix={<span>{v.length}/60</span>}
           onChange={setV}
         />
       </Cell>
