@@ -27,6 +27,7 @@ export type Props = {
 const StyledInput = styled.div`
   display: flex;
   align-items: center;
+  padding: 4px 12px;
   font-size: 14px;
   width: 100%;
   background-color: #fff;
@@ -44,10 +45,6 @@ const StyledInput = styled.div`
     border: none;
     padding: 0 4px;
     line-height: 24px;
-
-    textarea {
-      resize: none;
-    }
   }
 
   .prefix {
@@ -61,10 +58,10 @@ const StyledInput = styled.div`
   input,
   textarea {
     flex: 1;
-    padding: 4px 12px;
     position: relative;
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
     color: #333;
     line-height: inherit;
     text-align: left;
@@ -79,7 +76,7 @@ const StyledInput = styled.div`
   }
 
   textarea {
-    resize: auto;
+    resize: none;
     word-break: break-all;
     word-wrap: break-word;
     & + * {
