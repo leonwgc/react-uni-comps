@@ -39,12 +39,14 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-var __spreadArray = this && this.__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) {
-    to[j] = from[i];
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return to;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -170,7 +172,7 @@ var Wheel = function Wheel(props) {
       vIndex++;
     }
 
-    var cv = __spreadArray([], v.value);
+    var cv = __spreadArray([], v.value, true);
 
     vIndex = v.valueIndex - 1;
 
@@ -258,7 +260,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       var _a;
 
       if (listRef.current.length) {
-        var cv = __spreadArray([], val);
+        var cv = __spreadArray([], val, true);
 
         var i = cols - 1;
 

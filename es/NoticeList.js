@@ -39,12 +39,14 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-var __spreadArray = this && this.__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) {
-    to[j] = from[i];
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return to;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 import clsx from 'clsx';
@@ -120,7 +122,7 @@ var NoticeList = /*#__PURE__*/React.forwardRef(function (props, ref) {
       if (lIndex > 0) {
         data.push(data[0]);
         data.shift();
-        setData(__spreadArray([], data));
+        setData(__spreadArray([], data, true));
       }
     }
   }, data.map(function (item) {

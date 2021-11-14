@@ -224,6 +224,8 @@ function _assertThisInitialized(self) {
 function _possibleConstructorReturn(self, call) {
   if (call && (typeof call === "object" || typeof call === "function")) {
     return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
   }
 
   return _assertThisInitialized(self);
@@ -2641,12 +2643,10 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
     }
 
     _this = _super.call.apply(_super, [this].concat(args));
-
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _this.state = {
       hasError: false,
       error: null
-    });
-
+    };
     return _this;
   }
 
@@ -6846,9 +6846,7 @@ var Tile = /*#__PURE__*/function (_Component) {
     }
 
     _this = _super.call.apply(_super, [this].concat(args));
-
-    _defineProperty(_assertThisInitialized(_this), "state", {});
-
+    _this.state = {};
     return _this;
   }
 
@@ -7533,17 +7531,16 @@ var Calendar = /*#__PURE__*/function (_Component) {
     }
 
     _this = _super.call.apply(_super, [this].concat(_args));
-
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _this.state = {
       /* eslint-disable react/destructuring-assignment */
       activeStartDate: _this.props.defaultActiveStartDate,
       value: _this.props.defaultValue,
       view: _this.props.defaultView
       /* eslint-enable react/destructuring-assignment */
 
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "setStateAndCallCallbacks", function (nextState, event, callback) {
+    _this.setStateAndCallCallbacks = function (nextState, event, callback) {
       var _assertThisInitialize = _assertThisInitialized(_this),
           previousActiveStartDate = _assertThisInitialize.activeStartDate,
           previousView = _assertThisInitialize.view;
@@ -7601,16 +7598,16 @@ var Calendar = /*#__PURE__*/function (_Component) {
 
         if (callback) callback(args);
       });
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "setActiveStartDate", function (nextActiveStartDate, action) {
+    _this.setActiveStartDate = function (nextActiveStartDate, action) {
       _this.setStateAndCallCallbacks({
         action: action,
         activeStartDate: nextActiveStartDate
       });
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "drillDown", function (nextActiveStartDate, event) {
+    _this.drillDown = function (nextActiveStartDate, event) {
       if (!_this.drillDownAvailable) {
         return;
       }
@@ -7629,9 +7626,9 @@ var Calendar = /*#__PURE__*/function (_Component) {
         activeStartDate: nextActiveStartDate,
         view: nextView
       }, undefined, onDrillDown);
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "drillUp", function () {
+    _this.drillUp = function () {
       if (!_this.drillUpAvailable) {
         return;
       }
@@ -7650,9 +7647,9 @@ var Calendar = /*#__PURE__*/function (_Component) {
         activeStartDate: nextActiveStartDate,
         view: nextView
       }, undefined, onDrillUp);
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "onChange", function (value, event) {
+    _this.onChange = function (value, event) {
       var selectRange = _this.props.selectRange;
 
       _this.onClickTile(value, event);
@@ -7688,9 +7685,9 @@ var Calendar = /*#__PURE__*/function (_Component) {
         activeStartDate: nextActiveStartDate,
         value: nextValue
       }, event);
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "onClickTile", function (value, event) {
+    _this.onClickTile = function (value, event) {
       var _assertThisInitialize5 = _assertThisInitialized(_this),
           view = _assertThisInitialize5.view;
 
@@ -7720,9 +7717,9 @@ var Calendar = /*#__PURE__*/function (_Component) {
       }();
 
       if (callback) callback(value, event);
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "onMouseOver", function (value) {
+    _this.onMouseOver = function (value) {
       _this.setState(function (prevState) {
         if (prevState.hover && prevState.hover.getTime() === value.getTime()) {
           return null;
@@ -7732,13 +7729,13 @@ var Calendar = /*#__PURE__*/function (_Component) {
           hover: value
         };
       });
-    });
+    };
 
-    _defineProperty(_assertThisInitialized(_this), "onMouseLeave", function () {
+    _this.onMouseLeave = function () {
       _this.setState({
         hover: null
       });
-    });
+    };
 
     return _this;
   }
