@@ -19,7 +19,7 @@
     "build": "father-build && tsc",
     "pub": "bash pub.sh",
     "start": "node pack",
-    "dev": "node dev"
+    "dev": "vited start -p 9100"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -60,7 +60,7 @@
     "rimraf": "^3.0.2",
     "simple-redux-store": "^1.0.2",
     "typescript": "^4.3.5",
-    "vited": "2.3.1",
+    "vited": "2.3.2",
     "yargs": "^17.1.0"
   },
   "files": [
