@@ -11711,10 +11711,10 @@ vite@^2.6.14:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vited@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/vited/download/vited-2.3.1.tgz#f5adc512908ad812fa04e1959d793721b049ead9"
-  integrity sha512-/ocmuimuECEmB8staB6pAJjRwx061DbNg3a9iYCLy2uhoJiEH8A6rF/y5S3drFxD+QMiC1KxcxXsHp4VZbLIUQ==
+vited@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npmmirror.com/vited/download/vited-2.3.2.tgz#f5eac164a354c8ae974e0845eb5f7f794fc279e4"
+  integrity sha512-vcNf+D4uv1XtIDJF8gmhLwTV4OLuD25vvxS7rvIVF1wEygeISDoRmldcoxfr9Yx7bgRfMw38TJ1uRvAvUBci+Q==
   dependencies:
     "@babel/cli" "^7.16.0"
     "@babel/core" "^7.16.0"
