@@ -8,7 +8,8 @@ export default function App() {
       <Space wrap>
         <Spinner style={{ color: 'red', fontSize: 30, margin: '0 20px' }}></Spinner>
         <Spinner size={32}></Spinner>
-        <Spinner color="red"></Spinner>
+        <Spinner></Spinner>
+        <Spinner></Spinner>
         <Spinner color="red" size={48}></Spinner>
         <Spinner color="#004bcc"></Spinner>
         <Spinner color="#004bcc" size={48}></Spinner>

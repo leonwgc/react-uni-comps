@@ -26,7 +26,6 @@ const StyledSteps = styled.div`
       &::after {
         content: '';
         position: absolute;
-        z-index: -1;
         background-color: #909ca4;
       }
 
