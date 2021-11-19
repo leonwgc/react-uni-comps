@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import styled from 'styled-components';
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
   className?: string;
 };
 
-const StyledLoading = styled.div<{ size: number; color: string }>`
+const StyledLoading = styled.div`
   @-webkit-keyframes loading {
     0% {
       -webkit-transform: rotate3d(0, 0, 1, 0deg);
@@ -34,13 +35,11 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
     }
   }
 
-  font-size: ${(props) => props.size}px;
   display: inline-flex;
   position: relative;
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  color: ${(props) => props.color || props.theme.color};
   animation: loading 1s steps(60, end) infinite;
   :before,
   :after {
@@ -69,9 +68,18 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
 `;
 
 /** Spinner 加载中 */
-const Spinner = React.forwardRef<HTMLDivElement, Props>(({ size = 16, color, ...rest }, ref) => {
-  return <StyledLoading {...rest} ref={ref} size={size} color={color}></StyledLoading>;
-});
+const Spinner = React.forwardRef<HTMLDivElement, Props>(
+  ({ size = 16, color, className, style, ...rest }, ref) => {
+    return (
+      <StyledLoading
+        {...rest}
+        ref={ref}
+        className={clsx(className, 'uc-spinner')}
+        style={{ fontSize: size, color: color, ...style }}
+      ></StyledLoading>
+    );
+  }
+);
 
 Spinner.displayName = 'UC-Spinner';
 
