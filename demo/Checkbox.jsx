@@ -3,8 +3,21 @@ import { Space, Checkbox, Divider, Button, styled } from '../src';
 
 const StyledContent = styled.div`
   .uc-checkbox {
-    margin: 0 8px;
+    margin: 16px;
+
+    &.checked {
+      .checkbox {
+        &.styled {
+          background-color: blue;
+          border: 1px solid blue;
+        }
+      }
+    }
   }
+`;
+
+const StyledDivider = styled(Divider)`
+  margin: 16px 0;
 `;
 
 export default function App() {
@@ -12,17 +25,23 @@ export default function App() {
 
   return (
     <StyledContent>
-      <Divider>controlled</Divider>
+      <StyledDivider>controlled</StyledDivider>
       <Checkbox checked={checked} onChange={setChecked}>
         controlled check
       </Checkbox>
       <Button onClick={() => setChecked(!checked)}>toggle checked outside</Button>
-      <Divider>uncontrolled</Divider>
+      <StyledDivider>uncontrolled</StyledDivider>
       <Checkbox defaultChecked onChange={(c) => console.log(c)}>
         uncontrolled check
       </Checkbox>
 
-      <Divider>others</Divider>
+      <StyledDivider>styled</StyledDivider>
+
+      <Checkbox className="styled" defaultChecked>
+        styled
+      </Checkbox>
+
+      <StyledDivider>others</StyledDivider>
       <Space wrap>
         <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
           good
