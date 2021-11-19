@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  size?: number /** 圈圈大小,应用到font-size,默认16 */;
-  color?: string /** 圈圈颜色*/;
+  /** 圈圈大小,应用到font-size,默认16 */
+  size?: number;
+  /** 圈圈颜色*/
+  color?: string;
+  style?: React.CSSProperties;
+  className?: string;
 };
 
 const StyledLoading = styled.div<{ size: number; color: string }>`
@@ -65,8 +69,8 @@ const StyledLoading = styled.div<{ size: number; color: string }>`
 `;
 
 /** Spinner 加载中 */
-const Spinner = React.forwardRef<HTMLDivElement, Props>(({ size = 16, color }, ref) => {
-  return <StyledLoading ref={ref} size={size} color={color}></StyledLoading>;
+const Spinner = React.forwardRef<HTMLDivElement, Props>(({ size = 16, color, ...rest }, ref) => {
+  return <StyledLoading {...rest} ref={ref} size={size} color={color}></StyledLoading>;
 });
 
 Spinner.displayName = 'UC-Spinner';
