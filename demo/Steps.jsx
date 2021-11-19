@@ -5,7 +5,7 @@ import { Steps, Divider, Button, Icon, styled } from '../src';
 const StyledSteps = styled(Steps)`
   &.vertical {
     .step {
-      height: 110px;
+      height: 120px;
     }
   }
 `;
@@ -51,12 +51,7 @@ export default function App() {
         direction="vertical"
         dotStyle
         current={index}
-        steps={[
-          { title: '步骤1', description: '步骤1desc' },
-          { title: '步骤2', description: '步骤2desc' },
-          { title: '步骤3', description: '' },
-          { title: '步骤4', description: '步骤4desc' },
-        ]}
+        steps={[{ title: '步骤1' }, { title: '步骤2' }, { title: '步骤3' }, { title: '步骤4' }]}
       ></Steps>
       <Divider>vertical</Divider>
       <StyledSteps

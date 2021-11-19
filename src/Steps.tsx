@@ -132,7 +132,6 @@ const StyledSteps = styled.div`
     padding: 8px 16px;
 
     .step {
-      height: 90px;
       display: flex;
 
       .step-box {
