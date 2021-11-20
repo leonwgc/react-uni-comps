@@ -1,12 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
 /**
- * 获取验证码倒计时
+ * 倒计时，常用于获取验证码
  *
  * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
  * @param {boolean} [defaultStarted=false] 默认开始否
  * @return {*} {
   countdown: number;
-  started: boolean;
+  isRunning: boolean;
+  isReStarted: boolean;
   start: () => void;
   reset: () => void;
 }
@@ -29,6 +30,10 @@ var useCountdown = function useCountdown(defaultCountdown, defaultStarted) {
       started = _b[0],
       setStarted = _b[1];
 
+  var _c = useState(false),
+      isReStarted = _c[0],
+      setIsReStarted = _c[1];
+
   var start = useCallback(function () {
     setStarted(true);
   }, []);
@@ -42,6 +47,11 @@ var useCountdown = function useCountdown(defaultCountdown, defaultStarted) {
           return --cd;
         });
       }, 1000);
+
+      if (countdown === 1) {
+        // mark the end of this round
+        setIsReStarted(true);
+      }
     } else {
       setStarted(false);
       setCountdown(defaultCountdown);
@@ -49,9 +59,10 @@ var useCountdown = function useCountdown(defaultCountdown, defaultStarted) {
   }, [countdown, started, defaultCountdown]);
   return {
     countdown: countdown,
-    started: started,
+    isRunning: started,
     start: start,
-    reset: reset
+    reset: reset,
+    isReStarted: isReStarted
   };
 };
 

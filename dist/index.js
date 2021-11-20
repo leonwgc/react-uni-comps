@@ -8611,6 +8611,70 @@ var useThrottle = function useThrottle(fn) {
   );
 };
 
+/**
+ * 倒计时，常用于获取验证码
+ *
+ * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
+ * @param {boolean} [defaultStarted=false] 默认开始否
+ * @return {*} {
+  countdown: number;
+  isRunning: boolean;
+  isReStarted: boolean;
+  start: () => void;
+  reset: () => void;
+}
+ */
+var useCountdown = function useCountdown() {
+  var defaultCountdown = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 60;
+  var defaultStarted = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var _useState = React.useState(defaultCountdown),
+      _useState2 = _slicedToArray(_useState, 2),
+      countdown = _useState2[0],
+      setCountdown = _useState2[1];
+
+  var _useState3 = React.useState(defaultStarted),
+      _useState4 = _slicedToArray(_useState3, 2),
+      started = _useState4[0],
+      setStarted = _useState4[1];
+
+  var _useState5 = React.useState(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isReStarted = _useState6[0],
+      setIsReStarted = _useState6[1];
+
+  var start = React.useCallback(function () {
+    setStarted(true);
+  }, []);
+  var reset = React.useCallback(function () {
+    setStarted(false);
+  }, []);
+  React.useEffect(function () {
+    if (countdown > 0 && started) {
+      setTimeout(function () {
+        setCountdown(function (cd) {
+          return --cd;
+        });
+      }, 1000);
+
+      if (countdown === 1) {
+        // mark the end of this round
+        setIsReStarted(true);
+      }
+    } else {
+      setStarted(false);
+      setCountdown(defaultCountdown);
+    }
+  }, [countdown, started, defaultCountdown]);
+  return {
+    countdown: countdown,
+    isRunning: started,
+    start: start,
+    reset: reset,
+    isReStarted: isReStarted
+  };
+};
+
 Object.keys(reactTransitionGroup).forEach(function (k) {
   if (k !== 'default') Object.defineProperty(exports, k, {
     enumerable: true,
@@ -8703,6 +8767,7 @@ exports.observe = observe;
 exports.throttle = throttle;
 exports.unobserve = unobserve;
 exports.useCallbackRef = useCallbackRef;
+exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
 exports.useInViewport = useInViewport;
 exports.useThrottle = useThrottle;

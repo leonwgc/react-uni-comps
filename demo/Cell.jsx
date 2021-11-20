@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useCountdown from '../src/hooks/useCountdown';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
   Divider,
@@ -14,6 +13,7 @@ import {
   Radio,
   Toast,
   styled,
+  useCountdown,
 } from '../src';
 import useBgColor from './hooks/useBgColor';
 
@@ -35,7 +35,7 @@ export default function App() {
   const [v1, setV1] = useState('item2');
   const [v2, setV2] = useState([2]);
 
-  const { countdown, started, start, reset } = useCountdown(15);
+  const { countdown, isRunning, start, isReStarted } = useCountdown(5);
 
   const { tel, id } = data;
 
@@ -145,8 +145,8 @@ export default function App() {
           placeholder="请输入验证码"
           maxLength={6}
           suffix={
-            <span style={{ color: '#FF5D0D' }} onClick={started ? reset : start}>
-              {started ? countdown + '秒' : '获取验证码'}
+            <span style={{ color: '#FF5D0D' }} onClick={start}>
+              {isRunning ? countdown + '秒' : `${isReStarted ? '重新获取' : '获取验证码'}`}
             </span>
           }
         />

@@ -172,6 +172,7 @@ yarn add react-uni-comps
 - useInViewport (监听元素是否在视口内)
 - useVisibleObserve (监视元素在文档视口的可见性，可见性变化时触发回调)
 - useCallbackRef (保存最新的值在 ref 中)
+- useCountdown (倒计时，常用于获取验证码)
 
 ### 按需加载
 
