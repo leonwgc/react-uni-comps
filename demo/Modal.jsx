@@ -6,14 +6,20 @@ export default function App() {
   const onClose = () => setVisible(false);
   return (
     <div style={{ margin: 50 }}>
-      <Button type="primary" onClick={() => setVisible(true)}>
+      <Button
+        type="primary"
+        onClick={() => setVisible(true)}
+        style={{ position: 'fixed', left: '30%', top: '40%' }}
+      >
         open Modal
       </Button>
 
       <Modal
         visible={visible}
+        // flip={true}
         closable
         wrapStyle={{ width: 320 }}
+        // style={{ transition: 'none' }}
         onClose={onClose}
         header={<h3>头部</h3>}
         footer={

@@ -26,32 +26,31 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useCallback, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
 import styled from 'styled-components';
-import { isMobile } from './dom';
+import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"]))); // type MousePosition = {
-//   x: number;
-//   y: number;
-// };
-// let mousePosition: MousePosition = null;
-// if (isBrowser) {
-//   const getClickPosition = (e: MouseEvent) => {
-//     mousePosition = {
-//       x: e.pageX,
-//       y: e.pageY,
-//     };
-//     setTimeout(() => {
-//       mousePosition = null;
-//     }, 100);
-//   };
-//   document.documentElement.addEventListener('click', getClickPosition, true);
-// }
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0);\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0);\n    }\n  }\n"])));
+var mousePosition = null;
 
+if (isBrowser) {
+  var getClickPosition = function getClickPosition(e) {
+    mousePosition = {
+      x: e.clientX,
+      y: e.clientY
+    };
+    setTimeout(function () {
+      mousePosition = null;
+    }, 100);
+  };
+
+  document.documentElement.addEventListener('click', getClickPosition, true);
+}
 /** 弹框，可以从上，下，左，右，中间弹出 */
+
 
 var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
   var children = props.children,
@@ -67,37 +66,41 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       position = _c === void 0 ? 'bottom' : _c,
       _d = props.duration,
       duration = _d === void 0 ? 160 : _d,
+      _e = props.flip,
+      flip = _e === void 0 ? true : _e,
       mountContainer = props.mountContainer,
       style = props.style,
       className = props.className;
   var wrapRef = useRef();
   useImperativeHandle(ref, function () {
     return wrapRef.current;
-  }); // const lastMousePositionRef = useRef<MousePosition>();
-
+  });
+  var lastMousePositionRef = useRef();
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
-  var showPosition = mountNode === document.body ? 'fixed' : 'absolute'; // const resetTransformOrigin = useCallback(() => {
-  //   const mousePosition = lastMousePositionRef.current;
-  //   const dialogEl = wrapRef.current;
-  //   if (
-  //     mousePosition &&
-  //     mousePosition.x >= 0 &&
-  //     mousePosition.y >= 0 &&
-  //     dialogEl &&
-  //     dialogEl.getBoundingClientRect
-  //   ) {
-  //     const { left: x, top: y } = dialogEl.getBoundingClientRect();
-  //     const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px`;
-  //     dialogEl.style.transformOrigin = origin;
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   if (!isMobile && position === 'center' && visible && !lastMousePositionRef.current) {
-  //     lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
-  //     resetTransformOrigin();
-  //   }
-  // }, [visible, position, resetTransformOrigin]);
+  var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+  var resetTransformOrigin = useCallback(function () {
+    var mousePosition = lastMousePositionRef.current;
+    var dialogEl = wrapRef.current;
 
+    if (mousePosition && mousePosition.x >= 0 && mousePosition.y >= 0 && dialogEl && dialogEl.getBoundingClientRect) {
+      var _a = dialogEl.getBoundingClientRect(),
+          x = _a.left,
+          y = _a.top;
+
+      var origin = mousePosition.x - x + "px " + (mousePosition.y - y) + "px 0";
+      dialogEl.style.transformOrigin = origin;
+      dialogEl.style.transitionDuration = '0s'; // hey yoo reflow
+
+      document.body.offsetHeight;
+      dialogEl.style.transitionDuration = duration + 'ms';
+    }
+  }, [duration]);
+  useLayoutEffect(function () {
+    if (!isMobile && position === 'center' && flip && visible && !lastMousePositionRef.current) {
+      lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
+      resetTransformOrigin();
+    }
+  }, [visible, position, resetTransformOrigin, flip]);
   return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popup-container-' + position)
   }, mask && visible && /*#__PURE__*/React.createElement(Mask, {

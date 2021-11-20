@@ -1,9 +1,15 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
 import styled from 'styled-components';
-import { isMobile } from './dom';
+import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
 
 const StyledWrapper = styled.div`
@@ -99,10 +105,10 @@ const StyledWrapper = styled.div`
   &.center-exited,
   &.center-exiting {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate(-50%, -50%) scale(0);
     &.pc {
       top: 200px;
-      transform: translate(-50%, 0) scale(0.5);
+      transform: translate(-50%, 0) scale(0);
     }
   }
 `;
@@ -120,7 +126,7 @@ export type Props = {
   maskClass?: string;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
   position: 'top' | 'bottom' | 'left' | 'center' | 'right';
-  /** 弹出动画时间，默认280ms */
+  /** 弹出动画时间，默认160ms */
   duration?: number;
   /** 弹框mount位置，默认为document.body */
   mountContainer?: () => HTMLElement;
@@ -132,28 +138,31 @@ export type Props = {
   className?: string;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
+
+  /** pc端中间弹框点击按钮触发显示的飞出效果，默认true */
+  flip?: boolean;
 };
 
-// type MousePosition = {
-//   x: number;
-//   y: number;
-// };
+type MousePosition = {
+  x: number;
+  y: number;
+};
 
-// let mousePosition: MousePosition = null;
+let mousePosition: MousePosition = null;
 
-// if (isBrowser) {
-//   const getClickPosition = (e: MouseEvent) => {
-//     mousePosition = {
-//       x: e.pageX,
-//       y: e.pageY,
-//     };
-//     setTimeout(() => {
-//       mousePosition = null;
-//     }, 100);
-//   };
+if (isBrowser) {
+  const getClickPosition = (e: MouseEvent) => {
+    mousePosition = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+    setTimeout(() => {
+      mousePosition = null;
+    }, 100);
+  };
 
-//   document.documentElement.addEventListener('click', getClickPosition, true);
-// }
+  document.documentElement.addEventListener('click', getClickPosition, true);
+}
 
 /** 弹框，可以从上，下，左，右，中间弹出 */
 const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -167,6 +176,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskClass,
     position = 'bottom',
     duration = 160,
+    flip = true,
     mountContainer,
     style,
     className,
@@ -175,32 +185,37 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => wrapRef.current);
 
-  // const lastMousePositionRef = useRef<MousePosition>();
+  const lastMousePositionRef = useRef<MousePosition>();
   const mountNode = mountContainer?.() || document.body;
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
 
-  // const resetTransformOrigin = useCallback(() => {
-  //   const mousePosition = lastMousePositionRef.current;
-  //   const dialogEl = wrapRef.current;
-  //   if (
-  //     mousePosition &&
-  //     mousePosition.x >= 0 &&
-  //     mousePosition.y >= 0 &&
-  //     dialogEl &&
-  //     dialogEl.getBoundingClientRect
-  //   ) {
-  //     const { left: x, top: y } = dialogEl.getBoundingClientRect();
-  //     const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px`;
-  //     dialogEl.style.transformOrigin = origin;
-  //   }
-  // }, []);
+  const resetTransformOrigin = useCallback(() => {
+    const mousePosition = lastMousePositionRef.current;
+    const dialogEl = wrapRef.current;
+    if (
+      mousePosition &&
+      mousePosition.x >= 0 &&
+      mousePosition.y >= 0 &&
+      dialogEl &&
+      dialogEl.getBoundingClientRect
+    ) {
+      const { left: x, top: y } = dialogEl.getBoundingClientRect();
+      const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px 0`;
+      dialogEl.style.transformOrigin = origin;
+      dialogEl.style.transitionDuration = '0s';
+      // hey yoo reflow
+      document.body.offsetHeight;
+      dialogEl.style.transitionDuration = duration + 'ms';
+    }
+  }, [duration]);
 
-  // useEffect(() => {
-  //   if (!isMobile && position === 'center' && visible && !lastMousePositionRef.current) {
-  //     lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
-  //     resetTransformOrigin();
-  //   }
-  // }, [visible, position, resetTransformOrigin]);
+  useLayoutEffect(() => {
+    if (!isMobile && position === 'center' && flip && visible && !lastMousePositionRef.current) {
+      lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
+
+      resetTransformOrigin();
+    }
+  }, [visible, position, resetTransformOrigin, flip]);
 
   return ReactDOM.createPortal(
     <div className={clsx('uc-popup-container-' + position)}>

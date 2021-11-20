@@ -721,26 +721,25 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 Mask.displayName = 'UC-Mask';
 
 var _templateObject$1;
-var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n"])));
-// type MousePosition = {
-//   x: number;
-//   y: number;
-// };
-// let mousePosition: MousePosition = null;
-// if (isBrowser) {
-//   const getClickPosition = (e: MouseEvent) => {
-//     mousePosition = {
-//       x: e.pageX,
-//       y: e.pageY,
-//     };
-//     setTimeout(() => {
-//       mousePosition = null;
-//     }, 100);
-//   };
-//   document.documentElement.addEventListener('click', getClickPosition, true);
-// }
+var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0);\n    }\n  }\n"])));
+var mousePosition = null;
 
+if (isBrowser) {
+  var getClickPosition = function getClickPosition(e) {
+    mousePosition = {
+      x: e.clientX,
+      y: e.clientY
+    };
+    setTimeout(function () {
+      mousePosition = null;
+    }, 100);
+  };
+
+  document.documentElement.addEventListener('click', getClickPosition, true);
+}
 /** 弹框，可以从上，下，左，右，中间弹出 */
+
+
 var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       visible = props.visible,
@@ -755,37 +754,41 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 160 : _props$duration,
+      _props$flip = props.flip,
+      flip = _props$flip === void 0 ? true : _props$flip,
       mountContainer = props.mountContainer,
       style = props.style,
       className = props.className;
   var wrapRef = React.useRef();
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
-  }); // const lastMousePositionRef = useRef<MousePosition>();
-
+  });
+  var lastMousePositionRef = React.useRef();
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
-  var showPosition = mountNode === document.body ? 'fixed' : 'absolute'; // const resetTransformOrigin = useCallback(() => {
-  //   const mousePosition = lastMousePositionRef.current;
-  //   const dialogEl = wrapRef.current;
-  //   if (
-  //     mousePosition &&
-  //     mousePosition.x >= 0 &&
-  //     mousePosition.y >= 0 &&
-  //     dialogEl &&
-  //     dialogEl.getBoundingClientRect
-  //   ) {
-  //     const { left: x, top: y } = dialogEl.getBoundingClientRect();
-  //     const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px`;
-  //     dialogEl.style.transformOrigin = origin;
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   if (!isMobile && position === 'center' && visible && !lastMousePositionRef.current) {
-  //     lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
-  //     resetTransformOrigin();
-  //   }
-  // }, [visible, position, resetTransformOrigin]);
+  var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+  var resetTransformOrigin = React.useCallback(function () {
+    var mousePosition = lastMousePositionRef.current;
+    var dialogEl = wrapRef.current;
 
+    if (mousePosition && mousePosition.x >= 0 && mousePosition.y >= 0 && dialogEl && dialogEl.getBoundingClientRect) {
+      var _dialogEl$getBounding = dialogEl.getBoundingClientRect(),
+          x = _dialogEl$getBounding.left,
+          y = _dialogEl$getBounding.top;
+
+      var origin = "".concat(mousePosition.x - x, "px ").concat(mousePosition.y - y, "px 0");
+      dialogEl.style.transformOrigin = origin;
+      dialogEl.style.transitionDuration = '0s'; // hey yoo reflow
+
+      document.body.offsetHeight;
+      dialogEl.style.transitionDuration = duration + 'ms';
+    }
+  }, [duration]);
+  React.useLayoutEffect(function () {
+    if (!isMobile && position === 'center' && flip && visible && !lastMousePositionRef.current) {
+      lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
+      resetTransformOrigin();
+    }
+  }, [visible, position, resetTransformOrigin, flip]);
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popup-container-' + position)
   }, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {

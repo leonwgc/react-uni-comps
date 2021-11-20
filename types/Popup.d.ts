@@ -12,7 +12,7 @@ export declare type Props = {
     maskClass?: string;
     /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
     position: 'top' | 'bottom' | 'left' | 'center' | 'right';
-    /** 弹出动画时间，默认280ms */
+    /** 弹出动画时间，默认160ms */
     duration?: number;
     /** 弹框mount位置，默认为document.body */
     mountContainer?: () => HTMLElement;
@@ -24,6 +24,8 @@ export declare type Props = {
     className?: string;
     /** 点击遮罩是否关闭,默认true*/
     closeOnMaskClick?: boolean;
+    /** pc端中间弹框点击按钮触发显示的飞出效果，默认true */
+    flip?: boolean;
 };
 /** 弹框，可以从上，下，左，右，中间弹出 */
 declare const Popup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
