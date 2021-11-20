@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Button, styled } from '../src';
+import { Space, Button, styled, Toast } from '../src';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`
@@ -25,11 +25,25 @@ export default function App() {
   return (
     <StyledContent>
       <Space wrap>
-        <StyButton type="primary">去领取</StyButton>
-        <Button disabled onClick={() => console.log(1)}>
-          hello
+        <StyButton
+          type="primary"
+          onClick={() => Toast.show(<span style={{ fontSize: 32, letterSpacing: 5 }}>hello</span>)}
+        >
+          去领取
+        </StyButton>
+        <Button onClick={() => Toast.show('hello,world')}>hello</Button>
+        <Button
+          onClick={() =>
+            Toast.show({
+              content: 'hello,world',
+              duration: 1000,
+            })
+          }
+        >
+          hello 1s
         </Button>
-        <Button disabled type="primary" onClick={() => console.log(1)}>
+        <Button disabled>hello</Button>
+        <Button disabled type="primary">
           hello
         </Button>
         <Button type="primary" onClick={() => console.log(1)}>

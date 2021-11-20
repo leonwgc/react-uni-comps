@@ -75,7 +75,7 @@ Toast.show = function (props) {
   var toastProps = {};
   var _duration = 1500;
 
-  if (_typeof(props) === 'object') {
+  if (_typeof(props) === 'object' && 'content' in props) {
     var _a = props.duration,
         duration = _a === void 0 ? 1500 : _a,
         rest = __rest(props, ["duration"]);

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
@@ -42,11 +42,11 @@ type Props = {
 };
 
 type StaticToastProps =
-  | string
+  | React.ReactNode
   | {
       /** 内容 */
       content: React.ReactNode;
-      /** 持续显示时间，默认2000ms */
+      /** 持续显示时间，默认1500ms */
       duration?: number;
       /** 模态, 默认true */
       modal?: boolean;
@@ -62,17 +62,16 @@ type StaticToastProps =
 const Toast: React.ForwardRefExoticComponent<Props> & {
   /** 黑背景提示,静态调用 */ show?: (
     props:
-      | string
+      | ReactNode
       | {
           /** 内容 */
           content: React.ReactNode;
-          /** 持续显示时间，默认2000ms */
+          /** 持续显示时间，默认1500ms */
           duration?: number;
           /** 模态, 默认true */
           modal?: boolean;
-          /** toast class */
           className?: string;
-          /** 内容样式, 应用于StyledToast */
+          /** 容器样式 */
           style?: React.CSSProperties;
           /** 模态时 mask style */
           maskStyle: React.CSSProperties;
@@ -94,11 +93,11 @@ const Toast: React.ForwardRefExoticComponent<Props> & {
 const transitionDuration = 240;
 
 /** 黑背景提示,静态调用 */
-Toast.show = (props: StaticToastProps | string) => {
+Toast.show = (props: StaticToastProps | React.ReactNode) => {
   let toastProps = {};
   let _duration = 1500;
 
-  if (typeof props === 'object') {
+  if (typeof props === 'object' && 'content' in props) {
     const { duration = 1500, ...rest } = props;
     toastProps = rest;
     _duration = duration;

@@ -3750,7 +3750,7 @@ Toast.show = function (props) {
   var toastProps = {};
   var _duration = 1500;
 
-  if (_typeof(props) === 'object') {
+  if (_typeof(props) === 'object' && 'content' in props) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 1500 : _props$duration,
         rest = _objectWithoutProperties(props, _excluded2$2);

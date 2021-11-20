@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
   Divider,
   Cell,
@@ -14,10 +13,13 @@ import {
   Toast,
   styled,
   useCountdown,
+  Icon,
 } from '../src';
 import useBgColor from './hooks/useBgColor';
 
-const StyledApp = styled.div``;
+const StyledApp = styled.div`
+  font-size: 14px;
+`;
 
 const options2 = [
   { label: '选项A', value: 0 },
@@ -96,7 +98,7 @@ export default function App() {
         />
       </Cell>
       <Cell title="antd输入框" description="antd">
-        <Input placeholder="输入框" suffix={<QuestionCircleOutlined />} />
+        <Input placeholder="输入框" suffix={<Icon type="uc-icon-yiwen" />} />
       </Cell>
       <Cell title="邮箱地址">
         <Input placeholder="邮箱地址" suffix={'@126.com'} />
@@ -124,9 +126,13 @@ export default function App() {
         />
       </Cell>
       <Cell title="Radio" content={<Radio>hello</Radio>}></Cell>
+      <Cell title="Radio" description="as children">
+        <Radio />
+      </Cell>
       <Cell title="Switch" content={<Switch />}></Cell>
-      <Cell title="Checkbox">
-        <Checkbox>Checkbox</Checkbox>
+      <Cell title="Checkbox" content={<Checkbox />}></Cell>
+      <Cell title="Checkbox" description="as children">
+        <Checkbox />
       </Cell>
       <Cell title="多选">
         <CheckboxGroup options={options2} value={v2} onChange={setV2} />
@@ -168,7 +174,7 @@ export default function App() {
           setData((d) => ({ ...d, tel: value }));
         }}
         onOk={(val) => {
-          Toast.show({ content: val, duration: 1000 });
+          Toast.show(val);
         }}
       />
       <NumberKeyboard
@@ -180,7 +186,7 @@ export default function App() {
           setData((d) => ({ ...d, id: value }));
         }}
         onOk={(val) => {
-          Toast.show({ content: val, duration: 1000 });
+          Toast.show(val);
         }}
       />
     </StyledApp>
