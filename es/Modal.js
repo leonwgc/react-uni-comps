@@ -44,31 +44,25 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Icon from './Icon';
 import Popup from './Popup';
-var StyledModal = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"], ["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
-/** 对话框 */
+var StyledModal = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 16px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 16px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
+/** 对话框,基于Popup */
 
 var Modal = function Modal(props) {
-  var wrapClassName = props.wrapClassName,
-      closable = props.closable,
+  var closable = props.closable,
       visible = props.visible,
       onClose = props.onClose,
-      wrapStyle = props.wrapStyle,
       className = props.className,
       header = props.header,
       children = props.children,
       footer = props.footer,
-      rest = __rest(props, ["wrapClassName", "closable", "visible", "onClose", "wrapStyle", "className", "header", "children", "footer"]);
+      rest = __rest(props, ["closable", "visible", "onClose", "className", "header", "children", "footer"]);
 
-  return /*#__PURE__*/React.createElement(StyledModal, __assign({
+  return /*#__PURE__*/React.createElement(StyledModal, __assign({}, rest, {
     visible: visible,
-    onClose: onClose
-  }, rest, {
+    onClose: onClose,
     className: clsx('uc-modal', className),
     position: 'center'
-  }), /*#__PURE__*/React.createElement("div", {
-    className: clsx('content', wrapClassName),
-    style: __assign({}, wrapStyle)
-  }, closable && /*#__PURE__*/React.createElement(Icon, {
+  }), closable && /*#__PURE__*/React.createElement(Icon, {
     type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
@@ -78,7 +72,7 @@ var Modal = function Modal(props) {
     className: "body"
   }, children), footer && /*#__PURE__*/React.createElement("div", {
     className: "footer"
-  }, footer)));
+  }, footer));
 };
 
 Modal.displayName = 'UC-Modal';

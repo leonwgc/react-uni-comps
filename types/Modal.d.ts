@@ -7,15 +7,12 @@ declare type Props = PopupProps & {
     footer?: React.ReactNode;
     /** 内容 */
     children?: React.ReactNode;
-    /** 包裹元素样式 */
-    wrapStyle?: React.CSSProperties;
     /** 是否显示右上角关闭 */
     closable?: boolean;
-    wrapClassName?: string;
 };
-/** 对话框 */
+/** 对话框,基于Popup */
 declare const Modal: {
-    (props: Props): React.ReactNode;
+    (props: Props): React.ReactElement;
     displayName: string;
 };
 export default Modal;

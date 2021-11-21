@@ -721,7 +721,7 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 Mask.displayName = 'UC-Mask';
 
 var _templateObject$1;
-var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0);\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0) scale(0);\n    }\n  }\n"])));
+var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.4);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.4);\n    }\n  }\n"])));
 var mousePosition = null;
 
 if (isBrowser) {
@@ -762,12 +762,11 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var wrapRef = React.useRef();
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
-  });
-  var lastMousePositionRef = React.useRef();
+  }); // const lastMousePositionRef = useRef<MousePosition>();
+
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
-  var resetTransformOrigin = React.useCallback(function () {
-    var mousePosition = lastMousePositionRef.current;
+  var setTransformOrigin = React.useCallback(function (mousePosition) {
     var dialogEl = wrapRef.current;
 
     if (mousePosition && mousePosition.x >= 0 && mousePosition.y >= 0 && dialogEl && dialogEl.getBoundingClientRect) {
@@ -777,18 +776,25 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
       var origin = "".concat(mousePosition.x - x, "px ").concat(mousePosition.y - y, "px 0");
       dialogEl.style.transformOrigin = origin;
-      dialogEl.style.transitionDuration = '0s'; // hey yoo reflow
+      dialogEl.style.transitionDuration = '0s'; // flip: hey yoo reflow
 
       document.body.offsetHeight;
       dialogEl.style.transitionDuration = duration + 'ms';
+    } else {
+      setTimeout(function () {
+        dialogEl.style.transformOrigin = 'unset';
+      }, duration);
     }
   }, [duration]);
   React.useLayoutEffect(function () {
-    if (!isMobile && position === 'center' && flip && visible && !lastMousePositionRef.current) {
-      lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
-      resetTransformOrigin();
+    if (!isMobile && position === 'center' && flip) {
+      if (visible) {
+        setTransformOrigin(mousePosition);
+      } else {
+        setTransformOrigin(null);
+      }
     }
-  }, [visible, position, resetTransformOrigin, flip]);
+  }, [visible, position, setTransformOrigin, flip]);
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popup-container-' + position)
   }, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
@@ -8320,34 +8326,28 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-var _excluded$W = ["wrapClassName", "closable", "visible", "onClose", "wrapStyle", "className", "header", "children", "footer"];
+var _excluded$W = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 
 var _templateObject$N;
-var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  .content {\n    min-width: 60px;\n    background-color: #fff;\n    padding: 16px;\n    position: relative;\n    border-radius: 2px;\n\n    .close {\n      top: 16px;\n      right: 16px;\n      color: #999;\n      position: absolute;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 16px;\n\n      &:hover {\n        color: #666;\n      }\n    }\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
-/** 对话框 */
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 16px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
+/** 对话框,基于Popup */
 
 var Modal = function Modal(props) {
-  var wrapClassName = props.wrapClassName,
-      closable = props.closable,
+  var closable = props.closable,
       visible = props.visible,
       onClose = props.onClose,
-      wrapStyle = props.wrapStyle,
       className = props.className,
       header = props.header,
       children = props.children,
       footer = props.footer,
       rest = _objectWithoutProperties(props, _excluded$W);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({}, rest, {
     visible: visible,
-    onClose: onClose
-  }, rest, {
+    onClose: onClose,
     className: clsx__default['default']('uc-modal', className),
     position: 'center'
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('content', wrapClassName),
-    style: _objectSpread2({}, wrapStyle)
-  }, closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }), closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
     type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
@@ -8357,7 +8357,7 @@ var Modal = function Modal(props) {
     className: "body"
   }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "footer"
-  }, footer)));
+  }, footer));
 };
 
 Modal.displayName = 'UC-Modal';

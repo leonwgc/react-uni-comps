@@ -96,7 +96,7 @@ const StyledWrapper = styled.div`
   &.center-entered {
     transform: translate(-50%, -50%) scale(1);
     &.pc {
-      top: 200px;
+      top: 160px;
       transform: translate(-50%, 0) scale(1);
     }
     opacity: 1;
@@ -105,10 +105,10 @@ const StyledWrapper = styled.div`
   &.center-exited,
   &.center-exiting {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.38);
+    transform: translate(-50%, -50%) scale(0.4);
     &.pc {
-      top: 200px;
-      transform: translate(-50%, 0) scale(0.38);
+      top: 160px;
+      transform: translate(-50%, 0) scale(0.4);
     }
   }
 `;

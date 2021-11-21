@@ -36,14 +36,20 @@ export default function App() {
 
       <Modal
         visible={visible}
-        // flip={true}
+        // flip={false}
         closable
-        wrapStyle={{ width: 320 }}
-        // style={{ transition: 'none' }}
+        style={{ width: 420, height: 260 }}
         onClose={onClose}
         header={<h3>头部</h3>}
         footer={
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              height: 32,
+              alignItems: 'center',
+            }}
+          >
             <Space>
               <Button type="primary" onClick={onClose}>
                 保存
