@@ -105,10 +105,10 @@ const StyledWrapper = styled.div`
   &.center-exited,
   &.center-exiting {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.2);
+    transform: translate(-50%, -50%) scale(0.38);
     &.pc {
       top: 200px;
-      transform: translate(-50%, 0) scale(0.2);
+      transform: translate(-50%, 0) scale(0.38);
     }
   }
 `;
