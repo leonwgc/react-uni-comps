@@ -6,12 +6,32 @@ export default function App() {
   const onClose = () => setVisible(false);
   return (
     <div style={{ margin: 50 }}>
+      <Button type="primary" onClick={() => setVisible(true)}>
+        open Modal left
+      </Button>
+
       <Button
         type="primary"
         onClick={() => setVisible(true)}
-        style={{ position: 'fixed', left: '30%', top: '40%' }}
+        style={{ position: 'fixed', right: '10%', top: '10%' }}
       >
-        open Modal
+        open Modal right
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={() => setVisible(true)}
+        style={{ position: 'fixed', left: '10%', bottom: '10%' }}
+      >
+        open Modal bottom left
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={() => setVisible(true)}
+        style={{ position: 'fixed', right: '10%', bottom: '10%' }}
+      >
+        open Modal bottom right
       </Button>
 
       <Modal

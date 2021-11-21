@@ -105,10 +105,10 @@ const StyledWrapper = styled.div`
   &.center-exited,
   &.center-exiting {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%) scale(0.2);
     &.pc {
       top: 200px;
-      transform: translate(-50%, 0) scale(0);
+      transform: translate(-50%, 0) scale(0.2);
     }
   }
 `;
@@ -185,37 +185,46 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => wrapRef.current);
 
-  const lastMousePositionRef = useRef<MousePosition>();
+  // const lastMousePositionRef = useRef<MousePosition>();
   const mountNode = mountContainer?.() || document.body;
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
 
-  const resetTransformOrigin = useCallback(() => {
-    const mousePosition = lastMousePositionRef.current;
-    const dialogEl = wrapRef.current;
-    if (
-      mousePosition &&
-      mousePosition.x >= 0 &&
-      mousePosition.y >= 0 &&
-      dialogEl &&
-      dialogEl.getBoundingClientRect
-    ) {
-      const { left: x, top: y } = dialogEl.getBoundingClientRect();
-      const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px 0`;
-      dialogEl.style.transformOrigin = origin;
-      dialogEl.style.transitionDuration = '0s';
-      // hey yoo reflow
-      document.body.offsetHeight;
-      dialogEl.style.transitionDuration = duration + 'ms';
-    }
-  }, [duration]);
+  const setTransformOrigin = useCallback(
+    (mousePosition) => {
+      const dialogEl = wrapRef.current;
+      if (
+        mousePosition &&
+        mousePosition.x >= 0 &&
+        mousePosition.y >= 0 &&
+        dialogEl &&
+        dialogEl.getBoundingClientRect
+      ) {
+        const { left: x, top: y } = dialogEl.getBoundingClientRect();
+        const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px 0`;
+        dialogEl.style.transformOrigin = origin;
+        dialogEl.style.transitionDuration = '0s';
+
+        // flip: hey yoo reflow
+        document.body.offsetHeight;
+        dialogEl.style.transitionDuration = duration + 'ms';
+      } else {
+        setTimeout(() => {
+          dialogEl.style.transformOrigin = 'unset';
+        }, duration);
+      }
+    },
+    [duration]
+  );
 
   useLayoutEffect(() => {
-    if (!isMobile && position === 'center' && flip && visible && !lastMousePositionRef.current) {
-      lastMousePositionRef.current = lastMousePositionRef.current || mousePosition;
-
-      resetTransformOrigin();
+    if (!isMobile && position === 'center' && flip) {
+      if (visible) {
+        setTransformOrigin(mousePosition);
+      } else {
+        setTransformOrigin(null);
+      }
     }
-  }, [visible, position, resetTransformOrigin, flip]);
+  }, [visible, position, setTransformOrigin, flip]);
 
   return ReactDOM.createPortal(
     <div className={clsx('uc-popup-container-' + position)}>
