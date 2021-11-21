@@ -8295,10 +8295,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packx@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmmirror.com/packx/download/packx-1.1.0.tgz#daab06f1086b19978e7573709499f93ffce89abc"
-  integrity sha512-GpzmjqoQGwxYd9K2cEMVVXLw0nuo6XifiDDTlkOyI3BY4vmyVDRB6NcM3aE8JhKxb9GaV0Gly4PRyhmCzhwK4g==
+packx@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmmirror.com/packx/download/packx-1.1.2.tgz?cache=0&sync_timestamp=1637461576603&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fpackx%2Fdownload%2Fpackx-1.1.2.tgz#6ec46d10f87a4d9a6e31d83c4e81351dc91ac9e3"
+  integrity sha512-6egGS+jGdhdnpfa7brMPoyk9WsY6XLJIP/0ljlKZY/JRtJf2Wjfr8CUrkF6jZlcMdKbrVJ5RaEi1GMFK2nI7YQ==
   dependencies:
     "@babel/cli" "^7.16.0"
     "@babel/core" "^7.16.0"
