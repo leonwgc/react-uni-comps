@@ -3,6 +3,41 @@ import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space, styled 
 import 'animate.css';
 import './Tab.less';
 
+const StyledTabsNew = styled(Tabs)`
+  background-color: #fff;
+  flex-basis: 56px;
+  .uc-tabs-header-wrap {
+    height: 56px;
+  }
+  .uc-tabs-header-item {
+    flex: 0 0 128px;
+    height: 40px;
+
+    &.active {
+      background: rgba(0, 75, 204, 0.08);
+      color: #004bcc;
+      font-weight: normal;
+    }
+  }
+`;
+
+const StyledTabsNew1 = styled(Tabs)`
+  background-color: #fff;
+  .uc-tabs-header-wrap {
+    height: 56px;
+  }
+  .uc-tabs-header-item {
+    flex: 0 0 132px;
+
+    &.active {
+      background: rgba(0, 75, 204, 0.08);
+      color: #004bcc;
+      border-bottom: 2px solid #004bcc;
+      font-weight: normal;
+    }
+  }
+`;
+
 const StyledApp = styled.div`
   .uc-tabs {
     margin: 10px 0;
@@ -63,6 +98,18 @@ export default function App() {
           return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
         })}
       </StyledTabs>
+
+      <Divider> new style </Divider>
+
+      <StyledTabsNew underline={false}>
+        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+      </StyledTabsNew>
+
+      <StyledTabsNew1 underline={false}>
+        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+      </StyledTabsNew1>
 
       <Divider> no underline</Divider>
 
