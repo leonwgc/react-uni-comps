@@ -99,18 +99,6 @@ export default function App() {
         })}
       </StyledTabs>
 
-      <Divider> new style </Divider>
-
-      <StyledTabsNew underline={false}>
-        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
-      </StyledTabsNew>
-
-      <StyledTabsNew1 underline={false}>
-        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
-      </StyledTabsNew1>
-
       <Divider> no underline</Divider>
 
       <Tabs underline={false} value={value} onChange={setValue}>
@@ -193,6 +181,18 @@ export default function App() {
           <StyledContent>content7</StyledContent>
         </Tabs.Tab>
       </StyledTabs>
+
+      <Divider> new style </Divider>
+
+      <StyledTabsNew underline={false}>
+        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+      </StyledTabsNew>
+
+      <StyledTabsNew1 underline={false}>
+        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+      </StyledTabsNew1>
     </StyledApp>
   );
 }
