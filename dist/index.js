@@ -8329,7 +8329,7 @@ Drawer.displayName = 'UC-Drawer';
 var _excluded$W = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 
 var _templateObject$N;
-var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 4px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #8c8c8c;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 20px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #1a1a1a;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #8c8c8c;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 20px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #1a1a1a;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
 /** 对话框,基于Popup */
 
 var Modal = function Modal(props) {

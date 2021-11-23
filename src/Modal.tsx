@@ -22,7 +22,7 @@ const StyledModal = styled(Popup)`
   background-color: #fff;
   padding: 32px 32px 24px;
   position: relative;
-  border-radius: 4px;
+  border-radius: 8px;
 
   .close {
     top: 16px;
