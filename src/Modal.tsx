@@ -20,21 +20,22 @@ const StyledModal = styled(Popup)`
   flex-direction: column;
   min-width: 30px;
   background-color: #fff;
-  padding: 16px;
+  padding: 32px 32px 24px;
   position: relative;
-  border-radius: 8px;
+  border-radius: 4px;
 
   .close {
     top: 16px;
     right: 16px;
-    color: #999;
+    color: #8c8c8c;
     position: absolute;
     display: inline-block;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
+    transition: color 0.3s ease;
 
     &:hover {
-      color: #666;
+      color: #1a1a1a;
     }
   }
 

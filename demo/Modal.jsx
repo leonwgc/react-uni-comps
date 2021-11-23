@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { styled, Space, Modal, Button } from '../src';
+import { styled, Space, Modal, Button, isMobile } from '../src';
+
+const StyledModal = styled(Modal)`
+  color: #1a1a1a;
+  .header {
+    font-size: 16px;
+    font-family: PingFangSC, PingFangSC-Semibold;
+    font-weight: 600;
+    text-align: left;
+    line-height: 20px;
+  }
+  .body {
+    padding-top: 16px;
+  }
+`;
 
 export default function App() {
   const [visible, setVisible] = useState(false);
@@ -34,33 +48,32 @@ export default function App() {
         open Modal bottom right
       </Button>
 
-      <Modal
+      <StyledModal
         visible={visible}
-        // flip={false}
         closable
-        style={{ width: 420, height: 260 }}
+        style={{ width: isMobile ? '70vw' : 600, height: 300, top: isMobile ? '40%' : 120 }}
         onClose={onClose}
-        header={<h3>头部</h3>}
+        header={'新建权限组'}
         footer={
           <div
             style={{
               display: 'flex',
               justifyContent: 'flex-end',
-              height: 32,
-              alignItems: 'center',
             }}
           >
-            <Space>
-              <Button type="primary" onClick={onClose}>
-                保存
+            <Space size={16}>
+              <Button style={{ width: 80, height: 32 }} onClick={onClose}>
+                取消
               </Button>
-              <Button onClick={onClose}>取消</Button>
+              <Button type="primary" style={{ width: 80, height: 32 }} onClick={onClose}>
+                确定
+              </Button>
             </Space>
           </div>
         }
       >
         <div>body 区域</div>
-      </Modal>
+      </StyledModal>
     </div>
   );
 }
