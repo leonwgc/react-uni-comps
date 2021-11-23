@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, PopMenu, styled } from '../src';
+import React, { useState, useRef } from 'react';
+import { Button, PopMenu, styled, useUpdateLayoutEffect } from '../src';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;
@@ -39,14 +39,26 @@ const StyledBtn = styled(Button)`
 
 export default function App() {
   const arr = Array.from(new Array(10), (e, i) => i);
+  const anchorRef = useRef();
+  const ref = useRef(0);
+
+  const [placement, setPlacement] = useState('bottom-right');
+  const [v, setV] = useState(false);
+
+  useUpdateLayoutEffect(() => {
+    // update  position
+    if (v) {
+      ref.current++;
+      setPlacement(ref.current % 2 == 0 ? 'top-right' : 'bottom-right');
+    }
+  }, [v]);
   return (
     <StyledPopMenu
       arrow={true}
-      onVisibleChange={(v) => {
-        console.log(v ? '可见' : '不可见');
-      }}
+      onVisibleChange={setV}
+      placement={placement}
       // closeOnClick={false}
-      // trigger="hover"
+      trigger="click"
       content={
         <div className="list">
           {arr.map((i) => (
