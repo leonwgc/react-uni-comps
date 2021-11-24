@@ -1,9 +1,17 @@
 {
   "name": "react-uni-comps",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "桌面和移动端react组件库, desktop & mobile react components",
   "keywords": [
-    "react"
+    "react",
+    "component",
+    "components",
+    "frontend",
+    "react-component",
+    "ui",
+    "pc",
+    "mobile",
+    "css-in-js"
   ],
   "license": "MIT",
   "repository": "https://github.com/leonwgc/react-uni-comps",
