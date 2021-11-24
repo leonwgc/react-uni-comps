@@ -43,38 +43,36 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Popup from './Popup';
-var StyledDrawerContent = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .content {\n    display: flex;\n    flex-direction: column;\n    background-color: #fff;\n\n    .body {\n      flex: 1;\n    }\n  }\n"], ["\n  .content {\n    display: flex;\n    flex-direction: column;\n    background-color: #fff;\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
+var StyledDrawer = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  background-color: #fff;\n  position: relative;\n\n  .body {\n    flex: 1;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  background-color: #fff;\n  position: relative;\n\n  .body {\n    flex: 1;\n  }\n"])));
 /** 抽屉 */
 
 var Drawer = function Drawer(props) {
-  var wrapClassName = props.wrapClassName,
-      wrapStyle = props.wrapStyle,
-      className = props.className,
+  var className = props.className,
+      style = props.style,
       header = props.header,
       children = props.children,
       footer = props.footer,
       _a = props.position,
       position = _a === void 0 ? 'right' : _a,
-      rest = __rest(props, ["wrapClassName", "wrapStyle", "className", "header", "children", "footer", "position"]);
+      rest = __rest(props, ["className", "style", "header", "children", "footer", "position"]);
 
-  var sty = position === 'left' || position === 'right' ? {
+  var _style = position === 'left' || position === 'right' ? {
     height: '100vh'
   } : {
     width: '100vw'
   };
-  return /*#__PURE__*/React.createElement(StyledDrawerContent, __assign({}, rest, {
+
+  return /*#__PURE__*/React.createElement(StyledDrawer, __assign({}, rest, {
     className: clsx('uc-drawer', className),
+    style: __assign(__assign({}, _style), style),
     position: position
-  }), /*#__PURE__*/React.createElement("div", {
-    className: clsx('content', wrapClassName),
-    style: __assign(__assign({}, sty), wrapStyle)
-  }, header && /*#__PURE__*/React.createElement("div", {
+  }), header && /*#__PURE__*/React.createElement("div", {
     className: "header"
   }, header), /*#__PURE__*/React.createElement("div", {
     className: "body"
   }, children), footer && /*#__PURE__*/React.createElement("div", {
     className: "footer"
-  }, footer)));
+  }, footer));
 };
 
 Drawer.displayName = 'UC-Drawer';

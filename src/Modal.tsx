@@ -13,6 +13,8 @@ type Props = PopupProps & {
   children?: React.ReactNode;
   /** 是否显示右上角关闭 */
   closable?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
 const StyledModal = styled(Popup)`
@@ -27,7 +29,7 @@ const StyledModal = styled(Popup)`
   .close {
     top: 16px;
     right: 16px;
-    color: #8c8c8c;
+    color: #999;
     position: absolute;
     display: inline-block;
     cursor: pointer;
@@ -35,7 +37,7 @@ const StyledModal = styled(Popup)`
     transition: color 0.3s ease;
 
     &:hover {
-      color: #1a1a1a;
+      color: #666;
     }
   }
 

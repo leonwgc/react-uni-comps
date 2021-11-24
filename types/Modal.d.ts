@@ -9,6 +9,8 @@ declare type Props = PopupProps & {
     children?: React.ReactNode;
     /** 是否显示右上角关闭 */
     closable?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
 };
 /** 对话框,基于Popup */
 declare const Modal: {

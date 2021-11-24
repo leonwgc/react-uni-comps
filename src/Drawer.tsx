@@ -10,47 +10,39 @@ type Props = PopupProps & {
   footer?: React.ReactNode;
   /** 内容 */
   children?: React.ReactNode;
-  /** 包裹元素样式 */
-  wrapStyle?: React.CSSProperties;
-  wrapClassName?: string;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-const StyledDrawerContent = styled(Popup)`
-  .content {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
+const StyledDrawer = styled(Popup)`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
 
-    .body {
-      flex: 1;
-    }
+  .body {
+    flex: 1;
   }
 `;
 
 /** 抽屉 */
 const Drawer = (props: Props): React.ReactNode => {
-  const {
-    wrapClassName,
-    wrapStyle,
-    className,
-    header,
-    children,
-    footer,
-    position = 'right',
-    ...rest
-  } = props;
+  const { className, style, header, children, footer, position = 'right', ...rest } = props;
 
-  const sty =
+  const _style =
     position === 'left' || position === 'right' ? { height: '100vh' } : { width: '100vw' };
 
   return (
-    <StyledDrawerContent {...rest} className={clsx('uc-drawer', className)} position={position}>
-      <div className={clsx('content', wrapClassName)} style={{ ...sty, ...wrapStyle }}>
-        {header && <div className="header">{header}</div>}
-        <div className="body">{children}</div>
-        {footer && <div className="footer">{footer}</div>}
-      </div>
-    </StyledDrawerContent>
+    <StyledDrawer
+      {...rest}
+      className={clsx('uc-drawer', className)}
+      style={{ ..._style, ...style }}
+      position={position}
+    >
+      {header && <div className="header">{header}</div>}
+      <div className="body">{children}</div>
+      {footer && <div className="footer">{footer}</div>}
+    </StyledDrawer>
   );
 };
 

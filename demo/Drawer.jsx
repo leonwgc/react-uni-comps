@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer, styled } from '../src';
+import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile } from '../src';
 
 // example to implement Drawer
 
@@ -7,10 +7,10 @@ const StyledTabs = styled(Tabs)`
   flex-basis: 50px;
   .uc-tabs-header-wrap {
     height: 50px;
+    padding-left: 20px;
   }
   .uc-tabs-header-item {
-    flex: none;
-    width: 120px;
+    flex: 0 0 120px;
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
@@ -27,11 +27,7 @@ const StyledFooter = styled.div`
   box-shadow: 0px -1px 0px 0px #f5f5f5;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-`;
-
-const StyledBody = styled.div`
-  padding: 16px;
+  padding-left: 20px;
 `;
 
 export default function RightDrawer(props) {
@@ -52,7 +48,7 @@ export default function RightDrawer(props) {
         position="right"
         onClose={onClose}
         visible={visible}
-        wrapStyle={{ width: '60vw' }}
+        style={{ width: isMobile ? '60vw' : 400 }}
         header={
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="tab1" />
@@ -72,9 +68,9 @@ export default function RightDrawer(props) {
           </StyledFooter>
         }
       >
-        <StyledBody>
+        <div style={{ padding: 20 }}>
           <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
-        </StyledBody>
+        </div>
       </Drawer>
     </>
   );

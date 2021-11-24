@@ -7,9 +7,8 @@ declare type Props = PopupProps & {
     footer?: React.ReactNode;
     /** 内容 */
     children?: React.ReactNode;
-    /** 包裹元素样式 */
-    wrapStyle?: React.CSSProperties;
-    wrapClassName?: string;
+    className?: string;
+    style?: React.CSSProperties;
 };
 /** 抽屉 */
 declare const Drawer: {

@@ -8287,16 +8287,15 @@ var DatePicker = function DatePicker(props) {
 
 DatePicker.displayName = 'UC-DatePicker';
 
-var _excluded$V = ["wrapClassName", "wrapStyle", "className", "header", "children", "footer", "position"];
+var _excluded$V = ["className", "style", "header", "children", "footer", "position"];
 
 var _templateObject$M;
-var StyledDrawerContent = styled__default['default'](Popup)(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  .content {\n    display: flex;\n    flex-direction: column;\n    background-color: #fff;\n\n    .body {\n      flex: 1;\n    }\n  }\n"])));
+var StyledDrawer = styled__default['default'](Popup)(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  background-color: #fff;\n  position: relative;\n\n  .body {\n    flex: 1;\n  }\n"])));
 /** 抽屉 */
 
 var Drawer = function Drawer(props) {
-  var wrapClassName = props.wrapClassName,
-      wrapStyle = props.wrapStyle,
-      className = props.className,
+  var className = props.className,
+      style = props.style,
       header = props.header,
       children = props.children,
       footer = props.footer,
@@ -8304,24 +8303,23 @@ var Drawer = function Drawer(props) {
       position = _props$position === void 0 ? 'right' : _props$position,
       rest = _objectWithoutProperties(props, _excluded$V);
 
-  var sty = position === 'left' || position === 'right' ? {
+  var _style = position === 'left' || position === 'right' ? {
     height: '100vh'
   } : {
     width: '100vw'
   };
-  return /*#__PURE__*/React__default['default'].createElement(StyledDrawerContent, _extends({}, rest, {
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledDrawer, _extends({}, rest, {
     className: clsx__default['default']('uc-drawer', className),
+    style: _objectSpread2(_objectSpread2({}, _style), style),
     position: position
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('content', wrapClassName),
-    style: _objectSpread2(_objectSpread2({}, sty), wrapStyle)
-  }, header && /*#__PURE__*/React__default['default'].createElement("div", {
+  }), header && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "header"
   }, header), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "body"
   }, children), footer && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "footer"
-  }, footer)));
+  }, footer));
 };
 
 Drawer.displayName = 'UC-Drawer';
@@ -8329,7 +8327,7 @@ Drawer.displayName = 'UC-Drawer';
 var _excluded$W = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 
 var _templateObject$N;
-var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #8c8c8c;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 20px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #1a1a1a;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 20px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
 /** 对话框,基于Popup */
 
 var Modal = function Modal(props) {
