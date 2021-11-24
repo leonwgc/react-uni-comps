@@ -36,7 +36,7 @@ yarn add react-uni-comps
 <Modal
   visible={visible}
   closable
-  wrapStyle={{ width: 320 }}
+  style={{ width: 600, height: 300 }}
   onClose={onClose}
   header={<h3>头部</h3>} //不定义则没有
   footer={
@@ -102,7 +102,7 @@ yarn add react-uni-comps
 - Spinner（加载中）
 - Drawer (抽屉)
 - Modal (对话框)
-- PopConfirm (弹出气泡式的确认框) 
+- PopConfirm (弹出气泡式的确认框)
 
 #### 导航组件
 
