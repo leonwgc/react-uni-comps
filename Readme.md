@@ -211,11 +211,12 @@ import Button from 'react-uni-comps/es/Button';
 ### 自定义样式
 
 ```js
-import styled from 'react-uni-comps/es/styled';
-import { Button } from 'react-uni-comps';
+import { Button, styled } from 'react-uni-comps';
 
 const StyledButton = styled(Button)`
-  border-radius: 10px;
+  width: 80px;
+  height: 32px;
+  border-radius: 4px;
 `;
 
 <StyledButton type="primary" loading>
@@ -228,15 +229,12 @@ const StyledButton = styled(Button)`
 ```js
 // styled-components
 import { styled } from 'react-uni-comps';
-import styled from 'react-uni-comps/es/styled';
 
 // clsx
 import { clsx } from 'react-uni-comps';
-import clsx from 'react-uni-comps/es/clsx';
 
 // react-transition-group
 import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
-import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps/es/transition';
 ```
 
 ### 参考
