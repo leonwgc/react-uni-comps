@@ -33,7 +33,7 @@ const StyledModal = styled(Popup)`
     position: absolute;
     display: inline-block;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     transition: color 0.3s ease;
 
     &:hover {
