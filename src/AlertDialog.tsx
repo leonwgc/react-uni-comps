@@ -31,9 +31,9 @@ type Props = {
   /** 点击遮罩是否关闭,默认false*/
   closeOnMaskClick?: boolean;
   className?: string;
-  /** 按钮间距，默认8 */
+  /** 按钮间距，默认16 */
   buttonSpace?: number;
-  /** 按钮宽度，默认62 */
+  /** 按钮宽度，默认80 */
   buttonWidth?: number;
   closable?: boolean;
   /** 弹框mount位置，默认为document.body */
@@ -44,6 +44,8 @@ type Props = {
   maskStyle?: React.CSSProperties;
   /** 遮罩class*/
   maskClass?: string;
+  /** 弹框样式 */
+  wrapStyle?: React.CSSProperties;
 };
 
 const StyledAlertDialog = styled(Popup)`
@@ -54,7 +56,7 @@ const StyledAlertDialog = styled(Popup)`
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.5);
     &.pc {
-      top: 200px;
+      top: 160px;
       transform: translate(-50%, 0) scale(0.5);
     }
   }
@@ -62,7 +64,7 @@ const StyledAlertDialog = styled(Popup)`
   &.to {
     transform: translate(-50%, -50%) scale(1);
     &.pc {
-      top: 200px;
+      top: 160px;
       transform: translate(-50%, 0) scale(1);
     }
     opacity: 1;
@@ -70,121 +72,116 @@ const StyledAlertDialog = styled(Popup)`
   // end effect
 
   &.mobile {
-    .uc-alert-dialog-wrap {
-      padding-bottom: 0;
-      border-radius: 8px;
-      width: 280px;
-
-      .title {
-        text-align: center;
-        border-bottom: none;
-      }
-
-      .footer {
-        position: relative;
-        display: flex;
-        height: 48px;
-        padding: 0;
-        overflow: hidden;
-        .confirm {
-          ${getThemeColorCss('color')}
-        }
-
-        .m-btn {
-          height: 48px;
-          line-height: 48px;
-          text-align: center;
-          flex: 1;
-          user-select: none;
-          &:active {
-            background-color: rgba(0, 0, 0, 0.1);
-          }
-        }
-
-        &:after {
-          content: '';
-          pointer-events: none;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          left: 0;
-          top: 0;
-          border-top: 1px solid ${colors.border};
-
-          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-            width: 200%;
-            height: 200%;
-            transform: scale(0.5);
-            transform-origin: 0 0;
-          }
-        }
-      }
-    }
-  }
-
-  .uc-alert-dialog-wrap {
-    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
-    background-color: #fff;
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: initial;
-    border-radius: 4px;
-    padding: 16px 0;
-    box-sizing: border-box;
-    white-space: normal;
-    max-width: calc(100vw - 56px);
-    max-height: calc(100vh - 112px);
-    width: 420px;
-
-    .close {
-      top: 16px;
-      right: 16px;
-      color: #999;
-      position: absolute;
-      display: inline-block;
-      cursor: pointer;
-      font-size: 16px;
-
-      &:hover {
-        color: #666;
-      }
-    }
+    width: 280px;
+    padding: 20px 0 0;
 
     .title {
-      font-size: 16px;
-      line-height: 24px;
-      border-bottom-color: ${colors.border};
-      color: #333;
-      padding: 0 16px 15px;
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
-      margin: 0;
-      box-sizing: border-box;
-      font-weight: 500;
+      text-align: center;
     }
-    .content {
-      font-size: 14px;
-      line-height: 20px;
-      color: #333;
-      padding: 16px;
-      min-height: 46px;
-      max-height: calc(100vh - 256px);
 
+    .content {
+      padding: 16px;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
       &::-webkit-scrollbar {
         display: none;
       }
     }
-    .footer {
-      text-align: right;
-      padding: 8px 16px 0;
 
-      button {
-        width: 62px;
+    .footer {
+      position: relative;
+      display: flex;
+      height: 48px;
+      padding: 0;
+      overflow: hidden;
+      .confirm {
+        ${getThemeColorCss('color')}
+      }
+
+      .m-btn {
+        height: 48px;
+        line-height: 48px;
+        text-align: center;
+        flex: 1;
+        user-select: none;
+        &:active {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      &:after {
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-top: 1px solid ${colors.border};
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+          width: 200%;
+          height: 200%;
+          transform: scale(0.5);
+          transform-origin: 0 0;
+        }
       }
     }
+  }
+
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  background-color: #fff;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: initial;
+  border-radius: 8px;
+  padding: 32px 32px 24px;
+  box-sizing: border-box;
+  white-space: normal;
+  max-width: calc(100vw - 56px);
+  max-height: calc(100vh - 112px);
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+
+  .close {
+    top: 16px;
+    right: 16px;
+    color: #999;
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      color: #666;
+    }
+  }
+
+  .title {
+    font-size: 16px;
+    line-height: 20px;
+    color: #333;
+    box-sizing: border-box;
+    font-weight: 500;
+  }
+  .content {
+    font-size: 14px;
+    line-height: 20px;
+    min-height: 46px;
+    max-height: calc(100vh - 256px);
+    padding: 24px 0 32px;
+    flex: 1;
+
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .footer {
+    text-align: right;
   }
 `;
 
@@ -198,6 +195,7 @@ type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
    * @param {*} onConfirm 确定回调
    * @param {*} cancelText 取消文本
    * @param {*} onCancel 取消回调
+   * @param {*} wrapStyle 弹框样式
    * @return {*}
    */ show?: (
     title?: React.ReactNode,
@@ -205,7 +203,8 @@ type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
     confirmText?: string,
     onConfirm?: () => void,
     cancelText?: string,
-    onCancel?: () => void
+    onCancel?: () => void,
+    wrapStyle?: React.CSSProperties
   ) => void;
 };
 
@@ -220,14 +219,15 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
     confirmText = '确定',
     cancelText,
     closeOnMaskClick = false,
-    buttonSpace = 8,
-    buttonWidth = 62,
+    buttonSpace = 16,
+    buttonWidth = 80,
     closable = false,
     mask = true,
     maskStyle,
     maskClass,
     onClose,
     className,
+    wrapStyle,
     ...rest
   } = props;
 
@@ -240,82 +240,81 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
       onClose={onClose}
       position="center"
       mask={mask}
+      style={wrapStyle}
       maskStyle={maskStyle}
       maskClass={maskClass}
       closeOnMaskClick={closeOnMaskClick}
     >
-      <div className={clsx('uc-alert-dialog-wrap')}>
-        {closable && <Icon type="uc-icon-guanbi" className="close" onClick={onClose} />}
-        {title && <div className={clsx('title')}>{title}</div>}
-        <div className={clsx('content')}>{content}</div>
-        <div className={clsx('footer')}>
-          {!isMobile ? (
-            <Space size={buttonSpace}>
-              {cancelText ? (
-                <Button
+      {closable && <Icon type="uc-icon-guanbi" className="close" onClick={onClose} />}
+      {title && <div className={clsx('title')}>{title}</div>}
+      <div className={clsx('content')}>{content}</div>
+      <div className={clsx('footer')}>
+        {!isMobile ? (
+          <Space size={buttonSpace}>
+            {cancelText ? (
+              <Button
+                onClick={() => {
+                  onCancel?.();
+                  if (typeof onCancel !== 'function') {
+                    onClose?.();
+                  }
+                }}
+                className={clsx('cancel')}
+                style={{ width: buttonWidth }}
+              >
+                {cancelText}
+              </Button>
+            ) : null}
+            <Button
+              type="primary"
+              className={clsx('confirm')}
+              onClick={() => {
+                onConfirm?.();
+
+                if (typeof onConfirm !== 'function') {
+                  onClose?.();
+                }
+              }}
+              style={{ width: buttonWidth }}
+            >
+              {confirmText}
+            </Button>
+          </Space>
+        ) : (
+          <>
+            {cancelText ? (
+              <>
+                <div
+                  className={clsx('m-btn', 'cancel')}
                   onClick={() => {
                     onCancel?.();
                     if (typeof onCancel !== 'function') {
                       onClose?.();
                     }
                   }}
-                  className={clsx('cancel')}
-                  style={{ width: buttonWidth }}
                 >
                   {cancelText}
-                </Button>
-              ) : null}
-              <Button
-                type="primary"
-                className={clsx('confirm')}
-                onClick={() => {
-                  onConfirm?.();
+                </div>
+                <Divider
+                  type="vertical"
+                  style={{ height: '100%', color: colors.border, margin: 0 }}
+                />
+              </>
+            ) : null}
+            <div
+              className={clsx('m-btn', 'confirm')}
+              onClick={() => {
+                onConfirm?.();
 
-                  if (typeof onConfirm !== 'function') {
-                    onClose?.();
-                  }
-                }}
-                style={{ width: buttonWidth }}
-              >
-                {confirmText}
-              </Button>
-            </Space>
-          ) : (
-            <>
-              {cancelText ? (
-                <>
-                  <div
-                    className={clsx('m-btn', 'cancel')}
-                    onClick={() => {
-                      onCancel?.();
-                      if (typeof onCancel !== 'function') {
-                        onClose?.();
-                      }
-                    }}
-                  >
-                    {cancelText}
-                  </div>
-                  <Divider
-                    type="vertical"
-                    style={{ height: '100%', color: colors.border, margin: 0 }}
-                  />
-                </>
-              ) : null}
-              <div
-                className={clsx('m-btn', 'confirm')}
-                onClick={() => {
-                  onConfirm?.();
-
-                  if (typeof onConfirm !== 'function') {
-                    onClose?.();
-                  }
-                }}
-              >
-                {confirmText}
-              </div>
-            </>
-          )}
-        </div>
+                if (typeof onConfirm !== 'function') {
+                  onClose?.();
+                }
+              }}
+            >
+              {confirmText}
+            </div>
+          </>
+        )}
       </div>
     </StyledAlertDialog>
   );
@@ -325,7 +324,15 @@ AlertDialog.displayName = 'UC-AlertDialog';
 
 const transitionDuration = 240;
 
-AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelText, onCancel) => {
+AlertDialog.show = (
+  title,
+  content,
+  confirmText = '确定',
+  onConfirm,
+  cancelText,
+  onCancel,
+  wrapStyle
+) => {
   if (!content) return;
 
   const container = document.createElement('div');
@@ -340,6 +347,7 @@ AlertDialog.show = (title, content, confirmText = '确定', onConfirm, cancelTex
         visible
         confirmText={confirmText}
         cancelText={cancelText}
+        wrapStyle={wrapStyle}
         onConfirm={() => {
           onConfirm?.();
           dispose(beforeDispose);

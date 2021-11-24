@@ -19,9 +19,9 @@ declare type Props = {
     /** 点击遮罩是否关闭,默认false*/
     closeOnMaskClick?: boolean;
     className?: string;
-    /** 按钮间距，默认8 */
+    /** 按钮间距，默认16 */
     buttonSpace?: number;
-    /** 按钮宽度，默认62 */
+    /** 按钮宽度，默认80 */
     buttonWidth?: number;
     closable?: boolean;
     /** 弹框mount位置，默认为document.body */
@@ -32,6 +32,8 @@ declare type Props = {
     maskStyle?: React.CSSProperties;
     /** 遮罩class*/
     maskClass?: string;
+    /** 弹框样式 */
+    wrapStyle?: React.CSSProperties;
 };
 declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
     /**
@@ -43,8 +45,9 @@ declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
      * @param {*} onConfirm 确定回调
      * @param {*} cancelText 取消文本
      * @param {*} onCancel 取消回调
+     * @param {*} wrapStyle 弹框样式
      * @return {*}
-     */ show?: (title?: React.ReactNode, content?: React.ReactNode, confirmText?: string, onConfirm?: () => void, cancelText?: string, onCancel?: () => void) => void;
+     */ show?: (title?: React.ReactNode, content?: React.ReactNode, confirmText?: string, onConfirm?: () => void, cancelText?: string, onCancel?: () => void, wrapStyle?: React.CSSProperties) => void;
 };
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 declare const AlertDialog: AlertDialogType;
