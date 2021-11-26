@@ -138,8 +138,7 @@ export type Props = {
   className?: string;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
-
-  /** pc端中间弹框点击按钮触发显示的飞出效果，默认true */
+  /** pc端从点击元素飞出动画效果，默认true */
   flip?: boolean;
 };
 
