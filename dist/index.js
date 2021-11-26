@@ -693,7 +693,7 @@ TransitionElement.displayName = 'UC-TransitionElement';
 var _excluded = ["children", "className", "hideOverflow"];
 
 var _templateObject;
-var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.55;\n  }\n"])));
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0;\n  }\n  &.to {\n    opacity: 0.4;\n  }\n"])));
 
 /** 遮罩层 */
 var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -713,9 +713,10 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       document.body.style.overflow = hideOverflow ? 'hidden' : '';
     }
   }, [hideOverflow]);
-  return /*#__PURE__*/React__default['default'].createElement(TransitionElement, null, /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({}, rest, {
-    className: clsx__default['default']('uc-mask', className),
+  return /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     ref: ref
+  }, /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({}, rest, {
+    className: clsx__default['default']('uc-mask', className)
   }), children));
 });
 Mask.displayName = 'UC-Mask';
@@ -760,6 +761,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style = props.style,
       className = props.className;
   var wrapRef = React.useRef();
+  var maskRef = React.useRef();
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
   }); // const lastMousePositionRef = useRef<MousePosition>();
@@ -795,9 +797,19 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, [visible, position, setTransformOrigin, flip]);
+  React.useLayoutEffect(function () {
+    if (mask && visible && maskRef.current) {
+      var wrapZIndex = window.getComputedStyle(wrapRef.current, null).getPropertyValue('z-index');
+
+      if (wrapZIndex) {
+        maskRef.current.style.zIndex = wrapZIndex;
+      }
+    }
+  }, [mask, visible]);
   return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popup-container-' + position)
   }, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
+    ref: maskRef,
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {
@@ -2356,7 +2368,7 @@ var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Icon.displayName = 'UC-Icon';
 /**
- * 加载在 iconfont.cn 上自行管理的图标
+ * 加载iconfont.cn图标
  *
  * @param {string} scriptUrl
  */

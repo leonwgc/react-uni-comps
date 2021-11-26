@@ -42,7 +42,7 @@ export default function RightDrawer(props) {
 
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
+      <Button type="primary" onClick={() => setVisible(true)} style={{ margin: 20 }}>
         open drawer
       </Button>
 
@@ -50,7 +50,7 @@ export default function RightDrawer(props) {
         position="right"
         onClose={onClose}
         visible={visible}
-        style={{ width: isMobile ? '60vw' : 400 }}
+        style={{ width: isMobile ? '60vw' : 600 }}
         header={
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="tab1" />
@@ -72,7 +72,7 @@ export default function RightDrawer(props) {
       >
         <div style={{ padding: 20 }}>
           <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
-          <Space size={16}>
+          <Space size={16} style={{ marginTop: 30, display: 'flex' }}>
             <Button onClick={() => setV(true)}>open modal</Button>
 
             <Button type="primary" onClick={() => AlertDialog.show('hello', 'how are you')}>

@@ -65,7 +65,7 @@ var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
 });
 Icon.displayName = 'UC-Icon';
 /**
- * 加载在 iconfont.cn 上自行管理的图标
+ * 加载iconfont.cn图标
  *
  * @param {string} scriptUrl
  */

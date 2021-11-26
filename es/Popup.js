@@ -72,6 +72,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       style = props.style,
       className = props.className;
   var wrapRef = useRef();
+  var maskRef = useRef();
   useImperativeHandle(ref, function () {
     return wrapRef.current;
   }); // const lastMousePositionRef = useRef<MousePosition>();
@@ -107,9 +108,19 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       }
     }
   }, [visible, position, setTransformOrigin, flip]);
+  useLayoutEffect(function () {
+    if (mask && visible && maskRef.current) {
+      var wrapZIndex = window.getComputedStyle(wrapRef.current, null).getPropertyValue('z-index');
+
+      if (wrapZIndex) {
+        maskRef.current.style.zIndex = wrapZIndex;
+      }
+    }
+  }, [mask, visible]);
   return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popup-container-' + position)
   }, mask && visible && /*#__PURE__*/React.createElement(Mask, {
+    ref: maskRef,
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {
