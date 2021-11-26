@@ -10,7 +10,7 @@ export default function App() {
         placement="right"
         style={{ width: 300 }}
         icon={<Icon type="uc-icon-yiwen" />}
-        title={<span style={{ fontSize: 20 }}>确认删除吗?</span>}
+        title={<span style={{ fontSize: 20 }}>确定删除吗?</span>}
         okText="ok"
         onOk={() => {
           Toast.show('you clicked ok');
