@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal } from '../src';
+import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal, AlertDialog } from '../src';
 
 // example to implement Drawer
 
@@ -72,11 +72,21 @@ export default function RightDrawer(props) {
       >
         <div style={{ padding: 20 }}>
           <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
-          <div>
+          <Space size={16}>
             <Button onClick={() => setV(true)}>open modal</Button>
-          </div>
+
+            <Button type="primary" onClick={() => AlertDialog.show('hello', 'how are you')}>
+              open alert dialog
+            </Button>
+          </Space>
         </div>
-        <Modal header="hello" style={{ zIndex: 201 }} visible={v} onClose={() => setV(false)}>
+        <Modal
+          header="hello"
+          closable
+          style={{ zIndex: 201, width: 400, height: 260 }}
+          visible={v}
+          onClose={() => setV(false)}
+        >
           hello,world
         </Modal>
       </Drawer>
