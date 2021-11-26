@@ -16,10 +16,10 @@ const StyledMask = styled.div`
   touch-action: none;
 
   &.from {
-    opacity: 0.4;
+    opacity: 0;
   }
   &.to {
-    opacity: 0.55;
+    opacity: 0.4;
   }
 `;
 
@@ -49,8 +49,8 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   }, [hideOverflow]);
 
   return (
-    <TransitionElement>
-      <StyledMask {...rest} className={clsx('uc-mask', className)} ref={ref}>
+    <TransitionElement ref={ref}>
+      <StyledMask {...rest} className={clsx('uc-mask', className)}>
         {children}
       </StyledMask>
     </TransitionElement>

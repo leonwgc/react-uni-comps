@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile } from '../src';
+import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal } from '../src';
 
 // example to implement Drawer
 
@@ -33,6 +33,8 @@ const StyledFooter = styled.div`
 export default function RightDrawer(props) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(false);
+
+  const [v, setV] = useState(false);
 
   const onClose = useCallback(() => {
     setVisible(false);
@@ -70,7 +72,13 @@ export default function RightDrawer(props) {
       >
         <div style={{ padding: 20 }}>
           <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
+          <div>
+            <Button onClick={() => setV(true)}>open modal</Button>
+          </div>
         </div>
+        <Modal header="hello" style={{ zIndex: 201 }} visible={v} onClose={() => setV(false)}>
+          hello,world
+        </Modal>
       </Drawer>
     </>
   );

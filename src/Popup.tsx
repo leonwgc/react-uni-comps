@@ -182,6 +182,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     className,
   } = props;
   const wrapRef = useRef<HTMLDivElement>();
+  const maskRef = useRef<HTMLDivElement>();
 
   useImperativeHandle(ref, () => wrapRef.current);
 
@@ -226,10 +227,20 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [visible, position, setTransformOrigin, flip]);
 
+  useLayoutEffect(() => {
+    if (mask && visible && maskRef.current) {
+      const wrapZIndex = window.getComputedStyle(wrapRef.current, null).getPropertyValue('z-index');
+      if (wrapZIndex) {
+        maskRef.current.style.zIndex = wrapZIndex;
+      }
+    }
+  }, [mask, visible]);
+
   return ReactDOM.createPortal(
     <div className={clsx('uc-popup-container-' + position)}>
       {mask && visible && (
         <Mask
+          ref={maskRef}
           className={maskClass}
           style={maskStyle}
           onClick={() => closeOnMaskClick && onClose?.()}
