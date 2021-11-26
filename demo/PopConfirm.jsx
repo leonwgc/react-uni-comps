@@ -32,7 +32,7 @@ export default function App() {
 
       <PopConfirm
         placement="right"
-        title="确定发布此页面？确定发布此页面？"
+        title="确定发布此页面?"
         onOk={() => {
           Toast.show('发布中..');
         }}
