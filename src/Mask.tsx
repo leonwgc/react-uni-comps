@@ -12,14 +12,14 @@ const StyledMask = styled.div`
   bottom: 0;
   right: 0;
   width: 100%;
-  transition: opacity 0.24s linear;
+  transition: opacity 0.22s linear;
   touch-action: none;
 
   &.from {
-    opacity: 0;
+    opacity: 0.4;
   }
   &.to {
-    opacity: 0.4;
+    opacity: 0.45;
   }
 `;
 
