@@ -622,7 +622,7 @@ var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
 
 /** 统一浅色边框色 */
 var border = '#eee';
-var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
+var disabledText = 'rgba(0, 0, 0, 0.25)';
 var primary = '#004bcc';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
@@ -5600,7 +5600,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     slideToPageLoc(0, false);
   }, [children, loop, height, slideToPageLoc]);
   useUpdateEffect(function () {
-    if (pageIndex === len) {
+    if (pageIndex >= len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(0);
     } else if (pageIndex === -1) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(len - 1);
@@ -5705,7 +5705,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     onTransitionEnd: function onTransitionEnd() {
       sRef.current.inTransition = false; // loop
 
-      if (pageIndex === len) {
+      if (pageIndex >= len) {
         slideToPageLoc(0, false);
       } else if (pageIndex === -1) {
         slideToPageLoc(len - 1, false);

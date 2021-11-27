@@ -156,7 +156,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     slideToPageLoc(0, false);
   }, [children, loop, height, slideToPageLoc]);
   useUpdateEffect(function () {
-    if (pageIndex === len) {
+    if (pageIndex >= len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(0);
     } else if (pageIndex === -1) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(len - 1);
@@ -261,7 +261,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onTransitionEnd: function onTransitionEnd() {
       sRef.current.inTransition = false; // loop
 
-      if (pageIndex === len) {
+      if (pageIndex >= len) {
         slideToPageLoc(0, false);
       } else if (pageIndex === -1) {
         slideToPageLoc(len - 1, false);
