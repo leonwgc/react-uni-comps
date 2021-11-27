@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useImperativeHandle } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
@@ -22,6 +22,8 @@ export type Props = {
   onFocus?: () => void;
   /** textarea 是否高度自适应,默认true */
   autoHeight?: boolean;
+  /** 处理ime输入,默认 false */
+  ime?: boolean;
 };
 
 const StyledInput = styled.div`
@@ -92,13 +94,17 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
     className,
     style,
     prefix,
+    value,
     onChange,
     suffix,
     autoHeight = true,
     textarea,
+    ime,
     ...rest
   } = props;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
+  const isImeModeRef = useRef(false);
+  const [compositionValue, setCompositionValue] = useState(value);
   useImperativeHandle(ref, () => inputRef.current);
 
   useEffect(() => {
@@ -108,6 +114,30 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   });
+
+  const inputProps: Record<string, unknown> = {
+    onChange: (e) => {
+      const val = e.target.value;
+      if (!isImeModeRef.current) {
+        onChange?.(e.target.value);
+      } else {
+        setCompositionValue(val);
+      }
+    },
+    value: isImeModeRef.current ? compositionValue : value,
+  };
+
+  if (ime) {
+    inputProps.onCompositionStart = () => {
+      isImeModeRef.current = true;
+    };
+    inputProps.onCompositionEnd = (e) => {
+      isImeModeRef.current = false;
+      const val = e.target.value;
+      setCompositionValue(val);
+      onChange?.(val);
+    };
+  }
 
   return (
     <StyledInput
@@ -120,9 +150,7 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
       {React.createElement(textarea ? 'textarea' : 'input', {
         ...rest,
-        onChange: (e) => {
-          onChange?.(e.target.value);
-        },
+        ...inputProps,
         ref: inputRef,
       })}
 

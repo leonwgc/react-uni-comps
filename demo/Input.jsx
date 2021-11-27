@@ -1,10 +1,10 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Input, Icon, Button, throttle, styled, clsx } from '../src';
+import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from '../src';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
 
 const StyledPage = styled.div`
-  transition: all 0.3s ease-in-out;
+  transition: all 0.28s ease-in-out;
   &.mobile {
     padding: 20px 27px;
   }
@@ -124,6 +124,7 @@ export default function App() {
   const [data, setData] = useState({ account: '', pwd: '', eyeOn: false });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
   const { account = '', pwd = '', eyeOn } = data;
+  const [ime, setIme] = useState(false);
 
   useLayoutEffect(() => {
     const handler = throttle(() => {
@@ -151,12 +152,17 @@ export default function App() {
   return (
     <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
       <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
+        <Checkbox checked={ime} onChange={setIme}>
+          ime mode
+        </Checkbox>
         <StyledInput
           placeholder="请输入真实账号"
+          ime={ime}
           value={account}
           onChange={onFieldChange('account')}
           prefix={!isMobile && <Icon type="icon-yonghu" onClick={() => onFieldChange('pwd')('')} />}
         />
+        <StyledInput placeholder="请输入真实账号" value={account} disabled />
         <StyledInput
           placeholder="请输入密码"
           value={pwd}
@@ -185,7 +191,7 @@ export default function App() {
             </>
           }
         />
-        <Button block type="primary" style={{ marginTop: 60 }}>
+        <Button block type="primary" style={{ marginTop: 32 }}>
           登录
         </Button>
       </StyledVa>

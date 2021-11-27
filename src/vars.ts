@@ -8,3 +8,8 @@ export const danger = '#ff4d4f';
 export const activeBg = 'rgba(0, 0, 0, 0.1)';
 /** common box-shadow */
 export const boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
+
+// animation duration ref
+// 短：160ms
+// 中：220ms
+// 长：280ms
