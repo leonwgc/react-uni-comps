@@ -31,6 +31,7 @@ const StyledInput = styled.div`
   font-size: 14px;
   width: 100%;
   background-color: #fff;
+  overflow: hidden;
 
   &.pc {
     background-image: none;
