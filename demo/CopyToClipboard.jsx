@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// import { Space } from 'antd';
-import { CopyToClipboard, Button, Space } from '../src';
+import { CopyToClipboard, Button, Space, Toast, AlertDialog } from '../src';
 
 export default function App() {
   const [value, setValue] = useState(new Date());
@@ -11,16 +10,16 @@ export default function App() {
           <Button block>hello</Button>
         </CopyToClipboard>
 
-        <CopyToClipboard text="hi" onCopy={() => alert('copied')}>
+        <CopyToClipboard text="hi" onCopy={() => AlertDialog.show(null, 'copied')}>
           <Button block>hi</Button>
         </CopyToClipboard>
 
-        <CopyToClipboard text={value.toString()} onCopy={() => setValue(new Date())}>
+        <CopyToClipboard text={value.toString()} onCopy={() => Toast.show(value.toLocaleString())}>
           <Button block>{value.toString()}</Button>
         </CopyToClipboard>
 
         <CopyToClipboard text="hello">
-          <Button block onClick={() => console.log('hello')}>
+          <Button block onClick={() => Toast.show('hello')}>
             hello
           </Button>
         </CopyToClipboard>
