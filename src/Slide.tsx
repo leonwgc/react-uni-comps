@@ -199,7 +199,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   }, [children, loop, height, slideToPageLoc]);
 
   useUpdateEffect(() => {
-    if (pageIndex === len) {
+    if (pageIndex >= len) {
       onPageChange?.(0);
     } else if (pageIndex === -1) {
       onPageChange?.(len - 1);
@@ -300,7 +300,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
           onTransitionEnd={() => {
             sRef.current.inTransition = false;
             // loop
-            if (pageIndex === len) {
+            if (pageIndex >= len) {
               slideToPageLoc(0, false);
             } else if (pageIndex === -1) {
               slideToPageLoc(len - 1, false);
