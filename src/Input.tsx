@@ -22,7 +22,7 @@ export type Props = {
   onFocus?: () => void;
   /** textarea 是否高度自适应,默认true */
   autoHeight?: boolean;
-  /** 处理ime输入,默认 false */
+  /** 处理IME输入法,默认 false */
   ime?: boolean;
 };
 

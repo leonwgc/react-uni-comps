@@ -11,6 +11,7 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
+import { animationFast } from './vars';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -174,7 +175,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskStyle,
     maskClass,
     position = 'bottom',
-    duration = 160,
+    duration = animationFast,
     flip = true,
     mountContainer,
     style,

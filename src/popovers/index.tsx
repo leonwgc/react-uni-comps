@@ -9,6 +9,7 @@ import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 import useCallbackRef from '../hooks/useCallbackRef';
 import useUpdateEffect from '../hooks/useUpdateEffect';
+import { boxShadow } from '../vars';
 
 // port from https://github.com/bytedance/guide and refactor
 
@@ -18,8 +19,7 @@ const StyledPopover = styled.div`
   background: #fff;
   border-radius: 2px;
 
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-
+  box-shadow: ${boxShadow};
   .uc-popover-content {
   }
 

@@ -4,6 +4,7 @@ import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 import { renderElement, isMobile, Dispose, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
+import { boxShadow } from './vars';
 
 const transitionDuration = 240;
 
@@ -41,7 +42,7 @@ const StyledNotify = styled.div`
       text-align: center;
     }
     &.pc {
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: ${boxShadow};
       background-color: #fff;
       font-size: 14px;
       margin-top: 10px;
