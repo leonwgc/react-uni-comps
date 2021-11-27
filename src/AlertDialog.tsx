@@ -49,8 +49,6 @@ type Props = {
 };
 
 const StyledAlertDialog = styled(Popup)`
-  z-index: 300;
-
   // effect
   &.from {
     opacity: 0;
