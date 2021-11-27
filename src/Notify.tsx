@@ -73,7 +73,7 @@ type StaticProps = {
   style?: React.CSSProperties;
 };
 
-type Pos = { top: number; height: number };
+type Pos = { top: number; height: number; el: HTMLElement };
 
 const allNotifies: Array<Pos> = [];
 
@@ -98,10 +98,17 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
       allNotifies.push({
         top: parseInt(css.getPropertyValue('top'), 10),
         height: parseInt(css.getPropertyValue('height'), 10),
+        el: elRef.current,
       });
 
       return () => {
-        allNotifies.shift();
+        const item = allNotifies.shift();
+        if (allNotifies.length > 0 && item) {
+          const h = item.height;
+          allNotifies.map((n) => {
+            n.el.style.top = parseInt(n.el.style.top, 10) - h + 'px';
+          });
+        }
       };
     }
   }, []);
@@ -129,10 +136,10 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
  */
 Notify.show = (props: StaticProps | React.ReactNode) => {
   let notifyProps = {};
-  let _duration = 1500;
+  let _duration = 2000;
 
   if (typeof props === 'object' && 'content' in props) {
-    const { duration = 1500, ...rest } = props;
+    const { duration = 2000, ...rest } = props;
     notifyProps = rest;
     _duration = duration;
   } else {
