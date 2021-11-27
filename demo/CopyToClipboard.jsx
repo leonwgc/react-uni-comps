@@ -5,7 +5,7 @@ export default function App() {
   const [value, setValue] = useState(new Date());
   return (
     <div className="app">
-      <Space direction="vertical" size={30} style={{ width: '100%' }}>
+      <Space direction="vertical" size={20} style={{ margin: 20 }}>
         <CopyToClipboard text="hello">
           <Button block>hello</Button>
         </CopyToClipboard>

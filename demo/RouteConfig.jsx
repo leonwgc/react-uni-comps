@@ -242,6 +242,10 @@ const routes = [
     path: '/PopConfirm',
     component: lazy(() => import('./PopConfirm')),
   },
+  {
+    path: '/WaitLoading',
+    component: lazy(() => import('./WaitLoading')),
+  },
 ];
 
 export default routes;

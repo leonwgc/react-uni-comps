@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-// import { SoundOutlined } from '@ant-design/icons';
 import { Space, Cell, IconArrow, Icon } from '../src';
 
 const SoundOutlined = () => <Icon type="uc-icon-zujian" />;
@@ -13,6 +12,15 @@ export default function All() {
   }, []);
   return (
     <div>
+      <Cell
+        title={
+          <Space>
+            <SoundOutlined /> WaitLoading
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('WaitLoading')}
+      ></Cell>
       <Cell
         title={
           <Space>

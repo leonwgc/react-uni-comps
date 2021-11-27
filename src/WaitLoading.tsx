@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 type Props = {
-  wait?: number /** 渲染spinner前等待时间, default 600ms，时间到了并且visible为true才显示spinner子元素 */;
-  visible: boolean /** 是否显示spinner */;
-  children: React.ReactElement /** spinner 子元素 */;
+  /** 渲染子元素等待时间，单位ms,默认600 */
+  wait?: number;
+  /** 是否显示子元素 */
+  visible: boolean;
+  /** 子元素 */
+  children: React.ReactNode;
 };
 
-/**  等待wait毫秒如果visible是true才渲染子元素,包裹spinner可以防止spinner闪烁 */
-const WaitLoading: React.FC<Props> = ({ wait = 600, visible = false, children }) => {
+/**  等待wait毫秒且visible是true才渲染子元素, 一般用于防止loading闪烁等问题 */
+const WaitLoading = (props: Props): React.ReactNode => {
+  const { wait = 600, visible = false, children } = props;
   const [show, setShow] = useState(false);
   const ref = useRef<number>();
 
@@ -31,7 +35,7 @@ const WaitLoading: React.FC<Props> = ({ wait = 600, visible = false, children })
     };
   }, [visible, wait]);
 
-  return show ? React.Children.only(children) : null;
+  return show ? children : null;
 };
 
 export default WaitLoading;

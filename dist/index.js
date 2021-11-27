@@ -1410,13 +1410,13 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 
-/**  等待wait毫秒如果visible是true才渲染子元素,包裹spinner可以防止spinner闪烁 */
-var WaitLoading = function WaitLoading(_ref) {
-  var _ref$wait = _ref.wait,
-      wait = _ref$wait === void 0 ? 600 : _ref$wait,
-      _ref$visible = _ref.visible,
-      visible = _ref$visible === void 0 ? false : _ref$visible,
-      children = _ref.children;
+/**  等待wait毫秒且visible是true才渲染子元素, 一般用于防止loading闪烁等问题 */
+var WaitLoading = function WaitLoading(props) {
+  var _props$wait = props.wait,
+      wait = _props$wait === void 0 ? 600 : _props$wait,
+      _props$visible = props.visible,
+      visible = _props$visible === void 0 ? false : _props$visible,
+      children = props.children;
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1446,7 +1446,7 @@ var WaitLoading = function WaitLoading(_ref) {
       clearTimeout(ref.current);
     };
   }, [visible, wait]);
-  return show ? React__default['default'].Children.only(children) : null;
+  return show ? children : null;
 };
 
 var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
