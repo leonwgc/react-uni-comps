@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import Spinner from './Spinner';
@@ -64,7 +64,7 @@ const StyledButton = styled.button`
 
   &.default {
     background-color: #fff;
-    border-color: ${colors.border};
+    border-color: ${vars.border};
 
     ${isMobile ? '&:active' : '&:hover'} {
       opacity: 0.8;
@@ -75,14 +75,14 @@ const StyledButton = styled.button`
     }
 
     &.mobile:active {
-      background-color: ${colors.activeBg};
+      background-color: ${vars.activeBg};
     }
 
     &.danger,
     &.danger:hover,
     &.danger:active {
-      color: ${colors.danger};
-      border-color: ${colors.danger};
+      color: ${vars.danger};
+      border-color: ${vars.danger};
     }
   }
   &.primary {
@@ -102,15 +102,15 @@ const StyledButton = styled.button`
       ${getThemeColorCss('color')}
 
       &.danger {
-        color: ${colors.danger};
+        color: ${vars.danger};
       }
     }
 
     &.danger,
     &.danger:hover,
     &.danger:active {
-      background-color: ${colors.danger};
-      border-color: ${colors.danger};
+      background-color: ${vars.danger};
+      border-color: ${vars.danger};
     }
   }
   &.block {
@@ -140,8 +140,8 @@ const StyledButton = styled.button`
   &.ghost,
   &.ghost:hover {
     background-color: transparent;
-    border-color: ${colors.border};
-    color: ${colors.border};
+    border-color: ${vars.border};
+    color: ${vars.border};
   }
 `;
 

@@ -3,7 +3,7 @@ import Popover from './Popover';
 import { Placement } from './popovers/types';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { boxShadow } from './colors';
+import { boxShadow } from './vars';
 
 type Offset = { x?: number; y?: number };
 

@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
-import * as colors from './colors';
+import * as vars from './vars';
 import clsx from 'clsx';
 
 type Action = {
@@ -45,13 +45,13 @@ const StyledActionSheet = styled(Popup)`
     color: #999;
     font-size: 15px;
     padding: 18px 16px;
-    border-bottom: 1px solid ${colors.border};
+    border-bottom: 1px solid ${vars.border};
   }
 
   .button-list {
     .wrapper {
       background-color: #ffffff;
-      border-top: 1px solid ${colors.border};
+      border-top: 1px solid ${vars.border};
 
       &.disabled {
         color: #999;

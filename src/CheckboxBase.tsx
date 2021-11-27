@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
@@ -94,7 +94,7 @@ const StyledCheckboxBaseWrapper = styled.div`
 
   &.disabled {
     .checkbox {
-      border-color: ${colors.border};
+      border-color: ${vars.border};
     }
   }
 
@@ -102,7 +102,7 @@ const StyledCheckboxBaseWrapper = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid ${colors.border};
+    border: 1px solid ${vars.border};
     border-radius: 2px;
     background: #fff;
     transition: all 0.24s ease-in-out;

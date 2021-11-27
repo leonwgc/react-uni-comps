@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
-import * as colors from './colors';
+import * as vars from './vars';
 import clsx from 'clsx';
 
 export type Props = {
@@ -34,7 +34,7 @@ const StyledInput = styled.div`
 
   &.pc {
     background-image: none;
-    border: 1px solid ${colors.border};
+    border: 1px solid ${vars.border};
     border-radius: 2px;
     transition: all 0.3s;
     &:hover {

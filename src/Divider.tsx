@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 
 // refer to https://ant.design/components/divider-cn/ antd Divider
 
@@ -104,7 +104,7 @@ const Divider = (props: Props): React.ReactElement => {
     textPosition = 'center',
     className,
     dashed,
-    color = colors.border,
+    color = vars.border,
     children,
     ...rest
   } = props;

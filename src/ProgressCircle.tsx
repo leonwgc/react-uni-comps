@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 
 type Props = {
   /** 进度条颜色,默认读主题色 */
@@ -43,7 +43,7 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
   const theme = useTheme() as Record<string, unknown>;
-  const color = (props.color || theme.color || colors.primary) as string;
+  const color = (props.color || theme.color || vars.primary) as string;
 
   return (
     <StyledProgressCircle

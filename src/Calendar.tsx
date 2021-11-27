@@ -5,7 +5,7 @@ import { getThemeColorCss } from './themeHelper';
 import { isMobile } from './dom';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 
 // props refer: https://www.npmjs.com/package/react-calendar
 export type DateType = Date | Date[];
@@ -83,7 +83,7 @@ const StyledCalendar = styled(ReactCalendar)`
     display: flex;
     height: 44px;
     margin-bottom: 0.5em;
-    border-bottom: 1px solid ${colors.border};
+    border-bottom: 1px solid ${vars.border};
 
     button {
       min-width: 44px;

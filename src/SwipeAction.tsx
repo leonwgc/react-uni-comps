@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEf
 import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
 import useThisRef from './hooks/useThisRef';
-import * as colors from './colors';
+import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 
@@ -143,7 +143,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       <StyledButton
         onClick={item.onClick}
         key={idx}
-        style={{ backgroundColor: item.color || colors.primary }}
+        style={{ backgroundColor: item.color || vars.primary }}
       >
         {item.text}
       </StyledButton>

@@ -2,7 +2,7 @@ import React, { useRef, useLayoutEffect, useImperativeHandle, RefAttributes } fr
 import styled from 'styled-components';
 import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 
 type SigPadRefProps = {
   getData: () => string;
@@ -18,7 +18,7 @@ type Props = {
 
 const StyledSignature = styled.div`
   position: relative;
-  border: 1px solid ${colors.border};
+  border: 1px solid ${vars.border};
   box-sizing: border-box;
 `;
 

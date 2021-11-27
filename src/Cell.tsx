@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
-import * as colors from './colors';
+import * as vars from './vars';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 
@@ -24,7 +24,7 @@ const StyledCell = styled.div`
   padding-left: 12px;
   &.clickable {
     &:active {
-      background-color: ${colors.activeBg};
+      background-color: ${vars.activeBg};
     }
   }
 
@@ -84,7 +84,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     description,
     className,
     content,
-    lineColor = colors.border,
+    lineColor = vars.border,
     children,
     ...rest
   } = props;

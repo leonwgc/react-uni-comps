@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useCallback, useEffect, RefObject } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 import useGesture from './hooks/useGesture';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
@@ -46,7 +46,7 @@ const StyledWrapper = styled.div`
     margin: 0;
     padding: 0;
     overflow-x: scroll;
-    border-bottom: 1px solid ${colors.border};
+    border-bottom: 1px solid ${vars.border};
     align-items: center;
     &::-webkit-scrollbar {
       display: none;
@@ -85,7 +85,7 @@ const StyledTabHeadItem = styled.div<{
   }
   &.disabled {
     cursor: not-allowed;
-    color: ${colors.disabledText};
+    color: ${vars.disabledText};
   }
 
   &.uc-tabs-header-item {

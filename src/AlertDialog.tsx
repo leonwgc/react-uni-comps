@@ -5,7 +5,7 @@ import Button from './Button';
 import Divider from './Divider';
 import Space from './Space';
 import Icon from './Icon';
-import * as colors from './colors';
+import * as vars from './vars';
 import { Dispose, isMobile, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
@@ -117,7 +117,7 @@ const StyledAlertDialog = styled(Popup)`
         height: 100%;
         left: 0;
         top: 0;
-        border-top: 1px solid ${colors.border};
+        border-top: 1px solid ${vars.border};
 
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
           width: 200%;
@@ -297,7 +297,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                 </div>
                 <Divider
                   type="vertical"
-                  style={{ height: '100%', color: colors.border, margin: 0 }}
+                  style={{ height: '100%', color: vars.border, margin: 0 }}
                 />
               </>
             ) : null}

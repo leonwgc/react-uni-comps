@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import * as colors from './colors';
+import * as vars from './vars';
 import { isMobile } from './dom';
 /**
  *  get a css snippet with theme color
@@ -12,12 +12,12 @@ export const getThemeColorCss = (prop: string, leftValue = ''): any => {
   // mobile css variable first
   if (isMobile) {
     return css`
-      ${prop}:${leftValue} ${(props) => props.theme.color || colors.primary};
-      ${prop}:${leftValue} var(--uc-color, ${colors.primary});
+      ${prop}:${leftValue} ${(props) => props.theme.color || vars.primary};
+      ${prop}:${leftValue} var(--uc-color, ${vars.primary});
     `;
   } else {
     return css`
-      ${prop}:${leftValue} var(--uc-color, ${colors.primary});
+      ${prop}:${leftValue} var(--uc-color, ${vars.primary});
       ${prop}:${leftValue} ${(props) => props.theme.color};
     `;
   }

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'react';
 import styled from 'styled-components';
-import * as colors from './colors';
+import * as vars from './vars';
 import clsx from 'clsx';
 import { isMobile } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
@@ -34,7 +34,7 @@ const StyledPasswordInput = styled.div`
   background-color: #fff;
   border-radius: 4px;
   padding: 8px;
-  border: 1px solid ${colors.border};
+  border: 1px solid ${vars.border};
   margin: 0 16px;
 
   .item {
@@ -48,7 +48,7 @@ const StyledPasswordInput = styled.div`
     background-color: #fff;
 
     &:not(:first-child) {
-      border-left: 1px solid ${colors.border};
+      border-left: 1px solid ${vars.border};
     }
 
     .dot {
