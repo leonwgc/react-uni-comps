@@ -2,11 +2,12 @@ import React, { useRef, useImperativeHandle, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import useVisibleObserve from './hooks/useVisibleObserve';
 import clsx from 'clsx';
+import { animationNormal } from './vars';
 
 type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
   children: React.ReactElement;
-  /** from到to动画执行的时间,单位ms,默认240ms */
+  /** 动画时间,默认220ms */
   duration?: number;
   /** transition动画开始执行的类名，默认from */
   fromClass?: string;
@@ -31,7 +32,7 @@ const getClassName = (state, fromClass = 'from', toClass = 'to') => {
  *  2.从不可见到可见状态
  */
 const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
-  const { children, duration = 240, fromClass = 'from', toClass = 'to' } = props;
+  const { children, duration = animationNormal, fromClass = 'from', toClass = 'to' } = props;
   const elRef = useRef<HTMLElement>();
   const [isInViewport, setIsInViewport] = useState<boolean>();
 
