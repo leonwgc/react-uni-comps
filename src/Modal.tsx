@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Icon from './Icon';
 import Popup, { Props as PopupProps } from './Popup';
+import { boxShadow } from './vars';
 
 type Props = PopupProps & {
   /** 头部 */
@@ -25,6 +26,7 @@ const StyledModal = styled(Popup)`
   padding: 32px 32px 24px;
   position: relative;
   border-radius: 8px;
+  box-shadow: ${boxShadow};
 
   .close {
     top: 16px;

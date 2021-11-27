@@ -82,6 +82,7 @@ export default function RightDrawer(props) {
         </div>
         <Modal
           header="hello"
+          mask={false}
           closable
           style={{ zIndex: 201, width: 400, height: 260 }}
           visible={v}
