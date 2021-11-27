@@ -1,12 +1,13 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useLayoutEffect, useImperativeHandle, useRef, ReactNode } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 import { renderElement, isMobile, Dispose, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
-import { boxShadow } from './vars';
+import { boxShadow, animationNormal } from './vars';
+import Mask from './Mask';
 
-const transitionDuration = 240;
+const transitionDuration = animationNormal;
 
 const StyledNotify = styled.div`
   position: fixed;
@@ -22,37 +23,39 @@ const StyledNotify = styled.div`
 
   &.from {
     transform: translate(0, -100%);
+    opacity: 0;
   }
 
   &.to {
     transform: none;
+    opacity: 1;
   }
 
   .content {
-    ${getThemeColorCss('background-color')};
     padding: 8px 12px;
-    margin: 0 auto;
-    .icon {
-      margin-right: 8px;
-    }
+  }
 
-    &.mobile {
-      color: #fff;
-      width: 100%;
-      text-align: center;
-    }
-    &.pc {
+  &.pc {
+    top: 16px;
+    .content {
       box-shadow: ${boxShadow};
       background-color: #fff;
-      font-size: 14px;
-      margin-top: 10px;
+      border-radius: 2px;
+    }
+  }
+
+  &.mobile {
+    .content {
+      ${getThemeColorCss('background-color')};
+      color: #fff;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
 `;
 
 type Props = {
-  /** 图标*/
-  icon?: React.ReactNode;
   /** 内容 */
   content?: React.ReactNode;
   /** 内容样式 */
@@ -62,8 +65,6 @@ type Props = {
 };
 
 type StaticProps = {
-  /** 图标*/
-  icon?: React.ReactNode;
   /** 内容 */
   content: React.ReactNode;
   /** 持续显示时间，默认2000ms */
@@ -72,19 +73,52 @@ type StaticProps = {
   style?: React.CSSProperties;
 };
 
+type Pos = { top: number; height: number };
+
+const allNotifies: Array<Pos> = [];
+
 /** 顶部全局消息通知 */
 const Notify: React.ForwardRefExoticComponent<Props> & {
-  /**顶部全局消息通知静态调用  */ show?: (props: StaticProps) => void;
+  /**顶部全局消息通知静态调用  */ show?: (props: StaticProps | ReactNode) => void;
 } = forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { content, icon, style, className, ...rest } = props;
+  const { content, style, className, ...rest } = props;
+  const elRef = useRef<HTMLDivElement>();
+
+  useImperativeHandle(ref, () => elRef.current);
+
+  useLayoutEffect(() => {
+    if (elRef.current) {
+      if (allNotifies.length > 0) {
+        const lastElPos = allNotifies[allNotifies.length - 1];
+        elRef.current.style.top = lastElPos.top + lastElPos.height + 16 + 'px';
+      }
+
+      const css = window.getComputedStyle(elRef.current);
+
+      allNotifies.push({
+        top: parseInt(css.getPropertyValue('top'), 10),
+        height: parseInt(css.getPropertyValue('height'), 10),
+      });
+
+      return () => {
+        allNotifies.shift();
+      };
+    }
+  }, []);
 
   return (
-    <StyledNotify {...rest} ref={ref} className={clsx('uc-notify', className)}>
-      <div className={clsx('content', { mobile: isMobile, pc: !isMobile })} style={style}>
-        {icon && <span className="icon">{icon}</span>}
-        {content}
-      </div>
-    </StyledNotify>
+    <>
+      {isMobile && <Mask style={{ background: 'transparent' }} />}
+      <StyledNotify
+        {...rest}
+        ref={elRef}
+        className={clsx('uc-notify', className, { mobile: isMobile, pc: !isMobile })}
+      >
+        <div className={clsx('content')} style={style}>
+          {content}
+        </div>
+      </StyledNotify>
+    </>
   );
 });
 
@@ -93,8 +127,19 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
  *
  * @param {StaticProps} props
  */
-Notify.show = (props: StaticProps) => {
-  const { duration = 2000, ...rest } = props;
+Notify.show = (props: StaticProps | React.ReactNode) => {
+  let notifyProps = {};
+  let _duration = 1500;
+
+  if (typeof props === 'object' && 'content' in props) {
+    const { duration = 1500, ...rest } = props;
+    notifyProps = rest;
+    _duration = duration;
+  } else {
+    notifyProps = {
+      content: props,
+    };
+  }
 
   const container = document.createElement('div');
 
@@ -102,13 +147,13 @@ Notify.show = (props: StaticProps) => {
 
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>
-      <Notify {...rest} />
+      <Notify {...notifyProps} />
     </TransitionElement>,
     container
   );
   window.setTimeout(() => {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Notify.displayName = 'UC-Notify';

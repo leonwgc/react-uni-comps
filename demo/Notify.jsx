@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import { Spinner, Space, Button, Notify } from '../src';
+import { Space, Button, Notify, Icon, isMobile } from '../src';
 import { InfoCircleFilled } from '@ant-design/icons';
 
 export default function App() {
   return (
-    <div style={{ margin: '200px auto' }}>
-      <Space size={16}>
+    <div style={{ margin: '100px 50px' }}>
+      <Space size={16} direction="vertical">
+        <Button type="primary" onClick={() => Notify.show('明天不上学')}>
+          Notify.show
+        </Button>
         <Button
           type="primary"
           onClick={() =>
-            Notify.show({
-              icon: <InfoCircleFilled />,
-              content: '明天不上学',
-            })
+            Notify.show(
+              <Space size={4}>
+                <Icon type="uc-icon-jinggao" style={{ fontSize: 16 }} />
+                明天不上学
+              </Space>
+            )
           }
         >
-          Notify.show
+          Notify.show with icon
         </Button>
         <Button
           type="primary"
@@ -25,11 +30,11 @@ export default function App() {
               icon: <InfoCircleFilled />,
               duration: 1000,
               style: {
-                width: 300,
-                border: '1px solid #ccc',
                 backgroundColor: '#00bc8d',
-                borderRadius: 8,
-                margin: '50px 20px 0',
+                color: '#fff',
+                height: isMobile ? 60 : 40,
+                display: 'flex',
+                alignItems: 'center',
               },
             })
           }
