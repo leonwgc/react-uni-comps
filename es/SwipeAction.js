@@ -14,7 +14,7 @@ import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEf
 import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
 import useThisRef from './hooks/useThisRef';
-import * as colors from './colors';
+import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 var StyledSwipeAction = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"], ["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
@@ -88,7 +88,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClick: item.onClick,
       key: idx,
       style: {
-        backgroundColor: item.color || colors.primary
+        backgroundColor: item.color || vars.primary
       }
     }, item.text);
   }, []);

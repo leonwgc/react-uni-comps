@@ -27,7 +27,6 @@ export default function App() {
           onClick={() =>
             Notify.show({
               content: '明天不上学',
-              icon: <InfoCircleFilled />,
               duration: 1000,
               style: {
                 backgroundColor: '#00bc8d',

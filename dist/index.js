@@ -620,6 +620,22 @@ var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
   }, []);
 };
 
+/** 统一浅色边框色 */
+var border = '#eee';
+var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
+var primary = '#004bcc';
+var danger = '#ff4d4f';
+var activeBg = 'rgba(0, 0, 0, 0.1)';
+/** 统一边框阴影 */
+
+var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
+/** 中速动画时间, 单位:ms */
+
+var animationNormal = 220;
+/** 快速动画时间, 单位:ms  */
+
+var animationFast = 160;
+
 var getClassName = function getClassName(state) {
   var fromClass = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'from';
   var toClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'to';
@@ -643,7 +659,7 @@ var getClassName = function getClassName(state) {
 var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 240 : _props$duration,
+      duration = _props$duration === void 0 ? animationNormal : _props$duration,
       _props$fromClass = props.fromClass,
       fromClass = _props$fromClass === void 0 ? 'from' : _props$fromClass,
       _props$toClass = props.toClass,
@@ -693,7 +709,7 @@ TransitionElement.displayName = 'UC-TransitionElement';
 var _excluded = ["children", "className", "hideOverflow"];
 
 var _templateObject;
-var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.24s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0;\n  }\n  &.to {\n    opacity: 0.4;\n  }\n"])));
+var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.22s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.45;\n  }\n"])));
 
 /** 遮罩层 */
 var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -754,7 +770,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 160 : _props$duration,
+      duration = _props$duration === void 0 ? animationFast : _props$duration,
       _props$flip = props.flip,
       flip = _props$flip === void 0 ? true : _props$flip,
       mountContainer = props.mountContainer,
@@ -1432,15 +1448,6 @@ var WaitLoading = function WaitLoading(_ref) {
   }, [visible, wait]);
   return show ? React__default['default'].Children.only(children) : null;
 };
-
-var border = '#eee';
-var disabledText = 'rgba(0, 0, 0, 0.25)'; // text
-var primary = '#004bcc';
-var danger = '#ff4d4f';
-var activeBg = 'rgba(0, 0, 0, 0.1)';
-/** common box-shadow */
-
-var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
 
 var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
 
@@ -3306,7 +3313,7 @@ var _excluded$l = ["placement", "content", "arrow", "visible", "closable", "onVi
 
 var _templateObject$l;
 
-var StyledPopover = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])));
+var StyledPopover = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: ", ";\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])), boxShadow);
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -4159,7 +4166,7 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$t = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle"];
 
 var _templateObject$s;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  z-index: 300;\n\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .title {\n      text-align: center;\n    }\n\n    .content {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .title {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .content {\n    font-size: 14px;\n    line-height: 20px;\n    min-height: 46px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n  }\n"])), getThemeColorCss('color'), border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .title {\n      text-align: center;\n    }\n\n    .content {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .title {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .content {\n    font-size: 14px;\n    line-height: 20px;\n    min-height: 46px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n  }\n"])), getThemeColorCss('color'), border);
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -4771,24 +4778,33 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$y = ["className", "style", "prefix", "onChange", "suffix", "autoHeight", "textarea"];
+var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime"];
 
 var _templateObject$x;
-var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
+var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
 /** 单行/多行输入框 input/textarea */
 
 var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       style = props.style,
       prefix = props.prefix,
+      value = props.value,
       _onChange = props.onChange,
       suffix = props.suffix,
       _props$autoHeight = props.autoHeight,
       autoHeight = _props$autoHeight === void 0 ? true : _props$autoHeight,
       textarea = props.textarea,
+      ime = props.ime,
       rest = _objectWithoutProperties(props, _excluded$y);
 
   var inputRef = React.useRef();
+  var isImeModeRef = React.useRef(false);
+
+  var _useState = React.useState(value),
+      _useState2 = _slicedToArray(_useState, 2),
+      compositionValue = _useState2[0],
+      setCompositionValue = _useState2[1];
+
   React.useImperativeHandle(ref, function () {
     return inputRef.current;
   });
@@ -4799,6 +4815,32 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   });
+  var inputProps = {
+    onChange: function onChange(e) {
+      var val = e.target.value;
+
+      if (!isImeModeRef.current) {
+        _onChange === null || _onChange === void 0 ? void 0 : _onChange(e.target.value);
+      } else {
+        setCompositionValue(val);
+      }
+    },
+    value: isImeModeRef.current ? compositionValue : value
+  };
+
+  if (ime) {
+    inputProps.onCompositionStart = function () {
+      isImeModeRef.current = true;
+    };
+
+    inputProps.onCompositionEnd = function (e) {
+      isImeModeRef.current = false;
+      var val = e.target.value;
+      setCompositionValue(val);
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange(val);
+    };
+  }
+
   return /*#__PURE__*/React__default['default'].createElement(StyledInput, {
     style: style,
     className: clsx__default['default']('uc-input', className, {
@@ -4807,10 +4849,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     })
   }, prefix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('prefix')
-  }, prefix), /*#__PURE__*/React__default['default'].createElement(textarea ? 'textarea' : 'input', _objectSpread2(_objectSpread2({}, rest), {}, {
-    onChange: function onChange(e) {
-      _onChange === null || _onChange === void 0 ? void 0 : _onChange(e.target.value);
-    },
+  }, prefix), /*#__PURE__*/React__default['default'].createElement(textarea ? 'textarea' : 'input', _objectSpread2(_objectSpread2(_objectSpread2({}, rest), inputProps), {}, {
     ref: inputRef
   })), suffix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('suffix')
@@ -5833,33 +5872,64 @@ var WaterMark = function WaterMark(props) {
 
 WaterMark.displayName = 'UC-WaterMark';
 
-var _excluded$G = ["content", "icon", "style", "className"],
+var _excluded$G = ["content", "style", "className"],
     _excluded2$3 = ["duration"];
 
 var _templateObject$G;
-var transitionDuration$2 = 240;
-var StyledNotify = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n  }\n\n  &.to {\n    transform: none;\n  }\n\n  .content {\n    ", ";\n    padding: 8px 12px;\n    margin: 0 auto;\n    .icon {\n      margin-right: 8px;\n    }\n\n    &.mobile {\n      color: #fff;\n      width: 100%;\n      text-align: center;\n    }\n    &.pc {\n      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      font-size: 14px;\n      margin-top: 10px;\n    }\n  }\n"])), transitionDuration$2, getThemeColorCss('background-color'));
-
+var transitionDuration$2 = animationNormal;
+var StyledNotify = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n    opacity: 0;\n  }\n\n  &.to {\n    transform: none;\n    opacity: 1;\n  }\n\n  .content {\n    padding: 8px 12px;\n  }\n\n  &.pc {\n    top: 16px;\n    .content {\n      box-shadow: ", ";\n      background-color: #fff;\n      border-radius: 2px;\n    }\n  }\n\n  &.mobile {\n    .content {\n      ", ";\n      color: #fff;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n    }\n  }\n"])), transitionDuration$2, boxShadow, getThemeColorCss('background-color'));
+var allNotifies = [];
 /** 顶部全局消息通知 */
+
 var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var content = props.content,
-      icon = props.icon,
       style = props.style,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$G);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledNotify, _extends({}, rest, {
-    ref: ref,
-    className: clsx__default['default']('uc-notify', className)
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('content', {
+  var elRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  React.useLayoutEffect(function () {
+    if (elRef.current) {
+      if (allNotifies.length > 0) {
+        var lastElPos = allNotifies[allNotifies.length - 1];
+        elRef.current.style.top = lastElPos.top + lastElPos.height + 16 + 'px';
+      }
+
+      var css = window.getComputedStyle(elRef.current);
+      allNotifies.push({
+        top: parseInt(css.getPropertyValue('top'), 10),
+        height: parseInt(css.getPropertyValue('height'), 10),
+        el: elRef.current
+      });
+      return function () {
+        var item = allNotifies.shift();
+
+        if (allNotifies.length > 0 && item) {
+          var h = item.height;
+          allNotifies.map(function (n) {
+            n.el.style.top = parseInt(n.el.style.top, 10) - h + 'px';
+          });
+        }
+      };
+    }
+  }, []);
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, isMobile && /*#__PURE__*/React__default['default'].createElement(Mask, {
+    style: {
+      background: 'transparent'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement(StyledNotify, _extends({}, rest, {
+    ref: elRef,
+    className: clsx__default['default']('uc-notify', className, {
       mobile: isMobile,
       pc: !isMobile
-    }),
+    })
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('content'),
     style: style
-  }, icon && /*#__PURE__*/React__default['default'].createElement("span", {
-    className: "icon"
-  }, icon), content));
+  }, content)));
 });
 /**
  * 顶部全局消息通知静态调用
@@ -5868,18 +5938,30 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
  */
 
 Notify.show = function (props) {
-  var _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 2000 : _props$duration,
-      rest = _objectWithoutProperties(props, _excluded2$3);
+  var notifyProps = {};
+  var _duration = 2000;
+
+  if (_typeof(props) === 'object' && 'content' in props) {
+    var _props$duration = props.duration,
+        duration = _props$duration === void 0 ? 2000 : _props$duration,
+        rest = _objectWithoutProperties(props, _excluded2$3);
+
+    notifyProps = rest;
+    _duration = duration;
+  } else {
+    notifyProps = {
+      content: props
+    };
+  }
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-notify', transitionDuration$2);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration$2
-  }, /*#__PURE__*/React__default['default'].createElement(Notify, rest)), container);
+  }, /*#__PURE__*/React__default['default'].createElement(Notify, notifyProps)), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
-  }, duration);
+  }, _duration);
 };
 
 Notify.displayName = 'UC-Notify';
@@ -8341,7 +8423,7 @@ Drawer.displayName = 'UC-Drawer';
 var _excluded$W = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 
 var _templateObject$N;
-var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])));
+var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n  box-shadow: ", ";\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])), boxShadow);
 /** 对话框,基于Popup */
 
 var Modal = function Modal(props) {

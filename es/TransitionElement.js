@@ -18,6 +18,7 @@ import React, { useRef, useImperativeHandle, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import useVisibleObserve from './hooks/useVisibleObserve';
 import clsx from 'clsx';
+import { animationNormal } from './vars';
 
 var getClassName = function getClassName(state, fromClass, toClass) {
   if (fromClass === void 0) {
@@ -47,7 +48,7 @@ var getClassName = function getClassName(state, fromClass, toClass) {
 var TransitionElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       _a = props.duration,
-      duration = _a === void 0 ? 240 : _a,
+      duration = _a === void 0 ? animationNormal : _a,
       _b = props.fromClass,
       fromClass = _b === void 0 ? 'from' : _b,
       _c = props.toClass,

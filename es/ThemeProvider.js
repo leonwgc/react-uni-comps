@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import * as colors from './colors';
+import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 /**
  * 主题色设置
@@ -17,7 +17,7 @@ import { ThemeProvider as StyledProvider } from 'styled-components';
 
 var ThemeProvider = function ThemeProvider(props) {
   var _a = props.color,
-      color = _a === void 0 ? colors.primary : _a,
+      color = _a === void 0 ? vars.primary : _a,
       children = props.children;
   useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);

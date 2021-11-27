@@ -11,7 +11,7 @@ var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked
 };
 
 import { css } from 'styled-components';
-import * as colors from './colors';
+import * as vars from './vars';
 import { isMobile } from './dom';
 /**
  *  get a css snippet with theme color
@@ -29,10 +29,10 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
 
   if (isMobile) {
     return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n      ", ":", " ", ";\n      ", ":", " var(--uc-color, ", ");\n    "], ["\n      ", ":", " ", ";\n      ", ":", " var(--uc-color, ", ");\n    "])), prop, leftValue, function (props) {
-      return props.theme.color || colors.primary;
-    }, prop, leftValue, colors.primary);
+      return props.theme.color || vars.primary;
+    }, prop, leftValue, vars.primary);
   } else {
-    return css(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n      ", ":", " var(--uc-color, ", ");\n      ", ":", " ", ";\n    "], ["\n      ", ":", " var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, leftValue, colors.primary, prop, leftValue, function (props) {
+    return css(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n      ", ":", " var(--uc-color, ", ");\n      ", ":", " ", ";\n    "], ["\n      ", ":", " var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, leftValue, vars.primary, prop, leftValue, function (props) {
       return props.theme.color;
     });
   }

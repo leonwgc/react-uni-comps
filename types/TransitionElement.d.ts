@@ -2,7 +2,7 @@ import React from 'react';
 declare type Props = {
     /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
     children: React.ReactElement;
-    /** from到to动画执行的时间,单位ms,默认240ms */
+    /** 动画时间,默认220ms */
     duration?: number;
     /** transition动画开始执行的类名，默认from */
     fromClass?: string;

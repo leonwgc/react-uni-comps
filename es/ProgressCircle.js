@@ -42,7 +42,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
-import * as colors from './colors';
+import * as vars from './vars';
 var StyledProgressCircle = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"], ["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
 /** 环形进度条 */
 
@@ -61,7 +61,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
       rest = __rest(props, ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"]);
 
   var theme = useTheme();
-  var color = props.color || theme.color || colors.primary;
+  var color = props.color || theme.color || vars.primary;
   return /*#__PURE__*/React.createElement(StyledProgressCircle, __assign({
     className: clsx(className, 'uc-progress-circle'),
     style: __assign(__assign({}, style), {

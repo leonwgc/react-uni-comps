@@ -43,8 +43,8 @@ import React, { useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
-import * as colors from './colors';
-var StyledSignature = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), colors.border);
+import * as vars from './vars';
+var StyledSignature = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"], ["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), vars.border);
 /** 签名 */
 
 var Signature = /*#__PURE__*/React.forwardRef(function (props, ref) {

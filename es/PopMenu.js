@@ -43,7 +43,7 @@ import React, { useState, useRef, useCallback, useImperativeHandle } from 'react
 import Popover from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { boxShadow } from './colors';
+import { boxShadow } from './vars';
 var StyledPopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"], ["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
 /**
  * click/hover 弹出菜单, 默认click, 基于Popover
