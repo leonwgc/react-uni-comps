@@ -3669,7 +3669,7 @@ var useDragMove = function useDragMove(elRef, boundRef, onStart, onEnd) {
   }, []);
 };
 
-/** 拖拽包裹的元素 */
+/** 拖拽 */
 var Drag = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
       boundRef = props.boundRef;

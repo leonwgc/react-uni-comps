@@ -16,7 +16,7 @@ var __assign = this && this.__assign || function () {
 
 import React, { useRef, useImperativeHandle } from 'react';
 import useDrag from './hooks/useDrag';
-/** 拖拽包裹的元素 */
+/** 拖拽 */
 
 var Drag = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
