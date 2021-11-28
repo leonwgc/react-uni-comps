@@ -15,11 +15,37 @@ const StyledModal = styled(Modal)`
   }
 `;
 
+const StyleMobileModal = styled(Modal)`
+  width: 297px;
+  height: 139px;
+  border-radius: 12px;
+  padding: 30px 21px 24px;
+
+  .body {
+    font-size: 15px;
+    font-family: PingFangSC, PingFangSC-Medium;
+    font-weight: 500;
+    text-align: center;
+    color: #262626;
+    line-height: 22px;
+  }
+
+  .uc-btn {
+    width: 120px;
+    height: 39px;
+    border-radius: 21px;
+  }
+`;
+
 export default function App() {
   const [visible, setVisible] = useState(false);
+  const [v, setV] = useState(false);
   const onClose = () => setVisible(false);
   return (
     <div style={{ margin: 50 }}>
+      <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
+        open mobile modal
+      </Button>
       <Button type="primary" onClick={() => setVisible(true)}>
         open Modal left
       </Button>
@@ -74,6 +100,22 @@ export default function App() {
       >
         <div>body 区域</div>
       </StyledModal>
+
+      <StyleMobileModal
+        visible={v}
+        closeOnMaskClick={false}
+        onClose={() => setV(false)}
+        footer={
+          <Space size={16} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button onClick={() => setV(false)}>取消</Button>
+            <Button type="primary" onClick={() => setV(false)}>
+              确定
+            </Button>
+          </Space>
+        }
+      >
+        确认给 张帆帆 投票?
+      </StyleMobileModal>
     </div>
   );
 }
