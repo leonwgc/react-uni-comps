@@ -8,9 +8,9 @@ export default function App() {
       <PopConfirm
         ref={ref}
         placement="right"
-        style={{ width: 300 }}
+        style={{ width: 300, height: 112, padding: '16px 20px', fontWeight: 500 }}
         icon={<Icon type="uc-icon-yiwen" />}
-        title={<span style={{ fontSize: 20 }}>确定删除吗?</span>}
+        title={<span style={{ fontSize: 12, color: '#111' }}>确定删除吗?</span>}
         okText="ok"
         onOk={() => {
           Toast.show('you clicked ok');
@@ -33,6 +33,7 @@ export default function App() {
       <PopConfirm
         placement="right"
         title="确定发布此页面?"
+        style={{ width: 300 }}
         onOk={() => {
           Toast.show('发布中..');
         }}
