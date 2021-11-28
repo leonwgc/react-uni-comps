@@ -2,12 +2,16 @@ import React, { useRef, useImperativeHandle, MutableRefObject } from 'react';
 import useDrag, { Position } from './hooks/useDrag';
 
 type Props = {
+  /** drag开始回调 */
   onDragStart?: (e: MouseEvent | TouchEvent, position: Position) => void;
+  /** drag结束回调 */
   onDragEnd?: (e: MouseEvent | TouchEvent, position: Position) => void;
+  /** 拖拽限制范围 */
   boundRef?: MutableRefObject<HTMLElement>;
+  /** 被拖拽元素 */
   children: React.ReactElement;
 };
-/** 拖拽包裹的元素 */
+/** 拖拽 */
 const Drag = React.forwardRef<Element, Props>((props: Props, ref): React.ReactElement => {
   const { children, boundRef } = props;
   const elRef = useRef<HTMLElement>();
