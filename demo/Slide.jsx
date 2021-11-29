@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Slide, Switch, Divider, Button, Cell, Toast } from '../src';
-import clsx from 'clsx';
 
 export default function App() {
   const [autoPlay, setAutoPlay] = useState(false);

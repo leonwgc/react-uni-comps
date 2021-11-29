@@ -32,7 +32,7 @@ export default function SlideFullPage() {
               name={'fadeIn' + ['Left', 'Down', 'Right', 'Up'][idx]}
               delay="200ms"
               timingFunc="ease-in-out"
-              duration="300ms"
+              duration="160ms"
             >
               <span>page {idx + 1}</span>
             </AnimationElement>
