@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
+import { animationSlow } from './vars';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -19,7 +20,7 @@ const StyledSlide = styled.div`
     position: relative;
     display: flex;
     flex-wrap: nowrap;
-    transition: transform 0.3s ease-in-out;
+    transition: transform ${animationSlow}ms ease-in-out;
     touch-action: none;
 
     &.vertical {
@@ -221,14 +222,16 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     // auto play
     if (autoPlay) {
       const timer = window.setTimeout(() => {
-        slideToPageLoc(pageIndex + 1);
+        if (pageIndex < len) {
+          slideToPageLoc(pageIndex + 1);
+        }
       }, interval);
 
       return () => {
         window.clearTimeout(timer);
       };
     }
-  }, [pageIndex, slideToPageLoc, autoPlay, interval]);
+  }, [pageIndex, slideToPageLoc, autoPlay, interval, len]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot) return null;

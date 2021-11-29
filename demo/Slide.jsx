@@ -19,7 +19,6 @@ export default function App() {
       <Cell title="horizontal" content={<Switch checked={isH} onChange={setisH} />} />
       <Slide
         ref={ref}
-        style={{ margin: '10px 12px' }}
         loop={loop}
         autoPlay={autoPlay}
         direction={isH ? 'horizontal' : 'vertical'}
@@ -27,8 +26,7 @@ export default function App() {
         ref={ref}
         height={200}
         onPageChange={console.log}
-        defaultPageIndex={2}
-        interval={3000}
+        interval={1000}
       >
         {ar.map((item, idx) => (
           <div
@@ -44,7 +42,7 @@ export default function App() {
             }}
             onClick={() => Toast.show({ content: 'page' + (idx + 1) })}
           >
-            page {idx + 1}
+            {idx + 1}
           </div>
         ))}
       </Slide>
