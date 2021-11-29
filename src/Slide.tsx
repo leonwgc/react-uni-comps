@@ -117,15 +117,13 @@ const getItems = (children, loop, height) => {
     items.unshift(lastItem);
   }
 
-  const newItems = React.Children.map(items, (c, index) =>
+  return React.Children.map(items, (c, index) =>
     React.cloneElement(c, {
       key: index,
       className: clsx('uc-slide-page', c.props?.className),
       style: { ...c.props?.style, height },
     })
   );
-
-  return newItems;
 };
 
 /**  轮播 */
@@ -154,7 +152,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const count = items.length;
   const len = React.Children.count(children);
 
-  const sRef = useRef({
+  const thisRef = useRef({
     x: 0,
     lastX: 0,
     y: 0,
@@ -164,18 +162,19 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     inTransition: false,
   });
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
+  const exp = count > len; // expanded
 
-  const slideToPageLoc = useCallback(
+  const slideToPageIndex = useCallback(
     (newPageIndex: number, transition = true) => {
-      const s = sRef.current;
+      const s = thisRef.current;
 
       wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
       if (direction === 'horizontal') {
-        const x = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapWidth;
+        const x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
         wrapElRef.current.style.transform = `translate3d(${x}px, 0, 0)`;
         s.x = x;
       } else {
-        const y = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapHeight;
+        const y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
         wrapElRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
         s.y = y;
       }
@@ -183,47 +182,39 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
       setPageIndex(newPageIndex);
     },
-    [sRef, loop, direction]
+    [thisRef, direction, exp]
   );
 
-  const exp = count > len;
-
   useImperativeHandle(ref, () => ({
-    prev: () => slideToPageLoc(pageIndex > (exp ? -1 : 0) ? pageIndex - 1 : exp ? -1 : 0),
-    next: () =>
-      slideToPageLoc(pageIndex < (exp ? len : len - 1) ? pageIndex + 1 : exp ? len : len - 1),
+    prev: () => slideToPageIndex(pageIndex > 0 ? pageIndex - 1 : 0),
+    next: () => slideToPageIndex(pageIndex < len - 1 ? pageIndex + 1 : len - 1),
   }));
 
   useUpdateEffect(() => {
     setItems(getItems(children, loop, height));
-    slideToPageLoc(0, false);
-  }, [children, loop, height, slideToPageLoc]);
+    slideToPageIndex(0, false);
+  }, [children, loop, height, slideToPageIndex]);
 
   useUpdateEffect(() => {
-    if (pageIndex >= len) {
-      onPageChange?.(0);
-    } else if (pageIndex === -1) {
-      onPageChange?.(len - 1);
-    } else {
+    if (pageIndex >= 0 && pageIndex < len) {
       onPageChange?.(pageIndex);
     }
-  }, [pageIndex, len]);
+  }, [pageIndex]);
 
   useLayoutEffect(() => {
-    const s = sRef.current;
+    const s = thisRef.current;
     const container = containerRef.current;
     s.wrapWidth = container.offsetWidth;
     s.wrapHeight = container.offsetHeight;
 
-    slideToPageLoc(0, false);
-  }, [slideToPageLoc]);
+    slideToPageIndex(0, false);
+  }, [slideToPageIndex]);
 
   useEffect(() => {
-    // auto play
-    if (autoPlay) {
+    if (autoPlay && len > 1) {
       const timer = window.setTimeout(() => {
-        if (pageIndex < len) {
-          slideToPageLoc(pageIndex + 1);
+        if (pageIndex >= 0 && pageIndex < len - 1) {
+          slideToPageIndex(pageIndex + 1);
         }
       }, interval);
 
@@ -231,10 +222,10 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         window.clearTimeout(timer);
       };
     }
-  }, [pageIndex, slideToPageLoc, autoPlay, interval, len]);
+  }, [pageIndex, slideToPageIndex, autoPlay, interval, len]);
 
   const dotRender = (): React.ReactNode => {
-    if (!showDot) return null;
+    if (!showDot || len <= 1) return null;
 
     return (
       <div className={clsx('uc-slide-dot-wrapper', { vertical: direction === 'vertical' })}>
@@ -242,7 +233,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
           <span
             key={idx}
             className={clsx('dot', { active: pageIndex === idx })}
-            onClick={() => slideToPageLoc(idx)}
+            onClick={() => slideToPageIndex(idx)}
           ></span>
         ))}
       </div>
@@ -259,25 +250,25 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       <FingerGestureElement
         ref={wrapElRef}
         onTouchStart={() => {
-          const s = sRef.current;
+          const s = thisRef.current;
           wrapElRef.current.style.transitionProperty = 'none';
           s.lastX = s.x;
           s.lastY = s.y;
         }}
         onTouchEnd={() => {
-          const s = sRef.current;
+          const s = thisRef.current;
 
           if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-            slideToPageLoc(pageIndex + (s.x < s.lastX ? 1 : -1));
+            slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
           } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-            slideToPageLoc(pageIndex + (s.y < s.lastY ? 1 : -1));
+            slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
           } else {
             // reset
-            slideToPageLoc(pageIndex);
+            slideToPageIndex(pageIndex);
           }
         }}
         onPressMove={(e) => {
-          const s = sRef.current;
+          const s = thisRef.current;
           if (s.inTransition) {
             return setTimeout(() => {
               s.inTransition = false;
@@ -301,12 +292,12 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         <div
           className={clsx('wrap', { vertical: direction === 'vertical' })}
           onTransitionEnd={() => {
-            sRef.current.inTransition = false;
+            thisRef.current.inTransition = false;
             // loop
             if (pageIndex >= len) {
-              slideToPageLoc(0, false);
+              slideToPageIndex(0, false);
             } else if (pageIndex === -1) {
-              slideToPageLoc(len - 1, false);
+              slideToPageIndex(len - 1, false);
             }
           }}
         >

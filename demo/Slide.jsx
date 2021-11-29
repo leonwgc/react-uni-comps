@@ -25,7 +25,7 @@ export default function App() {
         showDot={dot}
         ref={ref}
         height={200}
-        onPageChange={console.log}
+        onPageChange={(pageIndex) => console.log('pageindex:' + pageIndex)}
         interval={1000}
       >
         {ar.map((item, idx) => (
