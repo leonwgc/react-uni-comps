@@ -31,7 +31,6 @@ export default function App() {
         {ar.map((item, idx) => (
           <div
             key={idx}
-            className={clsx('slide-page')}
             style={{
               background: item,
               display: 'flex',

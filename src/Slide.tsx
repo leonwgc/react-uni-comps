@@ -126,7 +126,16 @@ const getItems = (children, loop, height) => {
   );
 };
 
-/**  轮播 */
+/**
+ *  轮播
+ *
+ *  ref: {
+ *    prev: () => void;
+ *    next: () => void;
+ * }
+ *
+ *
+ */
 const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const {
     autoPlay = false,
