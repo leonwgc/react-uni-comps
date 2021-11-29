@@ -26,7 +26,7 @@ type Props = {
 
 const StyledImageViewer = styled.div`
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
   left: 0;
   right: 0;
   bottom: 0;
@@ -37,7 +37,7 @@ const StyledImageViewer = styled.div`
   align-items: center;
 
   .text {
-    z-index: 101;
+    z-index: 1100;
     position: absolute;
     left: 50%;
     top: 12px;
@@ -45,18 +45,21 @@ const StyledImageViewer = styled.div`
     color: #e6e6e6;
     font-size: 18px;
   }
+  .uc-icon-arrow {
+    cursor: pointer;
+  }
   .slide-page {
     display: flex;
     align-items: center;
-    height: 100%;
-  }
-  .image {
-    z-index: 101;
-    width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    object-position: center;
-    touch-action: none;
+    justify-content: center;
+    height: 70vh;
+    width: 100vw;
+
+    img {
+      object-position: center;
+      max-width: 100%;
+      touch-action: none;
+    }
   }
 `;
 
@@ -98,7 +101,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       >
         {urls.map((url) => (
           <div className="slide-page" key={url}>
-            <img className="image" src={url} />
+            <img src={url} />
           </div>
         ))}
       </Slide>
@@ -117,14 +120,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 e.stopPropagation();
                 slideRef.current?.prev();
               }}
-              icon={
-                <IconArrow
-                  direction="left"
-                  title="上一张"
-                  style={{ cursor: 'pointer' }}
-                  size={24}
-                />
-              }
+              icon={<IconArrow direction="left" />}
             />
             <span>
               {index + 1} / {urls.length}
@@ -136,14 +132,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 e.stopPropagation();
                 slideRef.current?.next();
               }}
-              icon={
-                <IconArrow
-                  direction="right"
-                  title="下一张"
-                  style={{ cursor: 'pointer' }}
-                  size={24}
-                />
-              }
+              icon={<IconArrow direction="right" />}
             ></Button>
           </Space>
         </div>
@@ -153,16 +142,10 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     visible && (
-      <StyledImageViewer
-        {...rest}
-        ref={ref}
-        className={clsx('uc-image-viewer', className)}
-        onClick={onClose}
-      >
-        <Mask style={maskStyle} />
+      <StyledImageViewer {...rest} ref={ref} className={clsx('uc-image-viewer', className)}>
+        <Mask style={maskStyle} onClick={onClose} />
         {textRender()}
-        {urls.length > 1 && slides}
-        {urls.length === 1 && <img className="image" src={urls[0]} />}
+        {slides}
       </StyledImageViewer>
     )
   );
