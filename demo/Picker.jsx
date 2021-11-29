@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Toast, Button, Picker } from '../src';
+import { Toast, Button, Picker, Divider } from '../src';
 
 const oneColData = [
   {
@@ -41,6 +41,18 @@ const twoColsData = [
       },
     ],
   },
+];
+
+// 非级联
+const UnlinkedTwo = [
+  [
+    { value: '选项一', label: '选项一' },
+    { value: '选项二', label: '选项二' },
+  ],
+  [
+    { value: '选项A', label: '选项A' },
+    { value: '选项B', label: '选项B' },
+  ],
 ];
 
 const areas = [
@@ -120,13 +132,27 @@ export default function App() {
   const [value, setValue] = useState(['北京']);
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
+  const [value3, setValue3] = useState(['选项二', '选项B']);
   const [visible, setVisible] = useState(false);
 
   return (
     <div className="app" style={{ margin: '20px' }}>
+      <Divider>单个</Divider>
       <Button block onClick={() => setVisible(1)}>
-        show
+        单个
       </Button>
+
+      <Divider>非级联</Divider>
+      <Button
+        style={{ margin: '20px 0' }}
+        block
+        onClick={() => {
+          setVisible(4);
+        }}
+      >
+        非级联2列
+      </Button>
+      <Divider>级联</Divider>
       <Button
         style={{ margin: '20px 0' }}
         block
@@ -134,7 +160,7 @@ export default function App() {
           setVisible(2);
         }}
       >
-        show 2 col
+        级联2列
       </Button>
       <Button
         block
@@ -142,14 +168,14 @@ export default function App() {
           setVisible(3);
         }}
       >
-        show 3 cols
+        级联3列
       </Button>
       <Picker
         visible={visible === 1}
         onClose={() => setVisible(false)}
         onOk={(v) => {
           setValue(v);
-          Toast.show({ content: JSON.stringify(v), duration: 1000 });
+          Toast.show(v);
         }}
         value={value}
         cols={1}
@@ -161,7 +187,7 @@ export default function App() {
         value={value1}
         onOk={(v) => {
           setValue1(v);
-          Toast.show({ content: JSON.stringify(v), duration: 1000 });
+          Toast.show(v);
         }}
         cols={2}
         data={twoColsData}
@@ -172,10 +198,22 @@ export default function App() {
         value={value2}
         onOk={(v) => {
           setValue2(v);
-          Toast.show({ content: JSON.stringify(v), duration: 1000 });
+          Toast.show(v);
         }}
         cols={3}
         data={areas}
+      />
+
+      <Picker
+        visible={visible === 4}
+        onClose={() => setVisible(false)}
+        value={value3}
+        onOk={(v) => {
+          setValue3(v);
+          Toast.show(v);
+        }}
+        cols={2}
+        data={UnlinkedTwo}
       />
     </div>
   );

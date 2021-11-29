@@ -1,14 +1,14 @@
-import React, { HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
-import useThisRef from './hooks/useThisRef';
-import Popup from './Popup';
 import { getThemeColorCss } from './themeHelper';
+import Drawer from './Drawer';
 import clsx from 'clsx';
 
 type DataItem = {
   label: string;
   value: string;
+  /** 级联数据用children */
   children?: DataItem[];
 };
 
@@ -27,10 +27,10 @@ type Props = {
 
 const StyledBar = styled.div`
   display: flex;
-  height: 56px;
+  height: 45px;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: 0 16px;
   width: 100%;
   background-color: #fff;
   font-size: 16px;
@@ -104,7 +104,8 @@ const StyledPicker = styled.div`
           justify-content: center;
           align-items: center;
           height: 35px;
-          color: #000;
+          font-size: 18px;
+          color: #333;
         }
       }
     }
@@ -125,33 +126,40 @@ const getPickerMapData = (data: DataItem[], cols = 1, value = []) => {
   });
 
   if (cols > 1) {
-    let lastIndex = data.findIndex((d) => d.value === value[0]);
-    lastIndex = lastIndex === -1 ? 0 : lastIndex;
-    ret[1] = data[lastIndex].children || [];
-
-    if (cols === 3) {
-      lastIndex = data.findIndex((d) => d.value === value[1]);
+    if (!Array.isArray(data[0])) {
+      // linked
+      let lastIndex = data.findIndex((d) => d.value === value[0]);
       lastIndex = lastIndex === -1 ? 0 : lastIndex;
-      ret[2] = ret[1][lastIndex].children || [];
+      ret[1] = data[lastIndex].children || [];
+
+      if (cols === 3) {
+        lastIndex = data.findIndex((d) => d.value === value[1]);
+        lastIndex = lastIndex === -1 ? 0 : lastIndex;
+        ret[2] = ret[1][lastIndex].children || [];
+      }
+    } else {
+      // unlinked
+      for (let i = 0; i < cols; i++) {
+        ret[i] = data[i];
+      }
     }
   }
-
   return ret;
 };
 
 const Wheel = (props) => {
-  const { onChange, data = [], listRef, value = [], valueIndex = 0, cols = 1 } = props;
+  const {
+    onChange,
+    isUnLinked,
+    data = [],
+    list = [],
+    value = [],
+    valueIndex = 0,
+    cols = 1,
+  } = props;
   const elRef = useRef<HTMLElement>();
 
   const yRef = useRef(firstItemY);
-  const thisRef = useThisRef({
-    list: listRef.current,
-    cols,
-    data,
-    onChange,
-    value,
-    valueIndex,
-  });
 
   const scrollToIndex = useCallback(
     (index) => {
@@ -176,49 +184,49 @@ const Wheel = (props) => {
   }, [yRef]);
 
   useEffect(() => {
-    const v = thisRef.current;
-    const i = v.data.findIndex((d) => d.value === v.value[v.valueIndex]);
+    const i = data.findIndex((d) => d.value === value[valueIndex]);
     scrollToIndex(i > -1 ? i : 0);
-  }, [scrollToIndex, thisRef]);
+  }, [scrollToIndex, data, valueIndex, value]);
 
-  const onTouchEnd = useCallback(() => {
-    const v = thisRef.current;
-    const list = v.data;
-    const min = -1 * (list.length - 1) * itemHeight + firstItemY;
+  const onTouchEnd = () => {
+    const min = -1 * (data.length - 1) * itemHeight + firstItemY;
     const max = firstItemY;
 
     let index;
     if (yRef.current >= max - itemHeight / 2) {
       index = 0;
     } else if (yRef.current <= min) {
-      index = v.data.length - 1;
+      index = data.length - 1;
     } else {
       index = getIndexByY();
     }
     scrollToIndex(index);
-    v.value[v.valueIndex] = v.data[index]?.value;
+    value[valueIndex] = data[index]?.value;
 
-    let vIndex = v.valueIndex + 1;
-    while (vIndex <= v.cols - 1) {
+    let vIndex = valueIndex + 1;
+    while (vIndex <= cols - 1) {
       // next wheel refresh  & update value to next&first
-      v.list[vIndex] = v.list[vIndex - 1][index]?.children || [];
-      v.value[vIndex] = v.list[vIndex][0]?.value || '';
+      if (!isUnLinked) {
+        list[vIndex] = list[vIndex - 1][index]?.children || [];
+        value[vIndex] = list[vIndex][0]?.value || '';
+      }
+
       vIndex++;
     }
 
-    const cv = [...v.value];
-    vIndex = v.valueIndex - 1;
+    const cv = [...value];
+    vIndex = valueIndex - 1;
     while (vIndex >= 0) {
       // prev wheel check
       if (typeof cv[vIndex] === 'undefined') {
         // left not scrolled
-        cv[vIndex] = v.list[vIndex][0]?.value || '';
+        cv[vIndex] = list[vIndex][0]?.value || '';
       }
       vIndex--;
     }
 
-    v.onChange?.(cv);
-  }, [getIndexByY, scrollToIndex, thisRef]);
+    onChange?.(cv);
+  };
 
   return (
     <FingerGestureElement
@@ -258,61 +266,67 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const listRef = useRef(getPickerMapData(data, cols, value));
+  // 是否非级联
+  const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
+
+  const list = useMemo(() => {
+    return getPickerMapData(data, cols, value);
+  }, [data, cols, value]);
+
   const [val, setVal] = useState(value);
 
   return (
-    <Popup
+    <Drawer
       position="bottom"
-      style={{
-        width: '100%',
-      }}
       visible={visible}
       onClose={onClose}
-    >
-      <StyledBar className="bar">
-        <div className="cancel" onClick={onClose}>
-          {cancelText}
-        </div>
-        <div className="title">{title}</div>
-        <div
-          className="ok"
-          onClick={() => {
-            if (listRef.current.length) {
-              const cv = [...val];
-              let i = cols - 1;
-              while (i >= 0) {
-                if (typeof cv[i] === 'undefined') {
-                  cv[i] = listRef.current[i][val[i] || 0]?.value || '';
+      header={
+        <StyledBar className="bar">
+          <div className="cancel" onClick={onClose}>
+            {cancelText}
+          </div>
+          <div className="title">{title}</div>
+          <div
+            className="ok"
+            onClick={() => {
+              if (list.length) {
+                const cv = [...val];
+                let i = cols - 1;
+                while (i >= 0) {
+                  if (typeof cv[i] === 'undefined') {
+                    cv[i] = list[i][val[i] || 0]?.value || '';
+                  }
+                  i--;
                 }
-                i--;
+
+                onOk?.(cv);
+              } else {
+                onOk?.([]);
               }
 
-              onOk?.(cv);
-            } else {
-              onOk?.([]);
-            }
-
-            onClose?.();
-          }}
-        >
-          {okText}
-        </div>
-      </StyledBar>
+              onClose?.();
+            }}
+          >
+            {okText}
+          </div>
+        </StyledBar>
+      }
+    >
       <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
         <div className="mask"></div>
         <div className="hairline"></div>
         <div className="columnitem">
           <div className="content">
-            {listRef.current?.map((d, idx) => {
+            {list?.map((listItem, idx) => {
               return (
                 <Wheel
                   cols={cols}
-                  data={d}
-                  key={idx === 0 ? 'first' : val?.[idx - 1] || idx}
+                  data={listItem}
+                  key={idx}
                   value={val}
                   valueIndex={idx}
-                  listRef={listRef}
+                  list={list}
+                  isUnLinked={isUnLinked}
                   onChange={setVal}
                 />
               );
@@ -320,7 +334,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           </div>
         </div>
       </StyledPicker>
-    </Popup>
+    </Drawer>
   );
 });
 
