@@ -26,7 +26,7 @@ const StyledDrawer = styled(Popup)`
 `;
 
 /** 抽屉 */
-const Drawer = (props: Props): React.ReactNode => {
+const Drawer = (props: Props): React.ReactElement => {
   const { className, style, header, children, footer, position = 'right', ...rest } = props;
 
   const _style =
