@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Spinner, Slide, Switch, Space, Divider, Button, Cell, Toast } from '../src';
+import React, { useState, useRef } from 'react';
+import { Slide, Switch, Divider, Button, Cell, Toast } from '../src';
 import clsx from 'clsx';
 
 export default function App() {
@@ -26,7 +26,7 @@ export default function App() {
         ref={ref}
         height={200}
         onPageChange={(pageIndex) => console.log('pageindex:' + pageIndex)}
-        interval={1000}
+        interval={200}
       >
         {ar.map((item, idx) => (
           <div

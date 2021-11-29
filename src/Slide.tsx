@@ -212,10 +212,13 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   useEffect(() => {
     if (autoPlay && len > 1) {
+      if (pageIndex >= len) {
+        slideToPageIndex(0, false);
+      } else if (pageIndex === -1) {
+        slideToPageIndex(len - 1, false);
+      }
       const timer = window.setTimeout(() => {
-        if (pageIndex >= 0 && pageIndex < len - 1) {
-          slideToPageIndex(pageIndex + 1);
-        }
+        slideToPageIndex(pageIndex + 1);
       }, interval);
 
       return () => {
