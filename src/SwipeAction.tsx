@@ -1,12 +1,16 @@
-import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEffect } from 'react';
+import React, {
+  useRef,
+  useImperativeHandle,
+  useLayoutEffect,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
-import useThisRef from './hooks/useThisRef';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
-
-type openType = 'left' | 'right';
 
 type Action = {
   text: string;
@@ -15,11 +19,15 @@ type Action = {
 };
 
 type Props = {
+  /** 左边actions */
   left?: Action[];
+  /** 右边actions */
   right?: Action[];
   children: React.ReactNode;
-  onOpen: (type: openType) => void;
-  onClose: (type: openType) => void;
+  /** 显示回调 */
+  onOpen: () => void;
+  /** 关闭回调 */
+  onClose: () => void;
   /** 点击按钮后是否自动关闭,默认true */
   autoClose?: boolean;
   /** 点击外部区域关闭,默认true*/
@@ -85,46 +93,26 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     children,
   } = props;
   const elRef = useRef();
-  const thisRef = useThisRef({
+  const [isOpen, setIsOpen] = useState(false);
+
+  const thisRef = useRef({
     x: 0,
-    onClose,
-    onOpen,
-    closeOnClickOutside,
     el: null,
     leftEl: null,
     rightEl: null,
     leftWidth: 0,
     rightWidth: 0,
-    isOpen: 0,
   });
+
   useImperativeHandle(ref, () => elRef.current);
 
   useEffect(() => {
-    const v = thisRef.current;
-    if (v.closeOnClickOutside) {
-      const closeHandler = (e) => {
-        if (!v.isOpen) {
-          return;
-        }
-
-        if (!v.el.contains(e.target)) {
-          startTransform('translate3d(0,0,0)', 0);
-          v.x = 0;
-        }
-      };
-      window.addEventListener('click', closeHandler);
-
-      return () => {
-        window.removeEventListener('click', closeHandler);
-      };
+    if (isOpen) {
+      onOpen?.();
+    } else {
+      onClose?.();
     }
-  }, []);
-
-  useLayoutEffect(() => {
-    thisRef.current.el = elRef.current;
-    thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
-    thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
-  }, [thisRef]);
+  }, [isOpen]);
 
   const startTransform = useCallback(
     (transformStr, x) => {
@@ -137,6 +125,33 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     },
     [thisRef]
   );
+
+  useEffect(() => {
+    const v = thisRef.current;
+    if (closeOnClickOutside) {
+      const closeHandler = (e) => {
+        if (!isOpen) {
+          return;
+        }
+
+        if (!v.el.contains(e.target)) {
+          startTransform('translate3d(0,0,0)', 0);
+          setIsOpen(false);
+        }
+      };
+      window.addEventListener('click', closeHandler);
+
+      return () => {
+        window.removeEventListener('click', closeHandler);
+      };
+    }
+  }, [closeOnClickOutside, startTransform, isOpen]);
+
+  useLayoutEffect(() => {
+    thisRef.current.el = elRef.current;
+    thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
+    thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
+  }, [thisRef]);
 
   const renderAction = useCallback((item, idx) => {
     return (
@@ -165,17 +180,13 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             if (Math.abs(v.x) < v.rightWidth / 2) {
               // no more than half way
               startTransform('translate3d(0,0,0)', 0);
-              // v.x = 0;
-              if (v.isOpen) {
-                v.onClose?.('right');
-                v.isOpen = 0;
+              if (isOpen) {
+                setIsOpen(false);
               }
             } else {
               startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
-              // v.x = -1 * v.rightWidth;
-              if (!v.isOpen) {
-                v.onOpen?.('right');
-                v.isOpen = 1;
+              if (!isOpen) {
+                setIsOpen(true);
               }
             }
           } else if (v.x > 0) {
@@ -183,16 +194,13 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               // no more than half way
               startTransform('translate3d(0,0,0)', 0);
               v.x = 0;
-              if (v.isOpen) {
-                v.onClose?.('left');
-                v.isOpen = 0;
+              if (isOpen) {
+                setIsOpen(false);
               }
             } else {
               startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
-              // v.x = v.leftWidth;
-              if (!v.isOpen) {
-                v.onOpen?.('left');
-                v.isOpen = 1;
+              if (!isOpen) {
+                setIsOpen(true);
               }
             }
           }
@@ -213,6 +221,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           onClick={() => {
             if (autoClose) {
               startTransform('translate3d(0,0,0)', 0);
+              setIsOpen(false);
             }
           }}
         >
