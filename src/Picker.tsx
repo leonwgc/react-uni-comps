@@ -128,7 +128,15 @@ const StyledDrawer = styled(Drawer)`
 const itemHeight = 35;
 const firstItemY = 105;
 
-const getPickerMapData = (data: DataItem[], cols = 1, value = []) => {
+/**
+ *  convert data to 2 dimension array ;
+ *
+ * @param {DataItem[]} data
+ * @param {number} [cols=1]
+ * @param {*} [value=[]]
+ * @return {*}
+ */
+const convertPickerData = (data: DataItem[], cols = 1, value = []) => {
   const ret = [];
   for (let i = 0; i < cols; i++) {
     ret.push([]);
@@ -284,7 +292,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
 
   const list = useMemo(() => {
-    return getPickerMapData(data, cols, value);
+    return convertPickerData(data, cols, value);
   }, [data, cols, value]);
 
   const [val, setVal] = useState(value);

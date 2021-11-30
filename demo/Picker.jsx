@@ -145,7 +145,7 @@ const areas = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState(['北京']);
+  const [value, setValue] = useState();
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [value3, setValue3] = useState(['选项二', '选项B']);
