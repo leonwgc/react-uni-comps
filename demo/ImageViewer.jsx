@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Button, ImageViewer, Toast } from '../src';
+import { Button, ImageViewer, Space } from '../src';
 
 const demoImages = [
-  'https://t7.baidu.com/it/u=2141219545,3103086273&fm=193&f=GIF',
-  'https://t7.baidu.com/it/u=3332251293,4211134448&fm=193&f=GIF',
-  'https://t7.baidu.com/it/u=695301425,3518772921&fm=193&f=GIF',
-  'https://t7.baidu.com/it/u=1821636093,3729533292&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1956604245,3662848045&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2529476510,3041785782&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=727460147,2222092211&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2511982910,2454873241&fm=193&f=GIF',
 ];
 
 export default function App() {
   const [v, setV] = useState(false);
   const [visible, setVisible] = useState(false);
   return (
-    <div style={{ margin: 50 }}>
+    <Space size={20} style={{ margin: 20 }}>
       <Button onClick={() => setV(true)}>显示单个图片预览</Button>
       <Button onClick={() => setVisible(true)}>显示图片预览</Button>
       <ImageViewer
@@ -30,6 +30,6 @@ export default function App() {
           setV(false);
         }}
       />
-    </div>
+    </Space>
   );
 }

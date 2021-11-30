@@ -8,6 +8,8 @@ import Space from './Space';
 import IconArrow from './IconArrow';
 import Button from './Button';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import Icon from './Icon';
+import { isMobile } from './dom';
 
 type Props = {
   /** 是否可见 */
@@ -38,13 +40,14 @@ const StyledImageViewer = styled.div`
 
   .text {
     z-index: 1100;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 12px;
     transform: translateX(-50%);
     color: #e6e6e6;
     font-size: 18px;
   }
+
   .uc-icon-arrow {
     cursor: pointer;
   }
@@ -52,13 +55,14 @@ const StyledImageViewer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70vh;
     width: 100vw;
 
     img {
       object-position: center;
       max-width: 100%;
       touch-action: none;
+      height: 100%;
+      aspect-ratio: 4 / 3;
     }
   }
 `;
@@ -90,14 +94,13 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         showDot={false}
         style={{ zIndex: 101, width: '100%' }}
         direction="horizontal"
-        height="60vh"
+        height={'60vh'}
         onPageChange={(index) => {
           setIndex(index);
           onIndexChangeRef.current?.(index);
         }}
-        loop={false}
+        loop={isMobile}
         autoPlay={false}
-        ratio={0.1}
       >
         {urls.map((url) => (
           <div className="slide-page" key={url}>
@@ -144,6 +147,18 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible && (
       <StyledImageViewer {...rest} ref={ref} className={clsx('uc-image-viewer', className)}>
         <Mask style={maskStyle} onClick={onClose} />
+        <Icon
+          type="uc-icon-clear"
+          onClick={onClose}
+          style={{
+            position: 'fixed',
+            zIndex: 1100,
+            right: 20,
+            top: 20,
+            cursor: 'pointer',
+            fontSize: 30,
+          }}
+        />
         {textRender()}
         {slides}
       </StyledImageViewer>
