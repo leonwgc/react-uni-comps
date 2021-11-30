@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { Toast, Button, Picker, Divider } from '../src';
+import { Toast, Button, Picker, Space, styled } from '../src';
+
+const StyledPicker = styled(Picker)`
+  .header {
+    .cancel-text {
+      color: red;
+    }
+    .title {
+      color: green;
+    }
+    .ok-text {
+      color: blue;
+    }
+  }
+`;
 
 const oneColData = [
   {
@@ -136,13 +150,11 @@ export default function App() {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="app" style={{ margin: '20px' }}>
-      <Divider>单个</Divider>
+    <Space size={16} direction="vertical" style={{ margin: 20 }}>
       <Button block onClick={() => setVisible(1)}>
         单个
       </Button>
 
-      <Divider>非级联</Divider>
       <Button
         style={{ margin: '20px 0' }}
         block
@@ -152,7 +164,7 @@ export default function App() {
       >
         非级联2列
       </Button>
-      <Divider>级联</Divider>
+
       <Button
         style={{ margin: '20px 0' }}
         block
@@ -170,13 +182,17 @@ export default function App() {
       >
         级联3列
       </Button>
-      <Picker
+
+      <StyledPicker
         visible={visible === 1}
         onClose={() => setVisible(false)}
         onOk={(v) => {
           setValue(v);
           Toast.show(v);
         }}
+        title="城市选择"
+        cancelText="不选了"
+        okText="选好了"
         value={value}
         cols={1}
         data={oneColData}
@@ -215,6 +231,6 @@ export default function App() {
         cols={2}
         data={UnlinkedTwo}
       />
-    </div>
+    </Space>
   );
 }

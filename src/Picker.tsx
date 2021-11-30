@@ -6,106 +6,119 @@ import Drawer from './Drawer';
 import clsx from 'clsx';
 
 type DataItem = {
+  /** 数据显示文本 */
   label: string;
+  /** 数据值 */
   value: string;
   /** 级联数据用children */
   children?: DataItem[];
 };
 
 type Props = {
-  /** 几栏,默认1 */
+  /** 列数，最多3列,默认1 */
   cols?: 1 | 2 | 3;
+  /** 数据 */
   data: DataItem[];
+  /** 值 */
   value?: string[];
+  /** 关闭回调 */
   onClose: () => void;
+  /** 点击确定回调 */
   onOk?: (value: string[]) => void;
+  /** 是否显示 */
   visible?: boolean;
+  /** 确定文本 */
   okText?: React.ReactNode;
+  /** 中间标题 */
   title?: React.ReactNode;
+  /** 取消文本 */
   cancelText?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 } & HTMLAttributes<HTMLElement>;
 
-const StyledBar = styled.div`
-  display: flex;
-  height: 45px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  width: 100%;
-  background-color: #fff;
-  font-size: 16px;
-  touch-action: none;
-
-  .ok {
-    ${getThemeColorCss('color')}
-  }
-  .cancel {
-    color: #999;
-  }
-  .title {
-    color: #333;
-  }
-`;
-
-const StyledPicker = styled.div`
-  display: flex;
-  position: relative;
-  background-color: #fff;
-  height: 245px;
-  width: 100%;
-  touch-action: none;
-
-  .mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+const StyledDrawer = styled(Drawer)`
+  .header {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
     width: 100%;
-    height: 100%;
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),
-      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
-    background-repeat: no-repeat;
-    background-position: top, bottom;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    pointer-events: none;
-    background-size: 100% 105px;
-  }
+    background-color: #f7f7f7;
+    font-size: 16px;
+    touch-action: none;
 
-  .hairline {
-    position: absolute;
-    height: 35px;
+    .ok-text {
+      ${getThemeColorCss('color')}
+    }
+    .cancel-text {
+      color: #999;
+    }
+    .title {
+      color: #333;
+    }
+  }
+  .picker-wrap {
+    display: flex;
+    position: relative;
+    background-color: #fff;
+    height: 245px;
     width: 100%;
-    border: 1px solid #d8d8d8;
-    border-left: 0;
-    border-right: 0;
-    top: 105px;
-  }
+    touch-action: none;
 
-  .columnitem {
-    width: 0;
-    flex-grow: 1;
-    height: 100%;
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+      background-repeat: no-repeat;
+      background-position: top, bottom;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      pointer-events: none;
+      background-size: 100% 105px;
+    }
 
-    .content {
-      display: flex;
-      position: relative;
-      text-align: center;
-      overflow-y: hidden;
+    .hairline {
+      position: absolute;
+      height: 35px;
+      width: 100%;
+      border: 1px solid #d8d8d8;
+      border-left: 0;
+      border-right: 0;
+      top: 105px;
+    }
+
+    .columnitem {
+      width: 0;
+      flex-grow: 1;
       height: 100%;
 
-      .wrapper {
-        transform: translate3d(0px, 105px, 0px);
-        transition-duration: 0.24s;
-        transition-property: transform;
-        transition-timing-function: ease-in-out;
-        .item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 35px;
-          font-size: 18px;
-          color: #333;
+      .wheel {
+        display: flex;
+        position: relative;
+        text-align: center;
+        overflow-y: hidden;
+        height: 100%;
+
+        .wrapper {
+          transform: translate3d(0px, 105px, 0px);
+          transition-duration: 0.24s;
+          transition-property: transform;
+          transition-timing-function: ease-in-out;
+          .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 35px;
+            font-size: 18px;
+            color: #333;
+          }
         }
       }
     }
@@ -260,6 +273,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     onClose,
     visible,
     onOk,
+    className,
     value = [],
     data = [],
     cols = 1,
@@ -276,18 +290,20 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [val, setVal] = useState(value);
 
   return (
-    <Drawer
+    <StyledDrawer
+      {...rest}
+      className={clsx('uc-picker', className)}
       position="bottom"
       visible={visible}
       onClose={onClose}
       header={
-        <StyledBar className="bar">
-          <div className="cancel" onClick={onClose}>
+        <>
+          <div className="cancel-text" onClick={onClose}>
             {cancelText}
           </div>
           <div className="title">{title}</div>
           <div
-            className="ok"
+            className="ok-text"
             onClick={() => {
               if (list.length) {
                 const cv = [...val];
@@ -309,14 +325,14 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           >
             {okText}
           </div>
-        </StyledBar>
+        </>
       }
     >
-      <StyledPicker ref={ref} {...rest} className={clsx('uc-picker')}>
+      <div className="picker-wrap" ref={ref}>
         <div className="mask"></div>
         <div className="hairline"></div>
         <div className="columnitem">
-          <div className="content">
+          <div className="wheel">
             {list?.map((listItem, idx) => {
               return (
                 <Wheel
@@ -333,8 +349,8 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             })}
           </div>
         </div>
-      </StyledPicker>
-    </Drawer>
+      </div>
+    </StyledDrawer>
   );
 });
 
