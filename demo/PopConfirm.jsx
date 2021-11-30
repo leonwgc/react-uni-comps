@@ -4,7 +4,7 @@ import { Button, Toast, Icon, PopConfirm } from '../src';
 export default function App() {
   const ref = useRef();
   return (
-    <div style={{ margin: '140px 100px 0' }}>
+    <div style={{ margin: 20 }}>
       <PopConfirm
         ref={ref}
         placement="right"
@@ -38,7 +38,7 @@ export default function App() {
           Toast.show('发布中..');
         }}
       >
-        <Button style={{ position: 'fixed', left: 100, top: 300 }}>hello</Button>
+        <Button style={{ position: 'fixed', left: 20, top: 300 }}>hello</Button>
       </PopConfirm>
     </div>
   );

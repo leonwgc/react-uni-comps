@@ -219,14 +219,6 @@ const routes = [
     component: lazy(() => import('./ImageViewer')),
   },
   {
-    path: '/Calendar',
-    component: lazy(() => import('./Calendar')),
-  },
-  {
-    path: '/DatePicker',
-    component: lazy(() => import('./DatePicker')),
-  },
-  {
     path: '/Drawer',
     component: lazy(() => import('./Drawer')),
   },

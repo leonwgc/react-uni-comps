@@ -123,8 +123,6 @@ yarn add react-uni-comps
 - IndexList (索引列表)
 - FileInputTrigger (触发文件上传)
 - Signature (手写签名)
-- DatePicker (日期选择)
-- Calendar (日历)
 
 ### 数据展示
 
