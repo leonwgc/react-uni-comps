@@ -44,7 +44,8 @@ import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform 0.3s ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])));
+import { animationSlow } from './vars';
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])), animationSlow);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -56,7 +57,7 @@ var getItems = function getItems(children, loop, height) {
     items.unshift(lastItem);
   }
 
-  var newItems = React.Children.map(items, function (c, index) {
+  return React.Children.map(items, function (c, index) {
     var _a, _b;
 
     return /*#__PURE__*/React.cloneElement(c, {
@@ -67,9 +68,17 @@ var getItems = function getItems(children, loop, height) {
       })
     });
   });
-  return newItems;
 };
-/**  轮播 */
+/**
+ *  轮播
+ *
+ *  ref: {
+ *    prev: () => void;
+ *    next: () => void;
+ * }
+ *
+ *
+ */
 
 
 var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -104,7 +113,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var count = items.length;
   var len = React.Children.count(children);
-  var sRef = useRef({
+  var thisRef = useRef({
     x: 0,
     lastX: 0,
     y: 0,
@@ -119,72 +128,74 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setPageIndex = _j[1]; // !loop:0~len-1, loop: -1~len
 
 
-  var slideToPageLoc = useCallback(function (newPageIndex, transition) {
+  var exp = count > len; // expanded
+
+  var slideToPageIndex = useCallback(function (newPageIndex, transition) {
     if (transition === void 0) {
       transition = true;
     }
 
-    var s = sRef.current;
+    var s = thisRef.current;
     wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
 
     if (direction === 'horizontal') {
-      var x = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapWidth;
+      var x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
       wrapElRef.current.style.transform = "translate3d(" + x + "px, 0, 0)";
       s.x = x;
     } else {
-      var y = (newPageIndex + (loop ? 1 : 0)) * -1 * s.wrapHeight;
+      var y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
       wrapElRef.current.style.transform = "translate3d(0, " + y + "px, 0)";
       s.y = y;
     }
 
     s.inTransition = transition;
     setPageIndex(newPageIndex);
-  }, [sRef, loop, direction]);
-  var exp = count > len;
+  }, [thisRef, direction, exp]);
   useImperativeHandle(ref, function () {
     return {
       prev: function prev() {
-        return slideToPageLoc(pageIndex > (exp ? -1 : 0) ? pageIndex - 1 : exp ? -1 : 0);
+        return slideToPageIndex(pageIndex > 0 ? pageIndex - 1 : 0);
       },
       next: function next() {
-        return slideToPageLoc(pageIndex < (exp ? len : len - 1) ? pageIndex + 1 : exp ? len : len - 1);
+        return slideToPageIndex(pageIndex < len - 1 ? pageIndex + 1 : len - 1);
       }
     };
   });
   useUpdateEffect(function () {
     setItems(getItems(children, loop, height));
-    slideToPageLoc(0, false);
-  }, [children, loop, height, slideToPageLoc]);
+    slideToPageIndex(0, false);
+  }, [children, loop, height, slideToPageIndex]);
   useUpdateEffect(function () {
-    if (pageIndex >= len) {
-      onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(0);
-    } else if (pageIndex === -1) {
-      onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(len - 1);
-    } else {
+    if (pageIndex >= 0 && pageIndex < len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
     }
-  }, [pageIndex, len]);
+  }, [pageIndex]);
   useLayoutEffect(function () {
-    var s = sRef.current;
+    var s = thisRef.current;
     var container = containerRef.current;
     s.wrapWidth = container.offsetWidth;
     s.wrapHeight = container.offsetHeight;
-    slideToPageLoc(0, false);
-  }, [slideToPageLoc]);
+    slideToPageIndex(0, false);
+  }, [slideToPageIndex]);
   useEffect(function () {
-    // auto play
-    if (autoPlay) {
+    if (autoPlay && len > 1) {
+      if (pageIndex >= len) {
+        slideToPageIndex(0, false);
+      } else if (pageIndex === -1) {
+        slideToPageIndex(len - 1, false);
+      }
+
       var timer_1 = window.setTimeout(function () {
-        slideToPageLoc(pageIndex + 1);
+        slideToPageIndex(pageIndex + 1);
       }, interval);
       return function () {
         window.clearTimeout(timer_1);
       };
     }
-  }, [pageIndex, slideToPageLoc, autoPlay, interval]);
+  }, [pageIndex, slideToPageIndex, autoPlay, interval, len]);
 
   var dotRender = function dotRender() {
-    if (!showDot) return null;
+    if (!showDot || len <= 1) return null;
     return /*#__PURE__*/React.createElement("div", {
       className: clsx('uc-slide-dot-wrapper', {
         vertical: direction === 'vertical'
@@ -196,7 +207,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
           active: pageIndex === idx
         }),
         onClick: function onClick() {
-          return slideToPageLoc(idx);
+          return slideToPageIndex(idx);
         }
       });
     }));
@@ -212,25 +223,25 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: wrapElRef,
     onTouchStart: function onTouchStart() {
-      var s = sRef.current;
+      var s = thisRef.current;
       wrapElRef.current.style.transitionProperty = 'none';
       s.lastX = s.x;
       s.lastY = s.y;
     },
     onTouchEnd: function onTouchEnd() {
-      var s = sRef.current;
+      var s = thisRef.current;
 
       if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-        slideToPageLoc(pageIndex + (s.x < s.lastX ? 1 : -1));
+        slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
       } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-        slideToPageLoc(pageIndex + (s.y < s.lastY ? 1 : -1));
+        slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
       } else {
         // reset
-        slideToPageLoc(pageIndex);
+        slideToPageIndex(pageIndex);
       }
     },
     onPressMove: function onPressMove(e) {
-      var s = sRef.current;
+      var s = thisRef.current;
 
       if (s.inTransition) {
         return setTimeout(function () {
@@ -259,12 +270,12 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
-      sRef.current.inTransition = false; // loop
+      thisRef.current.inTransition = false; // loop
 
       if (pageIndex >= len) {
-        slideToPageLoc(0, false);
+        slideToPageIndex(0, false);
       } else if (pageIndex === -1) {
-        slideToPageLoc(len - 1, false);
+        slideToPageIndex(len - 1, false);
       }
     }
   }, items)), dotRender());

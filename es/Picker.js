@@ -47,15 +47,13 @@ var __spreadArray = this && this.__spreadArray || function (to, from) {
   return to;
 };
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
-import useThisRef from './hooks/useThisRef';
-import Popup from './Popup';
 import { getThemeColorCss } from './themeHelper';
+import Drawer from './Drawer';
 import clsx from 'clsx';
-var StyledBar = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"], ["\n  display: flex;\n  height: 56px;\n  align-items: center;\n  justify-content: space-between;\n  padding: 15px;\n  width: 100%;\n  background-color: #fff;\n  font-size: 16px;\n  touch-action: none;\n\n  .ok {\n    ", "\n  }\n  .cancel {\n    color: #999;\n  }\n  .title {\n    color: #333;\n  }\n"])), getThemeColorCss('color'));
-var StyledPicker = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  width: 100%;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border: 1px solid #d8d8d8;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .content {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n\n      .wrapper {\n        transform: translate3d(0px, 105px, 0px);\n        transition-duration: 0.24s;\n        transition-property: transform;\n        transition-timing-function: ease-in-out;\n        .item {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 35px;\n          color: #000;\n        }\n      }\n    }\n  }\n"], ["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  width: 100%;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border: 1px solid #d8d8d8;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .content {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n\n      .wrapper {\n        transform: translate3d(0px, 105px, 0px);\n        transition-duration: 0.24s;\n        transition-property: transform;\n        transition-timing-function: ease-in-out;\n        .item {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 35px;\n          color: #000;\n        }\n      }\n    }\n  }\n"])));
+var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"])), getThemeColorCss('color'));
 var itemHeight = 35;
 var firstItemY = 105;
 
@@ -79,18 +77,26 @@ var getPickerMapData = function getPickerMapData(data, cols, value) {
   });
 
   if (cols > 1) {
-    var lastIndex = data.findIndex(function (d) {
-      return d.value === value[0];
-    });
-    lastIndex = lastIndex === -1 ? 0 : lastIndex;
-    ret[1] = data[lastIndex].children || [];
-
-    if (cols === 3) {
-      lastIndex = data.findIndex(function (d) {
-        return d.value === value[1];
+    if (!Array.isArray(data[0])) {
+      // linked
+      var lastIndex = data.findIndex(function (d) {
+        return d.value === value[0];
       });
       lastIndex = lastIndex === -1 ? 0 : lastIndex;
-      ret[2] = ret[1][lastIndex].children || [];
+      ret[1] = data[lastIndex].children || [];
+
+      if (cols === 3) {
+        lastIndex = data.findIndex(function (d) {
+          return d.value === value[1];
+        });
+        lastIndex = lastIndex === -1 ? 0 : lastIndex;
+        ret[2] = ret[1][lastIndex].children || [];
+      }
+    } else {
+      // unlinked
+      for (var i = 0; i < cols; i++) {
+        ret[i] = data[i];
+      }
     }
   }
 
@@ -99,25 +105,19 @@ var getPickerMapData = function getPickerMapData(data, cols, value) {
 
 var Wheel = function Wheel(props) {
   var onChange = props.onChange,
+      isUnLinked = props.isUnLinked,
       _a = props.data,
       data = _a === void 0 ? [] : _a,
-      listRef = props.listRef,
-      _b = props.value,
-      value = _b === void 0 ? [] : _b,
-      _c = props.valueIndex,
-      valueIndex = _c === void 0 ? 0 : _c,
-      _d = props.cols,
-      cols = _d === void 0 ? 1 : _d;
+      _b = props.list,
+      list = _b === void 0 ? [] : _b,
+      _c = props.value,
+      value = _c === void 0 ? [] : _c,
+      _d = props.valueIndex,
+      valueIndex = _d === void 0 ? 0 : _d,
+      _e = props.cols,
+      cols = _e === void 0 ? 1 : _e;
   var elRef = useRef();
   var yRef = useRef(firstItemY);
-  var thisRef = useThisRef({
-    list: listRef.current,
-    cols: cols,
-    data: data,
-    onChange: onChange,
-    value: value,
-    valueIndex: valueIndex
-  });
   var scrollToIndex = useCallback(function (index) {
     if (elRef.current) {
       elRef.current.style.transitionProperty = 'transform';
@@ -136,56 +136,58 @@ var Wheel = function Wheel(props) {
     return d;
   }, [yRef]);
   useEffect(function () {
-    var v = thisRef.current;
-    var i = v.data.findIndex(function (d) {
-      return d.value === v.value[v.valueIndex];
+    var i = data.findIndex(function (d) {
+      return d.value === value[valueIndex];
     });
     scrollToIndex(i > -1 ? i : 0);
-  }, [scrollToIndex, thisRef]);
-  var onTouchEnd = useCallback(function () {
-    var _a, _b, _c, _d, _e;
+  }, [scrollToIndex, data, valueIndex, value]);
 
-    var v = thisRef.current;
-    var list = v.data;
-    var min = -1 * (list.length - 1) * itemHeight + firstItemY;
+  var onTouchEnd = function onTouchEnd() {
+    var _a, _b, _c, _d;
+
+    var min = -1 * (data.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
     var index;
 
     if (yRef.current >= max - itemHeight / 2) {
       index = 0;
     } else if (yRef.current <= min) {
-      index = v.data.length - 1;
+      index = data.length - 1;
     } else {
       index = getIndexByY();
     }
 
     scrollToIndex(index);
-    v.value[v.valueIndex] = (_a = v.data[index]) === null || _a === void 0 ? void 0 : _a.value;
-    var vIndex = v.valueIndex + 1;
+    value[valueIndex] = (_a = data[index]) === null || _a === void 0 ? void 0 : _a.value;
+    var vIndex = valueIndex + 1;
 
-    while (vIndex <= v.cols - 1) {
+    while (vIndex <= cols - 1) {
       // next wheel refresh  & update value to next&first
-      v.list[vIndex] = ((_b = v.list[vIndex - 1][index]) === null || _b === void 0 ? void 0 : _b.children) || [];
-      v.value[vIndex] = ((_c = v.list[vIndex][0]) === null || _c === void 0 ? void 0 : _c.value) || '';
+      if (!isUnLinked) {
+        list[vIndex] = ((_b = list[vIndex - 1][index]) === null || _b === void 0 ? void 0 : _b.children) || [];
+        value[vIndex] = ((_c = list[vIndex][0]) === null || _c === void 0 ? void 0 : _c.value) || '';
+      }
+
       vIndex++;
     }
 
-    var cv = __spreadArray([], v.value);
+    var cv = __spreadArray([], value);
 
-    vIndex = v.valueIndex - 1;
+    vIndex = valueIndex - 1;
 
     while (vIndex >= 0) {
       // prev wheel check
       if (typeof cv[vIndex] === 'undefined') {
         // left not scrolled
-        cv[vIndex] = ((_d = v.list[vIndex][0]) === null || _d === void 0 ? void 0 : _d.value) || '';
+        cv[vIndex] = ((_d = list[vIndex][0]) === null || _d === void 0 ? void 0 : _d.value) || '';
       }
 
       vIndex--;
     }
 
-    (_e = v.onChange) === null || _e === void 0 ? void 0 : _e.call(v, cv);
-  }, [getIndexByY, scrollToIndex, thisRef]);
+    onChange === null || onChange === void 0 ? void 0 : onChange(cv);
+  };
+
   return /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: elRef,
     onTouchStart: function onTouchStart() {
@@ -213,94 +215,94 @@ var Wheel = function Wheel(props) {
 
 
 var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var _a;
-
-  var _b = props.okText,
-      okText = _b === void 0 ? '确定' : _b,
-      _c = props.cancelText,
-      cancelText = _c === void 0 ? '取消' : _c,
-      _d = props.title,
-      title = _d === void 0 ? '请选择' : _d,
+  var _a = props.okText,
+      okText = _a === void 0 ? '确定' : _a,
+      _b = props.cancelText,
+      cancelText = _b === void 0 ? '取消' : _b,
+      _c = props.title,
+      title = _c === void 0 ? '请选择' : _c,
       onClose = props.onClose,
       visible = props.visible,
       onOk = props.onOk,
-      _e = props.value,
-      value = _e === void 0 ? [] : _e,
-      _f = props.data,
-      data = _f === void 0 ? [] : _f,
-      _g = props.cols,
-      cols = _g === void 0 ? 1 : _g,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "value", "data", "cols"]);
+      className = props.className,
+      _d = props.value,
+      value = _d === void 0 ? [] : _d,
+      _e = props.data,
+      data = _e === void 0 ? [] : _e,
+      _f = props.cols,
+      cols = _f === void 0 ? 1 : _f,
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "className", "value", "data", "cols"]); // 是否非级联
 
-  var listRef = useRef(getPickerMapData(data, cols, value));
 
-  var _h = useState(value),
-      val = _h[0],
-      setVal = _h[1];
+  var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
+  var list = useMemo(function () {
+    return getPickerMapData(data, cols, value);
+  }, [data, cols, value]);
 
-  return /*#__PURE__*/React.createElement(Popup, {
+  var _g = useState(value),
+      val = _g[0],
+      setVal = _g[1];
+
+  return /*#__PURE__*/React.createElement(StyledDrawer, __assign({}, rest, {
+    className: clsx('uc-picker', className),
     position: "bottom",
-    style: {
-      width: '100%'
-    },
     visible: visible,
-    onClose: onClose
-  }, /*#__PURE__*/React.createElement(StyledBar, {
-    className: "bar"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "cancel",
-    onClick: onClose
-  }, cancelText), /*#__PURE__*/React.createElement("div", {
-    className: "title"
-  }, title), /*#__PURE__*/React.createElement("div", {
-    className: "ok",
-    onClick: function onClick() {
-      var _a;
+    onClose: onClose,
+    header: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "cancel-text",
+      onClick: onClose
+    }, cancelText), /*#__PURE__*/React.createElement("div", {
+      className: "title"
+    }, title), /*#__PURE__*/React.createElement("div", {
+      className: "ok-text",
+      onClick: function onClick() {
+        var _a;
 
-      if (listRef.current.length) {
-        var cv = __spreadArray([], val);
+        if (list.length) {
+          var cv = __spreadArray([], val);
 
-        var i = cols - 1;
+          var i = cols - 1;
 
-        while (i >= 0) {
-          if (typeof cv[i] === 'undefined') {
-            cv[i] = ((_a = listRef.current[i][val[i] || 0]) === null || _a === void 0 ? void 0 : _a.value) || '';
+          while (i >= 0) {
+            if (typeof cv[i] === 'undefined') {
+              cv[i] = ((_a = list[i][val[i] || 0]) === null || _a === void 0 ? void 0 : _a.value) || '';
+            }
+
+            i--;
           }
 
-          i--;
+          onOk === null || onOk === void 0 ? void 0 : onOk(cv);
+        } else {
+          onOk === null || onOk === void 0 ? void 0 : onOk([]);
         }
 
-        onOk === null || onOk === void 0 ? void 0 : onOk(cv);
-      } else {
-        onOk === null || onOk === void 0 ? void 0 : onOk([]);
+        onClose === null || onClose === void 0 ? void 0 : onClose();
       }
-
-      onClose === null || onClose === void 0 ? void 0 : onClose();
-    }
-  }, okText)), /*#__PURE__*/React.createElement(StyledPicker, __assign({
-    ref: ref
-  }, rest, {
-    className: clsx('uc-picker')
+    }, okText))
   }), /*#__PURE__*/React.createElement("div", {
+    className: "picker-wrap",
+    ref: ref
+  }, /*#__PURE__*/React.createElement("div", {
     className: "mask"
   }), /*#__PURE__*/React.createElement("div", {
     className: "hairline"
   }), /*#__PURE__*/React.createElement("div", {
     className: "columnitem"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "content"
-  }, (_a = listRef.current) === null || _a === void 0 ? void 0 : _a.map(function (d, idx) {
+    className: "wheel"
+  }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
     return /*#__PURE__*/React.createElement(Wheel, {
       cols: cols,
-      data: d,
-      key: idx === 0 ? 'first' : (val === null || val === void 0 ? void 0 : val[idx - 1]) || idx,
+      data: listItem,
+      key: idx,
       value: val,
       valueIndex: idx,
-      listRef: listRef,
+      list: list,
+      isUnLinked: isUnLinked,
       onChange: setVal
     });
   })))));
 });
 Picker.displayName = 'UC-Picker';
 export default Picker;
-var templateObject_1, templateObject_2;
+var templateObject_1;

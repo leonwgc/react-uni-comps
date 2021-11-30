@@ -12,7 +12,7 @@ declare type Props = PopupProps & {
 };
 /** 抽屉 */
 declare const Drawer: {
-    (props: Props): React.ReactNode;
+    (props: Props): React.ReactElement;
     displayName: string;
 };
 export default Drawer;

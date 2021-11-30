@@ -23,6 +23,15 @@ export interface SlideRefType {
     prev: () => void;
     next: () => void;
 }
-/**  轮播 */
+/**
+ *  轮播
+ *
+ *  ref: {
+ *    prev: () => void;
+ *    next: () => void;
+ * }
+ *
+ *
+ */
 declare const Slide: React.ForwardRefExoticComponent<Props & React.RefAttributes<SlideRefType>>;
 export default Slide;
