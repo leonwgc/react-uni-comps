@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Toast, Button, Picker, Space, styled } from '../src';
 
+//#region  data
+
 const StyledPicker = styled(Picker)`
   .header {
     .cancel-text {
@@ -156,7 +158,6 @@ export default function App() {
       </Button>
 
       <Button
-        style={{ margin: '20px 0' }}
         block
         onClick={() => {
           setVisible(4);
@@ -166,7 +167,6 @@ export default function App() {
       </Button>
 
       <Button
-        style={{ margin: '20px 0' }}
         block
         onClick={() => {
           setVisible(2);
