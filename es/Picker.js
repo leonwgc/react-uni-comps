@@ -56,8 +56,16 @@ import clsx from 'clsx';
 var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"])), getThemeColorCss('color'));
 var itemHeight = 35;
 var firstItemY = 105;
+/**
+ *  convert data to 2 dimension array ;
+ *
+ * @param {DataItem[]} data
+ * @param {number} [cols=1]
+ * @param {*} [value=[]]
+ * @return {*}
+ */
 
-var getPickerMapData = function getPickerMapData(data, cols, value) {
+var convertPickerData = function convertPickerData(data, cols, value) {
   if (cols === void 0) {
     cols = 1;
   }
@@ -236,7 +244,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
   var list = useMemo(function () {
-    return getPickerMapData(data, cols, value);
+    return convertPickerData(data, cols, value);
   }, [data, cols, value]);
 
   var _g = useState(value),

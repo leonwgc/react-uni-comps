@@ -4597,21 +4597,6 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
-/**
- *  get latest values from ref, value will always be synced automatically with props & states
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useThisRef(value) {
-  var ref = React.useRef(value);
-  ref.current = value;
-  return ref;
-}
-
 var _templateObject$w, _templateObject2$5;
 var StyledSwipeAction = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
 var StyledButton$2 = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
@@ -4630,33 +4615,50 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children;
   var elRef = React.useRef();
-  var thisRef = useThisRef({
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isOpen = _useState2[0],
+      setIsOpen = _useState2[1];
+
+  var thisRef = React.useRef({
     x: 0,
-    onClose: onClose,
-    onOpen: onOpen,
-    closeOnClickOutside: closeOnClickOutside,
     el: null,
     leftEl: null,
     rightEl: null,
     leftWidth: 0,
-    rightWidth: 0,
-    isOpen: 0
+    rightWidth: 0
   });
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
   React.useEffect(function () {
+    if (isOpen) {
+      onOpen === null || onOpen === void 0 ? void 0 : onOpen();
+    } else {
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }, [isOpen]);
+  var startTransform = React.useCallback(function (transformStr, x) {
+    var v = thisRef.current;
+    v.x = x;
+    v.el.style.transitionProperty = 'transform';
+    setTimeout(function () {
+      v.el.style.transform = "".concat(transformStr);
+    });
+  }, [thisRef]);
+  React.useEffect(function () {
     var v = thisRef.current;
 
-    if (v.closeOnClickOutside) {
+    if (closeOnClickOutside) {
       var closeHandler = function closeHandler(e) {
-        if (!v.isOpen) {
+        if (!isOpen) {
           return;
         }
 
         if (!v.el.contains(e.target)) {
           startTransform('translate3d(0,0,0)', 0);
-          v.x = 0;
+          setIsOpen(false);
         }
       };
 
@@ -4665,19 +4667,11 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         window.removeEventListener('click', closeHandler);
       };
     }
-  }, []);
+  }, [closeOnClickOutside, startTransform, isOpen]);
   React.useLayoutEffect(function () {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
     thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
-  }, [thisRef]);
-  var startTransform = React.useCallback(function (transformStr, x) {
-    var v = thisRef.current;
-    v.x = x;
-    v.el.style.transitionProperty = 'transform';
-    setTimeout(function () {
-      v.el.style.transform = "".concat(transformStr);
-    });
   }, [thisRef]);
   var renderAction = React.useCallback(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement(StyledButton$2, {
@@ -4702,22 +4696,16 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         // open right
         if (Math.abs(v.x) < v.rightWidth / 2) {
           // no more than half way
-          startTransform('translate3d(0,0,0)', 0); // v.x = 0;
+          startTransform('translate3d(0,0,0)', 0);
 
-          if (v.isOpen) {
-            var _v$onClose;
-
-            (_v$onClose = v.onClose) === null || _v$onClose === void 0 ? void 0 : _v$onClose.call(v, 'right');
-            v.isOpen = 0;
+          if (isOpen) {
+            setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth); // v.x = -1 * v.rightWidth;
+          startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
 
-          if (!v.isOpen) {
-            var _v$onOpen;
-
-            (_v$onOpen = v.onOpen) === null || _v$onOpen === void 0 ? void 0 : _v$onOpen.call(v, 'right');
-            v.isOpen = 1;
+          if (!isOpen) {
+            setIsOpen(true);
           }
         }
       } else if (v.x > 0) {
@@ -4726,20 +4714,14 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
           startTransform('translate3d(0,0,0)', 0);
           v.x = 0;
 
-          if (v.isOpen) {
-            var _v$onClose2;
-
-            (_v$onClose2 = v.onClose) === null || _v$onClose2 === void 0 ? void 0 : _v$onClose2.call(v, 'left');
-            v.isOpen = 0;
+          if (isOpen) {
+            setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth); // v.x = v.leftWidth;
+          startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
 
-          if (!v.isOpen) {
-            var _v$onOpen2;
-
-            (_v$onOpen2 = v.onOpen) === null || _v$onOpen2 === void 0 ? void 0 : _v$onOpen2.call(v, 'left');
-            v.isOpen = 1;
+          if (!isOpen) {
+            setIsOpen(true);
           }
         }
       }
@@ -4759,6 +4741,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     onClick: function onClick() {
       if (autoClose) {
         startTransform('translate3d(0,0,0)', 0);
+        setIsOpen(false);
       }
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -4903,8 +4886,16 @@ var _templateObject$z;
 var StyledDrawer$1 = styled__default['default'](Drawer)(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"])), getThemeColorCss('color'));
 var itemHeight = 35;
 var firstItemY = 105;
+/**
+ *  convert data to 2 dimension array ;
+ *
+ * @param {DataItem[]} data
+ * @param {number} [cols=1]
+ * @param {*} [value=[]]
+ * @return {*}
+ */
 
-var getPickerMapData = function getPickerMapData(data) {
+var convertPickerData = function convertPickerData(data) {
   var cols = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
   var ret = [];
@@ -5081,7 +5072,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
   var list = React.useMemo(function () {
-    return getPickerMapData(data, cols, value);
+    return convertPickerData(data, cols, value);
   }, [data, cols, value]);
 
   var _useState = React.useState(value),

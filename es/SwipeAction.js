@@ -10,10 +10,9 @@ var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked
   return cooked;
 };
 
-import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEffect } from 'react';
+import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEffect, useState } from 'react';
 import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
-import useThisRef from './hooks/useThisRef';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
@@ -34,33 +33,49 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       closeOnClickOutside = _d === void 0 ? true : _d,
       children = props.children;
   var elRef = useRef();
-  var thisRef = useThisRef({
+
+  var _e = useState(false),
+      isOpen = _e[0],
+      setIsOpen = _e[1];
+
+  var thisRef = useRef({
     x: 0,
-    onClose: onClose,
-    onOpen: onOpen,
-    closeOnClickOutside: closeOnClickOutside,
     el: null,
     leftEl: null,
     rightEl: null,
     leftWidth: 0,
-    rightWidth: 0,
-    isOpen: 0
+    rightWidth: 0
   });
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
   useEffect(function () {
+    if (isOpen) {
+      onOpen === null || onOpen === void 0 ? void 0 : onOpen();
+    } else {
+      onClose === null || onClose === void 0 ? void 0 : onClose();
+    }
+  }, [isOpen]);
+  var startTransform = useCallback(function (transformStr, x) {
+    var v = thisRef.current;
+    v.x = x;
+    v.el.style.transitionProperty = 'transform';
+    setTimeout(function () {
+      v.el.style.transform = "" + transformStr;
+    });
+  }, [thisRef]);
+  useEffect(function () {
     var v = thisRef.current;
 
-    if (v.closeOnClickOutside) {
+    if (closeOnClickOutside) {
       var closeHandler_1 = function closeHandler_1(e) {
-        if (!v.isOpen) {
+        if (!isOpen) {
           return;
         }
 
         if (!v.el.contains(e.target)) {
           startTransform('translate3d(0,0,0)', 0);
-          v.x = 0;
+          setIsOpen(false);
         }
       };
 
@@ -69,19 +84,11 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
         window.removeEventListener('click', closeHandler_1);
       };
     }
-  }, []);
+  }, [closeOnClickOutside, startTransform, isOpen]);
   useLayoutEffect(function () {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
     thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
-  }, [thisRef]);
-  var startTransform = useCallback(function (transformStr, x) {
-    var v = thisRef.current;
-    v.x = x;
-    v.el.style.transitionProperty = 'transform';
-    setTimeout(function () {
-      v.el.style.transform = "" + transformStr;
-    });
   }, [thisRef]);
   var renderAction = useCallback(function (item, idx) {
     return /*#__PURE__*/React.createElement(StyledButton, {
@@ -100,26 +107,22 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       thisRef.current.el.style.transitionProperty = 'none';
     },
     onTouchEnd: function onTouchEnd() {
-      var _a, _b, _c, _d;
-
       var v = thisRef.current;
 
       if (v.x < 0) {
         // open right
         if (Math.abs(v.x) < v.rightWidth / 2) {
           // no more than half way
-          startTransform('translate3d(0,0,0)', 0); // v.x = 0;
+          startTransform('translate3d(0,0,0)', 0);
 
-          if (v.isOpen) {
-            (_a = v.onClose) === null || _a === void 0 ? void 0 : _a.call(v, 'right');
-            v.isOpen = 0;
+          if (isOpen) {
+            setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(-" + v.rightWidth + "px,0,0)", -1 * v.rightWidth); // v.x = -1 * v.rightWidth;
+          startTransform("translate3d(-" + v.rightWidth + "px,0,0)", -1 * v.rightWidth);
 
-          if (!v.isOpen) {
-            (_b = v.onOpen) === null || _b === void 0 ? void 0 : _b.call(v, 'right');
-            v.isOpen = 1;
+          if (!isOpen) {
+            setIsOpen(true);
           }
         }
       } else if (v.x > 0) {
@@ -128,16 +131,14 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
           startTransform('translate3d(0,0,0)', 0);
           v.x = 0;
 
-          if (v.isOpen) {
-            (_c = v.onClose) === null || _c === void 0 ? void 0 : _c.call(v, 'left');
-            v.isOpen = 0;
+          if (isOpen) {
+            setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(" + v.leftWidth + "px,0,0)", v.leftWidth); // v.x = v.leftWidth;
+          startTransform("translate3d(" + v.leftWidth + "px,0,0)", v.leftWidth);
 
-          if (!v.isOpen) {
-            (_d = v.onOpen) === null || _d === void 0 ? void 0 : _d.call(v, 'left');
-            v.isOpen = 1;
+          if (!isOpen) {
+            setIsOpen(true);
           }
         }
       }
@@ -157,6 +158,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onClick: function onClick() {
       if (autoClose) {
         startTransform('translate3d(0,0,0)', 0);
+        setIsOpen(false);
       }
     }
   }, /*#__PURE__*/React.createElement("div", {
