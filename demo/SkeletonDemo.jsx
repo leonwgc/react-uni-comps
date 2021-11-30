@@ -28,8 +28,9 @@ export default function SkeletonDemo() {
 
   return (
     <StyledContent>
-      <Space>
-        <Switch checked={loading} onChange={setLoading}></Switch>loading
+      <Space style={{ margin: 20 }}>
+        <Switch checked={loading} onChange={setLoading} />
+        loading
       </Space>
 
       <Skeleton
@@ -39,7 +40,7 @@ export default function SkeletonDemo() {
         rowWidth={['38%', '50%']}
         rowHeight={12}
         loading={loading}
-        className="article"
+        style={{ margin: '24px 20px' }}
       >
         <div className="article">
           <div className="l">
@@ -56,7 +57,13 @@ export default function SkeletonDemo() {
           </div>
         </div>
       </Skeleton>
-      <Skeleton loading={loading} row={1} className="article">
+      <Skeleton
+        loading={loading}
+        avatar
+        row={2}
+        rowWidth={['38%', '50%', '70%', '70%', '90%']}
+        style={{ margin: '24px 20px' }}
+      >
         <div className="article">
           <div className="l">
             <Avatar

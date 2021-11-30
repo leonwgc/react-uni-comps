@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 
 type Props = {
-  animate?: boolean /** 是否显示动画效果，默认显示 */;
-  shape?: 'rect' | 'circle' /** 形状：默认 react */;
-  height?: number | string /** 高度，默认16px */;
-  width?: number | string /** 宽度 */;
+  /** 是否显示动画效果，默认显示 */
+  animate?: boolean;
+  /** 形状：默认 react */
+  shape?: 'rect' | 'circle';
+  /** 高度，默认16px */
+  height?: number | string;
+  /** 宽度 */
+  width?: number | string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledSkeletonBase = styled.div`

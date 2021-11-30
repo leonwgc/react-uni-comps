@@ -6,16 +6,21 @@ import clsx from 'clsx';
 // ref to : https://vant-contrib.gitee.io/vant/#/en-US/skeleton
 
 type Props = {
-  children: React.ReactNode /** loading结束渲染的元素 */;
-  animate?: boolean /** 是否显示动画效果，默认显示 */;
+  /** loading结束渲染的元素 */
+  children: React.ReactNode;
+  /** 是否显示动画效果，默认显示 */
+  animate?: boolean;
   row: number /** 几行，默认4行, 最小1行 */;
-  rowWidth:
-    | string
-    | string[] /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */;
-  rowHeight: number /** 矩形条高度,默认16px*/;
-  avatar?: boolean /** 是否显示头像，默认不显示 */;
-  avatarSize?: number /** 头像大小，默认32px */;
-  loading?: boolean /** loading为true显示骨架，false则显示子元素*/;
+  /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */
+  rowWidth: string | string[];
+  /** 矩形条高度,默认16px*/
+  rowHeight: number;
+  /** 是否显示头像，默认不显示 */
+  avatar?: boolean;
+  /** 头像大小，默认32px */
+  avatarSize?: number;
+  /** loading为true显示骨架，false则显示子元素*/
+  loading?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 const StyledSkeleton = styled.div`
@@ -51,15 +56,16 @@ const Skeleton = (props: Props): React.ReactNode => {
     row = 4,
     rowWidth = ['40%', '100%', '100%', '60%'],
     rowHeight = 16,
-    avatar = false,
+    avatar,
     avatarSize = 32,
+    className,
     children,
     loading,
-    ...other
+    ...rest
   } = props;
 
   if (row < 1) {
-    throw new Error('row必须设置>=1,默认4');
+    throw new Error('row必须大于等于1,默认4');
   }
 
   let rowWidthAr = [];
@@ -76,11 +82,10 @@ const Skeleton = (props: Props): React.ReactNode => {
   } else {
     rowWidthAr = Array.from(new Array(row), () => rowWidth);
   }
-  const { className = '', ...rest } = other;
 
   return loading ? (
     avatar ? (
-      <StyledSkeleton {...rest} className={clsx({ avatar: avatar }, className)}>
+      <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
         <SkeletonBase
           animate={animate}
           shape="circle"
@@ -95,11 +100,7 @@ const Skeleton = (props: Props): React.ReactNode => {
         </div>
       </StyledSkeleton>
     ) : (
-      <StyledSkeleton
-        {...rest}
-        style={{ display: 'block' }}
-        className={clsx({ avatar: avatar }, className)}
-      >
+      <StyledSkeleton {...rest} className={clsx({ avatar: avatar }, className)}>
         {rowWidthAr.map((v, idx) => (
           <SkeletonBase animate={animate} key={idx} shape="rect" width={v} height={rowHeight} />
         ))}
