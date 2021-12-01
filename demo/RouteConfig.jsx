@@ -238,6 +238,10 @@ const routes = [
     path: '/WaitLoading',
     component: lazy(() => import('./WaitLoading')),
   },
+  {
+    path: '/Calendar',
+    component: lazy(() => import('./Calendar')),
+  },
 ];
 
 export default routes;
