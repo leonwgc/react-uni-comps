@@ -2201,8 +2201,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 
-var _excluded$a = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"],
-    _excluded2$1 = ["className"];
+var _excluded$a = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
 
 var _templateObject$b;
 
@@ -2218,16 +2217,16 @@ var Skeleton = function Skeleton(props) {
       rowWidth = _props$rowWidth === void 0 ? ['40%', '100%', '100%', '60%'] : _props$rowWidth,
       _props$rowHeight = props.rowHeight,
       rowHeight = _props$rowHeight === void 0 ? 16 : _props$rowHeight,
-      _props$avatar = props.avatar,
-      avatar = _props$avatar === void 0 ? false : _props$avatar,
+      avatar = props.avatar,
       _props$avatarSize = props.avatarSize,
       avatarSize = _props$avatarSize === void 0 ? 32 : _props$avatarSize,
+      className = props.className,
       children = props.children,
       loading = props.loading,
-      other = _objectWithoutProperties(props, _excluded$a);
+      rest = _objectWithoutProperties(props, _excluded$a);
 
   if (row < 1) {
-    throw new Error('row必须设置>=1,默认4');
+    throw new Error('row必须大于等于1,默认4');
   }
 
   var rowWidthAr = [];
@@ -2248,12 +2247,8 @@ var Skeleton = function Skeleton(props) {
     });
   }
 
-  var _other$className = other.className,
-      className = _other$className === void 0 ? '' : _other$className,
-      rest = _objectWithoutProperties(other, _excluded2$1);
-
   return loading ? avatar ? /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
-    className: clsx__default['default']({
+    className: clsx__default['default']('uc-skeleton', {
       avatar: avatar
     }, className)
   }), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
@@ -2273,9 +2268,6 @@ var Skeleton = function Skeleton(props) {
       height: rowHeight
     });
   }))) : /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
-    style: {
-      display: 'block'
-    },
     className: clsx__default['default']({
       avatar: avatar
     }, className)
@@ -2390,7 +2382,7 @@ Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 var _excluded$d = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
 var _templateObject$e, _templateObject2$2;
-var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked {\n      ", "\n      ", "\n    color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
+var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
 var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
@@ -3747,7 +3739,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 Text.displayName = 'UC-Text';
 
 var _excluded$o = ["content", "visible", "modal", "maskStyle", "className"],
-    _excluded2$2 = ["duration"];
+    _excluded2$1 = ["duration"];
 
 var _templateObject$o;
 var StyledToast = styled__default['default'].div(_templateObject$o || (_templateObject$o = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
@@ -3781,7 +3773,7 @@ Toast.show = function (props) {
   if (_typeof(props) === 'object' && 'content' in props) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 1500 : _props$duration,
-        rest = _objectWithoutProperties(props, _excluded2$2);
+        rest = _objectWithoutProperties(props, _excluded2$1);
 
     toastProps = rest;
     _duration = duration;
@@ -5914,7 +5906,7 @@ var WaterMark = function WaterMark(props) {
 WaterMark.displayName = 'UC-WaterMark';
 
 var _excluded$H = ["content", "style", "className"],
-    _excluded2$3 = ["duration"];
+    _excluded2$2 = ["duration"];
 
 var _templateObject$H;
 var transitionDuration$2 = animationNormal;
@@ -5985,7 +5977,7 @@ Notify.show = function (props) {
   if (_typeof(props) === 'object' && 'content' in props) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 2000 : _props$duration,
-        rest = _objectWithoutProperties(props, _excluded2$3);
+        rest = _objectWithoutProperties(props, _excluded2$2);
 
     notifyProps = rest;
     _duration = duration;
@@ -6065,16 +6057,15 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$K = ["className", "visible", "maskStyle", "onClose", "images", "onIndexChange"];
+var _excluded$K = ["className", "visible", "onClose", "images", "onIndexChange"];
 
 var _templateObject$K;
-var StyledImageViewer = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 1100;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 70vh;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"])));
+var StyledImageViewer = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    position: fixed;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       visible = props.visible,
-      maskStyle = props.maskStyle,
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
@@ -6109,16 +6100,15 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         width: '100%'
       },
       direction: "horizontal",
-      height: "60vh",
+      height: '60vh',
       onPageChange: function onPageChange(index) {
         var _onIndexChangeRef$cur;
 
         setIndex(index);
         (_onIndexChangeRef$cur = onIndexChangeRef.current) === null || _onIndexChangeRef$cur === void 0 ? void 0 : _onIndexChangeRef$cur.call(onIndexChangeRef, index);
       },
-      loop: false,
-      autoPlay: false,
-      ratio: 0.1
+      loop: isMobile,
+      autoPlay: false
     }, urls.map(function (url) {
       return /*#__PURE__*/React__default['default'].createElement("div", {
         className: "slide-page",
@@ -6169,8 +6159,21 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     ref: ref,
     className: clsx__default['default']('uc-image-viewer', className)
   }), /*#__PURE__*/React__default['default'].createElement(Mask, {
-    style: maskStyle,
+    style: {
+      zIndex: 'auto'
+    },
     onClick: onClose
+  }), /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-clear",
+    onClick: onClose,
+    style: {
+      position: 'fixed',
+      right: 20,
+      top: 20,
+      cursor: 'pointer',
+      fontSize: 30,
+      opacity: 0.7
+    }
   }), textRender(), slides);
 });
 ImageViewer.displayName = 'UC-ImageViewer';

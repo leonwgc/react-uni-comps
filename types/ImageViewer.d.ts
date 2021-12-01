@@ -4,8 +4,6 @@ declare type Props = {
     visible?: boolean;
     /**  关闭回调 */
     onClose?: () => void;
-    /** 遮罩样式 */
-    maskStyle?: React.CSSProperties;
     /** 图片资源的 url 列表 */
     images?: string[] | string;
     /** 切换图片时触发 */

@@ -55,16 +55,16 @@ var Skeleton = function Skeleton(props) {
       rowWidth = _c === void 0 ? ['40%', '100%', '100%', '60%'] : _c,
       _d = props.rowHeight,
       rowHeight = _d === void 0 ? 16 : _d,
-      _e = props.avatar,
-      avatar = _e === void 0 ? false : _e,
-      _f = props.avatarSize,
-      avatarSize = _f === void 0 ? 32 : _f,
+      avatar = props.avatar,
+      _e = props.avatarSize,
+      avatarSize = _e === void 0 ? 32 : _e,
+      className = props.className,
       children = props.children,
       loading = props.loading,
-      other = __rest(props, ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "children", "loading"]);
+      rest = __rest(props, ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"]);
 
   if (row < 1) {
-    throw new Error('row必须设置>=1,默认4');
+    throw new Error('row必须大于等于1,默认4');
   }
 
   var rowWidthAr = [];
@@ -85,12 +85,8 @@ var Skeleton = function Skeleton(props) {
     });
   }
 
-  var _g = other.className,
-      className = _g === void 0 ? '' : _g,
-      rest = __rest(other, ["className"]);
-
   return loading ? avatar ? /*#__PURE__*/React.createElement(StyledSkeleton, __assign({}, rest, {
-    className: clsx({
+    className: clsx('uc-skeleton', {
       avatar: avatar
     }, className)
   }), /*#__PURE__*/React.createElement(SkeletonBase, {
@@ -110,9 +106,6 @@ var Skeleton = function Skeleton(props) {
       height: rowHeight
     });
   }))) : /*#__PURE__*/React.createElement(StyledSkeleton, __assign({}, rest, {
-    style: {
-      display: 'block'
-    },
     className: clsx({
       avatar: avatar
     }, className)

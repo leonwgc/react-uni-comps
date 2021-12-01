@@ -49,17 +49,18 @@ import Space from './Space';
 import IconArrow from './IconArrow';
 import Button from './Button';
 import useUpdateEffect from './hooks/useUpdateEffect';
-var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 1100;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 70vh;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    z-index: 1100;\n    position: absolute;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 70vh;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"])));
+import Icon from './Icon';
+import { isMobile } from './dom';
+var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    position: fixed;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    position: fixed;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       visible = props.visible,
-      maskStyle = props.maskStyle,
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
-      rest = __rest(props, ["className", "visible", "maskStyle", "onClose", "images", "onIndexChange"]);
+      rest = __rest(props, ["className", "visible", "onClose", "images", "onIndexChange"]);
 
   var _a = useState(Array.isArray(images) ? images : [images]),
       urls = _a[0],
@@ -88,16 +89,15 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
         width: '100%'
       },
       direction: "horizontal",
-      height: "60vh",
+      height: '60vh',
       onPageChange: function onPageChange(index) {
         var _a;
 
         setIndex(index);
         (_a = onIndexChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onIndexChangeRef, index);
       },
-      loop: false,
-      autoPlay: false,
-      ratio: 0.1
+      loop: isMobile,
+      autoPlay: false
     }, urls.map(function (url) {
       return /*#__PURE__*/React.createElement("div", {
         className: "slide-page",
@@ -148,8 +148,21 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: ref,
     className: clsx('uc-image-viewer', className)
   }), /*#__PURE__*/React.createElement(Mask, {
-    style: maskStyle,
+    style: {
+      zIndex: 'auto'
+    },
     onClick: onClose
+  }), /*#__PURE__*/React.createElement(Icon, {
+    type: "uc-icon-clear",
+    onClick: onClose,
+    style: {
+      position: 'fixed',
+      right: 20,
+      top: 20,
+      cursor: 'pointer',
+      fontSize: 30,
+      opacity: 0.7
+    }
   }), textRender(), slides);
 });
 ImageViewer.displayName = 'UC-ImageViewer';
