@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable operator-linebreak */
+/** refer to: zarm calendar (https://zarm.gitee.io/)  */
 
-/** port from: zarm calendar (https://zarm.gitee.io/)  */
-
-import React, { PureComponent } from 'react';
+import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import CalendarMonthView from './MonthView';
 import * as locales from './locale';
 import utils from './utils';
-import color from 'color';
-import * as vars from './vars';
+// import color from 'color';
+// import * as vars from './vars';
 
 type Props = {
   /**  最小可选日期,默认当前日期*/
@@ -18,7 +15,6 @@ type Props = {
   /**  最大可选日期,默认min+1年*/
   max?: Date;
   value?: Date | Date[];
-  defaultValue?: Date | Date[];
   /** 是否选择一段时间范围,默认false */
   multiple: boolean;
   className?: string;
@@ -219,166 +215,84 @@ const StyledWrap = styled.div`
 
 //#endregion
 
-const parseProps = (props: Props) => {
-  const { defaultValue, multiple } = props;
-  let { value } = props;
+/** 日历  */
+const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { multiple, className, locale = 'zh', dateRender, disabledDate, onChange, value } = props;
 
-  let tmpValue: Date[];
+  let { max, min } = props;
 
-  value = value || defaultValue;
-  value = (
-    Object.prototype.toString.call(value) === '[object Array]' ? value : (value && [value]) || []
-  ) as Date[];
-
-  tmpValue = value.slice(0, multiple ? 2 : 1).map((item: Date) => utils.parseDay(item));
-  tmpValue = tmpValue.sort((item1: Date, item2: Date) => +item1 - +item2);
-  const min = props.min ? utils.parseDay(props.min) : new Date();
-  const startMonth = utils.cloneDate(min, 'dd', 1);
-  const max = props.max ? utils.parseDay(props.max) : utils.cloneDate(min, 'y', 1);
-  const endMonth = utils.cloneDate(max, 'dd', utils.getDaysByDate(max));
-
-  // min、max 排序
-  const duration = [min, max].sort((item1: Date, item2: Date) => +item1 - +item2);
-
-  const tmp = {
-    value: tmpValue,
-    min: duration[0],
-    max: duration[1],
-    startMonth,
-    endMonth,
-    steps: multiple ? 2 : 1,
-    multiple,
-  };
-
-  return tmp;
-};
-
-export interface CalendarStates {
-  value: Date[];
-  min: Date;
-  max: Date;
-  startMonth: Date;
-  endMonth: Date;
-  steps: number;
-  step: number;
-  multiple: boolean;
-}
-
-export default class CalendarView extends PureComponent<any, any> {
-  static displayName = 'UC-Calendar';
-
-  static defaultProps: any = {
-    multiple: false,
-    min: new Date(),
-    dateRender: (date: Date) => date.getDate(),
-    disabledDate: () => false,
-  };
-
-  // 当前月份dom数据缓存
-  private nodes?: any;
-
-  constructor(props) {
-    super(props);
-    this.nodes = {};
-  }
-
-  state = {
-    ...parseProps(this.props),
-    step: 1,
-  };
-
-  //   componentDidMount() {
-  //     this.anchor();
-  //   }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      ('value' in nextProps && nextProps.value !== prevState.prevValue) ||
-      ('multiple' in nextProps && nextProps.multiple !== prevState.prevMultiple) ||
-      ('min' in nextProps && nextProps.min !== prevState.prevMin) ||
-      ('max' in nextProps && nextProps.max !== prevState.prevMax)
-    ) {
-      return {
-        ...parseProps(nextProps),
-        step: prevState.step ? 1 : prevState.step,
-        refresh: !prevState.refresh,
-        prevValue: nextProps.value,
-        prevMax: nextProps.max,
-        prevMin: nextProps.min,
-        prevMultiple: nextProps.multiple,
-      };
-    }
-    return null;
-  }
-
-  // 日期点击事件，注意排序
-  handleDateClick = (date: Date) => {
-    const { step, steps, value, multiple } = this.state;
-    const { onChange } = this.props;
-    if (step === 1) {
-      value.splice(0, value.length);
-    }
-    value[step - 1] = date;
-    value.sort((item1: Date, item2: Date) => +item1 - +item2);
-    this.setState(
-      {
-        value,
-        step: step >= steps ? 1 : step + 1,
-      },
-      () => {
-        step >= steps && onChange?.(multiple ? value : value[0]);
-      }
+  const [val, setVal] = useState(() => {
+    return ((Array.isArray(value) ? value : [value || new Date()]) as Date[]).map((d) =>
+      utils.parseDay(d)
     );
+  });
+
+  const [index, setIndex] = useState(0);
+
+  min = min ? utils.parseDay(min) : new Date();
+  max = max ? utils.parseDay(max) : utils.cloneDate(min, 'y', 1);
+
+  const startMonth = utils.cloneDate(min, 'dd', 1);
+
+  const handleDateClick = (date: Date) => {
+    if (multiple) {
+      if (index === 0) {
+        setVal([date]);
+        setIndex(1);
+      } else if (index === 1) {
+        val[1] = date;
+        val.sort((a, b) => a.getTime() - b.getTime());
+        setVal([...val]);
+        onChange?.(val);
+        setIndex(0);
+      }
+    } else {
+      setVal([date]);
+      onChange?.(date);
+    }
   };
 
-  renderWeekBar = (locale) => {
+  const renderWeekBar = useCallback(() => {
     const content = locales[locale].weeks.map((week) => (
       <li key={week} className={`item`}>
         {week}
       </li>
     ));
     return <ul className={`bar`}>{content}</ul>;
-  };
+  }, [locale]);
 
-  renderMonth = (dateMonth: Date, locale) => {
-    const { value, min, max } = this.state;
-    const { dateRender, disabledDate } = this.props;
+  const renderMonth = (dateMonth: Date) => {
     const key = `${dateMonth.getFullYear()}-${dateMonth.getMonth()}`;
     return (
       <CalendarMonthView
         key={key}
         min={min}
         max={max}
-        value={value}
+        value={val}
         dateMonth={dateMonth}
         dateRender={dateRender}
         disabledDate={disabledDate}
-        onDateClick={this.handleDateClick}
-        locale={locale}
-        ref={(n) => {
-          this.nodes[key] = n;
-        }}
+        onDateClick={handleDateClick}
+        locale={locales[locale]}
       />
     );
   };
 
   // 生成日历内容
-  renderMonths(locale) {
-    const { startMonth, max } = this.state;
+  const renderMonths = () => {
     const arr = Array.from({ length: utils.getMonthCount(startMonth, max) });
-    const content = arr.map((_item, i) =>
-      this.renderMonth(utils.cloneDate(startMonth, 'm', i), locale)
-    );
+    const content = arr.map((_item, i) => renderMonth(utils.cloneDate(startMonth, 'm', i)));
     return <section className={`body`}>{content}</section>;
-  }
+  };
 
-  render() {
-    const { className, locale = 'zh' } = this.props;
-    return (
-      <StyledWrap className={clsx('uc-calendar', className)}>
-        {this.renderWeekBar(locale)}
-        {this.renderMonths(locales[locale])}
-      </StyledWrap>
-    );
-  }
-}
+  return (
+    <StyledWrap ref={ref} className={clsx('uc-calendar', className)}>
+      {renderWeekBar()}
+      {renderMonths()}
+    </StyledWrap>
+  );
+});
+
+Calendar.displayName = 'UC-Calendar';
+
+export default Calendar;
