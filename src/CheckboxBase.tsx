@@ -36,10 +36,10 @@ type Props = {
 
 const StyledButton = styled(Button)`
   &.fill {
-    &.checked {
+    &.checked.default {
       ${getThemeColorCss('background-color')}
       ${getThemeColorCss('border-color')}
-    color: #fff;
+      color: #fff;
     }
   }
   &.outline {

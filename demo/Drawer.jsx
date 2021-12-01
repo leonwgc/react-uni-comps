@@ -50,7 +50,7 @@ export default function RightDrawer(props) {
         position="right"
         onClose={onClose}
         visible={visible}
-        style={{ width: isMobile ? '60vw' : 600 }}
+        style={{ width: isMobile ? '80vw' : 600 }}
         header={
           <StyledTabs underline={false} value={index} onChange={setIndex}>
             <Tabs.Tab title="tab1" />
