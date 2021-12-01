@@ -16,8 +16,6 @@ type Props = {
   visible?: boolean;
   /**  关闭回调 */
   onClose?: () => void;
-  /** 遮罩样式 */
-  maskStyle?: React.CSSProperties;
   /** 图片资源的 url 列表 */
   images?: string[] | string;
   /** 切换图片时触发 */
@@ -39,7 +37,6 @@ const StyledImageViewer = styled.div`
   align-items: center;
 
   .text {
-    z-index: 1100;
     position: fixed;
     left: 50%;
     top: 12px;
@@ -67,7 +64,7 @@ const StyledImageViewer = styled.div`
 
 /** 图片查看器 */
 const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, visible, maskStyle, onClose, images, onIndexChange, ...rest } = props;
+  const { className, visible, onClose, images, onIndexChange, ...rest } = props;
 
   const [urls, setUrls] = useState(Array.isArray(images) ? images : [images]);
   const [index, setIndex] = useState<number>(0);
@@ -144,13 +141,13 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
     visible && (
       <StyledImageViewer {...rest} ref={ref} className={clsx('uc-image-viewer', className)}>
-        <Mask style={maskStyle} onClick={onClose} />
+        <Mask style={{ zIndex: 'auto' }} onClick={onClose} />
         <Icon
           type="uc-icon-clear"
           onClick={onClose}
           style={{
             position: 'fixed',
-            zIndex: 1100,
+
             right: 20,
             top: 20,
             cursor: 'pointer',
