@@ -13,6 +13,7 @@ export default function App() {
       multiple={multiple}
       value={value}
       min={min}
+      locale="zh"
       max={max}
       prefixCls="uc-calendar"
       dateRender={(date) => {

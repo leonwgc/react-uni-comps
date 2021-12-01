@@ -1,150 +1,132 @@
-import React, { Component, isValidElement } from 'react';
-import classnames from 'classnames';
+import React, { useRef, useImperativeHandle, useCallback, useLayoutEffect } from 'react';
+import clsx from 'clsx';
 import utils from './utils';
 
-export interface CalendarMonthState {
-  value: Date[];
-  dateMonth: Date;
+export interface RefType {
+  anchor: () => void;
 }
 
-class CalendarMonthView extends Component<any, CalendarMonthState> {
-  static displayName = 'CalendarMonthView';
+function renderDate(date: Date) {
+  return date.getDate();
+}
 
-  static defaultProps = {
-    prefixCls: 'uc-calendar',
-    value: [],
-    dateMonth: new Date(),
-    min: new Date(),
-    max: new Date(),
-    dateRender: (date: Date) => date.getDate(),
-    disabledDate: () => false,
-  };
+function disableDate() {
+  return false;
+}
 
-  // 上次是否落点在当前月份内
-  private lastIn?: boolean = false;
+const CalendarMonthView = React.forwardRef<RefType, any>((props, ref) => {
+  const {
+    value = [],
+    dateMonth = new Date(),
+    onDateClick,
+    min = new Date(),
+    max = new Date(),
+    dateRender = renderDate,
+    disabledDate = disableDate,
+    locale = 'zh',
+  } = props;
 
-  // 当前月份的dom
-  private node?: any;
+  const lastInRef = useRef();
+  const nodeRef = useRef<HTMLDivElement>();
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-      dateMonth: props.dateMonth,
-    };
-    this.checkStatus = this.checkStatus.bind(this);
-  }
+  const year = dateMonth.getFullYear();
+  const month = dateMonth.getMonth();
+  const monthKey = `${year}-${month}`;
+  const mountedRef = useRef(false);
 
-  static getDerivedStateFromProps(nextProps, state) {
-    if (
-      // eslint-disable-next-line operator-linebreak
-      ('value' in nextProps && nextProps.value !== state.value) ||
-      ('dateMonth' in nextProps && nextProps.dateMonth !== state.dateMonth)
-    ) {
-      return {
-        value: nextProps.value,
-        dateMonth: nextProps.dateMonth,
-      };
+  useLayoutEffect(() => {
+    // auto anchor to value date / now
+    const target = value[0] || new Date();
+    const key = `${target.getFullYear()}-${target.getMonth()}`;
+
+    if (key === monthKey) {
+      nodeRef.current.scrollIntoView({ behavior: !mountedRef.current ? 'auto' : 'smooth' });
     }
-    return null;
-  }
 
-  anchor = () => {
-    if (this.node && this.node.scrollIntoViewIfNeeded) {
-      this.node.scrollIntoViewIfNeeded();
+    if (!mountedRef.current) {
+      mountedRef.current = true;
     }
-  };
+  }, [value, monthKey]);
+
+  useImperativeHandle(ref, () => ({
+    anchor: () => {
+      if (nodeRef.current && nodeRef.current.scrollIntoView) {
+        nodeRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+  }));
+
+  const title =
+    locale?.yearText === '年'
+      ? year + locale.yearText + locale.months[month]
+      : `${locale?.months[month]} ${year}`;
 
   // 日期状态: 选中，区间
-  checkStatus(date: Date) {
-    const { min, max, disabledDate } = this.props;
-    const { value = [] } = this.state;
-    const disabled = date < utils.cloneDate(min, 'd', 0) || date > utils.cloneDate(max, 'd', 0);
-    const res = {
-      disabled: disabled || (disabledDate && disabledDate(date)),
-      isSelected: value.some((item) => utils.isOneDay(date, item)),
-      isRange: value.length > 1 && date > value[0] && date < value[value.length - 1],
-      rangeStart: value.length > 1 && utils.isOneDay(date, value[0]),
-      rangeEnd: value.length > 1 && utils.isOneDay(date, value[value.length - 1]),
-    };
-    this.lastIn = this.lastIn || res.isSelected || res.isRange;
-    return res;
-  }
+  const checkStatus = useCallback(
+    (date: Date) => {
+      const disabled = date < utils.cloneDate(min, 'd', 0) || date > utils.cloneDate(max, 'd', 0);
+      const res = {
+        disabled: disabled || disabledDate?.(date),
+        isSelected: value.some((item) => utils.isOneDay(date, item)),
+        isRange: value.length > 1 && date > value[0] && date < value[value.length - 1],
+        rangeStart: value.length > 1 && utils.isOneDay(date, value[0]),
+        rangeEnd: value.length > 1 && utils.isOneDay(date, value[value.length - 1]),
+      };
+      lastInRef.current = lastInRef.current || res.isSelected || res.isRange;
+      return res;
+    },
+    [disabledDate, max, min, value]
+  );
 
-  renderDay = (day: number, year: number, month: number, firstDay: number) => {
-    const { prefixCls, dateRender, onDateClick } = this.props;
-    const date = new Date(year, month, day);
-    const isToday =
-      new Date().getFullYear() === year &&
-      new Date().getMonth() === month &&
-      new Date().getDate() === day;
-    const status = this.checkStatus(date);
+  const renderDay = useCallback(
+    (day: number, year: number, month: number, firstDay: number) => {
+      const date = new Date(year, month, day);
+      const isToday =
+        new Date().getFullYear() === year &&
+        new Date().getMonth() === month &&
+        new Date().getDate() === day;
+      const status = checkStatus(date);
 
-    let txt = (date && dateRender && dateRender(date)) || '';
-    if (typeof txt === 'object') {
-      if (!isValidElement(txt)) {
-        console.warn('dateRender函数返回数据类型错误，请返回基本数据类型或者reactNode');
-        txt = '';
-      }
-    }
+      const txt = (date && dateRender?.(date)) || '';
 
-    const className = {
-      'd6': (day + firstDay) % 7 === 0,
-      'd7': (day + firstDay) % 7 === 1,
-      [`${prefixCls}__day--disabled`]: status.disabled,
-      [`${prefixCls}__day--today`]: isToday,
-      [`${prefixCls}__day--selected`]: status.isSelected,
-      [`${prefixCls}__day--range`]: status.isRange,
-      'range-start': status.rangeStart,
-      'range-end': status.rangeEnd,
-      [`firstday-${firstDay}`]: day === 1 && firstDay,
-    };
+      return (
+        <li
+          key={`${year}-${month}-${day}`}
+          className={clsx(`day`, {
+            'd6': (day + firstDay) % 7 === 0,
+            'd7': (day + firstDay) % 7 === 1,
+            [`day--disabled`]: status.disabled,
+            [`day--today`]: isToday,
+            [`day--selected`]: status.isSelected,
+            [`day--range`]: status.isRange,
+            'range-start': status.rangeStart,
+            'range-end': status.rangeEnd,
+            [`firstday-${firstDay}`]: day === 1 && firstDay,
+          })}
+          onClick={() => !status.disabled && date && onDateClick?.(date)}
+        >
+          {(txt && <div className={`day__content`}>{txt}</div>) || ''}
+        </li>
+      );
+    },
+    [checkStatus, dateRender, onDateClick]
+  );
 
-    return (
-      <li
-        key={`${year}-${month}-${day}`}
-        className={classnames(`${prefixCls}__day`, className)}
-        onClick={() => !status.disabled && date && onDateClick && onDateClick(date)}
-      >
-        {(txt && <div className={`${prefixCls}__day__content`}>{txt}</div>) || ''}
-      </li>
-    );
-  };
-
-  renderContent = (year: number, month: number) => {
+  const renderContent = (year: number, month: number) => {
     const data = utils.getCurrMonthInfo(year, month);
     const { firstDay, dayCount } = data;
     return Array.from({ length: dayCount }).map((_item, i) =>
-      this.renderDay(i + 1, year, month, firstDay)
+      renderDay(i + 1, year, month, firstDay)
     );
   };
 
-  render() {
-    const { prefixCls, locale } = this.props;
-    const { dateMonth } = this.state;
+  return (
+    <div className={`month`} title={title} ref={nodeRef}>
+      <ul>{renderContent(year, month)}</ul>
+    </div>
+  );
+});
 
-    const year = dateMonth.getFullYear();
-    const month = dateMonth.getMonth();
-    const monthKey = `${year}-${month}`;
-
-    const title =
-      locale?.yearText === '年'
-        ? year + locale.yearText + locale.months[month]
-        : `${locale?.months[month]} ${year}`;
-
-    return (
-      <section
-        key={monthKey}
-        className={`${prefixCls}__month`}
-        title={title}
-        ref={(n) => {
-          this.node = n;
-        }}
-      >
-        <ul>{this.renderContent(year, month)}</ul>
-      </section>
-    );
-  }
-}
+CalendarMonthView.displayName = 'CalendarMonthView';
 
 export default CalendarMonthView;

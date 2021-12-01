@@ -9,8 +9,29 @@ import styled from 'styled-components';
 import CalendarMonthView from './MonthView';
 import * as locales from './locale';
 import utils from './utils';
+import color from 'color';
+import * as vars from './vars';
 
-const prefixCls = 'uc-calendar';
+type Props = {
+  /**  最小可选日期,默认当前日期*/
+  min?: Date;
+  /**  最大可选日期,默认min+1年*/
+  max?: Date;
+  value?: Date | Date[];
+  defaultValue?: Date | Date[];
+  /** 是否选择一段时间范围,默认false */
+  multiple: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  /** 自定义日期渲染函数 */
+  dateRender?: (date?: Date) => void;
+  /** 日期是否禁止选择 */
+  disabledDate?: (date?: Date) => boolean;
+  /** 日期选择发生变化时触发的回调函数 */
+  onChange?: (value?: Date | Date[]) => void;
+  /** 语言,默认中文 */
+  locale?: 'zh' | 'en';
+};
 
 //#region styled
 
@@ -29,7 +50,7 @@ const StyledWrap = styled.div`
     }
   }
 
-  .uc-calendar__bar {
+  .bar {
     display: flex;
     flex-wrap: wrap;
     color: #909090;
@@ -38,172 +59,167 @@ const StyledWrap = styled.div`
     margin: 0;
     padding: 0 15px;
     list-style-type: disc;
-  }
-  .uc-calendar__bar__item {
-    height: 40px;
-    line-height: 40px;
+
+    .item {
+      height: 40px;
+      line-height: 40px;
+    }
   }
 
-  .uc-calendar__body {
+  .body {
     padding: 10px 0;
     overflow: auto;
     max-height: 50vh;
-  }
 
-  .uc-calendar__month {
-    padding: 0 15px;
-    color: #343434;
-  }
-  .uc-calendar__month ul {
-    margin: 0;
-    padding: 0;
-  }
-  .uc-calendar__month:before {
-    content: attr(title);
-    display: block;
-    margin: 15px auto;
-    font-size: 17px;
-    font-weight: 500;
-    padding-left: 15px;
-  }
+    .month {
+      padding: 0 15px;
+      color: #343434;
 
-  .uc-calendar__day {
-    margin: 10px 0;
-    position: relative;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  .uc-calendar__day__content {
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-  }
-  .uc-calendar__day.firstday-1 {
-    margin-left: 14.28571%;
-  }
-  .uc-calendar__day.firstday-2 {
-    margin-left: 28.57142%;
-  }
-  .uc-calendar__day.firstday-3 {
-    margin-left: 42.85713%;
-  }
-  .uc-calendar__day.firstday-4 {
-    margin-left: 57.14284%;
-  }
-  .uc-calendar__day.firstday-5 {
-    margin-left: 71.42855%;
-  }
-  .uc-calendar__day.firstday-6 {
-    margin-left: 85.71426%;
-  }
-  .uc-calendar__day--today .uc-calendar__day__content {
-    background-color: hsl(156, 100%, 95%);
-    color: hsl(156, 100%, 36.9%);
-    color: var(--calendar-day-today-color);
-  }
+      &:before {
+        content: attr(title);
+        display: block;
+        margin: 15px auto;
+        font-size: 17px;
+        font-weight: 500;
+        padding-left: 15px;
+      }
 
-  .uc-calendar__day--selected .uc-calendar__day__content {
-    background-color: hsl(156, 100%, 36.9%);
+      ul {
+        margin: 0;
+        padding: 0;
+      }
 
-    color: #fff;
-    -webkit-box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
-    box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
-  }
+      .day {
+        margin: 10px 0;
+        position: relative;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .day__content {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+      }
+      .day.firstday-1 {
+        margin-left: 14.28571%;
+      }
+      .day.firstday-2 {
+        margin-left: 28.57142%;
+      }
+      .day.firstday-3 {
+        margin-left: 42.85713%;
+      }
+      .day.firstday-4 {
+        margin-left: 57.14284%;
+      }
+      .day.firstday-5 {
+        margin-left: 71.42855%;
+      }
+      .day.firstday-6 {
+        margin-left: 85.71426%;
+      }
+      .day--today .day__content {
+        background-color: hsl(156, 100%, 95%);
+        color: hsl(156, 100%, 36.9%);
+      }
 
-  .uc-calendar__day--disabled {
-    cursor: auto;
-  }
-  .uc-calendar__day--disabled .uc-calendar__day__content {
-    color: #bcbcbc;
-  }
+      .day--selected .day__content {
+        background-color: hsl(156, 100%, 36.9%);
 
-  .uc-calendar__day--range {
-    background-color: hsl(156, 100%, 95%);
+        color: #fff;
+        -webkit-box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
+        box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
+      }
 
-    color: hsl(156, 100%, 36.9%);
-  }
-  .uc-calendar__day--range .uc-calendar__day__content {
-    background-color: hsl(156, 100%, 95%);
-  }
+      .day--disabled {
+        cursor: auto;
+      }
+      .day--disabled .day__content {
+        color: #bcbcbc;
+      }
 
-  .uc-calendar__day--range.d6 {
-    background-color: transparent;
+      .day--range {
+        background-color: hsl(156, 100%, 95%);
+        color: hsl(156, 100%, 36.9%);
+      }
+      .day--range .day__content {
+        background-color: hsl(156, 100%, 95%);
+      }
 
-    background-image: linear-gradient(
-      to left,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
-  }
-  .uc-calendar__day--range.d7 {
-    background-color: transparent;
-    background-image: linear-gradient(
-      to right,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
-  }
-  .uc-calendar__day--range:first-child:not(.d6) {
-    background-color: transparent;
+      .day--range.d6 {
+        background-color: transparent;
 
-    background-image: linear-gradient(
-      to right,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
-  }
-  .uc-calendar__day--range:last-child:not(.d7) {
-    background-color: transparent;
-    background-image: linear-gradient(
-      to left,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
-  }
-  .uc-calendar__day--range:last-child.d7,
-  .uc-calendar__day--range:first-child.d6 {
-    background-image: none;
-  }
+        background-image: linear-gradient(
+          to left,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+      .day--range.d7 {
+        background-color: transparent;
+        background-image: linear-gradient(
+          to right,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+      .day--range:first-child:not(.d6) {
+        background-color: transparent;
 
-  .uc-calendar__day.range-start.range-end {
-    background-image: none;
-  }
-  .uc-calendar__day.range-start:not(.range-end):not(.d6):not(:last-child) {
-    background-image: linear-gradient(
-      to right,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
-  }
-  .uc-calendar__day.range-end:not(.range-start):not(.d7):not(:first-child) {
-    background-image: linear-gradient(
-      to left,
-      transparent 0,
-      transparent 50%,
-      hsl(155.7, 100%, 95%) 50%
-    );
+        background-image: linear-gradient(
+          to right,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+      .day--range:last-child:not(.d7) {
+        background-color: transparent;
+        background-image: linear-gradient(
+          to left,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+      .day--range:last-child.d7,
+      .day--range:first-child.d6 {
+        background-image: none;
+      }
+
+      .day.range-start.range-end {
+        background-image: none;
+      }
+      .day.range-start:not(.range-end):not(.d6):not(:last-child) {
+        background-image: linear-gradient(
+          to right,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+      .day.range-end:not(.range-start):not(.d7):not(:first-child) {
+        background-image: linear-gradient(
+          to left,
+          transparent 0,
+          transparent 50%,
+          hsl(155.7, 100%, 95%) 50%
+        );
+      }
+    }
   }
 `;
 
 //#endregion
 
-const parseState = (props: {
-  min?: Date;
-  max?: Date;
-  value?: Date | Date[];
-  defaultValue?: Date | Date[];
-  multiple: boolean;
-}) => {
+const parseProps = (props: Props) => {
   const { defaultValue, multiple } = props;
   let { value } = props;
 
@@ -214,10 +230,7 @@ const parseState = (props: {
     Object.prototype.toString.call(value) === '[object Array]' ? value : (value && [value]) || []
   ) as Date[];
 
-  // 注掉该逻辑，强制根据 multiple 控制节点个数，后面改进
-  // tmpValue = value.map(item => DateTool.parseDay(item));
   tmpValue = value.slice(0, multiple ? 2 : 1).map((item: Date) => utils.parseDay(item));
-  // 排序过滤
   tmpValue = tmpValue.sort((item1: Date, item2: Date) => +item1 - +item2);
   const min = props.min ? utils.parseDay(props.min) : new Date();
   const startMonth = utils.cloneDate(min, 'dd', 1);
@@ -233,12 +246,7 @@ const parseState = (props: {
     max: duration[1],
     startMonth,
     endMonth,
-    // 是否是入参更新(主要是月份跨度更新，需要重新定位)
-    refresh: false,
-    // 注掉该逻辑，强制根据 multiple 控制节点个数，后面改进
-    // steps:Math.max(tmp.value.length, tmp.defaultValue.length);
     steps: multiple ? 2 : 1,
-    // 初始化点击步数
     multiple,
   };
 
@@ -251,23 +259,15 @@ export interface CalendarStates {
   max: Date;
   startMonth: Date;
   endMonth: Date;
-  // 是否是入参更新(主要是月份跨度更新，需要重新定位)
-  refresh: boolean;
-  // 注掉该逻辑，强制根据 multiple 控制节点个数，后面改进
-  // steps:Math.max(tmp.value.length; tmp.defaultValue.length);
-  // steps 是总的选择的个数 via zouhuan
   steps: number;
-  // 初始化点击步数
-  // step 是为了扩展的，以后如果是三选，四选之类的，用这个，step 标注每次事件是第几次选择 via zouhuan
   step: number;
   multiple: boolean;
 }
 
 export default class CalendarView extends PureComponent<any, any> {
-  static displayName = 'CalendarView';
+  static displayName = 'UC-Calendar';
 
   static defaultProps: any = {
-    prefixCls: 'uc-calendar',
     multiple: false,
     min: new Date(),
     dateRender: (date: Date) => date.getDate(),
@@ -283,13 +283,13 @@ export default class CalendarView extends PureComponent<any, any> {
   }
 
   state = {
-    ...parseState(this.props),
+    ...parseProps(this.props),
     step: 1,
   };
 
-  componentDidMount() {
-    this.anchor();
-  }
+  //   componentDidMount() {
+  //     this.anchor();
+  //   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
@@ -299,7 +299,7 @@ export default class CalendarView extends PureComponent<any, any> {
       ('max' in nextProps && nextProps.max !== prevState.prevMax)
     ) {
       return {
-        ...parseState(nextProps),
+        ...parseProps(nextProps),
         step: prevState.step ? 1 : prevState.step,
         refresh: !prevState.refresh,
         prevValue: nextProps.value,
@@ -311,16 +311,9 @@ export default class CalendarView extends PureComponent<any, any> {
     return null;
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    const { refresh } = this.state;
-    if (refresh !== prevState.refresh) {
-      this.anchor();
-    }
-  }
-
   // 日期点击事件，注意排序
   handleDateClick = (date: Date) => {
-    const { step, steps, value } = this.state;
+    const { step, steps, value, multiple } = this.state;
     const { onChange } = this.props;
     if (step === 1) {
       value.splice(0, value.length);
@@ -333,31 +326,18 @@ export default class CalendarView extends PureComponent<any, any> {
         step: step >= steps ? 1 : step + 1,
       },
       () => {
-        step >= steps && typeof onChange === 'function' && onChange(value);
+        step >= steps && onChange?.(multiple ? value : value[0]);
       }
     );
   };
 
-  // 月历定位
-  anchor = () => {
-    const { value } = this.state;
-    const target = value[0] || new Date();
-    const key = `${target.getFullYear()}-${target.getMonth()}`;
-    const node = this.nodes[key];
-    if (node && Object.prototype.toString.call(node.anchor) === '[object Function]') {
-      node.anchor();
-    }
-  };
-
-  // 生成星期条
   renderWeekBar = (locale) => {
-    const { prefixCls } = this.props;
     const content = locales[locale].weeks.map((week) => (
-      <li key={week} className={`${prefixCls}__bar__item`}>
+      <li key={week} className={`item`}>
         {week}
       </li>
     ));
-    return <ul className={`${prefixCls}__bar`}>{content}</ul>;
+    return <ul className={`bar`}>{content}</ul>;
   };
 
   renderMonth = (dateMonth: Date, locale) => {
@@ -366,7 +346,6 @@ export default class CalendarView extends PureComponent<any, any> {
     const key = `${dateMonth.getFullYear()}-${dateMonth.getMonth()}`;
     return (
       <CalendarMonthView
-        prefixCls={prefixCls}
         key={key}
         min={min}
         max={max}
@@ -390,13 +369,13 @@ export default class CalendarView extends PureComponent<any, any> {
     const content = arr.map((_item, i) =>
       this.renderMonth(utils.cloneDate(startMonth, 'm', i), locale)
     );
-    return <section className={`${prefixCls}__body`}>{content}</section>;
+    return <section className={`body`}>{content}</section>;
   }
 
   render() {
     const { className, locale = 'zh' } = this.props;
     return (
-      <StyledWrap className={clsx(prefixCls, className)}>
+      <StyledWrap className={clsx('uc-calendar', className)}>
         {this.renderWeekBar(locale)}
         {this.renderMonths(locales[locale])}
       </StyledWrap>
