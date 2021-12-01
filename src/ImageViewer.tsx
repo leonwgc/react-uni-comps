@@ -61,8 +61,6 @@ const StyledImageViewer = styled.div`
       object-position: center;
       max-width: 100%;
       touch-action: none;
-      height: 100%;
-      aspect-ratio: 4 / 3;
     }
   }
 `;
@@ -157,6 +155,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             top: 20,
             cursor: 'pointer',
             fontSize: 30,
+            opacity: 0.7,
           }}
         />
         {textRender()}
