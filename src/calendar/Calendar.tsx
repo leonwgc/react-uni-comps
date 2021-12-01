@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable operator-linebreak */
+
+/** port from: zarm calendar (https://zarm.gitee.io/)  */
+
 import React, { PureComponent } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
@@ -27,18 +30,13 @@ const StyledWrap = styled.div`
   }
 
   .uc-calendar__bar {
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     color: #909090;
     background-color: #f2f2f2;
     font-size: 14px;
     margin: 0;
     padding: 0 15px;
-
     list-style-type: disc;
   }
   .uc-calendar__bar__item {
@@ -49,6 +47,7 @@ const StyledWrap = styled.div`
   .uc-calendar__body {
     padding: 10px 0;
     overflow: auto;
+    max-height: 50vh;
   }
 
   .uc-calendar__month {
