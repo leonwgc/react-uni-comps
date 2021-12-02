@@ -6700,7 +6700,7 @@ var StyledWrap$1 = styled__default['default'].div(_templateObject$P || (_templat
   return color__default['default'](props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color__default['default'](props.theme.color);
-}, getThemeColorCss('box-shadow', '0 2px 5px 0'), function (props) {
+}, getThemeColorCss('box-shadow', '0 0 4px 0'), function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color__default['default'](props.theme.color).fade(0.72);

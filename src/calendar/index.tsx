@@ -128,7 +128,7 @@ const StyledWrap = styled.div`
         .day__content {
           background-color: ${(props) => color(props.theme.color)};
           color: #fff;
-          ${getThemeColorCss('box-shadow', '0 2px 5px 0')}
+          ${getThemeColorCss('box-shadow', '0 0 4px 0')}
         }
       }
 

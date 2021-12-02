@@ -61,7 +61,7 @@ var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTempla
   return color(props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color(props.theme.color);
-}, getThemeColorCss('box-shadow', '0 2px 5px 0'), function (props) {
+}, getThemeColorCss('box-shadow', '0 0 4px 0'), function (props) {
   return color(props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color(props.theme.color).fade(0.72);

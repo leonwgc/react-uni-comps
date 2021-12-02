@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { Toast, Button, DatePicker } from '../src';
+import { Toast, Button, DatePicker, styled } from '../src';
+
+const StyledPicker = styled(DatePicker)`
+  .header {
+    .cancel-text {
+      color: red;
+    }
+    .title {
+      color: green;
+    }
+    .ok-text {
+      color: blue;
+    }
+  }
+`;
 
 export default function App() {
   const [v, setV] = useState();
@@ -9,7 +23,7 @@ export default function App() {
       <Button type="primary" onClick={() => setV(true)}>
         选日期
       </Button>
-      <DatePicker
+      <StyledPicker
         value="2021-11-19"
         visible={v}
         onClose={() => setV(false)}
