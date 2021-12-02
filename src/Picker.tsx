@@ -1,9 +1,11 @@
-import React, { HTMLAttributes, useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
+import Wheel from './picker/Wheel';
 import clsx from 'clsx';
+
+//#region def
 
 type DataItem = {
   /** 数据显示文本 */
@@ -24,7 +26,7 @@ type Props = {
   /** 关闭回调 */
   onClose: () => void;
   /** 点击确定回调 */
-  onOk?: (value: string[]) => void;
+  onOk?: (value: Array<string | number>) => void;
   /** 是否显示 */
   visible?: boolean;
   /** 确定文本 */
@@ -35,7 +37,9 @@ type Props = {
   cancelText?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-} & HTMLAttributes<HTMLElement>;
+  /** 滚动变化回调 */
+  onWheelChange?: (val: unknown, index: number) => void;
+};
 
 const StyledDrawer = styled(Drawer)`
   .header {
@@ -125,8 +129,7 @@ const StyledDrawer = styled(Drawer)`
   }
 `;
 
-const itemHeight = 35;
-const firstItemY = 105;
+//#endregion
 
 /**
  *  convert data to 2 dimension array ;
@@ -168,110 +171,6 @@ const convertPickerData = (data: DataItem[], cols = 1, value = []) => {
   return ret;
 };
 
-const Wheel = (props) => {
-  const {
-    onChange,
-    isUnLinked,
-    data = [],
-    list = [],
-    value = [],
-    valueIndex = 0,
-    cols = 1,
-  } = props;
-  const elRef = useRef<HTMLElement>();
-
-  const yRef = useRef(firstItemY);
-
-  const scrollToIndex = useCallback(
-    (index) => {
-      if (elRef.current) {
-        elRef.current.style.transitionProperty = 'transform';
-        const y = firstItemY - itemHeight * index;
-        yRef.current = y;
-        setTimeout(() => {
-          if (elRef.current) {
-            elRef.current.style.transform = `translate3d(0,${y}px,0)`;
-          }
-        });
-      }
-    },
-    [yRef]
-  );
-
-  const getIndexByY = useCallback(() => {
-    const y = yRef.current;
-    const d = Math.round((firstItemY - y) / itemHeight);
-    return d;
-  }, [yRef]);
-
-  useEffect(() => {
-    const i = data.findIndex((d) => d.value === value[valueIndex]);
-    scrollToIndex(i > -1 ? i : 0);
-  }, [scrollToIndex, data, valueIndex, value]);
-
-  const onTouchEnd = () => {
-    const min = -1 * (data.length - 1) * itemHeight + firstItemY;
-    const max = firstItemY;
-
-    let index;
-    if (yRef.current >= max - itemHeight / 2) {
-      index = 0;
-    } else if (yRef.current <= min) {
-      index = data.length - 1;
-    } else {
-      index = getIndexByY();
-    }
-    scrollToIndex(index);
-    value[valueIndex] = data[index]?.value;
-
-    let vIndex = valueIndex + 1;
-    while (vIndex <= cols - 1) {
-      // next wheel refresh  & update value to next&first
-      if (!isUnLinked) {
-        list[vIndex] = list[vIndex - 1][index]?.children || [];
-        value[vIndex] = list[vIndex][0]?.value || '';
-      }
-
-      vIndex++;
-    }
-
-    const cv = [...value];
-    vIndex = valueIndex - 1;
-    while (vIndex >= 0) {
-      // prev wheel check
-      if (typeof cv[vIndex] === 'undefined') {
-        // left not scrolled
-        cv[vIndex] = list[vIndex][0]?.value || '';
-      }
-      vIndex--;
-    }
-
-    onChange?.(cv);
-  };
-
-  return (
-    <FingerGestureElement
-      ref={elRef}
-      onTouchStart={() => {
-        elRef.current.style.transitionProperty = 'none';
-      }}
-      onTouchEnd={onTouchEnd}
-      onPressMove={(e) => {
-        yRef.current += e.deltaY;
-        elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
-      }}
-    >
-      <div className="wrapper" style={{ width: 100 / cols + '%', touchAction: 'none' }}>
-        {data.map((item) => (
-          <div className="item" key={item.value}>
-            {item.label}
-          </div>
-        ))}
-      </div>
-    </FingerGestureElement>
-  );
-};
-
 /** picker 选择器 */
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
@@ -282,6 +181,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     onOk,
     className,
+    onWheelChange,
     value = [],
     data = [],
     cols = 1,
@@ -295,7 +195,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     return convertPickerData(data, cols, value);
   }, [data, cols, value]);
 
-  const [val, setVal] = useState(value);
+  const [val, setVal] = useState<Array<string | number>>(value || []);
 
   return (
     <StyledDrawer
@@ -314,16 +214,16 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             className="ok-text"
             onClick={() => {
               if (list.length) {
-                const cv = [...val];
+                const newVal = [...val];
                 let i = cols - 1;
                 while (i >= 0) {
-                  if (typeof cv[i] === 'undefined') {
-                    cv[i] = list[i][val[i] || 0]?.value || '';
+                  if (typeof newVal[i] === 'undefined') {
+                    newVal[i] = list[i][val[i] || 0]?.value || '';
                   }
                   i--;
                 }
 
-                onOk?.(cv);
+                onOk?.(newVal);
               } else {
                 onOk?.([]);
               }
@@ -344,14 +244,36 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             {list?.map((listItem, idx) => {
               return (
                 <Wheel
-                  cols={cols}
                   data={listItem}
                   key={idx}
-                  value={val}
-                  valueIndex={idx}
-                  list={list}
-                  isUnLinked={isUnLinked}
-                  onChange={setVal}
+                  value={val[idx]}
+                  onChange={(v, index) => {
+                    val[idx] = v;
+
+                    let nextIndex = idx + 1;
+                    while (nextIndex <= cols - 1) {
+                      // next wheel refresh  & update value to next&first
+                      if (!isUnLinked) {
+                        list[nextIndex] = list[nextIndex - 1][index]?.children || [];
+                        value[nextIndex] = list[nextIndex][0]?.value || '';
+                      }
+                      nextIndex++;
+                    }
+
+                    const newVal = [...val];
+                    nextIndex = idx - 1;
+                    while (nextIndex >= 0) {
+                      // prev wheel check
+                      if (typeof newVal[nextIndex] === 'undefined') {
+                        // left not scrolled
+                        newVal[nextIndex] = list[nextIndex][0]?.value || '';
+                      }
+                      nextIndex--;
+                    }
+
+                    setVal(newVal);
+                    onWheelChange?.(v, index);
+                  }}
                 />
               );
             })}
