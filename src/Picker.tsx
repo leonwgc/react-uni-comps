@@ -103,27 +103,12 @@ const StyledDrawer = styled(Drawer)`
       flex-grow: 1;
       height: 100%;
 
-      .wheel {
+      .wheel-wrap {
         display: flex;
         position: relative;
         text-align: center;
         overflow-y: hidden;
         height: 100%;
-
-        .wrapper {
-          transform: translate3d(0px, 105px, 0px);
-          transition-duration: 0.24s;
-          transition-property: transform;
-          transition-timing-function: ease-in-out;
-          .item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 35px;
-            font-size: 18px;
-            color: #333;
-          }
-        }
       }
     }
   }
@@ -240,7 +225,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div className="mask"></div>
         <div className="hairline"></div>
         <div className="columnitem">
-          <div className="wheel">
+          <div className="wheel-wrap">
             {list?.map((listItem, idx) => {
               return (
                 <Wheel
