@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 type DateType = 'y' | 'yyyy' | 'm' | 'mm' | 'd' | 'dd';
 type DateOrString = Date | string;
 
-const utils: any = {
+const utils = {
   // 返回月份中的第一天是星期几
   firstDayOfMonth(date: DateOrString) {
     const d = date.constructor === Date ? date : this.cloneDate(date, 'dd', 1);

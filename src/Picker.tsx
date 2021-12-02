@@ -7,11 +7,11 @@ import clsx from 'clsx';
 
 //#region def
 
-type DataItem = {
+export type DataItem = {
   /** 数据显示文本 */
   label: string;
   /** 数据值 */
-  value: string;
+  value: string | number;
   /** 级联数据用children */
   children?: DataItem[];
 };
@@ -20,11 +20,11 @@ type Props = {
   /** 列数，最多3列,默认1 */
   cols?: 1 | 2 | 3;
   /** 数据 */
-  data: DataItem[];
+  data?: DataItem[] | DataItem[][];
   /** 值 */
-  value?: string[];
+  value?: Array<string | number>;
   /** 关闭回调 */
-  onClose: () => void;
+  onClose?: () => void;
   /** 点击确定回调 */
   onOk?: (value: Array<string | number>) => void;
   /** 是否显示 */
@@ -38,7 +38,7 @@ type Props = {
   className?: string;
   style?: React.CSSProperties;
   /** 滚动变化回调 */
-  onWheelChange?: (val: unknown, index: number) => void;
+  onWheelChange?: (val: unknown, index: number, wheelIndex: number) => void;
 };
 
 const StyledDrawer = styled(Drawer)`
@@ -124,7 +124,7 @@ const StyledDrawer = styled(Drawer)`
  * @param {*} [value=[]]
  * @return {*}
  */
-const convertPickerData = (data: DataItem[], cols = 1, value = []) => {
+const convertPickerData = (data: DataItem[] | DataItem[][], cols = 1, value = []) => {
   const ret = [];
   for (let i = 0; i < cols; i++) {
     ret.push([]);
@@ -139,7 +139,7 @@ const convertPickerData = (data: DataItem[], cols = 1, value = []) => {
       // linked
       let lastIndex = data.findIndex((d) => d.value === value[0]);
       lastIndex = lastIndex === -1 ? 0 : lastIndex;
-      ret[1] = data[lastIndex].children || [];
+      ret[1] = (data[lastIndex] as DataItem).children || [];
 
       if (cols === 3) {
         lastIndex = data.findIndex((d) => d.value === value[1]);
@@ -257,7 +257,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                     }
 
                     setVal(newVal);
-                    onWheelChange?.(v, index);
+                    onWheelChange?.(v, index, idx);
                   }}
                 />
               );

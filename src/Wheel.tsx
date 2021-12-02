@@ -73,8 +73,18 @@ const Wheel = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     const index = data.findIndex((d) => d.value === value);
-    scrollToIndex(index > -1 ? index : 0);
-  }, [scrollToIndex, data, value]);
+    if (index === -1) {
+      // not found , goto first
+      if (data.length > 0) {
+        onChange?.(data[0].value, 0);
+      } else {
+        onChange?.(undefined, 0);
+      }
+      scrollToIndex(0);
+    } else {
+      scrollToIndex(index);
+    }
+  }, [scrollToIndex, data, value, onChange]);
 
   const onTouchEnd = () => {
     const min = -1 * (data.length - 1) * itemHeight + firstItemY;
