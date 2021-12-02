@@ -1,13 +1,13 @@
-/** refer to: zarm calendar (https://zarm.gitee.io/)  */
+/** refer : zarm calendar (https://zarm.gitee.io/)  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import CalendarMonthView from './MonthView';
 import * as locales from './locale';
 import utils from './utils';
-// import color from 'color';
-// import * as vars from './vars';
+import { getThemeColorCss } from '../themeHelper';
+import color from 'color';
 
 type Props = {
   /**  最小可选日期,默认当前日期*/
@@ -16,7 +16,7 @@ type Props = {
   max?: Date;
   value?: Date | Date[];
   /** 是否选择一段时间范围,默认false */
-  multiple: boolean;
+  range: boolean;
   className?: string;
   style?: React.CSSProperties;
   /** 自定义日期渲染函数 */
@@ -46,7 +46,7 @@ const StyledWrap = styled.div`
     }
   }
 
-  .bar {
+  .head {
     display: flex;
     flex-wrap: wrap;
     color: #909090;
@@ -120,16 +120,16 @@ const StyledWrap = styled.div`
         margin-left: 85.71426%;
       }
       .day--today .day__content {
-        background-color: hsl(156, 100%, 95%);
-        color: hsl(156, 100%, 36.9%);
+        background-color: ${(props) => color(props.theme.color).fade(0.72)};
+        ${getThemeColorCss('color')}
       }
 
-      .day--selected .day__content {
-        background-color: hsl(156, 100%, 36.9%);
-
-        color: #fff;
-        -webkit-box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
-        box-shadow: 0 2px 5px 0 hsl(156, 100%, 95%);
+      .day--selected {
+        .day__content {
+          background-color: ${(props) => color(props.theme.color)};
+          color: #fff;
+          ${getThemeColorCss('box-shadow', '0 2px 5px 0')}
+        }
       }
 
       .day--disabled {
@@ -140,54 +140,12 @@ const StyledWrap = styled.div`
       }
 
       .day--range {
-        background-color: hsl(156, 100%, 95%);
-        color: hsl(156, 100%, 36.9%);
-      }
-      .day--range .day__content {
-        background-color: hsl(156, 100%, 95%);
-      }
+        background-color: ${(props) => color(props.theme.color).fade(0.72)};
+        ${getThemeColorCss('color')}
 
-      .day--range.d6 {
-        background-color: transparent;
-
-        background-image: linear-gradient(
-          to left,
-          transparent 0,
-          transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
-        );
-      }
-      .day--range.d7 {
-        background-color: transparent;
-        background-image: linear-gradient(
-          to right,
-          transparent 0,
-          transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
-        );
-      }
-      .day--range:first-child:not(.d6) {
-        background-color: transparent;
-
-        background-image: linear-gradient(
-          to right,
-          transparent 0,
-          transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
-        );
-      }
-      .day--range:last-child:not(.d7) {
-        background-color: transparent;
-        background-image: linear-gradient(
-          to left,
-          transparent 0,
-          transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
-        );
-      }
-      .day--range:last-child.d7,
-      .day--range:first-child.d6 {
-        background-image: none;
+        .day__content {
+          background-color: transparent;
+        }
       }
 
       .day.range-start.range-end {
@@ -198,7 +156,7 @@ const StyledWrap = styled.div`
           to right,
           transparent 0,
           transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
+          ${(props) => color(props.theme.color).fade(0.72)} 50%
         );
       }
       .day.range-end:not(.range-start):not(.d7):not(:first-child) {
@@ -206,7 +164,7 @@ const StyledWrap = styled.div`
           to left,
           transparent 0,
           transparent 50%,
-          hsl(155.7, 100%, 95%) 50%
+          ${(props) => color(props.theme.color).fade(0.72)} 50%
         );
       }
     }
@@ -215,9 +173,18 @@ const StyledWrap = styled.div`
 
 //#endregion
 
-/** 日历  */
+/** 移动端日历  */
 const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { multiple, className, locale = 'zh', dateRender, disabledDate, onChange, value } = props;
+  const {
+    range,
+    className,
+    locale = 'zh',
+    dateRender,
+    disabledDate,
+    onChange,
+    value,
+    ...rest
+  } = props;
 
   let { max, min } = props;
 
@@ -235,7 +202,7 @@ const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const startMonth = utils.cloneDate(min, 'dd', 1);
 
   const handleDateClick = (date: Date) => {
-    if (multiple) {
+    if (range) {
       if (index === 0) {
         setVal([date]);
         setIndex(1);
@@ -251,15 +218,6 @@ const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       onChange?.(date);
     }
   };
-
-  const renderWeekBar = useCallback(() => {
-    const content = locales[locale].weeks.map((week) => (
-      <li key={week} className={`item`}>
-        {week}
-      </li>
-    ));
-    return <ul className={`bar`}>{content}</ul>;
-  }, [locale]);
 
   const renderMonth = (dateMonth: Date) => {
     const key = `${dateMonth.getFullYear()}-${dateMonth.getMonth()}`;
@@ -278,17 +236,20 @@ const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     );
   };
 
-  // 生成日历内容
-  const renderMonths = () => {
-    const arr = Array.from({ length: utils.getMonthCount(startMonth, max) });
-    const content = arr.map((_item, i) => renderMonth(utils.cloneDate(startMonth, 'm', i)));
-    return <section className={`body`}>{content}</section>;
-  };
+  const arr = Array.from({ length: utils.getMonthCount(startMonth, max) });
 
   return (
-    <StyledWrap ref={ref} className={clsx('uc-calendar', className)}>
-      {renderWeekBar()}
-      {renderMonths()}
+    <StyledWrap {...rest} ref={ref} className={clsx('uc-calendar', className)}>
+      <ul className={`head`}>
+        {locales[locale].weeks.map((week) => (
+          <li key={week} className={`item`}>
+            {week}
+          </li>
+        ))}
+      </ul>
+      <div className={`body`}>
+        {arr.map((_item, i) => renderMonth(utils.cloneDate(startMonth, 'm', i)))}
+      </div>
     </StyledWrap>
   );
 });
