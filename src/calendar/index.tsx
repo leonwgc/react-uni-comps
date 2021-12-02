@@ -50,8 +50,6 @@ const StyledWrap = styled.div`
 
   .head {
     display: flex;
-    flex-wrap: wrap;
-    color: #909090;
     box-shadow: ${boxShadow};
     font-size: 14px;
     margin: 0;
