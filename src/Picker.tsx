@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
-import Wheel from './picker/Wheel';
+import Wheel from './Wheel';
 import clsx from 'clsx';
 
 //#region def

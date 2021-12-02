@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { clsx } from 'react-uni-comps';
 import styled from 'styled-components';
-import FingerGestureElement from '../FingerGestureElement';
+import FingerGestureElement from './FingerGestureElement';
 
 type DataItem = {
   /** 数据显示文本 */
