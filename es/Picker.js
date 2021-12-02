@@ -47,15 +47,14 @@ var __spreadArray = this && this.__spreadArray || function (to, from) {
   return to;
 };
 
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
+import Wheel from './Wheel';
 import clsx from 'clsx';
-var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n\n        .wrapper {\n          transform: translate3d(0px, 105px, 0px);\n          transition-duration: 0.24s;\n          transition-property: transform;\n          transition-timing-function: ease-in-out;\n          .item {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 35px;\n            font-size: 18px;\n            color: #333;\n          }\n        }\n      }\n    }\n  }\n"])), getThemeColorCss('color'));
-var itemHeight = 35;
-var firstItemY = 105;
+var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+
 /**
  *  convert data to 2 dimension array ;
  *
@@ -110,115 +109,6 @@ var convertPickerData = function convertPickerData(data, cols, value) {
 
   return ret;
 };
-
-var Wheel = function Wheel(props) {
-  var onChange = props.onChange,
-      isUnLinked = props.isUnLinked,
-      _a = props.data,
-      data = _a === void 0 ? [] : _a,
-      _b = props.list,
-      list = _b === void 0 ? [] : _b,
-      _c = props.value,
-      value = _c === void 0 ? [] : _c,
-      _d = props.valueIndex,
-      valueIndex = _d === void 0 ? 0 : _d,
-      _e = props.cols,
-      cols = _e === void 0 ? 1 : _e;
-  var elRef = useRef();
-  var yRef = useRef(firstItemY);
-  var scrollToIndex = useCallback(function (index) {
-    if (elRef.current) {
-      elRef.current.style.transitionProperty = 'transform';
-      var y_1 = firstItemY - itemHeight * index;
-      yRef.current = y_1;
-      setTimeout(function () {
-        if (elRef.current) {
-          elRef.current.style.transform = "translate3d(0," + y_1 + "px,0)";
-        }
-      });
-    }
-  }, [yRef]);
-  var getIndexByY = useCallback(function () {
-    var y = yRef.current;
-    var d = Math.round((firstItemY - y) / itemHeight);
-    return d;
-  }, [yRef]);
-  useEffect(function () {
-    var i = data.findIndex(function (d) {
-      return d.value === value[valueIndex];
-    });
-    scrollToIndex(i > -1 ? i : 0);
-  }, [scrollToIndex, data, valueIndex, value]);
-
-  var onTouchEnd = function onTouchEnd() {
-    var _a, _b, _c, _d;
-
-    var min = -1 * (data.length - 1) * itemHeight + firstItemY;
-    var max = firstItemY;
-    var index;
-
-    if (yRef.current >= max - itemHeight / 2) {
-      index = 0;
-    } else if (yRef.current <= min) {
-      index = data.length - 1;
-    } else {
-      index = getIndexByY();
-    }
-
-    scrollToIndex(index);
-    value[valueIndex] = (_a = data[index]) === null || _a === void 0 ? void 0 : _a.value;
-    var vIndex = valueIndex + 1;
-
-    while (vIndex <= cols - 1) {
-      // next wheel refresh  & update value to next&first
-      if (!isUnLinked) {
-        list[vIndex] = ((_b = list[vIndex - 1][index]) === null || _b === void 0 ? void 0 : _b.children) || [];
-        value[vIndex] = ((_c = list[vIndex][0]) === null || _c === void 0 ? void 0 : _c.value) || '';
-      }
-
-      vIndex++;
-    }
-
-    var cv = __spreadArray([], value);
-
-    vIndex = valueIndex - 1;
-
-    while (vIndex >= 0) {
-      // prev wheel check
-      if (typeof cv[vIndex] === 'undefined') {
-        // left not scrolled
-        cv[vIndex] = ((_d = list[vIndex][0]) === null || _d === void 0 ? void 0 : _d.value) || '';
-      }
-
-      vIndex--;
-    }
-
-    onChange === null || onChange === void 0 ? void 0 : onChange(cv);
-  };
-
-  return /*#__PURE__*/React.createElement(FingerGestureElement, {
-    ref: elRef,
-    onTouchStart: function onTouchStart() {
-      elRef.current.style.transitionProperty = 'none';
-    },
-    onTouchEnd: onTouchEnd,
-    onPressMove: function onPressMove(e) {
-      yRef.current += e.deltaY;
-      elRef.current.style.transform = "translate3d(0," + yRef.current + "px,0)";
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "wrapper",
-    style: {
-      width: 100 / cols + '%',
-      touchAction: 'none'
-    }
-  }, data.map(function (item) {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "item",
-      key: item.value
-    }, item.label);
-  })));
-};
 /** picker 选择器 */
 
 
@@ -233,13 +123,14 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       visible = props.visible,
       onOk = props.onOk,
       className = props.className,
+      onWheelChange = props.onWheelChange,
       _d = props.value,
       value = _d === void 0 ? [] : _d,
       _e = props.data,
       data = _e === void 0 ? [] : _e,
       _f = props.cols,
       cols = _f === void 0 ? 1 : _f,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "className", "value", "data", "cols"]); // 是否非级联
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "className", "onWheelChange", "value", "data", "cols"]); // 是否非级联
 
 
   var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
@@ -247,7 +138,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return convertPickerData(data, cols, value);
   }, [data, cols, value]);
 
-  var _g = useState(value),
+  var _g = useState(value || []),
       val = _g[0],
       setVal = _g[1];
 
@@ -267,19 +158,19 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
         var _a;
 
         if (list.length) {
-          var cv = __spreadArray([], val);
+          var newVal = __spreadArray([], val);
 
           var i = cols - 1;
 
           while (i >= 0) {
-            if (typeof cv[i] === 'undefined') {
-              cv[i] = ((_a = list[i][val[i] || 0]) === null || _a === void 0 ? void 0 : _a.value) || '';
+            if (typeof newVal[i] === 'undefined') {
+              newVal[i] = ((_a = list[i][val[i] || 0]) === null || _a === void 0 ? void 0 : _a.value) || '';
             }
 
             i--;
           }
 
-          onOk === null || onOk === void 0 ? void 0 : onOk(cv);
+          onOk === null || onOk === void 0 ? void 0 : onOk(newVal);
         } else {
           onOk === null || onOk === void 0 ? void 0 : onOk([]);
         }
@@ -297,17 +188,45 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement("div", {
     className: "columnitem"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "wheel"
+    className: "wheel-wrap"
   }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
     return /*#__PURE__*/React.createElement(Wheel, {
-      cols: cols,
       data: listItem,
       key: idx,
-      value: val,
-      valueIndex: idx,
-      list: list,
-      isUnLinked: isUnLinked,
-      onChange: setVal
+      value: val[idx],
+      onChange: function onChange(v, index) {
+        var _a, _b, _c;
+
+        val[idx] = v;
+        var nextIndex = idx + 1;
+
+        while (nextIndex <= cols - 1) {
+          // next wheel refresh  & update value to next&first
+          if (!isUnLinked) {
+            list[nextIndex] = ((_a = list[nextIndex - 1][index]) === null || _a === void 0 ? void 0 : _a.children) || [];
+            value[nextIndex] = ((_b = list[nextIndex][0]) === null || _b === void 0 ? void 0 : _b.value) || '';
+          }
+
+          nextIndex++;
+        }
+
+        var newVal = __spreadArray([], val);
+
+        nextIndex = idx - 1;
+
+        while (nextIndex >= 0) {
+          // prev wheel check
+          if (typeof newVal[nextIndex] === 'undefined') {
+            // left not scrolled
+            newVal[nextIndex] = ((_c = list[nextIndex][0]) === null || _c === void 0 ? void 0 : _c.value) || '';
+          }
+
+          nextIndex--;
+        }
+
+        setVal(newVal);
+        onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(v, index, idx);
+      }
     });
   })))));
 });

@@ -61,6 +61,7 @@ export { default as Modal } from './Modal';
 export { default as PopMenu } from './PopMenu';
 export { default as PopConfirm } from './PopConfirm';
 export { default as Calendar } from './Calendar';
+export { default as DatePicker } from './DatePicker';
 /** helper & dom */
 
 export { debounce, throttle } from './helper';

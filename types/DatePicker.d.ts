@@ -1,42 +1,28 @@
 import React from 'react';
 declare type Props = {
-    /** 是否弹出 */
+    /** 值 */
+    value?: string;
+    /** 关闭回调 */
+    onClose: () => void;
+    /** 点击确定回调 */
+    onOk?: (value: Date) => void;
+    /** 是否显示 */
     visible?: boolean;
-    /** 关闭 */
-    onClose?: () => void;
-    /** 移动端不会触发onChange, 请使用onOk 点击确认触发*/
-    onChange?: (val: Date | Date[]) => void;
-    value?: Date | Date[];
-    style?: React.CSSProperties;
-    className?: string;
-    /** 自定义头  */
-    header?: React.ReactNode;
-    /** 自定义底部  */
-    footer?: React.ReactNode;
-    /** US */
-    calendarType?: string;
-    /** zh-CN */
-    locale?: string;
-    formatDay?: (locale: string, date: Date) => number;
-    minDetail?: string;
-    /** 点击遮罩是否关闭,默认true*/
-    closeOnMaskClick?: boolean;
+    /** 确定文本 */
     okText?: React.ReactNode;
+    /** 中间标题 */
     title?: React.ReactNode;
+    /** 最小年份, 默认1980 */
+    minYear?: number;
+    /** 最大年份, 默认2030 */
+    maxYear?: number;
+    /** 取消文本 */
     cancelText?: React.ReactNode;
-    /** 移动端点击确认触发*/
-    onOk?: (value: Date | Date[]) => void;
-    /** input左边内容 */
-    prefix?: React.ReactNode;
-    /** input右边内容 */
-    suffix?: React.ReactNode;
-    /** 自定义日期格式, YYYY-MM-DD */
-    format?: string;
-    todayText?: string;
+    className?: string;
+    style?: React.CSSProperties;
+    /** 语言,默认中文 */
+    locale?: 'zh' | 'en';
 };
-/** 日期选择  */
-declare const DatePicker: {
-    (props: Props): React.ReactNode;
-    displayName: string;
-};
+/** 移动端日期选择 */
+declare const DatePicker: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default DatePicker;
