@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { clsx } from 'react-uni-comps';
+import clsx from 'clsx';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 

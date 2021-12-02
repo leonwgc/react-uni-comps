@@ -40,7 +40,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useCallback, useEffect, useRef } from 'react';
-import { clsx } from 'react-uni-comps';
+import clsx from 'clsx';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"])));

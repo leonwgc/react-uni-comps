@@ -10,7 +10,6 @@ var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
 var copy = require('copy-text-to-clipboard');
-var reactUniComps = require('react-uni-comps');
 var SignaturePad = require('signature_pad');
 var color = require('color');
 
@@ -4953,7 +4952,7 @@ var Wheel = function Wheel(props) {
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
-    className: reactUniComps.clsx('uc-wheel', className)
+    className: clsx__default['default']('uc-wheel', className)
   }), data.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       className: "item",
