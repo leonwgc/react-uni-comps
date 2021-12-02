@@ -1,5 +1,3 @@
-/** refer : zarm calendar (https://zarm.gitee.io/)  */
-
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
@@ -7,26 +5,30 @@ import CalendarMonthView from './MonthView';
 import * as locales from './locale';
 import utils from './utils';
 import { getThemeColorCss } from '../themeHelper';
+import { boxShadow } from '../vars';
 import color from 'color';
+
+/** refer : zarm calendar (https://zarm.gitee.io/)  */
 
 type Props = {
   /**  最小可选日期,默认当前日期*/
   min?: Date;
   /**  最大可选日期,默认min+1年*/
   max?: Date;
+  /** 值,默认当前日期 */
   value?: Date | Date[];
+  /** 日期选择发生变化时触发的回调函数 */
+  onChange?: (value?: Date | Date[]) => void;
   /** 是否选择一段时间范围,默认false */
   range: boolean;
-  className?: string;
-  style?: React.CSSProperties;
   /** 自定义日期渲染函数 */
   dateRender?: (date?: Date) => void;
   /** 日期是否禁止选择 */
   disabledDate?: (date?: Date) => boolean;
-  /** 日期选择发生变化时触发的回调函数 */
-  onChange?: (value?: Date | Date[]) => void;
   /** 语言,默认中文 */
   locale?: 'zh' | 'en';
+  className?: string;
+  style?: React.CSSProperties;
 };
 
 //#region styled
@@ -50,7 +52,7 @@ const StyledWrap = styled.div`
     display: flex;
     flex-wrap: wrap;
     color: #909090;
-    background-color: #f2f2f2;
+    box-shadow: ${boxShadow};
     font-size: 14px;
     margin: 0;
     padding: 0 15px;
@@ -182,7 +184,7 @@ const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     dateRender,
     disabledDate,
     onChange,
-    value,
+    value = new Date(),
     ...rest
   } = props;
 

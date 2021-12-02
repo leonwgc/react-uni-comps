@@ -60,6 +60,7 @@ export { default as Drawer } from './Drawer';
 export { default as Modal } from './Modal';
 export { default as PopMenu } from './PopMenu';
 export { default as PopConfirm } from './PopConfirm';
+export { default as Calendar } from './Calendar';
 /** helper & dom */
 export { debounce, throttle } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';

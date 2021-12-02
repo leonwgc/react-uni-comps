@@ -52,6 +52,7 @@ const StyledCell = styled.div`
         color: #999;
         margin-top: 4px;
         line-height: 18px;
+        font-size: 12px;
       }
 
       &.input {

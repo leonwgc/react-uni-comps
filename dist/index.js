@@ -11,6 +11,7 @@ var styled = require('styled-components');
 var reactIs = require('react-is');
 var copy = require('copy-text-to-clipboard');
 var SignaturePad = require('signature_pad');
+var color = require('color');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -20,6 +21,7 @@ var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
 var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
+var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -2122,7 +2124,7 @@ Tabs.Tab = Tab;
 var _excluded$8 = ["title", "description", "className", "content", "lineColor", "children"];
 
 var _templateObject$9;
-var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg);
+var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg);
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -6410,6 +6412,383 @@ var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PopConfirm.displayName = 'UC-PopConfirm';
 
+var utils = {
+  // 返回月份中的第一天是星期几
+  firstDayOfMonth: function firstDayOfMonth(date) {
+    var d = date.constructor === Date ? date : this.cloneDate(date, 'dd', 1);
+    return d.getDay();
+  },
+  // 获取当月天数
+  getDaysInMonth: function getDaysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  },
+  // 获取当月天数
+  getDaysByDate: function getDaysByDate(date) {
+    var tmp = this.parseDate(date);
+    return new Date(tmp.getFullYear(), tmp.getMonth() + 1, 0).getDate();
+  },
+  // 获取当月信息
+  getCurrMonthInfo: function getCurrMonthInfo(year, month) {
+    return {
+      dayCount: new Date(year, month + 1, 0).getDate(),
+      // 总天数
+      firstDay: new Date(year, month, 1).getDay() // 第一天是周几
+
+    };
+  },
+  // 判断闰年还是平年
+  isLeapYear: function isLeapYear(year) {
+    if (year === '' || !Number.isSafeInteger(+year)) {
+      throw new Error('年份格式不正确');
+    }
+
+    year = +year;
+
+    if (year < 1790) {
+      throw new Error('年份不能低于1790');
+    }
+
+    return +year % 4 === 0 && +year % 100 !== 0 || +year % 400 === 0;
+  },
+  // 获取时间差的月份数
+  getMonthCount: function getMonthCount(date1, date2) {
+    var tmp1 = this.parseDate(date1);
+    var tmp2 = this.parseDate(date2);
+    var dur = (tmp2.getFullYear() - tmp1.getFullYear()) * 12 + (tmp2.getMonth() - tmp1.getMonth());
+    return Math.abs(dur) + 1;
+  },
+  // 是否是今天(只判断年月日)
+  isToday: function isToday(date) {
+    return this.isOneDay(date, new Date());
+  },
+  // 两个日期是否同一天
+  isOneDay: function isOneDay(date1, date2) {
+    if (!date1 || !date2) {
+      return false;
+    }
+
+    var tmp1 = this.parseDate(date1);
+    var tmp2 = this.parseDate(date2);
+    return tmp1.toDateString() === tmp2.toDateString();
+  },
+  // 两个日期是否同一个月
+  isOneMonth: function isOneMonth(date1, date2) {
+    if (!date1 || !date2) {
+      return false;
+    }
+
+    var tmp1 = this.parseDate(date1);
+    var tmp2 = this.parseDate(date2);
+    return tmp1.getFullYear() === tmp2.getFullYear() && tmp1.getMonth() === tmp2.getMonth();
+  },
+  // 周几
+  getDay: function getDay(date, opt) {
+    var realDate = this.cloneDate(date);
+    var array = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+    if (opt && opt instanceof Array) {
+      array = opt;
+    }
+
+    return array[realDate.getDay()];
+  },
+  // 标准化日期, 时间均为00:00:00
+  parseDay: function parseDay(date) {
+    var tmp = this.parseDate(date);
+    return new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate());
+  },
+  // 标准化时间
+  parseDate: function parseDate(date) {
+    if (date.constructor === Date) {
+      return date;
+    }
+
+    if (date.constructor === String) {
+      if (+date) {
+        return new Date(+date);
+      }
+
+      date = date.replace(/-/gi, '/');
+    }
+
+    return new Date(date);
+  },
+  // 克隆日期
+  cloneDate: function cloneDate(date, type, during) {
+    var tmp = new Date(this.parseDate(date));
+
+    if (!type || !during) {
+      return tmp;
+    }
+
+    switch (type) {
+      case 'y':
+        tmp.setFullYear(tmp.getFullYear() + during);
+        break;
+
+      case 'yyyy':
+        tmp.setFullYear(during);
+        break;
+
+      case 'm':
+        tmp.setMonth(tmp.getMonth() + during);
+        break;
+
+      case 'mm':
+        tmp.setMonth(during);
+        break;
+
+      case 'd':
+        tmp.setDate(tmp.getDate() + during);
+        break;
+
+      case 'dd':
+        tmp.setDate(during);
+        break;
+    }
+
+    return tmp;
+  }
+};
+
+function renderDate(date) {
+  return date.getDate();
+}
+
+function disableDate() {
+  return false;
+}
+
+var CalendarMonthView = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$value = props.value,
+      value = _props$value === void 0 ? [] : _props$value,
+      _props$dateMonth = props.dateMonth,
+      dateMonth = _props$dateMonth === void 0 ? new Date() : _props$dateMonth,
+      onDateClick = props.onDateClick,
+      _props$min = props.min,
+      min = _props$min === void 0 ? new Date() : _props$min,
+      _props$max = props.max,
+      max = _props$max === void 0 ? new Date() : _props$max,
+      _props$dateRender = props.dateRender,
+      dateRender = _props$dateRender === void 0 ? renderDate : _props$dateRender,
+      _props$disabledDate = props.disabledDate,
+      disabledDate = _props$disabledDate === void 0 ? disableDate : _props$disabledDate,
+      _props$locale = props.locale,
+      locale = _props$locale === void 0 ? 'zh' : _props$locale;
+  var lastInRef = React.useRef();
+  var nodeRef = React.useRef();
+  var year = dateMonth.getFullYear();
+  var month = dateMonth.getMonth();
+  var monthKey = "".concat(year, "-").concat(month);
+  var mountedRef = React.useRef(false);
+  React.useLayoutEffect(function () {
+    // auto anchor to value date / now
+    var target = value[0] || new Date();
+    var key = "".concat(target.getFullYear(), "-").concat(target.getMonth());
+
+    if (key === monthKey) {
+      nodeRef.current.scrollIntoView({
+        behavior: !mountedRef.current ? 'auto' : 'smooth'
+      });
+    }
+
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+    }
+  }, [value, monthKey]);
+  React.useImperativeHandle(ref, function () {
+    return {
+      anchor: function anchor() {
+        if (nodeRef.current && nodeRef.current.scrollIntoView) {
+          nodeRef.current.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      }
+    };
+  });
+  var title = (locale === null || locale === void 0 ? void 0 : locale.yearText) === '年' ? year + locale.yearText + locale.months[month] : "".concat(locale === null || locale === void 0 ? void 0 : locale.months[month], " ").concat(year); // 日期状态: 选中，区间
+
+  var checkStatus = React.useCallback(function (date) {
+    var disabled = date < utils.cloneDate(min, 'd', 0) || date > utils.cloneDate(max, 'd', 0);
+    var res = {
+      disabled: disabled || (disabledDate === null || disabledDate === void 0 ? void 0 : disabledDate(date)),
+      isSelected: value.some(function (item) {
+        return utils.isOneDay(date, item);
+      }),
+      isRange: value.length > 1 && date > value[0] && date < value[value.length - 1],
+      rangeStart: value.length > 1 && utils.isOneDay(date, value[0]),
+      rangeEnd: value.length > 1 && utils.isOneDay(date, value[value.length - 1])
+    };
+    lastInRef.current = lastInRef.current || res.isSelected || res.isRange;
+    return res;
+  }, [disabledDate, max, min, value]);
+  var renderDay = React.useCallback(function (day, year, month, firstDay) {
+    var _clsx;
+
+    var date = new Date(year, month, day);
+    var isToday = new Date().getFullYear() === year && new Date().getMonth() === month && new Date().getDate() === day;
+    var status = checkStatus(date);
+    var txt = date && (dateRender === null || dateRender === void 0 ? void 0 : dateRender(date)) || '';
+    return /*#__PURE__*/React__default['default'].createElement("li", {
+      key: "".concat(year, "-").concat(month, "-").concat(day),
+      className: clsx__default['default']("day", (_clsx = {
+        'd6': (day + firstDay) % 7 === 0,
+        'd7': (day + firstDay) % 7 === 1
+      }, _defineProperty(_clsx, "day--disabled", status.disabled), _defineProperty(_clsx, "day--today", isToday), _defineProperty(_clsx, "day--selected", status.isSelected), _defineProperty(_clsx, "day--range", status.isRange), _defineProperty(_clsx, 'range-start', status.rangeStart), _defineProperty(_clsx, 'range-end', status.rangeEnd), _defineProperty(_clsx, "firstday-".concat(firstDay), day === 1 && firstDay), _clsx)),
+      onClick: function onClick() {
+        return !status.disabled && date && (onDateClick === null || onDateClick === void 0 ? void 0 : onDateClick(date));
+      }
+    }, txt && /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "day__content"
+    }, txt) || '');
+  }, [checkStatus, dateRender, onDateClick]);
+
+  var renderContent = function renderContent(year, month) {
+    var data = utils.getCurrMonthInfo(year, month);
+    var firstDay = data.firstDay,
+        dayCount = data.dayCount;
+    return Array.from({
+      length: dayCount
+    }).map(function (_item, i) {
+      return renderDay(i + 1, year, month, firstDay);
+    });
+  };
+
+  return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "month",
+    title: title,
+    ref: nodeRef
+  }, /*#__PURE__*/React__default['default'].createElement("ul", null, renderContent(year, month)));
+});
+CalendarMonthView.displayName = 'CalendarMonthView';
+
+var zh = {
+  weeks: ['日', '一', '二', '三', '四', '五', '六'],
+  months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+  yearText: '年'
+};
+var en = {
+  weeks: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  yearText: ''
+};
+
+var locales = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  zh: zh,
+  en: en
+});
+
+var _excluded$O = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
+
+var _templateObject$O;
+/** refer : zarm calendar (https://zarm.gitee.io/)  */
+
+//#region styled
+var StyledWrap = styled__default['default'].div(_templateObject$O || (_templateObject$O = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    flex-wrap: wrap;\n    color: #909090;\n    box-shadow: ", ";\n    font-size: 14px;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), boxShadow, function (props) {
+  return color__default['default'](props.theme.color).fade(0.72);
+}, getThemeColorCss('color'), function (props) {
+  return color__default['default'](props.theme.color);
+}, getThemeColorCss('box-shadow', '0 2px 5px 0'), function (props) {
+  return color__default['default'](props.theme.color).fade(0.72);
+}, getThemeColorCss('color'), function (props) {
+  return color__default['default'](props.theme.color).fade(0.72);
+}, function (props) {
+  return color__default['default'](props.theme.color).fade(0.72);
+}); //#endregion
+
+/** 移动端日历  */
+
+var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var range = props.range,
+      className = props.className,
+      _props$locale = props.locale,
+      locale = _props$locale === void 0 ? 'zh' : _props$locale,
+      dateRender = props.dateRender,
+      disabledDate = props.disabledDate,
+      onChange = props.onChange,
+      _props$value = props.value,
+      value = _props$value === void 0 ? new Date() : _props$value,
+      rest = _objectWithoutProperties(props, _excluded$O);
+
+  var max = props.max,
+      min = props.min;
+
+  var _useState = React.useState(function () {
+    return (Array.isArray(value) ? value : [value || new Date()]).map(function (d) {
+      return utils.parseDay(d);
+    });
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      val = _useState2[0],
+      setVal = _useState2[1];
+
+  var _useState3 = React.useState(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      index = _useState4[0],
+      setIndex = _useState4[1];
+
+  min = min ? utils.parseDay(min) : new Date();
+  max = max ? utils.parseDay(max) : utils.cloneDate(min, 'y', 1);
+  var startMonth = utils.cloneDate(min, 'dd', 1);
+
+  var handleDateClick = function handleDateClick(date) {
+    if (range) {
+      if (index === 0) {
+        setVal([date]);
+        setIndex(1);
+      } else if (index === 1) {
+        val[1] = date;
+        val.sort(function (a, b) {
+          return a.getTime() - b.getTime();
+        });
+        setVal(_toConsumableArray(val));
+        onChange === null || onChange === void 0 ? void 0 : onChange(val);
+        setIndex(0);
+      }
+    } else {
+      setVal([date]);
+      onChange === null || onChange === void 0 ? void 0 : onChange(date);
+    }
+  };
+
+  var renderMonth = function renderMonth(dateMonth) {
+    var key = "".concat(dateMonth.getFullYear(), "-").concat(dateMonth.getMonth());
+    return /*#__PURE__*/React__default['default'].createElement(CalendarMonthView, {
+      key: key,
+      min: min,
+      max: max,
+      value: val,
+      dateMonth: dateMonth,
+      dateRender: dateRender,
+      disabledDate: disabledDate,
+      onDateClick: handleDateClick,
+      locale: locales[locale]
+    });
+  };
+
+  var arr = Array.from({
+    length: utils.getMonthCount(startMonth, max)
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-calendar', className)
+  }), /*#__PURE__*/React__default['default'].createElement("ul", {
+    className: "head"
+  }, locales[locale].weeks.map(function (week) {
+    return /*#__PURE__*/React__default['default'].createElement("li", {
+      key: week,
+      className: "item"
+    }, week);
+  })), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "body"
+  }, arr.map(function (_item, i) {
+    return renderMonth(utils.cloneDate(startMonth, 'm', i));
+  })));
+});
+Calendar.displayName = 'UC-Calendar';
+
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
  *  执行同步更新effect
@@ -6557,6 +6936,7 @@ exports.AnimationElement = AnimationElement;
 exports.Avatar = Avatar;
 exports.Badge = Badge;
 exports.Button = Button;
+exports.Calendar = Calendar;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
