@@ -2,7 +2,7 @@
 title: 图标
 group:
   title: 基础组件
-  order: 4
+  order: 1
   path: base
 ---
 

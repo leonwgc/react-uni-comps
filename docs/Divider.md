@@ -2,7 +2,7 @@
 title: 分割线
 group:
   title: 基础组件
-  order: 2
+  order: 1
   path: base
 ---
 

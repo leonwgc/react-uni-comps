@@ -2,7 +2,7 @@
 title: 1px边框容器
 group:
   title: 基础组件
-  order: 5
+  order: 1
   path: base
 ---
 

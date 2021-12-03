@@ -28,7 +28,7 @@
     "pub": "bash pub.sh",
     "start": "node pack",
     "dev": "vited start -p 9100",
-    "doc":"dumi dev"
+    "doc": "dumi dev"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
