@@ -18,7 +18,7 @@ export default function All() {
             <SoundOutlined /> Login
           </Space>
         }
-        description="login demo"
+        description="移动端登录风格"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Login')}
       ></Cell>
@@ -28,6 +28,7 @@ export default function All() {
             <SoundOutlined /> DatePicker
           </Space>
         }
+        description="年月日选择"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('DatePicker')}
       ></Cell>
@@ -37,6 +38,7 @@ export default function All() {
             <SoundOutlined /> Calendar
           </Space>
         }
+        description="移动端日历选择"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Calendar')}
       ></Cell>
@@ -46,6 +48,7 @@ export default function All() {
             <SoundOutlined /> WaitLoading
           </Space>
         }
+        description="防止spinner闪烁"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('WaitLoading')}
       ></Cell>
@@ -55,6 +58,7 @@ export default function All() {
             <SoundOutlined /> PopConfirm
           </Space>
         }
+        description="二次确认气泡框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PopConfirm')}
       ></Cell>
@@ -64,6 +68,7 @@ export default function All() {
             <SoundOutlined /> PopMenu
           </Space>
         }
+        description="弹出气泡框菜单"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PopMenu')}
       ></Cell>
@@ -73,6 +78,7 @@ export default function All() {
             <SoundOutlined /> Modal
           </Space>
         }
+        description="中间弹出对话框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Modal')}
       ></Cell>
@@ -82,6 +88,7 @@ export default function All() {
             <SoundOutlined /> Drawer
           </Space>
         }
+        description="上下左右抽屉"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Drawer')}
       ></Cell>
@@ -91,6 +98,7 @@ export default function All() {
             <SoundOutlined /> ImageViewer
           </Space>
         }
+        description="图片查看"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ImageViewer')}
       ></Cell>
@@ -100,6 +108,7 @@ export default function All() {
             <SoundOutlined /> Avatar
           </Space>
         }
+        description="头像显示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Avatar')}
       ></Cell>
@@ -109,6 +118,7 @@ export default function All() {
             <SoundOutlined /> Badge
           </Space>
         }
+        description="右上角添加标记"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Badge')}
       ></Cell>
@@ -118,6 +128,7 @@ export default function All() {
             <SoundOutlined /> AlertDialog
           </Space>
         }
+        description="当做window.alert使用"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AlertDialog')}
       ></Cell>
@@ -127,6 +138,7 @@ export default function All() {
             <SoundOutlined /> Notify
           </Space>
         }
+        description="顶部弹出提示信息"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Notify')}
       ></Cell>
@@ -136,6 +148,7 @@ export default function All() {
             <SoundOutlined /> Toast
           </Space>
         }
+        description="中间弹出黑色背景提示信息"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Toast')}
       ></Cell>
@@ -145,6 +158,7 @@ export default function All() {
             <SoundOutlined /> Radio
           </Space>
         }
+        description="单选"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Radio')}
       ></Cell>
@@ -154,17 +168,9 @@ export default function All() {
             <SoundOutlined /> RadioGroup
           </Space>
         }
+        description="单选组"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('RadioGroup')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
-            <SoundOutlined /> CheckboxGroup
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('CheckboxGroup')}
       ></Cell>
       <Cell
         title={
@@ -172,15 +178,28 @@ export default function All() {
             <SoundOutlined /> Checkbox
           </Space>
         }
+        description="多选"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Checkbox')}
       ></Cell>
       <Cell
         title={
           <Space>
+            <SoundOutlined /> CheckboxGroup
+          </Space>
+        }
+        description="多选组"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('CheckboxGroup')}
+      ></Cell>
+
+      <Cell
+        title={
+          <Space>
             <SoundOutlined /> WaterMark
           </Space>
         }
+        description="文字/图片水印"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('WaterMark')}
       ></Cell>
@@ -190,6 +209,7 @@ export default function All() {
             <SoundOutlined /> ProgressCircle
           </Space>
         }
+        description="环形进度"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ProgressCircle')}
       ></Cell>
@@ -199,6 +219,7 @@ export default function All() {
             <SoundOutlined /> Slide FullPage
           </Space>
         }
+        description="全屏滑动幻灯片示例"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SlideFullPage')}
       ></Cell>
@@ -208,6 +229,7 @@ export default function All() {
             <SoundOutlined /> Slide
           </Space>
         }
+        description="幻灯片"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Slide')}
       ></Cell>
@@ -217,6 +239,7 @@ export default function All() {
             <SoundOutlined /> NoticeList
           </Space>
         }
+        description="垂直滚动信息提示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NoticeList')}
       ></Cell>
@@ -226,6 +249,7 @@ export default function All() {
             <SoundOutlined /> NoticeBar
           </Space>
         }
+        description="水平滚动信息提示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NoticeBar')}
       ></Cell>
@@ -235,6 +259,7 @@ export default function All() {
             <SoundOutlined /> Rate
           </Space>
         }
+        description="评价几颗星"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Rate')}
       ></Cell>
@@ -244,6 +269,7 @@ export default function All() {
             <SoundOutlined /> Signature/Landscape
           </Space>
         }
+        description="横屏手写签名"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SignatureLandscape')}
       ></Cell>
@@ -253,6 +279,7 @@ export default function All() {
             <SoundOutlined /> Signature
           </Space>
         }
+        description="手写签名"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Signature')}
       ></Cell>
@@ -262,6 +289,7 @@ export default function All() {
             <SoundOutlined /> Input
           </Space>
         }
+        description="输入"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Input')}
       ></Cell>
@@ -271,6 +299,7 @@ export default function All() {
             <SoundOutlined /> Steps
           </Space>
         }
+        description="步骤条"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Steps')}
       ></Cell>
@@ -280,6 +309,7 @@ export default function All() {
             <SoundOutlined /> Picker
           </Space>
         }
+        description="移动端触屏选择器"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Picker')}
       ></Cell>
@@ -319,6 +349,7 @@ export default function All() {
             <SoundOutlined /> NumberKeyboard
           </Space>
         }
+        description="数字键盘"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NumberKeyboard')}
       ></Cell>
@@ -328,6 +359,7 @@ export default function All() {
             <SoundOutlined /> PasswordInput
           </Space>
         }
+        description="自定义密码输入框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PasswordInput')}
       ></Cell>
@@ -337,6 +369,7 @@ export default function All() {
             <SoundOutlined /> TransitionElement
           </Space>
         }
+        description="过渡动画"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
@@ -346,6 +379,7 @@ export default function All() {
             <SoundOutlined /> Pullup & ScrollTop
           </Space>
         }
+        description="上拉无限加载"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Pullup')}
       ></Cell>
@@ -364,6 +398,7 @@ export default function All() {
             <SoundOutlined /> AnimationElement
           </Space>
         }
+        description="动画"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
@@ -373,6 +408,7 @@ export default function All() {
             <SoundOutlined /> LazyloadImage
           </Space>
         }
+        description="替换img,实现懒加载"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('LazyloadImage')}
       ></Cell>
