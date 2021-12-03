@@ -246,6 +246,10 @@ const routes = [
     path: '/DatePicker',
     component: lazy(() => import('./DatePicker')),
   },
+  {
+    path: '/login',
+    component: lazy(() => import('./Login')),
+  },
 ];
 
 export default routes;
