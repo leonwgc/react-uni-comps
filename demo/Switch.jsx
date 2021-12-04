@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'react-uni-comps/styled';
-import { Space, Switch } from 'react-uni-comps';
+import { Space, Switch, styled } from 'react-uni-comps';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {

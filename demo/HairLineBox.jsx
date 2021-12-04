@@ -2,9 +2,9 @@ import React from 'react';
 import { HairLineBox, Divider, styled } from 'react-uni-comps';
 
 const StyledHairline = styled(HairLineBox)`
-  width: 300px;
+  width: 200px;
   height: 200px;
-  margin-left: 30px;
+  margin-left: 16px;
   &::after {
     border-radius: 20px;
   }
@@ -19,7 +19,11 @@ export default function App() {
       <StyledHairline position="all" color="red" />
 
       <Divider>left</Divider>
-      <HairLineBox position="left" color="blue" style={{ width: 200, height: 150 }} />
+      <HairLineBox
+        position="left"
+        color="blue"
+        style={{ width: 200, height: 150, marginLeft: 20 }}
+      />
 
       <Divider>right</Divider>
       <HairLineBox position="right" color="#00bc8d" style={{ width: 200, height: 150 }} />
