@@ -1,6 +1,7 @@
 ---
 title: 开关
 order: 16
+mobile: true
 group:
   title: 操作反馈
   order: 1

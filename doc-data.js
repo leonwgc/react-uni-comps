@@ -49,10 +49,12 @@ module.exports = [
       {
         name: 'Popover',
         title: '带箭头的浮层',
+        mobile: false,
       },
       {
         name: 'Drag',
         title: '拖拽',
+        mobile: false,
       },
       {
         name: 'Tooltip',

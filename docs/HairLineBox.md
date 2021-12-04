@@ -1,6 +1,7 @@
 ---
 title: 一像素边框div
 order: 2
+mobile: true
 group:
   title: 基础组件
   order: 0

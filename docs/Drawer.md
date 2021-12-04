@@ -1,6 +1,7 @@
 ---
 title: 抽屉
 order: 20
+mobile: true
 group:
   title: 操作反馈
   order: 1

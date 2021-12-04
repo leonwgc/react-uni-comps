@@ -1,6 +1,7 @@
 ---
 title: 动作面板
 order: 10
+mobile: true
 group:
   title: 操作反馈
   order: 1

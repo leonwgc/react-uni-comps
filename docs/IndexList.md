@@ -1,6 +1,7 @@
 ---
 title: 索引列表
 order: 9
+mobile: true
 group:
   title: 数据录入
   order: 3

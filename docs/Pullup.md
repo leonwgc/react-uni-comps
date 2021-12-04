@@ -1,6 +1,7 @@
 ---
 title: 上拉加载
 order: 0
+mobile: true
 group:
   title: 操作反馈
   order: 1

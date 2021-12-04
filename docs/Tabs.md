@@ -1,6 +1,7 @@
 ---
 title: 选项卡
 order: 0
+mobile: true
 group:
   title: 导航组件
   order: 2

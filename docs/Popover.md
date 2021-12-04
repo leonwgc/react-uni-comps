@@ -1,6 +1,7 @@
 ---
 title: 带箭头的浮层
 order: 3
+mobile: false
 group:
   title: 操作反馈
   order: 1

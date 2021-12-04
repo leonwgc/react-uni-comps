@@ -1,6 +1,7 @@
 ---
 title: 图标
 order: 4
+mobile: true
 group:
   title: 基础组件
   order: 0

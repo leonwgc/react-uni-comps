@@ -1,6 +1,7 @@
 ---
 title: 通告栏
 order: 14
+mobile: true
 group:
   title: 操作反馈
   order: 1

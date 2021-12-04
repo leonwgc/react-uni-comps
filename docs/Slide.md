@@ -1,6 +1,7 @@
 ---
 title: 轮播
 order: 11
+mobile: true
 group:
   title: 操作反馈
   order: 1

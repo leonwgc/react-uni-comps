@@ -1,6 +1,7 @@
 ---
 title: 拖拽
 order: 4
+mobile: false
 group:
   title: 操作反馈
   order: 1

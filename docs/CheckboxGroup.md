@@ -1,6 +1,7 @@
 ---
 title: 复选框列表
 order: 1
+mobile: true
 group:
   title: 数据录入
   order: 3

@@ -1,6 +1,7 @@
 ---
 title: 自定义密码输入框
 order: 5
+mobile: true
 group:
   title: 数据录入
   order: 3

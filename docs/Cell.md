@@ -1,6 +1,7 @@
 ---
 title: 列表项
 order: 0
+mobile: true
 group:
   title: 数据展示
   order: 4

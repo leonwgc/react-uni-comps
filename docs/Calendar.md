@@ -1,6 +1,7 @@
 ---
 title: 移动端日历
 order: 13
+mobile: true
 group:
   title: 数据录入
   order: 3
