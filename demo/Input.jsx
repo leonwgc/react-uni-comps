@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from '../src';
+import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from 'react-uni-comps';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
 

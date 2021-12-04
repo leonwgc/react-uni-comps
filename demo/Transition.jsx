@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransitionElement, Space, Button, styled } from '../src';
+import { TransitionElement, Space, Button, styled } from 'react-uni-comps';
 
 const StyledUCButton = styled(Button)`
   height: 100px;

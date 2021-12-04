@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cell, Icon, IconArrow, styled } from '../src';
+import { Cell, Icon, IconArrow, styled } from 'react-uni-comps';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js'); // misc-icons
 

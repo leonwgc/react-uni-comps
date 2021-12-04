@@ -5,7 +5,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from './RouteConfig';
 import 'dayjs/locale/zh-cn';
 import dayjs from 'dayjs';
-import { ThemeProvider } from '../src';
+import { ThemeProvider } from 'react-uni-comps';
 import './App.less';
 
 dayjs.locale('zh-cn');

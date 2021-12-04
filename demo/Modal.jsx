@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { styled, Space, Modal, Button, isMobile } from '../src';
+import { styled, Space, Modal, Button, isMobile } from 'react-uni-comps';
 
 const StyledModal = styled(Modal)`
   color: #1a1a1a;

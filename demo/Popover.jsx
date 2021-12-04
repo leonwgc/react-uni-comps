@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Space, Popover, Button, styled } from '../src';
+import { Space, Popover, Button, styled } from 'react-uni-comps';
 
 const StyledPopover = styled(Popover)`
   font-size: 14px;

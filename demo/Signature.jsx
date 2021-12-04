@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Signature, Divider, Button, Space } from '../src';
+import { Signature, Divider, Button, Space } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();

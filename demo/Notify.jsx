@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Space, Button, Notify, Icon, isMobile } from '../src';
+import { Space, Button, Notify, Icon, isMobile } from 'react-uni-comps';
 import { InfoCircleFilled } from '@ant-design/icons';
 
 export default function App() {

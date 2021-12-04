@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CopyToClipboard, Button, Space, Toast, AlertDialog } from '../src';
+import { CopyToClipboard, Button, Space, Toast, AlertDialog } from 'react-uni-comps';
 
 export default function App() {
   const [value, setValue] = useState(new Date());

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Toast, Button, Picker, Space, styled } from '../src';
+import { Toast, Button, Picker, Space, styled } from 'react-uni-comps';
 
 //#region  data
 

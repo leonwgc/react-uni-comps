@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Button, styled, Toast } from '../src';
+import { Space, Button, styled, Toast } from 'react-uni-comps';
 import { SearchOutlined } from '@ant-design/icons';
 
 const StyledContent = styled.div`

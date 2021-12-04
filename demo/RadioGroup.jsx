@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, Button, RadioGroup, styled } from '../src';
+import { Divider, Button, RadioGroup, styled } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   .uc-checkbox {

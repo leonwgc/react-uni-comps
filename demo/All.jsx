@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Space, Cell, IconArrow, Icon } from '../src';
+import { Space, Cell, IconArrow, Icon } from 'react-uni-comps';
 
 const SoundOutlined = () => <Icon type="uc-icon-zujian" />;
 

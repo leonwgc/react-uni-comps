@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActionSheet, Button } from '../src';
+import { ActionSheet, Button } from 'react-uni-comps';
 
 export default function App() {
   const actions = [

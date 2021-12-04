@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Toast, Icon, PopConfirm } from '../src';
+import { Button, Toast, Icon, PopConfirm } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();

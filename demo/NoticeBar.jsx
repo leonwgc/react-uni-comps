@@ -1,5 +1,5 @@
 import React from 'react';
-import { NoticeBar, Icon } from '../src';
+import { NoticeBar, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (

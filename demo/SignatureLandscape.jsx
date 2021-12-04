@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Signature, Button, Space, styled } from '../src';
+import { Signature, Button, Space, styled } from 'react-uni-comps';
 
 // simulate landscape mode
 

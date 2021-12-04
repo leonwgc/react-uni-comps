@@ -1,6 +1,6 @@
 import React from 'react';
-import styled  from '../src/styled';
-import { ErrorBoundary, Button } from '../src';
+import styled  from 'react-uni-comps/styled';
+import { ErrorBoundary, Button } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   padding: 20px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rate, Divider, Space, Toast, styled } from '../src';
+import { Rate, Divider, Space, Toast, styled } from 'react-uni-comps';
 import { HeartOutlined } from '@ant-design/icons';
 
 const StyledRate = styled(Rate)`

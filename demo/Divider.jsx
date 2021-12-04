@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Divider } from '../src';
+import { Divider } from 'react-uni-comps';
 
 export default function App() {
   return (

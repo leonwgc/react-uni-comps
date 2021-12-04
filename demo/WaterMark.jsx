@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { WaterMark, Button, Space } from '../src';
+import { WaterMark, Button, Space } from 'react-uni-comps';
 
 const textProps = {
   content: 'react-uni-comps',

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Affix, Button } from '../src';
+import { Affix, Button } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();

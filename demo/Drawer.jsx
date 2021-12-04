@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal, AlertDialog } from '../src';
+import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal, AlertDialog } from 'react-uni-comps';
 
 // example to implement Drawer
 

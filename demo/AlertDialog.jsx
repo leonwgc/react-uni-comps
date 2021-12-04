@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SoundOutlined } from '@ant-design/icons';
-import { AlertDialog, Space, Button, Toast } from '../src';
+import { AlertDialog, Space, Button, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [visible, setVisible] = useState(false);

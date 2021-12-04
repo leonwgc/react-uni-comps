@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SmileOutlined, GithubOutlined } from '@ant-design/icons';
-import { Steps, Divider, Button, Icon, styled } from '../src';
+import { Steps, Divider, Button, Icon, styled } from 'react-uni-comps';
 
 const StyledSteps = styled(Steps)`
   &.vertical {

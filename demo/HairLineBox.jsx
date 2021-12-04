@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Form } from 'antd';
-import styled  from '../src/styled';
-import { HairLineBox, Divider } from '../src';
+import styled  from 'react-uni-comps/styled';
+import { HairLineBox, Divider } from 'react-uni-comps';
 
 const StyledHairline = styled(HairLineBox)`
   width: 300px;

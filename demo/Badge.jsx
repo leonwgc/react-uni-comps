@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Space, styled } from '../src';
+import { Badge, Space, styled } from 'react-uni-comps';
 import { DownloadOutlined } from '@ant-design/icons';
 
 const Box = styled.div`

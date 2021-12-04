@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Image } from 'antd';
-import { Skeleton, Switch, Space, styled } from '../src';
+import { Skeleton, Switch, Space, styled } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   .article {

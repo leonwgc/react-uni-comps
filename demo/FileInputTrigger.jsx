@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from '../src';
+import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from 'react-uni-comps';
 import { PlusOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
