@@ -1,13 +1,11 @@
 ---
-title: 弹出带箭头的浮层
-order: 5
-mobile: false
+title: 带箭头的浮层
+order: 3
 group:
   title: 操作反馈
-  order: 2
-  path: action
+  order: 1
+  path: feedback
 ---
 
-<code src="../demo/Popover.jsx" ></code>
-
+<code src="../demo/Popover.jsx"></code>
 <API src="../src/Popover.tsx"></API>

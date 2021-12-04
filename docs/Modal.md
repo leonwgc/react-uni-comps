@@ -1,8 +1,11 @@
 ---
 title: 对话框
-# mobile: false
+order: 21
+group:
+  title: 操作反馈
+  order: 1
+  path: feedback
 ---
 
-<code src="../demo/Modal.jsx" ></code>
-
+<code src="../demo/Modal.jsx"></code>
 <API src="../src/Modal.tsx"></API>

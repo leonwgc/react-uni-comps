@@ -1,12 +1,11 @@
 ---
 title: 弹框
-order: 2
+order: 1
 group:
   title: 操作反馈
-  order: 2
-  path: action
+  order: 1
+  path: feedback
 ---
 
-<code src="../demo/Popup.jsx" ></code>
-
+<code src="../demo/Popup.jsx"></code>
 <API src="../src/Popup.tsx"></API>
