@@ -119,14 +119,17 @@ module.exports = [
       {
         name: 'Drawer',
         title: '抽屉',
+        mobile: false,
       },
       {
         name: 'Modal',
         title: '对话框',
+        mobile: false,
       },
       {
         name: 'PopConfirm',
         title: '气泡确认框',
+        mobile: false,
       },
     ],
   },

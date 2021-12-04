@@ -17,9 +17,7 @@ const StyledModal = styled(Modal)`
 
 const StyleMobileModal = styled(Modal)`
   width: 297px;
-  height: 139px;
   border-radius: 12px;
-  padding: 30px 21px 24px;
 
   .body {
     font-size: 15px;
@@ -28,6 +26,7 @@ const StyleMobileModal = styled(Modal)`
     text-align: center;
     color: #262626;
     line-height: 22px;
+    padding: 20px;
   }
 
   .uc-btn {

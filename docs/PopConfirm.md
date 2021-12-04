@@ -1,7 +1,7 @@
 ---
 title: 气泡确认框
 order: 22
-mobile: true
+mobile: false
 group:
   title: 操作反馈
   order: 1
