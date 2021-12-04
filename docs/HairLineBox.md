@@ -1,6 +1,6 @@
 ---
 title: 一像素边框div
-order: 3
+order: 2
 group:
   title: 基础组件
   order: 0

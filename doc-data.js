@@ -11,10 +11,10 @@ module.exports = [
         name: 'Divider',
         title: '分割线',
       },
-      {
-        name: 'Space',
-        title: '间距容器',
-      },
+      //   {
+      //     name: 'Space',
+      //     title: '间距容器',
+      //   },
       {
         name: 'HairLineBox',
         title: '一像素边框div',
@@ -125,6 +125,108 @@ module.exports = [
       {
         name: 'PopConfirm',
         title: '气泡确认框',
+      },
+    ],
+  },
+  {
+    title: '导航组件',
+    path: 'nav',
+    comps: [
+      {
+        name: 'Tabs',
+        title: '选项卡',
+      },
+      {
+        name: 'Affix',
+        title: '固钉',
+      },
+    ],
+  },
+  {
+    title: '数据录入',
+    path: 'data',
+    comps: [
+      {
+        name: 'Checkbox',
+        title: '复选框',
+      },
+      {
+        name: 'CheckboxGroup',
+        title: '复选框列表',
+      },
+      {
+        name: 'Radio',
+        title: '单选框',
+      },
+      {
+        name: 'RadioGroup',
+        title: '单选框列表',
+      },
+      {
+        name: 'Input',
+        title: '输入框',
+      },
+      {
+        name: 'PasswordInput',
+        title: '自定义密码输入框',
+      },
+      {
+        name: 'NumberKeyboard',
+        title: '数字键盘',
+      },
+      {
+        name: 'Picker',
+        title: '移动端选择器',
+      },
+      {
+        name: 'Rate',
+        title: '评分',
+      },
+      {
+        name: 'IndexList',
+        title: '索引列表',
+      },
+      {
+        name: 'FileInputTrigger',
+        title: '上传',
+      },
+      {
+        name: 'Signature',
+        title: '手写签名',
+      },
+      {
+        name: 'DatePicker',
+        title: '移动端日期选择',
+      },
+      {
+        name: 'Calendar',
+        title: '移动端日历',
+      },
+    ],
+  },
+  {
+    title: '数据展示',
+    path: 'display',
+    comps: [
+      {
+        name: 'Cell',
+        title: '列表项',
+      },
+      {
+        name: 'Badge',
+        title: '徽标',
+      },
+      {
+        name: 'WaterMark',
+        title: '水印',
+      },
+      {
+        name: 'Text',
+        title: '文本省略',
+      },
+      {
+        name: 'ImageViewer',
+        title: '图片查看',
       },
     ],
   },

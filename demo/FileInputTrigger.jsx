@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Image } from 'antd';
 import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from '../src';
 import { PlusOutlined } from '@ant-design/icons';
 

@@ -1,6 +1,6 @@
 ---
 title: 头像
-order: 4
+order: 3
 group:
   title: 基础组件
   order: 0

@@ -1,6 +1,6 @@
 ---
 title: 图标
-order: 5
+order: 4
 group:
   title: 基础组件
   order: 0
