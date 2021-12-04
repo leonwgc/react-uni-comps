@@ -9,8 +9,11 @@ export default defineConfig({
   title: repo,
   favicon: logo,
   logo: logo,
-  outputPath: 'dist',
+  outputPath: 'docs',
   mode: 'doc',
+  resolve: {
+    includes: ['mdx'],
+  },
   hash: true,
   webpack5: {},
   // Because of using GitHub Pages
