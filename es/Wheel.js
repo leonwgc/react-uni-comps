@@ -64,7 +64,7 @@ var Wheel = function Wheel(props) {
       yRef.current = y_1;
       setTimeout(function () {
         if (elRef.current) {
-          elRef.current.style.transform = "translate3d(0," + y_1 + "px,0)";
+          elRef.current.style.transform = "translate3d(0,".concat(y_1, "px,0)");
         }
       });
     }
@@ -118,7 +118,7 @@ var Wheel = function Wheel(props) {
     onTouchEnd: onTouchEnd,
     onPressMove: function onPressMove(e) {
       yRef.current += e.deltaY;
-      elRef.current.style.transform = "translate3d(0," + yRef.current + "px,0)";
+      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     className: clsx('uc-wheel', className)

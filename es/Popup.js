@@ -88,7 +88,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
           x = _a.left,
           y = _a.top;
 
-      var origin = mousePosition.x - x + "px " + (mousePosition.y - y) + "px 0";
+      var origin = "".concat(mousePosition.x - x, "px ").concat(mousePosition.y - y, "px 0");
       dialogEl.style.transformOrigin = origin;
       dialogEl.style.transitionDuration = '0s'; // flip: hey yoo reflow
 

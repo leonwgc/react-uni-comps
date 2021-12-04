@@ -48,7 +48,7 @@ var AnimationElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useVisibleObserve(elRef, setIsInViewport);
 
   var newStyle = __assign(__assign({}, style), {
-    animation: duration + " " + timingFunc + " " + delay + " " + iterationCount + " " + direction + " " + fillMode + " " + (isInViewport ? 'running' : 'paused') + " " + name
+    animation: "".concat(duration, " ").concat(timingFunc, " ").concat(delay, " ").concat(iterationCount, " ").concat(direction, " ").concat(fillMode, " ").concat(isInViewport ? 'running' : 'paused', " ").concat(name)
   });
 
   var count = React.Children.count(children);

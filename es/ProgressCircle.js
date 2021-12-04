@@ -60,7 +60,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style = props.style,
       rest = __rest(props, ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"]);
 
-  var theme = useTheme();
+  var theme = useTheme() || {};
   var color = props.color || theme.color || vars.primary;
   return /*#__PURE__*/React.createElement(StyledProgressCircle, __assign({
     className: clsx(className, 'uc-progress-circle'),
@@ -87,7 +87,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
     cx: "60",
     cy: "60",
     stroke: color,
-    strokeDasharray: progress * 314 / 100 + ",314",
+    strokeDasharray: "".concat(progress * 314 / 100, ",314"),
     strokeWidth: strokeWidth,
     fill: "none",
     transform: "rotate(-90,60,60)",

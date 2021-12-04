@@ -140,11 +140,11 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
     if (direction === 'horizontal') {
       var x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
-      wrapElRef.current.style.transform = "translate3d(" + x + "px, 0, 0)";
+      wrapElRef.current.style.transform = "translate3d(".concat(x, "px, 0, 0)");
       s.x = x;
     } else {
       var y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
-      wrapElRef.current.style.transform = "translate3d(0, " + y + "px, 0)";
+      wrapElRef.current.style.transform = "translate3d(0, ".concat(y, "px, 0)");
       s.y = y;
     }
 
@@ -255,14 +255,14 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
         }
 
         s.x += e.deltaX;
-        wrapElRef.current.style.transform = "translate3d(" + s.x + "px, 0, 0)";
+        wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
       } else {
         if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
           return;
         }
 
         s.y += e.deltaY;
-        wrapElRef.current.style.transform = "translate3d(0, " + s.y + "px, 0)";
+        wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
       }
     }
   }, /*#__PURE__*/React.createElement("div", {

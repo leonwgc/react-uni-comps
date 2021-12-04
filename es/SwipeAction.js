@@ -61,7 +61,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
     v.x = x;
     v.el.style.transitionProperty = 'transform';
     setTimeout(function () {
-      v.el.style.transform = "" + transformStr;
+      v.el.style.transform = "".concat(transformStr);
     });
   }, [thisRef]);
   useEffect(function () {
@@ -119,7 +119,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
             setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(-" + v.rightWidth + "px,0,0)", -1 * v.rightWidth);
+          startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
 
           if (!isOpen) {
             setIsOpen(true);
@@ -135,7 +135,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
             setIsOpen(false);
           }
         } else {
-          startTransform("translate3d(" + v.leftWidth + "px,0,0)", v.leftWidth);
+          startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
 
           if (!isOpen) {
             setIsOpen(true);
@@ -148,9 +148,9 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       v.x += e.deltaX; // x<0:swipe left & show right
 
       if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
-        v.el.style.transform = "translate3d(" + v.x + "px,0,0)";
+        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
       } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
-        v.el.style.transform = "translate3d(" + v.x + "px,0,0)";
+        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
       }
     }
   }, /*#__PURE__*/React.createElement("div", {
