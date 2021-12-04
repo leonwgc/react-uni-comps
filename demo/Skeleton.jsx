@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Image } from 'antd';
-import { Skeleton, Switch, Space, styled } from 'react-uni-comps';
+import { Skeleton, Switch, Space, styled, Avatar } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   .article {
@@ -66,9 +65,9 @@ export default function SkeletonDemo() {
       >
         <div className="article">
           <div className="l">
-            <Avatar
-              src={<Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-            />
+            <Avatar>
+              <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            </Avatar>
           </div>
           <div className="r">
             <div> 自 2017 年以来，暴雪的每月平均活跃用户基数从 4600 万降至 2600 万</div>

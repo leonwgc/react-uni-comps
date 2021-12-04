@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
 
-// refer to https://ant.design/components/divider-cn/ antd Divider
-
 type Props = {
   /** 分割线水平还是垂直 */
   type?: 'horizontal' | 'vertical';
@@ -21,7 +19,7 @@ type Props = {
 
 const StyledDivider = styled.div`
   box-sizing: border-box;
-  margin: 0;
+  margin: 16px 0;
   padding: 0;
   color: #000000d9;
   font-size: 14px;

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Badge, Space, styled } from 'react-uni-comps';
-import { DownloadOutlined } from '@ant-design/icons';
+import { Badge, Space, styled, Icon } from 'react-uni-comps';
 
 const Box = styled.div`
   background: #eee;
@@ -26,7 +25,7 @@ export default function App() {
         <Badge>
           <Box />
         </Badge>
-        <Badge content={<DownloadOutlined />}>
+        <Badge content={<Icon type="uc-icon-daoru" />}>
           <Box />
         </Badge>
         <Badge content={'hello'} badgeStyle={{ backgroundColor: '#ccc', color: 'red', padding: 5 }}>

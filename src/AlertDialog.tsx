@@ -167,7 +167,6 @@ const StyledAlertDialog = styled(Popup)`
   .content {
     font-size: 14px;
     line-height: 20px;
-    min-height: 46px;
     max-height: calc(100vh - 256px);
     padding: 24px 0 32px;
     flex: 1;

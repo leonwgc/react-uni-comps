@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Space, Button, Notify, Icon, isMobile } from 'react-uni-comps';
-import { InfoCircleFilled } from '@ant-design/icons';
 
 export default function App() {
   return (
-    <div style={{ margin: '100px 50px' }}>
+    <div style={{ margin: '100px 16px' }}>
       <Space size={16} direction="vertical">
         <Button type="primary" onClick={() => Notify.show('明天不上学')}>
           Notify.show

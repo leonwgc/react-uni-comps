@@ -432,11 +432,11 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> ImageUpload
+            <SoundOutlined /> FileInputTrigger
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('ImageUpload')}
+        onClick={() => gotoPage('FileInputTrigger')}
       ></Cell>
       <Cell
         title={

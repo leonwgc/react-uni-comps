@@ -1,6 +1,5 @@
 import React from 'react';
-import { Space, Button, styled, Toast } from 'react-uni-comps';
-import { SearchOutlined } from '@ant-design/icons';
+import { Space, Button, styled, Toast, Icon } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   .uc-btn {
@@ -86,17 +85,17 @@ export default function App() {
         </Button>
 
         <Button type="default" circle>
-          <SearchOutlined />
+          <Icon type="uc-icon-sousuo" />
         </Button>
 
         <Button>
-          <SearchOutlined />
+          <Icon type="uc-icon-sousuo" />
         </Button>
-        <Button type="primary" icon={<SearchOutlined />}>
+        <Button type="primary" icon={<Icon type="uc-icon-sousuo" />}>
           搜索
         </Button>
 
-        <Button icon={<SearchOutlined />}>搜索</Button>
+        <Button icon={<Icon type="uc-icon-sousuo" />}>搜索</Button>
 
         <Button color="#00bc8d">hello</Button>
         <Button color="#00bc8d" dashed>

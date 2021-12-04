@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SmileOutlined, GithubOutlined } from '@ant-design/icons';
 import { Steps, Divider, Button, Icon, styled } from 'react-uni-comps';
 
 const StyledSteps = styled(Steps)`
@@ -58,13 +57,17 @@ export default function App() {
         direction="vertical"
         current={index}
         steps={[
-          { title: '步骤1', description: '步骤1desc', icon: <SmileOutlined /> },
+          { title: '步骤1', description: '步骤1desc', icon: <Icon type="uc-icon-tips" /> },
           {
             title: '步骤2',
             description: '',
             icon: <Icon type="uc-icon-tick" style={{ fontSize: 22 }} />,
           },
-          { title: '步骤3', description: '步骤3desc', icon: <GithubOutlined /> },
+          {
+            title: '步骤3',
+            description: '步骤3desc',
+            icon: <Icon type="uc-icon-biaoqianlan_wode" />,
+          },
           { title: '步骤4', description: '步骤4desc' },
         ]}
       ></StyledSteps>

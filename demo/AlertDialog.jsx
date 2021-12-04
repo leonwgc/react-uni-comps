@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SoundOutlined } from '@ant-design/icons';
 import { AlertDialog, Space, Button, Toast } from 'react-uni-comps';
 
 export default function App() {
@@ -7,7 +6,7 @@ export default function App() {
   const [visible1, setVisible1] = useState(false);
 
   return (
-    <div style={{ margin: 60 }}>
+    <div style={{ margin: 16 }}>
       <Space direction="vertical">
         <Button onClick={() => setVisible(true)}>show Alert dialog</Button>
         <Button onClick={() => setVisible1(true)}>show mobile Alert dialog</Button>
@@ -34,7 +33,7 @@ export default function App() {
             )
           }
         >
-          show Alert dialog via static show ok/cancel/bg color
+          show Alert dialog ok/cancel/bg color
         </Button>
         <Button
           onClick={() =>
@@ -52,7 +51,7 @@ export default function App() {
             )
           }
         >
-          show Alert dialog via static show onConfirm
+          show Alert dialog via static
         </Button>
       </Space>
 
@@ -71,11 +70,7 @@ export default function App() {
           }, 1000);
         }}
         onConfirm={() => Toast.show({ content: 'confirmed' })}
-        title={
-          <span>
-            <SoundOutlined /> 提示
-          </span>
-        }
+        title={'提示'}
         visible={visible}
         wrapStyle={{ width: 600, height: 400 }}
         onClose={() => setVisible(false)}
