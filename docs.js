@@ -26,12 +26,12 @@ data.map((group, idx) => {
     item.groupTitle = group.title;
     item.mobile = typeof item.mobile === 'boolean' ? item.mobile : true;
 
-    const fileName = path.resolve(__dirname, `./docs/${item.name}.md`);
+    const fileName = path.resolve(__dirname, `./mdx/${item.name}.md`);
 
     if (fs.existsSync(fileName)) {
       fs.unlinkSync(fileName);
     }
 
-    fs.writeFileSync(path.resolve(__dirname, `./docs/${item.name}.md`), ejs.render(tpl, item));
+    fs.writeFileSync(path.resolve(__dirname, `./mdx/${item.name}.md`), ejs.render(tpl, item));
   });
 });
