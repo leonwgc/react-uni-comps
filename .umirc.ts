@@ -16,13 +16,29 @@ export default defineConfig({
   },
   hash: true,
   webpack5: {},
+  chainWebpack(memo, { env, webpack, createCSSRule }) {
+    memo.cache = {
+      type: 'filesystem',
+      name: 'dumi',
+      buildDependencies: {
+        config: [__filename],
+      },
+      store: 'pack',
+    };
+    memo.plugins.delete('friendly-error');
+    memo.plugins.delete('copy');
+  },
   // Because of using GitHub Pages
   base: `/${repo}/`,
   publicPath: `/${repo}/`,
   styles: [
     `
-    #root .__dumi-default-menu-header {
+    #root .__dumi-default-menu-header p {
       display:none;
+    }
+    #root .__dumi-default-menu-header h1 {
+      font-size: 24px;
+      margin: 16px auto;
     }
     `,
   ],
