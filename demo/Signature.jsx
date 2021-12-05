@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Signature, Button, Space } from 'react-uni-comps';
+import { Signature, Button, Space, Divider } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
@@ -7,6 +7,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <Divider>竖屏手写签名</Divider>
       <Signature ref={ref} style={{ width: '100%', height: 300, border: '1px solid #eee' }} />
       <Space style={{ display: 'flex', justifyContent: 'center', margin: '24px auto' }}>
         <Button

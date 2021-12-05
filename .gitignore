@@ -4,3 +4,4 @@ node_modules
 *.log
 output
 .umi
+.umi-production
