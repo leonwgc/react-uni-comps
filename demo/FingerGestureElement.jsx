@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FingerGestureElement, Toast } from '../src';
+import { FingerGestureElement, Toast } from 'react-uni-comps';
 import dog from './images/dog.jpg';
 
 export default function App() {

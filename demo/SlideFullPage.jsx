@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slide, AnimationElement, styled } from '../src';
+import { Slide, AnimationElement, styled } from 'react-uni-comps';
 import 'animate.css';
 
 const StyledSlidePage = styled.div`

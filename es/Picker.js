@@ -39,12 +39,14 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-var __spreadArray = this && this.__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) {
-    to[j] = from[i];
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return to;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 import React, { useState, useMemo } from 'react';
@@ -53,7 +55,7 @@ import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import Wheel from './Wheel';
 import clsx from 'clsx';
-var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    width: 100%;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 /**
  *  convert data to 2 dimension array ;
@@ -158,7 +160,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
         var _a;
 
         if (list.length) {
-          var newVal = __spreadArray([], val);
+          var newVal = __spreadArray([], val, true);
 
           var i = cols - 1;
 
@@ -210,7 +212,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
           nextIndex++;
         }
 
-        var newVal = __spreadArray([], val);
+        var newVal = __spreadArray([], val, true);
 
         nextIndex = idx - 1;
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tooltip, Button, Space, styled, WaitLoading, Spinner } from '../src';
+import { Tooltip, Button, Space, styled, WaitLoading, Spinner } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState(false);

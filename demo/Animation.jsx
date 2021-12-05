@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimationElement, styled, Space, Button } from '../src';
+import { AnimationElement, styled, Space, Button } from 'react-uni-comps';
 import 'animate.css';
 import bird from './images/bird.png';
 

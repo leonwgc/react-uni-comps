@@ -72,8 +72,8 @@ var WaterMark = function WaterMark(props) {
     var canvas = document.createElement('canvas');
     var ratio = window.devicePixelRatio;
     var ctx = canvas.getContext('2d');
-    var canvasWidth = (gapX + width) * ratio + "px";
-    var canvasHeight = (gapY + height) * ratio + "px";
+    var canvasWidth = "".concat((gapX + width) * ratio, "px");
+    var canvasHeight = "".concat((gapY + height) * ratio, "px");
     var markWidth = width * ratio;
     var markHeight = height * ratio;
     canvas.setAttribute('width', canvasWidth);
@@ -100,7 +100,7 @@ var WaterMark = function WaterMark(props) {
         ctx.translate(markWidth / 2, markHeight / 2);
         ctx.rotate(Math.PI / 180 * Number(rotate));
         var markSize = Number(fontSize) * ratio;
-        ctx.font = fontStyle + " normal " + fontWeight + " " + markSize + "px/" + markHeight + "px " + fontFamily;
+        ctx.font = "".concat(fontStyle, " normal ").concat(fontWeight, " ").concat(markSize, "px/").concat(markHeight, "px ").concat(fontFamily);
         ctx.fillStyle = fontColor;
         ctx.fillText(content, 0, 0);
         ctx.restore();
@@ -114,8 +114,8 @@ var WaterMark = function WaterMark(props) {
     className: clsx('uc-watermark', className),
     style: __assign({
       zIndex: zIndex,
-      backgroundSize: gapX + width + "px",
-      backgroundImage: "url('" + base64Url + "')"
+      backgroundSize: "".concat(gapX + width, "px"),
+      backgroundImage: "url('".concat(base64Url, "')")
     }, style)
   });
 };

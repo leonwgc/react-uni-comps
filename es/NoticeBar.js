@@ -80,8 +80,8 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var text = contentRef.current;
     if (container.offsetWidth >= text.offsetWidth) return;
     var timeout = window.setTimeout(function () {
-      text.style.transitionDuration = Math.round(text.offsetWidth / speed) + "s";
-      text.style.transform = "translateX(-" + text.offsetWidth + "px)";
+      text.style.transitionDuration = "".concat(Math.round(text.offsetWidth / speed), "s");
+      text.style.transform = "translateX(-".concat(text.offsetWidth, "px)");
     }, delay);
     return function () {
       window.clearTimeout(timeout);
@@ -95,9 +95,9 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return;
     }
 
-    text.style.transform = "translateX(" + container.offsetWidth + "px)";
-    text.style.transitionDuration = Math.round((container.offsetWidth + text.offsetWidth) / speed) + "s";
-    text.style.transform = "translateX(-" + text.offsetWidth + "px)"; // eslint-disable-next-line react-hooks/exhaustive-deps
+    text.style.transform = "translateX(".concat(container.offsetWidth, "px)");
+    text.style.transitionDuration = "".concat(Math.round((container.offsetWidth + text.offsetWidth) / speed), "s");
+    text.style.transform = "translateX(-".concat(text.offsetWidth, "px)"); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [v]);
   return /*#__PURE__*/React.createElement(StyledNoticeBar, __assign({}, rest, {
     ref: ref,

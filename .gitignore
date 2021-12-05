@@ -1,7 +1,7 @@
 
 node_modules
-*.html
 .eslintcache
 *.log
 output
 .umi
+.umi-production

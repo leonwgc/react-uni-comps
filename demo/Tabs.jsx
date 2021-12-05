@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space, styled } from '../src';
+import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
 import 'animate.css';
 import './Tab.less';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Space, Toast, Button, Icon } from '../src';
+import { Spinner, Space, Toast, Button, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (

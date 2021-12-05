@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from '../src';
+import { Avatar } from 'react-uni-comps';
 
 export default function App() {
   return (

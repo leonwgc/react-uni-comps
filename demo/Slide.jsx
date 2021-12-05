@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Slide, Switch, Divider, Button, Cell, Toast } from '../src';
+import { Slide, Switch, Divider, Button, Cell, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [autoPlay, setAutoPlay] = useState(false);

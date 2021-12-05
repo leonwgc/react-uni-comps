@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexList, Toast } from '../src';
+import { IndexList, Toast } from 'react-uni-comps';
 
 export default function App() {
   const data = [

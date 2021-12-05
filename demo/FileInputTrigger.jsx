@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image } from 'antd';
-import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from '../src';
-import { PlusOutlined } from '@ant-design/icons';
+import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from 'react-uni-comps';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -112,9 +110,7 @@ export default function App() {
           }}
         >
           <StyledImageUpload>
-            <PlusOutlined
-              style={{ width: 20, height: 20, color: '#909399', fontSize: 20, marginTop: 25 }}
-            />
+            <Icon type="uc-icon-jia2" style={{ color: '#909399', fontSize: 20, marginTop: 25 }} />
             <div style={{ marginTop: 14, color: '#4d4d4d', fontSize: 14 }}>上传图片</div>
           </StyledImageUpload>
         </FileInputTrigger>

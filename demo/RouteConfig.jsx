@@ -35,12 +35,12 @@ const routes = [
     component: lazy(() => import('./Popup')),
   },
   {
-    path: '/Tab',
-    component: lazy(() => import('./Tab')),
+    path: '/Tabs',
+    component: lazy(() => import('./Tabs')),
   },
   {
     path: '/Skeleton',
-    component: lazy(() => import('./SkeletonDemo')),
+    component: lazy(() => import('./Skeleton')),
   },
   {
     path: '/Checkbox',
@@ -71,8 +71,8 @@ const routes = [
     component: lazy(() => import('./Divider')),
   },
   {
-    path: '/ImageUpload',
-    component: lazy(() => import('./ImageUpload')),
+    path: '/FileInputTrigger',
+    component: lazy(() => import('./FileInputTrigger')),
   },
   {
     path: '/Waypoint',

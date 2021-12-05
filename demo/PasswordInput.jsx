@@ -1,5 +1,5 @@
 import React, { useState, useref, useRef } from 'react';
-import { PasswordInput, Button, Toast } from '../src';
+import { PasswordInput, Button, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState('');

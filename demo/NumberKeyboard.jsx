@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NumberKeyboard, Toast, PasswordInput } from '../src';
+import { NumberKeyboard, Toast, PasswordInput } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState('');

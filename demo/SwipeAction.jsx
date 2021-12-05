@@ -1,5 +1,5 @@
 import React from 'react';
-import { SwipeAction, HairLineBox, Toast, Divider } from '../src';
+import { SwipeAction, HairLineBox, Toast, Divider } from 'react-uni-comps';
 
 export default function App() {
   return (

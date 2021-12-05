@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, PopMenu, styled, useUpdateLayoutEffect } from '../src';
+import { Button, PopMenu, styled, useUpdateLayoutEffect } from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;

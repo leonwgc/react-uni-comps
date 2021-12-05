@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ImageViewer, Space } from '../src';
+import { Button, ImageViewer, Space } from 'react-uni-comps';
 
 const demoImages = [
   'https://t7.baidu.com/it/u=1956604245,3662848045&fm=193&f=GIF',

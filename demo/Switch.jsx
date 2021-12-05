@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styled  from '../src/styled';
-import { Space, Switch } from '../src';
-import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Space, Switch, styled } from 'react-uni-comps';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {

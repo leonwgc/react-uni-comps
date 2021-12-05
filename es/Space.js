@@ -86,7 +86,7 @@ function SpaceItem(_a) {
     className: className,
     style: style
   }, children), index < latestIndex && split && /*#__PURE__*/React.createElement("span", {
-    className: className + "-split",
+    className: "".concat(className, "-split"),
     style: style
   }, split));
 }

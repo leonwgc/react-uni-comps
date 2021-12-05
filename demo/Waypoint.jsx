@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled  from '../src/styled';
-import { Divider, Waypoint, Button } from '../src';
+import styled  from 'react-uni-comps/styled';
+import { Divider, Waypoint, Button } from 'react-uni-comps';
 
 export default function App() {
   const [index, setIndex] = useState(0);

@@ -9,16 +9,16 @@ yarn add react-uni-comps
 
 ### 特点
 
-1. 支持按需加载
-2. 支持桌面和移动端
-3. 支持 js 动态切换主题色
-4. 只支持 react>=16.8 版本，使用 hooks 实现
+1. 支持按需加载，体积小
+2. 同时支持pc和mobile web，开发pc和mobile同一套组件，一致的开发体验
+3. 得益于css-in-js技术,支持js动态切换主题色
+4. 只支持 react>=16.8，完全使用hooks实现, 拥抱react未来
 5. 样式采用 css-in-js 方案 (styled-components)
-6. 只提供最基础的样式,方便扩展,二次开发/定制属于自己的组件库
-7. 使用 typescript 编写，良好的类型提示
-8. 体积小，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用
+6. 只提供最基础的框架样式,方便二次开发/定制自己的组件风格
+7. 使用TypeScript编写，内置 TypeScript 类型定义文件，良好的智能提示
+8. 体积小，组件按需加载，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，用到什么才加载什么，无需配置
 9. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
-10. 导出了组件库内部实现的一些工具函数/react hooks 函数等，比如 debounce, throttle
+10. 导出了组件库内部实现的一些工具函数/hooks函数等，比如 debounce, throttle,usePrevious, useInViewport
 
 ### 适用场景
 
@@ -30,7 +30,7 @@ yarn add react-uni-comps
 </ThemeProvider>
 ```
 
-2. 需要完全自定义组件样式，antd, zarm 等组件库提供了完整的样式风格，antd 偏后台，zarm 等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义组件，本库组件只提供最基础的样式，组件最终的样子需要自定实现，例如 modal 弹窗组件
+2. 需要完全自定义组件样式，antd, zarm 等组件库提供了完整的样式风格，antd 偏后台，zarm 等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义组件，本库组件只提供最基础的样式，组件最终的样子需要自己实现，例如 modal 弹窗组件
 
 ```js
 <Modal
@@ -55,11 +55,11 @@ yarn add react-uni-comps
 </Modal>
 ```
 
-3. 不想使用 css/less/sass，偏向 css-in-js 方案的开发者
+3. 不想使用css/less/sass，偏向 css-in-js 技术的开发者
 
-4. 开发同时支持 pc 和 h5 的页面，本库组件同时支持 pc 和 h5，体积小巧
+4. 开发同时支持pc和h5的页面，pc和h5同一套组件库，同一套技术方案，一致的开发体验，本库组件同时支持 pc 和 h5，按需加载，体积小巧
 
-5. 当前使用的组件库不包含某些组件，本库包含的
+5. 当前使用的组件库不包含某些组件或者某些组件很难使用，本库包含的/易用的，
 
 ### 注意点
 

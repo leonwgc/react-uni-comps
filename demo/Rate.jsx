@@ -1,6 +1,5 @@
 import React from 'react';
-import { Rate, Divider, Space, Toast, styled } from '../src';
-import { HeartOutlined } from '@ant-design/icons';
+import { Rate, Divider, Space, Toast, styled, Icon } from 'react-uni-comps';
 
 const StyledRate = styled(Rate)`
   .char {
@@ -45,7 +44,7 @@ export default function App() {
         <StyledRate
           allowHalf
           defaultValue={3}
-          char={<HeartOutlined />}
+          char={<Icon type="uc-icon-yonghu" />}
           onChange={(v) => Toast.show({ content: v, duration: 800 })}
         />
         <StyledRate

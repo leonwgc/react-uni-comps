@@ -30,12 +30,12 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var nodeRef = useRef();
   var year = dateMonth.getFullYear();
   var month = dateMonth.getMonth();
-  var monthKey = year + "-" + month;
+  var monthKey = "".concat(year, "-").concat(month);
   var mountedRef = useRef(false);
   useLayoutEffect(function () {
     // auto anchor to value date / now
     var target = value[0] || new Date();
-    var key = target.getFullYear() + "-" + target.getMonth();
+    var key = "".concat(target.getFullYear(), "-").concat(target.getMonth());
 
     if (key === monthKey) {
       nodeRef.current.scrollIntoView({
@@ -58,7 +58,7 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     };
   });
-  var title = (locale === null || locale === void 0 ? void 0 : locale.yearText) === '年' ? year + locale.yearText + locale.months[month] : (locale === null || locale === void 0 ? void 0 : locale.months[month]) + " " + year; // 日期状态: 选中，区间
+  var title = (locale === null || locale === void 0 ? void 0 : locale.yearText) === '年' ? year + locale.yearText + locale.months[month] : "".concat(locale === null || locale === void 0 ? void 0 : locale.months[month], " ").concat(year); // 日期状态: 选中，区间
 
   var checkStatus = useCallback(function (date) {
     var disabled = date < utils.cloneDate(min, 'd', 0) || date > utils.cloneDate(max, 'd', 0);
@@ -82,11 +82,11 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var status = checkStatus(date);
     var txt = date && (dateRender === null || dateRender === void 0 ? void 0 : dateRender(date)) || '';
     return /*#__PURE__*/React.createElement("li", {
-      key: year + "-" + month + "-" + day,
+      key: "".concat(year, "-").concat(month, "-").concat(day),
       className: clsx("day", (_a = {
         'd6': (day + firstDay) % 7 === 0,
         'd7': (day + firstDay) % 7 === 1
-      }, _a["day--disabled"] = status.disabled, _a["day--today"] = isToday, _a["day--selected"] = status.isSelected, _a["day--range"] = status.isRange, _a['range-start'] = status.rangeStart, _a['range-end'] = status.rangeEnd, _a["firstday-" + firstDay] = day === 1 && firstDay, _a)),
+      }, _a["day--disabled"] = status.disabled, _a["day--today"] = isToday, _a["day--selected"] = status.isSelected, _a["day--range"] = status.isRange, _a['range-start'] = status.rangeStart, _a['range-end'] = status.rangeEnd, _a["firstday-".concat(firstDay)] = day === 1 && firstDay, _a)),
       onClick: function onClick() {
         return !status.disabled && date && (onDateClick === null || onDateClick === void 0 ? void 0 : onDateClick(date));
       }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { Toast, Button, DatePicker, styled } from '../src';
+import { Toast, Button, DatePicker, styled } from 'react-uni-comps';
 
 const StyledPicker = styled(DatePicker)`
   .header {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Space, Popup, Button, AlertDialog, styled } from '../src';
+import { Space, Popup, Button, AlertDialog, styled } from 'react-uni-comps';
 
 const StyleedPopupBottom = styled(Popup)`
   height: 50vh;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cell, Switch, Toast, Calendar } from '../src';
+import { Cell, Switch, Toast, Calendar } from 'react-uni-comps';
 import dayjs from 'dayjs';
 
 export default function App() {

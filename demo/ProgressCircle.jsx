@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProgressCircle, Button, Icon, styled } from '../src';
+import { ProgressCircle, Button, Icon, styled } from 'react-uni-comps';
 
 const StyledProgressCircle = styled(ProgressCircle)`
   .content {

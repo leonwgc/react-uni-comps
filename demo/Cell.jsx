@@ -14,7 +14,7 @@ import {
   styled,
   useCountdown,
   Icon,
-} from '../src';
+} from 'react-uni-comps';
 import useBgColor from './hooks/useBgColor';
 
 const StyledApp = styled.div`

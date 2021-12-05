@@ -39,12 +39,14 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-var __spreadArray = this && this.__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) {
-    to[j] = from[i];
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
   }
-
-  return to;
+  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 import React, { useCallback } from 'react';
@@ -82,7 +84,7 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
 
-    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, __spreadArray([], value));
+    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, __spreadArray([], value, true));
   }, [value, onChangeRef]);
   return /*#__PURE__*/React.createElement(StyledCheckboxGroup, __assign({}, rest, {
     ref: ref,

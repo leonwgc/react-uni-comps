@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Toast, Icon, PopConfirm } from '../src';
+import { Button, Toast, Icon, PopConfirm } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
@@ -27,7 +27,7 @@ export default function App() {
         }}
         onCancel={() => Toast.show('you cancelled')}
       >
-        <a>删除</a>
+        <Button danger>删除</Button>
       </PopConfirm>
 
       <PopConfirm
@@ -38,7 +38,7 @@ export default function App() {
           Toast.show('发布中..');
         }}
       >
-        <Button style={{ position: 'fixed', left: 20, top: 300 }}>hello</Button>
+        <Button style={{ marginLeft: 16 }}>Publish</Button>
       </PopConfirm>
     </div>
   );

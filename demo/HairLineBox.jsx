@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { Input, Form } from 'antd';
-import styled  from '../src/styled';
-import { HairLineBox, Divider } from '../src';
+import React from 'react';
+import { HairLineBox, Divider, styled } from 'react-uni-comps';
 
 const StyledHairline = styled(HairLineBox)`
-  width: 300px;
+  width: 200px;
   height: 200px;
-  margin-left: 30px;
+  margin-left: 16px;
   &::after {
     border-radius: 20px;
   }
@@ -24,15 +22,11 @@ export default function App() {
       <HairLineBox
         position="left"
         color="blue"
-        style={{ width: 200, height: 150, margin: '0 30px' }}
+        style={{ width: 200, height: 150, marginLeft: 20 }}
       />
 
       <Divider>right</Divider>
-      <HairLineBox
-        position="right"
-        color="#00bc8d"
-        style={{ width: 200, height: 150, margin: '0 30px' }}
-      />
+      <HairLineBox position="right" color="#00bc8d" style={{ width: 200, height: 150 }} />
     </div>
   );
 }

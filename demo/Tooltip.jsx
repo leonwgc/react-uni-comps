@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button, Space, styled } from '../src';
+import { Tooltip, Button, Space, styled } from 'react-uni-comps';
 
 const StyledToolTip = styled(Tooltip)`
   font-size: 14px;

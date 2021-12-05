@@ -60,7 +60,7 @@ var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: ref,
     className: clsx('uc-icon', className, type)
   }), /*#__PURE__*/React.createElement("svg", __assign({}, SVGProps), /*#__PURE__*/React.createElement("use", {
-    xlinkHref: "#" + type
+    xlinkHref: "#".concat(type)
   })));
 });
 Icon.displayName = 'UC-Icon';

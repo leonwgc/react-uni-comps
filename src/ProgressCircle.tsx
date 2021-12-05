@@ -42,7 +42,7 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     style,
     ...rest
   } = props;
-  const theme = useTheme() as Record<string, unknown>;
+  const theme = (useTheme() as Record<string, unknown>) || {};
   const color = (props.color || theme.color || vars.primary) as string;
 
   return (
