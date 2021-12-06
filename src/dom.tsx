@@ -159,14 +159,14 @@ export const renderElement: (element: ReactElement, container?: HTMLElement) => 
 const cssRegex = /\.css$/i;
 const resourceRegex = /\.(css|js)$/i;
 const resourceLoadedList = new Set<string>();
-
 /**
  * 动态加载 js/css文件
  *
  * @param {string} url
+ * @param {*} [attrs={}] 额外的属性设置
  * @return {*}  {Promise<void>}
  */
-export const loadResource = (url: string): Promise<void> => {
+export const loadResource = (url: string, attrs = {}): Promise<void> => {
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
@@ -175,11 +175,17 @@ export const loadResource = (url: string): Promise<void> => {
         const isCss = cssRegex.test(url);
         if (isCss) {
           el = document.createElement('link');
+          Object.keys(attrs).map((key) => {
+            el.setAttribute(key, attrs[key]);
+          });
           el.rel = 'stylesheet';
           el.href = url;
         } else {
           el = document.createElement('script');
           el.setAttribute('data-namespace', url);
+          Object.keys(attrs).map((key) => {
+            el.setAttribute(key, attrs[key]);
+          });
           el.src = url;
         }
 
