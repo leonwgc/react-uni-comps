@@ -170,7 +170,7 @@ if (isBrowser) {
  *
  *  无须直接使用->
  *  对话框请使用 Modal
- *  上下左右请使用 Drawer
+ *  上下左右滑出请使用 Drawer
  *
  */
 const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
