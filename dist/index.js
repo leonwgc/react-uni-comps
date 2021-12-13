@@ -501,10 +501,13 @@ var resourceLoadedList = new Set();
  * 动态加载 js/css文件
  *
  * @param {string} url
+ * @param {*} [attrs={}] 额外的属性设置
  * @return {*}  {Promise<void>}
  */
 
 var loadResource = function loadResource(url) {
+  var attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
@@ -514,11 +517,17 @@ var loadResource = function loadResource(url) {
 
         if (isCss) {
           el = document.createElement('link');
+          Object.keys(attrs).map(function (key) {
+            el.setAttribute(key, attrs[key]);
+          });
           el.rel = 'stylesheet';
           el.href = url;
         } else {
           el = document.createElement('script');
           el.setAttribute('data-namespace', url);
+          Object.keys(attrs).map(function (key) {
+            el.setAttribute(key, attrs[key]);
+          });
           el.src = url;
         }
 
@@ -758,7 +767,15 @@ if (isBrowser) {
 
   document.documentElement.addEventListener('click', getClickPosition, true);
 }
-/** 弹框，可以从上，下，左，右，中间弹出 */
+/**
+ *
+ * 弹层，从上，下，左，右，中间弹出
+ *
+ *  无须直接使用->
+ *  对话框请使用 Modal
+ *  上下左右滑出请使用 Drawer
+ *
+ */
 
 
 var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -3800,37 +3817,30 @@ Toast.show = function (props) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$p = ["color", "style", "direction", "className", "size"];
+var _excluded$p = ["direction", "className"];
 
 var _templateObject$p;
 var StyledArrow = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])));
+var SVGProps$1 = {
+  width: '1em',
+  height: '1em',
+  fill: 'currentColor'
+};
 /** 箭头 */
 
 var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$color = props.color,
-      color = _props$color === void 0 ? 'currentColor' : _props$color,
-      style = props.style,
-      _props$direction = props.direction,
+  var _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       className = props.className,
-      _props$size = props.size,
-      size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$p);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-icon-arrow', className, _defineProperty({}, direction, direction)),
-    style: _objectSpread2(_objectSpread2({}, style), {}, {
-      width: size,
-      height: size
-    })
-  }), /*#__PURE__*/React__default['default'].createElement("svg", {
-    width: size,
-    height: size,
+    className: clsx__default['default']('uc-icon-arrow', className, _defineProperty({}, direction, direction))
+  }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 16 16",
-    fill: color
-  }, /*#__PURE__*/React__default['default'].createElement("path", {
+    viewBox: "0 0 16 16"
+  }, SVGProps$1), /*#__PURE__*/React__default['default'].createElement("path", {
     fillRule: "evenodd",
     d: "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
   })));
@@ -5317,7 +5327,8 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     backgroundColor: padColor
   }),
       padRef = _useSigPad.padRef,
-      _clear = _useSigPad.clear;
+      _clear = _useSigPad.clear,
+      download = _useSigPad.download;
 
   React.useImperativeHandle(ref, function () {
     return {
@@ -5326,7 +5337,8 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       },
       clear: function clear() {
         _clear();
-      }
+      },
+      download: download
     };
   });
   React.useLayoutEffect(function () {
@@ -6697,7 +6709,7 @@ var _templateObject$P;
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 
 //#region styled
-var StyledWrap$1 = styled__default['default'].div(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    box-shadow: ", ";\n    font-size: 14px;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), boxShadow, function (props) {
+var StyledWrap$1 = styled__default['default'].div(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    border-bottom: 1px solid ", ";\n    font-size: 14px;\n    color: #999;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), border, function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color__default['default'](props.theme.color);

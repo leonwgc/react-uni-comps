@@ -7,13 +7,16 @@ import * as vars from './vars';
 type SigPadRefProps = {
   getData: () => string;
   clear: () => void;
+  download: (fileName: string) => void;
 };
 
 type Props = {
+  /** 画布背景色 */
   padColor: '';
+  /** 画笔颜色 */
   penColor: '';
   className?: string;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 } & RefAttributes<SigPadRefProps>;
 
 const StyledSignature = styled.div`
@@ -27,7 +30,7 @@ const Signature = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
   const { padColor, penColor, className, ...rest } = props;
   const elRef = useRef<HTMLDivElement>();
   const canvasRef = useRef<HTMLCanvasElement>();
-  const { padRef, clear } = useSigPad(canvasRef, {
+  const { padRef, clear, download } = useSigPad(canvasRef, {
     useLandscape: false,
     penColor,
     backgroundColor: padColor,
@@ -40,6 +43,7 @@ const Signature = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
     clear: () => {
       clear();
     },
+    download,
   }));
 
   useLayoutEffect(() => {

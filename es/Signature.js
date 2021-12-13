@@ -62,7 +62,8 @@ var Signature = /*#__PURE__*/React.forwardRef(function (props, ref) {
     backgroundColor: padColor
   }),
       padRef = _a.padRef,
-      _clear = _a.clear;
+      _clear = _a.clear,
+      download = _a.download;
 
   useImperativeHandle(ref, function () {
     return {
@@ -71,7 +72,8 @@ var Signature = /*#__PURE__*/React.forwardRef(function (props, ref) {
       },
       clear: function clear() {
         _clear();
-      }
+      },
+      download: download
     };
   });
   useLayoutEffect(function () {

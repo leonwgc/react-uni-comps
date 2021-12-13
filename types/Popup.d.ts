@@ -27,6 +27,14 @@ export declare type Props = {
     /** pc端从点击元素飞出动画效果，默认true */
     flip?: boolean;
 };
-/** 弹框，可以从上，下，左，右，中间弹出 */
+/**
+ *
+ * 弹层，从上，下，左，右，中间弹出
+ *
+ *  无须直接使用->
+ *  对话框请使用 Modal
+ *  上下左右滑出请使用 Drawer
+ *
+ */
 declare const Popup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default Popup;

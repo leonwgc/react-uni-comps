@@ -8,7 +8,12 @@ export default function App() {
   return (
     <div className="app">
       <Divider>竖屏手写签名</Divider>
-      <Signature ref={ref} style={{ width: '100%', height: 300, border: '1px solid #eee' }} />
+      <Signature
+        ref={ref}
+        penColor="red"
+        padColor="lightgreen"
+        style={{ width: '100%', height: 300, border: '1px solid #eee' }}
+      />
       <Space style={{ display: 'flex', justifyContent: 'center', margin: '24px auto' }}>
         <Button
           onClick={() => {
@@ -25,6 +30,14 @@ export default function App() {
           }}
         >
           确定
+        </Button>
+        <Button
+          as="a"
+          onClick={() => {
+            ref.current.download('hello.jpg');
+          }}
+        >
+          下载
         </Button>
       </Space>
       <img ref={imgRef} />

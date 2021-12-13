@@ -50,7 +50,15 @@ if (isBrowser) {
 
   document.documentElement.addEventListener('click', getClickPosition, true);
 }
-/** 弹框，可以从上，下，左，右，中间弹出 */
+/**
+ *
+ * 弹层，从上，下，左，右，中间弹出
+ *
+ *  无须直接使用->
+ *  对话框请使用 Modal
+ *  上下左右滑出请使用 Drawer
+ *
+ */
 
 
 var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
