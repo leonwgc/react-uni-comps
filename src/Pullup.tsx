@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
-import Spinner from './Spinner';
+import Spin from './Spin';
 import Space from './Space';
 import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
@@ -22,6 +22,11 @@ const StyledWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
+
+    .uc-spin {
+      color: #999;
+    }
   }
 `;
 
@@ -68,7 +73,7 @@ const Pullup = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     fetchData,
     loadingText = (
       <Space>
-        <Spinner color="#999" />
+        <Spin />
         加载中
       </Space>
     ),

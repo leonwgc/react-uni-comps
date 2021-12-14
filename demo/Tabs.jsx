@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
+import { Spin, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
 import 'animate.css';
 import './Tab.less';
 
@@ -157,15 +157,13 @@ export default function App() {
         </Tabs.Tab>
         <Tabs.Tab title="title3">
           <StyledContent>
-            <AnimationElement name="fadeInRight" duration=".24s">
-              <Spinner color="red" size={48}></Spinner>
-            </AnimationElement>
+            <Spin style={{ color: 'red', fontSize: 48 }}></Spin>
           </StyledContent>
         </Tabs.Tab>
         <Tabs.Tab
           title={
             <span>
-              <Spinner></Spinner> loading...
+              <Spin /> loading...
             </span>
           }
         >

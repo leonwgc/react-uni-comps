@@ -55,8 +55,8 @@ const routes = [
     component: lazy(() => import('./Button')),
   },
   {
-    path: '/Spinner',
-    component: lazy(() => import('./Spinner')),
+    path: '/Spin',
+    component: lazy(() => import('./Spin')),
   },
   {
     path: '/Switch',

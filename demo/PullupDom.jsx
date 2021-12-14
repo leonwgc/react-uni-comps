@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop, Space, Spinner } from 'react-uni-comps';
+import { Button, Pullup, ScrollTop, Space, Spin } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
@@ -37,7 +37,7 @@ const PullupDom = () => {
         finishedText="no more data :("
         loadingText={
           <Space>
-            <Spinner /> loading
+            <Spin /> loading
           </Space>
         }
         fetchData={fetchData}

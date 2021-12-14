@@ -40,7 +40,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
-import Spinner from './Spinner';
+import Spin from './Spin';
 import Space from './Space';
 import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
@@ -72,7 +72,7 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   } : _b,
       fetchData = props.fetchData,
       _c = props.loadingText,
-      loadingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spinner, {
+      loadingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, {
     color: "#999"
   }), "\u52A0\u8F7D\u4E2D") : _c,
       _d = props.finishedText,

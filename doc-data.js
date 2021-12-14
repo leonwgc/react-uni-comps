@@ -113,7 +113,7 @@ module.exports = [
         title: '复制',
       },
       {
-        name: 'Spinner',
+        name: 'Spin',
         title: '加载中',
       },
       {

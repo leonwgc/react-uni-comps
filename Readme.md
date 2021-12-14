@@ -98,7 +98,7 @@ yarn add react-uni-comps
 - Switch (开关)
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
-- Spinner（加载中）
+- Spin（加载中指示器）
 - Drawer (抽屉)
 - Modal (对话框)
 - PopConfirm (弹出气泡式的确认框)
@@ -144,7 +144,7 @@ yarn add react-uni-comps
 - ThemeProvider (全局主题色配置)
 - LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 - LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
-- WaitLoading (延时显示 Loading/Spinner 防止闪烁)
+- WaitLoading (延时显示 Loading/Spin 防止闪烁)
 - ErrorBoudary （错误边界）
 - Waypoint （可见/不可见指示）
 

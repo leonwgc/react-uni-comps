@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Space, Toast, Button, Icon } from 'react-uni-comps';
+import { Spin, Space, Toast, Button, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -11,8 +11,8 @@ export default function App() {
             Toast.show({
               content: (
                 <div>
-                  <Space>
-                    <Spinner color="rgba(255,255,255,.5)" size={30} /> 加载中
+                  <Space style={{ fontSize: 24 }}>
+                    <Spin style={{ color: 'rgba(255,255,255,.5)' }} /> 加载中
                   </Space>
                 </div>
               ),

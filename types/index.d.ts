@@ -7,7 +7,7 @@ export { default as LazyLoadImage } from './LazyLoadImage';
 export { default as Pullup } from './Pullup';
 export { default as HairLineBox } from './HairLineBox';
 export { default as WaitLoading } from './WaitLoading';
-export { default as Spinner } from './Spinner';
+export { default as Spin } from './Spin';
 export { default as Tabs } from './Tabs';
 export { default as Cell } from './Cell';
 export { default as Skeleton } from './Skeleton';

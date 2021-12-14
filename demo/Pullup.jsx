@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop, Spinner } from 'react-uni-comps';
+import { Button, Pullup, ScrollTop, Spin } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
@@ -39,7 +39,7 @@ const App = () => {
         footer={(loading, finished) => {
           return loading ? (
             <div style={{ color: 'red', padding: '16px 12px', textAlign: 'center' }}>
-              <Spinner style={{ marginRight: 8, fontSize: 24 }} />
+              <Spin style={{ marginRight: 8, fontSize: 24 }} />
               加载中...
             </div>
           ) : finished ? (

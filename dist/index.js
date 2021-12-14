@@ -1218,9 +1218,9 @@ var _excluded$4 = ["size", "color", "className", "style"];
 
 var _templateObject$4;
 var StyledLoading = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])));
-/** Spinner 加载中 */
+/** Spin 加载中 */
 
-var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
+var Spin = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
   var _ref$size = _ref.size,
       size = _ref$size === void 0 ? 16 : _ref$size,
       color = _ref.color,
@@ -1230,14 +1230,14 @@ var Spinner = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, 
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](className, 'uc-spinner'),
+    className: clsx__default['default'](className, 'uc-Spin'),
     style: _objectSpread2({
       fontSize: size,
       color: color
     }, style)
   }));
 });
-Spinner.displayName = 'UC-Spinner';
+Spin.displayName = 'UC-Spin';
 
 /**
  * 监听元素是否在视口内
@@ -1344,7 +1344,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   } : _props$dataRender,
       fetchData = props.fetchData,
       _props$loadingText = props.loadingText,
-      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spinner, {
+      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, {
     color: "#999"
   }), "\u52A0\u8F7D\u4E2D") : _props$loadingText,
       _props$finishedText = props.finishedText,
@@ -2339,7 +2339,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost = props.ghost,
       rest = _objectWithoutProperties(props, _excluded$b);
 
-  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spinner, {
+  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spin, {
     color: type === 'primary' ? '#fff' : '#999'
   }) : null);
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
@@ -7120,7 +7120,7 @@ exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Slide = Slide;
 exports.Space = Space;
-exports.Spinner = Spinner;
+exports.Spin = Spin;
 exports.Steps = Steps;
 exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;

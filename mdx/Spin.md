@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Spinner.jsx"></code>
-<API src="../src/Spinner.tsx"></API>
+<code src="../demo/Spin.jsx"></code>
+<API src="../src/Spin.tsx"></API>

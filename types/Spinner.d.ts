@@ -7,6 +7,6 @@ declare type Props = {
     style?: React.CSSProperties;
     className?: string;
 };
-/** Spinner 加载中 */
-declare const Spinner: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
-export default Spinner;
+/** Spin 加载中 */
+declare const Spin: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+export default Spin;
