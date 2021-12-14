@@ -46,7 +46,7 @@ import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 16px;\n\n    .uc-spin {\n      color: #999;\n    }\n  }\n"], ["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 16px;\n\n    .uc-spin {\n      color: #999;\n    }\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _a = el.getBoundingClientRect(),
@@ -72,9 +72,7 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   } : _b,
       fetchData = props.fetchData,
       _c = props.loadingText,
-      loadingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, {
-    color: "#999"
-  }), "\u52A0\u8F7D\u4E2D") : _c,
+      loadingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u52A0\u8F7D\u4E2D") : _c,
       _d = props.finishedText,
       finishedText = _d === void 0 ? '我是有底线的' : _d,
       _e = props.finished,

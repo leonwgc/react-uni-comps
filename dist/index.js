@@ -1214,27 +1214,19 @@ var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 LazyLoadImage.displayName = 'UC-LazyLoadImage';
 
-var _excluded$4 = ["size", "color", "className", "style"];
+var _excluded$4 = ["className"];
 
 var _templateObject$4;
 var StyledLoading = styled__default['default'].div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  @-webkit-keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n  @keyframes loading {\n    0% {\n      -webkit-transform: rotate3d(0, 0, 1, 0deg);\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      -webkit-transform: rotate3d(0, 0, 1, 360deg);\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n  }\n\n  display: inline-flex;\n  position: relative;\n  width: 1em;\n  height: 1em;\n  vertical-align: middle;\n  animation: loading 1s steps(60, end) infinite;\n  :before,\n  :after {\n    content: '';\n    display: block;\n    width: 0.5em;\n    height: 1em;\n    box-sizing: border-box;\n    border: 0.125em solid;\n    border-color: currentColor;\n  }\n  :before {\n    border-right-width: 0;\n    border-top-left-radius: 1em;\n    border-bottom-left-radius: 1em;\n    mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, #000000 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n  :after {\n    border-left-width: 0;\n    border-top-right-radius: 1em;\n    border-bottom-right-radius: 1em;\n    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.3) 95%);\n  }\n"])));
-/** Spin 加载中 */
+/** 加载中指示器,继承父容器颜色和字体大小 */
 
 var Spin = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
-  var _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 16 : _ref$size,
-      color = _ref.color,
-      className = _ref.className,
-      style = _ref.style,
+  var className = _ref.className,
       rest = _objectWithoutProperties(_ref, _excluded$4);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](className, 'uc-Spin'),
-    style: _objectSpread2({
-      fontSize: size,
-      color: color
-    }, style)
+    className: clsx__default['default'](className, 'uc-spin')
   }));
 });
 Spin.displayName = 'UC-Spin';
@@ -1319,7 +1311,7 @@ function usePrevious(value) {
 var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "footer"];
 
 var _templateObject$5;
-var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 16px;\n\n    .uc-spin {\n      color: #999;\n    }\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -1344,9 +1336,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   } : _props$dataRender,
       fetchData = props.fetchData,
       _props$loadingText = props.loadingText,
-      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, {
-    color: "#999"
-  }), "\u52A0\u8F7D\u4E2D") : _props$loadingText,
+      loadingText = _props$loadingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D") : _props$loadingText,
       _props$finishedText = props.finishedText,
       finishedText = _props$finishedText === void 0 ? '我是有底线的' : _props$finishedText,
       _props$finished = props.finished,
@@ -2339,9 +2329,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost = props.ghost,
       rest = _objectWithoutProperties(props, _excluded$b);
 
-  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spin, {
-    color: type === 'primary' ? '#fff' : '#999'
-  }) : null);
+  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spin, null) : null);
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
     ref: ref,
     disabled: disabled,

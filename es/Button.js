@@ -65,9 +65,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ghost = props.ghost,
       rest = __rest(props, ["type", "disabled", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost"]);
 
-  var icon = props.icon || (loading ? /*#__PURE__*/React.createElement(Spin, {
-    color: type === 'primary' ? '#fff' : '#999'
-  }) : null);
+  var icon = props.icon || (loading ? /*#__PURE__*/React.createElement(Spin, null) : null);
   return /*#__PURE__*/React.createElement(StyledButton, __assign({}, rest, {
     ref: ref,
     disabled: disabled,
