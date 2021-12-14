@@ -46,7 +46,7 @@ import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledPullupContainer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"], ["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _a = el.getBoundingClientRect(),
@@ -80,23 +80,23 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _e = props.finished,
       finished = _e === void 0 ? false : _e,
       className = props.className,
-      _f = props.useWindowScroll,
-      useWindowScroll = _f === void 0 ? true : _f,
-      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"]);
+      useWindowScroll = props.useWindowScroll,
+      footer = props.footer,
+      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "footer"]);
 
-  var _g = useState(false),
-      loading = _g[0],
-      setLoading = _g[1];
+  var _f = useState(false),
+      loading = _f[0],
+      setLoading = _f[1];
 
   var waypointRef = useRef();
-  var containerRef = useRef();
-  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
+  var wrapRef = useRef();
+  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : wrapRef);
   var lastIsAtBottom = usePrevious(isAtBottom);
   useImperativeHandle(ref, function () {
-    return containerRef.current;
+    return wrapRef.current;
   });
   useEffect(function () {
-    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : containerRef.current))) {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : wrapRef.current))) {
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
@@ -105,26 +105,24 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
-  return /*#__PURE__*/React.createElement(StyledPullupContainer, __assign({}, rest, {
-    className: clsx('uc-pullup-container', className, {
+  return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
+    ref: wrapRef,
+    className: clsx('uc-pullup', className, {
       'dom-scroll': !useWindowScroll,
       'window-scroll': useWindowScroll
-    }),
-    ref: containerRef
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "uc-pullup-wrapper"
-  }, dataList.map(function (item, idx) {
+    })
+  }), dataList.map(function (item, idx) {
     return /*#__PURE__*/React.createElement(React.Fragment, {
       key: idx
     }, dataRender(item, idx));
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "uc-pullup-waypoint",
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "waypoint",
     style: {
       fontSize: 0
     },
     ref: waypointRef
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "uc-pullup-footer"
+  }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React.createElement("div", {
+    className: "footer"
   }, loading ? loadingText : finished ? finishedText : null));
 });
 Pullup.displayName = 'UC-Pullup';

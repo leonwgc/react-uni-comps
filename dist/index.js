@@ -1316,10 +1316,10 @@ function usePrevious(value) {
   return ref.current;
 }
 
-var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll"];
+var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "footer"];
 
 var _templateObject$5;
-var StyledPullupContainer = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  &.window-scroll {\n    .uc-pullup-footer {\n      padding-bottom: 34px;\n    }\n  }\n\n  .uc-pullup-footer {\n    padding: 16px 0;\n    display: flex;\n    color: #909090;\n    font-size: 14px;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .footer {\n    padding: 16px 0;\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -1352,8 +1352,8 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       _props$finished = props.finished,
       finished = _props$finished === void 0 ? false : _props$finished,
       className = props.className,
-      _props$useWindowScrol = props.useWindowScroll,
-      useWindowScroll = _props$useWindowScrol === void 0 ? true : _props$useWindowScrol,
+      useWindowScroll = props.useWindowScroll,
+      footer = props.footer,
       rest = _objectWithoutProperties(props, _excluded$5);
 
   var _useState = React.useState(false),
@@ -1362,14 +1362,14 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       setLoading = _useState2[1];
 
   var waypointRef = React.useRef();
-  var containerRef = React.useRef();
-  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
+  var wrapRef = React.useRef();
+  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : wrapRef);
   var lastIsAtBottom = usePrevious(isAtBottom);
   React.useImperativeHandle(ref, function () {
-    return containerRef.current;
+    return wrapRef.current;
   });
   React.useEffect(function () {
-    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : containerRef.current))) {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : wrapRef.current))) {
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
@@ -1378,26 +1378,24 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledPullupContainer, _extends({}, rest, {
-    className: clsx__default['default']('uc-pullup-container', className, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
+    ref: wrapRef,
+    className: clsx__default['default']('uc-pullup', className, {
       'dom-scroll': !useWindowScroll,
       'window-scroll': useWindowScroll
-    }),
-    ref: containerRef
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-pullup-wrapper"
-  }, dataList.map(function (item, idx) {
+    })
+  }), dataList.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
       key: idx
     }, dataRender(item, idx));
-  })), /*#__PURE__*/React__default['default'].createElement("span", {
-    className: "uc-pullup-waypoint",
+  }), /*#__PURE__*/React__default['default'].createElement("span", {
+    className: "waypoint",
     style: {
       fontSize: 0
     },
     ref: waypointRef
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-pullup-footer"
+  }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "footer"
   }, loading ? loadingText : finished ? finishedText : null));
 });
 Pullup.displayName = 'UC-Pullup';
@@ -4885,7 +4883,7 @@ Drawer.displayName = 'UC-Drawer';
 var _excluded$A = ["onChange", "data", "value", "className"];
 
 var _templateObject$z;
-var StyledWrap = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"])));
+var StyledWrap$1 = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"])));
 var itemHeight = 35;
 var firstItemY = 105;
 
@@ -4962,7 +4960,7 @@ var Wheel = function Wheel(props) {
       yRef.current += e.deltaY;
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
+  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
     className: clsx__default['default']('uc-wheel', className)
   }), data.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
@@ -6709,7 +6707,7 @@ var _templateObject$P;
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 
 //#region styled
-var StyledWrap$1 = styled__default['default'].div(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    border-bottom: 1px solid ", ";\n    font-size: 14px;\n    color: #999;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), border, function (props) {
+var StyledWrap$2 = styled__default['default'].div(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    border-bottom: 1px solid ", ";\n    font-size: 14px;\n    color: #999;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), border, function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color__default['default'](props.theme.color);
@@ -6794,7 +6792,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var arr = Array.from({
     length: utils.getMonthCount(startMonth, max)
   });
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-calendar', className)
   }), /*#__PURE__*/React__default['default'].createElement("ul", {
