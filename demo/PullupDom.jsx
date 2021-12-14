@@ -33,7 +33,6 @@ const PullupDom = () => {
     <>
       <Pullup
         style={{ height: '80vh', marginTop: 10 }}
-        useWindowScroll={false}
         dataList={list}
         finishedText="no more data :("
         loadingText={
@@ -45,7 +44,7 @@ const PullupDom = () => {
         finished={finished}
         dataRender={(data, index) => {
           return (
-            <div style={{ padding: '10px 0', borderBottom: '1px solid #e0e0e0' }}>
+            <div style={{ padding: '10px 16px', borderBottom: '1px solid #e0e0e0' }}>
               list {index + 1}
             </div>
           );

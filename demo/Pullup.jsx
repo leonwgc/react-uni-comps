@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop } from 'react-uni-comps';
+import { Button, Pullup, ScrollTop, Spinner } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
@@ -32,15 +32,25 @@ const App = () => {
   return (
     <>
       <Pullup
-        // dom滚动需要设置高度
-        // style={{ height: '80vh' }}
+        useWindowScroll
         dataList={list}
-        // finishedText="没有更多数据了!"
         fetchData={fetchData}
         finished={finished}
+        footer={(loading, finished) => {
+          return loading ? (
+            <div style={{ color: 'red', padding: '16px 12px', textAlign: 'center' }}>
+              <Spinner style={{ marginRight: 8, fontSize: 24 }} />
+              加载中...
+            </div>
+          ) : finished ? (
+            <div style={{ color: 'red', padding: '16px 12px', textAlign: 'center' }}>
+              没有数据了...
+            </div>
+          ) : null;
+        }}
         dataRender={(data, index) => {
           return (
-            <div style={{ padding: '10px 0', borderBottom: '1px solid #e0e0e0' }}>
+            <div style={{ padding: '10px 16px', borderBottom: '1px solid #e0e0e0' }}>
               list {index + 1}
             </div>
           );
