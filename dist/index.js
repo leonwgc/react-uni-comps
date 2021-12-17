@@ -511,7 +511,7 @@ var loadResource = function loadResource(url) {
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
-      return new Promise(function (resolve) {
+      return new Promise(function (resolve, reject) {
         var el;
         var isCss = cssRegex.test(url);
 
@@ -532,6 +532,7 @@ var loadResource = function loadResource(url) {
         }
 
         el.onload = resolve;
+        el.onerror = reject;
 
         if (isCss) {
           var head = document.getElementsByTagName('head')[0];
@@ -540,6 +541,8 @@ var loadResource = function loadResource(url) {
           document.body.appendChild(el);
         }
       });
+    } else {
+      return Promise.resolve();
     }
   } else {
     return Promise.reject('请输入js/css文件地址');

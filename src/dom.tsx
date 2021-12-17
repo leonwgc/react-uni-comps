@@ -170,7 +170,7 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         let el;
         const isCss = cssRegex.test(url);
         if (isCss) {
@@ -190,6 +190,7 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
         }
 
         el.onload = resolve;
+        el.onerror = reject;
 
         if (isCss) {
           const head = document.getElementsByTagName('head')[0];
@@ -199,7 +200,7 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
         }
       });
     } else {
-      Promise.resolve('已经加载');
+      return Promise.resolve();
     }
   } else {
     return Promise.reject('请输入js/css文件地址');

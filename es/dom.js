@@ -168,7 +168,7 @@ export var loadResource = function loadResource(url, attrs) {
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
-      return new Promise(function (resolve) {
+      return new Promise(function (resolve, reject) {
         var el;
         var isCss = cssRegex.test(url);
 
@@ -189,6 +189,7 @@ export var loadResource = function loadResource(url, attrs) {
         }
 
         el.onload = resolve;
+        el.onerror = reject;
 
         if (isCss) {
           var head = document.getElementsByTagName('head')[0];
@@ -198,7 +199,7 @@ export var loadResource = function loadResource(url, attrs) {
         }
       });
     } else {
-      Promise.resolve('已经加载');
+      return Promise.resolve();
     }
   } else {
     return Promise.reject('请输入js/css文件地址');
