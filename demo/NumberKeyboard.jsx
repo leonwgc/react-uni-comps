@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PageWrap from './common/PageWrap';
 import { NumberKeyboard, Toast, PasswordInput } from 'react-uni-comps';
 
 export default function App() {
@@ -10,12 +11,12 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
+    <PageWrap>
       <PasswordInput
         style={{ marginTop: 30 }}
         onFinish={() => {
           setVisible(false);
-          console.log('PasswordInput:' + v);
+
           setTimeout(() => {
             Toast.show({ content: '输入完成:' + v });
           }, 500);
@@ -36,6 +37,6 @@ export default function App() {
           setV(value);
         }}
       />
-    </div>
+    </PageWrap>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
 import { IndexList, Toast } from 'react-uni-comps';
 
 export default function App() {
@@ -61,11 +62,11 @@ export default function App() {
     },
   ];
   return (
-    <div className="app">
+    <PageWrap>
       <IndexList
         data={data}
         onItemClick={(item) => Toast.show({ content: item.value, duration: 1000 })}
       />
-    </div>
+    </PageWrap>
   );
 }

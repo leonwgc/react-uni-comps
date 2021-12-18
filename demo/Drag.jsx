@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PageWrap from './common/PageWrap';
 import { styled, Drag } from 'react-uni-comps';
 
 const StyledDiv = styled.div`
@@ -7,6 +8,11 @@ const StyledDiv = styled.div`
   border: 1px solid #00bd8c;
   font-size: 12px;
   color: #333;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 `;
 
 export default function App() {
@@ -14,28 +20,19 @@ export default function App() {
   const boundRef = useRef();
   const elNoBoundRef = useRef();
   return (
-    <div>
+    <PageWrap>
       <div
         ref={boundRef}
         style={{
           position: 'relative',
-          left: 100,
-          top: 100,
           border: '1px solid red',
+          left: 400,
           width: 300,
           height: 300,
         }}
       >
         <Drag onDragEnd={(e, p) => setPos(p)} boundRef={boundRef}>
-          <StyledDiv>
-            {pos ? (
-              <span>
-                top:{pos.top},left:{pos.left}
-              </span>
-            ) : (
-              'bound'
-            )}
-          </StyledDiv>
+          <StyledDiv>框内拖动</StyledDiv>
         </Drag>
       </div>
 
@@ -47,8 +44,8 @@ export default function App() {
           e.target.style.borderColor = 'green';
         }}
       >
-        <StyledDiv ref={elNoBoundRef}>no bound</StyledDiv>
+        <StyledDiv ref={elNoBoundRef}>任意拖动</StyledDiv>
       </Drag>
-    </div>
+    </PageWrap>
   );
 }

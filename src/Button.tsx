@@ -38,6 +38,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   margin: 0;
   display: inline-flex;
+  box-sizing: border-box;
   outline: 0;
   position: relative;
   align-items: center;

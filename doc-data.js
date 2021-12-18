@@ -95,26 +95,16 @@ module.exports = [
         name: 'Slide',
         title: '轮播',
       },
-      {
-        name: 'ProgressCircle',
-        title: '环形进度条',
-      },
-      {
-        name: 'FingerGestureElement',
-        title: '手势',
-      },
+
       {
         name: 'NoticeBar',
-        title: '通告栏',
+        title: '水平滚动通知栏',
       },
       {
         name: 'NoticeList',
-        title: '直滚动通知栏',
+        title: '垂直滚动通知栏',
       },
-      {
-        name: 'Switch',
-        title: '开关',
-      },
+
       {
         name: 'Skeleton',
         title: '骨架屏',
@@ -126,6 +116,10 @@ module.exports = [
       {
         name: 'Spin',
         title: '加载中',
+      },
+      {
+        name: 'FingerGestureElement',
+        title: '手势',
       },
     ],
   },
@@ -166,6 +160,10 @@ module.exports = [
       {
         name: 'Input',
         title: '输入框',
+      },
+      {
+        name: 'Switch',
+        title: '开关',
       },
       {
         name: 'PasswordInput',
@@ -228,6 +226,10 @@ module.exports = [
       {
         name: 'ImageViewer',
         title: '图片查看',
+      },
+      {
+        name: 'ProgressCircle',
+        title: '环形进度条',
       },
     ],
   },

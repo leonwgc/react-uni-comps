@@ -41,6 +41,10 @@ export default defineConfig({
       font-size: 24px;
       margin: 16px auto;
     }
+
+    #root .__dumi-default-mobile-demo-layout{
+      padding:0;
+    }
     `,
   ],
   themeConfig: {

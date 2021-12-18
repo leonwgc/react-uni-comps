@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import { Space, Switch, styled } from 'react-uni-comps';
-
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-}
-
-const StyledContent = styled.div`
-  div {
-    margin: 8px 0;
-  }
-`;
+import PageWrap from './common/PageWrap';
+import { Space, Switch } from 'react-uni-comps';
 
 export default function App() {
   const [c, setC] = useState(false);
 
   return (
-    <StyledContent>
-      <Space wrap>
-        <Switch checked={c} onChange={setC} />
-        {c ? 'checked' : 'unchecked'}
+    <PageWrap>
+      <Space wrap direction="vertical" size={16}>
+        <Space>
+          <Switch checked={c} onChange={setC} />
+          {c ? 'checked' : 'unchecked'}
+        </Space>
+
         <Switch checked />
-        <Switch defaultChecked /> defaultChecked
-        <Switch disabled defaultChecked />
+
+        <Space>
+          <Switch defaultChecked /> 默认打开
+        </Space>
+
+        <Space>
+          <Switch disabled defaultChecked /> 禁用
+        </Space>
+
+        <Space>
+          <Switch disabled /> 禁用
+        </Space>
       </Space>
-    </StyledContent>
+    </PageWrap>
   );
 }

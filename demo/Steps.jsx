@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { Steps, Divider, Button, Icon, styled } from 'react-uni-comps';
 
 const StyledSteps = styled(Steps)`
@@ -13,7 +14,7 @@ const StyedButton = styled(Button)`
   position: fixed;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 38px;
   bottom: 0;
   z-index: 10;
 `;
@@ -21,8 +22,8 @@ const StyedButton = styled(Button)`
 export default function App() {
   const [index, setIndex] = useState(0);
   return (
-    <div className="app">
-      <Divider>horizontal</Divider>
+    <PageWrap>
+      <Divider>水平</Divider>
       <Steps
         direction="horizontal"
         current={index}
@@ -33,7 +34,7 @@ export default function App() {
           { title: '步骤4', description: '步骤4desc' },
         ]}
       ></Steps>
-      <Divider>horizontal/dotStyle</Divider>
+      <Divider>水平/圈</Divider>
       <Steps
         direction="horizontal"
         dotStyle
@@ -45,14 +46,14 @@ export default function App() {
           { title: '步骤4', description: '步骤4desc' },
         ]}
       ></Steps>
-      <Divider>vertical/dotStyle</Divider>
+      <Divider>垂直</Divider>
       <Steps
         direction="vertical"
         dotStyle
         current={index}
         steps={[{ title: '步骤1' }, { title: '步骤2' }, { title: '步骤3' }, { title: '步骤4' }]}
       ></Steps>
-      <Divider>vertical</Divider>
+      <Divider>垂直1</Divider>
       <StyledSteps
         direction="vertical"
         current={index}
@@ -84,8 +85,8 @@ export default function App() {
           });
         }}
       >
-        next
+        下一步
       </StyedButton>
-    </div>
+    </PageWrap>
   );
 }

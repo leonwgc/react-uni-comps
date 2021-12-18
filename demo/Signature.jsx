@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PageWrap from './common/PageWrap';
 import { Signature, Button, Space, Divider } from 'react-uni-comps';
 
 export default function App() {
@@ -6,12 +7,12 @@ export default function App() {
   const imgRef = useRef();
 
   return (
-    <div className="app">
+    <PageWrap style={{ padding: 0 }}>
       <Divider>竖屏手写签名</Divider>
       <Signature
         ref={ref}
         penColor="red"
-        padColor="lightgreen"
+        padColor="#eee"
         style={{ width: '100%', height: 300, border: '1px solid #eee' }}
       />
       <Space style={{ display: 'flex', justifyContent: 'center', margin: '24px auto' }}>
@@ -41,6 +42,6 @@ export default function App() {
         </Button>
       </Space>
       <img ref={imgRef} />
-    </div>
+    </PageWrap>
   );
 }

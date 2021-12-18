@@ -77,7 +77,7 @@ export default function App() {
       <StyledModal
         visible={visible}
         closable
-        style={{ width: isMobile ? '70vw' : 600, height: 300, top: isMobile ? '40%' : 120 }}
+        style={{ width: isMobile ? '70vw' : 420, height: 160, top: isMobile ? '40%' : 120 }}
         onClose={onClose}
         header={'新建角色'}
         footer={

@@ -1,5 +1,5 @@
 ---
-title: 直滚动通知栏
+title: 垂直滚动通知栏
 order: 17
 mobile: true
 group:

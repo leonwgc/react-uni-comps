@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { Divider, Button, RadioGroup, styled } from 'react-uni-comps';
 
 const StyledContent = styled.div`
@@ -19,60 +20,29 @@ export default function App() {
   const [v, setV] = useState();
 
   return (
-    <StyledContent>
-      <Divider>只有受控模式</Divider>
+    <PageWrap>
+      <StyledContent>
+        <Divider>只有受控模式</Divider>
 
-      <RadioGroup options={options} value={value} onChange={(v) => setValue(v)}></RadioGroup>
+        <RadioGroup options={options} value={value} onChange={(v) => setValue(v)}></RadioGroup>
 
-      <Button
-        type="primary"
-        style={{ marginTop: 30 }}
-        onClick={() => setOptions((o) => o.concat('item' + (o.length + 1)))}
-      >
-        add option
-      </Button>
+        <Button
+          type="primary"
+          style={{ marginTop: 30 }}
+          onClick={() => setOptions((o) => o.concat('item' + (o.length + 1)))}
+        >
+          add option
+        </Button>
 
-      <Divider>disabled</Divider>
-      <RadioGroup
-        options={options}
-        disabled
-        value={value}
-        onChange={(v) => setValue(v)}
-      ></RadioGroup>
-      <Divider>label/value options </Divider>
-      <RadioGroup
-        options={options1}
-        value={v}
-        onChange={(v) => {
-          console.log(v);
-          setV(v);
-        }}
-      ></RadioGroup>
-
-      <Divider>label/value options </Divider>
-      <RadioGroup
-        options={options1}
-        value={v}
-        onChange={(v) => {
-          console.log(v);
-          setV(v);
-        }}
-      ></RadioGroup>
-
-      <Divider>button style </Divider>
-      <RadioGroup
-        button
-        options={options1}
-        value={v}
-        onChange={(v) => {
-          console.log(v);
-          setV(v);
-        }}
-      ></RadioGroup>
-
-      <div style={{ marginTop: 20 }}>
+        <Divider>disabled</Divider>
         <RadioGroup
-          button="fill"
+          options={options}
+          disabled
+          value={value}
+          onChange={(v) => setValue(v)}
+        ></RadioGroup>
+        <Divider>label/value options </Divider>
+        <RadioGroup
           options={options1}
           value={v}
           onChange={(v) => {
@@ -80,7 +50,40 @@ export default function App() {
             setV(v);
           }}
         ></RadioGroup>
-      </div>
-    </StyledContent>
+
+        <Divider>label/value options </Divider>
+        <RadioGroup
+          options={options1}
+          value={v}
+          onChange={(v) => {
+            console.log(v);
+            setV(v);
+          }}
+        ></RadioGroup>
+
+        <Divider>button style </Divider>
+        <RadioGroup
+          button
+          options={options1}
+          value={v}
+          onChange={(v) => {
+            console.log(v);
+            setV(v);
+          }}
+        ></RadioGroup>
+
+        <div style={{ marginTop: 20 }}>
+          <RadioGroup
+            button="fill"
+            options={options1}
+            value={v}
+            onChange={(v) => {
+              console.log(v);
+              setV(v);
+            }}
+          ></RadioGroup>
+        </div>
+      </StyledContent>
+    </PageWrap>
   );
 }

@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import { CopyToClipboard, Button, Space, Toast, AlertDialog } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { CopyToClipboard, Button, Space, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [value, setValue] = useState(new Date());
   return (
-    <div className="app">
+    <PageWrap>
       <Space direction="vertical" size={20}>
-        <CopyToClipboard text="hello">
-          <Button>hello</Button>
-        </CopyToClipboard>
-
-        <CopyToClipboard text="hi" onCopy={() => AlertDialog.show(null, 'copied')}>
-          <Button>hi</Button>
+        <CopyToClipboard text="1590163430x" onCopy={() => Toast.show('copied')}>
+          <Button type="primary">1590163430x</Button>
         </CopyToClipboard>
 
         <CopyToClipboard text={value.toString()} onCopy={() => Toast.show(value.toLocaleString())}>
-          <Button>{value.toLocaleDateString()}</Button>
+          <Button type="primary">{value.toLocaleDateString()}</Button>
         </CopyToClipboard>
 
-        <CopyToClipboard text="hello">
-          <Button onClick={() => Toast.show('hello')}>hello</Button>
+        <CopyToClipboard text="子元素带点击事件">
+          <Button type="primary" onClick={() => Toast.show('子元素带点击事件')}>
+            子元素带点击事件
+          </Button>
         </CopyToClipboard>
       </Space>
-    </div>
+    </PageWrap>
   );
 }

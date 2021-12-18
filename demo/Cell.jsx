@@ -15,11 +15,8 @@ import {
   useCountdown,
   Icon,
 } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
 import useBgColor from './hooks/useBgColor';
-
-const StyledApp = styled.div`
-  font-size: 14px;
-`;
 
 const options2 = [
   { label: '选项A', value: 0 },
@@ -44,7 +41,7 @@ export default function App() {
   useBgColor('#f7f8fa');
 
   return (
-    <StyledApp>
+    <PageWrap style={{ padding: 0 }}>
       <Divider style={{ margin: 0 }}>base</Divider>
       <Cell title="Cell title" content="Content"></Cell>
       <Cell
@@ -189,6 +186,6 @@ export default function App() {
           Toast.show(val);
         }}
       />
-    </StyledApp>
+    </PageWrap>
   );
 }

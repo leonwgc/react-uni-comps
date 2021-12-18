@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { ActionSheet, Button } from 'react-uni-comps';
 
 export default function App() {
@@ -14,8 +15,10 @@ export default function App() {
 
   const [visible, setVisible] = useState(false);
   return (
-    <>
-      <Button onClick={() => setVisible(true)}>ActionSheet 动作面板</Button>
+    <PageWrap>
+      <Button type="primary" block style={{ marginTop: 40 }} onClick={() => setVisible(true)}>
+        打开动作面板
+      </Button>
       <ActionSheet
         extra={'ActionSheet 动作面板'}
         cancelText="取消"
@@ -23,6 +26,6 @@ export default function App() {
         actions={actions}
         onClose={() => setVisible(false)}
       />
-    </>
+    </PageWrap>
   );
 }

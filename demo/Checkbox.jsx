@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { Space, Checkbox, Divider, Button, styled } from 'react-uni-comps';
 
 const StyledContent = styled.div`
@@ -24,41 +25,43 @@ export default function App() {
   const [checked, setChecked] = useState(true);
 
   return (
-    <StyledContent>
-      <StyledDivider>controlled</StyledDivider>
-      <Checkbox checked={checked} onChange={setChecked}>
-        controlled check
-      </Checkbox>
-      <Button onClick={() => setChecked(!checked)}>toggle checked outside</Button>
-      <StyledDivider>uncontrolled</StyledDivider>
-      <Checkbox defaultChecked onChange={(c) => console.log(c)}>
-        uncontrolled check
-      </Checkbox>
-
-      <StyledDivider>styled</StyledDivider>
-
-      <Checkbox className="styled" defaultChecked>
-        styled
-      </Checkbox>
-
-      <StyledDivider>others</StyledDivider>
-      <Space wrap>
-        <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
-          good
+    <PageWrap>
+      <StyledContent>
+        <StyledDivider>controlled</StyledDivider>
+        <Checkbox checked={checked} onChange={setChecked}>
+          controlled check
         </Checkbox>
-        <Checkbox
-          style={{ backgroundColor: 'red', borderRadius: '50%' }}
-          size={32}
-          defaultChecked
-          disabled
-        >
-          love u
+        <Button onClick={() => setChecked(!checked)}>toggle checked outside</Button>
+        <StyledDivider>uncontrolled</StyledDivider>
+        <Checkbox defaultChecked onChange={(c) => console.log(c)}>
+          uncontrolled check
         </Checkbox>
-        <Checkbox disabled>love u</Checkbox>
-        <Checkbox disabled checked>
-          love u
+
+        <StyledDivider>styled</StyledDivider>
+
+        <Checkbox className="styled" defaultChecked>
+          styled
         </Checkbox>
-      </Space>
-    </StyledContent>
+
+        <StyledDivider>others</StyledDivider>
+        <Space wrap>
+          <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
+            good
+          </Checkbox>
+          <Checkbox
+            style={{ backgroundColor: 'red', borderRadius: '50%' }}
+            size={32}
+            defaultChecked
+            disabled
+          >
+            love u
+          </Checkbox>
+          <Checkbox disabled>love u</Checkbox>
+          <Checkbox disabled checked>
+            love u
+          </Checkbox>
+        </Space>
+      </StyledContent>
+    </PageWrap>
   );
 }
