@@ -16,8 +16,8 @@ export declare type Props = {
     children: React.ReactElement;
     /** 弹框自定义偏移 */
     offset?: Offset;
-    /** 触发方式 */
-    trigger: 'click' | 'hover';
+    /** 触发方式, 默认click */
+    trigger?: 'click' | 'hover';
     /** 点击内容区域关闭,默认true */
     closeOnClick?: boolean;
     /** hover触发显示，关闭的timeout时间，默认100 (ms) */
