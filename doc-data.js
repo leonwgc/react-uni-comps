@@ -11,10 +11,7 @@ module.exports = [
         name: 'Divider',
         title: '分割线',
       },
-      //   {
-      //     name: 'Space',
-      //     title: '间距容器',
-      //   },
+
       {
         name: 'HairLineBox',
         title: '一像素边框div',
@@ -39,12 +36,9 @@ module.exports = [
       },
 
       {
-        name: 'Popup',
-        title: '弹框',
-      },
-      {
         name: 'AlertDialog',
-        title: '确认弹框',
+        title: '确认弹框,模拟alert/confirm',
+        mobile: false,
       },
       {
         name: 'Popover',

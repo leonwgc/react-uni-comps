@@ -1,6 +1,6 @@
 ---
 title: 开关
-order: 16
+order: 15
 mobile: true
 group:
   title: 操作反馈

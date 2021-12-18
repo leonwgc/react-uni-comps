@@ -1,6 +1,6 @@
 ---
 title: 加载中
-order: 19
+order: 18
 mobile: true
 group:
   title: 操作反馈
