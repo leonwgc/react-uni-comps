@@ -1,4 +1,5 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
 import { Tooltip, Button, Space, styled } from 'react-uni-comps';
 
 const StyledToolTip = styled(Tooltip)`
@@ -15,23 +16,26 @@ const StyledToolTip = styled(Tooltip)`
 
 export default function App() {
   return (
-    <Space direction="vertical" size={50} style={{ margin: '40vw 0 0 20vw' }}>
-      <StyledToolTip
-        title="Tooltip text"
-        onVisibleChange={(v) => {
-          console.log(v ? '可见' : '不可见');
-        }}
-      >
-        <Button>hello</Button>
-      </StyledToolTip>
+    <PageWrap>
+      <Space size={32}>
+        <Tooltip offset={{ x: -10, y: 15 }} arrow={false} placement="right" title="右侧">
+          <Button>右侧</Button>
+        </Tooltip>
 
-      <Tooltip offset={{ x: -10, y: 15 }} arrow={false} placement="right" title="Tooltip text">
-        <Button>right</Button>
-      </Tooltip>
+        <Tooltip title="默认上侧">
+          <Button>默认</Button>
+        </Tooltip>
 
-      <Tooltip title="Tooltip text">
-        <Button>hello</Button>
-      </Tooltip>
-    </Space>
+        <StyledToolTip
+          placement="bottom-left"
+          title="自定义样式"
+          onVisibleChange={(v) => {
+            console.log(v ? '可见' : '不可见');
+          }}
+        >
+          <Button type="primary">自定义样式</Button>
+        </StyledToolTip>
+      </Space>
+    </PageWrap>
   );
 }

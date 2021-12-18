@@ -31,6 +31,17 @@ module.exports = [
     path: 'feedback',
     comps: [
       {
+        name: 'Modal',
+        title: '弹框',
+        mobile: false,
+      },
+      {
+        name: 'Drawer',
+        title: '抽屉',
+        mobile: false,
+      },
+
+      {
         name: 'Pullup',
         title: '上拉加载',
       },
@@ -52,7 +63,8 @@ module.exports = [
       },
       {
         name: 'Tooltip',
-        title: 'Tooltip提示',
+        title: 'Tooltip',
+        mobile: false,
       },
       {
         name: 'PopMenu',
@@ -111,16 +123,7 @@ module.exports = [
         name: 'Spin',
         title: '加载中',
       },
-      {
-        name: 'Drawer',
-        title: '抽屉',
-        mobile: false,
-      },
-      {
-        name: 'Modal',
-        title: '对话框',
-        mobile: false,
-      },
+
       {
         name: 'PopConfirm',
         title: '气泡确认框',

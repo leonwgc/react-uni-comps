@@ -43,10 +43,10 @@ export default function App() {
   return (
     <div style={{ margin: 50 }}>
       <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
-        open mobile modal
+        移动端风格
       </Button>
       <Button type="primary" onClick={() => setVisible(true)}>
-        open Modal left
+        左边打开
       </Button>
 
       <Button
@@ -54,7 +54,7 @@ export default function App() {
         onClick={() => setVisible(true)}
         style={{ position: 'fixed', right: '10%', top: '10%' }}
       >
-        open Modal right
+        右边打开
       </Button>
 
       <Button
@@ -62,7 +62,7 @@ export default function App() {
         onClick={() => setVisible(true)}
         style={{ position: 'fixed', left: '10%', bottom: '10%' }}
       >
-        open Modal bottom left
+        左下角打开
       </Button>
 
       <Button
@@ -70,7 +70,7 @@ export default function App() {
         onClick={() => setVisible(true)}
         style={{ position: 'fixed', right: '10%', bottom: '10%' }}
       >
-        open Modal bottom right
+        右下角打开
       </Button>
 
       <StyledModal
@@ -78,7 +78,7 @@ export default function App() {
         closable
         style={{ width: isMobile ? '70vw' : 600, height: 300, top: isMobile ? '40%' : 120 }}
         onClose={onClose}
-        header={'新建权限组'}
+        header={'新建角色'}
         footer={
           <div
             style={{
@@ -113,7 +113,7 @@ export default function App() {
           </Space>
         }
       >
-        确认给 张帆帆 投票?
+        确认给张伟投票?
       </StyleMobileModal>
     </div>
   );
