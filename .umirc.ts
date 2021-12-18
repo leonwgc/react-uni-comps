@@ -16,6 +16,7 @@ export default defineConfig({
   },
   hash: true,
   webpack5: {},
+  fastRefresh: {},
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     memo.cache = {
       type: 'filesystem',

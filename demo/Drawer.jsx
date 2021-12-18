@@ -1,7 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import { Tabs, Space, Button, Avatar, Drawer, styled, isMobile, Modal, AlertDialog } from 'react-uni-comps';
-
-// example to implement Drawer
+import PageWrap from './common/PageWrap';
+import {
+  Tabs,
+  Space,
+  Button,
+  Avatar,
+  Drawer,
+  styled,
+  isMobile,
+  Modal,
+  AlertDialog,
+} from 'react-uni-comps';
 
 const StyledTabs = styled(Tabs)`
   flex-basis: 50px;
@@ -41,9 +50,9 @@ export default function RightDrawer(props) {
   }, []);
 
   return (
-    <>
+    <PageWrap>
       <Button type="primary" onClick={() => setVisible(true)} style={{ margin: 20 }}>
-        open drawer
+        打开抽屉
       </Button>
 
       <Drawer
@@ -71,26 +80,34 @@ export default function RightDrawer(props) {
         }
       >
         <div style={{ padding: 20 }}>
-          <Avatar /> {index === 0 ? 'tab1 body' : 'tab2 body'}
+          <Avatar /> {index === 0 ? 'tab1 ' : 'tab2 '}
           <Space size={16} style={{ marginTop: 30, display: 'flex' }}>
-            <Button onClick={() => setV(true)}>open modal</Button>
+            <Button onClick={() => setV(true)}>打开弹框</Button>
 
-            <Button type="primary" onClick={() => AlertDialog.show('hello', 'how are you')}>
-              open alert dialog
+            <Button
+              type="primary"
+              onClick={() =>
+                AlertDialog.show({
+                  confirmText: `got it`,
+                  content: 'how are you guy',
+                })
+              }
+            >
+              打开确认弹框
             </Button>
           </Space>
         </div>
-        <Modal
-          header="hello"
-          mask={false}
-          closable
-          style={{ zIndex: 201, width: 400, height: 260 }}
-          visible={v}
-          onClose={() => setV(false)}
-        >
-          hello,world
-        </Modal>
       </Drawer>
-    </>
+      <Modal
+        header="hello"
+        mask={false}
+        closable
+        style={{ width: 400, height: 260 }}
+        visible={v}
+        onClose={() => setV(false)}
+      >
+        hello,world
+      </Modal>
+    </PageWrap>
   );
 }

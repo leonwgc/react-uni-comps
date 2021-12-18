@@ -1,6 +1,6 @@
 ---
 title: 确认弹框,模拟alert/confirm
-order: 1
+order: 2
 mobile: false
 group:
   title: 操作反馈

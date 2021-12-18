@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { styled, Space, Modal, Button, isMobile } from 'react-uni-comps';
 
 const StyledModal = styled(Modal)`
@@ -41,7 +42,7 @@ export default function App() {
   const [v, setV] = useState(false);
   const onClose = () => setVisible(false);
   return (
-    <div style={{ margin: 50 }}>
+    <PageWrap>
       <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
         移动端风格
       </Button>
@@ -115,6 +116,6 @@ export default function App() {
       >
         确认给张伟投票?
       </StyleMobileModal>
-    </div>
+    </PageWrap>
   );
 }

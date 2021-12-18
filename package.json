@@ -29,8 +29,8 @@
     "build": "father-build && tsc",
     "pub": "bash pub.sh",
     "start": "node pack",
-    "doc": "dumi dev",
-    "doc:build": "dumi build"
+    "doc": "node docs && dumi dev",
+    "doc:build": "node docs && dumi build"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

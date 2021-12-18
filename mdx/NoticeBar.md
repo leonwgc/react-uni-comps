@@ -1,6 +1,6 @@
 ---
 title: 通告栏
-order: 13
+order: 16
 mobile: true
 group:
   title: 操作反馈

@@ -1,6 +1,6 @@
 ---
 title: 轮播
-order: 10
+order: 13
 mobile: true
 group:
   title: 操作反馈

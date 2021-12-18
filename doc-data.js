@@ -40,16 +40,37 @@ module.exports = [
         title: '抽屉',
         mobile: false,
       },
-
-      {
-        name: 'Pullup',
-        title: '上拉加载',
-      },
-
       {
         name: 'AlertDialog',
         title: '确认弹框,模拟alert/confirm',
         mobile: false,
+      },
+      {
+        name: 'Tooltip',
+        title: 'Tooltip',
+        mobile: false,
+      },
+      {
+        name: 'Pullup',
+        title: '上拉加载',
+      },
+      {
+        name: 'Toast',
+        title: 'Toast提示',
+      },
+      {
+        name: 'PopConfirm',
+        title: 'PopConfirm气泡确认框',
+        mobile: false,
+      },
+      {
+        name: 'PopMenu',
+        title: 'Dropdown菜单',
+        mobile: false,
+      },
+      {
+        name: 'Notify',
+        title: '顶部消息通知',
       },
       {
         name: 'Popover',
@@ -61,24 +82,7 @@ module.exports = [
         title: '拖拽',
         mobile: false,
       },
-      {
-        name: 'Tooltip',
-        title: 'Tooltip',
-        mobile: false,
-      },
-      {
-        name: 'PopMenu',
-        title: 'Dropdown菜单',
-        mobile: false,
-      },
-      {
-        name: 'Toast',
-        title: 'Toast提示',
-      },
-      {
-        name: 'Notify',
-        title: '全局消息通知',
-      },
+
       {
         name: 'Steps',
         title: '步骤条',
@@ -122,12 +126,6 @@ module.exports = [
       {
         name: 'Spin',
         title: '加载中',
-      },
-
-      {
-        name: 'PopConfirm',
-        title: '气泡确认框',
-        mobile: false,
       },
     ],
   },
