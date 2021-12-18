@@ -1,6 +1,6 @@
 ---
 title: 数字键盘
-order: 6
+order: 7
 mobile: true
 group:
   title: 数据录入

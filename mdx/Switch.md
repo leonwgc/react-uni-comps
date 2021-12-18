@@ -1,11 +1,11 @@
 ---
 title: 开关
-order: 18
+order: 5
 mobile: true
 group:
-  title: 操作反馈
-  order: 1
-  path: feedback
+  title: 数据录入
+  order: 3
+  path: data
 ---
 
 <code src="../demo/Switch.jsx"></code>

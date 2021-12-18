@@ -1,6 +1,6 @@
 ---
 title: 水平滚动通知栏
-order: 16
+order: 14
 mobile: true
 group:
   title: 操作反馈

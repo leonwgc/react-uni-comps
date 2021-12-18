@@ -1,6 +1,6 @@
 ---
 title: 骨架屏
-order: 19
+order: 16
 mobile: true
 group:
   title: 操作反馈

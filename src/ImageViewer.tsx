@@ -147,7 +147,6 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           onClick={onClose}
           style={{
             position: 'fixed',
-
             right: 20,
             top: 20,
             cursor: 'pointer',
