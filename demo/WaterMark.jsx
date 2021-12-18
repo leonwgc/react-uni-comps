@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { WaterMark, Button, Space } from 'react-uni-comps';
 
 const textProps = {
@@ -19,7 +20,7 @@ export default function App() {
   const [props, setProps] = useState(textProps);
 
   return (
-    <div style={{ padding: 20 }}>
+    <PageWrap>
       <Space>
         <Button onClick={() => setProps(textProps)}>普通水印</Button>
         <Button type="primary" onClick={() => setProps(imageProps)}>
@@ -28,6 +29,6 @@ export default function App() {
       </Space>
 
       <WaterMark {...props} />
-    </div>
+    </PageWrap>
   );
 }
