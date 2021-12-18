@@ -1,9 +1,10 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
 import { Divider } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <div style={{ padding: '0 16px' }}>
+    <PageWrap>
       <p>hello,world</p>
       <Divider color="#00bc8d" style={{ margin: '16px 0' }} />
       <p>hello,world</p>
@@ -30,6 +31,6 @@ export default function App() {
         <Divider type="vertical" color="red" style={{ margin: '0 20px' }} />
         <a href="#">Link</a>
       </div>
-    </div>
+    </PageWrap>
   );
 }

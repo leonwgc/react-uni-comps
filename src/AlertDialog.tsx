@@ -73,11 +73,11 @@ const StyledAlertDialog = styled(Popup)`
     width: 280px;
     padding: 20px 0 0;
 
-    .title {
+    .header {
       text-align: center;
     }
 
-    .content {
+    .body {
       padding: 16px;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
@@ -157,14 +157,14 @@ const StyledAlertDialog = styled(Popup)`
     }
   }
 
-  .title {
+  .header {
     font-size: 16px;
     line-height: 20px;
     color: #333;
     box-sizing: border-box;
     font-weight: 500;
   }
-  .content {
+  .body {
     font-size: 14px;
     line-height: 20px;
     max-height: calc(100vh - 256px);
@@ -182,27 +182,28 @@ const StyledAlertDialog = styled(Popup)`
   }
 `;
 
+type StaticProps = {
+  /** 标题 */
+  title?: React.ReactNode;
+  /** 内容 */
+  content?: React.ReactNode;
+  /** 确定按钮文本 */
+  confirmText?: string;
+  /** 确定回调 */
+  onConfirm?: () => void;
+  /** 取消文本 */
+  cancelText?: string;
+  /** 取消回调 */
+  onCancel?: () => void;
+  /** 弹框样式 */
+  wrapStyle?: React.CSSProperties;
+};
+
 type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
   /**
    *  AlertDialog静态调用
    *
-   * @param {*} title 标题
-   * @param {*} content 内容
-   * @param {string} [confirmText='确定'] 确定按钮文本
-   * @param {*} onConfirm 确定回调
-   * @param {*} cancelText 取消文本
-   * @param {*} onCancel 取消回调
-   * @param {*} wrapStyle 弹框样式
-   * @return {*}
-   */ show?: (
-    title?: React.ReactNode,
-    content?: React.ReactNode,
-    confirmText?: string,
-    onConfirm?: () => void,
-    cancelText?: string,
-    onCancel?: () => void,
-    wrapStyle?: React.CSSProperties
-  ) => void;
+   */ show?: (prop: StaticProps) => void;
 };
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
@@ -243,8 +244,8 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
       closeOnMaskClick={closeOnMaskClick}
     >
       {closable && <Icon type="uc-icon-guanbi" className="close" onClick={onClose} />}
-      {title && <div className={clsx('title')}>{title}</div>}
-      <div className={clsx('content')}>{content}</div>
+      {title && <div className={clsx('header')}>{title}</div>}
+      <div className={clsx('body')}>{content}</div>
       <div className={clsx('footer')}>
         {!isMobile ? (
           <Space size={buttonSpace}>
@@ -321,16 +322,16 @@ AlertDialog.displayName = 'UC-AlertDialog';
 
 const transitionDuration = 240;
 
-AlertDialog.show = (
-  title,
-  content,
-  confirmText = '确定',
-  onConfirm,
-  cancelText,
-  onCancel,
-  wrapStyle
-) => {
-  if (!content) return;
+AlertDialog.show = (props: StaticProps) => {
+  const {
+    title,
+    content,
+    confirmText = '确定',
+    onConfirm,
+    cancelText,
+    onCancel,
+    wrapStyle,
+  } = props;
 
   const container = document.createElement('div');
 

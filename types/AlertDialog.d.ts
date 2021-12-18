@@ -35,19 +35,27 @@ declare type Props = {
     /** 弹框样式 */
     wrapStyle?: React.CSSProperties;
 };
+declare type StaticProps = {
+    /** 标题 */
+    title?: React.ReactNode;
+    /** 内容 */
+    content?: React.ReactNode;
+    /** 确定按钮文本 */
+    confirmText?: string;
+    /** 确定回调 */
+    onConfirm?: () => void;
+    /** 取消文本 */
+    cancelText?: string;
+    /** 取消回调 */
+    onCancel?: () => void;
+    /** 弹框样式 */
+    wrapStyle?: React.CSSProperties;
+};
 declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
     /**
      *  AlertDialog静态调用
      *
-     * @param {*} title 标题
-     * @param {*} content 内容
-     * @param {string} [confirmText='确定'] 确定按钮文本
-     * @param {*} onConfirm 确定回调
-     * @param {*} cancelText 取消文本
-     * @param {*} onCancel 取消回调
-     * @param {*} wrapStyle 弹框样式
-     * @return {*}
-     */ show?: (title?: React.ReactNode, content?: React.ReactNode, confirmText?: string, onConfirm?: () => void, cancelText?: string, onCancel?: () => void, wrapStyle?: React.CSSProperties) => void;
+     */ show?: (prop: StaticProps) => void;
 };
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 declare const AlertDialog: AlertDialogType;

@@ -2710,7 +2710,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
 var _excluded$i = ["type", "textPosition", "className", "dashed", "color", "children"];
 
 var _templateObject$i;
-var StyledDivider = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 16px 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      text-align: center;\n    }\n\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
+var StyledDivider = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 16px 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      text-align: center;\n    }\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
   var color = _ref.color;
   return color;
 }, function (_ref2) {
@@ -2735,13 +2735,13 @@ var Divider = function Divider(props) {
       rest = _objectWithoutProperties(props, _excluded$i);
 
   var hasText = !!children;
-  return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({}, rest, {
     color: color,
     className: clsx__default['default']('uc-divider', type, hasText ? textPosition : '', className, {
       dashed: dashed,
       text: hasText
     })
-  }, rest), hasText ? /*#__PURE__*/React__default['default'].createElement("span", {
+  }), hasText ? /*#__PURE__*/React__default['default'].createElement("span", {
     className: "inner-text"
   }, children) : null);
 };
@@ -4160,7 +4160,7 @@ ActionSheet.displayName = 'UC-ActionSheet';
 var _excluded$t = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle"];
 
 var _templateObject$s;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .title {\n      text-align: center;\n    }\n\n    .content {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .title {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .content {\n    font-size: 14px;\n    line-height: 20px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n  }\n"])), getThemeColorCss('color'), border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .header {\n      text-align: center;\n    }\n\n    .body {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .header {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .body {\n    font-size: 14px;\n    line-height: 20px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n  }\n"])), getThemeColorCss('color'), border);
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -4208,9 +4208,9 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: "close",
     onClick: onClose
   }), title && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('title')
+    className: clsx__default['default']('header')
   }, title), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('content')
+    className: clsx__default['default']('body')
   }, content), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('footer')
   }, !isMobile ? /*#__PURE__*/React__default['default'].createElement(Space, {
@@ -4270,13 +4270,15 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
 AlertDialog.displayName = 'UC-AlertDialog';
 var transitionDuration$1 = 240;
 
-AlertDialog.show = function (title, content) {
-  var confirmText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '确定';
-  var onConfirm = arguments.length > 3 ? arguments[3] : undefined;
-  var cancelText = arguments.length > 4 ? arguments[4] : undefined;
-  var onCancel = arguments.length > 5 ? arguments[5] : undefined;
-  var wrapStyle = arguments.length > 6 ? arguments[6] : undefined;
-  if (!content) return;
+AlertDialog.show = function (props) {
+  var title = props.title,
+      content = props.content,
+      _props$confirmText2 = props.confirmText,
+      confirmText = _props$confirmText2 === void 0 ? '确定' : _props$confirmText2,
+      _onConfirm = props.onConfirm,
+      cancelText = props.cancelText,
+      _onCancel = props.onCancel,
+      wrapStyle = props.wrapStyle;
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration$1);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
@@ -4288,37 +4290,17 @@ AlertDialog.show = function (title, content) {
     confirmText: confirmText,
     cancelText: cancelText,
     wrapStyle: wrapStyle,
-    onConfirm: function (_onConfirm) {
-      function onConfirm() {
-        return _onConfirm.apply(this, arguments);
-      }
-
-      onConfirm.toString = function () {
-        return _onConfirm.toString();
-      };
-
-      return onConfirm;
-    }(function () {
-      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+    onConfirm: function onConfirm() {
+      _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm();
       dispose(beforeDispose);
-    }),
+    },
     onClose: function onClose() {
       dispose(beforeDispose);
     },
-    onCancel: function (_onCancel) {
-      function onCancel() {
-        return _onCancel.apply(this, arguments);
-      }
-
-      onCancel.toString = function () {
-        return _onCancel.toString();
-      };
-
-      return onCancel;
-    }(function () {
-      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+    onCancel: function onCancel() {
+      _onCancel === null || _onCancel === void 0 ? void 0 : _onCancel();
       dispose(beforeDispose);
-    }),
+    },
     mountContainer: function mountContainer() {
       return container;
     }

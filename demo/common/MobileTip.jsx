@@ -6,6 +6,6 @@ const StyledTip = styled.div`
   margin: 24px 0;
 `;
 
-export default function StyledF12Tip() {
+export default function MobileTip() {
   return <StyledTip>F12预览移动端效果</StyledTip>;
 }

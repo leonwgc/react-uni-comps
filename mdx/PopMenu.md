@@ -1,7 +1,7 @@
 ---
-title: 弹出菜单
+title: Dropdown菜单
 order: 5
-mobile: true
+mobile: false
 group:
   title: 操作反馈
   order: 1

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PageWrap from './common/PageWrap';
 import { Button, PopMenu, styled, useUpdateLayoutEffect } from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
@@ -33,43 +34,43 @@ const StyledBtn = styled(Button)`
   left: 200px;
   top: 300px;
   &.active {
-    border: 1px solid red;
+    border: 3px solid red;
+    transform: all 0.3s ease;
   }
 `;
 
 export default function App() {
   const arr = Array.from(new Array(10), (e, i) => i);
-  const anchorRef = useRef();
   const ref = useRef(0);
 
   const [placement, setPlacement] = useState('bottom-right');
   const [v, setV] = useState(false);
 
   useUpdateLayoutEffect(() => {
-    // update  position
     if (v) {
       ref.current++;
       setPlacement(ref.current % 2 == 0 ? 'top-right' : 'bottom-right');
     }
   }, [v]);
   return (
-    <StyledPopMenu
-      arrow={true}
-      onVisibleChange={setV}
-      placement={placement}
-      // closeOnClick={false}
-      trigger="click"
-      content={
-        <div className="list">
-          {arr.map((i) => (
-            <div className="item" key={i}>
-              {`menu${i}`}
-            </div>
-          ))}
-        </div>
-      }
-    >
-      <StyledBtn>hello</StyledBtn>
-    </StyledPopMenu>
+    <PageWrap>
+      <StyledPopMenu
+        arrow={true}
+        onVisibleChange={setV}
+        placement={placement}
+        trigger="hover"
+        content={
+          <div className="list">
+            {arr.map((i) => (
+              <div className="item" key={i}>
+                {`menu${i}`}
+              </div>
+            ))}
+          </div>
+        }
+      >
+        <StyledBtn type="primary">鼠标移入移出试试 </StyledBtn>
+      </StyledPopMenu>
+    </PageWrap>
   );
 }

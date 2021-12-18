@@ -52,15 +52,16 @@ module.exports = [
       },
       {
         name: 'Tooltip',
-        title: '提示',
+        title: 'Tooltip提示',
       },
       {
         name: 'PopMenu',
-        title: '弹出菜单',
+        title: 'Dropdown菜单',
+        mobile: false,
       },
       {
         name: 'Toast',
-        title: '黑背景提示',
+        title: 'Toast提示',
       },
       {
         name: 'Notify',
