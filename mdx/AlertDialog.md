@@ -1,5 +1,5 @@
 ---
-title: 确认弹框
+title: 确认弹框,模拟alert/confirm
 order: 2
 mobile: true
 group:

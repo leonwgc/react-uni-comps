@@ -1,91 +1,50 @@
-import React, { useState } from 'react';
-import { AlertDialog, Space, Button, Toast } from 'react-uni-comps';
+import React from 'react';
+import { AlertDialog, Button, Toast, Divider, Icon, Space } from 'react-uni-comps';
 
 export default function App() {
-  const [visible, setVisible] = useState(false);
-  const [visible1, setVisible1] = useState(false);
-
   return (
-    <div style={{ margin: 16 }}>
-      <Space direction="vertical">
-        <Button onClick={() => setVisible(true)}>show Alert dialog</Button>
-        <Button onClick={() => setVisible1(true)}>show mobile Alert dialog</Button>
-        <Button onClick={() => AlertDialog.show('are you sure?', 'sure to leave china')}>
-          show Alert dialog via static show
-        </Button>
-        <Button
-          onClick={() =>
-            AlertDialog.show(
-              'are you sure?',
-              'sure to leave china',
-              'yes',
-              () => {
-                Toast.show('you confirmed');
-              },
-              'no',
-              () => {
-                Toast.show('you canceled');
-              },
-              {
-                width: 600,
-                background: '#00bc8d',
-              }
-            )
-          }
-        >
-          show Alert dialog ok/cancel/bg color
-        </Button>
-        <Button
-          onClick={() =>
-            AlertDialog.show(
-              'are you sure?',
-              'sure to leave china',
-              'yes',
-              () => {
-                Toast.show({ content: 'yes' });
-              },
-              'no',
-              () => {
-                Toast.show({ content: 'no' });
-              }
-            )
-          }
-        >
-          show Alert dialog via static
-        </Button>
-      </Space>
+    <div style={{ padding: 20 }}>
+      <Divider textPosition="left">只包含确定按钮, 代替window.alert</Divider>
+      <Button
+        onClick={() =>
+          AlertDialog.show('提示', '确定要这么做吗', '决定了', () => Toast.show('你点击了确定'))
+        }
+      >
+        模拟window.alert
+      </Button>
 
-      <AlertDialog
-        mountContainer={() => document.querySelector('#root')}
-        closable
-        className="mount-in-root"
-        buttonSpace={16}
-        buttonWidth={80}
-        confirmText="确定"
-        cancelText="取消"
-        onCancel={() => {
-          Toast.show({ content: 'canceld', duration: 1000 });
-          setTimeout(() => {
-            setVisible(false);
-          }, 1000);
-        }}
-        onConfirm={() => Toast.show({ content: 'confirmed' })}
-        title={'提示'}
-        visible={visible}
-        wrapStyle={{ width: 600, height: 400 }}
-        onClose={() => setVisible(false)}
-        content="In the process of internal desktop applications development, many different design specs and implementations would be involved, which might cause designers and developers difficulties and duplication and reduce the efficiency of development.
-        After massive project practice and summaries, Ant Design, a design language for background applications, is refined by Ant UED Team, which aims touniform the user interface specs for internal background projects, lower the unnecessary cost of design differences and implementation and liberate the resources of design and front-end development."
-      />
+      <Divider textPosition="left">包含确认和取消按钮,代替window.confirm</Divider>
+      <Button
+        onClick={() =>
+          AlertDialog.show(
+            '提示',
+            '确定要这么做吗',
+            '决定了',
+            () => Toast.show('你点击了确定'),
+            '取消',
+            () => Toast.show('你点击了取消')
+          )
+        }
+      >
+        模拟window.confirm
+      </Button>
 
-      <AlertDialog
-        confirmText="确定"
-        cancelText="cancel"
-        visible={visible1}
-        onClose={() => setVisible1(false)}
-        maskStyle={{ background: 'red', opacity: 0.1 }}
-        content="hello,world"
-      />
+      <Divider textPosition="left">自定义样式</Divider>
+      <Button
+        onClick={() =>
+          AlertDialog.show(
+            '提示',
+            <Space style={{ textAlign: 'center', color: 'red', fontSize: 18 }}>
+              <Icon type="uc-icon-jinggao" />
+              确定要这么做吗
+            </Space>,
+            '决定了',
+            () => Toast.show('你点击了确定')
+          )
+        }
+      >
+        模拟window.alert
+      </Button>
     </div>
   );
 }

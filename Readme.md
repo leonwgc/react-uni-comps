@@ -77,10 +77,10 @@ yarn add react-uni-comps
 - Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
 
 #### 操作反馈
-
+- Drawer (抽屉)
+- Modal (弹框)
 - Pullup (上拉加载数据)
 - ScrollTop (平滑滚动到顶部)
-- Popup (弹框，可以从上，下，左，右，中间弹出)
 - AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗,支持静态调用)
 - Popover (弹出带箭头的浮层)
 - Drag (拖拽)
@@ -99,8 +99,6 @@ yarn add react-uni-comps
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
 - Spin（加载中指示器）
-- Drawer (抽屉)
-- Modal (对话框)
 - PopConfirm (弹出气泡式的确认框)
 
 #### 导航组件

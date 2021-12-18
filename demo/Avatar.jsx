@@ -1,16 +1,20 @@
 import React from 'react';
-import { Avatar } from 'react-uni-comps';
+import { Avatar, Divider } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <div style={{ margin: 50 }}>
-      <Avatar></Avatar>
+    <div style={{ padding: 20 }}>
+      <Divider textPosition="left">默认</Divider>
+      <Avatar />
+
+      <Divider textPosition="left">自定义样式</Divider>
       <Avatar size={64} style={{ margin: '0 16px', fontSize: 40, color: 'red' }}></Avatar>
 
       <Avatar size={64} style={{ margin: '0 16px', fontSize: (60 * 24) / 40 }}></Avatar>
 
-      <Avatar style={{ margin: '0 16px' }}>W</Avatar>
+      <Divider textPosition="left">自定义头像</Divider>
 
+      <Avatar style={{ margin: '0 16px' }}>W</Avatar>
       <Avatar size={64} style={{ margin: '0 16px' }}>
         <img
           src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K`}
