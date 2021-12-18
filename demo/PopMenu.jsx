@@ -30,9 +30,7 @@ const StyledPopMenu = styled(PopMenu)`
 `;
 
 const StyledBtn = styled(Button)`
-  position: fixed;
-  left: 200px;
-  top: 300px;
+  margin: 32px;
   &.active {
     border: 3px solid red;
     transform: all 0.3s ease;
@@ -43,13 +41,13 @@ export default function App() {
   const arr = Array.from(new Array(10), (e, i) => i);
   const ref = useRef(0);
 
-  const [placement, setPlacement] = useState('bottom-right');
+  const [placement, setPlacement] = useState('right-top');
   const [v, setV] = useState(false);
 
   useUpdateLayoutEffect(() => {
     if (v) {
       ref.current++;
-      setPlacement(ref.current % 2 == 0 ? 'top-right' : 'bottom-right');
+      setPlacement(ref.current % 2 == 0 ? 'right-top' : 'bottom-left');
     }
   }, [v]);
   return (
