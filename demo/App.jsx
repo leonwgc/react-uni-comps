@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import { ThemeProvider, styled, PopMenu, Space } from 'react-uni-comps';
+import { ThemeProvider, styled, PopMenu } from 'react-uni-comps';
 import { useSelector, useUpdateStore } from 'simple-redux-store';
 import routes from './RouteConfig';
 
@@ -50,15 +50,17 @@ const Routes = () => {
         trigger="click"
         content={
           <div className="list">
-            {['green', 'blue', 'orange', 'purple', 'red'].map((i) => (
-              <div
-                style={{ background: i, width: 24, height: 24 }}
-                key={i}
-                onClick={() => {
-                  updateStore({ theme: i });
-                }}
-              ></div>
-            ))}
+            {['#00bc70', '#1890ff', '#f5222d', '#fa541b', '#13c2c2', '#2f54ec', '#712fd1'].map(
+              (i) => (
+                <div
+                  style={{ background: i, width: 24, height: 24 }}
+                  key={i}
+                  onClick={() => {
+                    updateStore({ theme: i });
+                  }}
+                ></div>
+              )
+            )}
           </div>
         }
       >
