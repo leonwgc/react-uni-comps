@@ -11,8 +11,7 @@ import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
-
-const isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
+import { isTouch } from './dom';
 
 type Action = {
   text: string;

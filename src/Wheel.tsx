@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useLayoutEffect } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
+import { isTouch } from './dom';
+import useCallbackRef from './hooks/useCallbackRef';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -55,11 +57,9 @@ const Wheel = (props: Props): React.ReactElement => {
         elRef.current.style.transitionProperty = 'transform';
         const y = firstItemY - itemHeight * index;
         yRef.current = y;
-        setTimeout(() => {
-          if (elRef.current) {
-            elRef.current.style.transform = `translate3d(0,${y}px,0)`;
-          }
-        });
+        if (elRef.current) {
+          elRef.current.style.transform = `translate3d(0,${y}px,0)`;
+        }
       }
     },
     [yRef]
@@ -84,9 +84,9 @@ const Wheel = (props: Props): React.ReactElement => {
     } else {
       scrollToIndex(index);
     }
-  }, [scrollToIndex, data, value, onChange]);
+  }, [value, data]);
 
-  const onTouchEnd = () => {
+  const touchEnd = () => {
     const min = -1 * (data.length - 1) * itemHeight + firstItemY;
     const max = firstItemY;
 
@@ -102,13 +102,28 @@ const Wheel = (props: Props): React.ReactElement => {
     onChange?.(data[index].value, index);
   };
 
+  const touchEndRef = useCallbackRef(touchEnd);
+
+  useLayoutEffect(() => {
+    const el = elRef.current;
+    const elTouchEnd = touchEndRef.current;
+
+    const touchStart = () => {
+      elRef.current.style.transitionProperty = 'none';
+    };
+
+    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+    el.addEventListener(isTouch ? 'touchend' : 'mouseup', elTouchEnd);
+
+    return () => {
+      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', elTouchEnd);
+    };
+  }, [touchEndRef]);
+
   return (
     <FingerGestureElement
       ref={elRef}
-      onTouchStart={() => {
-        elRef.current.style.transitionProperty = 'none';
-      }}
-      onTouchEnd={onTouchEnd}
       onPressMove={(e) => {
         yRef.current += e.deltaY;
         elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
