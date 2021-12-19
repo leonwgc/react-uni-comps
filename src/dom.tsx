@@ -206,3 +206,6 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
     return Promise.reject('请输入js/css文件地址');
   }
 };
+
+/** 是否支持触屏 */
+export const isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;

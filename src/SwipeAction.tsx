@@ -12,6 +12,8 @@ import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 
+const isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
+
 type Action = {
   text: string;
   color?: string;
@@ -92,7 +94,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     closeOnClickOutside = true,
     children,
   } = props;
-  const elRef = useRef();
+  const elRef = useRef<HTMLDivElement>();
   const [isOpen, setIsOpen] = useState(false);
 
   const thisRef = useRef({
@@ -112,19 +114,14 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     } else {
       onClose?.();
     }
-  }, [isOpen]);
+  }, [isOpen, onOpen, onClose]);
 
-  const startTransform = useCallback(
-    (transformStr, x) => {
-      const v = thisRef.current;
-      v.x = x;
-      v.el.style.transitionProperty = 'transform';
-      setTimeout(() => {
-        v.el.style.transform = `${transformStr}`;
-      });
-    },
-    [thisRef]
-  );
+  const startTransform = useCallback((transformStr, x) => {
+    const v = thisRef.current;
+    v.x = x;
+    v.el.style.transitionProperty = 'transform';
+    v.el.style.transform = `${transformStr}`;
+  }, []);
 
   useEffect(() => {
     const v = thisRef.current;
@@ -158,6 +155,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       <StyledButton
         onClick={item.onClick}
         key={idx}
+        className="swipe-action-item"
         style={{ backgroundColor: item.color || vars.primary }}
       >
         {item.text}
@@ -165,46 +163,45 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     );
   }, []);
 
+  const touchStart = useCallback(() => {
+    thisRef.current.el.style.transitionProperty = 'none';
+  }, []);
+
+  const touchEnd = useCallback(() => {
+    const v = thisRef.current;
+
+    if (v.x < 0) {
+      // open right
+      if (Math.abs(v.x) < v.rightWidth / 2) {
+        // no more than half way
+        startTransform('translate3d(0,0,0)', 0);
+        setIsOpen(false);
+      } else {
+        startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
+        setIsOpen(true);
+      }
+    } else if (v.x > 0) {
+      if (Math.abs(v.x) < v.leftWidth / 2) {
+        // no more than half way
+        startTransform('translate3d(0,0,0)', 0);
+        v.x = 0;
+        setIsOpen(false);
+      } else {
+        startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
+        setIsOpen(true);
+      }
+    }
+  }, [startTransform]);
+
+  useEffect(() => {
+    elRef.current.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+    elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+  }, [touchEnd, touchStart]);
+
   return (
     <StyledSwipeAction className={clsx('uc-swipe-action')}>
       <FingerGestureElement
         ref={elRef}
-        onTouchStart={() => {
-          thisRef.current.el.style.transitionProperty = 'none';
-        }}
-        onTouchEnd={() => {
-          const v = thisRef.current;
-
-          if (v.x < 0) {
-            // open right
-            if (Math.abs(v.x) < v.rightWidth / 2) {
-              // no more than half way
-              startTransform('translate3d(0,0,0)', 0);
-              if (isOpen) {
-                setIsOpen(false);
-              }
-            } else {
-              startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
-              if (!isOpen) {
-                setIsOpen(true);
-              }
-            }
-          } else if (v.x > 0) {
-            if (Math.abs(v.x) < v.leftWidth / 2) {
-              // no more than half way
-              startTransform('translate3d(0,0,0)', 0);
-              v.x = 0;
-              if (isOpen) {
-                setIsOpen(false);
-              }
-            } else {
-              startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
-              if (!isOpen) {
-                setIsOpen(true);
-              }
-            }
-          }
-        }}
         onPressMove={(e) => {
           const v = thisRef.current;
           v.x += e.deltaX;
@@ -218,8 +215,8 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       >
         <div
           className="wrap"
-          onClick={() => {
-            if (autoClose) {
+          onClick={(e: any) => {
+            if (autoClose && e.target?.classList?.contains('swipe-action-item')) {
               startTransform('translate3d(0,0,0)', 0);
               setIsOpen(false);
             }

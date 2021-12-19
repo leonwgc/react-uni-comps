@@ -3,7 +3,7 @@
  */
 
 import { SyntheticEvent } from 'react';
-import { passiveIfSupported } from '../dom';
+import { passiveIfSupported, isTouch } from '../dom';
 
 export const supportedGestures = [
   'onMultipointStart',
@@ -18,6 +18,9 @@ export const supportedGestures = [
   'onSwipe',
   'onTwoFingerPressMove',
 ];
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = function () {};
 
 const getLen = (v) => {
   return Math.sqrt(v.x * v.x + v.y * v.y);
@@ -110,18 +113,26 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener('touchstart', this.start, passiveIfSupported);
-  this.element.addEventListener('touchmove', this.move, passiveIfSupported);
-  this.element.addEventListener('touchend', this.end, passiveIfSupported);
-  this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+
+  this.element.addEventListener(
+    isTouch ? 'touchstart' : 'mousedown',
+    this.start,
+    passiveIfSupported
+  );
+
+  if (isTouch) {
+    this.element.addEventListener('touchmove', this.move, passiveIfSupported);
+    this.element.addEventListener('touchend', this.end, passiveIfSupported);
+    this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+  } else {
+    document.addEventListener('mousemove', this.move, passiveIfSupported);
+    document.addEventListener('mouseup', this.end, passiveIfSupported);
+  }
 
   this.preV = { x: null, y: null };
   this.pinchStartLen = null;
   this.scale = 1;
   this.isDoubleTap = false;
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const noop = function () {};
 
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
   /** native events special care prevent from twice invoke  */
@@ -129,6 +140,7 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   this.touchMove = new HandlerAdmin(this.element);
   this.touchEnd = new HandlerAdmin(this.element);
   this.touchCancel = new HandlerAdmin(this.element);
+  this.isMoving = false;
 
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
@@ -158,7 +170,16 @@ const FingerGesture: (el: Element, option: Option) => void = function (
 
 FingerGesture.prototype = {
   start: function (evt) {
-    if (!evt.touches) return;
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY,
+      };
+    }
+    if (!this.isMoving) {
+      this.isMoving = true;
+    }
     this.now = Date.now();
     this.x1 = evt.touches[0].pageX;
     this.y1 = evt.touches[0].pageY;
@@ -196,7 +217,16 @@ FingerGesture.prototype = {
     );
   },
   move: function (evt) {
-    if (!evt.touches) return;
+    if (!this.isMoving) {
+      return;
+    }
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY,
+      };
+    }
     const preV = this.preV,
       len = evt.touches.length,
       currentX = evt.touches[0].pageX,
@@ -262,10 +292,20 @@ FingerGesture.prototype = {
     }
   },
   end: function (evt) {
-    if (!evt.changedTouches) return;
+    if (this.isMoving) {
+      this.isMoving = false;
+    }
+    if (isTouch && !evt.changedTouches) return;
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY,
+      };
+    }
     this._cancelLongTap();
     const self = this;
-    if (evt.touches.length < 2) {
+    if (isTouch && evt.touches.length < 2) {
       this.multipointEnd.dispatch(evt, this.element);
       this.sx2 = this.sy2 = null;
     }
@@ -282,23 +322,23 @@ FingerGesture.prototype = {
     } else {
       this.tapTimeout = setTimeout(function () {
         if (!self._preventTap) {
-          self.tap.dispatch(evt, self.element);
+          self.tap?.dispatch(evt, self.element);
         }
         // trigger double tap immediately
         if (self.isDoubleTap) {
-          self.doubleTap.dispatch(evt, self.element);
+          self.doubleTap?.dispatch(evt, self.element);
           self.isDoubleTap = false;
         }
       }, 0);
 
       if (!self.isDoubleTap) {
         self.singleTapTimeout = setTimeout(function () {
-          self.singleTap.dispatch(evt, self.element);
+          self.singleTap?.dispatch(evt, self.element);
         }, 250);
       }
     }
 
-    this.touchEnd.dispatch(evt, this.element);
+    this.touchEnd?.dispatch(evt, this.element);
 
     this.preV.x = 0;
     this.preV.y = 0;
@@ -351,10 +391,20 @@ FingerGesture.prototype = {
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
 
-    this.element.removeEventListener('touchstart', this.start, passiveIfSupported);
-    this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
-    this.element.removeEventListener('touchend', this.end, passiveIfSupported);
-    this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+    this.element.removeEventListener(
+      isTouch ? 'touchstart' : 'mousedown',
+      this.start,
+      passiveIfSupported
+    );
+
+    if (isTouch) {
+      this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
+      this.element.removeEventListener('touchend', this.end, passiveIfSupported);
+      this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+    } else {
+      document.removeEventListener('mousemove', this.move, passiveIfSupported);
+      document.removeEventListener('mouseup', this.end, passiveIfSupported);
+    }
 
     this.rotate.del();
     this.touchStart.del();
@@ -372,7 +422,9 @@ FingerGesture.prototype = {
     this.touchEnd.del();
     this.touchCancel.del();
 
-    this.preV =
+    this.preV = { x: null, y: null };
+
+    this.isMoving =
       this.pinchStartLen =
       this.scale =
       this.isDoubleTap =
