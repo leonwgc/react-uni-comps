@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Space, Cell, IconArrow, Icon } from 'react-uni-comps';
 
-const SoundOutlined = () => <Icon type="uc-icon-zujian" />;
+const IconComponent = () => <Icon type="uc-icon-zujian" />;
 
 export default function All() {
   const history = useHistory();
@@ -10,12 +10,17 @@ export default function All() {
     document.title = page;
     history.push(`/${page}`);
   }, []);
+
+  useEffect(() => {
+    document.title = 'react-uni-comps';
+  }, []);
+
   return (
     <div>
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Login
+            <IconComponent /> Login
           </Space>
         }
         description="移动端登录风格"
@@ -25,7 +30,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> DatePicker
+            <IconComponent /> DatePicker
           </Space>
         }
         description="年月日选择"
@@ -35,7 +40,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Calendar
+            <IconComponent /> Calendar
           </Space>
         }
         description="移动端日历选择"
@@ -45,7 +50,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> WaitLoading
+            <IconComponent /> WaitLoading
           </Space>
         }
         description="防止spinner闪烁"
@@ -55,7 +60,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> PopConfirm
+            <IconComponent /> PopConfirm
           </Space>
         }
         description="二次确认气泡框"
@@ -65,7 +70,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> PopMenu
+            <IconComponent /> PopMenu
           </Space>
         }
         description="弹出气泡框菜单"
@@ -75,7 +80,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Modal
+            <IconComponent /> Modal
           </Space>
         }
         description="中间弹出对话框"
@@ -85,7 +90,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Drawer
+            <IconComponent /> Drawer
           </Space>
         }
         description="上下左右抽屉"
@@ -95,7 +100,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> ImageViewer
+            <IconComponent /> ImageViewer
           </Space>
         }
         description="图片查看"
@@ -105,7 +110,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Avatar
+            <IconComponent /> Avatar
           </Space>
         }
         description="头像显示"
@@ -115,7 +120,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Badge
+            <IconComponent /> Badge
           </Space>
         }
         description="右上角添加标记"
@@ -125,7 +130,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> AlertDialog
+            <IconComponent /> AlertDialog
           </Space>
         }
         description="当做window.alert使用"
@@ -135,7 +140,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Notify
+            <IconComponent /> Notify
           </Space>
         }
         description="顶部弹出提示信息"
@@ -145,7 +150,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Toast
+            <IconComponent /> Toast
           </Space>
         }
         description="中间弹出黑色背景提示信息"
@@ -155,7 +160,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Radio
+            <IconComponent /> Radio
           </Space>
         }
         description="单选"
@@ -165,7 +170,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> RadioGroup
+            <IconComponent /> RadioGroup
           </Space>
         }
         description="单选组"
@@ -175,7 +180,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Checkbox
+            <IconComponent /> Checkbox
           </Space>
         }
         description="多选"
@@ -185,7 +190,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> CheckboxGroup
+            <IconComponent /> CheckboxGroup
           </Space>
         }
         description="多选组"
@@ -196,7 +201,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> WaterMark
+            <IconComponent /> WaterMark
           </Space>
         }
         description="文字/图片水印"
@@ -206,7 +211,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> ProgressCircle
+            <IconComponent /> ProgressCircle
           </Space>
         }
         description="环形进度"
@@ -216,7 +221,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Slide FullPage
+            <IconComponent /> Slide FullPage
           </Space>
         }
         description="全屏滑动幻灯片示例"
@@ -226,7 +231,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Slide
+            <IconComponent /> Slide
           </Space>
         }
         description="幻灯片"
@@ -236,7 +241,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> NoticeList
+            <IconComponent /> NoticeList
           </Space>
         }
         description="垂直滚动信息提示"
@@ -246,7 +251,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> NoticeBar
+            <IconComponent /> NoticeBar
           </Space>
         }
         description="水平滚动信息提示"
@@ -256,7 +261,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Rate
+            <IconComponent /> Rate
           </Space>
         }
         description="评价几颗星"
@@ -266,7 +271,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Signature/Landscape
+            <IconComponent /> Signature/Landscape
           </Space>
         }
         description="横屏手写签名"
@@ -276,7 +281,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Signature
+            <IconComponent /> Signature
           </Space>
         }
         description="手写签名"
@@ -286,7 +291,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Input
+            <IconComponent /> Input
           </Space>
         }
         description="输入"
@@ -296,7 +301,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Steps
+            <IconComponent /> Steps
           </Space>
         }
         description="步骤条"
@@ -306,7 +311,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Picker
+            <IconComponent /> Picker
           </Space>
         }
         description="移动端触屏选择器"
@@ -316,7 +321,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> SwipeAction
+            <IconComponent /> SwipeAction
           </Space>
         }
         description="滑动操作"
@@ -326,7 +331,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> HairLineBox
+            <IconComponent /> HairLineBox
           </Space>
         }
         description="一像素边框"
@@ -336,7 +341,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> FingerGestureElement
+            <IconComponent /> FingerGestureElement
           </Space>
         }
         description="手势操作"
@@ -346,7 +351,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> NumberKeyboard
+            <IconComponent /> NumberKeyboard
           </Space>
         }
         description="数字键盘"
@@ -356,7 +361,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> PasswordInput
+            <IconComponent /> PasswordInput
           </Space>
         }
         description="自定义密码输入框"
@@ -366,7 +371,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> TransitionElement
+            <IconComponent /> TransitionElement
           </Space>
         }
         description="过渡动画"
@@ -376,7 +381,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Pullup & ScrollTop
+            <IconComponent /> Pullup & ScrollTop
           </Space>
         }
         description="上拉无限加载"
@@ -386,7 +391,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> PullupDom
+            <IconComponent /> PullupDom
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -395,7 +400,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> AnimationElement
+            <IconComponent /> AnimationElement
           </Space>
         }
         description="动画"
@@ -405,7 +410,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> LazyloadImage
+            <IconComponent /> LazyloadImage
           </Space>
         }
         description="替换img,实现懒加载"
@@ -415,7 +420,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> LazyLoadElement
+            <IconComponent /> LazyLoadElement
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -424,7 +429,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Tab
+            <IconComponent /> Tab
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -433,7 +438,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Skeleton
+            <IconComponent /> Skeleton
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -442,7 +447,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Cell
+            <IconComponent /> Cell
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -451,7 +456,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Spin
+            <IconComponent /> Spin
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -460,7 +465,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Switch
+            <IconComponent /> Switch
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -469,7 +474,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Divider
+            <IconComponent /> Divider
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -478,7 +483,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> FileInputTrigger
+            <IconComponent /> FileInputTrigger
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -487,7 +492,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Waypoint
+            <IconComponent /> Waypoint
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -496,7 +501,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> IndexList
+            <IconComponent /> IndexList
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -505,7 +510,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Popover
+            <IconComponent /> Popover
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -514,7 +519,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Drag
+            <IconComponent /> Drag
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -523,7 +528,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> CopyToClipboard
+            <IconComponent /> CopyToClipboard
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -532,7 +537,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Text
+            <IconComponent /> Text
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -541,7 +546,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Tooltip
+            <IconComponent /> Tooltip
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -550,7 +555,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Popup
+            <IconComponent /> Popup
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -559,7 +564,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Icon
+            <IconComponent /> Icon
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -568,7 +573,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Button
+            <IconComponent /> Button
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -577,7 +582,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Affix
+            <IconComponent /> Affix
           </Space>
         }
         content={<IconArrow direction="right" />}
@@ -586,7 +591,7 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> ActionSheet
+            <IconComponent /> ActionSheet
           </Space>
         }
         content={<IconArrow direction="right" />}

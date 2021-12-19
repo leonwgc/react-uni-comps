@@ -1,9 +1,9 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
 import { TransitionElement, Space, Button, styled } from 'react-uni-comps';
 
 const StyledUCButton = styled(Button)`
   height: 100px;
-  background-color: red;
   margin-top: 10px;
   color: #fff;
   font-size: 32px;
@@ -60,13 +60,13 @@ const Tansition = () => {
   let arr = Array.from(new Array(20), (v, k) => k + 1);
 
   return (
-    <div>
+    <PageWrap>
       <Space>
         <TransitionElement duration={100}>
-          <StyledButton>One</StyledButton>
+          <StyledButton>入场动画</StyledButton>
         </TransitionElement>
 
-        <StyledButton>Two</StyledButton>
+        <StyledButton>hover动画</StyledButton>
       </Space>
 
       {arr.map((item, k) => (
@@ -76,7 +76,7 @@ const Tansition = () => {
           </StyledUCButton>
         </TransitionElement>
       ))}
-    </div>
+    </PageWrap>
   );
 };
 

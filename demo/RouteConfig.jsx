@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/AnimationElement',
-    component: lazy(() => import('./Animation')),
+    component: lazy(() => import('./AnimationElement')),
   },
   {
     path: '/LazyloadImage',
