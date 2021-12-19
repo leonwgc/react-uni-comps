@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Toast, Input, styled, Button, HairLineBox, useCountdown } from '../src';
+import PageWrap from './common/PageWrap';
+import { Toast, Input, styled, Button, HairLineBox, useCountdown } from 'react-uni-comps';
 
 //#region  style
 
@@ -49,7 +50,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <PageWrap>
       <StyledHairBox>
         <Input
           clearable
@@ -68,9 +69,9 @@ export default function App() {
           onChange={onFieldChange('code')}
           maxLength={6}
           suffix={
-            <a disabled={!isValidPhone(tel)} ref={ref} onClick={isRunning ? null : start}>
+            <Button as="a" ref={ref} onClick={isRunning ? null : start}>
               {isRunning ? countdown + '秒' : `${isReStarted ? '重新获取' : '获取验证码'}`}
-            </a>
+            </Button>
           }
         />
       </StyledHairBox>
@@ -80,13 +81,13 @@ export default function App() {
         block
         style={{
           borderRadius: 20,
-          height: 32,
+          height: 36,
           margin: '20px auto',
         }}
         onClick={() => submit()}
       >
         登录
       </Button>
-    </div>
+    </PageWrap>
   );
 }
