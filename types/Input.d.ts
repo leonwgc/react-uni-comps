@@ -18,6 +18,8 @@ export declare type Props = {
     autoHeight?: boolean;
     /** 处理IME输入法,默认 false */
     ime?: boolean;
+    /** 是否显示清除按钮,默认false*/
+    clearable?: boolean;
 };
 /** 单行/多行输入框 input/textarea */
 declare const Input: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLInputElement | HTMLTextAreaElement>>;

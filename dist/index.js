@@ -4737,10 +4737,10 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime"];
+var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
 
 var _templateObject$x;
-var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
+var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
 /** 单行/多行输入框 input/textarea */
 
 var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4754,6 +4754,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       autoHeight = _props$autoHeight === void 0 ? true : _props$autoHeight,
       textarea = props.textarea,
       ime = props.ime,
+      clearable = props.clearable,
       rest = _objectWithoutProperties(props, _excluded$y);
 
   var inputRef = React.useRef();
@@ -4763,6 +4764,11 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       _useState2 = _slicedToArray(_useState, 2),
       compositionValue = _useState2[0],
       setCompositionValue = _useState2[1];
+
+  var _useState3 = React.useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      focused = _useState4[0],
+      setFocused = _useState4[1];
 
   React.useImperativeHandle(ref, function () {
     return inputRef.current;
@@ -4774,6 +4780,18 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   });
+  React.useEffect(function () {
+    if (clearable) {
+      inputRef.current.addEventListener('focus', function () {
+        setFocused(true);
+      });
+      inputRef.current.addEventListener('blur', function () {
+        setTimeout(function () {
+          setFocused(false);
+        }, 200);
+      });
+    }
+  }, [clearable]);
   var inputProps = {
     onChange: function onChange(e) {
       var val = e.target.value;
@@ -4810,6 +4828,13 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     className: clsx__default['default']('prefix')
   }, prefix), /*#__PURE__*/React__default['default'].createElement(textarea ? 'textarea' : 'input', _objectSpread2(_objectSpread2(_objectSpread2({}, rest), inputProps), {}, {
     ref: inputRef
+  })), clearable && focused && typeof _onChange === 'function' && (value === null || value === void 0 ? void 0 : value.length) > 0 && /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default']('suffix', 'clear')
+  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-clear",
+    onClick: function onClick() {
+      return _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
+    }
   })), suffix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('suffix')
   }, suffix));

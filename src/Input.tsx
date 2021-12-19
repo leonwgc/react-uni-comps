@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import * as vars from './vars';
+import Icon from './Icon';
 import clsx from 'clsx';
 
 export type Props = {
@@ -24,6 +25,8 @@ export type Props = {
   autoHeight?: boolean;
   /** 处理IME输入法,默认 false */
   ime?: boolean;
+  /** 是否显示清除按钮,默认false*/
+  clearable?: boolean;
 };
 
 const StyledInput = styled.div`
@@ -57,6 +60,10 @@ const StyledInput = styled.div`
   .suffix {
     margin-left: 8px;
     color: #999;
+  }
+
+  .clear {
+    color: #bcbcbc;
   }
 
   input,
@@ -101,11 +108,13 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
     autoHeight = true,
     textarea,
     ime,
+    clearable,
     ...rest
   } = props;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
   const isImeModeRef = useRef(false);
   const [compositionValue, setCompositionValue] = useState(value);
+  const [focused, setFocused] = useState(false);
   useImperativeHandle(ref, () => inputRef.current);
 
   useEffect(() => {
@@ -115,6 +124,20 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   });
+
+  useEffect(() => {
+    if (clearable) {
+      inputRef.current.addEventListener('focus', () => {
+        setFocused(true);
+      });
+
+      inputRef.current.addEventListener('blur', () => {
+        setTimeout(() => {
+          setFocused(false);
+        }, 200);
+      });
+    }
+  }, [clearable]);
 
   const inputProps: Record<string, unknown> = {
     onChange: (e) => {
@@ -155,6 +178,11 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
         ref: inputRef,
       })}
 
+      {clearable && focused && typeof onChange === 'function' && value?.length > 0 && (
+        <span className={clsx('suffix', 'clear')}>
+          <Icon type="uc-icon-clear" onClick={() => onChange?.('')} />
+        </span>
+      )}
       {suffix && <span className={clsx('suffix')}>{suffix}</span>}
     </StyledInput>
   );

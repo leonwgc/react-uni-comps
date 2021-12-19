@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Toast, Input, styled, Button, HairLineBox, useCountdown } from 'react-uni-comps';
+import { Toast, Input, styled, Button, HairLineBox, useCountdown, Icon } from 'react-uni-comps';
 
 //#region  style
 
@@ -31,9 +31,9 @@ export default function App() {
 
   const { tel, code } = data;
 
-  const onFieldChange = (name) => (value) => {
-    setData({ ...data, [name]: value });
-  };
+  const setFieldValue = useCallback((name, value) => {
+    setData((data) => ({ ...data, [name]: value }));
+  }, []);
 
   const submit = (force = false) => {
     const { tel, code } = data;
@@ -57,7 +57,7 @@ export default function App() {
           type="number"
           placeholder="请输入手机号码"
           value={tel}
-          onChange={onFieldChange('tel')}
+          onChange={(val) => setFieldValue('tel', val)}
         />
       </StyledHairBox>
 
@@ -66,7 +66,7 @@ export default function App() {
           clearable
           placeholder="请输入验证码"
           value={code}
-          onChange={onFieldChange('code')}
+          onChange={(val) => setFieldValue('code', val)}
           maxLength={6}
           suffix={
             <Button as="a" ref={ref} onClick={isRunning ? null : start}>

@@ -158,13 +158,12 @@ export default function App() {
             ime mode
           </Checkbox>
           <StyledInput
+            clearable
             placeholder="请输入真实账号"
             ime={ime}
             value={account}
             onChange={onFieldChange('account')}
-            prefix={
-              !isMobile && <Icon type="icon-yonghu" onClick={() => onFieldChange('pwd')('')} />
-            }
+            prefix={!isMobile && <Icon type="icon-yonghu" />}
           />
           <StyledInput placeholder="请输入真实账号" value={account} disabled />
           <StyledInput
@@ -172,27 +171,14 @@ export default function App() {
             value={pwd}
             type={eyeOn ? 'text' : 'password'}
             onChange={onFieldChange('pwd')}
-            prefix={
-              !isMobile && (
-                <Icon type="icon-lock_filled_regular" onClick={() => onFieldChange('pwd')('')} />
-              )
-            }
+            prefix={!isMobile && <Icon type="icon-lock_filled_regular" />}
+            clearable
             suffix={
-              <>
-                {pwd.length > 0 && (
-                  <Icon
-                    type="icon-error_filled_regular"
-                    className="icon"
-                    onClick={() => onFieldChange('pwd')('')}
-                  />
-                )}
-                <Icon
-                  style={{ marginLeft: 8 }}
-                  className="icon"
-                  onClick={() => onFieldChange('eyeOn')(!eyeOn)}
-                  type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
-                />
-              </>
+              <Icon
+                className="icon"
+                onClick={() => onFieldChange('eyeOn')(!eyeOn)}
+                type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
+              />
             }
           />
           <Button block type="primary" style={{ marginTop: 32 }}>
