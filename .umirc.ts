@@ -16,6 +16,7 @@ export default defineConfig({
   },
   hash: true,
   webpack5: {},
+  fastRefresh: {},
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     memo.cache = {
       type: 'filesystem',
@@ -39,6 +40,10 @@ export default defineConfig({
     #root .__dumi-default-menu-header h1 {
       font-size: 24px;
       margin: 16px auto;
+    }
+
+    #root .__dumi-default-mobile-demo-layout{
+      padding:0;
     }
     `,
   ],

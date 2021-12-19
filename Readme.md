@@ -9,16 +9,15 @@ yarn add react-uni-comps
 
 ### 特点
 
-1. 支持按需加载，体积小
-2. 同时支持pc和mobile web，开发pc和mobile同一套组件，一致的开发体验
-3. 得益于css-in-js技术,支持js动态切换主题色
-4. 只支持 react>=16.8，完全使用hooks实现, 拥抱react未来
-5. 样式采用 css-in-js 方案 (styled-components)
-6. 只提供最基础的框架样式,方便二次开发/定制自己的组件风格
-7. 使用TypeScript编写，内置 TypeScript 类型定义文件，良好的智能提示
-8. 体积小，组件按需加载，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，用到什么才加载什么，无需配置
-9. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
-10. 导出了组件库内部实现的一些工具函数/hooks函数等，比如 debounce, throttle,usePrevious, useInViewport
+1. 体积小,按需加载
+2. 同时支持桌面和移动端，同一套组件，一致的开发体验
+3. 完全使用hooks实现, 拥抱react未来
+4. 样式采用 css-in-js 方案 (styled-components)，支持js动态切换主题色
+5. 只提供最基础的框架样式,方便二次开发/定制自己的组件风格
+6. 使用TypeScript编写，内置 TypeScript 类型定义文件，良好的智能提示
+7. 体积小，组件按需加载，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，用到什么才加载什么，无需配置
+8. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
+9. 导出了组件库内部实现的一些工具函数/hooks函数等，比如 debounce, throttle,usePrevious, useInViewport
 
 ### 适用场景
 
@@ -30,7 +29,7 @@ yarn add react-uni-comps
 </ThemeProvider>
 ```
 
-2. 需要完全自定义组件样式，antd, zarm 等组件库提供了完整的样式风格，antd 偏后台，zarm 等偏向众安保险设计风格， 当他们默认的样式风格无法满足自定义需求，或者感觉覆盖样式很麻烦，可以考虑基于本库自定义组件，本库组件只提供最基础的样式，组件最终的样子需要自己实现，例如 modal 弹窗组件
+2. 需要完全定制组件样式。本库只提供最基础的样式，组件最终的样子需要自己实现，例如 modal 弹窗组件
 
 ```js
 <Modal
@@ -77,15 +76,15 @@ yarn add react-uni-comps
 - Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
 
 #### 操作反馈
-
+- Drawer (抽屉)
+- Modal (弹框)
 - Pullup (上拉加载数据)
-- ScrollTop (平滑滚动到顶部)
-- Popup (弹框，可以从上，下，左，右，中间弹出)
 - AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗,支持静态调用)
 - Popover (弹出带箭头的浮层)
 - Drag (拖拽)
 - Tooltip (文字提示)
-- PopMenu (click/hover 弹出菜单)
+- PopMenu (click/hover Dropdown菜单)
+- PopConfirm (弹出气泡式的确认框)
 - Toast (黑背景提示,支持静态调用)
 - Notify (顶部全局消息通知,支持静态调用)
 - Steps (步骤条)
@@ -98,10 +97,8 @@ yarn add react-uni-comps
 - Switch (开关)
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
-- Spinner（加载中）
-- Drawer (抽屉)
-- Modal (对话框)
-- PopConfirm (弹出气泡式的确认框)
+- Spin（加载中指示器）
+- ScrollTop (平滑滚动到顶部)
 
 #### 导航组件
 
@@ -144,7 +141,7 @@ yarn add react-uni-comps
 - ThemeProvider (全局主题色配置)
 - LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 - LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
-- WaitLoading (延时显示 Loading/Spinner 防止闪烁)
+- WaitLoading (延时显示 Loading/Spin 防止闪烁)
 - ErrorBoudary （错误边界）
 - Waypoint （可见/不可见指示）
 

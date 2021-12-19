@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Slide, Switch, Divider, Button, Cell, Toast } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { Slide, Switch, Button, Cell } from 'react-uni-comps';
 
 export default function App() {
   const [autoPlay, setAutoPlay] = useState(false);
@@ -7,48 +8,38 @@ export default function App() {
   const [dot, setDot] = useState(true);
   const [isH, setisH] = useState(true);
   const ref = useRef();
-  const ar = ['#004bcc', 'pink', '#00bc8d', '#666'];
+  const images = [
+    'https://t7.baidu.com/it/u=1811223786,2017754440&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=2783075563,3362558456&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=2466425392,342874463&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=1139638767,225908414&fm=193&f=GIF',
+  ];
 
   return (
-    <div className="app">
-      <Divider>Slide</Divider>
-      <Cell title="autoPlay" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
-      <Cell title="loop" content={<Switch checked={loop} onChange={setLoop} />} />
-      <Cell title="showDot" content={<Switch checked={dot} onChange={setDot} />} />
-      <Cell title="horizontal" content={<Switch checked={isH} onChange={setisH} />} />
+    <PageWrap style={{ padding: 0 }}>
+      <Cell title="自动轮播" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
+      <Cell title="循环" content={<Switch checked={loop} onChange={setLoop} />} />
+      <Cell title="显示分页指示器" content={<Switch checked={dot} onChange={setDot} />} />
+      <Cell title="水平轮播" content={<Switch checked={isH} onChange={setisH} />} />
       <Slide
         ref={ref}
         loop={loop}
         autoPlay={autoPlay}
         direction={isH ? 'horizontal' : 'vertical'}
         showDot={dot}
-        ref={ref}
         height={200}
         onPageChange={(pageIndex) => console.log('pageindex:' + pageIndex)}
-        interval={200}
+        interval={1000}
       >
-        {ar.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              background: item,
-              display: 'flex',
-              alignItems: 'center',
-              color: '#fff',
-              fontSize: 40,
-              justifyContent: 'center',
-            }}
-            onClick={() => Toast.show({ content: 'page' + (idx + 1) })}
-          >
-            {idx + 1}
-          </div>
+        {images.map((item) => (
+          <img src={item} key={item} />
         ))}
       </Slide>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button onClick={() => ref.current.prev()}>prev</Button>
-        <Button onClick={() => ref.current.next()}>next</Button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 32 }}>
+        <Button onClick={() => ref.current.prev()}>上一页</Button>
+        <Button onClick={() => ref.current.next()}>下一页</Button>
       </div>
-    </div>
+    </PageWrap>
   );
 }

@@ -1,6 +1,6 @@
 ---
 title: 上拉加载
-order: 0
+order: 4
 mobile: true
 group:
   title: 操作反馈

@@ -1,4 +1,5 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
 import { Rate, Divider, Space, Toast, styled, Icon } from 'react-uni-comps';
 
 const StyledRate = styled(Rate)`
@@ -11,7 +12,7 @@ const StyledRate = styled(Rate)`
 
 export default function App() {
   return (
-    <div className="app" style={{ margin: '20px' }}>
+    <PageWrap>
       <Divider>半星</Divider>
       <Rate
         defaultValue={2.5}
@@ -60,6 +61,6 @@ export default function App() {
           onChange={(v) => Toast.show({ content: v, duration: 800 })}
         />
       </Space>
-    </div>
+    </PageWrap>
   );
 }

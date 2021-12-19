@@ -1,11 +1,12 @@
-import React, { useState, useref, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import PageWrap from './common/PageWrap';
 import { PasswordInput, Button, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState('');
   const ref = useRef();
   return (
-    <div className="app">
+    <PageWrap>
       <PasswordInput
         style={{ marginTop: 30 }}
         mask={false}
@@ -51,6 +52,6 @@ export default function App() {
           设置值
         </Button>
       </div>
-    </div>
+    </PageWrap>
   );
 }

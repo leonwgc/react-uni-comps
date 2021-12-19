@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
-import Spinner from './Spinner';
+import Spin from './Spin';
 import Space from './Space';
 import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-const StyledPullupContainer = styled.div`
+const StyledWrap = styled.div`
   &.dom-scroll {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -16,19 +16,17 @@ const StyledPullupContainer = styled.div`
     }
   }
 
-  &.window-scroll {
-    .uc-pullup-footer {
-      padding-bottom: 34px;
-    }
-  }
-
-  .uc-pullup-footer {
+  .footer {
     padding: 16px 0;
-    display: flex;
     color: #909090;
-    font-size: 14px;
+    display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
+
+    .uc-spin {
+      color: #999;
+    }
   }
 `;
 
@@ -61,8 +59,10 @@ type Props = {
   style?: React.CSSProperties;
   /** 容器 class */
   className?: string;
-  /** 使用window滚动，默认true,设置为false请给Pullup组件加个固定高度,Pullup container将作为滚动容器  */
+  /** 是否使用window滚动,默认false,如果为false wrap将作为滚动容器(需要设置wrap高度)  */
   useWindowScroll?: boolean;
+  /** 自定义footer */
+  footer?: (loading: boolean, finished: boolean) => React.ReactNode;
 };
 
 /** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
@@ -73,31 +73,32 @@ const Pullup = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     fetchData,
     loadingText = (
       <Space>
-        <Spinner color="#999" />
+        <Spin />
         加载中
       </Space>
     ),
     finishedText = '我是有底线的',
     finished = false,
     className,
-    useWindowScroll = true,
+    useWindowScroll,
+    footer,
     ...rest
   } = props;
 
   const [loading, setLoading] = useState(false);
   const waypointRef = useRef();
-  const containerRef = useRef();
-  const isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : containerRef);
+  const wrapRef = useRef();
+  const isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : wrapRef);
   const lastIsAtBottom = usePrevious(isAtBottom);
 
-  useImperativeHandle(ref, () => containerRef.current);
+  useImperativeHandle(ref, () => wrapRef.current);
 
   useEffect(() => {
     if (
       !loading &&
       !finished &&
       ((!lastIsAtBottom && isAtBottom) ||
-        isInViewport(waypointRef.current, useWindowScroll ? null : containerRef.current))
+        isInViewport(waypointRef.current, useWindowScroll ? null : wrapRef.current))
     ) {
       setLoading(true);
       fetchData()
@@ -111,24 +112,24 @@ const Pullup = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
 
   return (
-    <StyledPullupContainer
+    <StyledWrap
       {...rest}
-      className={clsx('uc-pullup-container', className, {
+      ref={wrapRef}
+      className={clsx('uc-pullup', className, {
         'dom-scroll': !useWindowScroll,
         'window-scroll': useWindowScroll,
       })}
-      ref={containerRef}
     >
-      <div className="uc-pullup-wrapper">
-        {dataList.map((item, idx) => {
-          return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
-        })}
-      </div>
-      <span className="uc-pullup-waypoint" style={{ fontSize: 0 }} ref={waypointRef}></span>
-      <div className="uc-pullup-footer">
-        {loading ? loadingText : finished ? finishedText : null}
-      </div>
-    </StyledPullupContainer>
+      {dataList.map((item, idx) => {
+        return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
+      })}
+      <span className="waypoint" style={{ fontSize: 0 }} ref={waypointRef}></span>
+      {typeof footer === 'function' ? (
+        footer(loading, finished)
+      ) : (
+        <div className="footer">{loading ? loadingText : finished ? finishedText : null}</div>
+      )}
+    </StyledWrap>
   );
 });
 

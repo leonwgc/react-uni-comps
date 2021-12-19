@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PageWrap from './common/PageWrap';
 import { Space, Button, Notify, Icon, isMobile } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <div style={{ margin: '100px 16px' }}>
+    <PageWrap
+      style={{ display: 'flex', alignItems: 'center', height: '100vh', justifyContent: 'center' }}
+    >
       <Space size={16} direction="vertical">
         <Button type="primary" onClick={() => Notify.show('明天不上学')}>
-          Notify.show
+          默认
         </Button>
         <Button
           type="primary"
@@ -19,7 +22,7 @@ export default function App() {
             )
           }
         >
-          Notify.show with icon
+          自定义内容
         </Button>
         <Button
           type="primary"
@@ -37,9 +40,9 @@ export default function App() {
             })
           }
         >
-          Notify.show with style
+          自定义样式
         </Button>
       </Space>
-    </div>
+    </PageWrap>
   );
 }

@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { Cell, Switch, Toast, Calendar } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
 import dayjs from 'dayjs';
 
 export default function App() {
-  const [range, setRange] = useState(false);
-  const [value, setValue] = useState('2021-12-20');
+  const [range, setRange] = useState(true);
+  const [value, setValue] = useState([
+    dayjs().format('yyyy-MM-dd'),
+    dayjs().add(10, 'day').format('yyyy-MM-dd'),
+  ]);
   const [custom, setCustom] = useState(false);
-  const [minMax, setMinMax] = useState(true);
+  const [minMax, setMinMax] = useState(false);
   const [isZh, setIsZh] = useState(true);
 
   const minMaxValue = minMax ? { min: '2021-10-29', max: '2022-1-04' } : null;
 
   return (
-    <div>
+    <PageWrap style={{ padding: 0 }}>
       <Cell
         title="时间段选择"
         content={<Switch checked={range} onChange={setRange}></Switch>}
@@ -71,6 +75,6 @@ export default function App() {
           );
         }}
       />
-    </div>
+    </PageWrap>
   );
 }

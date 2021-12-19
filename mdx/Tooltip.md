@@ -1,7 +1,7 @@
 ---
-title: 提示
-order: 5
-mobile: true
+title: Tooltip
+order: 3
+mobile: false
 group:
   title: 操作反馈
   order: 1

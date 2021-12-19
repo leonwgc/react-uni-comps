@@ -5,7 +5,7 @@ import CalendarMonthView from './MonthView';
 import * as locales from './locale';
 import utils from './utils';
 import { getThemeColorCss } from '../themeHelper';
-import { boxShadow } from '../vars';
+import { border } from '../vars';
 import color from 'color';
 
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
@@ -50,8 +50,9 @@ const StyledWrap = styled.div`
 
   .head {
     display: flex;
-    box-shadow: ${boxShadow};
+    border-bottom: 1px solid ${border};
     font-size: 14px;
+    color: #999;
     margin: 0;
     padding: 0 15px;
     list-style-type: disc;

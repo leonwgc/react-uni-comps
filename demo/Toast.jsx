@@ -1,18 +1,23 @@
 import React from 'react';
-import { Spinner, Space, Toast, Button, Icon } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { Spin, Space, Toast, Button, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <div className="app">
+    <PageWrap>
       <Space direction="vertical" size={50}>
+        <Button type="primary" onClick={() => Toast.show('hello,world')}>
+          默认
+        </Button>
+
         <Button
           type="primary"
           onClick={() =>
             Toast.show({
               content: (
                 <div>
-                  <Space>
-                    <Spinner color="rgba(255,255,255,.5)" size={30} /> 加载中
+                  <Space style={{ fontSize: 24 }}>
+                    <Spin style={{ color: 'rgba(255,255,255,.5)' }} /> 加载中
                   </Space>
                 </div>
               ),
@@ -21,7 +26,7 @@ export default function App() {
             })
           }
         >
-          loading & maskStyle & style
+          自定义样式
         </Button>
 
         <Button
@@ -41,14 +46,11 @@ export default function App() {
             })
           }
         >
-          Toast.show checked
+          自定义内容
         </Button>
 
-        <Button
-          type="primary"
-          onClick={() => Toast.show({ content: '中华人民共和国 none modal', modal: false })}
-        >
-          Toast.show not modal
+        <Button type="primary" onClick={() => Toast.show({ content: '非模态', modal: false })}>
+          非模态
         </Button>
 
         <Button
@@ -62,7 +64,7 @@ export default function App() {
             })
           }
         >
-          Toast.show, toast style, top 100px
+          自定义样式，设置显示位置 top:100px
         </Button>
 
         <Button
@@ -78,7 +80,7 @@ export default function App() {
             })
           }
         >
-          Toast.show, toast style, bottom 100px
+          自定义样式，设置显示位置 bottom:100px
         </Button>
 
         <Button
@@ -95,9 +97,9 @@ export default function App() {
             })
           }
         >
-          Toast.show, buttom
+          自定义样式，背景色，大小
         </Button>
       </Space>
-    </div>
+    </PageWrap>
   );
 }

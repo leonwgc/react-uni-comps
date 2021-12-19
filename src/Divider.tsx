@@ -49,7 +49,6 @@ const StyledDivider = styled.div`
       white-space: nowrap;
       text-align: center;
     }
-
     &::before,
     &::after {
       width: 50%;
@@ -111,12 +110,12 @@ const Divider = (props: Props): React.ReactElement => {
 
   return (
     <StyledDivider
+      {...rest}
       color={color}
       className={clsx('uc-divider', type, hasText ? textPosition : '', className, {
         dashed: dashed,
         text: hasText,
       })}
-      {...rest}
     >
       {hasText ? <span className="inner-text">{children}</span> : null}
     </StyledDivider>

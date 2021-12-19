@@ -11,10 +11,7 @@ module.exports = [
         name: 'Divider',
         title: '分割线',
       },
-      //   {
-      //     name: 'Space',
-      //     title: '间距容器',
-      //   },
+
       {
         name: 'HairLineBox',
         title: '一像素边框div',
@@ -34,17 +31,46 @@ module.exports = [
     path: 'feedback',
     comps: [
       {
-        name: 'Pullup',
-        title: '上拉加载',
-      },
-
-      {
-        name: 'Popup',
+        name: 'Modal',
         title: '弹框',
+        mobile: false,
+      },
+      {
+        name: 'Drawer',
+        title: '抽屉',
+        mobile: false,
       },
       {
         name: 'AlertDialog',
-        title: '确认弹框',
+        title: '确认弹框,模拟alert/confirm',
+        mobile: false,
+      },
+      {
+        name: 'Tooltip',
+        title: 'Tooltip',
+        mobile: false,
+      },
+      {
+        name: 'Pullup',
+        title: '上拉加载',
+      },
+      {
+        name: 'Toast',
+        title: 'Toast提示',
+      },
+      {
+        name: 'PopConfirm',
+        title: 'PopConfirm气泡确认框',
+        mobile: false,
+      },
+      {
+        name: 'PopMenu',
+        title: 'Dropdown菜单',
+        mobile: false,
+      },
+      {
+        name: 'Notify',
+        title: '顶部消息通知',
       },
       {
         name: 'Popover',
@@ -56,22 +82,7 @@ module.exports = [
         title: '拖拽',
         mobile: false,
       },
-      {
-        name: 'Tooltip',
-        title: '提示',
-      },
-      {
-        name: 'PopMenu',
-        title: '弹出菜单',
-      },
-      {
-        name: 'Toast',
-        title: '黑背景提示',
-      },
-      {
-        name: 'Notify',
-        title: '全局消息通知',
-      },
+
       {
         name: 'Steps',
         title: '步骤条',
@@ -84,26 +95,16 @@ module.exports = [
         name: 'Slide',
         title: '轮播',
       },
-      {
-        name: 'ProgressCircle',
-        title: '环形进度条',
-      },
-      {
-        name: 'FingerGestureElement',
-        title: '手势',
-      },
+
       {
         name: 'NoticeBar',
-        title: '通告栏',
+        title: '水平滚动通知栏',
       },
       {
         name: 'NoticeList',
-        title: '直滚动通知栏',
+        title: '垂直滚动通知栏',
       },
-      {
-        name: 'Switch',
-        title: '开关',
-      },
+
       {
         name: 'Skeleton',
         title: '骨架屏',
@@ -113,23 +114,12 @@ module.exports = [
         title: '复制',
       },
       {
-        name: 'Spinner',
+        name: 'Spin',
         title: '加载中',
       },
       {
-        name: 'Drawer',
-        title: '抽屉',
-        mobile: false,
-      },
-      {
-        name: 'Modal',
-        title: '对话框',
-        mobile: false,
-      },
-      {
-        name: 'PopConfirm',
-        title: '气泡确认框',
-        mobile: false,
+        name: 'FingerGestureElement',
+        title: '手势',
       },
     ],
   },
@@ -170,6 +160,10 @@ module.exports = [
       {
         name: 'Input',
         title: '输入框',
+      },
+      {
+        name: 'Switch',
+        title: '开关',
       },
       {
         name: 'PasswordInput',
@@ -232,6 +226,10 @@ module.exports = [
       {
         name: 'ImageViewer',
         title: '图片查看',
+      },
+      {
+        name: 'ProgressCircle',
+        title: '环形进度条',
       },
     ],
   },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { ProgressCircle, Button, Icon, styled } from 'react-uni-comps';
 
 const StyledProgressCircle = styled(ProgressCircle)`
@@ -11,10 +12,11 @@ const StyledProgressCircle = styled(ProgressCircle)`
 export default function App() {
   const [v, setV] = useState(50);
   return (
-    <div style={{ textAlign: 'center' }}>
+    <PageWrap style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
       <ProgressCircle progress={0}>0%</ProgressCircle>
       <ProgressCircle progress={v}>{v}%</ProgressCircle>
       <ProgressCircle progress={100}>100%</ProgressCircle>
+
       <StyledProgressCircle
         color="#00bc8d"
         strokeWidth={20}
@@ -24,6 +26,7 @@ export default function App() {
       >
         {v}%
       </StyledProgressCircle>
+
       <Button
         onClick={() =>
           setV((v) => {
@@ -42,6 +45,6 @@ export default function App() {
       >
         <Icon type="uc-icon-jia2" />
       </Button>
-    </div>
+    </PageWrap>
   );
 }

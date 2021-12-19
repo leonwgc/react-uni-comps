@@ -12,20 +12,24 @@ const StyledHairline = styled(HairLineBox)`
 
 export default function App() {
   return (
-    <div className="app">
-      <Divider>all</Divider>
+    <div style={{ padding: 16 }}>
+      <Divider textPosition="left">默认</Divider>
+      <HairLineBox style={{ padding: '16px 0' }}>hell,world</HairLineBox>
+
+      <Divider textPosition="left">四条边</Divider>
       <HairLineBox position="all" style={{ width: 200, height: 150, margin: 20 }} />
-      <Divider>radius & color</Divider>
+
+      <Divider textPosition="left">圆角和颜色</Divider>
       <StyledHairline position="all" color="red" />
 
-      <Divider>left</Divider>
+      <Divider textPosition="left">左边</Divider>
       <HairLineBox
         position="left"
         color="blue"
         style={{ width: 200, height: 150, marginLeft: 20 }}
       />
 
-      <Divider>right</Divider>
+      <Divider textPosition="left">右边</Divider>
       <HairLineBox position="right" color="#00bc8d" style={{ width: 200, height: 150 }} />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { Button, Pullup, ScrollTop, Cell } from 'react-uni-comps';
 
-// 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
 
 const App = () => {
@@ -30,22 +30,14 @@ const App = () => {
   };
 
   return (
-    <>
+    <PageWrap style={{ padding: 0 }}>
       <Pullup
-        // dom滚动需要设置高度
-        // style={{ height: '80vh' }}
+        useWindowScroll
         dataList={list}
-        // finishedText="没有更多数据了!"
         fetchData={fetchData}
         finished={finished}
-        dataRender={(data, index) => {
-          return (
-            <div style={{ padding: '10px 0', borderBottom: '1px solid #e0e0e0' }}>
-              list {index + 1}
-            </div>
-          );
-        }}
-      ></Pullup>
+        dataRender={(data) => <Cell title={`item${data}`} />}
+      />
       <ScrollTop visibilityHeight={100}>
         <Button
           type="primary"
@@ -61,7 +53,7 @@ const App = () => {
           top
         </Button>
       </ScrollTop>
-    </>
+    </PageWrap>
   );
 };
 

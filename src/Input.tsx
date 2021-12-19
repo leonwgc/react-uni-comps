@@ -34,6 +34,7 @@ const StyledInput = styled.div`
   width: 100%;
   background-color: #fff;
   overflow: hidden;
+  box-sizing: border-box;
 
   &.pc {
     background-image: none;

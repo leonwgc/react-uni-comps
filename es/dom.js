@@ -156,28 +156,40 @@ var resourceLoadedList = new Set();
  * 动态加载 js/css文件
  *
  * @param {string} url
+ * @param {*} [attrs={}] 额外的属性设置
  * @return {*}  {Promise<void>}
  */
 
-export var loadResource = function loadResource(url) {
+export var loadResource = function loadResource(url, attrs) {
+  if (attrs === void 0) {
+    attrs = {};
+  }
+
   if (resourceRegex.test(url)) {
     if (!resourceLoadedList.has(url)) {
       resourceLoadedList.add(url);
-      return new Promise(function (resolve) {
+      return new Promise(function (resolve, reject) {
         var el;
         var isCss = cssRegex.test(url);
 
         if (isCss) {
           el = document.createElement('link');
+          Object.keys(attrs).map(function (key) {
+            el.setAttribute(key, attrs[key]);
+          });
           el.rel = 'stylesheet';
           el.href = url;
         } else {
           el = document.createElement('script');
           el.setAttribute('data-namespace', url);
+          Object.keys(attrs).map(function (key) {
+            el.setAttribute(key, attrs[key]);
+          });
           el.src = url;
         }
 
         el.onload = resolve;
+        el.onerror = reject;
 
         if (isCss) {
           var head = document.getElementsByTagName('head')[0];
@@ -187,7 +199,7 @@ export var loadResource = function loadResource(url) {
         }
       });
     } else {
-      Promise.resolve('已经加载');
+      return Promise.resolve();
     }
   } else {
     return Promise.reject('请输入js/css文件地址');

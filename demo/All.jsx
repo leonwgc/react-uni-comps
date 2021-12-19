@@ -451,11 +451,11 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <SoundOutlined /> Spinner
+            <SoundOutlined /> Spin
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Spinner')}
+        onClick={() => gotoPage('Spin')}
       ></Cell>
       <Cell
         title={

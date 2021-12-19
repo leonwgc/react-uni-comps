@@ -1,6 +1,6 @@
 ---
 title: 移动端选择器
-order: 7
+order: 8
 mobile: true
 group:
   title: 数据录入

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
-import Spinner from './Spinner';
+import Spin from './Spin';
 import Space from './Space';
 
 type Props = {
@@ -38,6 +38,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   margin: 0;
   display: inline-flex;
+  box-sizing: border-box;
   outline: 0;
   position: relative;
   align-items: center;
@@ -162,8 +163,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const icon =
-    props.icon || (loading ? <Spinner color={type === 'primary' ? '#fff' : '#999'} /> : null);
+  const icon = props.icon || (loading ? <Spin /> : null);
 
   return (
     <StyledButton

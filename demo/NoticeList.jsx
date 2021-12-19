@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import PageWrap from './common/PageWrap';
 import { NoticeList, Button, styled, Icon } from 'react-uni-comps';
 
 const StyledNoticeList = styled(NoticeList)`
   background-color: rgb(251, 248, 220);
   color: red;
   margin-top: 30px;
-  height: 50px;
   font-size: 16px;
   padding: 0 8px;
 `;
@@ -26,7 +26,7 @@ export default function App() {
     },
   ]);
   return (
-    <div className="app">
+    <PageWrap style={{ padding: 0 }}>
       <NoticeList
         icon={<Icon type="uc-icon-horn" />}
         closeable
@@ -35,17 +35,6 @@ export default function App() {
       />
 
       <StyledNoticeList list={list1} stayTime={1000} />
-
-      <Button
-        style={{ marginTop: 30 }}
-        type="primary"
-        onClick={() => {
-          list.push({ text: 'item1' }, { text: 'item2' });
-          setList([...list]);
-        }}
-      >
-        add more data
-      </Button>
-    </div>
+    </PageWrap>
   );
 }

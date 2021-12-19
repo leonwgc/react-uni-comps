@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Spinner, AnimationElement, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { Spin, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
 import 'animate.css';
 import './Tab.less';
 
@@ -62,137 +63,137 @@ export default function App() {
   const [value, setValue] = useState(0);
 
   return (
-    <StyledApp>
-      <Divider>controlled & extra & no content</Divider>
-      <StyledTabs
-        value={value}
-        onChange={setValue}
-        extra={
-          <Space>
-            {tabTitles.length > 1 && (
-              <Button
-                onClick={() => {
-                  tabTitles.pop();
-                  setTabTitles([...tabTitles]);
-                  setValue(tabTitles.length - 1);
-                }}
-              >
-                delete
-              </Button>
-            )}
-            {tabTitles.length < maxCount && (
-              <Button
-                type="primary"
-                onClick={() => {
-                  setTabTitles((t) => [...t, { key: tabTitles.length }]);
-                  setValue(tabTitles.length);
-                }}
-              >
-                add
-              </Button>
-            )}
-          </Space>
-        }
-      >
-        {tabTitles.map((item, idx) => {
-          return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
-        })}
-      </StyledTabs>
-
-      <Divider> no underline</Divider>
-
-      <Tabs underline={false} value={value} onChange={setValue}>
-        <Tabs.Tab title="title1">
-          <StyledContent>content1</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <StyledContent>content2</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title3">
-          <StyledContent>content3</StyledContent>
-        </Tabs.Tab>
-      </Tabs>
-
-      <Divider>swipe controlled </Divider>
-
-      <Tabs swipe value={value} onChange={setValue}>
-        <Tabs.Tab title="title1">
-          <StyledContent>content1</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <StyledContent>content2</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title3">
-          <StyledContent>content3</StyledContent>
-        </Tabs.Tab>
-      </Tabs>
-
-      <Divider>swipe uncontrolled/defaultValue</Divider>
-
-      <Tabs swipe defaultValue={2}>
-        <Tabs.Tab title="title1">
-          <StyledContent>content1</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <StyledContent>content2</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title3">
-          <StyledContent>content3</StyledContent>
-        </Tabs.Tab>
-      </Tabs>
-
-      <Divider>uncontrolled swipe/onChange</Divider>
-      <StyledTabs
-        swipe
-        underline="40px"
-        defaultValue={2}
-        style={{ marginTop: 30 }}
-        onChange={(v) => Toast.show({ content: v })}
-      >
-        <Tabs.Tab title="title1">
-          <StyledContent>content1</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title2">
-          <StyledContent>content2</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title3">
-          <StyledContent>
-            <AnimationElement name="fadeInRight" duration=".24s">
-              <Spinner color="red" size={48}></Spinner>
-            </AnimationElement>
-          </StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab
-          title={
-            <span>
-              <Spinner></Spinner> loading...
-            </span>
+    <PageWrap style={{ padding: 0 }}>
+      <StyledApp>
+        <Divider>controlled & extra & no content</Divider>
+        <StyledTabs
+          value={value}
+          onChange={setValue}
+          extra={
+            <Space>
+              {tabTitles.length > 1 && (
+                <Button
+                  onClick={() => {
+                    tabTitles.pop();
+                    setTabTitles([...tabTitles]);
+                    setValue(tabTitles.length - 1);
+                  }}
+                >
+                  delete
+                </Button>
+              )}
+              {tabTitles.length < maxCount && (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setTabTitles((t) => [...t, { key: tabTitles.length }]);
+                    setValue(tabTitles.length);
+                  }}
+                >
+                  add
+                </Button>
+              )}
+            </Space>
           }
         >
-          <StyledContent> loading content</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title5">
-          <StyledContent>content5</StyledContent>
-        </Tabs.Tab>
-        <Tabs.Tab title="title6" disabled>
-          disabled
-        </Tabs.Tab>
-        <Tabs.Tab title="title7">
-          <StyledContent>content7</StyledContent>
-        </Tabs.Tab>
-      </StyledTabs>
+          {tabTitles.map((item, idx) => {
+            return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
+          })}
+        </StyledTabs>
 
-      <Divider> new style </Divider>
+        <Divider> no underline</Divider>
 
-      <StyledTabsNew underline={false}>
-        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
-      </StyledTabsNew>
+        <Tabs underline={false} value={value} onChange={setValue}>
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
 
-      <StyledTabsNew1 underline={false}>
-        <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-        <Tabs.Tab title="员工发放记录"></Tabs.Tab>
-      </StyledTabsNew1>
-    </StyledApp>
+        <Divider>swipe controlled </Divider>
+
+        <Tabs swipe value={value} onChange={setValue}>
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
+
+        <Divider>swipe uncontrolled/defaultValue</Divider>
+
+        <Tabs swipe defaultValue={2}>
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
+
+        <Divider>uncontrolled swipe/onChange</Divider>
+        <StyledTabs
+          swipe
+          underline="40px"
+          defaultValue={2}
+          style={{ marginTop: 30 }}
+          onChange={(v) => Toast.show({ content: v })}
+        >
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>
+              <Spin style={{ color: 'red', fontSize: 48 }}></Spin>
+            </StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab
+            title={
+              <span>
+                <Spin /> loading...
+              </span>
+            }
+          >
+            <StyledContent> loading content</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title5">
+            <StyledContent>content5</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title6" disabled>
+            disabled
+          </Tabs.Tab>
+          <Tabs.Tab title="title7">
+            <StyledContent>content7</StyledContent>
+          </Tabs.Tab>
+        </StyledTabs>
+
+        <Divider> new style </Divider>
+
+        <StyledTabsNew underline={false}>
+          <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+          <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+        </StyledTabsNew>
+
+        <StyledTabsNew1 underline={false}>
+          <Tabs.Tab title="额度分配记录"></Tabs.Tab>
+          <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+        </StyledTabsNew1>
+      </StyledApp>
+    </PageWrap>
   );
 }

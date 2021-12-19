@@ -16,8 +16,10 @@ declare type Props = {
     style?: React.CSSProperties;
     /** 容器 class */
     className?: string;
-    /** 使用window滚动，默认true,设置为false请给Pullup组件加个固定高度,Pullup container将作为滚动容器  */
+    /** 是否使用window滚动,默认false,如果为false wrap将作为滚动容器(需要设置wrap高度)  */
     useWindowScroll?: boolean;
+    /** 自定义footer */
+    footer?: (loading: boolean, finished: boolean) => React.ReactNode;
 };
 /** 上拉加载更多数据, 注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器 */
 declare const Pullup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLButtonElement>>;

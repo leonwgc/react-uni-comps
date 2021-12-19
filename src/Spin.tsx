@@ -3,10 +3,6 @@ import clsx from 'clsx';
 import styled from 'styled-components';
 
 type Props = {
-  /** 圈圈大小,应用到font-size,默认16 */
-  size?: number;
-  /** 圈圈颜色*/
-  color?: string;
   style?: React.CSSProperties;
   className?: string;
 };
@@ -67,20 +63,11 @@ const StyledLoading = styled.div`
   }
 `;
 
-/** Spinner 加载中 */
-const Spinner = React.forwardRef<HTMLDivElement, Props>(
-  ({ size = 16, color, className, style, ...rest }, ref) => {
-    return (
-      <StyledLoading
-        {...rest}
-        ref={ref}
-        className={clsx(className, 'uc-spinner')}
-        style={{ fontSize: size, color: color, ...style }}
-      ></StyledLoading>
-    );
-  }
-);
+/** 加载中指示器,继承父容器颜色和字体大小 */
+const Spin = React.forwardRef<HTMLDivElement, Props>(({ className, ...rest }, ref) => {
+  return <StyledLoading {...rest} ref={ref} className={clsx(className, 'uc-spin')}></StyledLoading>;
+});
 
-Spinner.displayName = 'UC-Spinner';
+Spin.displayName = 'UC-Spin';
 
-export default Spinner;
+export default Spin;
