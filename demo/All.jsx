@@ -20,6 +20,25 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> Picker
+          </Space>
+        }
+        description="移动端触屏选择器"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Picker')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <IconComponent /> PickerView
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PickerView')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> Login
           </Space>
         }
@@ -308,16 +327,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Steps')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> Picker
-          </Space>
-        }
-        description="移动端触屏选择器"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Picker')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

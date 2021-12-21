@@ -58,10 +58,28 @@ const StyledWrap = styled.div`
     position: absolute;
     height: 35px;
     width: 100%;
-    border: 1px solid #d8d8d8;
     border-left: 0;
     border-right: 0;
     top: 105px;
+
+    &:after {
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      border-top: 1px solid #d8d8d8;
+      border-bottom: 1px solid #d8d8d8;
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        width: 200%;
+        height: 200%;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+      }
+    }
   }
 
   .columnitem {

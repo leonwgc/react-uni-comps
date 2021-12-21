@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Toast, Button, PickerView } from 'react-uni-comps';
+import { PickerView } from 'react-uni-comps';
 
 //#region  data
 
@@ -171,7 +171,7 @@ export default function App() {
       <PickerView
         onChange={(v) => {
           setValue(v);
-          Toast.show(v);
+          console.log(v);
         }}
         value={value}
         cols={1}
@@ -181,7 +181,7 @@ export default function App() {
         value={value1}
         onChange={(v) => {
           setValue1(v);
-          Toast.show(v);
+          console.log(v);
         }}
         cols={2}
         data={twoColsData}
@@ -190,7 +190,7 @@ export default function App() {
         value={value2}
         onChange={(v) => {
           setValue2(v);
-          Toast.show(v);
+          console.log(v);
         }}
         cols={3}
         data={areas}
@@ -200,7 +200,7 @@ export default function App() {
         value={value3}
         onChange={(v) => {
           setValue3(v);
-          Toast.show(v);
+          console.log(v);
         }}
         cols={2}
         data={UnlinkedTwo}
