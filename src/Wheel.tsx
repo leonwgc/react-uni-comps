@@ -39,7 +39,6 @@ const StyledWrap = styled.div`
     align-items: center;
     height: 35px;
     font-size: 18px;
-    color: #333;
     user-select: none;
     cursor: grab;
   }
