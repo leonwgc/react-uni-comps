@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/PickerView',
+    component: lazy(() => import('./PickerView')),
+  },
+  {
     path: '/TransitionElement',
     component: lazy(() => import('./Transition')),
   },

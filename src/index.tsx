@@ -44,6 +44,7 @@ export { default as FingerGestureElement } from './FingerGestureElement';
 export { default as SwipeAction } from './SwipeAction';
 export { default as Input } from './Input';
 export { default as Picker } from './Picker';
+export { default as PickerView } from './PickerView';
 export { default as Steps } from './Steps';
 export { default as Signature } from './Signature';
 export { default as Rate } from './Rate';
