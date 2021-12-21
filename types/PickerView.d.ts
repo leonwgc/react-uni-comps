@@ -1,5 +1,4 @@
 import React from 'react';
-import { PickerViewRefType } from './PickerView';
 export declare type DataItem = {
     /** 数据显示文本 */
     label: string;
@@ -15,25 +14,16 @@ declare type Props = {
     data?: DataItem[] | DataItem[][];
     /** 值 */
     value?: Array<string | number>;
-    /** 关闭回调 */
-    onClose?: () => void;
-    /** 点击确定回调 */
-    onOk?: (value: Array<string | number>) => void;
     /** 值改变回调 */
     onChange?: (value: Array<string | number>) => void;
-    /** 是否显示 */
-    visible?: boolean;
-    /** 确定文本 */
-    okText?: React.ReactNode;
-    /** 中间标题 */
-    title?: React.ReactNode;
-    /** 取消文本 */
-    cancelText?: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
     /** 滚动变化回调 */
     onWheelChange?: (index: number, wheelIndex: number) => void;
 };
-/** picker 下方弹出选择器 */
-declare const Picker: React.ForwardRefExoticComponent<Props & React.RefAttributes<PickerViewRefType>>;
-export default Picker;
+export interface PickerViewRefType {
+    getValue: () => Array<string | number>;
+}
+/** 平铺选择器 */
+declare const PickerView: React.ForwardRefExoticComponent<Props & React.RefAttributes<PickerViewRefType>>;
+export default PickerView;

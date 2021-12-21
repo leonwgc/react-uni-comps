@@ -46,9 +46,13 @@ import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n    user-select: none;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n    user-select: none;\n  }\n"])));
+import { animationSlow } from './vars';
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: ", "ms;\n  transition-property: transform;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: ", "ms;\n  transition-property: transform;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"])), animationSlow);
 var itemHeight = 35;
-var firstItemY = 105;
+var firstItemY = 105; // 惯性滑动
+
+var MOMENTUM_LIMIT_TIME = 300;
+var MOMENTUM_LIMIT_DISTANCE = 15;
 
 var Wheel = function Wheel(props) {
   var onIndexChange = props.onIndexChange,
@@ -67,6 +71,9 @@ var Wheel = function Wheel(props) {
       _index = _c[0],
       _setIndex = _c[1];
 
+  var momentumRef = useRef({
+    touchStartTime: 0
+  });
   var scrollToIndex = useCallback(function (index) {
     if (elRef.current) {
       elRef.current.style.transitionProperty = 'transform';
@@ -132,6 +139,7 @@ var Wheel = function Wheel(props) {
     var touchStart = function touchStart() {
       elRef.current.style.transitionProperty = 'none';
       isMoving = true;
+      momentumRef.current.touchStartTime = Date.now();
     };
 
     var touchEnd = function touchEnd() {
@@ -162,6 +170,18 @@ var Wheel = function Wheel(props) {
     ref: elRef,
     onPressMove: function onPressMove(e) {
       yRef.current += e.deltaY;
+      var distance = e.deltaY;
+      var duration = Date.now() - momentumRef.current.touchStartTime;
+
+      if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
+        // momentum effect
+        elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
+        elRef.current.offsetHeight;
+        var speed = Math.abs(distance / duration);
+        yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
+        scrollToIndex(getIndexByY());
+      }
+
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {

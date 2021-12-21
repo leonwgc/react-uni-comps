@@ -1,4 +1,5 @@
 import React from 'react';
+import { PickerViewRefType } from './PickerView';
 declare type Props = {
     /** 值 */
     value?: string | number;
@@ -24,5 +25,5 @@ declare type Props = {
     locale?: 'zh' | 'en';
 };
 /** 移动端日期选择 */
-declare const DatePicker: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+declare const DatePicker: React.ForwardRefExoticComponent<Props & React.RefAttributes<PickerViewRefType>>;
 export default DatePicker;
