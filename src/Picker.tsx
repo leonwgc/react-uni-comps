@@ -198,10 +198,6 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     setList(convertPickerData(data, cols, value));
   }, [data]);
 
-  useUpdateEffect(() => {
-    setIndexArr(getIndexArrayFromValue(value, list, cols));
-  }, [value]);
-
   return (
     <StyledDrawer
       {...rest}
@@ -240,7 +236,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               return (
                 <Wheel
                   data={listItem}
-                  key={idx}
+                  key={listItem.length + '-' + idx}
                   index={indexArr[idx]}
                   onIndexChange={(index) => {
                     indexArr[idx] = index;

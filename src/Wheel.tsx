@@ -74,6 +74,16 @@ const Wheel = (props: Props): React.ReactElement => {
     return d;
   }, [yRef]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    // guard to prevent from index out of range
+    if (_index < 0) {
+      _setIndex(0);
+    } else if (_index >= data.length) {
+      _setIndex(data.length - 1);
+    }
+  });
+
   // sync outside
   useUpdateEffect(() => {
     if (_index !== index) {
