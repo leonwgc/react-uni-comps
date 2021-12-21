@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import Wheel from './Wheel';
 import clsx from 'clsx';
@@ -132,9 +132,13 @@ const getIndexArrayFromValue = (value = [], list, cols = 1) => {
   return ar;
 };
 
+export interface PickerViewRefType {
+  getValue: () => Array<string | number>;
+}
+
 /** 平铺选择器 */
-const PickerView = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, onChange, value = [], data = [], cols = 1, ...rest } = props;
+const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
+  const { className, onChange, onWheelChange, value = [], data = [], cols = 1, ...rest } = props;
 
   // 非级联
   const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
@@ -145,12 +149,16 @@ const PickerView = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const [indexArr, setIndexArr] = useState(() => getIndexArrayFromValue(value, list, cols));
 
+  useImperativeHandle(ref, () => ({
+    getValue: () => list.map((e, i) => e[indexArr[i]].value),
+  }));
+
   useUpdateEffect(() => {
     setList(convertPickerData(data, cols, value));
   }, [data]);
 
   return (
-    <StyledWrap {...rest} ref={ref} className={clsx('uc-pickerview', className)}>
+    <StyledWrap {...rest} className={clsx('uc-pickerview', className)}>
       <div className="mask"></div>
       <div className="hairline"></div>
       <div className="columnitem">
@@ -183,6 +191,7 @@ const PickerView = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                   }
 
                   onChange?.(list.map((e, i) => e[indexArr[i]].value));
+                  onWheelChange?.(index, idx);
                 }}
               />
             );

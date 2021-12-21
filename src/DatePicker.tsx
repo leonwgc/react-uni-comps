@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import dateUtils from './calendar/utils';
 import Picker, { DataItem } from './Picker';
+import { PickerViewRefType } from './PickerView';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 
 //#region def
@@ -68,7 +69,7 @@ const getData = (minYear: number, maxYear: number, locale = 'zh') => {
 //#endregion
 
 /** 移动端日期选择 */
-const DatePicker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const DatePicker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   const {
     className,
     value = new Date(),
