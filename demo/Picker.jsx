@@ -162,15 +162,6 @@ export default function App() {
         <Button
           block
           onClick={() => {
-            setVisible(4);
-          }}
-        >
-          非级联2列
-        </Button>
-
-        <Button
-          block
-          onClick={() => {
             setVisible(2);
           }}
         >
@@ -183,6 +174,15 @@ export default function App() {
           }}
         >
           级联3列
+        </Button>
+
+        <Button
+          block
+          onClick={() => {
+            setVisible(4);
+          }}
+        >
+          非级联2列
         </Button>
 
         <StyledPicker

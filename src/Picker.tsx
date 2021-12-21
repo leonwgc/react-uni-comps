@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import Wheel from './Wheel';
 import clsx from 'clsx';
+import useUpdateEffect from './hooks/useUpdateEffect';
 
 //#region def
 
@@ -38,7 +39,7 @@ type Props = {
   className?: string;
   style?: React.CSSProperties;
   /** 滚动变化回调 */
-  onWheelChange?: (val: unknown, index: number, wheelIndex: number) => void;
+  onWheelChange?: (index: number, wheelIndex: number) => void;
 };
 
 const StyledDrawer = styled(Drawer)`
@@ -51,6 +52,7 @@ const StyledDrawer = styled(Drawer)`
     background-color: #f7f7f7;
     font-size: 16px;
     touch-action: none;
+    user-select: none;
 
     .ok-text {
       ${getThemeColorCss('color')}
@@ -155,6 +157,17 @@ const convertPickerData = (data: DataItem[] | DataItem[][], cols = 1, value = []
   return ret;
 };
 
+const getIndexArrayFromValue = (value = [], list, cols = 1) => {
+  const ar = new Array(cols).fill(0);
+  if (list.length > 0 && value.length > 0) {
+    list.map((e, i) => {
+      const index = list[i].findIndex((e) => e.value === value[i]);
+      ar[i] = index === -1 ? 0 : index;
+    });
+  }
+  return ar;
+};
+
 /** picker 选择器 */
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
@@ -172,14 +185,22 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  // 是否非级联
+  // 非级联
   const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
 
-  const list = useMemo(() => {
+  const [list, setList] = useState(() => {
     return convertPickerData(data, cols, value);
-  }, [data, cols, value]);
+  });
 
-  const [val, setVal] = useState<Array<string | number>>(value || []);
+  const [indexArr, setIndexArr] = useState(() => getIndexArrayFromValue(value, list, cols));
+
+  useUpdateEffect(() => {
+    setList(convertPickerData(data, cols, value));
+  }, [data]);
+
+  useUpdateEffect(() => {
+    setIndexArr(getIndexArrayFromValue(value, list, cols));
+  }, [value]);
 
   return (
     <StyledDrawer
@@ -197,21 +218,11 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           <div
             className="ok-text"
             onClick={() => {
-              if (list.length) {
-                const newVal = [...val];
-                let i = cols - 1;
-                while (i >= 0) {
-                  if (typeof newVal[i] === 'undefined') {
-                    newVal[i] = list[i][val[i] || 0]?.value || '';
-                  }
-                  i--;
-                }
-
-                onOk?.(newVal);
+              if (list.length && indexArr.length) {
+                onOk?.(list.map((e, i) => e[indexArr[i]].value));
               } else {
                 onOk?.([]);
               }
-
               onClose?.();
             }}
           >
@@ -230,33 +241,29 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 <Wheel
                   data={listItem}
                   key={idx}
-                  value={val[idx]}
-                  onChange={(v, index) => {
-                    val[idx] = v;
+                  index={indexArr[idx]}
+                  onIndexChange={(index) => {
+                    indexArr[idx] = index;
 
                     let nextIndex = idx + 1;
-                    while (nextIndex <= cols - 1) {
-                      // next wheel refresh  & update value to next&first
-                      if (!isUnLinked) {
-                        list[nextIndex] = list[nextIndex - 1][index]?.children || [];
-                        value[nextIndex] = list[nextIndex][0]?.value || '';
+
+                    if (nextIndex <= cols - 1) {
+                      while (nextIndex <= cols - 1) {
+                        // next wheel refresh  & update value to next&first
+                        if (!isUnLinked) {
+                          // linked
+                          list[nextIndex] =
+                            list[nextIndex - 1][indexArr[nextIndex - 1]]?.children || [];
+
+                          indexArr[nextIndex] = 0;
+                        }
+                        nextIndex++;
                       }
-                      nextIndex++;
+                      setList([...list]);
+                      setIndexArr([...indexArr]);
                     }
 
-                    const newVal = [...val];
-                    nextIndex = idx - 1;
-                    while (nextIndex >= 0) {
-                      // prev wheel check
-                      if (typeof newVal[nextIndex] === 'undefined') {
-                        // left not scrolled
-                        newVal[nextIndex] = list[nextIndex][0]?.value || '';
-                      }
-                      nextIndex--;
-                    }
-
-                    setVal(newVal);
-                    onWheelChange?.(v, index, idx);
+                    onWheelChange?.(index, idx);
                   }}
                 />
               );

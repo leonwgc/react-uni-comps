@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
+import useUpdateEffect from './hooks/useUpdateEffect';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -19,10 +20,10 @@ type Props = {
   style?: React.CSSProperties;
   /** 数据列表 */
   data?: Array<DataItem>;
-  /** 值*/
-  value?: string | number;
-  /** 值改变回调 */
-  onChange?: (val: string | number, index: number) => void;
+  /** 当前滚动值的索引 */
+  index?: number;
+  /** 索引改变回调 */
+  onIndexChange?: (newIndex: number) => void;
 };
 
 const StyledWrap = styled.div`
@@ -39,6 +40,7 @@ const StyledWrap = styled.div`
     height: 35px;
     font-size: 18px;
     color: #333;
+    user-select: none;
   }
 `;
 
@@ -46,10 +48,11 @@ const itemHeight = 35;
 const firstItemY = 105;
 
 const Wheel = (props: Props): React.ReactElement => {
-  const { onChange, data = [], value, className, ...rest } = props;
+  const { onIndexChange, data = [], index = 0, className, ...rest } = props;
   const elRef = useRef<HTMLElement>();
-
+  const onIndexChangeRef = useCallbackRef(onIndexChange);
   const yRef = useRef(firstItemY);
+  const [_index, _setIndex] = useState(index);
 
   const scrollToIndex = useCallback(
     (index) => {
@@ -71,35 +74,36 @@ const Wheel = (props: Props): React.ReactElement => {
     return d;
   }, [yRef]);
 
-  useEffect(() => {
-    const index = data.findIndex((d) => d.value === value);
-    if (index === -1) {
-      // not found , goto first
-      if (data.length > 0) {
-        onChange?.(data[0].value, 0);
-      } else {
-        onChange?.(undefined, 0);
-      }
-      scrollToIndex(0);
-    } else {
-      scrollToIndex(index);
+  // sync outside
+  useUpdateEffect(() => {
+    if (_index !== index) {
+      _setIndex(index);
     }
-  }, [value, data]);
+  }, [index]);
+
+  useUpdateEffect(() => {
+    onIndexChangeRef?.current(_index);
+  }, [_index]);
+
+  useEffect(() => {
+    scrollToIndex(_index);
+  }, [_index, scrollToIndex]);
 
   const touchEnd = () => {
     const min = -1 * (data.length - 1) * itemHeight + firstItemY;
     const max = firstItemY;
 
-    let index;
+    let newIndex;
     if (yRef.current >= max - itemHeight / 2) {
-      index = 0;
+      newIndex = 0;
     } else if (yRef.current <= min) {
-      index = data.length - 1;
+      newIndex = data.length - 1;
     } else {
-      index = getIndexByY();
+      newIndex = getIndexByY();
     }
-    scrollToIndex(index);
-    onChange?.(data[index].value, index);
+
+    scrollToIndex(newIndex);
+    _setIndex(newIndex);
   };
 
   const touchEndRef = useCallbackRef(touchEnd);
@@ -107,17 +111,33 @@ const Wheel = (props: Props): React.ReactElement => {
   useLayoutEffect(() => {
     const el = elRef.current;
     const elTouchEnd = touchEndRef.current;
+    let isMoving = false;
 
     const touchStart = () => {
       elRef.current.style.transitionProperty = 'none';
+      isMoving = true;
+    };
+
+    const touchEnd = () => {
+      if (isMoving) {
+        elTouchEnd();
+      }
+      isMoving = false;
     };
 
     el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    el.addEventListener(isTouch ? 'touchend' : 'mouseup', elTouchEnd);
+    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+
+    if (!isTouch) {
+      document.addEventListener('mouseup', touchEnd);
+    }
 
     return () => {
       el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', elTouchEnd);
+      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+      if (!isTouch) {
+        document.removeEventListener('mouseup', touchEnd);
+      }
     };
   }, [touchEndRef]);
 

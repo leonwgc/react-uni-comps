@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import dateUtils from './calendar/utils';
 import Picker, { DataItem } from './Picker';
@@ -8,7 +8,7 @@ import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 
 type Props = {
   /** 值 */
-  value?: string;
+  value?: string | number;
   /** 关闭回调 */
   onClose: () => void;
   /** 点击确定回调 */
@@ -79,10 +79,10 @@ const DatePicker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const dataRef = useRef(getData(minYear, maxYear, locale));
+  const [list, setList] = useState(getData(minYear, maxYear, locale));
 
   useUpdateLayoutEffect(() => {
-    dataRef.current = getData(minYear, maxYear, locale);
+    setList(getData(minYear, maxYear, locale));
   }, [minYear, maxYear, locale]);
 
   const [val, setVal] = useState<Array<number>>(() => {
@@ -94,24 +94,33 @@ const DatePicker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <Picker
       {...rest}
       cols={3}
-      data={dataRef.current}
+      data={list}
       onOk={(v: number[]) => {
         onOk?.(new Date(v[0], v[1] - 1, v[2]));
       }}
       value={val}
-      onWheelChange={(v: number, index: number, wheelIndex: number) => {
+      onWheelChange={(index: number, wheelIndex: number) => {
+        if (index >= list[wheelIndex].length) {
+          // fix feb
+          index = list[wheelIndex].length - 1;
+        }
+        const v = list[wheelIndex][index].value as number;
         val[wheelIndex] = v;
         if (wheelIndex === 1) {
           // month change
           const days = getDays(val[0], v);
-          dataRef.current[2] = days.map((v) => ({
-            label: v + locales[locale].day,
-            value: v,
-          })) as DataItem[];
 
-          if (val[2] > days.length) {
-            // keep the days original , but when origin val > lastday of curent month , set to first day
-            val[2] = 1;
+          if (days.length !== list[2].length) {
+            list[2] = days.map((v) => ({
+              label: v + locales[locale].day,
+              value: v,
+            })) as DataItem[];
+
+            if (val[2] > days.length) {
+              // keep the days original , but when origin val > lastday of curent month , set to first day
+              val[2] = list[2][list[2].length - 1].value as number;
+            }
+            setList([...list]);
           }
         }
         setVal([...val]);
