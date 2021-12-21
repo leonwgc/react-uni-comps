@@ -116,6 +116,7 @@ yarn add react-uni-comps
 - NumberKeyboardBase (数字键盘,非弹出 )
 - NumberKeyboard (数字键盘)
 - Picker (移动端选择器)
+- PickerView (平铺选择器)
 - Rate (评分/几颗星)
 - IndexList (索引列表)
 - FileInputTrigger (触发文件上传)
