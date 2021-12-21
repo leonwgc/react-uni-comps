@@ -178,6 +178,10 @@ module.exports = [
         title: '移动端选择器',
       },
       {
+        name: 'PickerView',
+        title: '平铺选择器',
+      },
+      {
         name: 'Rate',
         title: '评分',
       },

@@ -1,6 +1,6 @@
 ---
 title: 索引列表
-order: 10
+order: 11
 mobile: true
 group:
   title: 数据录入

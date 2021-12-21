@@ -1,6 +1,6 @@
 ---
 title: 评分
-order: 9
+order: 10
 mobile: true
 group:
   title: 数据录入

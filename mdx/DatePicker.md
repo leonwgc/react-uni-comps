@@ -1,6 +1,6 @@
 ---
 title: 移动端日期选择
-order: 13
+order: 14
 mobile: true
 group:
   title: 数据录入
