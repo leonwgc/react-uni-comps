@@ -5,6 +5,7 @@ import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import { animationSlow } from './vars';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -28,9 +29,8 @@ type Props = {
 
 const StyledWrap = styled.div`
   transform: translate3d(0px, 105px, 0px);
-  transition-duration: 0.24s;
+  transition-duration: ${animationSlow}ms;
   transition-property: transform;
-  transition-timing-function: ease-in-out;
   touch-action: none;
   flex: 1;
   .item {
@@ -41,11 +41,16 @@ const StyledWrap = styled.div`
     font-size: 18px;
     color: #333;
     user-select: none;
+    cursor: grab;
   }
 `;
 
 const itemHeight = 35;
 const firstItemY = 105;
+
+// 惯性滑动
+const MOMENTUM_LIMIT_TIME = 300;
+const MOMENTUM_LIMIT_DISTANCE = 15;
 
 const Wheel = (props: Props): React.ReactElement => {
   const { onIndexChange, data = [], index = 0, className, ...rest } = props;
@@ -53,6 +58,10 @@ const Wheel = (props: Props): React.ReactElement => {
   const onIndexChangeRef = useCallbackRef(onIndexChange);
   const yRef = useRef(firstItemY);
   const [_index, _setIndex] = useState(index);
+
+  const momentumRef = useRef({
+    touchStartTime: 0,
+  });
 
   const scrollToIndex = useCallback(
     (index) => {
@@ -126,6 +135,7 @@ const Wheel = (props: Props): React.ReactElement => {
     const touchStart = () => {
       elRef.current.style.transitionProperty = 'none';
       isMoving = true;
+      momentumRef.current.touchStartTime = Date.now();
     };
 
     const touchEnd = () => {
@@ -156,6 +166,19 @@ const Wheel = (props: Props): React.ReactElement => {
       ref={elRef}
       onPressMove={(e) => {
         yRef.current += e.deltaY;
+
+        const distance = e.deltaY;
+        const duration = Date.now() - momentumRef.current.touchStartTime;
+
+        if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
+          // momentum effect
+          elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
+          elRef.current.offsetHeight;
+          const speed = Math.abs(distance / duration);
+          yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
+          scrollToIndex(getIndexByY());
+        }
+
         elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
       }}
     >
