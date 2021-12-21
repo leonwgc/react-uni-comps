@@ -12,10 +12,10 @@ declare type Props = {
     style?: React.CSSProperties;
     /** 数据列表 */
     data?: Array<DataItem>;
-    /** 值*/
-    value?: string | number;
-    /** 值改变回调 */
-    onChange?: (val: string | number, index: number) => void;
+    /** 当前滚动值的索引 */
+    index?: number;
+    /** 索引改变回调 */
+    onIndexChange?: (newIndex: number) => void;
 };
 declare const Wheel: {
     (props: Props): React.ReactElement;

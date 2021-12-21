@@ -39,83 +39,127 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"])));
+import { isTouch } from './dom';
+import useCallbackRef from './hooks/useCallbackRef';
+import useUpdateEffect from './hooks/useUpdateEffect';
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n    user-select: none;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n    user-select: none;\n  }\n"])));
 var itemHeight = 35;
 var firstItemY = 105;
 
 var Wheel = function Wheel(props) {
-  var onChange = props.onChange,
+  var onIndexChange = props.onIndexChange,
       _a = props.data,
       data = _a === void 0 ? [] : _a,
-      value = props.value,
+      _b = props.index,
+      index = _b === void 0 ? 0 : _b,
       className = props.className,
-      rest = __rest(props, ["onChange", "data", "value", "className"]);
+      rest = __rest(props, ["onIndexChange", "data", "index", "className"]);
 
   var elRef = useRef();
+  var onIndexChangeRef = useCallbackRef(onIndexChange);
   var yRef = useRef(firstItemY);
+
+  var _c = useState(index),
+      _index = _c[0],
+      _setIndex = _c[1];
+
   var scrollToIndex = useCallback(function (index) {
     if (elRef.current) {
       elRef.current.style.transitionProperty = 'transform';
-      var y_1 = firstItemY - itemHeight * index;
-      yRef.current = y_1;
-      setTimeout(function () {
-        if (elRef.current) {
-          elRef.current.style.transform = "translate3d(0,".concat(y_1, "px,0)");
-        }
-      });
+      var y = firstItemY - itemHeight * index;
+      yRef.current = y;
+
+      if (elRef.current) {
+        elRef.current.style.transform = "translate3d(0,".concat(y, "px,0)");
+      }
     }
   }, [yRef]);
   var getIndexByY = useCallback(function () {
     var y = yRef.current;
     var d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [yRef]);
+  }, [yRef]); // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(function () {
-    var index = data.findIndex(function (d) {
-      return d.value === value;
-    });
-
-    if (index === -1) {
-      // not found , goto first
-      if (data.length > 0) {
-        onChange === null || onChange === void 0 ? void 0 : onChange(data[0].value, 0);
-      } else {
-        onChange === null || onChange === void 0 ? void 0 : onChange(undefined, 0);
-      }
-
-      scrollToIndex(0);
-    } else {
-      scrollToIndex(index);
+    // guard to prevent from index out of range
+    if (_index < 0) {
+      _setIndex(0);
+    } else if (_index >= data.length) {
+      _setIndex(data.length - 1);
     }
-  }, [scrollToIndex, data, value, onChange]);
+  }); // sync outside
 
-  var onTouchEnd = function onTouchEnd() {
+  useUpdateEffect(function () {
+    if (_index !== index) {
+      _setIndex(index);
+    }
+  }, [index]);
+  useUpdateEffect(function () {
+    onIndexChangeRef === null || onIndexChangeRef === void 0 ? void 0 : onIndexChangeRef.current(_index);
+  }, [_index]);
+  useEffect(function () {
+    scrollToIndex(_index);
+  }, [_index, scrollToIndex]);
+
+  var touchEnd = function touchEnd() {
     var min = -1 * (data.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
-    var index;
+    var newIndex;
 
     if (yRef.current >= max - itemHeight / 2) {
-      index = 0;
+      newIndex = 0;
     } else if (yRef.current <= min) {
-      index = data.length - 1;
+      newIndex = data.length - 1;
     } else {
-      index = getIndexByY();
+      newIndex = getIndexByY();
     }
 
-    scrollToIndex(index);
-    onChange === null || onChange === void 0 ? void 0 : onChange(data[index].value, index);
+    scrollToIndex(newIndex);
+
+    _setIndex(newIndex);
   };
 
+  var touchEndRef = useCallbackRef(touchEnd);
+  useLayoutEffect(function () {
+    var el = elRef.current;
+    var elTouchEnd = touchEndRef.current;
+    var isMoving = false;
+
+    var touchStart = function touchStart() {
+      elRef.current.style.transitionProperty = 'none';
+      isMoving = true;
+    };
+
+    var touchEnd = function touchEnd() {
+      if (isMoving) {
+        elTouchEnd();
+      }
+
+      isMoving = false;
+    };
+
+    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+
+    if (!isTouch) {
+      document.addEventListener('mouseup', touchEnd);
+    }
+
+    return function () {
+      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+
+      if (!isTouch) {
+        document.removeEventListener('mouseup', touchEnd);
+      }
+    };
+  }, [touchEndRef]);
   return /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: elRef,
-    onTouchStart: function onTouchStart() {
-      elRef.current.style.transitionProperty = 'none';
-    },
-    onTouchEnd: onTouchEnd,
     onPressMove: function onPressMove(e) {
       yRef.current += e.deltaY;
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");

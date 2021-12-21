@@ -548,6 +548,9 @@ var loadResource = function loadResource(url) {
     return Promise.reject('请输入js/css文件地址');
   }
 };
+/** 是否支持触屏 */
+
+var isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
 
 var intersectionObserver;
 var handlers = new Map();
@@ -1461,7 +1464,9 @@ var WaitLoading = function WaitLoading(props) {
   return show ? children : null;
 };
 
-var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove'];
+var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove']; // eslint-disable-next-line @typescript-eslint/no-empty-function
+
+var noop = function noop() {};
 
 var getLen = function getLen(v) {
   return Math.sqrt(v.x * v.x + v.y * v.y);
@@ -1538,20 +1543,24 @@ var FingerGesture = function FingerGesture(el, option) {
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener('touchstart', this.start, passiveIfSupported);
-  this.element.addEventListener('touchmove', this.move, passiveIfSupported);
-  this.element.addEventListener('touchend', this.end, passiveIfSupported);
-  this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+  this.element.addEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+
+  if (isTouch) {
+    this.element.addEventListener('touchmove', this.move, passiveIfSupported);
+    this.element.addEventListener('touchend', this.end, passiveIfSupported);
+    this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+  } else {
+    document.addEventListener('mousemove', this.move, passiveIfSupported);
+    document.addEventListener('mouseup', this.end, passiveIfSupported);
+  }
+
   this.preV = {
     x: null,
     y: null
   };
   this.pinchStartLen = null;
   this.scale = 1;
-  this.isDoubleTap = false; // eslint-disable-next-line @typescript-eslint/no-empty-function
-
-  var noop = function noop() {};
-
+  this.isDoubleTap = false;
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
   /** native events special care prevent from twice invoke  */
 
@@ -1559,6 +1568,7 @@ var FingerGesture = function FingerGesture(el, option) {
   this.touchMove = new HandlerAdmin(this.element);
   this.touchEnd = new HandlerAdmin(this.element);
   this.touchCancel = new HandlerAdmin(this.element);
+  this.isMoving = false;
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
   this.pinch = wrapFunc(this.element, option.onPinch || noop);
@@ -1587,7 +1597,18 @@ var FingerGesture = function FingerGesture(el, option) {
 
 FingerGesture.prototype = {
   start: function start(evt) {
-    if (!evt.touches) return;
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY
+      };
+    }
+
+    if (!this.isMoving) {
+      this.isMoving = true;
+    }
+
     this.now = Date.now();
     this.x1 = evt.touches[0].pageX;
     this.y1 = evt.touches[0].pageY;
@@ -1627,7 +1648,18 @@ FingerGesture.prototype = {
     }.bind(this), 750);
   },
   move: function move(evt) {
-    if (!evt.touches) return;
+    if (!this.isMoving) {
+      return;
+    }
+
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY
+      };
+    }
+
     var preV = this.preV,
         len = evt.touches.length,
         currentX = evt.touches[0].pageX,
@@ -1698,13 +1730,27 @@ FingerGesture.prototype = {
     }
   },
   end: function end(evt) {
-    if (!evt.changedTouches) return;
+    var _this$touchEnd;
+
+    if (this.isMoving) {
+      this.isMoving = false;
+    }
+
+    if (isTouch && !evt.changedTouches) return;
+
+    if (!evt.touches) {
+      evt.touches = evt.touches || [];
+      evt.touches[0] = {
+        pageX: evt.pageX,
+        pageY: evt.pageY
+      };
+    }
 
     this._cancelLongTap();
 
     var self = this;
 
-    if (evt.touches.length < 2) {
+    if (isTouch && evt.touches.length < 2) {
       this.multipointEnd.dispatch(evt, this.element);
       this.sx2 = this.sy2 = null;
     } //swipe
@@ -1718,24 +1764,30 @@ FingerGesture.prototype = {
     } else {
       this.tapTimeout = setTimeout(function () {
         if (!self._preventTap) {
-          self.tap.dispatch(evt, self.element);
+          var _self$tap;
+
+          (_self$tap = self.tap) === null || _self$tap === void 0 ? void 0 : _self$tap.dispatch(evt, self.element);
         } // trigger double tap immediately
 
 
         if (self.isDoubleTap) {
-          self.doubleTap.dispatch(evt, self.element);
+          var _self$doubleTap;
+
+          (_self$doubleTap = self.doubleTap) === null || _self$doubleTap === void 0 ? void 0 : _self$doubleTap.dispatch(evt, self.element);
           self.isDoubleTap = false;
         }
       }, 0);
 
       if (!self.isDoubleTap) {
         self.singleTapTimeout = setTimeout(function () {
-          self.singleTap.dispatch(evt, self.element);
+          var _self$singleTap;
+
+          (_self$singleTap = self.singleTap) === null || _self$singleTap === void 0 ? void 0 : _self$singleTap.dispatch(evt, self.element);
         }, 250);
       }
     }
 
-    this.touchEnd.dispatch(evt, this.element);
+    (_this$touchEnd = this.touchEnd) === null || _this$touchEnd === void 0 ? void 0 : _this$touchEnd.dispatch(evt, this.element);
     this.preV.x = 0;
     this.preV.y = 0;
     this.scale = 1;
@@ -1777,10 +1829,17 @@ FingerGesture.prototype = {
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
-    this.element.removeEventListener('touchstart', this.start, passiveIfSupported);
-    this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
-    this.element.removeEventListener('touchend', this.end, passiveIfSupported);
-    this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+    this.element.removeEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+
+    if (isTouch) {
+      this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
+      this.element.removeEventListener('touchend', this.end, passiveIfSupported);
+      this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+    } else {
+      document.removeEventListener('mousemove', this.move, passiveIfSupported);
+      document.removeEventListener('mouseup', this.end, passiveIfSupported);
+    }
+
     this.rotate.del();
     this.touchStart.del();
     this.multipointStart.del();
@@ -1796,7 +1855,11 @@ FingerGesture.prototype = {
     this.touchMove.del();
     this.touchEnd.del();
     this.touchCancel.del();
-    this.preV = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = this.singleTapTimeout = this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = this.singleTap = this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
+    this.preV = {
+      x: null,
+      y: null
+    };
+    this.isMoving = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = this.singleTapTimeout = this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = this.singleTap = this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
     window.removeEventListener('scroll', this._cancelAllHandler);
     return null;
   }
@@ -4611,15 +4674,13 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     } else {
       onClose === null || onClose === void 0 ? void 0 : onClose();
     }
-  }, [isOpen]);
+  }, [isOpen, onOpen, onClose]);
   var startTransform = React.useCallback(function (transformStr, x) {
     var v = thisRef.current;
     v.x = x;
     v.el.style.transitionProperty = 'transform';
-    setTimeout(function () {
-      v.el.style.transform = "".concat(transformStr);
-    });
-  }, [thisRef]);
+    v.el.style.transform = "".concat(transformStr);
+  }, []);
   React.useEffect(function () {
     var v = thisRef.current;
 
@@ -4650,55 +4711,48 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     return /*#__PURE__*/React__default['default'].createElement(StyledButton$2, {
       onClick: item.onClick,
       key: idx,
+      className: "swipe-action-item",
       style: {
         backgroundColor: item.color || primary
       }
     }, item.text);
   }, []);
+  var touchStart = React.useCallback(function () {
+    thisRef.current.el.style.transitionProperty = 'none';
+  }, []);
+  var touchEnd = React.useCallback(function () {
+    var v = thisRef.current;
+
+    if (v.x < 0) {
+      // open right
+      if (Math.abs(v.x) < v.rightWidth / 2) {
+        // no more than half way
+        startTransform('translate3d(0,0,0)', 0);
+        setIsOpen(false);
+      } else {
+        startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
+        setIsOpen(true);
+      }
+    } else if (v.x > 0) {
+      if (Math.abs(v.x) < v.leftWidth / 2) {
+        // no more than half way
+        startTransform('translate3d(0,0,0)', 0);
+        v.x = 0;
+        setIsOpen(false);
+      } else {
+        startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
+        setIsOpen(true);
+      }
+    }
+  }, [startTransform]);
+  React.useEffect(function () {
+    elRef.current.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+    elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+  }, [touchEnd, touchStart]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, {
     className: clsx__default['default']('uc-swipe-action')
   }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: elRef,
-    onTouchStart: function onTouchStart() {
-      thisRef.current.el.style.transitionProperty = 'none';
-    },
-    onTouchEnd: function onTouchEnd() {
-      var v = thisRef.current;
-
-      if (v.x < 0) {
-        // open right
-        if (Math.abs(v.x) < v.rightWidth / 2) {
-          // no more than half way
-          startTransform('translate3d(0,0,0)', 0);
-
-          if (isOpen) {
-            setIsOpen(false);
-          }
-        } else {
-          startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
-
-          if (!isOpen) {
-            setIsOpen(true);
-          }
-        }
-      } else if (v.x > 0) {
-        if (Math.abs(v.x) < v.leftWidth / 2) {
-          // no more than half way
-          startTransform('translate3d(0,0,0)', 0);
-          v.x = 0;
-
-          if (isOpen) {
-            setIsOpen(false);
-          }
-        } else {
-          startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
-
-          if (!isOpen) {
-            setIsOpen(true);
-          }
-        }
-      }
-    },
     onPressMove: function onPressMove(e) {
       var v = thisRef.current;
       v.x += e.deltaX; // x<0:swipe left & show right
@@ -4711,8 +4765,10 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "wrap",
-    onClick: function onClick() {
-      if (autoClose) {
+    onClick: function onClick(e) {
+      var _e$target, _e$target$classList;
+
+      if (autoClose && ((_e$target = e.target) === null || _e$target === void 0 ? void 0 : (_e$target$classList = _e$target.classList) === null || _e$target$classList === void 0 ? void 0 : _e$target$classList.contains('swipe-action-item'))) {
         startTransform('translate3d(0,0,0)', 0);
         setIsOpen(false);
       }
@@ -4878,82 +4934,124 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-var _excluded$A = ["onChange", "data", "value", "className"];
+var _excluded$A = ["onIndexChange", "data", "index", "className"];
 
 var _templateObject$z;
-var StyledWrap$1 = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n  }\n"])));
+var StyledWrap$1 = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: 0.24s;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    color: #333;\n    user-select: none;\n  }\n"])));
 var itemHeight = 35;
 var firstItemY = 105;
 
 var Wheel = function Wheel(props) {
-  var onChange = props.onChange,
+  var onIndexChange = props.onIndexChange,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      value = props.value,
+      _props$index = props.index,
+      index = _props$index === void 0 ? 0 : _props$index,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$A);
 
   var elRef = React.useRef();
+  var onIndexChangeRef = useCallbackRef(onIndexChange);
   var yRef = React.useRef(firstItemY);
+
+  var _useState = React.useState(index),
+      _useState2 = _slicedToArray(_useState, 2),
+      _index = _useState2[0],
+      _setIndex = _useState2[1];
+
   var scrollToIndex = React.useCallback(function (index) {
     if (elRef.current) {
       elRef.current.style.transitionProperty = 'transform';
       var y = firstItemY - itemHeight * index;
       yRef.current = y;
-      setTimeout(function () {
-        if (elRef.current) {
-          elRef.current.style.transform = "translate3d(0,".concat(y, "px,0)");
-        }
-      });
+
+      if (elRef.current) {
+        elRef.current.style.transform = "translate3d(0,".concat(y, "px,0)");
+      }
     }
   }, [yRef]);
   var getIndexByY = React.useCallback(function () {
     var y = yRef.current;
     var d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [yRef]);
+  }, [yRef]); // eslint-disable-next-line react-hooks/exhaustive-deps
+
   React.useEffect(function () {
-    var index = data.findIndex(function (d) {
-      return d.value === value;
-    });
-
-    if (index === -1) {
-      // not found , goto first
-      if (data.length > 0) {
-        onChange === null || onChange === void 0 ? void 0 : onChange(data[0].value, 0);
-      } else {
-        onChange === null || onChange === void 0 ? void 0 : onChange(undefined, 0);
-      }
-
-      scrollToIndex(0);
-    } else {
-      scrollToIndex(index);
+    // guard to prevent from index out of range
+    if (_index < 0) {
+      _setIndex(0);
+    } else if (_index >= data.length) {
+      _setIndex(data.length - 1);
     }
-  }, [scrollToIndex, data, value, onChange]);
+  }); // sync outside
 
-  var onTouchEnd = function onTouchEnd() {
+  useUpdateEffect(function () {
+    if (_index !== index) {
+      _setIndex(index);
+    }
+  }, [index]);
+  useUpdateEffect(function () {
+    onIndexChangeRef === null || onIndexChangeRef === void 0 ? void 0 : onIndexChangeRef.current(_index);
+  }, [_index]);
+  React.useEffect(function () {
+    scrollToIndex(_index);
+  }, [_index, scrollToIndex]);
+
+  var touchEnd = function touchEnd() {
     var min = -1 * (data.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
-    var index;
+    var newIndex;
 
     if (yRef.current >= max - itemHeight / 2) {
-      index = 0;
+      newIndex = 0;
     } else if (yRef.current <= min) {
-      index = data.length - 1;
+      newIndex = data.length - 1;
     } else {
-      index = getIndexByY();
+      newIndex = getIndexByY();
     }
 
-    scrollToIndex(index);
-    onChange === null || onChange === void 0 ? void 0 : onChange(data[index].value, index);
+    scrollToIndex(newIndex);
+
+    _setIndex(newIndex);
   };
 
+  var touchEndRef = useCallbackRef(touchEnd);
+  React.useLayoutEffect(function () {
+    var el = elRef.current;
+    var elTouchEnd = touchEndRef.current;
+    var isMoving = false;
+
+    var touchStart = function touchStart() {
+      elRef.current.style.transitionProperty = 'none';
+      isMoving = true;
+    };
+
+    var touchEnd = function touchEnd() {
+      if (isMoving) {
+        elTouchEnd();
+      }
+
+      isMoving = false;
+    };
+
+    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+
+    if (!isTouch) {
+      document.addEventListener('mouseup', touchEnd);
+    }
+
+    return function () {
+      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+
+      if (!isTouch) {
+        document.removeEventListener('mouseup', touchEnd);
+      }
+    };
+  }, [touchEndRef]);
   return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: elRef,
-    onTouchStart: function onTouchStart() {
-      elRef.current.style.transitionProperty = 'none';
-    },
-    onTouchEnd: onTouchEnd,
     onPressMove: function onPressMove(e) {
       yRef.current += e.deltaY;
       elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
@@ -4974,7 +5072,7 @@ var _excluded$B = ["okText", "cancelText", "title", "onClose", "visible", "onOk"
 
 var _templateObject$A;
 
-var StyledDrawer$1 = styled__default['default'](Drawer)(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+var StyledDrawer$1 = styled__default['default'](Drawer)(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n  .picker-wrap {\n    display: flex;\n    position: relative;\n    background-color: #fff;\n    height: 245px;\n    width: 100%;\n    touch-action: none;\n\n    .mask {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n        linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n      background-repeat: no-repeat;\n      background-position: top, bottom;\n      -webkit-transform: translateZ(0);\n      transform: translateZ(0);\n      pointer-events: none;\n      background-size: 100% 105px;\n    }\n\n    .hairline {\n      position: absolute;\n      height: 35px;\n      width: 100%;\n      border: 1px solid #d8d8d8;\n      border-left: 0;\n      border-right: 0;\n      top: 105px;\n    }\n\n    .columnitem {\n      width: 0;\n      flex-grow: 1;\n      height: 100%;\n\n      .wheel-wrap {\n        display: flex;\n        position: relative;\n        text-align: center;\n        overflow-y: hidden;\n        height: 100%;\n      }\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 /**
  *  convert data to 2 dimension array ;
@@ -5024,6 +5122,24 @@ var convertPickerData = function convertPickerData(data) {
 
   return ret;
 };
+
+var getIndexArrayFromValue = function getIndexArrayFromValue() {
+  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var list = arguments.length > 1 ? arguments[1] : undefined;
+  var cols = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ar = new Array(cols).fill(0);
+
+  if (list.length > 0 && value.length > 0) {
+    list.map(function (e, i) {
+      var index = list[i].findIndex(function (e) {
+        return e.value === value[i];
+      });
+      ar[i] = index === -1 ? 0 : index;
+    });
+  }
+
+  return ar;
+};
 /** picker 选择器 */
 
 
@@ -5045,19 +5161,28 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       data = _props$data === void 0 ? [] : _props$data,
       _props$cols = props.cols,
       cols = _props$cols === void 0 ? 1 : _props$cols,
-      rest = _objectWithoutProperties(props, _excluded$B); // 是否非级联
+      rest = _objectWithoutProperties(props, _excluded$B); // 非级联
 
 
   var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
-  var list = React.useMemo(function () {
+
+  var _useState = React.useState(function () {
     return convertPickerData(data, cols, value);
-  }, [data, cols, value]);
-
-  var _useState = React.useState(value || []),
+  }),
       _useState2 = _slicedToArray(_useState, 2),
-      val = _useState2[0],
-      setVal = _useState2[1];
+      list = _useState2[0],
+      setList = _useState2[1];
 
+  var _useState3 = React.useState(function () {
+    return getIndexArrayFromValue(value, list, cols);
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      indexArr = _useState4[0],
+      setIndexArr = _useState4[1];
+
+  useUpdateEffect(function () {
+    setList(convertPickerData(data, cols, value));
+  }, [data]);
   return /*#__PURE__*/React__default['default'].createElement(StyledDrawer$1, _extends({}, rest, {
     className: clsx__default['default']('uc-picker', className),
     position: "bottom",
@@ -5071,22 +5196,10 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     }, title), /*#__PURE__*/React__default['default'].createElement("div", {
       className: "ok-text",
       onClick: function onClick() {
-        if (list.length) {
-          var newVal = _toConsumableArray(val);
-
-          var i = cols - 1;
-
-          while (i >= 0) {
-            if (typeof newVal[i] === 'undefined') {
-              var _list$i;
-
-              newVal[i] = ((_list$i = list[i][val[i] || 0]) === null || _list$i === void 0 ? void 0 : _list$i.value) || '';
-            }
-
-            i--;
-          }
-
-          onOk === null || onOk === void 0 ? void 0 : onOk(newVal);
+        if (list.length && indexArr.length) {
+          onOk === null || onOk === void 0 ? void 0 : onOk(list.map(function (e, i) {
+            return e[indexArr[i]].value;
+          }));
         } else {
           onOk === null || onOk === void 0 ? void 0 : onOk([]);
         }
@@ -5108,42 +5221,31 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
     return /*#__PURE__*/React__default['default'].createElement(Wheel, {
       data: listItem,
-      key: idx,
-      value: val[idx],
-      onChange: function onChange(v, index) {
-        val[idx] = v;
+      key: listItem.length + '-' + idx,
+      index: indexArr[idx],
+      onIndexChange: function onIndexChange(index) {
+        indexArr[idx] = index;
         var nextIndex = idx + 1;
 
-        while (nextIndex <= cols - 1) {
-          // next wheel refresh  & update value to next&first
-          if (!isUnLinked) {
-            var _list$index, _list$nextIndex$;
+        if (nextIndex <= cols - 1) {
+          while (nextIndex <= cols - 1) {
+            // next wheel refresh  & update value to next&first
+            if (!isUnLinked) {
+              var _list$indexArr;
 
-            list[nextIndex] = ((_list$index = list[nextIndex - 1][index]) === null || _list$index === void 0 ? void 0 : _list$index.children) || [];
-            value[nextIndex] = ((_list$nextIndex$ = list[nextIndex][0]) === null || _list$nextIndex$ === void 0 ? void 0 : _list$nextIndex$.value) || '';
+              // linked
+              list[nextIndex] = ((_list$indexArr = list[nextIndex - 1][indexArr[nextIndex - 1]]) === null || _list$indexArr === void 0 ? void 0 : _list$indexArr.children) || [];
+              indexArr[nextIndex] = 0;
+            }
+
+            nextIndex++;
           }
 
-          nextIndex++;
+          setList(_toConsumableArray(list));
+          setIndexArr(_toConsumableArray(indexArr));
         }
 
-        var newVal = _toConsumableArray(val);
-
-        nextIndex = idx - 1;
-
-        while (nextIndex >= 0) {
-          // prev wheel check
-          if (typeof newVal[nextIndex] === 'undefined') {
-            var _list$nextIndex$2;
-
-            // left not scrolled
-            newVal[nextIndex] = ((_list$nextIndex$2 = list[nextIndex][0]) === null || _list$nextIndex$2 === void 0 ? void 0 : _list$nextIndex$2.value) || '';
-          }
-
-          nextIndex--;
-        }
-
-        setVal(newVal);
-        onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(v, index, idx);
+        onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(index, idx);
       }
     });
   })))));
@@ -6900,42 +7002,57 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       locale = _props$locale === void 0 ? 'zh' : _props$locale,
       rest = _objectWithoutProperties(props, _excluded$Q);
 
-  var dataRef = React.useRef(getData(minYear, maxYear, locale));
+  var _useState = React.useState(getData(minYear, maxYear, locale)),
+      _useState2 = _slicedToArray(_useState, 2),
+      list = _useState2[0],
+      setList = _useState2[1];
+
   useUpdateLayoutEffect(function () {
-    dataRef.current = getData(minYear, maxYear, locale);
+    setList(getData(minYear, maxYear, locale));
   }, [minYear, maxYear, locale]);
 
-  var _useState = React.useState(function () {
+  var _useState3 = React.useState(function () {
     var d = utils.parseDate(value || new Date());
     return [d.getFullYear(), d.getMonth() + 1, d.getDate()];
   }),
-      _useState2 = _slicedToArray(_useState, 2),
-      val = _useState2[0],
-      setVal = _useState2[1];
+      _useState4 = _slicedToArray(_useState3, 2),
+      val = _useState4[0],
+      setVal = _useState4[1];
 
   return /*#__PURE__*/React__default['default'].createElement(Picker, _extends({}, rest, {
     cols: 3,
-    data: dataRef.current,
+    data: list,
     onOk: function onOk(v) {
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));
     },
     value: val,
-    onWheelChange: function onWheelChange(v, index, wheelIndex) {
+    onWheelChange: function onWheelChange(index, wheelIndex) {
+      if (index >= list[wheelIndex].length) {
+        // fix feb
+        index = list[wheelIndex].length - 1;
+      }
+
+      var v = list[wheelIndex][index].value;
       val[wheelIndex] = v;
 
       if (wheelIndex === 1) {
         // month change
         var days = getDays(val[0], v);
-        dataRef.current[2] = days.map(function (v) {
-          return {
-            label: v + locales$1[locale].day,
-            value: v
-          };
-        });
 
-        if (val[2] > days.length) {
-          // keep the days original , but when origin val > lastday of curent month , set to first day
-          val[2] = 1;
+        if (days.length !== list[2].length) {
+          list[2] = days.map(function (v) {
+            return {
+              label: v + locales$1[locale].day,
+              value: v
+            };
+          });
+
+          if (val[2] > days.length) {
+            // keep the days original , but when origin val > lastday of curent month , set to first day
+            val[2] = list[2][list[2].length - 1].value;
+          }
+
+          setList(_toConsumableArray(list));
         }
       }
 

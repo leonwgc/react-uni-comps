@@ -37,7 +37,7 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
   return to.concat(ar || Array.prototype.slice.call(from));
 };
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import dateUtils from './calendar/utils';
 import Picker from './Picker';
@@ -115,41 +115,55 @@ var DatePicker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       locale = _d === void 0 ? 'zh' : _d,
       rest = __rest(props, ["className", "value", "onOk", "minYear", "maxYear", "locale"]);
 
-  var dataRef = useRef(getData(minYear, maxYear, locale));
+  var _e = useState(getData(minYear, maxYear, locale)),
+      list = _e[0],
+      setList = _e[1];
+
   useUpdateLayoutEffect(function () {
-    dataRef.current = getData(minYear, maxYear, locale);
+    setList(getData(minYear, maxYear, locale));
   }, [minYear, maxYear, locale]);
 
-  var _e = useState(function () {
+  var _f = useState(function () {
     var d = dateUtils.parseDate(value || new Date());
     return [d.getFullYear(), d.getMonth() + 1, d.getDate()];
   }),
-      val = _e[0],
-      setVal = _e[1];
+      val = _f[0],
+      setVal = _f[1];
 
   return /*#__PURE__*/React.createElement(Picker, __assign({}, rest, {
     cols: 3,
-    data: dataRef.current,
+    data: list,
     onOk: function onOk(v) {
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));
     },
     value: val,
-    onWheelChange: function onWheelChange(v, index, wheelIndex) {
+    onWheelChange: function onWheelChange(index, wheelIndex) {
+      if (index >= list[wheelIndex].length) {
+        // fix feb
+        index = list[wheelIndex].length - 1;
+      }
+
+      var v = list[wheelIndex][index].value;
       val[wheelIndex] = v;
 
       if (wheelIndex === 1) {
         // month change
         var days = getDays(val[0], v);
-        dataRef.current[2] = days.map(function (v) {
-          return {
-            label: v + locales[locale].day,
-            value: v
-          };
-        });
 
-        if (val[2] > days.length) {
-          // keep the days original , but when origin val > lastday of curent month , set to first day
-          val[2] = 1;
+        if (days.length !== list[2].length) {
+          list[2] = days.map(function (v) {
+            return {
+              label: v + locales[locale].day,
+              value: v
+            };
+          });
+
+          if (val[2] > days.length) {
+            // keep the days original , but when origin val > lastday of curent month , set to first day
+            val[2] = list[2][list[2].length - 1].value;
+          }
+
+          setList(__spreadArray([], list, true));
         }
       }
 

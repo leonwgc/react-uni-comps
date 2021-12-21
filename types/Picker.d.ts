@@ -29,7 +29,7 @@ declare type Props = {
     className?: string;
     style?: React.CSSProperties;
     /** 滚动变化回调 */
-    onWheelChange?: (val: unknown, index: number, wheelIndex: number) => void;
+    onWheelChange?: (index: number, wheelIndex: number) => void;
 };
 /** picker 选择器 */
 declare const Picker: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;

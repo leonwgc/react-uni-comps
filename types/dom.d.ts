@@ -62,3 +62,5 @@ export declare const renderElement: (element: ReactElement, container?: HTMLElem
  * @return {*}  {Promise<void>}
  */
 export declare const loadResource: (url: string, attrs?: {}) => Promise<void>;
+/** 是否支持触屏 */
+export declare const isTouch: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 declare type Props = {
     /** 值 */
-    value?: string;
+    value?: string | number;
     /** 关闭回调 */
     onClose: () => void;
     /** 点击确定回调 */
