@@ -237,4 +237,18 @@ module.exports = [
       },
     ],
   },
+  {
+    title: '动画',
+    path: 'animation',
+    comps: [
+      {
+        name: 'TransitionElement',
+        title: 'Transition动画',
+      },
+      {
+        name: 'AnimationElement',
+        title: 'Animation动画',
+      },
+    ],
+  },
 ];

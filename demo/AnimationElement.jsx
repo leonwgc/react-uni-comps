@@ -73,7 +73,7 @@ const Animation = () => {
             fillMode="both"
             iterationCount="infinite"
           >
-            <StyledButton>{item}</StyledButton>
+            <StyledButton type="primary">{item}</StyledButton>
           </AnimationElement>
         ))}
         <AnimationElement
@@ -96,7 +96,7 @@ const Animation = () => {
           duration="600ms"
           timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
         >
-          <Button type="primary">hello,wgc</Button>
+          <Button type="primary">hello,world</Button>
         </AnimationElement>
         <AnimationElement
           name="fadeInLeft"

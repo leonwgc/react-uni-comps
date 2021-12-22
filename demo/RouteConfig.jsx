@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/TransitionElement',
-    component: lazy(() => import('./Transition')),
+    component: lazy(() => import('./TransitionElement')),
   },
   {
     path: '/AnimationElement',

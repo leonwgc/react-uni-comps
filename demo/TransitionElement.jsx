@@ -56,7 +56,7 @@ const StyledButton = styled.div`
   }
 `;
 
-const Tansition = () => {
+const App = () => {
   let arr = Array.from(new Array(20), (v, k) => k + 1);
 
   return (
@@ -80,4 +80,4 @@ const Tansition = () => {
   );
 };
 
-export default Tansition;
+export default App;

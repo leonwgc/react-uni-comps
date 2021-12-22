@@ -39,11 +39,9 @@ export default function App() {
         <Button onClick={() => ref.current.next()}>下一页</Button>
       </div>
 
-      <Slide style={{ marginTop: 30 }} interval={2000}>
+      <Slide style={{ marginTop: 30 }} interval={1000} autoPlay direction="vertical">
         {images.map((item) => (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={item} key={item} style={{ width: '80vw' }} />
-          </div>
+          <img src={item} key={item} />
         ))}
       </Slide>
     </PageWrap>
