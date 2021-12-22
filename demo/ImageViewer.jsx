@@ -11,7 +11,7 @@ const demoImages = [
 
 export default function App() {
   const [v, setV] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   return (
     <PageWrap>
       <Space size={20}>
