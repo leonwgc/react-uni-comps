@@ -6263,7 +6263,7 @@ Avatar.displayName = 'UC-Avatar';
 var _excluded$M = ["className", "visible", "onClose", "images", "onIndexChange"];
 
 var _templateObject$M;
-var StyledImageViewer = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n\n  .text {\n    position: fixed;\n    left: 50%;\n    top: 12px;\n    transform: translateX(-50%);\n    color: #e6e6e6;\n    font-size: 18px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n  .slide-page {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100vw;\n\n    img {\n      object-position: center;\n      max-width: 100%;\n      touch-action: none;\n    }\n  }\n"])));
+var StyledImageViewer = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 300;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  background-color: #000;\n\n  .navs {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #fff;\n    font-size: 18px;\n  }\n  .close {\n    position: fixed;\n    right: 24px;\n    top: 24px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 32px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    max-height: 70vh;\n    object-fit: contain;\n    flex-basis: 100vw;\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -6299,33 +6299,31 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       ref: slideRef,
       showPageIndicator: false,
       style: {
-        zIndex: 101,
-        width: '100%'
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center'
       },
       direction: "horizontal",
-      height: '60vh',
+      height: '100vh',
       onPageChange: function onPageChange(index) {
         var _onIndexChangeRef$cur;
 
         setIndex(index);
         (_onIndexChangeRef$cur = onIndexChangeRef.current) === null || _onIndexChangeRef$cur === void 0 ? void 0 : _onIndexChangeRef$cur.call(onIndexChangeRef, index);
       },
-      loop: isMobile,
       autoPlay: false
     }, urls.map(function (url) {
-      return /*#__PURE__*/React__default['default'].createElement("div", {
-        className: "slide-page",
+      return /*#__PURE__*/React__default['default'].createElement("img", {
+        src: url,
         key: url
-      }, /*#__PURE__*/React__default['default'].createElement("img", {
-        src: url
-      }));
+      });
     }));
   }, [urls, onIndexChangeRef, slideRef]);
 
-  var textRender = function textRender() {
+  var navRender = function navRender() {
     if (urls.length > 1) {
       return /*#__PURE__*/React__default['default'].createElement("div", {
-        className: clsx__default['default']('text')
+        className: clsx__default['default']('navs')
       }, /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Button, {
         style: {
           border: 'none'
@@ -6361,23 +6359,11 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   return visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-image-viewer', className)
-  }), /*#__PURE__*/React__default['default'].createElement(Mask, {
-    style: {
-      zIndex: 'auto'
-    },
-    onClick: onClose
-  }), /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }), slides, /*#__PURE__*/React__default['default'].createElement(Icon, {
     type: "uc-icon-clear",
-    onClick: onClose,
-    style: {
-      position: 'fixed',
-      right: 20,
-      top: 20,
-      cursor: 'pointer',
-      fontSize: 30,
-      opacity: 0.7
-    }
-  }), textRender(), slides);
+    className: "close",
+    onClick: onClose
+  }), navRender());
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
