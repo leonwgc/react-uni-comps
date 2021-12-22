@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import Mask from './Mask';
 import Slide, { SlideRefType } from './Slide';
 import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
@@ -9,7 +8,6 @@ import IconArrow from './IconArrow';
 import Button from './Button';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
-import { isMobile } from './dom';
 
 type Props = {
   /** 是否可见 */
@@ -26,7 +24,7 @@ type Props = {
 
 const StyledImageViewer = styled.div`
   position: fixed;
-  z-index: 1000;
+  z-index: 300;
   left: 0;
   right: 0;
   bottom: 0;
@@ -35,30 +33,34 @@ const StyledImageViewer = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
+  background-color: #000;
 
-  .text {
-    position: fixed;
+  .navs {
+    position: absolute;
     left: 50%;
-    top: 12px;
-    transform: translateX(-50%);
-    color: #e6e6e6;
+    top: 16px;
+    transform: translate3d(-50%, 0, 0);
+    color: #fff;
     font-size: 18px;
+  }
+  .close {
+    position: fixed;
+    right: 24px;
+    top: 24px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 32px;
   }
 
   .uc-icon-arrow {
     cursor: pointer;
   }
-  .slide-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
 
-    img {
-      object-position: center;
-      max-width: 100%;
-      touch-action: none;
-    }
+  img {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    flex-basis: 100vw;
   }
 `;
 
@@ -87,29 +89,26 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       <Slide
         ref={slideRef}
         showPageIndicator={false}
-        style={{ zIndex: 101, width: '100%' }}
+        style={{ width: '100%', display: 'flex', alignItems: 'center' }}
         direction="horizontal"
-        height={'60vh'}
+        height={'100vh'}
         onPageChange={(index) => {
           setIndex(index);
           onIndexChangeRef.current?.(index);
         }}
-        loop={isMobile}
         autoPlay={false}
       >
         {urls.map((url) => (
-          <div className="slide-page" key={url}>
-            <img src={url} />
-          </div>
+          <img src={url} key={url} />
         ))}
       </Slide>
     );
   }, [urls, onIndexChangeRef, slideRef]);
 
-  const textRender = () => {
+  const navRender = () => {
     if (urls.length > 1) {
       return (
-        <div className={clsx('text')}>
+        <div className={clsx('navs')}>
           <Space>
             <Button
               style={{ border: 'none' }}
@@ -141,21 +140,9 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
     visible && (
       <StyledImageViewer {...rest} ref={ref} className={clsx('uc-image-viewer', className)}>
-        <Mask style={{ zIndex: 'auto' }} onClick={onClose} />
-        <Icon
-          type="uc-icon-clear"
-          onClick={onClose}
-          style={{
-            position: 'fixed',
-            right: 20,
-            top: 20,
-            cursor: 'pointer',
-            fontSize: 30,
-            opacity: 0.7,
-          }}
-        />
-        {textRender()}
         {slides}
+        <Icon type="uc-icon-clear" className="close" onClick={onClose} />
+        {navRender()}
       </StyledImageViewer>
     )
   );
