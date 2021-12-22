@@ -35,24 +35,25 @@ const StyledSlide = styled.div`
     }
   }
 
-  .uc-slide-dot-wrapper {
+  .pager {
     position: absolute;
-    bottom: 4px;
+    bottom: 8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
 
-    .dot {
+    .item {
       display: inline-block;
-      margin: 0 4px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #eee;
-      transition: all ease-in-out 0.3s;
+      width: 19px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      transition: all ease-in-out ${animationSlow}ms;
+
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
 
       &.active {
-        width: 20px;
-        border-radius: 5px;
+        background: #fff;
       }
     }
 
@@ -61,20 +62,14 @@ const StyledSlide = styled.div`
       right: 8px;
       top: 50%;
       left: unset;
-      transform: translateY(-50%);
+      transform: translate3d(0, -50%, 0);
 
-      .dot {
+      .item {
         display: block;
-        margin: 4px 0;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #eee;
-
-        &.active {
-          width: 8px;
-          height: 20px;
-          border-radius: 5px;
+        width: 4px;
+        height: 19px;
+        &:not(:last-child) {
+          margin-bottom: 4px;
         }
       }
     }
@@ -97,8 +92,8 @@ export type Props = {
   loop?: boolean;
   /** 页面切换后回调 */
   onPageChange?: (pageIndex: number) => void;
-  /** 是否显示分页圆点,默认true */
-  showDot?: boolean;
+  /** 是否显示分页器,默认true */
+  showPageIndicator?: boolean;
   /** 滑动比例多少切换，默认0.1 */
   ratio?: number;
 };
@@ -148,7 +143,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     className,
     height = 160,
     style,
-    showDot = true,
+    showPageIndicator = true,
     ratio = 0.1,
     ...rest
   } = props;
@@ -245,15 +240,15 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     }
   }, [pageIndex, slideToPageIndex, autoPlay, interval, len, exp]);
 
-  const dotRender = (): React.ReactNode => {
-    if (!showDot || len <= 1) return null;
+  const pagerRender = (): React.ReactNode => {
+    if (!showPageIndicator || len <= 1) return null;
 
     return (
-      <div className={clsx('uc-slide-dot-wrapper', { vertical: direction === 'vertical' })}>
+      <div className={clsx('pager', { vertical: direction === 'vertical' })}>
         {React.Children.map(children, (c, idx) => (
           <span
             key={idx}
-            className={clsx('dot', { active: pageIndex === idx })}
+            className={clsx('item', { active: pageIndex === idx })}
             onClick={() => slideToPageIndex(idx)}
           ></span>
         ))}
@@ -346,7 +341,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
           {items}
         </div>
       </FingerGestureElement>
-      {dotRender()}
+      {pagerRender()}
     </StyledSlide>
   );
 });
