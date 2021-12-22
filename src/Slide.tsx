@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
+import { isTouch } from './dom';
 import { animationSlow } from './vars';
 
 const StyledSlide = styled.div`
@@ -168,7 +169,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     lastY: 0,
     wrapHeight: 0,
     wrapWidth: 0,
-    inTransition: false,
+    isMoving: false,
   });
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
@@ -187,7 +188,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         wrapElRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
         s.y = y;
       }
-      s.inTransition = transition;
 
       setPageIndex(newPageIndex);
     },
@@ -195,9 +195,23 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   );
 
   useImperativeHandle(ref, () => ({
-    prev: () => slideToPageIndex(pageIndex > 0 ? pageIndex - 1 : 0),
-    next: () => slideToPageIndex(pageIndex < len - 1 ? pageIndex + 1 : len - 1),
+    prev: () => {
+      const min = exp ? -1 : 0;
+      slideToPageIndex(Math.max(min, pageIndex - 1));
+    },
+    next: () => {
+      const max = exp ? len : len - 1;
+      slideToPageIndex(Math.min(max, pageIndex + 1));
+    },
   }));
+
+  const ensurePageIndex = useCallback(() => {
+    if (pageIndex >= len) {
+      slideToPageIndex(0, false);
+    } else if (pageIndex === -1) {
+      slideToPageIndex(len - 1, false);
+    }
+  }, [slideToPageIndex, len, pageIndex]);
 
   useUpdateEffect(() => {
     setItems(getItems(children, loop, height));
@@ -221,11 +235,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   useEffect(() => {
     if (autoPlay && len > 1) {
-      if (pageIndex >= len) {
-        slideToPageIndex(0, false);
-      } else if (pageIndex === -1) {
-        slideToPageIndex(len - 1, false);
-      }
       const timer = window.setTimeout(() => {
         slideToPageIndex(pageIndex + 1);
       }, interval);
@@ -234,7 +243,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         window.clearTimeout(timer);
       };
     }
-  }, [pageIndex, slideToPageIndex, autoPlay, interval, len]);
+  }, [pageIndex, slideToPageIndex, autoPlay, interval, len, exp]);
 
   const dotRender = (): React.ReactNode => {
     if (!showDot || len <= 1) return null;
@@ -252,6 +261,54 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     );
   };
 
+  const touchEnd = useCallback(() => {
+    const s = thisRef.current;
+    if (!s.isMoving) {
+      return;
+    }
+    s.isMoving = false;
+
+    if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
+      slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
+    } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
+      slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
+    } else {
+      // reset
+      slideToPageIndex(pageIndex);
+    }
+  }, [direction, pageIndex, ratio, slideToPageIndex]);
+
+  useLayoutEffect(() => {
+    const el = wrapElRef.current;
+
+    const touchStart = (e) => {
+      e.preventDefault();
+      const s = thisRef.current;
+      s.isMoving = true;
+      wrapElRef.current.style.transitionProperty = 'none';
+      s.lastX = s.x;
+      s.lastY = s.y;
+    };
+
+    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+
+    if (!isTouch) {
+      document.addEventListener('mouseup', touchEnd);
+    } else {
+      el.addEventListener('touchend', touchEnd);
+    }
+
+    return () => {
+      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+
+      if (!isTouch) {
+        document.removeEventListener('mouseup', touchEnd);
+      } else {
+        el.removeEventListener('touchend', touchEnd);
+      }
+    };
+  }, [touchEnd]);
+
   return (
     <StyledSlide
       ref={containerRef}
@@ -261,31 +318,10 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     >
       <FingerGestureElement
         ref={wrapElRef}
-        onTouchStart={() => {
-          const s = thisRef.current;
-          wrapElRef.current.style.transitionProperty = 'none';
-          s.lastX = s.x;
-          s.lastY = s.y;
-        }}
-        onTouchEnd={() => {
+        onPressMove={(e) => {
+          e.preventDefault();
           const s = thisRef.current;
 
-          if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-            slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
-          } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-            slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
-          } else {
-            // reset
-            slideToPageIndex(pageIndex);
-          }
-        }}
-        onPressMove={(e) => {
-          const s = thisRef.current;
-          if (s.inTransition) {
-            return setTimeout(() => {
-              s.inTransition = false;
-            }, 300);
-          }
           if (direction === 'horizontal') {
             if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
               return;
@@ -304,13 +340,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         <div
           className={clsx('wrap', { vertical: direction === 'vertical' })}
           onTransitionEnd={() => {
-            thisRef.current.inTransition = false;
-            // loop
-            if (pageIndex >= len) {
-              slideToPageIndex(0, false);
-            } else if (pageIndex === -1) {
-              slideToPageIndex(len - 1, false);
-            }
+            ensurePageIndex();
           }}
         >
           {items}
