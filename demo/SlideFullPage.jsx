@@ -17,8 +17,8 @@ export default function SlideFullPage() {
         autoPlay={false}
         direction="vertical"
         height="100vh"
-        showDot={false}
         loop={false}
+        showPageIndicator={false}
         ratio={0.1}
       >
         {['#004bcc', 'pink', '#00bc8d', '#666'].map((color, idx) => (

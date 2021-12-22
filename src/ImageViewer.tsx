@@ -86,7 +86,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     return (
       <Slide
         ref={slideRef}
-        showDot={false}
+        showPageIndicator={false}
         style={{ zIndex: 101, width: '100%' }}
         direction="horizontal"
         height={'60vh'}

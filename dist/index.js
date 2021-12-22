@@ -437,10 +437,6 @@ try {
     }
   }));
 } catch (err) {}
-/** 是否支持passive事件选项 */
-
-
-var passiveIfSupported = _passiveIfSupported;
 
 /**
  *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
@@ -1543,15 +1539,15 @@ var FingerGesture = function FingerGesture(el, option) {
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+  this.element.addEventListener(isTouch ? 'touchstart' : 'mousedown', this.start);
 
   if (isTouch) {
-    this.element.addEventListener('touchmove', this.move, passiveIfSupported);
-    this.element.addEventListener('touchend', this.end, passiveIfSupported);
-    this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+    this.element.addEventListener('touchmove', this.move);
+    this.element.addEventListener('touchend', this.end);
+    this.element.addEventListener('touchcancel', this.cancel);
   } else {
-    document.addEventListener('mousemove', this.move, passiveIfSupported);
-    document.addEventListener('mouseup', this.end, passiveIfSupported);
+    document.addEventListener('mousemove', this.move);
+    document.addEventListener('mouseup', this.end);
   }
 
   this.preV = {
@@ -1829,15 +1825,15 @@ FingerGesture.prototype = {
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
-    this.element.removeEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+    this.element.removeEventListener(isTouch ? 'touchstart' : 'mousedown', this.start);
 
     if (isTouch) {
-      this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
-      this.element.removeEventListener('touchend', this.end, passiveIfSupported);
-      this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+      this.element.removeEventListener('touchmove', this.move);
+      this.element.removeEventListener('touchend', this.end);
+      this.element.removeEventListener('touchcancel', this.cancel);
     } else {
-      document.removeEventListener('mousemove', this.move, passiveIfSupported);
-      document.removeEventListener('mouseup', this.end, passiveIfSupported);
+      document.removeEventListener('mousemove', this.move);
+      document.removeEventListener('mouseup', this.end);
     }
 
     this.rotate.del();
@@ -5695,10 +5691,10 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showDot", "ratio"];
+var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showPageIndicator", "ratio"];
 
 var _templateObject$G;
-var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .uc-slide-dot-wrapper {\n    position: absolute;\n    bottom: 4px;\n    left: 50%;\n    transform: translateX(-50%);\n\n    .dot {\n      display: inline-block;\n      margin: 0 4px;\n      width: 8px;\n      height: 8px;\n      border-radius: 50%;\n      background: #eee;\n      transition: all ease-in-out 0.3s;\n\n      &.active {\n        width: 20px;\n        border-radius: 5px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translateY(-50%);\n\n      .dot {\n        display: block;\n        margin: 4px 0;\n        width: 8px;\n        height: 8px;\n        border-radius: 50%;\n        background: #eee;\n\n        &.active {\n          width: 8px;\n          height: 20px;\n          border-radius: 5px;\n        }\n      }\n    }\n  }\n"])), animationSlow);
+var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationSlow, animationSlow);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -5749,8 +5745,8 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       _props$height = props.height,
       height = _props$height === void 0 ? 160 : _props$height,
       style = props.style,
-      _props$showDot = props.showDot,
-      showDot = _props$showDot === void 0 ? true : _props$showDot,
+      _props$showPageIndica = props.showPageIndicator,
+      showPageIndicator = _props$showPageIndica === void 0 ? true : _props$showPageIndica,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
       rest = _objectWithoutProperties(props, _excluded$H);
@@ -5774,7 +5770,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     lastY: 0,
     wrapHeight: 0,
     wrapWidth: 0,
-    inTransition: false
+    isMoving: false
   });
 
   var _useState3 = React.useState(0),
@@ -5800,19 +5796,27 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       s.y = y;
     }
 
-    s.inTransition = transition;
     setPageIndex(newPageIndex);
   }, [thisRef, direction, exp]);
   React.useImperativeHandle(ref, function () {
     return {
       prev: function prev() {
-        return slideToPageIndex(pageIndex > 0 ? pageIndex - 1 : 0);
+        var min = exp ? -1 : 0;
+        slideToPageIndex(Math.max(min, pageIndex - 1));
       },
       next: function next() {
-        return slideToPageIndex(pageIndex < len - 1 ? pageIndex + 1 : len - 1);
+        var max = exp ? len : len - 1;
+        slideToPageIndex(Math.min(max, pageIndex + 1));
       }
     };
   });
+  var ensurePageIndex = React.useCallback(function () {
+    if (pageIndex >= len) {
+      slideToPageIndex(0, false);
+    } else if (pageIndex === -1) {
+      slideToPageIndex(len - 1, false);
+    }
+  }, [slideToPageIndex, len, pageIndex]);
   useUpdateEffect(function () {
     setItems(getItems(children, loop, height));
     slideToPageIndex(0, false);
@@ -5831,12 +5835,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   }, [slideToPageIndex]);
   React.useEffect(function () {
     if (autoPlay && len > 1) {
-      if (pageIndex >= len) {
-        slideToPageIndex(0, false);
-      } else if (pageIndex === -1) {
-        slideToPageIndex(len - 1, false);
-      }
-
       var timer = window.setTimeout(function () {
         slideToPageIndex(pageIndex + 1);
       }, interval);
@@ -5844,18 +5842,18 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
         window.clearTimeout(timer);
       };
     }
-  }, [pageIndex, slideToPageIndex, autoPlay, interval, len]);
+  }, [pageIndex, slideToPageIndex, autoPlay, interval, len, exp]);
 
-  var dotRender = function dotRender() {
-    if (!showDot || len <= 1) return null;
+  var pagerRender = function pagerRender() {
+    if (!showPageIndicator || len <= 1) return null;
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('uc-slide-dot-wrapper', {
+      className: clsx__default['default']('pager', {
         vertical: direction === 'vertical'
       })
     }, React__default['default'].Children.map(children, function (c, idx) {
       return /*#__PURE__*/React__default['default'].createElement("span", {
         key: idx,
-        className: clsx__default['default']('dot', {
+        className: clsx__default['default']('item', {
           active: pageIndex === idx
         }),
         onClick: function onClick() {
@@ -5865,6 +5863,54 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     }));
   };
 
+  var touchEnd = React.useCallback(function () {
+    var s = thisRef.current;
+
+    if (!s.isMoving) {
+      return;
+    }
+
+    s.isMoving = false;
+
+    if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
+      slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
+    } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
+      slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
+    } else {
+      // reset
+      slideToPageIndex(pageIndex);
+    }
+  }, [direction, pageIndex, ratio, slideToPageIndex]);
+  React.useLayoutEffect(function () {
+    var el = wrapElRef.current;
+
+    var touchStart = function touchStart(e) {
+      e.preventDefault();
+      var s = thisRef.current;
+      s.isMoving = true;
+      wrapElRef.current.style.transitionProperty = 'none';
+      s.lastX = s.x;
+      s.lastY = s.y;
+    };
+
+    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+
+    if (!isTouch) {
+      document.addEventListener('mouseup', touchEnd);
+    } else {
+      el.addEventListener('touchend', touchEnd);
+    }
+
+    return function () {
+      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
+
+      if (!isTouch) {
+        document.removeEventListener('mouseup', touchEnd);
+      } else {
+        el.removeEventListener('touchend', touchEnd);
+      }
+    };
+  }, [touchEnd]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
@@ -5874,32 +5920,9 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     })
   }), /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: wrapElRef,
-    onTouchStart: function onTouchStart() {
-      var s = thisRef.current;
-      wrapElRef.current.style.transitionProperty = 'none';
-      s.lastX = s.x;
-      s.lastY = s.y;
-    },
-    onTouchEnd: function onTouchEnd() {
-      var s = thisRef.current;
-
-      if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-        slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
-      } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-        slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
-      } else {
-        // reset
-        slideToPageIndex(pageIndex);
-      }
-    },
     onPressMove: function onPressMove(e) {
+      e.preventDefault();
       var s = thisRef.current;
-
-      if (s.inTransition) {
-        return setTimeout(function () {
-          s.inTransition = false;
-        }, 300);
-      }
 
       if (direction === 'horizontal') {
         if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
@@ -5922,15 +5945,9 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
-      thisRef.current.inTransition = false; // loop
-
-      if (pageIndex >= len) {
-        slideToPageIndex(0, false);
-      } else if (pageIndex === -1) {
-        slideToPageIndex(len - 1, false);
-      }
+      ensurePageIndex();
     }
-  }, items)), dotRender());
+  }, items)), pagerRender());
 });
 Slide.displayName = 'UC-Slide';
 
@@ -6280,7 +6297,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   var slides = React.useMemo(function () {
     return /*#__PURE__*/React__default['default'].createElement(Slide, {
       ref: slideRef,
-      showDot: false,
+      showPageIndicator: false,
       style: {
         zIndex: 101,
         width: '100%'

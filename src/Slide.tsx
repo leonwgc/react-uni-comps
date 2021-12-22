@@ -42,6 +42,7 @@ const StyledSlide = styled.div`
     transform: translate3d(-50%, 0, 0);
 
     .item {
+      cursor: pointer;
       display: inline-block;
       width: 19px;
       height: 4px;

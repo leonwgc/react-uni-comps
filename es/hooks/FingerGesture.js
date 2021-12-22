@@ -1,7 +1,7 @@
 /*
  * refer to AlloyFinger & refactor
  */
-import { passiveIfSupported, isTouch } from '../dom';
+import { isTouch } from '../dom';
 export var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove']; // eslint-disable-next-line @typescript-eslint/no-empty-function
 
 var noop = function noop() {};
@@ -84,15 +84,15 @@ var FingerGesture = function FingerGesture(el, option) {
   this.move = this.move.bind(this);
   this.end = this.end.bind(this);
   this.cancel = this.cancel.bind(this);
-  this.element.addEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+  this.element.addEventListener(isTouch ? 'touchstart' : 'mousedown', this.start);
 
   if (isTouch) {
-    this.element.addEventListener('touchmove', this.move, passiveIfSupported);
-    this.element.addEventListener('touchend', this.end, passiveIfSupported);
-    this.element.addEventListener('touchcancel', this.cancel, passiveIfSupported);
+    this.element.addEventListener('touchmove', this.move);
+    this.element.addEventListener('touchend', this.end);
+    this.element.addEventListener('touchcancel', this.cancel);
   } else {
-    document.addEventListener('mousemove', this.move, passiveIfSupported);
-    document.addEventListener('mouseup', this.end, passiveIfSupported);
+    document.addEventListener('mousemove', this.move);
+    document.addEventListener('mouseup', this.end);
   }
 
   this.preV = {
@@ -368,15 +368,15 @@ FingerGesture.prototype = {
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
-    this.element.removeEventListener(isTouch ? 'touchstart' : 'mousedown', this.start, passiveIfSupported);
+    this.element.removeEventListener(isTouch ? 'touchstart' : 'mousedown', this.start);
 
     if (isTouch) {
-      this.element.removeEventListener('touchmove', this.move, passiveIfSupported);
-      this.element.removeEventListener('touchend', this.end, passiveIfSupported);
-      this.element.removeEventListener('touchcancel', this.cancel, passiveIfSupported);
+      this.element.removeEventListener('touchmove', this.move);
+      this.element.removeEventListener('touchend', this.end);
+      this.element.removeEventListener('touchcancel', this.cancel);
     } else {
-      document.removeEventListener('mousemove', this.move, passiveIfSupported);
-      document.removeEventListener('mouseup', this.end, passiveIfSupported);
+      document.removeEventListener('mousemove', this.move);
+      document.removeEventListener('mouseup', this.end);
     }
 
     this.rotate.del();

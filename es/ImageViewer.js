@@ -83,7 +83,7 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var slides = useMemo(function () {
     return /*#__PURE__*/React.createElement(Slide, {
       ref: slideRef,
-      showDot: false,
+      showPageIndicator: false,
       style: {
         zIndex: 101,
         width: '100%'

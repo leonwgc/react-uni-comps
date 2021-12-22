@@ -14,8 +14,8 @@ export declare type Props = {
     loop?: boolean;
     /** 页面切换后回调 */
     onPageChange?: (pageIndex: number) => void;
-    /** 是否显示分页圆点,默认true */
-    showDot?: boolean;
+    /** 是否显示分页器,默认true */
+    showPageIndicator?: boolean;
     /** 滑动比例多少切换，默认0.1 */
     ratio?: number;
 };

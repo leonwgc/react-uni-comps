@@ -3,7 +3,7 @@ import PageWrap from './common/PageWrap';
 import { Slide, Switch, Button, Cell } from 'react-uni-comps';
 
 export default function App() {
-  const [autoPlay, setAutoPlay] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(true);
   const [loop, setLoop] = useState(true);
   const [dot, setDot] = useState(true);
   const [isH, setisH] = useState(true);
@@ -26,20 +26,26 @@ export default function App() {
         loop={loop}
         autoPlay={autoPlay}
         direction={isH ? 'horizontal' : 'vertical'}
-        showDot={dot}
-        height={200}
+        showPageIndicator={dot}
         onPageChange={(pageIndex) => console.log('pageindex:' + pageIndex)}
-        interval={1000}
+        interval={2000}
       >
         {images.map((item) => (
           <img src={item} key={item} />
         ))}
       </Slide>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 32 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
         <Button onClick={() => ref.current.prev()}>上一页</Button>
         <Button onClick={() => ref.current.next()}>下一页</Button>
       </div>
+
+      <Slide style={{ marginTop: 30 }} interval={2000}>
+        {images.map((item) => (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src={item} key={item} style={{ width: '80vw' }} />
+          </div>
+        ))}
+      </Slide>
     </PageWrap>
   );
 }
