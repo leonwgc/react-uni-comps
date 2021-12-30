@@ -130,6 +130,9 @@ const StyledButton = styled.button`
   &.anchor {
     border: none;
     ${getThemeColorCss('color')}
+    height: unset;
+    padding: unset;
+    margin: unset;
   }
 
   &.disabled,

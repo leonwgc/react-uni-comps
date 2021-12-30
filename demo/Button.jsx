@@ -107,7 +107,7 @@ export default function App() {
           <Button color="#00bc8d" dashed>
             hello
           </Button>
-          <Button color="#00bc8d" dashed style={{ height: 60 }}>
+          <Button color="#00bc8d" className="active" dashed style={{ height: 60 }}>
             hello
           </Button>
 
