@@ -34,7 +34,9 @@ export default function App() {
           >
             去领取
           </StyButton>
-          <Button onClick={() => Toast.show('hello,world')}>hello</Button>
+          <Button className="active" onClick={() => Toast.show('hello,world')}>
+            active hello
+          </Button>
           <Button
             onClick={() =>
               Toast.show({

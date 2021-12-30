@@ -70,7 +70,8 @@ const StyledButton = styled.button`
     ${isMobile ? '&:active' : '&:hover'} {
       opacity: 0.8;
     }
-    &.pc:hover {
+    &.pc:hover,
+    &.pc.active {
       ${getThemeColorCss('border-color')}
       ${getThemeColorCss('color')}
     }
