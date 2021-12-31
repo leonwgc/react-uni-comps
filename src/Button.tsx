@@ -10,6 +10,9 @@ import Space from './Space';
 type Props = {
   /** default 线框，primary 实色框 */
   type?: 'primary' | 'default';
+  /** 线框使用主题色 */
+  active?: boolean;
+  /** 禁用 */
   disabled?: boolean;
   style?: React.CSSProperties;
   /** 块级按钮 */
@@ -44,11 +47,10 @@ const StyledButton = styled.button`
   align-items: center;
   user-select: none;
   vertical-align: middle;
-  -moz-appearance: none;
   justify-content: center;
   text-decoration: none;
   background-color: transparent;
-  -webkit-appearance: none;
+  appearance: none;
   -webkit-tap-highlight-color: transparent;
 
   font-weight: 400;
@@ -70,7 +72,8 @@ const StyledButton = styled.button`
     ${isMobile ? '&:active' : '&:hover'} {
       opacity: 0.8;
     }
-    &.pc:hover {
+    &.pc:hover,
+    &.active {
       ${getThemeColorCss('border-color')}
       ${getThemeColorCss('color')}
     }
@@ -129,6 +132,9 @@ const StyledButton = styled.button`
   &.anchor {
     border: none;
     ${getThemeColorCss('color')}
+    height: unset;
+    padding: unset;
+    margin: unset;
   }
 
   &.disabled,
@@ -151,6 +157,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
     type = 'default',
     disabled,
+    active,
     block,
     className,
     children,
@@ -184,6 +191,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           mobile: isMobile,
           pc: !isMobile,
           anchor: rest.as === 'a',
+          active,
         },
         className
       )}

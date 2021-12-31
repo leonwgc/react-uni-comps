@@ -3,6 +3,9 @@ import React from 'react';
 declare const Button: React.ForwardRefExoticComponent<{
     /** default 线框，primary 实色框 */
     type?: 'primary' | 'default';
+    /** 线框使用主题色 */
+    active?: boolean;
+    /** 禁用 */
     disabled?: boolean;
     style?: React.CSSProperties;
     /** 块级按钮 */
