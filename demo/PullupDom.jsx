@@ -3,7 +3,7 @@ import PageWrap from './common/PageWrap';
 import { Button, Pullup, ScrollTop, HairLineBox } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
-const pageSize = 30;
+const pageSize = 25;
 
 const PullupDom = () => {
   const [list, setList] = useState([]);
@@ -22,7 +22,7 @@ const PullupDom = () => {
 
         console.log(ref.current);
 
-        if (ref.current > 5) {
+        if (ref.current > 3) {
           setFinished(true);
         }
         resolve();
@@ -54,7 +54,7 @@ const PullupDom = () => {
         style={{ height: '50vh', marginTop: 30, background: '#fff' }}
         dataList={list}
         fetchData={fetchData}
-        refresh={refresh}
+        // refresh={refresh}
         finished={finished}
         dataRender={(data) => {
           return (

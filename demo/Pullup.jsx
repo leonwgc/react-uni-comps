@@ -5,7 +5,6 @@ import { Button, Pullup, ScrollTop, Cell, Switch } from 'react-uni-comps';
 const pageSize = 30;
 
 const App = () => {
-  const [isPullRefresh, setIsPullRefresh] = useState(true);
   const [list, setList] = useState([]);
   const [finished, setFinished] = useState(false);
   const ref = useRef(0);
@@ -22,7 +21,7 @@ const App = () => {
 
         console.log(ref.current);
 
-        if (ref.current > 5) {
+        if (ref.current > 3) {
           setFinished(true);
         }
         resolve();
@@ -50,16 +49,11 @@ const App = () => {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <Cell
-        title="下拉刷新"
-        content={<Switch checked={isPullRefresh} onChange={setIsPullRefresh} />}
-      />
-
       <Pullup
         useWindowScroll
         dataList={list}
         fetchData={fetchData}
-        refresh={isPullRefresh ? refresh : null}
+        refresh={refresh}
         finished={finished}
         dataRender={(data) => <Cell title={`item${data}`} />}
       />

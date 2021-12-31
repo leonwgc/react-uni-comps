@@ -208,7 +208,41 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     refreshRef.current().then(resetRefreshStatus).catch(resetRefreshStatus);
   }, [resetRefreshStatus, refreshRef]);
 
-  return (
+  const supportRefresh = typeof refreshRef.current === 'function';
+
+  const wrapStyle = {
+    ...style,
+  };
+
+  if (supportRefresh) {
+    wrapStyle.touchAction = 'auto';
+  }
+
+  const content = (
+    <StyledWrap
+      {...rest}
+      style={wrapStyle}
+      className={clsx('uc-pullup', className, {
+        'dom-scroll': !useWindowScroll,
+        'window-scroll': useWindowScroll,
+      })}
+    >
+      <div className={clsx('loading refresh', { active: isRefreshing })}>
+        {isRefreshing && refreshText}
+      </div>
+      {dataList.map((item, idx) => {
+        return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
+      })}
+      <span className="waypoint" style={{ fontSize: 0 }} ref={waypointRef}></span>
+      {typeof footer === 'function' ? (
+        footer(loading, finished)
+      ) : (
+        <div className="loading">{loading ? loadingText : finished ? finishedText : null}</div>
+      )}
+    </StyledWrap>
+  );
+
+  return typeof refresh === 'function' ? (
     <FingerGestureElement
       ref={wrapRef}
       onPressMove={(e) => {
@@ -248,28 +282,10 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         }, 1000);
       }}
     >
-      <StyledWrap
-        {...rest}
-        style={{ touchAction: 'auto', ...style }}
-        className={clsx('uc-pullup', className, {
-          'dom-scroll': !useWindowScroll,
-          'window-scroll': useWindowScroll,
-        })}
-      >
-        <div className={clsx('loading refresh', { active: isRefreshing })}>
-          {isRefreshing && refreshText}
-        </div>
-        {dataList.map((item, idx) => {
-          return <React.Fragment key={idx}>{dataRender(item, idx)}</React.Fragment>;
-        })}
-        <span className="waypoint" style={{ fontSize: 0 }} ref={waypointRef}></span>
-        {typeof footer === 'function' ? (
-          footer(loading, finished)
-        ) : (
-          <div className="loading">{loading ? loadingText : finished ? finishedText : null}</div>
-        )}
-      </StyledWrap>
+      {content}
     </FingerGestureElement>
+  ) : (
+    content
   );
 });
 
