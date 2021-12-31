@@ -88,10 +88,11 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _f = props.finished,
       finished = _f === void 0 ? false : _f,
       className = props.className,
+      style = props.style,
       useWindowScroll = props.useWindowScroll,
       refresh = props.refresh,
       footer = props.footer,
-      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "refreshText", "finished", "className", "useWindowScroll", "refresh", "footer"]);
+      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "refreshText", "finished", "className", "style", "useWindowScroll", "refresh", "footer"]);
 
   var _g = useState(false),
       loading = _g[0],
@@ -103,6 +104,7 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var lastIsAtBottom = usePrevious(isAtBottom);
   var moveRef = useRef({
     isMoving: false,
+    isRefreshing: false,
     y: 0
   });
 
@@ -128,6 +130,7 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var el = wrapRef.current;
     var moveInfo = moveRef.current;
     setIsRefreshing(false);
+    moveInfo.isRefreshing = false;
     moveInfo.y = 0;
     el.style.transform = 'none';
     el.style.touchAction = 'auto';
@@ -173,44 +176,23 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     };
   }, [resetRefreshStatus, refreshRef]);
-  var setRefreshStatus = useCallback(function (scrollTop, isRefreshing, y) {
-    if (scrollTop <= 0 && !isRefreshing && y === RefreshDistance) {
-      var el = wrapRef.current;
-      setIsRefreshing(true);
-      el.style.transitionProperty = 'transform';
-      refreshRef.current().then(resetRefreshStatus).catch(resetRefreshStatus);
-    }
+  var setRefreshStatus = useCallback(function () {
+    var el = wrapRef.current;
+    setIsRefreshing(true);
+    moveRef.current.isRefreshing = true;
+    el.style.transitionProperty = 'transform';
+    refreshRef.current().then(resetRefreshStatus).catch(resetRefreshStatus);
   }, [resetRefreshStatus, refreshRef]);
-  return /*#__PURE__*/React.createElement(FingerGestureElement, {
-    ref: wrapRef,
-    onPressMove: function onPressMove(e) {
-      // no refresh no pulldown handle
-      if (typeof refreshRef.current !== 'function') return;
-      var el = wrapRef.current;
-      var moveInfo = moveRef.current;
-      el.style.touchAction = e.deltaY > 0 ? 'none' : 'auto';
+  var supportRefresh = typeof refreshRef.current === 'function';
 
-      if (!moveInfo.isMoving) {
-        return resetRefreshStatus();
-      }
+  var wrapStyle = __assign({}, style);
 
-      var scrollTop = getScrollTop(useWindowScroll ? window : el);
-      moveInfo.y = Math.min(RefreshDistance, moveInfo.y + e.deltaY);
+  if (supportRefresh) {
+    wrapStyle.touchAction = 'auto';
+  }
 
-      if (moveInfo.y > 0 && moveInfo.y < RefreshDistance) {
-        // down
-        el.style.transform = "translate3d(0, ".concat(moveInfo.y, "px, 0)");
-      }
-
-      setRefreshStatus(scrollTop, isRefreshing, moveInfo.y); // double check to reset status
-
-      setTimeout(function () {
-        if (!isRefreshing) {
-          resetRefreshStatus();
-        }
-      }, 1000);
-    }
-  }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
+  var content = /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
+    style: wrapStyle,
     className: clsx('uc-pullup', className, {
       'dom-scroll': !useWindowScroll,
       'window-scroll': useWindowScroll
@@ -231,7 +213,44 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: waypointRef
   }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React.createElement("div", {
     className: "loading"
-  }, loading ? loadingText : finished ? finishedText : null)));
+  }, loading ? loadingText : finished ? finishedText : null));
+  return typeof refresh === 'function' ? /*#__PURE__*/React.createElement(FingerGestureElement, {
+    ref: wrapRef,
+    onPressMove: function onPressMove(e) {
+      // no refresh no pulldown handle
+      if (typeof refreshRef.current !== 'function') return;
+      var el = wrapRef.current;
+      var moveInfo = moveRef.current;
+      el.style.touchAction = e.deltaY > 0 ? 'none' : 'auto';
+
+      if (!moveInfo.isMoving) {
+        return resetRefreshStatus();
+      }
+
+      var scrollTop = getScrollTop(useWindowScroll ? window : el);
+      moveInfo.y = Math.min(RefreshDistance, moveInfo.y + e.deltaY);
+
+      if (moveInfo.y > 0 && moveInfo.y < RefreshDistance) {
+        // down
+        el.style.transform = "translate3d(0, ".concat(moveInfo.y, "px, 0)");
+      }
+
+      if (scrollTop <= 0 && !moveInfo.isRefreshing && moveInfo.y === RefreshDistance) {
+        setRefreshStatus();
+      } // double check
+
+
+      setTimeout(function () {
+        if (!moveInfo.isRefreshing) {
+          if (scrollTop <= 0 && moveInfo.y === RefreshDistance) {
+            setRefreshStatus();
+          } else {
+            resetRefreshStatus();
+          }
+        }
+      }, 1000);
+    }
+  }, content) : content;
 });
 Pullup.displayName = 'UC-Pullup';
 export default Pullup;
