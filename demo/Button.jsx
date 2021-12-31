@@ -34,7 +34,7 @@ export default function App() {
           >
             去领取
           </StyButton>
-          <Button className="active" onClick={() => Toast.show('hello,world')}>
+          <Button active onClick={() => Toast.show('hello,world')}>
             active hello
           </Button>
           <Button
@@ -119,10 +119,13 @@ export default function App() {
           <Button block style={{ marginBottom: 10 }}>
             hello
           </Button>
+          <Button block active dashed style={{ marginBottom: 10 }}>
+            hello active
+          </Button>
           <Button type="primary" block style={{ marginBottom: 10 }}>
             hello
           </Button>
-          <Button type="primary" color="#00bc8d" block style={{ height: 40 }}>
+          <Button active color="#00bc8d" block style={{ height: 40 }}>
             dr
           </Button>
           <Button as="div" block style={{ height: 40 }}>
