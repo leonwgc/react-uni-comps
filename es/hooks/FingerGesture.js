@@ -189,6 +189,8 @@ FingerGesture.prototype = {
     }.bind(this), 750);
   },
   move: function move(evt) {
+    var _a;
+
     if (!this.isMoving) {
       return;
     }
@@ -259,7 +261,7 @@ FingerGesture.prototype = {
       this.pressMove.dispatch(evt, this.element);
     }
 
-    this.touchMove.dispatch(evt, this.element);
+    (_a = this.touchMove) === null || _a === void 0 ? void 0 : _a.dispatch(evt, this.element);
 
     this._cancelLongTap();
 

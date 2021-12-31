@@ -208,3 +208,12 @@ export var loadResource = function loadResource(url, attrs) {
 /** 是否支持触屏 */
 
 export var isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
+/** get el scrollTop */
+
+export var getScrollTop = function getScrollTop(ele) {
+  if (ele === window) {
+    return window.pageYOffset;
+  }
+
+  return ele.scrollTop;
+};

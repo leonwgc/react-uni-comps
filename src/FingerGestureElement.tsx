@@ -16,7 +16,7 @@ const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) =
   return React.cloneElement(children, {
     ...getProps(rest, supportedGestures, false), // filter out gesture evts
     ref: elRef,
-    style: { ...children?.props?.style, touchAction: 'none' },
+    style: { touchAction: 'none', ...children?.props?.style },
   });
 });
 

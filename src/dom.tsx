@@ -209,3 +209,11 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
 
 /** 是否支持触屏 */
 export const isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
+
+/** get el scrollTop */
+export const getScrollTop = (ele: HTMLElement | Window): number => {
+  if (ele === window) {
+    return window.pageYOffset;
+  }
+  return (ele as HTMLElement).scrollTop;
+};

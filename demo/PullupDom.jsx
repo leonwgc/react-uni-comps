@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Button, Pullup, ScrollTop, Space, Spin } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import { Button, Pullup, ScrollTop, HairLineBox } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 30;
@@ -29,42 +30,56 @@ const PullupDom = () => {
     });
   };
 
+  const refresh = () => {
+    return new Promise((resolve) => {
+      ref.current = 0;
+      var ar = [];
+      const randomChar = Math.random().toString()[6];
+      for (var i = 0; i < pageSize; i++) {
+        ar.push(i + 1 + '-' + randomChar);
+      }
+      setTimeout(() => {
+        setList(ar);
+
+        console.log(ref.current);
+
+        resolve();
+      }, 1000);
+    });
+  };
+
   return (
-    <>
+    <PageWrap style={{ background: '#eee', height: '100vh' }}>
       <Pullup
-        style={{ height: '80vh', marginTop: 10 }}
+        style={{ height: '50vh', marginTop: 30, background: '#fff' }}
         dataList={list}
-        finishedText="no more data :("
-        loadingText={
-          <Space>
-            <Spin /> loading
-          </Space>
-        }
         fetchData={fetchData}
+        refresh={refresh}
         finished={finished}
-        dataRender={(data, index) => {
+        dataRender={(data) => {
           return (
-            <div style={{ padding: '10px 16px', borderBottom: '1px solid #e0e0e0' }}>
-              list {index + 1}
-            </div>
+            <HairLineBox style={{ padding: '10px 16px' }} position="top">
+              {data}
+            </HairLineBox>
           );
         }}
       ></Pullup>
       <ScrollTop visibilityHeight={100}>
         <Button
+          type="primary"
           circle
           style={{
+            width: 40,
+            height: 40,
             position: 'fixed',
             bottom: 60,
             right: 20,
-            width: 80,
-            height: 80,
           }}
         >
-          回到顶部
+          top
         </Button>
       </ScrollTop>
-    </>
+    </PageWrap>
   );
 };
 

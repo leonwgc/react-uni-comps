@@ -46,9 +46,9 @@ var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useGesture(elRef, rest);
   return /*#__PURE__*/React.cloneElement(children, __assign(__assign({}, getProps(rest, supportedGestures, false)), {
     ref: elRef,
-    style: __assign(__assign({}, (_a = children === null || children === void 0 ? void 0 : children.props) === null || _a === void 0 ? void 0 : _a.style), {
+    style: __assign({
       touchAction: 'none'
-    })
+    }, (_a = children === null || children === void 0 ? void 0 : children.props) === null || _a === void 0 ? void 0 : _a.style)
   }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';

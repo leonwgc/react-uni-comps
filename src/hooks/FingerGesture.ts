@@ -277,7 +277,7 @@ FingerGesture.prototype = {
       this.pressMove.dispatch(evt, this.element);
     }
 
-    this.touchMove.dispatch(evt, this.element);
+    this.touchMove?.dispatch(evt, this.element);
 
     this._cancelLongTap();
     this.x2 = currentX;
