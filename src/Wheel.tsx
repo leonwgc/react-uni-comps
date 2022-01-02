@@ -63,9 +63,10 @@ const Wheel = (props: Props): React.ReactElement => {
   });
 
   const scrollToIndex = useCallback(
-    (index) => {
+    (index, useTransition = false) => {
       if (elRef.current) {
-        elRef.current.style.transitionProperty = 'transform';
+        elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
+        document.body.offsetHeight;
         const y = firstItemY - itemHeight * index;
         yRef.current = y;
         if (elRef.current) {
@@ -120,7 +121,7 @@ const Wheel = (props: Props): React.ReactElement => {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex);
+    scrollToIndex(newIndex, true);
     _setIndex(newIndex);
   };
 
@@ -171,11 +172,12 @@ const Wheel = (props: Props): React.ReactElement => {
 
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
           // momentum effect
+          elRef.current.style.transitionProperty = 'transform';
           elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
           elRef.current.offsetHeight;
           const speed = Math.abs(distance / duration);
           yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
-          scrollToIndex(getIndexByY());
+          scrollToIndex(getIndexByY(), true);
         }
 
         elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
