@@ -1,9 +1,10 @@
-import React, { useState, useRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, useImperativeHandle, useCallback } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView, { PickerViewRefType } from './PickerView';
+import useCallbackRef from './hooks/useCallbackRef';
 
 //#region def
 
@@ -78,6 +79,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     onClose,
     visible,
     onOk,
+    onChange,
     onWheelChange,
     className,
     value = [],
@@ -89,6 +91,16 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   const pickerViewRef = useRef<PickerViewRefType>();
   useImperativeHandle(ref, () => pickerViewRef.current);
   const [val, setVal] = useState(value);
+
+  const onChangeRef = useCallbackRef(onChange);
+
+  const onValueChange = useCallback(
+    (value) => {
+      setVal(value);
+      onChangeRef.current?.(value);
+    },
+    [onChangeRef]
+  );
 
   return (
     <StyledDrawer
@@ -120,7 +132,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
         data={data}
         cols={cols}
         value={val}
-        onChange={setVal}
+        onChange={onValueChange}
         onWheelChange={onWheelChange}
       />
     </StyledDrawer>

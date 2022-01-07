@@ -63,10 +63,9 @@ const Wheel = (props: Props): React.ReactElement => {
   });
 
   const scrollToIndex = useCallback(
-    (index, useTransition = false) => {
+    (index, useTransition = true) => {
       if (elRef.current) {
         elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
-        document.body.offsetHeight;
         const y = firstItemY - itemHeight * index;
         yRef.current = y;
         if (elRef.current) {
@@ -105,7 +104,7 @@ const Wheel = (props: Props): React.ReactElement => {
   }, [_index]);
 
   useEffect(() => {
-    scrollToIndex(_index);
+    scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
   const touchEnd = () => {
@@ -121,7 +120,7 @@ const Wheel = (props: Props): React.ReactElement => {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex, true);
+    scrollToIndex(newIndex, false);
     _setIndex(newIndex);
   };
 
@@ -169,6 +168,7 @@ const Wheel = (props: Props): React.ReactElement => {
 
         const distance = e.deltaY;
         const duration = Date.now() - momentumRef.current.touchStartTime;
+        elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
 
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
           // momentum effect
@@ -177,10 +177,8 @@ const Wheel = (props: Props): React.ReactElement => {
           elRef.current.offsetHeight;
           const speed = Math.abs(distance / duration);
           yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
-          scrollToIndex(getIndexByY(), true);
+          scrollToIndex(getIndexByY());
         }
-
-        elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
       }}
     >
       <StyledWrap {...rest} className={clsx('uc-wheel', className)}>

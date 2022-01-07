@@ -9,11 +9,13 @@ import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 
 type Props = {
   /** 值 */
-  value?: string | number;
+  value?: string | Date;
   /** 关闭回调 */
   onClose: () => void;
   /** 点击确定回调 */
   onOk?: (value: Date) => void;
+  /** 值改变回调 */
+  onChange?: (value: Date) => void;
   /** 是否显示 */
   visible?: boolean;
   /** 确定文本 */
@@ -74,6 +76,7 @@ const DatePicker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     className,
     value = new Date(),
     onOk,
+    onChange,
     minYear = 1980,
     maxYear = 2030,
     locale = 'zh',
@@ -100,6 +103,9 @@ const DatePicker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
         onOk?.(new Date(v[0], v[1] - 1, v[2]));
       }}
       value={val}
+      onChange={(v: Array<number>) => {
+        onChange?.(new Date(v[0], v[1] - 1, v[2]));
+      }}
       onWheelChange={(index: number, wheelIndex: number) => {
         if (index >= list[wheelIndex].length) {
           // fix feb
@@ -118,7 +124,7 @@ const DatePicker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
             })) as DataItem[];
 
             if (val[2] > days.length) {
-              // keep the days original , but when origin val > lastday of curent month , set to first day
+              // keep the days original , but when origin val > lastday of curent month , set to last day
               val[2] = list[2][list[2].length - 1].value as number;
             }
             setList([...list]);
