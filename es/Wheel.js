@@ -74,9 +74,13 @@ var Wheel = function Wheel(props) {
   var momentumRef = useRef({
     touchStartTime: 0
   });
-  var scrollToIndex = useCallback(function (index) {
+  var scrollToIndex = useCallback(function (index, useTransition) {
+    if (useTransition === void 0) {
+      useTransition = true;
+    }
+
     if (elRef.current) {
-      elRef.current.style.transitionProperty = 'transform';
+      elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
       var y = firstItemY - itemHeight * index;
       yRef.current = y;
 
@@ -109,7 +113,7 @@ var Wheel = function Wheel(props) {
     onIndexChangeRef === null || onIndexChangeRef === void 0 ? void 0 : onIndexChangeRef.current(_index);
   }, [_index]);
   useEffect(function () {
-    scrollToIndex(_index);
+    scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
   var touchEnd = function touchEnd() {
@@ -125,7 +129,7 @@ var Wheel = function Wheel(props) {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex);
+    scrollToIndex(newIndex, false);
 
     _setIndex(newIndex);
   };
@@ -172,17 +176,17 @@ var Wheel = function Wheel(props) {
       yRef.current += e.deltaY;
       var distance = e.deltaY;
       var duration = Date.now() - momentumRef.current.touchStartTime;
+      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
 
       if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
         // momentum effect
+        elRef.current.style.transitionProperty = 'transform';
         elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
         elRef.current.offsetHeight;
         var speed = Math.abs(distance / duration);
         yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
         scrollToIndex(getIndexByY());
       }
-
-      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     className: clsx('uc-wheel', className)

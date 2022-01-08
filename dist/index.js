@@ -1907,7 +1907,8 @@ function isInViewport(el, container) {
 }
 
 var DefaultLoadingText = /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D");
-/** 上拉加载更多数据/下拉刷新
+/**
+ *  上拉加载/下拉刷新
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 
@@ -2616,7 +2617,7 @@ var _excluded$e = ["size", "className", "button", "onChange", "style", "defaultC
 
 var _templateObject$e, _templateObject2$2;
 var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
-var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
+var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -5102,8 +5103,10 @@ var Wheel = function Wheel(props) {
     touchStartTime: 0
   });
   var scrollToIndex = React.useCallback(function (index) {
+    var useTransition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
     if (elRef.current) {
-      elRef.current.style.transitionProperty = 'transform';
+      elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
       var y = firstItemY - itemHeight * index;
       yRef.current = y;
 
@@ -5136,7 +5139,7 @@ var Wheel = function Wheel(props) {
     onIndexChangeRef === null || onIndexChangeRef === void 0 ? void 0 : onIndexChangeRef.current(_index);
   }, [_index]);
   React.useEffect(function () {
-    scrollToIndex(_index);
+    scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
   var touchEnd = function touchEnd() {
@@ -5152,7 +5155,7 @@ var Wheel = function Wheel(props) {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex);
+    scrollToIndex(newIndex, false);
 
     _setIndex(newIndex);
   };
@@ -5199,17 +5202,17 @@ var Wheel = function Wheel(props) {
       yRef.current += e.deltaY;
       var distance = e.deltaY;
       var duration = Date.now() - momentumRef.current.touchStartTime;
+      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
 
       if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
         // momentum effect
+        elRef.current.style.transitionProperty = 'transform';
         elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
         elRef.current.offsetHeight;
         var speed = Math.abs(distance / duration);
         yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
         scrollToIndex(getIndexByY());
       }
-
-      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
     }
   }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
     className: clsx__default['default']('uc-wheel', className)
@@ -5385,7 +5388,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onWheelChange", "className", "value", "data", "cols"];
+var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "className", "value", "data", "cols"];
 
 var _templateObject$B;
 
@@ -5403,6 +5406,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       onClose = props.onClose,
       visible = props.visible,
       onOk = props.onOk,
+      onChange = props.onChange,
       onWheelChange = props.onWheelChange,
       className = props.className,
       _props$value = props.value,
@@ -5423,6 +5427,13 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       val = _useState2[0],
       setVal = _useState2[1];
 
+  var onChangeRef = useCallbackRef(onChange);
+  var onValueChange = React.useCallback(function (value) {
+    var _onChangeRef$current;
+
+    setVal(value);
+    (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, value);
+  }, [onChangeRef]);
   return /*#__PURE__*/React__default['default'].createElement(StyledDrawer$1, _extends({}, rest, {
     className: clsx__default['default']('uc-picker', className),
     position: "bottom",
@@ -5445,7 +5456,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     data: data,
     cols: cols,
     value: val,
-    onChange: setVal,
+    onChange: onValueChange,
     onWheelChange: onWheelChange
   }));
 });
@@ -7136,7 +7147,7 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   }, deps);
 };
 
-var _excluded$R = ["className", "value", "onOk", "minYear", "maxYear", "locale"];
+var _excluded$R = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
 
 var locales$1 = {
   zh: {
@@ -7200,6 +7211,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$value = props.value,
       value = _props$value === void 0 ? new Date() : _props$value,
       _onOk = props.onOk,
+      _onChange = props.onChange,
       _props$minYear = props.minYear,
       minYear = _props$minYear === void 0 ? 1980 : _props$minYear,
       _props$maxYear = props.maxYear,
@@ -7232,6 +7244,9 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));
     },
     value: val,
+    onChange: function onChange(v) {
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange(new Date(v[0], v[1] - 1, v[2]));
+    },
     onWheelChange: function onWheelChange(index, wheelIndex) {
       if (index >= list[wheelIndex].length) {
         // fix feb
@@ -7254,7 +7269,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
           });
 
           if (val[2] > days.length) {
-            // keep the days original , but when origin val > lastday of curent month , set to first day
+            // keep the days original , but when origin val > lastday of curent month , set to last day
             val[2] = list[2][list[2].length - 1].value;
           }
 

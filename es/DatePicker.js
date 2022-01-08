@@ -107,13 +107,14 @@ var DatePicker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _a = props.value,
       value = _a === void 0 ? new Date() : _a,
       _onOk = props.onOk,
+      _onChange = props.onChange,
       _b = props.minYear,
       minYear = _b === void 0 ? 1980 : _b,
       _c = props.maxYear,
       maxYear = _c === void 0 ? 2030 : _c,
       _d = props.locale,
       locale = _d === void 0 ? 'zh' : _d,
-      rest = __rest(props, ["className", "value", "onOk", "minYear", "maxYear", "locale"]);
+      rest = __rest(props, ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"]);
 
   var _e = useState(getData(minYear, maxYear, locale)),
       list = _e[0],
@@ -137,6 +138,9 @@ var DatePicker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));
     },
     value: val,
+    onChange: function onChange(v) {
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange(new Date(v[0], v[1] - 1, v[2]));
+    },
     onWheelChange: function onWheelChange(index, wheelIndex) {
       if (index >= list[wheelIndex].length) {
         // fix feb
@@ -159,7 +163,7 @@ var DatePicker = /*#__PURE__*/React.forwardRef(function (props, ref) {
           });
 
           if (val[2] > days.length) {
-            // keep the days original , but when origin val > lastday of curent month , set to first day
+            // keep the days original , but when origin val > lastday of curent month , set to last day
             val[2] = list[2][list[2].length - 1].value;
           }
 

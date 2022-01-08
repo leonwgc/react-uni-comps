@@ -2,11 +2,13 @@ import React from 'react';
 import { PickerViewRefType } from './PickerView';
 declare type Props = {
     /** 值 */
-    value?: string | number;
+    value?: string | Date;
     /** 关闭回调 */
     onClose: () => void;
     /** 点击确定回调 */
     onOk?: (value: Date) => void;
+    /** 值改变回调 */
+    onChange?: (value: Date) => void;
     /** 是否显示 */
     visible?: boolean;
     /** 确定文本 */

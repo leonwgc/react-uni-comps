@@ -67,7 +67,8 @@ function isInViewport(el, container) {
 }
 
 var DefaultLoadingText = /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u52A0\u8F7D\u4E2D");
-/** 上拉加载更多数据/下拉刷新
+/**
+ *  上拉加载/下拉刷新
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 

@@ -39,12 +39,13 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useState, useRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, useImperativeHandle, useCallback } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView from './PickerView';
+import useCallbackRef from './hooks/useCallbackRef';
 var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 /** picker 下方弹出选择器 */
@@ -59,6 +60,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClose = props.onClose,
       visible = props.visible,
       onOk = props.onOk,
+      onChange = props.onChange,
       onWheelChange = props.onWheelChange,
       className = props.className,
       _d = props.value,
@@ -67,7 +69,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       data = _e === void 0 ? [] : _e,
       _f = props.cols,
       cols = _f === void 0 ? 1 : _f,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onWheelChange", "className", "value", "data", "cols"]);
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "className", "value", "data", "cols"]);
 
   var pickerViewRef = useRef();
   useImperativeHandle(ref, function () {
@@ -78,6 +80,13 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       val = _g[0],
       setVal = _g[1];
 
+  var onChangeRef = useCallbackRef(onChange);
+  var onValueChange = useCallback(function (value) {
+    var _a;
+
+    setVal(value);
+    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, value);
+  }, [onChangeRef]);
   return /*#__PURE__*/React.createElement(StyledDrawer, __assign({}, rest, {
     className: clsx('uc-picker', className),
     position: "bottom",
@@ -100,7 +109,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
     data: data,
     cols: cols,
     value: val,
-    onChange: setVal,
+    onChange: onValueChange,
     onWheelChange: onWheelChange
   }));
 });

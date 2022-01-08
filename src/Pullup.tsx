@@ -65,9 +65,9 @@ type Props = {
   dataRender: (data: unknown, index: number) => React.ReactNode;
   /** ajax获取数据，返回Promise,当拉到底部，还有更多数据时调用 */
   fetchData: () => Promise<unknown>;
-  /** 上拉刷新重新加载数据 */
+  /** 下拉刷新加载数据 */
   refresh?: () => Promise<unknown>;
-  /** 上拉刷新文字提示，默认 加载中 */
+  /** 下拉刷新文字提示*/
   refreshText?: React.ReactNode;
   /** 指示是否还有更多数据,true没有更多,false还有 */
   finished: boolean;
@@ -92,7 +92,8 @@ const DefaultLoadingText = (
   </Space>
 );
 
-/** 上拉加载更多数据/下拉刷新
+/**
+ *  上拉加载/下拉刷新
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {

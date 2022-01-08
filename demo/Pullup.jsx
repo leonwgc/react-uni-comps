@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Button, Pullup, ScrollTop, Cell, Switch } from 'react-uni-comps';
+import { Button, Pullup, ScrollTop, Cell, Spin, Space } from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -29,7 +29,7 @@ const App = () => {
     });
   }, []);
 
-  // 刷新回调
+  // 定义refresh才支持下拉刷新
   const refresh = useCallback(() => {
     return new Promise((resolve) => {
       ref.current = 0;
@@ -48,10 +48,16 @@ const App = () => {
   }, []);
 
   return (
-    <PageWrap style={{ padding: 0 }}>
+    <PageWrap style={{ padding: 0, userSelect: 'none' }}>
       <Pullup
         useWindowScroll
         dataList={list}
+        refreshText={
+          <Space>
+            <Spin />
+            下拉刷新~
+          </Space>
+        }
         fetchData={fetchData}
         refresh={refresh}
         finished={finished}
