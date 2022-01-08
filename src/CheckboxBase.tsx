@@ -59,6 +59,7 @@ const StyledCheckboxBaseWrapper = styled.div`
   cursor: pointer;
   user-select: none;
   vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
 
   &:not(:first-child) {
     margin-left: 8px;
