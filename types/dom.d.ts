@@ -66,3 +66,4 @@ export declare const loadResource: (url: string, attrs?: {}) => Promise<void>;
 export declare const isTouch: boolean;
 /** get el scrollTop */
 export declare const getScrollTop: (ele: HTMLElement | Window) => number;
+export declare const isCssVarSupported: boolean;

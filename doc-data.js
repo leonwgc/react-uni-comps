@@ -52,7 +52,7 @@ module.exports = [
       },
       {
         name: 'Pullup',
-        title: '上拉加载',
+        title: '上拉加载/下拉刷新',
       },
       {
         name: 'Toast',

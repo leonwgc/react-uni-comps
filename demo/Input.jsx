@@ -153,7 +153,6 @@ export default function App() {
     <PageWrap style={{ padding: 0 }}>
       <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
         <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
-          <StyledInput placeholder="uncontrolled" onChange={console.log} />
           <Checkbox checked={ime} onChange={setIme}>
             ime mode
           </Checkbox>

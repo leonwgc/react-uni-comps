@@ -217,3 +217,6 @@ export const getScrollTop = (ele: HTMLElement | Window): number => {
   }
   return (ele as HTMLElement).scrollTop;
 };
+
+export const isCssVarSupported =
+  isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');

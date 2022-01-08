@@ -217,3 +217,4 @@ export var getScrollTop = function getScrollTop(ele) {
 
   return ele.scrollTop;
 };
+export var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, configureStore } from 'simple-redux-store';
+
 import App from './App';
 
-const initialState = { theme: '#FF5D0D' };
+const initialState = { theme: '#005cff' };
 const store = configureStore(initialState, true);
 
 // import VConsole from 'vconsole';

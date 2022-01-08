@@ -10,8 +10,8 @@ var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
 var copy = require('copy-text-to-clipboard');
-var SignaturePad = require('signature_pad');
 var color = require('color');
+var SignaturePad = require('signature_pad');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -20,8 +20,8 @@ var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var copy__default = /*#__PURE__*/_interopDefaultLegacy(copy);
-var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
+var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -556,6 +556,7 @@ var getScrollTop = function getScrollTop(ele) {
 
   return ele.scrollTop;
 };
+var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
 
 var intersectionObserver;
 var handlers = new Map();
@@ -2165,7 +2166,7 @@ var WaitLoading = function WaitLoading(props) {
   return show ? children : null;
 };
 
-var _templateObject$7, _templateObject2;
+var _templateObject$7;
 /**
  *  get a css snippet with theme color
  *
@@ -2176,17 +2177,18 @@ var _templateObject$7, _templateObject2;
 
 var getThemeColorCss = function getThemeColorCss(prop) {
   var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
+    return props.theme.color || primary;
+  }, prop, leftValue, primary);
+};
+/**
+ *  get theme color from root el
+ *
+ * @return {*}
+ */
 
-  // mobile css variable first
-  if (isMobile) {
-    return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n      ", ":", " ", ";\n      ", ":", " var(--uc-color, ", ");\n    "])), prop, leftValue, function (props) {
-      return props.theme.color || primary;
-    }, prop, leftValue, primary);
-  } else {
-    return styled.css(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      ", ":", " var(--uc-color, ", ");\n      ", ":", " ", ";\n    "])), prop, leftValue, primary, prop, leftValue, function (props) {
-      return props.theme.color;
-    });
-  }
+var getRootCssVarColor = function getRootCssVarColor() {
+  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };
 
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -2211,10 +2213,10 @@ var useUpdateEffect = function useUpdateEffect(effect) {
 
 var _excluded$8 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
-var _templateObject$8, _templateObject2$1;
+var _templateObject$8, _templateObject2;
 var isMobileEnv = isMobile;
 var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
 /**
@@ -2615,9 +2617,9 @@ Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
 var _excluded$e = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
-var _templateObject$e, _templateObject2$2;
+var _templateObject$e, _templateObject2$1;
 var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
-var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
+var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3949,11 +3951,11 @@ CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
 var _excluded$o = ["lines", "children", "className"];
 
-var _templateObject$n, _templateObject2$3;
+var _templateObject$n, _templateObject2$2;
 var StyledMultiLines = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
   return props.lines;
 });
-var StyledLine = styled__default['default'].div(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
+var StyledLine = styled__default['default'].div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\n  display: block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])));
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4646,9 +4648,9 @@ PasswordInput.displayName = 'UC-PasswordInput';
 
 var _excluded$w = ["onClick", "okText", "customKey", "className"];
 
-var _templateObject$u, _templateObject2$4;
+var _templateObject$u, _templateObject2$3;
 var StyledNumberKeyboardBase = styled__default['default'].div(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.empty {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
-var Styledkey = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
+var Styledkey = styled__default['default'](Button)(_templateObject2$3 || (_templateObject2$3 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 48px;\n  font-size: 28px;\n  line-height: 1.5;\n  background-color: #fff;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n  height: 100%;\n  border: 0;\n"])));
 /** 数字键盘基础 */
 
 var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4770,9 +4772,9 @@ var NumberKeyboard = function NumberKeyboard(props) {
 
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 
-var _templateObject$w, _templateObject2$5;
+var _templateObject$w, _templateObject2$4;
 var StyledSwipeAction = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
-var StyledButton$2 = styled__default['default'](Button)(_templateObject2$5 || (_templateObject2$5 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
+var StyledButton$2 = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
 
 var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4933,7 +4935,9 @@ SwipeAction.displayName = 'UC-SwipeAction';
 var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
 
 var _templateObject$x;
-var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'));
+var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n\n    &.focused {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
+  return color__default['default'](getRootCssVarColor() || props.theme.color || primary).fade(0.85);
+});
 /** 单行/多行输入框 input/textarea */
 
 var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4974,17 +4978,15 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     }
   });
   React.useEffect(function () {
-    if (clearable) {
-      inputRef.current.addEventListener('focus', function () {
-        setFocused(true);
-      });
-      inputRef.current.addEventListener('blur', function () {
-        setTimeout(function () {
-          setFocused(false);
-        }, 200);
-      });
-    }
-  }, [clearable]);
+    inputRef.current.addEventListener('focus', function () {
+      setFocused(true);
+    });
+    inputRef.current.addEventListener('blur', function () {
+      setTimeout(function () {
+        setFocused(false);
+      }, 200);
+    });
+  }, []);
   var inputProps = {
     onChange: function onChange(e) {
       var val = e.target.value;
@@ -5015,7 +5017,8 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: style,
     className: clsx__default['default']('uc-input', className, {
       mobile: isMobile,
-      pc: !isMobile
+      pc: !isMobile,
+      focused: focused
     })
   }, prefix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('prefix')

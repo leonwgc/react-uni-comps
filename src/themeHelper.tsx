@@ -1,6 +1,7 @@
 import { css } from 'styled-components';
+import { isBrowser } from './dom';
 import * as vars from './vars';
-import { isMobile } from './dom';
+
 /**
  *  get a css snippet with theme color
  *
@@ -9,16 +10,17 @@ import { isMobile } from './dom';
  * @return {*}  {*}
  */
 export const getThemeColorCss = (prop: string, leftValue = ''): any => {
-  // mobile css variable first
-  if (isMobile) {
-    return css`
-      ${prop}:${leftValue} ${(props) => props.theme.color || vars.primary};
-      ${prop}:${leftValue} var(--uc-color, ${vars.primary});
-    `;
-  } else {
-    return css`
-      ${prop}:${leftValue} var(--uc-color, ${vars.primary});
-      ${prop}:${leftValue} ${(props) => props.theme.color};
-    `;
-  }
+  return css`
+    ${prop}:${leftValue} ${(props) => props.theme.color || vars.primary};
+    ${prop}:${leftValue} var(--uc-color, ${vars.primary});
+  `;
+};
+
+/**
+ *  get theme color from root el
+ *
+ * @return {*}
+ */
+export const getRootCssVarColor = () => {
+  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };

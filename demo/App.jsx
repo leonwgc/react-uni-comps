@@ -1,19 +1,14 @@
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import { ThemeProvider, styled, PopMenu } from 'react-uni-comps';
+import { ThemeProvider, styled, PopMenu, Button } from 'react-uni-comps';
 import { useSelector, useUpdateStore } from 'simple-redux-store';
 import routes from './RouteConfig';
 
-const StyledSetting = styled.div`
+const StyledBall = styled(Button)`
   position: fixed;
   right: 8px;
   top: ${window.innerHeight / 2.5}px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  box-shadow: 0 1px 2px 0 rgba(56, 56, 56, 0.15);
-  cursor: pointer;
+  z-index: 1000;
 `;
 
 const StyledPopMenu = styled(PopMenu)`
@@ -57,22 +52,29 @@ const Routes = () => {
         trigger="click"
         content={
           <div className="list">
-            {['#00bc70', '#1890ff', '#f5222d', '#fa541b', '#13c2c2', '#2f54ec', '#712fd1'].map(
-              (i) => (
-                <div
-                  className="item"
-                  style={{ background: i }}
-                  key={i}
-                  onClick={() => {
-                    updateStore({ theme: i });
-                  }}
-                ></div>
-              )
-            )}
+            {[
+              '#005cff',
+              '#00bc70',
+              '#f5222d',
+              '#1890ff',
+              '#fa541b',
+              '#13c2c2',
+              '#2f54ec',
+              '#712fd1',
+            ].map((i) => (
+              <div
+                className="item"
+                style={{ background: i }}
+                key={i}
+                onClick={() => {
+                  updateStore({ theme: i });
+                }}
+              ></div>
+            ))}
           </div>
         }
       >
-        <StyledSetting style={{ background: theme }} />
+        <StyledBall circle type="primary" />
       </StyledPopMenu>
     </div>
   );

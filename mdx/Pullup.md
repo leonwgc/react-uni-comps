@@ -1,5 +1,5 @@
 ---
-title: 上拉加载
+title: 上拉加载/下拉刷新
 order: 4
 mobile: true
 group:
