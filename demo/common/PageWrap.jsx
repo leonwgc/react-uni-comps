@@ -7,13 +7,15 @@ const StyledWrap = styled.div`
   font-size: 14px;
 `;
 
-const initialState = { theme: '#005cff' };
+const getColor = () => document.documentElement.style.getPropertyValue('--uc-color') || '#005cff';
+
+const initialState = { theme: getColor() };
 const store = configureStore(initialState);
 
 export default function PageWrap({ children, ...rest }) {
   return (
     <Provider store={store}>
-      <ThemeProvider color={'#005cff'}>
+      <ThemeProvider color={getColor()}>
         <StyledWrap {...rest}>{children}</StyledWrap>
       </ThemeProvider>
     </Provider>

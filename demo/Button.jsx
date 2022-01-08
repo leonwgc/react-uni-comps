@@ -13,8 +13,8 @@ const StyledButton = styled(Button)`
 `;
 
 const StyButton = styled(Button)`
-  width: 63px;
-  height: 30px;
+  width: 80px;
+  height: 32px;
   border-radius: 15px;
   font-size: 13px;
   line-height: 30px;
@@ -32,7 +32,7 @@ export default function App() {
               Toast.show(<span style={{ fontSize: 32, letterSpacing: 5 }}>hello</span>)
             }
           >
-            去领取
+            确认
           </StyButton>
           <Button active onClick={() => Toast.show('hello,world')}>
             active hello
