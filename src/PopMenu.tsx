@@ -107,6 +107,7 @@ const PopMenu = React.forwardRef<PopMenuRefType, Props>((props, ref) => {
   const otherProps = {
     className: clsx(React.isValidElement(children) ? (children.props as Props)?.className : '', {
       active: visible,
+      visible: visible,
     }),
   };
 

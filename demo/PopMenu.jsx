@@ -5,7 +5,6 @@ import { Button, PopMenu, styled, useUpdateLayoutEffect } from 'react-uni-comps'
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;
   border-radius: 4px;
-  background-color: #eee;
 
   .list {
     height: 195px;
@@ -14,16 +13,12 @@ const StyledPopMenu = styled(PopMenu)`
       display: none;
     }
 
-    .item {
-      padding: 0 12px;
-      text-align: center;
-      height: 50px;
-      line-height: 50px;
-      user-select: none;
-      cursor: pointer;
+    .uc-btn {
+      border: none;
+      transition-property: none;
       &:hover {
-        color: #004bcc;
-        background: rgba(0, 75, 204, 0.08);
+        background-color: #005cff;
+        color: #fff;
       }
     }
   }
@@ -31,9 +26,9 @@ const StyledPopMenu = styled(PopMenu)`
 
 const StyledBtn = styled(Button)`
   margin: 32px;
-  &.active {
-    border: 3px solid red;
-    transform: all 0.3s ease;
+  &.visible {
+    transform: all 0.3s;
+    box-shadow: 0 0 4px 4px #005cff;
   }
 `;
 
@@ -60,14 +55,18 @@ export default function App() {
         content={
           <div className="list">
             {arr.map((i) => (
-              <div className="item" key={i}>
-                {`menu${i}`}
-              </div>
+              // <div className="item" key={i}>
+              //   {`menu${i}`}
+              // </div>
+              <Button block>
+                item
+                {i}
+              </Button>
             ))}
           </div>
         }
       >
-        <StyledBtn type="primary">鼠标移入移出试试 </StyledBtn>
+        <StyledBtn active>鼠标移入移出试试 </StyledBtn>
       </StyledPopMenu>
     </PageWrap>
   );

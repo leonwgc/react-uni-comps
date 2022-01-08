@@ -27,7 +27,7 @@ const StyleMobileModal = styled(Modal)`
     text-align: center;
     color: #262626;
     line-height: 22px;
-    padding: 20px;
+    margin-bottom: 20px;
   }
 
   .uc-btn {

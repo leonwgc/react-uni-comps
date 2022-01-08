@@ -29,7 +29,7 @@ export default function App() {
           style={{ width: 260 }}
           onCancel={() => Toast.show('you cancelled')}
         >
-          <Button danger>自定义样式</Button>
+          <Button active>自定义样式</Button>
         </PopConfirm>
 
         <PopConfirm
