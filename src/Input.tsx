@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
-import { getThemeColorCss } from './themeHelper';
+import { getThemeColorCss, getRootCssVarColor } from './themeHelper';
 import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
+import color from 'color';
 
 export type Props = {
   readOnly?: boolean;
@@ -46,6 +47,12 @@ const StyledInput = styled.div`
     transition: all 0.3s;
     &:hover {
       ${getThemeColorCss('border-color')}
+    }
+
+    &.focused {
+      ${getThemeColorCss('border-color')}
+      box-shadow: 0 0 2px 2px ${(props) =>
+        color(getRootCssVarColor() || props.theme.color || vars.primary).fade(0.85)};
     }
   }
   &.mobile {
@@ -126,18 +133,16 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
   });
 
   useEffect(() => {
-    if (clearable) {
-      inputRef.current.addEventListener('focus', () => {
-        setFocused(true);
-      });
+    inputRef.current.addEventListener('focus', () => {
+      setFocused(true);
+    });
 
-      inputRef.current.addEventListener('blur', () => {
-        setTimeout(() => {
-          setFocused(false);
-        }, 200);
-      });
-    }
-  }, [clearable]);
+    inputRef.current.addEventListener('blur', () => {
+      setTimeout(() => {
+        setFocused(false);
+      }, 200);
+    });
+  }, []);
 
   const inputProps: Record<string, unknown> = {
     onChange: (e) => {
@@ -169,6 +174,7 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
       className={clsx('uc-input', className, {
         mobile: isMobile,
         pc: !isMobile,
+        focused: focused,
       })}
     >
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
