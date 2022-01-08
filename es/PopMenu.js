@@ -125,7 +125,8 @@ var PopMenu = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var otherProps = {
     className: clsx( /*#__PURE__*/React.isValidElement(children) ? (_a = children.props) === null || _a === void 0 ? void 0 : _a.className : '', {
-      active: visible
+      active: visible,
+      visible: visible
     })
   };
   return /*#__PURE__*/React.createElement(StyledPopover, __assign({}, popoverRest, {
