@@ -2,7 +2,7 @@
 export declare const border = "#eee";
 export declare const disabledText = "rgba(0, 0, 0, 0.25)";
 export declare const disabledBg = "#f5f5f5";
-export declare const primary = "#004bcc";
+export declare const primary = "#005cff";
 export declare const danger = "#ff4d4f";
 export declare const activeBg = "rgba(0, 0, 0, 0.1)";
 /** 统一边框阴影 */

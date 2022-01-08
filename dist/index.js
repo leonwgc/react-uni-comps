@@ -645,7 +645,7 @@ var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
 /** 统一浅色边框色 */
 var border = '#eee';
 var disabledText = 'rgba(0, 0, 0, 0.25)';
-var primary = '#004bcc';
+var primary = '#005cff';
 var danger = '#ff4d4f';
 var activeBg = 'rgba(0, 0, 0, 0.1)';
 /** 统一边框阴影 */
