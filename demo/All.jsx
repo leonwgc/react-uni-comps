@@ -439,11 +439,11 @@ export default function All() {
       <Cell
         title={
           <Space>
-            <IconComponent /> Tab
+            <IconComponent /> Tabs
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Tab')}
+        onClick={() => gotoPage('Tabs')}
       ></Cell>
       <Cell
         title={
