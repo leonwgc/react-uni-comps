@@ -27,7 +27,6 @@ const StyledImageUpload = styled.div`
 
   img {
     max-width: 100%;
-    object-fit: cover;
   }
 
   &.with-image {
@@ -57,7 +56,7 @@ const StyledImageUpload = styled.div`
       font-size: 8px;
       color: #fff;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 0;
       display: flex;
       justify-content: center;
       align-items: center;
