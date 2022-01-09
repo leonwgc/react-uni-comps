@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Divider, Button, CheckboxGroup, styled } from 'react-uni-comps';
-
-const StyledContent = styled.div`
-  .uc-checkbox {
-    margin: 0 8px;
-  }
-`;
-
-const StyledCheckboxGroup = styled(CheckboxGroup)`
-  .uc-btn {
-    border-radius: 30px;
-  }
-`;
+import DemoBlock from './common/Block';
+import { CheckboxGroup } from 'react-uni-comps';
 
 const options1 = [
   { label: 'apple', value: 0 },
@@ -27,32 +16,23 @@ export default function App() {
 
   return (
     <PageWrap>
-      <StyledContent>
-        <Divider>只有受控模式</Divider>
-
+      <DemoBlock title="默认">
         <CheckboxGroup
           options={options}
           value={value}
           onChange={(v) => setValue(v)}
         ></CheckboxGroup>
-
-        <Button
-          type="primary"
-          style={{ marginTop: 30 }}
-          onClick={() => setOptions((o) => o.concat('item' + (o.length + 1)))}
-        >
-          add option
-        </Button>
-
-        <Divider>disabled</Divider>
+      </DemoBlock>
+      <DemoBlock title="禁用">
         <CheckboxGroup
           options={options}
           disabled
           value={value}
           onChange={(v) => setValue(v)}
         ></CheckboxGroup>
+      </DemoBlock>
 
-        <Divider>label/value options </Divider>
+      <DemoBlock title="label&value 数组">
         <CheckboxGroup
           options={options1}
           value={v}
@@ -61,8 +41,9 @@ export default function App() {
             setV(v);
           }}
         ></CheckboxGroup>
+      </DemoBlock>
 
-        <Divider>button style </Divider>
+      <DemoBlock title="按钮风格">
         <CheckboxGroup
           button
           options={options1}
@@ -74,7 +55,7 @@ export default function App() {
         ></CheckboxGroup>
 
         <div style={{ marginTop: 20 }}>
-          <StyledCheckboxGroup
+          <CheckboxGroup
             button="fill"
             options={options1}
             value={v}
@@ -82,22 +63,22 @@ export default function App() {
               console.log(v);
               setV(v);
             }}
-          ></StyledCheckboxGroup>
+          ></CheckboxGroup>
         </div>
 
         <div style={{ marginTop: 20 }}>
-          <StyledCheckboxGroup
+          <CheckboxGroup
             disabled
-            button="fill"
+            button="outline"
             options={options1}
             value={v}
             onChange={(v) => {
               console.log(v);
               setV(v);
             }}
-          ></StyledCheckboxGroup>
+          ></CheckboxGroup>
         </div>
-      </StyledContent>
+      </DemoBlock>
     </PageWrap>
   );
 }

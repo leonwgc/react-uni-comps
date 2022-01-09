@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Space, Checkbox, Divider, Button, styled } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { Space, Checkbox, styled } from 'react-uni-comps';
 
 const StyledContent = styled.div`
   .uc-checkbox {
@@ -17,50 +18,47 @@ const StyledContent = styled.div`
   }
 `;
 
-const StyledDivider = styled(Divider)`
-  margin: 16px 0;
-`;
-
 export default function App() {
   const [checked, setChecked] = useState(true);
 
   return (
     <PageWrap>
       <StyledContent>
-        <StyledDivider>controlled</StyledDivider>
-        <Checkbox checked={checked} onChange={setChecked}>
-          controlled check
-        </Checkbox>
-        <Button onClick={() => setChecked(!checked)}>toggle checked outside</Button>
-        <StyledDivider>uncontrolled</StyledDivider>
-        <Checkbox defaultChecked onChange={(c) => console.log(c)}>
-          uncontrolled check
-        </Checkbox>
-
-        <StyledDivider>styled</StyledDivider>
-
-        <Checkbox className="styled" defaultChecked>
-          styled
-        </Checkbox>
-
-        <StyledDivider>others</StyledDivider>
-        <Space wrap>
-          <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
-            good
+        <DemoBlock title="默认">
+          <Checkbox checked={checked} onChange={setChecked}>
+            默认
           </Checkbox>
-          <Checkbox
-            style={{ backgroundColor: 'red', borderRadius: '50%' }}
-            size={32}
-            defaultChecked
-            disabled
-          >
-            love u
+        </DemoBlock>
+
+        <DemoBlock title="非受控">
+          <Checkbox defaultChecked onChange={(c) => console.log(c)}>
+            非受控
           </Checkbox>
-          <Checkbox disabled>love u</Checkbox>
-          <Checkbox disabled checked>
-            love u
-          </Checkbox>
-        </Space>
+        </DemoBlock>
+
+        <DemoBlock title="自定义样式">
+          <Space wrap>
+            <Checkbox className="styled" defaultChecked>
+              自定义样式
+            </Checkbox>
+
+            <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
+              自定义样式
+            </Checkbox>
+            <Checkbox
+              style={{ backgroundColor: 'red', borderRadius: '50%' }}
+              size={32}
+              defaultChecked
+              disabled
+            >
+              自定义样式
+            </Checkbox>
+            <Checkbox disabled>自定义样式</Checkbox>
+            <Checkbox disabled checked>
+              自定义样式
+            </Checkbox>
+          </Space>
+        </DemoBlock>
       </StyledContent>
     </PageWrap>
   );

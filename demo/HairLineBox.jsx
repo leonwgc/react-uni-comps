@@ -1,36 +1,44 @@
 import React from 'react';
-import { HairLineBox, Divider, styled } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
+import { HairLineBox, Space, styled } from 'react-uni-comps';
 
 const StyledHairline = styled(HairLineBox)`
-  width: 200px;
-  height: 200px;
-  margin-left: 16px;
+  width: 220px;
+  height: 120px;
   &::after {
     border-radius: 20px;
   }
 `;
 
+const StyledHairlineEdge = styled(HairLineBox)`
+  width: 60px;
+  height: 60px;
+`;
+
 export default function App() {
   return (
-    <div style={{ padding: 16 }}>
-      <Divider textPosition="left">默认</Divider>
-      <HairLineBox style={{ padding: '16px 0' }}>hell,world</HairLineBox>
+    <PageWrap>
+      <DemoBlock title="默认下边">
+        <HairLineBox>默认下边</HairLineBox>
+      </DemoBlock>
 
-      <Divider textPosition="left">四条边</Divider>
-      <HairLineBox position="all" style={{ width: 200, height: 150, margin: 20 }} />
+      <DemoBlock title="四条边">
+        <HairLineBox position="all" style={{ width: 120, height: 80 }} />
+      </DemoBlock>
 
-      <Divider textPosition="left">圆角和颜色</Divider>
-      <StyledHairline position="all" color="red" />
+      <DemoBlock title="圆角和颜色">
+        <StyledHairline position="all" color="red" />
+      </DemoBlock>
 
-      <Divider textPosition="left">左边</Divider>
-      <HairLineBox
-        position="left"
-        color="blue"
-        style={{ width: 200, height: 150, marginLeft: 20 }}
-      />
-
-      <Divider textPosition="left">右边</Divider>
-      <HairLineBox position="right" color="#00bc8d" style={{ width: 200, height: 150 }} />
-    </div>
+      <DemoBlock title="不同边">
+        <Space>
+          <StyledHairlineEdge position="left">left</StyledHairlineEdge>
+          <StyledHairlineEdge position="right">right</StyledHairlineEdge>
+          <StyledHairlineEdge position="bottom">bottom</StyledHairlineEdge>
+          <StyledHairlineEdge position="top">top</StyledHairlineEdge>
+        </Space>
+      </DemoBlock>
+    </PageWrap>
   );
 }

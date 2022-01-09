@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Divider, Button, RadioGroup, styled } from 'react-uni-comps';
-
-const StyledContent = styled.div`
-  .uc-checkbox {
-    margin: 0 8px;
-  }
-`;
+import DemoBlock from './common/Block';
+import { Divider, RadioGroup } from 'react-uni-comps';
 
 const options1 = [
   { label: 'apple', value: 0 },
@@ -17,31 +12,24 @@ const options1 = [
 export default function App() {
   const [value, setValue] = useState();
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
-  const [v, setV] = useState();
+  const [v, setV] = useState(1);
 
   return (
     <PageWrap>
-      <StyledContent>
-        <Divider>只有受控模式</Divider>
-
+      <DemoBlock title="默认">
         <RadioGroup options={options} value={value} onChange={(v) => setValue(v)}></RadioGroup>
+      </DemoBlock>
 
-        <Button
-          type="primary"
-          style={{ marginTop: 30 }}
-          onClick={() => setOptions((o) => o.concat('item' + (o.length + 1)))}
-        >
-          add option
-        </Button>
-
-        <Divider>disabled</Divider>
+      <DemoBlock title="禁用">
         <RadioGroup
           options={options}
           disabled
           value={value}
           onChange={(v) => setValue(v)}
         ></RadioGroup>
-        <Divider>label/value options </Divider>
+      </DemoBlock>
+
+      <DemoBlock title="label&value 数组">
         <RadioGroup
           options={options1}
           value={v}
@@ -50,18 +38,9 @@ export default function App() {
             setV(v);
           }}
         ></RadioGroup>
+      </DemoBlock>
 
-        <Divider>label/value options </Divider>
-        <RadioGroup
-          options={options1}
-          value={v}
-          onChange={(v) => {
-            console.log(v);
-            setV(v);
-          }}
-        ></RadioGroup>
-
-        <Divider>button style </Divider>
+      <DemoBlock title="按钮风格">
         <RadioGroup
           button
           options={options1}
@@ -83,7 +62,20 @@ export default function App() {
             }}
           ></RadioGroup>
         </div>
-      </StyledContent>
+
+        <div style={{ marginTop: 20 }}>
+          <RadioGroup
+            button="outline"
+            options={options1}
+            disabled
+            value={v}
+            onChange={(v) => {
+              console.log(v);
+              setV(v);
+            }}
+          ></RadioGroup>
+        </div>
+      </DemoBlock>
     </PageWrap>
   );
 }

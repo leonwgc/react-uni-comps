@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Radio, Divider, styled } from 'react-uni-comps';
-
-const StyledContent = styled.div`
-  .uc-checkbox {
-    margin: 0 8px;
-  }
-`;
+import DemoBlock from './common/Block';
+import { Radio } from 'react-uni-comps';
 
 export default function App() {
   const [checked, setChecked] = useState(true);
 
   return (
     <PageWrap>
-      <StyledContent>
-        <Divider>controlled</Divider>
+      <DemoBlock title="默认">
         <Radio checked={checked} onChange={setChecked}>
-          controlled radio
+          默认
         </Radio>
+      </DemoBlock>
 
-        <Divider>radio</Divider>
+      <DemoBlock title="非受控">
         <Radio mode="radio" defaultChecked onChange={(c) => console.log(c)}>
-          radio
+          非受控
         </Radio>
         <Radio mode="radio" onChange={(c) => console.log(c)}>
-          radio1
+          非受控
         </Radio>
-      </StyledContent>
+      </DemoBlock>
     </PageWrap>
   );
 }

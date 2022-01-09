@@ -36,6 +36,7 @@ type TabProp = {
 };
 
 const StyledWrapper = styled.div`
+  -webkit-tap-highlight-color: transparent;
   .uc-tabs-content-wrap {
     overflow: hidden;
   }

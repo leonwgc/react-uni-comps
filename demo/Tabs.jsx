@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Spin, Tabs, Button, Divider, Toast, Space, styled } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
 import 'animate.css';
 import './Tab.less';
 
 const StyledTabsNew = styled(Tabs)`
   background-color: #fff;
   flex-basis: 56px;
+
   .uc-tabs-header-wrap {
     height: 56px;
   }
@@ -16,7 +18,7 @@ const StyledTabsNew = styled(Tabs)`
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
-      color: #004bcc;
+      color: #005cff;
       font-weight: normal;
     }
   }
@@ -32,8 +34,8 @@ const StyledTabsNew1 = styled(Tabs)`
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
-      color: #004bcc;
-      border-bottom: 2px solid #004bcc;
+      color: #005cff;
+      border-bottom: 2px solid #005cff;
       font-weight: normal;
     }
   }
@@ -58,14 +60,26 @@ const StyledContent = styled.div`
 `;
 
 export default function App() {
-  const [tabTitles, setTabTitles] = useState([{ title: 'tab' }, { title: 'tabx' }]);
+  const [tabTitles, setTabTitles] = useState([{ title: 'tab' }]);
   const maxCount = 5;
   const [value, setValue] = useState(0);
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <StyledApp>
-        <Divider>controlled & extra & no content</Divider>
+      <DemoBlock title="默认">
+        <Tabs value={value} onChange={setValue}>
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
+      </DemoBlock>
+      <DemoBlock title="包含extra配置">
         <StyledTabs
           value={value}
           onChange={setValue}
@@ -73,25 +87,26 @@ export default function App() {
             <Space>
               {tabTitles.length > 1 && (
                 <Button
+                  danger
+                  circle
+                  icon={<Icon type="uc-icon-jian2" />}
                   onClick={() => {
                     tabTitles.pop();
                     setTabTitles([...tabTitles]);
                     setValue(tabTitles.length - 1);
                   }}
-                >
-                  delete
-                </Button>
+                ></Button>
               )}
               {tabTitles.length < maxCount && (
                 <Button
-                  type="primary"
+                  active
+                  circle
+                  icon={<Icon type="uc-icon-jia2" />}
                   onClick={() => {
                     setTabTitles((t) => [...t, { key: tabTitles.length }]);
                     setValue(tabTitles.length);
                   }}
-                >
-                  add
-                </Button>
+                ></Button>
               )}
             </Space>
           }
@@ -100,9 +115,9 @@ export default function App() {
             return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
           })}
         </StyledTabs>
+      </DemoBlock>
 
-        <Divider> no underline</Divider>
-
+      <DemoBlock title="无下划线">
         <Tabs underline={false} value={value} onChange={setValue}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
@@ -114,9 +129,9 @@ export default function App() {
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
         </Tabs>
+      </DemoBlock>
 
-        <Divider>swipe controlled </Divider>
-
+      <DemoBlock title="可滑动">
         <Tabs swipe value={value} onChange={setValue}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
@@ -128,9 +143,9 @@ export default function App() {
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
         </Tabs>
+      </DemoBlock>
 
-        <Divider>swipe uncontrolled/defaultValue</Divider>
-
+      <DemoBlock title="可滑动非受控">
         <Tabs swipe defaultValue={2}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
@@ -142,58 +157,21 @@ export default function App() {
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
         </Tabs>
+      </DemoBlock>
 
-        <Divider>uncontrolled swipe/onChange</Divider>
-        <StyledTabs
-          swipe
-          underline="40px"
-          defaultValue={2}
-          style={{ marginTop: 30 }}
-          onChange={(v) => Toast.show({ content: v })}
-        >
-          <Tabs.Tab title="title1">
-            <StyledContent>content1</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title2">
-            <StyledContent>content2</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <StyledContent>
-              <Spin style={{ color: 'red', fontSize: 48 }}></Spin>
-            </StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab
-            title={
-              <span>
-                <Spin /> loading...
-              </span>
-            }
-          >
-            <StyledContent> loading content</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title5">
-            <StyledContent>content5</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title6" disabled>
-            disabled
-          </Tabs.Tab>
-          <Tabs.Tab title="title7">
-            <StyledContent>content7</StyledContent>
-          </Tabs.Tab>
-        </StyledTabs>
-
-        <Divider> new style </Divider>
-
+      <DemoBlock title="自定义风格1">
         <StyledTabsNew underline={false}>
-          <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-          <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+          <Tabs.Tab title="title1"></Tabs.Tab>
+          <Tabs.Tab title="title2"></Tabs.Tab>
         </StyledTabsNew>
+      </DemoBlock>
 
+      <DemoBlock title="自定义风格2">
         <StyledTabsNew1 underline={false}>
-          <Tabs.Tab title="额度分配记录"></Tabs.Tab>
-          <Tabs.Tab title="员工发放记录"></Tabs.Tab>
+          <Tabs.Tab title="title1"></Tabs.Tab>
+          <Tabs.Tab title="title2"></Tabs.Tab>
         </StyledTabsNew1>
-      </StyledApp>
+      </DemoBlock>
     </PageWrap>
   );
 }

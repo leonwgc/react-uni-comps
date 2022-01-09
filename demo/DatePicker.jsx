@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import dayjs from 'dayjs';
 import { Toast, Button, DatePicker, styled } from 'react-uni-comps';
 
@@ -22,9 +23,12 @@ export default function App() {
   const [val, setVal] = useState(new Date());
   return (
     <PageWrap>
-      <Button type="primary" onClick={() => setV(true)}>
-        选日期
-      </Button>
+      <DemoBlock title="默认">
+        <Button type="primary" onClick={() => setV(true)}>
+          选日期
+        </Button>
+      </DemoBlock>
+
       <StyledPicker
         // value="2021/11/19" // 2021-11-19
         value={val}
