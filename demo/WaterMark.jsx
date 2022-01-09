@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { WaterMark, Button, Space } from 'react-uni-comps';
 
 const textProps = {
@@ -21,14 +22,16 @@ export default function App() {
 
   return (
     <PageWrap>
-      <Space>
-        <Button onClick={() => setProps(textProps)}>普通水印</Button>
-        <Button type="primary" onClick={() => setProps(imageProps)}>
-          图片水印
-        </Button>
-      </Space>
+      <DemoBlock title="水印">
+        <Space>
+          <Button onClick={() => setProps(textProps)}>普通水印</Button>
+          <Button type="primary" onClick={() => setProps(imageProps)}>
+            图片水印
+          </Button>
+        </Space>
 
-      <WaterMark {...props} />
+        <WaterMark {...props} />
+      </DemoBlock>
     </PageWrap>
   );
 }

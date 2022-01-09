@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { Toast, Input, styled, Button, HairLineBox, useCountdown, Icon } from 'react-uni-comps';
 
 //#region  style
@@ -51,43 +52,45 @@ export default function App() {
 
   return (
     <PageWrap>
-      <StyledHairBox>
-        <Input
-          clearable
-          type="number"
-          placeholder="请输入手机号码"
-          value={tel}
-          onChange={(val) => setFieldValue('tel', val)}
-        />
-      </StyledHairBox>
+      <DemoBlock title="登录">
+        <StyledHairBox>
+          <Input
+            clearable
+            type="number"
+            placeholder="请输入手机号码"
+            value={tel}
+            onChange={(val) => setFieldValue('tel', val)}
+          />
+        </StyledHairBox>
 
-      <StyledHairBox>
-        <Input
-          clearable
-          placeholder="请输入验证码"
-          value={code}
-          onChange={(val) => setFieldValue('code', val)}
-          maxLength={6}
-          suffix={
-            <Button as="a" ref={ref} onClick={isRunning ? null : start}>
-              {isRunning ? countdown + '秒' : `${isReStarted ? '重新获取' : '获取验证码'}`}
-            </Button>
-          }
-        />
-      </StyledHairBox>
+        <StyledHairBox>
+          <Input
+            clearable
+            placeholder="请输入验证码"
+            value={code}
+            onChange={(val) => setFieldValue('code', val)}
+            maxLength={6}
+            suffix={
+              <Button as="a" ref={ref} onClick={isRunning ? null : start}>
+                {isRunning ? countdown + '秒' : `${isReStarted ? '重新获取' : '获取验证码'}`}
+              </Button>
+            }
+          />
+        </StyledHairBox>
 
-      <Button
-        type="primary"
-        block
-        style={{
-          borderRadius: 20,
-          height: 36,
-          margin: '20px auto',
-        }}
-        onClick={() => submit()}
-      >
-        登录
-      </Button>
+        <Button
+          type="primary"
+          block
+          style={{
+            borderRadius: 20,
+            height: 36,
+            margin: '20px auto',
+          }}
+          onClick={() => submit()}
+        >
+          登录
+        </Button>
+      </DemoBlock>
     </PageWrap>
   );
 }

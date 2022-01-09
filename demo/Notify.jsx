@@ -1,48 +1,49 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { Space, Button, Notify, Icon, isMobile } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <PageWrap
-      style={{ display: 'flex', alignItems: 'center', height: '100vh', justifyContent: 'center' }}
-    >
-      <Space size={16} direction="vertical">
-        <Button type="primary" onClick={() => Notify.show('明天不上学')}>
-          默认
-        </Button>
-        <Button
-          type="primary"
-          onClick={() =>
-            Notify.show(
-              <Space size={4}>
-                <Icon type="uc-icon-jinggao" style={{ fontSize: 16 }} />
-                明天不上学
-              </Space>
-            )
-          }
-        >
-          自定义内容
-        </Button>
-        <Button
-          type="primary"
-          onClick={() =>
-            Notify.show({
-              content: '明天不上学',
-              duration: 1000,
-              style: {
-                backgroundColor: '#00bc8d',
-                color: '#fff',
-                height: isMobile ? 60 : 40,
-                display: 'flex',
-                alignItems: 'center',
-              },
-            })
-          }
-        >
-          自定义样式
-        </Button>
-      </Space>
+    <PageWrap>
+      <DemoBlock style={{ marginTop: 100 }} title="顶部全局消息通知">
+        <Space size={16} wrap>
+          <Button type="primary" onClick={() => Notify.show('明天不上学')}>
+            默认
+          </Button>
+          <Button
+            type="primary"
+            onClick={() =>
+              Notify.show(
+                <Space size={4}>
+                  <Icon type="uc-icon-jinggao" style={{ fontSize: 16 }} />
+                  明天不上学
+                </Space>
+              )
+            }
+          >
+            自定义内容
+          </Button>
+          <Button
+            type="primary"
+            onClick={() =>
+              Notify.show({
+                content: '明天不上学',
+                duration: 1000,
+                style: {
+                  backgroundColor: '#00bc8d',
+                  color: '#fff',
+                  height: isMobile ? 60 : 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                },
+              })
+            }
+          >
+            自定义样式
+          </Button>
+        </Space>
+      </DemoBlock>
     </PageWrap>
   );
 }

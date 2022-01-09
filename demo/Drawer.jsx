@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import {
   Tabs,
   Space,
@@ -23,8 +24,6 @@ const StyledTabs = styled(Tabs)`
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
-      color: #004bcc;
-      border-bottom: 2px solid #004bcc;
     }
   }
 `;
@@ -51,9 +50,11 @@ export default function RightDrawer(props) {
 
   return (
     <PageWrap>
-      <Button type="primary" onClick={() => setVisible(true)} style={{ margin: 20 }}>
-        打开抽屉
-      </Button>
+      <DemoBlock title="抽屉">
+        <Button type="primary" onClick={() => setVisible(true)} style={{ margin: 20 }}>
+          打开抽屉
+        </Button>
+      </DemoBlock>
 
       <Drawer
         position="right"
@@ -80,7 +81,7 @@ export default function RightDrawer(props) {
         }
       >
         <div style={{ padding: 20 }}>
-          <Avatar /> {index === 0 ? 'tab1 ' : 'tab2 '}
+          {index === 0 ? 'tab1 ' : 'tab2 '}
           <Space size={16} style={{ marginTop: 30, display: 'flex' }}>
             <Button onClick={() => setV(true)}>打开弹框</Button>
 

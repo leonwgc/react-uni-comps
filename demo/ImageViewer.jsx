@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { Button, ImageViewer, Space } from 'react-uni-comps';
 
 const demoImages = [
@@ -14,26 +15,29 @@ export default function App() {
   const [visible, setVisible] = useState(true);
   return (
     <PageWrap>
-      <Space size={20}>
+      <DemoBlock title="单张图片预览">
         <Button onClick={() => setV(true)}>单张图片预览</Button>
+      </DemoBlock>
+
+      <DemoBlock title="多张图片预览">
         <Button onClick={() => setVisible(true)}>多张图片预览</Button>
+      </DemoBlock>
 
-        <ImageViewer
-          images={demoImages}
-          visible={visible}
-          onClose={() => {
-            setVisible(false);
-          }}
-        />
+      <ImageViewer
+        images={demoImages}
+        visible={visible}
+        onClose={() => {
+          setVisible(false);
+        }}
+      />
 
-        <ImageViewer
-          images={demoImages[2]}
-          visible={v}
-          onClose={() => {
-            setV(false);
-          }}
-        />
-      </Space>
+      <ImageViewer
+        images={demoImages[2]}
+        visible={v}
+        onClose={() => {
+          setV(false);
+        }}
+      />
     </PageWrap>
   );
 }

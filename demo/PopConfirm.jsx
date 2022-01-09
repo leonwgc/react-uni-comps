@@ -1,12 +1,26 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { Button, Toast, Icon, PopConfirm, Space } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
   return (
     <PageWrap>
-      <Space direction="vertical" size={64}>
+      <DemoBlock title="默认">
+        <PopConfirm
+          placement="bottom-left"
+          title="确定发布此页面?"
+          style={{ width: 300 }}
+          onOk={() => {
+            Toast.show('发布中..');
+          }}
+        >
+          <Button active>默认</Button>
+        </PopConfirm>
+      </DemoBlock>
+
+      <DemoBlock title="自定义样式">
         <PopConfirm
           ref={ref}
           placement="right"
@@ -31,18 +45,7 @@ export default function App() {
         >
           <Button active>自定义样式</Button>
         </PopConfirm>
-
-        <PopConfirm
-          placement="bottom-left"
-          title="确定发布此页面?"
-          style={{ width: 300 }}
-          onOk={() => {
-            Toast.show('发布中..');
-          }}
-        >
-          <Button type="primary">下面弹出确认气泡框</Button>
-        </PopConfirm>
-      </Space>
+      </DemoBlock>
     </PageWrap>
   );
 }

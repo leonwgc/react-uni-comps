@@ -17,9 +17,16 @@ const StyledBlock = styled.div`
   }
 `;
 
-export default function Block({ title, padding = '12px', background = '#fff', border, children }) {
+export default function Block({
+  title,
+  padding = '12px',
+  background = '#fff',
+  border,
+  children,
+  ...rest
+}) {
   return (
-    <StyledBlock>
+    <StyledBlock {...rest}>
       <div className="title">{title}</div>
       <div
         className="main"
