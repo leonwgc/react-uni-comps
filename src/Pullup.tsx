@@ -154,7 +154,6 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     moveInfo.isRefreshing = false;
     moveInfo.y = 0;
     el.style.transform = 'none';
-    el.style.touchAction = 'auto';
   }, []);
 
   useEffect(() => {
@@ -167,7 +166,6 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     const touchStart = () => {
       el.style.transitionProperty = 'none';
-      el.style.touchAction = 'none';
       document.body.offsetHeight;
       moveInfo.isMoving = true;
       moveInfo.y = 0;
@@ -216,7 +214,7 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   if (supportRefresh) {
-    wrapStyle.touchAction = 'auto';
+    wrapStyle.touchAction = 'pan-y';
   }
 
   const content = (
@@ -253,7 +251,6 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         const el = wrapRef.current;
         const moveInfo = moveRef.current;
 
-        el.style.touchAction = e.deltaY > 0 ? 'none' : 'auto';
         if (!moveInfo.isMoving) {
           return resetRefreshStatus();
         }
