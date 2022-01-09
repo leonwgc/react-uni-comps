@@ -161,7 +161,7 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   }
 
   return (
-    <div ref={wrapElRef} className={clsx('uc-affix-wrap')}>
+    <div ref={wrapElRef} className={clsx('uc-affix')}>
       <div ref={fixedElRef} {...rest} style={getAffixeStyle() as React.CSSProperties}>
         {React.cloneElement(children, {
           ref: innerRef,

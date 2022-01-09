@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
+import color from 'color';
 import { Button, PopMenu, styled, useUpdateLayoutEffect } from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
@@ -28,7 +29,7 @@ const StyledBtn = styled(Button)`
   margin: 32px;
   &.visible {
     transform: all 0.3s;
-    box-shadow: 0 0 4px 4px #005cff;
+    box-shadow: 0 0 4px 4px ${color('#005cff').fade(0.75)};
   }
 `;
 

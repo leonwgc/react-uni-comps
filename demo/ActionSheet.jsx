@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { ActionSheet, Button } from 'react-uni-comps';
 
 export default function App() {
@@ -16,9 +17,12 @@ export default function App() {
   const [visible, setVisible] = useState(false);
   return (
     <PageWrap>
-      <Button type="primary" block style={{ marginTop: 40 }} onClick={() => setVisible(true)}>
-        打开动作面板
-      </Button>
+      <DemoBlock title="动作面板">
+        <Button active onClick={() => setVisible(true)}>
+          打开动作面板
+        </Button>
+      </DemoBlock>
+
       <ActionSheet
         extra={'ActionSheet 动作面板'}
         cancelText="取消"

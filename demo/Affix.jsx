@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import { Affix, Button } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { Affix, Button, Space } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
@@ -11,52 +12,32 @@ export default function App() {
   }, []);
   return (
     <PageWrap>
-      <div style={{ margin: 100 }}>
+      <DemoBlock title="监听window滚动" style={{ marginTop: 100 }}>
         <Affix offsetTop={60} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
-          <Button type="primary">hello,top 60</Button>
+          <Button active>距离窗口顶部60px固定</Button>
         </Affix>
-        <Button danger block style={{ margin: '50px 0' }}>
-          danger
-        </Button>
+      </DemoBlock>
 
-        <Affix offsetTop={20} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
-          <Button type="primary">hello, top 20</Button>
-        </Affix>
-
+      <DemoBlock title="监听div容器滚动">
         <div
           ref={ref}
           style={{
-            marginTop: 100,
             height: 300,
+            width: 300,
             border: '1px solid #eee',
             position: 'relative',
             overflowY: 'scroll',
           }}
         >
           <div style={{ height: '100vh' }}>
-            <Button type="primary" style={{ margin: '150px' }}>
-              hello,there
-            </Button>
-            <Affix offsetTop={10} target={() => ref.current}>
-              <Button type="primary">hello, top 10 inner</Button>
+            <Button style={{ height: 100 }}>hello</Button>
+
+            <Affix offsetTop={20} target={() => ref.current}>
+              <Button active>距离容器顶部20px固定</Button>
             </Affix>
-
-            <div style={{ marginTop: '130px' }}>
-              <Affix
-                offsetBottom={20}
-                target={() => ref.current}
-                onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}
-              >
-                <Button type="primary">hello, bottom 10 inner</Button>
-              </Affix>
-            </div>
-
-            <Button type="primary" style={{ margin: '150px' }}>
-              hello,ccc
-            </Button>
           </div>
         </div>
-      </div>
+      </DemoBlock>
     </PageWrap>
   );
 }

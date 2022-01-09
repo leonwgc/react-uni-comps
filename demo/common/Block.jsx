@@ -22,6 +22,7 @@ export default function Block({
   padding = '12px',
   background = '#fff',
   border,
+  height,
   children,
   ...rest
 }) {
@@ -34,6 +35,7 @@ export default function Block({
           padding,
           background,
           border,
+          height,
         }}
       >
         {children}

@@ -1,4 +1,6 @@
 import React from 'react';
+import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { Text, Tooltip, Divider } from 'react-uni-comps';
 
 const text =
@@ -6,42 +8,26 @@ const text =
 
 export default function App() {
   return (
-    <div style={{ margin: '20px', width: 400 }}>
-      <Divider style={{ margin: '30px 0' }} textPosition="left">
-        一行{' '}
-      </Divider>
-      <Tooltip style={{ width: 320 }} title={text} arrow={false} placement="bottom-left">
-        <Text style={{ width: 200 }}>
-          <span style={{ color: 'red' }}>hello,world</span> <span>{text}</span>
+    <PageWrap>
+      <DemoBlock title="1行">
+        <Text style={{ width: 200 }}>{text}</Text>
+
+        <Text style={{ width: 200, marginTop: 16 }}>
+          <span style={{ color: 'red' }}>插入其他内容</span> <span>{text}</span>
         </Text>
-      </Tooltip>
+      </DemoBlock>
 
-      <Divider style={{ margin: '30px 0' }} textPosition="left">
-        2行{' '}
-      </Divider>
-
-      <Tooltip
-        arrow={false}
-        placement="bottom-left"
-        title={<div style={{ width: 240 }}>{text}</div>}
-      >
+      <DemoBlock title="2行">
         <Text lines={2} style={{ width: 200 }}>
           {text}
         </Text>
-      </Tooltip>
+      </DemoBlock>
 
-      <Divider style={{ margin: '30px 0' }} textPosition="left">
-        3行
-      </Divider>
-      <Tooltip
-        arrow={false}
-        placement="bottom-left"
-        title={<div style={{ width: 240 }}>{text}</div>}
-      >
+      <DemoBlock title="3行">
         <Text lines={3} style={{ width: 200 }}>
           {text}
         </Text>
-      </Tooltip>
-    </div>
+      </DemoBlock>
+    </PageWrap>
   );
 }

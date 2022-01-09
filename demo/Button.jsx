@@ -21,7 +21,7 @@ export default function App() {
           <Button block type="primary">
             Block primary
           </Button>
-          <Button block danger>
+          <Button block danger dashed>
             Block danger
           </Button>
         </Space>
