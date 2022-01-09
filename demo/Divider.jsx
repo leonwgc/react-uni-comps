@@ -1,28 +1,28 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
+import Block from './common/Block';
 import { Divider } from 'react-uni-comps';
 
 export default function App() {
   return (
     <PageWrap>
-      <p>hello,world</p>
-      <Divider color="#00bc8d" style={{ margin: '16px 0' }} />
-      <p>hello,world</p>
+      <Block title="基础分割线">
+        <Divider />
+      </Block>
 
-      <Divider dashed style={{ margin: '10px 0' }} />
+      <Block title="带内容的分割线">
+        <Divider>默认内容在中间</Divider>
+        <Divider textPosition="left">左侧内容</Divider>
+        <Divider textPosition="right">右侧内容</Divider>
+      </Block>
 
-      <Divider dashed>Hello</Divider>
-      <Divider color="red" style={{ margin: '20px 0' }}>
-        设置线条颜色
-      </Divider>
-      <Divider textPosition="left">Hello left</Divider>
-      <Divider textPosition="right">Hello right</Divider>
+      <Block title="自定义样式">
+        <Divider dashed color="#1677ff" style={{ color: 'red', fontSize: 20 }}>
+          自定义样式
+        </Divider>
+      </Block>
 
-      <Divider dashed style={{ margin: '24px 0' }}>
-        <span style={{ fontWeight: 500, fontSize: 16, color: 'red' }}>虚线</span>
-      </Divider>
-      <Divider style={{ margin: '32px 0' }}>垂直分隔线</Divider>
-      <div>
+      <Block title="垂直分隔线">
         Text
         <Divider type="vertical" />
         <a href="#">Link</a>
@@ -30,7 +30,7 @@ export default function App() {
         <a href="#">Link</a>
         <Divider type="vertical" color="red" style={{ margin: '0 20px' }} />
         <a href="#">Link</a>
-      </div>
+      </Block>
     </PageWrap>
   );
 }

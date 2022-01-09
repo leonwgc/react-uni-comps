@@ -1,160 +1,123 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import { Space, Button, styled, Toast, Icon } from 'react-uni-comps';
-
-const StyledContent = styled.div`
-  .uc-btn {
-    margin: 8px 0;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  border-radius: 10px;
-`;
-
-const StyButton = styled(Button)`
-  width: 80px;
-  height: 32px;
-  border-radius: 15px;
-  font-size: 13px;
-  line-height: 30px;
-  padding: 0;
-`;
+import DemoBlock from './common/Block';
+import { Space, Button, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (
     <PageWrap>
-      <StyledContent>
+      <DemoBlock title="不同类型的按钮">
         <Space wrap>
-          <StyButton
-            type="primary"
-            onClick={() =>
-              Toast.show(<span style={{ fontSize: 32, letterSpacing: 5 }}>hello</span>)
-            }
-          >
-            确认
-          </StyButton>
-          <Button active onClick={() => Toast.show('hello,world')}>
-            active hello
-          </Button>
-          <Button
-            onClick={() =>
-              Toast.show({
-                content: 'hello,world',
-                duration: 1000,
-              })
-            }
-          >
-            hello 1s
-          </Button>
-          <Button disabled>hello</Button>
-          <Button disabled type="primary">
-            hello
-          </Button>
-          <Button type="primary" onClick={() => console.log(1)}>
-            hello
-          </Button>
+          <Button>Default</Button>
+          <Button active>Outline</Button>
+          <Button type="primary">Primary</Button>
+          <Button danger>Danger</Button>
+        </Space>
+      </DemoBlock>
 
-          <Button type="primary">hello</Button>
+      <DemoBlock title="块级按钮">
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Button block>Block default</Button>
+          <Button block type="primary">
+            Block primary
+          </Button>
+          <Button block danger>
+            Block danger
+          </Button>
+        </Space>
+      </DemoBlock>
 
+      <DemoBlock title="加载状态">
+        <Space wrap>
+          <Button loading>加载中</Button>
           <Button type="primary" loading>
-            hello
+            加载中
+          </Button>
+          <Button type="primary" danger loading>
+            Loading
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="带图标的按钮">
+        <Space wrap>
+          <Button>
+            <Space>
+              <Icon type="uc-icon-sousuo" />
+              <span>搜索</span>
+            </Space>
+          </Button>
+          <Button circle>
+            <Icon type="uc-icon-sousuo" />
           </Button>
 
-          <StyledButton type="primary" loading>
-            StyledButton
-          </StyledButton>
-
-          <Button loading onClick={() => console.log('hello')}>
-            hello
-          </Button>
-
-          <Button danger>danger default</Button>
-          <Button danger disabled>
-            danger disabled
-          </Button>
-          <Button danger type="primary">
-            danger primary
-          </Button>
-          <Button danger type="primary" disabled>
-            danger primary disabled
-          </Button>
-          <Button type="primary" style={{ height: 40 }}>
-            hello
-          </Button>
-
-          <Button type="primary" danger disabled>
-            danger
-          </Button>
-          <Button type="default" dashed>
-            hello
-          </Button>
-
-          <Button type="default" circle>
+          <Button circle type="primary">
             <Icon type="uc-icon-sousuo" />
           </Button>
 
           <Button>
             <Icon type="uc-icon-sousuo" />
           </Button>
-          <Button type="primary" icon={<Icon type="uc-icon-sousuo" />}>
-            搜索
-          </Button>
+        </Space>
+      </DemoBlock>
 
-          <Button icon={<Icon type="uc-icon-sousuo" />}>搜索</Button>
-
-          <Button color="#00bc8d">hello</Button>
-          <Button color="#00bc8d" dashed>
-            hello
+      <DemoBlock title="按钮形状">
+        <Space wrap>
+          <Button>Default Button</Button>
+          <Button block style={{ borderRadius: 20 }}>
+            Rounded Button
           </Button>
-          <Button color="#00bc8d" className="active" dashed style={{ height: 60 }}>
-            hello
+          <Button block style={{ borderRadius: 0 }}>
+            Rect Button
           </Button>
-
-          <Button as="a" target="_blank" href="https://www.baidu.com/">
-            link button
+          <Button circle>X</Button>
+          <Button type="primary">Default Button</Button>
+          <Button type="primary" style={{ borderRadius: 20 }}>
+            Rounded Button
           </Button>
         </Space>
-        <div>
-          <Button block style={{ marginBottom: 10 }}>
-            hello
-          </Button>
-          <Button block active dashed style={{ marginBottom: 10 }}>
-            hello active
-          </Button>
-          <Button type="primary" block style={{ marginBottom: 10 }}>
-            hello
-          </Button>
-          <Button active color="#00bc8d" block style={{ height: 40 }}>
-            dr
-          </Button>
-          <Button as="div" block style={{ height: 40 }}>
-            as div
-          </Button>
-          <Button as="div" block loading style={{ height: 40 }}>
-            as div
-          </Button>
-        </div>
-        <div style={{ background: '#333', padding: 16 }}>
-          <Button block type="primary" ghost color="#00bc8d">
-            hello
-          </Button>
-          <Button ghost> hello</Button>
-          <Button ghost block>
-            hello
-          </Button>
-          <Button ghost block type="primary">
-            hello
-          </Button>
-          <Button ghost block type="primary" danger loading>
-            danger primary
+      </DemoBlock>
+
+      <DemoBlock title="幽灵按钮" background="#333">
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Button block ghost>
+            default
           </Button>
 
-          <Button ghost block danger>
-            danger default
+          <Button block ghost active>
+            active
           </Button>
-        </div>
-      </StyledContent>
+
+          <Button ghost block danger dashed>
+            danger dashed
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="链接按钮">
+        <Space wrap size={16}>
+          <Button as="a">Anchor</Button>
+          <Button as="a" style={{ color: '#333', textDecoration: 'underline' }}>
+            Anchor
+          </Button>
+          <Button as="a" danger>
+            Anchor danger
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="禁用状态">
+        <Space wrap>
+          <Button disabled>Disabled</Button>
+          <Button disabled type="primary">
+            Disabled
+          </Button>
+
+          <Button disabled danger>
+            Disabled
+          </Button>
+        </Space>
+      </DemoBlock>
     </PageWrap>
   );
 }

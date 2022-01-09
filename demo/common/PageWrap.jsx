@@ -3,7 +3,7 @@ import { styled, ThemeProvider } from 'react-uni-comps';
 import { Provider, configureStore } from 'simple-redux-store';
 
 const StyledWrap = styled.div`
-  padding: 16px;
+  /* padding: 16px; */
   font-size: 14px;
 `;
 
