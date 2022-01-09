@@ -43,12 +43,10 @@ module.exports = [
       {
         name: 'AlertDialog',
         title: '确认弹框,模拟alert/confirm',
-        mobile: false,
       },
       {
         name: 'Tooltip',
         title: 'Tooltip',
-        mobile: false,
       },
       {
         name: 'Pullup',

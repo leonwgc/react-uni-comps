@@ -1,6 +1,8 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
+
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
 
 const StyledPage = styled.div`
@@ -151,40 +153,42 @@ export default function App() {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
-        <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
-          <Checkbox checked={ime} onChange={setIme}>
-            ime mode
-          </Checkbox>
-          <StyledInput
-            clearable
-            placeholder="请输入真实账号"
-            ime={ime}
-            value={account}
-            onChange={onFieldChange('account')}
-            prefix={!isMobile && <Icon type="icon-yonghu" />}
-          />
-          <StyledInput placeholder="请输入真实账号" value={account} disabled />
-          <StyledInput
-            placeholder="请输入密码"
-            value={pwd}
-            type={eyeOn ? 'text' : 'password'}
-            onChange={onFieldChange('pwd')}
-            prefix={!isMobile && <Icon type="icon-lock_filled_regular" />}
-            clearable
-            suffix={
-              <Icon
-                className="icon"
-                onClick={() => onFieldChange('eyeOn')(!eyeOn)}
-                type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
-              />
-            }
-          />
-          <Button block type="primary" style={{ marginTop: 32 }}>
-            登录
-          </Button>
-        </StyledVa>
-      </StyledPage>
+      <DemoBlock>
+        <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
+          <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
+            <Checkbox checked={ime} onChange={setIme}>
+              ime mode
+            </Checkbox>
+            <StyledInput
+              clearable
+              placeholder="请输入真实账号"
+              ime={ime}
+              value={account}
+              onChange={onFieldChange('account')}
+              prefix={!isMobile && <Icon type="icon-yonghu" />}
+            />
+            <StyledInput placeholder="请输入真实账号" value={account} disabled />
+            <StyledInput
+              placeholder="请输入密码"
+              value={pwd}
+              type={eyeOn ? 'text' : 'password'}
+              onChange={onFieldChange('pwd')}
+              prefix={!isMobile && <Icon type="icon-lock_filled_regular" />}
+              clearable
+              suffix={
+                <Icon
+                  className="icon"
+                  onClick={() => onFieldChange('eyeOn')(!eyeOn)}
+                  type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
+                />
+              }
+            />
+            <Button block type="primary" style={{ marginTop: 32 }}>
+              登录
+            </Button>
+          </StyledVa>
+        </StyledPage>
+      </DemoBlock>
     </PageWrap>
   );
 }

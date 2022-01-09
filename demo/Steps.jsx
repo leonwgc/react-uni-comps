@@ -74,7 +74,6 @@ export default function App() {
       ></StyledSteps>
       <StyedButton
         block
-        type="primary"
         onClick={() => {
           setIndex((i) => {
             if (i + 1 <= 3) {

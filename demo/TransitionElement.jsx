@@ -1,5 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { TransitionElement, Space, Button, styled } from 'react-uni-comps';
 
 const StyledUCButton = styled(Button)`
@@ -61,21 +62,25 @@ const App = () => {
 
   return (
     <PageWrap>
-      <Space>
-        <TransitionElement duration={100}>
-          <StyledButton>入场动画</StyledButton>
-        </TransitionElement>
+      <DemoBlock title="例1">
+        <Space>
+          <TransitionElement duration={100}>
+            <StyledButton>入场动画</StyledButton>
+          </TransitionElement>
 
-        <StyledButton>hover动画</StyledButton>
-      </Space>
+          <StyledButton>hover动画</StyledButton>
+        </Space>
+      </DemoBlock>
 
-      {arr.map((item, k) => (
-        <TransitionElement key={k}>
-          <StyledUCButton type="primary" style={{ width: k * 10 }}>
-            {item}
-          </StyledUCButton>
-        </TransitionElement>
-      ))}
+      <DemoBlock title="例2">
+        {arr.map((item, k) => (
+          <TransitionElement key={k}>
+            <StyledUCButton type="primary" style={{ width: k * 10 }}>
+              {item}
+            </StyledUCButton>
+          </TransitionElement>
+        ))}
+      </DemoBlock>
     </PageWrap>
   );
 };

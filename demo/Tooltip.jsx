@@ -18,7 +18,7 @@ const StyledToolTip = styled(Tooltip)`
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock title="不同类型的按钮">
+      <DemoBlock title="不同位置">
         <Space size={16}>
           <Tooltip offset={{ x: -10, y: 15 }} arrow={false} placement="right" title="右侧">
             <Button>右侧</Button>
