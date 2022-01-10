@@ -1977,7 +1977,6 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     moveInfo.isRefreshing = false;
     moveInfo.y = 0;
     el.style.transform = 'none';
-    el.style.touchAction = 'auto';
   }, []);
   React.useEffect(function () {
     // no refresh no pulldown handle
@@ -1988,7 +1987,6 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
     var touchStart = function touchStart() {
       el.style.transitionProperty = 'none';
-      el.style.touchAction = 'none';
       document.body.offsetHeight;
       moveInfo.isMoving = true;
       moveInfo.y = 0;
@@ -2032,7 +2030,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var wrapStyle = _objectSpread2({}, style);
 
   if (supportRefresh) {
-    wrapStyle.touchAction = 'auto';
+    wrapStyle.touchAction = 'pan-y';
   }
 
   var content = /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
@@ -2065,7 +2063,6 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       if (typeof refreshRef.current !== 'function') return;
       var el = wrapRef.current;
       var moveInfo = moveRef.current;
-      el.style.touchAction = e.deltaY > 0 ? 'none' : 'auto';
 
       if (!moveInfo.isMoving) {
         return resetRefreshStatus();
@@ -2215,7 +2212,7 @@ var _excluded$8 = ["children", "underline", "value", "defaultValue", "border", "
 
 var _templateObject$8, _templateObject2;
 var isMobileEnv = isMobile;
-var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
+var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
 var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
@@ -4004,8 +4001,9 @@ var transitionDuration = 240;
 Toast.show = function (props) {
   var toastProps = {};
   var _duration = 1500;
+  var isToastProps = _typeof(props) === 'object' && 'content' in props;
 
-  if (_typeof(props) === 'object' && 'content' in props) {
+  if (isToastProps) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 1500 : _props$duration,
         rest = _objectWithoutProperties(props, _excluded2$1);
@@ -4027,6 +4025,12 @@ Toast.show = function (props) {
   }))), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
+
+    if (isToastProps) {
+      var _props$afterClose;
+
+      (_props$afterClose = props.afterClose) === null || _props$afterClose === void 0 ? void 0 : _props$afterClose.call(props);
+    }
   }, _duration);
 };
 
@@ -4301,7 +4305,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   return /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
-    className: clsx__default['default']('uc-affix-wrap')
+    className: clsx__default['default']('uc-affix')
   }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: fixedElRef
   }, rest, {

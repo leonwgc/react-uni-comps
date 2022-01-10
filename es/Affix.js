@@ -173,7 +173,7 @@ var Affix = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   return /*#__PURE__*/React.createElement("div", {
     ref: wrapElRef,
-    className: clsx('uc-affix-wrap')
+    className: clsx('uc-affix')
   }, /*#__PURE__*/React.createElement("div", __assign({
     ref: fixedElRef
   }, rest, {

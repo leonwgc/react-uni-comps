@@ -56,6 +56,8 @@ type StaticToastProps =
       style?: React.CSSProperties;
       /** 模态时 mask style */
       maskStyle: React.CSSProperties;
+      /* Toast 隐藏后的回调函数 */
+      afterClose?: () => void;
     };
 
 /** 黑背景轻提示 */
@@ -75,6 +77,8 @@ const Toast: React.ForwardRefExoticComponent<Props> & {
           style?: React.CSSProperties;
           /** 模态时 mask style */
           maskStyle: React.CSSProperties;
+          /* Toast 隐藏后的回调函数 */
+          afterClose?: () => void;
         }
   ) => void;
 } = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -97,7 +101,9 @@ Toast.show = (props: StaticToastProps | React.ReactNode) => {
   let toastProps = {};
   let _duration = 1500;
 
-  if (typeof props === 'object' && 'content' in props) {
+  const isToastProps = typeof props === 'object' && 'content' in props;
+
+  if (isToastProps) {
     const { duration = 1500, ...rest } = props;
     toastProps = rest;
     _duration = duration;
@@ -119,6 +125,9 @@ Toast.show = (props: StaticToastProps | React.ReactNode) => {
   );
   window.setTimeout(() => {
     dispose(beforeDispose);
+    if (isToastProps) {
+      props.afterClose?.();
+    }
   }, _duration);
 };
 

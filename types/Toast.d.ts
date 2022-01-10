@@ -25,6 +25,7 @@ declare const Toast: React.ForwardRefExoticComponent<Props> & {
         style?: React.CSSProperties;
         /** 模态时 mask style */
         maskStyle: React.CSSProperties;
+        afterClose?: () => void;
     }) => void;
 };
 export default Toast;

@@ -74,8 +74,9 @@ var transitionDuration = 240;
 Toast.show = function (props) {
   var toastProps = {};
   var _duration = 1500;
+  var isToastProps = _typeof(props) === 'object' && 'content' in props;
 
-  if (_typeof(props) === 'object' && 'content' in props) {
+  if (isToastProps) {
     var _a = props.duration,
         duration = _a === void 0 ? 1500 : _a,
         rest = __rest(props, ["duration"]);
@@ -96,7 +97,13 @@ Toast.show = function (props) {
     visible: true
   }))), container);
   window.setTimeout(function () {
+    var _a;
+
     dispose(beforeDispose);
+
+    if (isToastProps) {
+      (_a = props.afterClose) === null || _a === void 0 ? void 0 : _a.call(props);
+    }
   }, _duration);
 };
 

@@ -7,9 +7,25 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Button active onClick={() => Toast.show('hello,world')}>
-          默认
-        </Button>
+        <Space>
+          <Button active onClick={() => Toast.show('hello,world')}>
+            默认
+          </Button>
+
+          <Button
+            active
+            onClick={() =>
+              Toast.show({
+                content: '隐藏后的回调',
+                afterClose: () => {
+                  Toast.show('afterClose triggered');
+                },
+              })
+            }
+          >
+            隐藏后的回调
+          </Button>
+        </Space>
       </DemoBlock>
 
       <DemoBlock title="自定义样式">

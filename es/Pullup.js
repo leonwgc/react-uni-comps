@@ -134,7 +134,6 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     moveInfo.isRefreshing = false;
     moveInfo.y = 0;
     el.style.transform = 'none';
-    el.style.touchAction = 'auto';
   }, []);
   useEffect(function () {
     // no refresh no pulldown handle
@@ -145,7 +144,6 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
     var touchStart = function touchStart() {
       el.style.transitionProperty = 'none';
-      el.style.touchAction = 'none';
       document.body.offsetHeight;
       moveInfo.isMoving = true;
       moveInfo.y = 0;
@@ -189,7 +187,7 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var wrapStyle = __assign({}, style);
 
   if (supportRefresh) {
-    wrapStyle.touchAction = 'auto';
+    wrapStyle.touchAction = 'pan-y';
   }
 
   var content = /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
@@ -222,7 +220,6 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       if (typeof refreshRef.current !== 'function') return;
       var el = wrapRef.current;
       var moveInfo = moveRef.current;
-      el.style.touchAction = e.deltaY > 0 ? 'none' : 'auto';
 
       if (!moveInfo.isMoving) {
         return resetRefreshStatus();
