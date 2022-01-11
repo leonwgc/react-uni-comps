@@ -135,6 +135,7 @@ const StyledButton = styled.button`
     height: unset;
     padding: unset;
     margin: unset;
+    background: unset;
   }
 
   &.disabled,
