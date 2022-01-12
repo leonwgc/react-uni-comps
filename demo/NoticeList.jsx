@@ -1,40 +1,52 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { NoticeList, Button, styled, Icon } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { NoticeList, Space, styled, Icon } from 'react-uni-comps';
 
 const StyledNoticeList = styled(NoticeList)`
   background-color: rgb(251, 248, 220);
   color: red;
-  margin-top: 30px;
   font-size: 16px;
   padding: 0 8px;
 `;
 
-export default function App() {
-  const [list, setList] = useState([
-    { text: '1华为畅享9新品即将上市，活动期间0元预约' },
-    { text: '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！' },
-    { text: '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示' },
-  ]);
+const list = [
+  { text: '消息通知1' },
+  { text: '消息通知2' },
+  { text: '消息通知3' },
+  { text: '消息通知4' },
+  { text: '消息通知5' },
+];
 
-  const [list1] = useState([
-    { text: '1华为畅享9新品即将上市，活动期间0元预约1', link: 'https://www.baidu.com/' },
-    { text: '赢HUAWEI WATCH等好礼，更多产品信息请持续关注！2', link: 'https://www.baidu.com/' },
-    {
-      text: '弹出层容器，用于展示弹窗、信息提示等内容，支持多个弹出层叠加展示3',
-      link: 'https://www.baidu.com/',
-    },
-  ]);
+export default function App() {
   return (
     <PageWrap style={{ padding: 0 }}>
-      <NoticeList
-        icon={<Icon type="uc-icon-horn" />}
-        closeable
-        extra={<div style={{ color: '#999', fontSize: 12 }}>手慢无</div>}
-        list={list}
-      />
+      <DemoBlock title="默认">
+        <NoticeList list={list} />
+      </DemoBlock>
 
-      <StyledNoticeList list={list1} stayTime={1000} />
+      <DemoBlock title="可关闭">
+        <NoticeList closeable list={list} />
+      </DemoBlock>
+
+      <DemoBlock title="带icon">
+        <NoticeList icon={<Icon type="uc-icon-horn" />} list={list} />
+      </DemoBlock>
+
+      <DemoBlock title="extra配置">
+        <NoticeList
+          extra={
+            <Space style={{ color: '#111' }}>
+              <Icon type="uc-icon-horn" /> 手慢无
+            </Space>
+          }
+          list={list}
+        />
+      </DemoBlock>
+
+      <DemoBlock title="自定义">
+        <StyledNoticeList list={list} stayTime={1000} />
+      </DemoBlock>
     </PageWrap>
   );
 }
