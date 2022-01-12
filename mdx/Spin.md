@@ -1,5 +1,5 @@
 ---
-title: 加载中
+title: Spin 加载中
 order: 1
 mobile: true
 group:

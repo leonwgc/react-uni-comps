@@ -1,5 +1,5 @@
 ---
-title: 复选框列表
+title: CheckboxGroup 复选框列表
 order: 1
 mobile: true
 group:

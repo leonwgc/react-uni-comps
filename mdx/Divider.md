@@ -1,5 +1,5 @@
 ---
-title: 分割线
+title: Divider 分割线
 order: 1
 mobile: true
 group:

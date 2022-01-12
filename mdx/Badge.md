@@ -1,5 +1,5 @@
 ---
-title: 徽标
+title: Badge 徽标
 order: 1
 mobile: true
 group:

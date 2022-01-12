@@ -1,5 +1,5 @@
 ---
-title: Tooltip
+title: Tooltip 提示
 order: 5
 mobile: true
 group:

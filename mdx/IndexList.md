@@ -1,5 +1,5 @@
 ---
-title: 索引列表
+title: IndexList 索引列表
 order: 11
 mobile: true
 group:

@@ -1,5 +1,5 @@
 ---
-title: 步骤条
+title: Steps 步骤条
 order: 13
 mobile: true
 group:

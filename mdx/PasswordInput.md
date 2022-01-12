@@ -1,5 +1,5 @@
 ---
-title: 自定义密码输入框
+title: PasswordInput 自定义密码输入框
 order: 6
 mobile: true
 group:

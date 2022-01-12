@@ -1,5 +1,5 @@
 ---
-title: 轮播
+title: Slide 轮播/幻灯片
 order: 15
 mobile: true
 group:

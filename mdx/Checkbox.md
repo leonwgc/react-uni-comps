@@ -1,5 +1,5 @@
 ---
-title: 复选框
+title: Checkbox 复选框
 order: 0
 mobile: true
 group:

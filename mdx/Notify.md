@@ -1,5 +1,5 @@
 ---
-title: 顶部消息通知
+title: Notify 顶部消息通知
 order: 10
 mobile: true
 group:

@@ -1,5 +1,5 @@
 ---
-title: 手势
+title: FingerGestureElement 手势
 order: 20
 mobile: true
 group:

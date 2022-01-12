@@ -1,5 +1,5 @@
 ---
-title: 头像
+title: Avatar 头像
 order: 3
 mobile: true
 group:

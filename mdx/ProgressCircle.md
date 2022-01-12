@@ -1,5 +1,5 @@
 ---
-title: 环形进度条
+title: ProgressCircle 环形进度条
 order: 5
 mobile: true
 group:

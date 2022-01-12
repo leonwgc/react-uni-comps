@@ -1,5 +1,5 @@
 ---
-title: 数字键盘
+title: NumberKeyboard 数字键盘
 order: 7
 mobile: true
 group:

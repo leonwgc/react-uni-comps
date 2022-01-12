@@ -7,10 +7,10 @@ export default function App() {
     <div style={{ margin: 20 }}>
       <Space>
         <Button type="primary" onClick={() => setV(true)} loading={v}>
-          show Spin after 1s
+          1秒后显示 loading
         </Button>
 
-        <Button onClick={() => setV(false)}>hide Spin </Button>
+        <Button onClick={() => setV(false)}>隐藏loading </Button>
       </Space>
 
       <div style={{ marginTop: 24 }}>

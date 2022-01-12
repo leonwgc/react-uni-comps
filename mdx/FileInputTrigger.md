@@ -1,5 +1,5 @@
 ---
-title: 上传
+title: FileInputTrigger 图片文件上传
 order: 12
 mobile: true
 group:

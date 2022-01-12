@@ -1,5 +1,5 @@
 ---
-title: 确认弹框,模拟alert/confirm
+title: AlertDialog alert/confirm弹框
 order: 4
 mobile: true
 group:

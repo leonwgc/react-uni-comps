@@ -1,5 +1,5 @@
 ---
-title: 延迟渲染(防loading闪烁)
+title: WaitLoading (防闪烁)
 order: 0
 mobile: true
 group:

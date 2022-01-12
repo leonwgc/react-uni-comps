@@ -1,5 +1,5 @@
 ---
-title: 平铺选择器
+title: PickerView 平铺选择器
 order: 9
 mobile: true
 group:

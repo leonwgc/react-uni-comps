@@ -1,5 +1,5 @@
 ---
-title: 选项卡
+title: Tabs 选项卡
 order: 0
 mobile: true
 group:

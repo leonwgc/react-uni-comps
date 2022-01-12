@@ -1,5 +1,5 @@
 ---
-title: 移动端选择器
+title: Picker 弹出选择器
 order: 8
 mobile: true
 group:

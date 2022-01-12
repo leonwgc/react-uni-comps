@@ -1,5 +1,5 @@
 ---
-title: 水印
+title: WaterMark 水印
 order: 2
 mobile: true
 group:

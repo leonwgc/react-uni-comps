@@ -1,5 +1,5 @@
 ---
-title: 文本省略
+title: Text 文本省略
 order: 3
 mobile: true
 group:

@@ -1,5 +1,5 @@
 ---
-title: 水平滚动通知栏
+title: NoticeBar 水平通知栏
 order: 16
 mobile: true
 group:

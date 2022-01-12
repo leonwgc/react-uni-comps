@@ -5,24 +5,24 @@ module.exports = [
     comps: [
       {
         name: 'Button',
-        title: '按钮',
+        title: 'Button 按钮',
       },
       {
         name: 'Divider',
-        title: '分割线',
+        title: 'Divider 分割线',
       },
 
       {
         name: 'HairLineBox',
-        title: '一像素边框div',
+        title: 'HairLineBox 一像素边框容器',
       },
       {
         name: 'Avatar',
-        title: '头像',
+        title: 'Avatar 头像',
       },
       {
         name: 'Icon',
-        title: '图标',
+        title: 'Icon 图标',
       },
     ],
   },
@@ -32,97 +32,97 @@ module.exports = [
     comps: [
       {
         name: 'WaitLoading',
-        title: '延迟渲染(防loading闪烁)',
+        title: 'WaitLoading (防闪烁)',
       },
       {
         name: 'Spin',
-        title: '加载中',
+        title: 'Spin 加载中',
       },
       {
         name: 'Modal',
-        title: '弹框',
+        title: 'Modal 弹框',
         mobile: false,
       },
       {
         name: 'Drawer',
-        title: '抽屉',
+        title: 'Drawer 抽屉',
         mobile: false,
       },
       {
         name: 'AlertDialog',
-        title: '确认弹框,模拟alert/confirm',
+        title: 'AlertDialog alert/confirm弹框',
       },
       {
         name: 'Tooltip',
-        title: 'Tooltip',
+        title: 'Tooltip 提示',
       },
       {
         name: 'Pullup',
-        title: '上拉加载/下拉刷新',
+        title: 'Pullup 上拉加载/下拉刷新',
       },
       {
         name: 'Toast',
-        title: 'Toast提示',
+        title: 'Toast 提示',
       },
       {
         name: 'PopConfirm',
-        title: 'PopConfirm气泡确认框',
+        title: 'PopConfirm 气泡确认框',
         mobile: false,
       },
       {
         name: 'PopMenu',
-        title: 'Dropdown菜单',
+        title: 'PopMenu 弹出的列表',
         mobile: false,
       },
       {
         name: 'Notify',
-        title: '顶部消息通知',
+        title: 'Notify 顶部消息通知',
       },
       {
         name: 'Popover',
-        title: '带箭头的浮层',
+        title: 'Popover 带箭头的浮层',
         mobile: false,
       },
       {
         name: 'Drag',
-        title: '拖拽',
+        title: 'Drag 拖拽',
         mobile: false,
       },
 
       {
         name: 'Steps',
-        title: '步骤条',
+        title: 'Steps 步骤条',
       },
       {
         name: 'ActionSheet',
-        title: '动作面板',
+        title: 'ActionSheet 动作面板',
       },
       {
         name: 'Slide',
-        title: '轮播',
+        title: 'Slide 轮播/幻灯片',
       },
 
       {
         name: 'NoticeBar',
-        title: '水平滚动通知栏',
+        title: 'NoticeBar 水平通知栏',
       },
       {
         name: 'NoticeList',
-        title: '垂直滚动通知栏',
+        title: 'NoticeList 垂直通知栏',
       },
 
       {
         name: 'Skeleton',
-        title: '骨架屏',
+        title: 'Skeleton 骨架屏',
       },
       {
         name: 'CopyToClipboard',
-        title: '复制',
+        title: 'CopyToClipboard 复制',
       },
 
       {
         name: 'FingerGestureElement',
-        title: '手势',
+        title: 'FingerGestureElement 手势',
       },
     ],
   },
@@ -132,11 +132,11 @@ module.exports = [
     comps: [
       {
         name: 'Tabs',
-        title: '选项卡',
+        title: 'Tabs 选项卡',
       },
       {
         name: 'Affix',
-        title: '固钉',
+        title: 'Affix 固钉',
       },
     ],
   },
@@ -146,67 +146,67 @@ module.exports = [
     comps: [
       {
         name: 'Checkbox',
-        title: '复选框',
+        title: 'Checkbox 复选框',
       },
       {
         name: 'CheckboxGroup',
-        title: '复选框列表',
+        title: 'CheckboxGroup 复选框列表',
       },
       {
         name: 'Radio',
-        title: '单选框',
+        title: 'Radio 单选框',
       },
       {
         name: 'RadioGroup',
-        title: '单选框列表',
+        title: 'RadioGroup 单选框列表',
       },
       {
         name: 'Input',
-        title: '输入框',
+        title: 'Input 输入框',
       },
       {
         name: 'Switch',
-        title: '开关',
+        title: 'Switch 开关',
       },
       {
         name: 'PasswordInput',
-        title: '自定义密码输入框',
+        title: 'PasswordInput 自定义密码输入框',
       },
       {
         name: 'NumberKeyboard',
-        title: '数字键盘',
+        title: 'NumberKeyboard 数字键盘',
       },
       {
         name: 'Picker',
-        title: '移动端选择器',
+        title: 'Picker 弹出选择器',
       },
       {
         name: 'PickerView',
-        title: '平铺选择器',
+        title: 'PickerView 平铺选择器',
       },
       {
         name: 'Rate',
-        title: '评分',
+        title: 'Rate 评分',
       },
       {
         name: 'IndexList',
-        title: '索引列表',
+        title: 'IndexList 索引列表',
       },
       {
         name: 'FileInputTrigger',
-        title: '上传',
+        title: 'FileInputTrigger 图片文件上传',
       },
       {
         name: 'Signature',
-        title: '手写签名',
+        title: 'Signature 手写签名',
       },
       {
         name: 'DatePicker',
-        title: '移动端日期选择',
+        title: 'DatePicker 移动端日期选择',
       },
       {
         name: 'Calendar',
-        title: '移动端日历',
+        title: 'Calendar 移动端日历',
       },
     ],
   },
@@ -216,27 +216,27 @@ module.exports = [
     comps: [
       {
         name: 'Cell',
-        title: '列表项',
+        title: 'Cell 列表项',
       },
       {
         name: 'Badge',
-        title: '徽标',
+        title: 'Badge 徽标',
       },
       {
         name: 'WaterMark',
-        title: '水印',
+        title: 'WaterMark 水印',
       },
       {
         name: 'Text',
-        title: '文本省略',
+        title: 'Text 文本省略',
       },
       {
         name: 'ImageViewer',
-        title: '图片查看',
+        title: 'ImageViewer 图片查看',
       },
       {
         name: 'ProgressCircle',
-        title: '环形进度条',
+        title: 'ProgressCircle 环形进度条',
       },
     ],
   },

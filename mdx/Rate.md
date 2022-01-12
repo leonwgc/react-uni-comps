@@ -1,5 +1,5 @@
 ---
-title: 评分
+title: Rate 评分
 order: 10
 mobile: true
 group:

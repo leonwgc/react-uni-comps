@@ -1,5 +1,5 @@
 ---
-title: 骨架屏
+title: Skeleton 骨架屏
 order: 18
 mobile: true
 group:

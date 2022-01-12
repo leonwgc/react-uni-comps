@@ -1,5 +1,5 @@
 ---
-title: 图片查看
+title: ImageViewer 图片查看
 order: 4
 mobile: true
 group:
