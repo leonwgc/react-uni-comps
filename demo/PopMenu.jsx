@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import color from 'color';
-import { Button, PopMenu, styled, useUpdateLayoutEffect } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { Menu } from 'antd';
+import { Button, PopMenu, styled, useUpdateLayoutEffect, Toast } from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;
@@ -48,27 +50,47 @@ export default function App() {
   }, [v]);
   return (
     <PageWrap>
-      <StyledPopMenu
-        arrow={true}
-        onVisibleChange={setV}
-        placement={placement}
-        trigger="hover"
-        content={
-          <div className="list">
-            {arr.map((i) => (
-              // <div className="item" key={i}>
-              //   {`menu${i}`}
-              // </div>
-              <Button block>
-                item
-                {i}
-              </Button>
-            ))}
-          </div>
-        }
-      >
-        <StyledBtn active>鼠标移入移出试试 </StyledBtn>
-      </StyledPopMenu>
+      <DemoBlock title="自定义下拉列表">
+        <StyledPopMenu
+          arrow={true}
+          onVisibleChange={setV}
+          placement={placement}
+          trigger="hover"
+          content={
+            <div className="list">
+              {arr.map((i) => (
+                <Button block>
+                  item
+                  {i}
+                </Button>
+              ))}
+            </div>
+          }
+        >
+          <StyledBtn active>鼠标移入移出试试 </StyledBtn>
+        </StyledPopMenu>
+      </DemoBlock>
+
+      <DemoBlock title="使用antd Menu">
+        <PopMenu
+          trigger="hover"
+          content={
+            <Menu style={{ width: 120, textAlign: 'center' }}>
+              <Menu.Item key="0">
+                <a onClick={() => Toast.show('菜单1 clicked')}>菜单1</a>
+              </Menu.Item>
+
+              <Menu.Item key="1">
+                <a>菜单2</a>
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item key="3">菜单3</Menu.Item>
+            </Menu>
+          }
+        >
+          <StyledBtn active>使用antd Menu </StyledBtn>
+        </PopMenu>
+      </DemoBlock>
     </PageWrap>
   );
 }

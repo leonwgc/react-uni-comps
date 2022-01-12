@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled, ThemeProvider } from 'react-uni-comps';
 import { Provider, configureStore } from 'simple-redux-store';
+import './PageWrap.less';
 
 const StyledWrap = styled.div`
   background-color: rgb(245, 247, 250);
