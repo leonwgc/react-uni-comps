@@ -1,6 +1,6 @@
 ---
 title: Tooltip
-order: 3
+order: 5
 mobile: true
 group:
   title: 操作反馈

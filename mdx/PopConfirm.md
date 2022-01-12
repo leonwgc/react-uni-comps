@@ -1,6 +1,6 @@
 ---
 title: PopConfirm气泡确认框
-order: 6
+order: 8
 mobile: false
 group:
   title: 操作反馈

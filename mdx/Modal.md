@@ -1,6 +1,6 @@
 ---
 title: 弹框
-order: 0
+order: 2
 mobile: false
 group:
   title: 操作反馈

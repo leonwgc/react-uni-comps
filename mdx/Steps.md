@@ -1,6 +1,6 @@
 ---
 title: 步骤条
-order: 11
+order: 13
 mobile: true
 group:
   title: 操作反馈

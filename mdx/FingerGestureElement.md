@@ -1,6 +1,6 @@
 ---
 title: 手势
-order: 19
+order: 20
 mobile: true
 group:
   title: 操作反馈

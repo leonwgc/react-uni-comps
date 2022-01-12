@@ -1,6 +1,6 @@
 ---
 title: 动作面板
-order: 12
+order: 14
 mobile: true
 group:
   title: 操作反馈

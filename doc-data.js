@@ -31,6 +31,14 @@ module.exports = [
     path: 'feedback',
     comps: [
       {
+        name: 'WaitLoading',
+        title: '延迟渲染(防loading闪烁)',
+      },
+      {
+        name: 'Spin',
+        title: '加载中',
+      },
+      {
         name: 'Modal',
         title: '弹框',
         mobile: false,
@@ -111,10 +119,7 @@ module.exports = [
         name: 'CopyToClipboard',
         title: '复制',
       },
-      {
-        name: 'Spin',
-        title: '加载中',
-      },
+
       {
         name: 'FingerGestureElement',
         title: '手势',
