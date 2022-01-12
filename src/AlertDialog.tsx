@@ -22,12 +22,12 @@ type Props = {
   confirmText?: string;
   /** 取消文本 */
   cancelText?: string;
-  /** 确认回调 */
-  onConfirm?: () => void;
+  /** 点击确定回调，参数为关闭函数 */
+  onConfirm?: (close: () => void) => void;
   /** 取消，关闭默认调用onClose */
   onClose?: () => void;
-  /** 取消回调 */
-  onCancel?: () => void;
+  /** 取消回调，参数为关闭函数 */
+  onCancel?: (close: () => void) => void;
   /** 点击遮罩是否关闭,默认false*/
   closeOnMaskClick?: boolean;
   className?: string;
@@ -189,12 +189,12 @@ type StaticProps = {
   content?: React.ReactNode;
   /** 确定按钮文本 */
   confirmText?: string;
-  /** 确定回调 */
-  onConfirm?: () => void;
+  /** 点击确定回调，参数为关闭函数 */
+  onConfirm?: (close: () => void) => void;
   /** 取消文本 */
   cancelText?: string;
-  /** 取消回调 */
-  onCancel?: () => void;
+  /** 取消回调，参数为关闭函数 */
+  onCancel?: (close: () => void) => void;
   /** 弹框样式 */
   wrapStyle?: React.CSSProperties;
 };
@@ -252,7 +252,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
             {cancelText ? (
               <Button
                 onClick={() => {
-                  onCancel?.();
+                  onCancel?.(onClose);
                   if (typeof onCancel !== 'function') {
                     onClose?.();
                   }
@@ -267,7 +267,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
               type="primary"
               className={clsx('confirm')}
               onClick={() => {
-                onConfirm?.();
+                onConfirm?.(onClose);
 
                 if (typeof onConfirm !== 'function') {
                   onClose?.();
@@ -285,7 +285,8 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                 <div
                   className={clsx('m-btn', 'cancel')}
                   onClick={() => {
-                    onCancel?.();
+                    onCancel?.(onClose);
+
                     if (typeof onCancel !== 'function') {
                       onClose?.();
                     }
@@ -302,7 +303,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
             <div
               className={clsx('m-btn', 'confirm')}
               onClick={() => {
-                onConfirm?.();
+                onConfirm?.(onClose);
 
                 if (typeof onConfirm !== 'function') {
                   onClose?.();
@@ -347,15 +348,13 @@ AlertDialog.show = (props: StaticProps) => {
         cancelText={cancelText}
         wrapStyle={wrapStyle}
         onConfirm={() => {
-          onConfirm?.();
-          dispose(beforeDispose);
+          onConfirm?.(() => dispose(beforeDispose));
         }}
         onClose={() => {
           dispose(beforeDispose);
         }}
         onCancel={() => {
-          onCancel?.();
-          dispose(beforeDispose);
+          onCancel?.(() => dispose(beforeDispose));
         }}
         mountContainer={() => container}
       />

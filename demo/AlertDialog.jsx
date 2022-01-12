@@ -1,8 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import MobileTip from './common/MobileTip';
 import DemoBlock from './common/Block';
-import { AlertDialog, Button, Toast, Divider, Icon, Space, ThemeProvider } from 'react-uni-comps';
+import { AlertDialog, Button, Toast, Icon, Space } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -14,7 +13,12 @@ export default function App() {
               title: '提示',
               content: '确定要这么做吗',
               confirmText: '决定了',
-              onConfirm: () => Toast.show('你点击了确定'),
+              onConfirm: (close) => {
+                Toast.show('你点击了确定');
+                setTimeout(() => {
+                  close();
+                }, 1000);
+              },
             })
           }
         >
@@ -28,9 +32,19 @@ export default function App() {
             AlertDialog.show({
               title: '提示',
               content: '确定要这么做吗',
-              onConfirm: () => Toast.show('你点击了确定'),
+              onConfirm: (close) => {
+                Toast.show('你点击了确定');
+                setTimeout(() => {
+                  close();
+                }, 1000);
+              },
               cancelText: '取消',
-              onCancel: () => Toast.show('你点击了取消'),
+              onCancel: (close) => {
+                Toast.show('你点击了取消');
+                setTimeout(() => {
+                  close();
+                }, 1000);
+              },
             })
           }
         >
@@ -50,7 +64,13 @@ export default function App() {
                 </Space>
               ),
               confirmText: '决定了',
-              onConfirm: () => Toast.show('你点击了确定'),
+              onConfirm: (close) => {
+                Toast.show('你点击了确定');
+                setTimeout(() => {
+                  close();
+                }, 1000);
+              },
+              wrapStyle: { width: 280, height: 220, background: 'pink' },
             })
           }
         >
