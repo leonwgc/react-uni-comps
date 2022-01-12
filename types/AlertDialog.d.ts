@@ -10,12 +10,12 @@ declare type Props = {
     confirmText?: string;
     /** 取消文本 */
     cancelText?: string;
-    /** 确认回调 */
-    onConfirm?: () => void;
+    /** 点击确定回调，参数为关闭函数 */
+    onConfirm?: (close: () => void) => void;
     /** 取消，关闭默认调用onClose */
     onClose?: () => void;
-    /** 取消回调 */
-    onCancel?: () => void;
+    /** 取消回调，参数为关闭函数 */
+    onCancel?: (close: () => void) => void;
     /** 点击遮罩是否关闭,默认false*/
     closeOnMaskClick?: boolean;
     className?: string;
@@ -42,12 +42,12 @@ declare type StaticProps = {
     content?: React.ReactNode;
     /** 确定按钮文本 */
     confirmText?: string;
-    /** 确定回调 */
-    onConfirm?: () => void;
+    /** 点击确定回调，参数为关闭函数 */
+    onConfirm?: (close: () => void) => void;
     /** 取消文本 */
     cancelText?: string;
-    /** 取消回调 */
-    onCancel?: () => void;
+    /** 取消回调，参数为关闭函数 */
+    onCancel?: (close: () => void) => void;
     /** 弹框样式 */
     wrapStyle?: React.CSSProperties;
 };

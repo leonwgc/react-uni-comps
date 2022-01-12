@@ -4447,7 +4447,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
     size: buttonSpace
   }, cancelText ? /*#__PURE__*/React__default['default'].createElement(Button, {
     onClick: function onClick() {
-      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel(onClose);
 
       if (typeof onCancel !== 'function') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
@@ -4461,7 +4461,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
     type: "primary",
     className: clsx__default['default']('confirm'),
     onClick: function onClick() {
-      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm(onClose);
 
       if (typeof onConfirm !== 'function') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
@@ -4473,7 +4473,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, confirmText)) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, cancelText ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('m-btn', 'cancel'),
     onClick: function onClick() {
-      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel(onClose);
 
       if (typeof onCancel !== 'function') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
@@ -4489,7 +4489,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
   })) : null, /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('m-btn', 'confirm'),
     onClick: function onClick() {
-      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm();
+      onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm(onClose);
 
       if (typeof onConfirm !== 'function') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
@@ -4521,15 +4521,17 @@ AlertDialog.show = function (props) {
     cancelText: cancelText,
     wrapStyle: wrapStyle,
     onConfirm: function onConfirm() {
-      _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm();
-      dispose(beforeDispose);
+      _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm(function () {
+        return dispose(beforeDispose);
+      });
     },
     onClose: function onClose() {
       dispose(beforeDispose);
     },
     onCancel: function onCancel() {
-      _onCancel === null || _onCancel === void 0 ? void 0 : _onCancel();
-      dispose(beforeDispose);
+      _onCancel === null || _onCancel === void 0 ? void 0 : _onCancel(function () {
+        return dispose(beforeDispose);
+      });
     },
     mountContainer: function mountContainer() {
       return container;
