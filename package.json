@@ -25,12 +25,7 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "prepare": "husky install",
-    "lint-staged": "lint-staged",
-    "build": "father-build && tsc",
-    "pub": "bash pub.sh",
-    "start": "node pack",
-    "doc": "node docs && dumi dev",
-    "doc:build": "node docs && dumi build"
+    "lint-staged": "lint-staged"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
