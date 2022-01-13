@@ -25,7 +25,8 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "build": "father-build && tsc"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

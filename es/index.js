@@ -63,6 +63,7 @@ export { default as PopMenu } from './PopMenu';
 export { default as PopConfirm } from './PopConfirm';
 export { default as Calendar } from './Calendar';
 export { default as DatePicker } from './DatePicker';
+export { default as QRCode } from './QRCode';
 /** helper & dom */
 
 export { debounce, throttle } from './helper';

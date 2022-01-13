@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/QRCode',
+    component: lazy(() => import('./QRCode')),
+  },
+  {
     path: '/PickerView',
     component: lazy(() => import('./PickerView')),
   },
