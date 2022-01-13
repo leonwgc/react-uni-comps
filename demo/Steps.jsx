@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import { Steps, Divider, Button, Icon, styled } from 'react-uni-comps';
-
-const StyledSteps = styled(Steps)`
-  &.vertical {
-    .step {
-      height: 120px;
-    }
-  }
-`;
+import DemoBlock from './common/Block';
+import { Steps, Button, Icon, styled, Space } from 'react-uni-comps';
 
 const StyedButton = styled(Button)`
   position: fixed;
@@ -19,59 +12,52 @@ const StyedButton = styled(Button)`
   z-index: 10;
 `;
 
+const IconUser = <Icon type="uc-icon-biaoqianlan_wode" />;
+
+const steps = [
+  { title: '步骤1' },
+  { title: '步骤2' },
+  { title: '步骤3', icon: IconUser },
+  { title: '步骤4' },
+];
+
 export default function App() {
   const [index, setIndex] = useState(0);
   return (
     <PageWrap>
-      <Divider>水平</Divider>
-      <Steps
-        direction="horizontal"
-        current={index}
-        steps={[
-          { title: '步骤1', description: '步骤1desc' },
-          { title: '步骤2', description: '步骤2desc' },
-          { title: '步骤3', description: '' },
-          { title: '步骤4', description: '步骤4desc' },
-        ]}
-      ></Steps>
-      <Divider>水平/圈</Divider>
-      <Steps
-        direction="horizontal"
-        dotStyle
-        current={index}
-        steps={[
-          { title: '步骤1', description: '步骤1desc' },
-          { title: '步骤2', description: '步骤2desc' },
-          { title: '步骤3', description: '' },
-          { title: '步骤4', description: '步骤4desc' },
-        ]}
-      ></Steps>
-      <Divider>垂直</Divider>
-      <Steps
-        direction="vertical"
-        dotStyle
-        current={index}
-        steps={[{ title: '步骤1' }, { title: '步骤2' }, { title: '步骤3' }, { title: '步骤4' }]}
-      ></Steps>
-      <Divider>垂直1</Divider>
-      <StyledSteps
-        direction="vertical"
-        current={index}
-        steps={[
-          { title: '步骤1', description: '步骤1desc', icon: <Icon type="uc-icon-tips" /> },
-          {
-            title: '步骤2',
-            description: '',
-            icon: <Icon type="uc-icon-tick" style={{ fontSize: 22 }} />,
-          },
-          {
-            title: '步骤3',
-            description: '步骤3desc',
-            icon: <Icon type="uc-icon-biaoqianlan_wode" />,
-          },
-          { title: '步骤4', description: '步骤4desc' },
-        ]}
-      ></StyledSteps>
+      <DemoBlock title="水平">
+        <Steps direction="horizontal" current={index} steps={steps}></Steps>
+
+        <Steps
+          direction="horizontal"
+          dotStyle
+          current={index}
+          steps={steps}
+          style={{ marginTop: 16 }}
+        ></Steps>
+      </DemoBlock>
+
+      <DemoBlock title="垂直">
+        <Space size={64}>
+          <Steps
+            direction="vertical"
+            current={index}
+            steps={[
+              { title: '步骤1', description: 'This is a description.' },
+              { title: '步骤2' },
+              {
+                title: '步骤3',
+                description: 'This is a description.',
+                icon: IconUser,
+              },
+              { title: '步骤4' },
+            ]}
+          ></Steps>
+
+          <Steps direction="vertical" dotStyle current={index} steps={steps}></Steps>
+        </Space>
+      </DemoBlock>
+
       <StyedButton
         block
         onClick={() => {

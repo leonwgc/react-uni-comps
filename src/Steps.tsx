@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
+import { throttle } from './helper';
 import clsx from 'clsx';
 
 type Step = {
+  /** 标题 */
   title: string;
+  /** 步骤的详情描述 */
   description?: string;
+  /** 步骤图标的类型 */
   icon?: React.ReactNode;
 };
 
 type Props = {
+  /** 步骤数据 */
   steps: Step[];
+  /** 指定当前步骤，从 0 开始记数 */
   current?: number;
   className?: string;
+  style?: React.CSSProperties;
+  /** 指定步骤条方向 */
   direction?: 'horizontal' | 'vertical';
+  /** 实心圈风格 */
   dotStyle?: boolean;
 };
 
-const StyledSteps = styled.div`
-  width: 100%;
-
+const StyledSteps = styled.div<{ space: number }>`
   .step {
     .step-box {
       position: relative;
@@ -47,6 +54,10 @@ const StyledSteps = styled.div`
         &.dot {
           width: 8px;
           height: 8px;
+        }
+
+        &.icon {
+          border: none;
         }
       }
     }
@@ -91,21 +102,23 @@ const StyledSteps = styled.div`
 
   &.horizontal {
     display: flex;
-    justify-content: space-around;
-    padding: 8px 0;
 
     .step {
-      flex: 1;
+      &:not(:last-child) {
+        width: ${(props) => props.space}px;
+      }
+      position: relative;
 
       .step-box {
-        width: 100%;
+        width: 24px;
         height: 24px;
         &::after {
           left: 50%;
           top: 50%;
           height: 1px;
           transform: translateY(-50%);
-          width: 100%;
+          width: ${(props) => props.space}px;
+          position: absolute;
         }
         .step-circle {
           left: 50%;
@@ -116,7 +129,6 @@ const StyledSteps = styled.div`
     }
 
     .step-content {
-      text-align: center;
       font-size: 14px;
       padding-top: 12px;
       color: #999;
@@ -129,10 +141,12 @@ const StyledSteps = styled.div`
   }
 
   &.vertical {
-    padding: 8px 16px;
-
     .step {
       display: flex;
+
+      &:not(:last-child) {
+        height: ${(props) => props.space}px;
+      }
 
       .step-box {
         flex: none;
@@ -160,7 +174,7 @@ const StyledSteps = styled.div`
       }
       .step-content {
         flex: auto;
-        padding-bottom: 14px;
+        padding: 3px 0 14px;
         font-size: 14px;
         color: #999;
         .step-title {
@@ -184,16 +198,50 @@ const Steps = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
+  const domRef = useRef<HTMLDivElement>();
+  useImperativeHandle(ref, () => domRef.current);
+  const [space, setSpace] = useState(80);
+
+  useLayoutEffect(() => {
+    const isHorizontal = direction === 'horizontal';
+    const resizeHandler = () => {
+      if (steps.length > 1) {
+        const domEl = domRef.current;
+        setSpace(
+          Math.max((isHorizontal ? domEl.offsetWidth : domEl.offsetHeight) / steps.length, 60)
+        );
+      }
+    };
+
+    const throttleResizeHandler = throttle(resizeHandler);
+
+    if (isHorizontal) {
+      window.addEventListener('resize', throttleResizeHandler);
+    }
+    resizeHandler();
+
+    return () => {
+      if (isHorizontal) {
+        window.removeEventListener('resize', throttleResizeHandler);
+      }
+    };
+  }, [steps, direction]);
+
   return (
-    <StyledSteps {...rest} ref={ref} className={clsx(className, direction)}>
+    <StyledSteps
+      {...rest}
+      ref={domRef}
+      className={clsx('uc-steps', className, direction)}
+      space={space}
+    >
       {steps.map((item, idx) => (
         <div
           key={idx}
           className={clsx('step', { finish: idx < current, current: idx === current })}
         >
           <div className="step-box">
-            <div className={clsx(`step-circle`, { dot: dotStyle })}>
-              {dotStyle ? null : item.icon ? item.icon : idx + 1}
+            <div className={clsx(`step-circle`, { dot: dotStyle && !item.icon, icon: item.icon })}>
+              {item.icon ? item.icon : dotStyle ? null : idx + 1}
             </div>
           </div>
           <div className="step-content">
