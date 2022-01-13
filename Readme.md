@@ -131,6 +131,7 @@ yarn add react-uni-comps
 - WaterMark (图片/文字水印 )
 - Text (文本显示,单行/多行截断显示省略)
 - ImageViewer (图片查看器)
+- QRCode (二维码)
 
 ### 动画/过渡
 

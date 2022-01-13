@@ -238,6 +238,10 @@ module.exports = [
         name: 'ProgressCircle',
         title: 'ProgressCircle 环形进度条',
       },
+      {
+        name: 'QRCode',
+        title: 'QRCode 二维码',
+      },
     ],
   },
   {

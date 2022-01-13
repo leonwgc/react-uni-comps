@@ -38,7 +38,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="垂直">
-        <Space size={64}>
+        <Space size={32}>
           <Steps
             direction="vertical"
             current={index}
