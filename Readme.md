@@ -91,6 +91,7 @@ yarn add react-uni-comps
 - ActionSheet (移动端,动作面板)
 - Slide (轮播)
 - ProgressCircle (环形进度条)
+- ProgressBar (进度条)
 - FingerGestureElement (移动端手势操作,onTap,onDoubleTap,onLongTap,onPinch, onSwipe,onPressMove 等手势支持)
 - NoticeBar (通告栏)
 - NoticeList (多条信息垂直滚动通知栏)

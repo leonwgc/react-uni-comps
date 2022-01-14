@@ -234,13 +234,18 @@ module.exports = [
         name: 'ImageViewer',
         title: 'ImageViewer 图片查看',
       },
-      {
-        name: 'ProgressCircle',
-        title: 'ProgressCircle 环形进度条',
-      },
+
       {
         name: 'QRCode',
         title: 'QRCode 二维码',
+      },
+      {
+        name: 'ProgressBar',
+        title: 'ProgressBar 进度条',
+      },
+      {
+        name: 'ProgressCircle',
+        title: 'ProgressCircle 环形进度条',
       },
     ],
   },

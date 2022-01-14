@@ -1,6 +1,6 @@
 ---
 title: QRCode 二维码
-order: 6
+order: 5
 mobile: true
 group:
   title: 数据展示
