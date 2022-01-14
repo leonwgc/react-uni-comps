@@ -1,11 +1,11 @@
 ---
 title: Steps 步骤条
-order: 13
+order: 2
 mobile: true
 group:
-  title: 操作反馈
-  order: 1
-  path: feedback
+  title: 导航组件
+  order: 2
+  path: nav
 ---
 
 <code src="../demo/Steps.jsx"></code>

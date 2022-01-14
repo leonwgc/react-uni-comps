@@ -1,11 +1,11 @@
 ---
 title: NoticeBar 水平通知栏
-order: 16
+order: 10
 mobile: true
 group:
-  title: 操作反馈
-  order: 1
-  path: feedback
+  title: 数据展示
+  order: 4
+  path: display
 ---
 
 <code src="../demo/NoticeBar.jsx"></code>

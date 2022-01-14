@@ -19,7 +19,7 @@ declare const Item: ({ children }: {
     children: any;
 }) => any;
 /**
- * 选项卡切换
+ * 折叠面板
  */
 declare const Collapse: React.FC<CollapseProps> & {
     Item: typeof Item;

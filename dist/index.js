@@ -8708,7 +8708,7 @@ var Item = function Item(_ref) {
   return children;
 };
 /**
- * 选项卡切换
+ * 折叠面板
  */
 
 

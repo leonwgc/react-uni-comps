@@ -3,21 +3,21 @@
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
 ```js
-npm install react-uni-comps
+npm install react-uni-comps --save
 yarn add react-uni-comps
 ```
 
 ### 特点
 
-1. 体积小,按需加载
+1. 体积小,组件按需加载
 2. 同时支持桌面和移动端，同一套组件，一致的开发体验
-3. 完全使用hooks实现, 拥抱react未来
-4. 样式采用 css-in-js 方案 (styled-components)，支持js动态切换主题色
+3. 完全使用 hooks 实现, 拥抱 react 未来
+4. 样式采用 css-in-js 方案 (styled-components)
 5. 只提供最基础的框架样式,方便二次开发/定制自己的组件风格
-6. 使用TypeScript编写，内置 TypeScript 类型定义文件，良好的智能提示
-7. 体积小，组件按需加载，可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，用到什么才加载什么，无需配置
+6. 使用 TypeScript 编写，内置 TypeScript 类型定义文件，良好的智能提示
+7. 可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，按需加载用到什么才加载什么，无需配置
 8. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
-9. 导出了组件库内部实现的一些工具函数/hooks函数等，比如 debounce, throttle,usePrevious, useInViewport
+9. 导出了组件库内部实现的一些工具函数/hooks 函数等，比如 debounce, throttle,usePrevious, useInViewport
 
 ### 适用场景
 
@@ -54,14 +54,13 @@ yarn add react-uni-comps
 </Modal>
 ```
 
-3. 不想使用css/less/sass，偏向 css-in-js 技术的开发者
+3. 不想使用 css/less/sass，偏向 css-in-js 技术的开发者
 
-4. 开发同时支持pc和h5的页面，pc和h5同一套组件库，同一套技术方案，一致的开发体验，本库组件同时支持 pc 和 h5，按需加载，体积小巧
+4. 开发同时支持 pc 和 h5 的页面，pc 和 h5 同一套组件库，同一套技术方案，一致的开发体验，本库组件同时支持 pc 和 h5，按需加载，体积小巧
 
 5. 当前使用的组件库不包含某些组件或者某些组件很难使用，本库包含的/易用的，
 
 ### 注意点
-
 
 ## 组件列表
 
@@ -76,6 +75,7 @@ yarn add react-uni-comps
 - Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
 
 #### 操作反馈
+
 - Drawer (抽屉)
 - Modal (弹框)
 - Pullup (上拉加载数据)
@@ -83,18 +83,11 @@ yarn add react-uni-comps
 - Popover (弹出带箭头的浮层)
 - Drag (拖拽)
 - Tooltip (文字提示)
-- PopMenu (click/hover Dropdown菜单)
 - PopConfirm (弹出气泡式的确认框)
 - Toast (黑背景提示,支持静态调用)
 - Notify (顶部全局消息通知,支持静态调用)
-- Steps (步骤条)
 - ActionSheet (移动端,动作面板)
-- Slide (轮播)
-- ProgressCircle (环形进度条)
-- ProgressBar (进度条)
 - FingerGestureElement (移动端手势操作,onTap,onDoubleTap,onLongTap,onPinch, onSwipe,onPressMove 等手势支持)
-- NoticeBar (通告栏)
-- NoticeList (多条信息垂直滚动通知栏)
 - Switch (开关)
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
@@ -105,6 +98,8 @@ yarn add react-uni-comps
 
 - Tabs (选项卡切换)
 - Affix (将页面元素钉在可视范围)
+- Steps (步骤条)
+- PopMenu (弹出菜单)
 
 ### 数据录入
 
@@ -132,7 +127,13 @@ yarn add react-uni-comps
 - WaterMark (图片/文字水印 )
 - Text (文本显示,单行/多行截断显示省略)
 - ImageViewer (图片查看器)
+- ProgressCircle (环形进度条)
+- ProgressBar (进度条)
 - QRCode (二维码)
+- Collapse (折叠面板)
+- Slide (轮播)
+- NoticeBar (通告栏)
+- NoticeList (多条信息垂直滚动通知栏)
 
 ### 动画/过渡
 

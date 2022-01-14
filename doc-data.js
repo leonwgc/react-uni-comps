@@ -69,11 +69,7 @@ module.exports = [
         title: 'PopConfirm 气泡确认框',
         mobile: false,
       },
-      {
-        name: 'PopMenu',
-        title: 'PopMenu 弹出菜单',
-        mobile: false,
-      },
+
       {
         name: 'Notify',
         title: 'Notify 顶部消息通知',
@@ -90,25 +86,8 @@ module.exports = [
       },
 
       {
-        name: 'Steps',
-        title: 'Steps 步骤条',
-      },
-      {
         name: 'ActionSheet',
         title: 'ActionSheet 动作面板',
-      },
-      {
-        name: 'Slide',
-        title: 'Slide 轮播/幻灯片',
-      },
-
-      {
-        name: 'NoticeBar',
-        title: 'NoticeBar 水平通知栏',
-      },
-      {
-        name: 'NoticeList',
-        title: 'NoticeList 垂直通知栏',
       },
 
       {
@@ -137,6 +116,15 @@ module.exports = [
       {
         name: 'Affix',
         title: 'Affix 固钉',
+      },
+      {
+        name: 'Steps',
+        title: 'Steps 步骤条',
+      },
+      {
+        name: 'PopMenu',
+        title: 'PopMenu 弹出菜单',
+        mobile: false,
       },
     ],
   },
@@ -246,6 +234,23 @@ module.exports = [
       {
         name: 'ProgressCircle',
         title: 'ProgressCircle 环形进度条',
+      },
+      {
+        name: 'Collapse',
+        title: 'Collapse 折叠面板',
+      },
+      {
+        name: 'Slide',
+        title: 'Slide 轮播/幻灯片',
+      },
+
+      {
+        name: 'NoticeBar',
+        title: 'NoticeBar 水平通知栏',
+      },
+      {
+        name: 'NoticeList',
+        title: 'NoticeList 垂直通知栏',
       },
     ],
   },
