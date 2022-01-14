@@ -1,12 +1,13 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import * as vars from './vars';
 
 type Props = {
   style?: React.CSSProperties;
   className?: string;
   /** 箭头方向，默认朝下 */
-  direction: 'right' | 'bottom' | 'left' | 'top';
+  direction?: 'right' | 'bottom' | 'left' | 'top' | string;
 } & HTMLAttributes<HTMLDivElement>;
 
 const StyledArrow = styled.div`
@@ -14,6 +15,10 @@ const StyledArrow = styled.div`
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+
+  svg {
+    transition: transform ${vars.animationSlow}ms ease-in-out;
+  }
 
   &.right {
     svg {

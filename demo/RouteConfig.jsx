@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Collapse',
+    component: lazy(() => import('./Collapse')),
+  },
+  {
     path: '/ProgressBar',
     component: lazy(() => import('./ProgressBar')),
   },

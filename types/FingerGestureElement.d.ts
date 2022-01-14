@@ -24,7 +24,7 @@ declare const FingerGestureElement: React.ForwardRefExoticComponent<{
         deltaY: number;
     }) => void;
     onSwipe: (evt: React.SyntheticEvent<Element, Event> & {
-        direction: "left" | "right" | "up" | "down";
+        direction: "left" | "right" | "down" | "up";
     }) => void;
     onTwoFingerPressMove: () => void;
 }>> & React.RefAttributes<HTMLElement>>;

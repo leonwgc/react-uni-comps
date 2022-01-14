@@ -4039,7 +4039,7 @@ Toast.displayName = 'UC-Toast';
 var _excluded$q = ["direction", "className"];
 
 var _templateObject$p;
-var StyledArrow = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])));
+var StyledArrow = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  svg {\n    transition: transform ", "ms ease-in-out;\n  }\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), animationSlow);
 var SVGProps$1 = {
   width: '1em',
   height: '1em',
@@ -8692,7 +8692,117 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 QRCode$1.displayName = 'UC-QRCode';
 
-var _excluded$T = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+var _excluded$T = ["children", "onChange", "className", "keys"];
+
+var _templateObject$R;
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n\n    display: none;\n    &.active {\n      display: unset;\n    }\n  }\n"])));
+/**
+ *  子项，放在Collapse里面
+ *
+ * @param {*} { children }
+ * @return {*}
+ */
+
+var Item = function Item(_ref) {
+  var children = _ref.children;
+  return children;
+};
+/**
+ * 选项卡切换
+ */
+
+
+var Collapse = function Collapse(_ref2) {
+  var children = _ref2.children,
+      onChange = _ref2.onChange,
+      className = _ref2.className,
+      _ref2$keys = _ref2.keys,
+      keys = _ref2$keys === void 0 ? '' : _ref2$keys,
+      rest = _objectWithoutProperties(_ref2, _excluded$T);
+
+  var count = React__default['default'].Children.count(children); // 手风琴模式
+
+  var isSingleMode = typeof keys === 'string'; // inner keys
+
+  var _useState = React.useState(keys),
+      _useState2 = _slicedToArray(_useState, 2),
+      _keys = _useState2[0],
+      _setKeys = _useState2[1];
+
+  useUpdateEffect(function () {
+    _setKeys(keys);
+  }, [keys]);
+
+  if (count === 0) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$2, _extends({}, rest, {
+    className: clsx__default['default']('uc-collapse', className)
+  }), React__default['default'].Children.map(children, function (child, index) {
+    if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
+      var key = child.key;
+      key = key || index + '';
+      var _ref3 = child.props,
+          _ref3$title = _ref3.title,
+          title = _ref3$title === void 0 ? '' : _ref3$title,
+          disabled = _ref3.disabled,
+          _children = _ref3.children;
+      var active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        key: key,
+        className: clsx__default['default']('item', {
+          active: active,
+          disabled: disabled
+        }),
+        onClick: function onClick() {
+          if (!disabled) {
+            var _keys2;
+
+            if (active) {
+              if (isSingleMode) {
+                _keys2 = '';
+              } else {
+                var idx = _keys.indexOf(key);
+
+                _keys.splice(idx, 1);
+
+                _keys2 = _toConsumableArray(_keys);
+              }
+            } else {
+              if (isSingleMode) {
+                _keys2 = key;
+              } else {
+                _keys2 = [].concat(_toConsumableArray(_keys), [key]);
+              }
+            }
+
+            _setKeys(_keys2);
+
+            onChange === null || onChange === void 0 ? void 0 : onChange(_keys2);
+          }
+        }
+      }, /*#__PURE__*/React__default['default'].createElement("div", {
+        className: clsx__default['default']('header', {
+          disabled: disabled
+        })
+      }, /*#__PURE__*/React__default['default'].createElement("span", null, title), /*#__PURE__*/React__default['default'].createElement("span", null, /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+        direction: active ? 'down' : 'right'
+      }))), /*#__PURE__*/React__default['default'].createElement("div", {
+        className: clsx__default['default']('content', {
+          active: active
+        })
+      }, _children));
+    }
+  }));
+};
+
+Collapse.displayName = 'UC-Collapse';
+/** 直接子元素 */
+
+Collapse.Item = Item;
+
+var _excluded$U = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
 /** 进度条 */
 var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -8705,7 +8815,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       percent = _props$percent === void 0 ? 0 : _props$percent,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$T);
+      rest = _objectWithoutProperties(props, _excluded$U);
 
   var theme = styled.useTheme() || {};
   var color = theme.color || primary;
@@ -8860,6 +8970,7 @@ exports.Calendar = Calendar;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
+exports.Collapse = Collapse;
 exports.CopyToClipboard = CopyToClipboard;
 exports.DatePicker = DatePicker;
 exports.Divider = Divider;
