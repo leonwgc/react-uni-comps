@@ -64,6 +64,7 @@ export { default as PopConfirm } from './PopConfirm';
 export { default as Calendar } from './Calendar';
 export { default as DatePicker } from './DatePicker';
 export { default as QRCode } from './QRCode';
+export { default as ProgressBar } from './ProgressBar';
 
 /** helper & dom */
 export { debounce, throttle } from './helper';

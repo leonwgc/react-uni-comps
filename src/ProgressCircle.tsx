@@ -6,8 +6,8 @@ import * as vars from './vars';
 type Props = {
   /** 进度条颜色,默认读主题色 */
   color?: string;
-  /** 当前进度 0~100 */
-  progress?: number;
+  /** 进度百分比（范围：0 ～ 100）, 默认0 */
+  percent?: number;
   /** 圆弧的宽度，默认 10 */
   strokeWidth?: number;
   /** 圆弧末尾使用的形状,默认 round */
@@ -34,7 +34,7 @@ const StyledProgressCircle = styled.div`
 const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     children,
-    progress = 0,
+    percent = 0,
     strokeLinecap = 'round',
     strokeWidth = 10,
     size = 120,
@@ -61,13 +61,13 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           strokeWidth={strokeWidth}
           fill="none"
         ></circle>
-        {progress > 0 ? (
+        {percent > 0 ? (
           <circle
             r="50"
             cx="60"
             cy="60"
             stroke={color}
-            strokeDasharray={`${(progress * 314) / 100},314`}
+            strokeDasharray={`${(percent * 314) / 100},314`}
             strokeWidth={strokeWidth}
             fill="none"
             transform="rotate(-90,60,60)"

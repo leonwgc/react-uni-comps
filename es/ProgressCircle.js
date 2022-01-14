@@ -48,8 +48,8 @@ var StyledProgressCircle = styled.div(templateObject_1 || (templateObject_1 = __
 
 var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
-      _a = props.progress,
-      progress = _a === void 0 ? 0 : _a,
+      _a = props.percent,
+      percent = _a === void 0 ? 0 : _a,
       _b = props.strokeLinecap,
       strokeLinecap = _b === void 0 ? 'round' : _b,
       _c = props.strokeWidth,
@@ -58,7 +58,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
       size = _d === void 0 ? 120 : _d,
       className = props.className,
       style = props.style,
-      rest = __rest(props, ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"]);
+      rest = __rest(props, ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"]);
 
   var theme = useTheme() || {};
   var color = props.color || theme.color || vars.primary;
@@ -82,12 +82,12 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
     stroke: "#d9d9d9",
     strokeWidth: strokeWidth,
     fill: "none"
-  }), progress > 0 ? /*#__PURE__*/React.createElement("circle", {
+  }), percent > 0 ? /*#__PURE__*/React.createElement("circle", {
     r: "50",
     cx: "60",
     cy: "60",
     stroke: color,
-    strokeDasharray: "".concat(progress * 314 / 100, ",314"),
+    strokeDasharray: "".concat(percent * 314 / 100, ",314"),
     strokeWidth: strokeWidth,
     fill: "none",
     transform: "rotate(-90,60,60)",

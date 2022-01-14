@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { ProgressCircle, Button, Icon, styled, Space } from 'react-uni-comps';
-
-const StyledProgressCircle = styled(ProgressCircle)`
-  .content {
-    font-size: 32px;
-    color: #666;
-  }
-`;
+import { ProgressBar, Button, Icon, Space } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState(50);
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Space wrap>
-          <ProgressCircle percent={0}>0%</ProgressCircle>
-          <ProgressCircle percent={v}>{v}%</ProgressCircle>
-          <ProgressCircle percent={100}>100%</ProgressCircle>
+        <ProgressBar percent={20} />
+
+        <Space>
+          <ProgressBar percent={20} style={{ width: 150 }} />
+          <span style={{ fontSize: 12 }}>20%</span>
         </Space>
+
+        <ProgressBar percent={100} />
       </DemoBlock>
 
       <DemoBlock style={{ textAlign: 'center' }}>
@@ -49,15 +45,21 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="自定义">
-        <StyledProgressCircle
-          color="#712fd1"
-          strokeWidth={20}
-          strokeLinecap="butt"
-          size={180}
+        <ProgressBar percent={v} height={10} />
+        <ProgressBar
           percent={v}
-        >
-          {v}%
-        </StyledProgressCircle>
+          style={{
+            margin: '24px 0',
+            height: 20,
+            borderRadius: 10,
+          }}
+        />
+        <ProgressBar
+          percent={v}
+          height={20}
+          fillColor="#712fd1"
+          style={{ borderRadius: 15, width: '80vw' }}
+        />
       </DemoBlock>
     </PageWrap>
   );

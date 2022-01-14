@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/ProgressBar',
+    component: lazy(() => import('./ProgressBar')),
+  },
+  {
     path: '/QRCode',
     component: lazy(() => import('./QRCode')),
   },

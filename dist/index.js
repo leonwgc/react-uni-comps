@@ -6152,7 +6152,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Slide.displayName = 'UC-Slide';
 
-var _excluded$I = ["children", "progress", "strokeLinecap", "strokeWidth", "size", "className", "style"];
+var _excluded$I = ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"];
 
 var _templateObject$H;
 var StyledProgressCircle = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
@@ -6160,8 +6160,8 @@ var StyledProgressCircle = styled__default['default'].div(_templateObject$H || (
 
 var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
-      _props$progress = props.progress,
-      progress = _props$progress === void 0 ? 0 : _props$progress,
+      _props$percent = props.percent,
+      percent = _props$percent === void 0 ? 0 : _props$percent,
       _props$strokeLinecap = props.strokeLinecap,
       strokeLinecap = _props$strokeLinecap === void 0 ? 'round' : _props$strokeLinecap,
       _props$strokeWidth = props.strokeWidth,
@@ -6194,12 +6194,12 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
     stroke: "#d9d9d9",
     strokeWidth: strokeWidth,
     fill: "none"
-  }), progress > 0 ? /*#__PURE__*/React__default['default'].createElement("circle", {
+  }), percent > 0 ? /*#__PURE__*/React__default['default'].createElement("circle", {
     r: "50",
     cx: "60",
     cy: "60",
     stroke: color,
-    strokeDasharray: "".concat(progress * 314 / 100, ",314"),
+    strokeDasharray: "".concat(percent * 314 / 100, ",314"),
     strokeWidth: strokeWidth,
     fill: "none",
     transform: "rotate(-90,60,60)",
@@ -8692,6 +8692,43 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 QRCode$1.displayName = 'UC-QRCode';
 
+var _excluded$T = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+
+/** 进度条 */
+var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$trackColor = props.trackColor,
+      trackColor = _props$trackColor === void 0 ? '#e5e5e5' : _props$trackColor,
+      fillColor = props.fillColor,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 4 : _props$height,
+      _props$percent = props.percent,
+      percent = _props$percent === void 0 ? 0 : _props$percent,
+      className = props.className,
+      style = props.style,
+      rest = _objectWithoutProperties(props, _excluded$T);
+
+  var theme = styled.useTheme() || {};
+  var color = theme.color || primary;
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-progress-bar', className),
+    style: _objectSpread2({
+      height: height,
+      backgroundColor: trackColor,
+      overflow: 'hidden'
+    }, style)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']("path"),
+    style: {
+      height: '100%',
+      width: "".concat(percent, "%"),
+      background: fillColor || color,
+      transition: "width ".concat(animationSlow, "ms ease-in-out")
+    }
+  }));
+});
+ProgressBar.displayName = 'UC-ProgressBar';
+
 /**
  * 返回防抖函数
  *
@@ -8853,6 +8890,7 @@ exports.PopConfirm = PopConfirm;
 exports.PopMenu = PopMenu;
 exports.Popover = Popover;
 exports.Popup = Popup;
+exports.ProgressBar = ProgressBar;
 exports.ProgressCircle = ProgressCircle;
 exports.Pullup = Pullup;
 exports.QRCode = QRCode$1;

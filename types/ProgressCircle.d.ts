@@ -2,8 +2,8 @@ import React from 'react';
 declare type Props = {
     /** 进度条颜色,默认读主题色 */
     color?: string;
-    /** 当前进度 0~100 */
-    progress?: number;
+    /** 进度百分比（范围：0 ～ 100）, 默认0 */
+    percent?: number;
     /** 圆弧的宽度，默认 10 */
     strokeWidth?: number;
     /** 圆弧末尾使用的形状,默认 round */
