@@ -12,12 +12,13 @@ export default function App() {
             AlertDialog.show({
               title: '提示',
               content: '确定要这么做吗',
-              confirmText: '决定了',
+              confirmText: '决定了,2s后关闭',
+              wait: 2000,
               onConfirm: (close) => {
                 Toast.show('你点击了确定');
                 setTimeout(() => {
                   close();
-                }, 1000);
+                }, 2000);
               },
             })
           }

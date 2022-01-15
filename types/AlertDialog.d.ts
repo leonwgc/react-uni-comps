@@ -21,8 +21,6 @@ declare type Props = {
     className?: string;
     /** 按钮间距，默认16 */
     buttonSpace?: number;
-    /** 按钮宽度，默认80 */
-    buttonWidth?: number;
     closable?: boolean;
     /** 弹框mount位置，默认为document.body */
     mountContainer?: () => HTMLElement;
@@ -34,6 +32,8 @@ declare type Props = {
     maskClass?: string;
     /** 弹框样式 */
     wrapStyle?: React.CSSProperties;
+    /** 透传给 pc confirm button  */
+    wait?: number | boolean;
 };
 declare type StaticProps = {
     /** 标题 */
@@ -50,6 +50,8 @@ declare type StaticProps = {
     onCancel?: (close: () => void) => void;
     /** 弹框样式 */
     wrapStyle?: React.CSSProperties;
+    /** 透传给button  */
+    wait?: number | boolean;
 };
 declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
     /**

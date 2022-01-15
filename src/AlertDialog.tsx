@@ -33,8 +33,6 @@ type Props = {
   className?: string;
   /** 按钮间距，默认16 */
   buttonSpace?: number;
-  /** 按钮宽度，默认80 */
-  buttonWidth?: number;
   closable?: boolean;
   /** 弹框mount位置，默认为document.body */
   mountContainer?: () => HTMLElement;
@@ -46,6 +44,8 @@ type Props = {
   maskClass?: string;
   /** 弹框样式 */
   wrapStyle?: React.CSSProperties;
+  /** 透传给 pc confirm button  */
+  wait?: number | boolean;
 };
 
 const StyledAlertDialog = styled(Popup)`
@@ -179,6 +179,10 @@ const StyledAlertDialog = styled(Popup)`
   }
   .footer {
     text-align: right;
+
+    .uc-btn {
+      min-width: 80px;
+    }
   }
 `;
 
@@ -197,6 +201,8 @@ type StaticProps = {
   onCancel?: (close: () => void) => void;
   /** 弹框样式 */
   wrapStyle?: React.CSSProperties;
+  /** 透传给button  */
+  wait?: number | boolean;
 };
 
 type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
@@ -218,7 +224,6 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
     cancelText,
     closeOnMaskClick = false,
     buttonSpace = 16,
-    buttonWidth = 80,
     closable = false,
     mask = true,
     maskStyle,
@@ -226,6 +231,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
     onClose,
     className,
     wrapStyle,
+    wait,
     ...rest
   } = props;
 
@@ -258,13 +264,13 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                   }
                 }}
                 className={clsx('cancel')}
-                style={{ width: buttonWidth }}
               >
                 {cancelText}
               </Button>
             ) : null}
             <Button
               type="primary"
+              wait={wait}
               className={clsx('confirm')}
               onClick={() => {
                 onConfirm?.(onClose);
@@ -273,7 +279,6 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                   onClose?.();
                 }
               }}
-              style={{ width: buttonWidth }}
             >
               {confirmText}
             </Button>
@@ -331,6 +336,7 @@ AlertDialog.show = (props: StaticProps) => {
     onConfirm,
     cancelText,
     onCancel,
+    wait,
     wrapStyle,
   } = props;
 
@@ -347,6 +353,7 @@ AlertDialog.show = (props: StaticProps) => {
         confirmText={confirmText}
         cancelText={cancelText}
         wrapStyle={wrapStyle}
+        wait={wait}
         onConfirm={() => {
           onConfirm?.(() => dispose(beforeDispose));
         }}

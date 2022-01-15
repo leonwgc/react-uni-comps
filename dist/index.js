@@ -4466,10 +4466,10 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$u = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "buttonWidth", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle"];
+var _excluded$u = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"];
 
 var _templateObject$s;
-var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .header {\n      text-align: center;\n    }\n\n    .body {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .header {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .body {\n    font-size: 14px;\n    line-height: 20px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n  }\n"])), getThemeColorCss('color'), border);
+var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .header {\n      text-align: center;\n    }\n\n    .body {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .header {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .body {\n    font-size: 14px;\n    line-height: 20px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n\n    .uc-btn {\n      min-width: 80px;\n    }\n  }\n"])), getThemeColorCss('color'), border);
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -4486,8 +4486,6 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       closeOnMaskClick = _props$closeOnMaskCli === void 0 ? false : _props$closeOnMaskCli,
       _props$buttonSpace = props.buttonSpace,
       buttonSpace = _props$buttonSpace === void 0 ? 16 : _props$buttonSpace,
-      _props$buttonWidth = props.buttonWidth,
-      buttonWidth = _props$buttonWidth === void 0 ? 80 : _props$buttonWidth,
       _props$closable = props.closable,
       closable = _props$closable === void 0 ? false : _props$closable,
       _props$mask = props.mask,
@@ -4497,6 +4495,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClose = props.onClose,
       className = props.className,
       wrapStyle = props.wrapStyle,
+      wait = props.wait,
       rest = _objectWithoutProperties(props, _excluded$u);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({}, rest, {
@@ -4532,12 +4531,10 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
         onClose === null || onClose === void 0 ? void 0 : onClose();
       }
     },
-    className: clsx__default['default']('cancel'),
-    style: {
-      width: buttonWidth
-    }
+    className: clsx__default['default']('cancel')
   }, cancelText) : null, /*#__PURE__*/React__default['default'].createElement(Button, {
     type: "primary",
+    wait: wait,
     className: clsx__default['default']('confirm'),
     onClick: function onClick() {
       onConfirm === null || onConfirm === void 0 ? void 0 : onConfirm(onClose);
@@ -4545,9 +4542,6 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       if (typeof onConfirm !== 'function') {
         onClose === null || onClose === void 0 ? void 0 : onClose();
       }
-    },
-    style: {
-      width: buttonWidth
     }
   }, confirmText)) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, cancelText ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('m-btn', 'cancel'),
@@ -4587,6 +4581,7 @@ AlertDialog.show = function (props) {
       _onConfirm = props.onConfirm,
       cancelText = props.cancelText,
       _onCancel = props.onCancel,
+      wait = props.wait,
       wrapStyle = props.wrapStyle;
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration$1);
@@ -4599,6 +4594,7 @@ AlertDialog.show = function (props) {
     confirmText: confirmText,
     cancelText: cancelText,
     wrapStyle: wrapStyle,
+    wait: wait,
     onConfirm: function onConfirm() {
       _onConfirm === null || _onConfirm === void 0 ? void 0 : _onConfirm(function () {
         return dispose(beforeDispose);
