@@ -2088,18 +2088,18 @@ var _excluded$7 = ["position", "borderRadius", "color", "className", "mobile", "
 var _templateObject$6;
 /** 显示1px的边 */
 
-var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n  border-radius: ", "px;\n\n  &.mobile {\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-radius: ", "px;\n      ", ": 1px solid ", ";\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  &.pc {\n    ", ": 1px solid ", ";\n  }\n"])), function (_ref) {
+var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n\n  &.mobile {\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-radius: ", "px;\n      ", ": 1px solid ", ";\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  &.pc {\n    border-radius: ", "px;\n    ", ": 1px solid ", ";\n  }\n"])), function (_ref) {
   var borderRadius = _ref.borderRadius;
   return borderRadius;
 }, function (_ref2) {
-  var borderRadius = _ref2.borderRadius;
-  return borderRadius;
-}, function (_ref3) {
-  var position = _ref3.position;
+  var position = _ref2.position;
   return "border".concat(position === 'all' ? '' : '-' + position);
-}, function (_ref4) {
-  var color = _ref4.color;
+}, function (_ref3) {
+  var color = _ref3.color;
   return color;
+}, function (_ref4) {
+  var borderRadius = _ref4.borderRadius;
+  return borderRadius;
 }, function (_ref5) {
   var position = _ref5.position;
   return "border".concat(position === 'all' ? '' : '-' + position);

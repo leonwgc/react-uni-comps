@@ -15,13 +15,12 @@ type Props = {
   style?: React.CSSProperties;
   /** 圆角,默认0*/
   borderRadius?: number;
-  /** 只在移动端显示 */
+  /** 只在移动端显示,默认true */
   mobile?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: number }>`
   position: relative;
-  border-radius: ${({ borderRadius }) => borderRadius}px;
 
   &.mobile {
     &:after {
@@ -47,6 +46,7 @@ const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: 
   }
 
   &.pc {
+    border-radius: ${({ borderRadius }) => borderRadius}px;
     ${({ position }) => `border${position === 'all' ? '' : '-' + position}`}: 1px solid ${({
       color,
     }) => color};
