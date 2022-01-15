@@ -6,9 +6,6 @@ import { HairLineBox, Space, styled } from 'react-uni-comps';
 const StyledHairline = styled(HairLineBox)`
   width: 220px;
   height: 120px;
-  &::after {
-    border-radius: 20px;
-  }
 `;
 
 const StyledHairlineEdge = styled(HairLineBox)`
@@ -28,7 +25,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="圆角和颜色">
-        <StyledHairline position="all" color="red" />
+        <StyledHairline position="all" color="red" borderRadius={20} />
       </DemoBlock>
 
       <DemoBlock title="不同边">
