@@ -10,7 +10,8 @@ export default function App() {
         <Space wrap>
           <Spin style={{ color: 'red', fontSize: 30, margin: '0 20px' }}></Spin>
           <Spin style={{ fontSize: 32 }}></Spin>
-          <Spin></Spin>
+          <Spin />
+          文本XXX
           <Spin style={{ color: 'red', fontSize: 48 }}></Spin>
           <Spin style={{ color: '#005cff' }}></Spin>
           <Spin style={{ color: '#005cff', fontSize: 48 }}></Spin>

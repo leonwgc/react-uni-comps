@@ -81,6 +81,7 @@ export default function App() {
         <Button
           type="primary"
           block
+          wait
           style={{
             borderRadius: 20,
             height: 36,
