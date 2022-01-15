@@ -1,17 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import {
-  Tabs,
-  Space,
-  Button,
-  Avatar,
-  Drawer,
-  styled,
-  isMobile,
-  Modal,
-  AlertDialog,
-} from 'react-uni-comps';
+import { Tabs, Space, Button, Drawer, styled, isMobile, Modal, AlertDialog } from 'react-uni-comps';
 
 const StyledTabs = styled(Tabs)`
   flex-basis: 50px;
@@ -91,6 +81,7 @@ export default function RightDrawer(props) {
                 AlertDialog.show({
                   confirmText: `got it`,
                   content: 'how are you guy',
+                  onConfirm: (close) => close(),
                 })
               }
             >
@@ -103,7 +94,7 @@ export default function RightDrawer(props) {
         header="hello"
         mask={false}
         closable
-        style={{ width: 400, height: 260 }}
+        style={{ width: isMobile ? '70vw' : 300, height: 180 }}
         visible={v}
         onClose={() => setV(false)}
       >

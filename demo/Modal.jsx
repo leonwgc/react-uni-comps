@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { styled, Space, Modal, Button, isMobile } from 'react-uni-comps';
 
 const StyledModal = styled(Modal)`
@@ -43,36 +44,17 @@ export default function App() {
   const onClose = () => setVisible(false);
   return (
     <PageWrap>
-      <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
-        移动端风格
-      </Button>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        左边打开
-      </Button>
+      <DemoBlock title="默认">
+        <Button type="primary" onClick={() => setVisible(true)}>
+          打开弹框
+        </Button>
+      </DemoBlock>
 
-      <Button
-        type="primary"
-        onClick={() => setVisible(true)}
-        style={{ position: 'fixed', right: '10%', top: '10%' }}
-      >
-        右边打开
-      </Button>
-
-      <Button
-        type="primary"
-        onClick={() => setVisible(true)}
-        style={{ position: 'fixed', left: '10%', bottom: '10%' }}
-      >
-        左下角打开
-      </Button>
-
-      <Button
-        type="primary"
-        onClick={() => setVisible(true)}
-        style={{ position: 'fixed', right: '10%', bottom: '10%' }}
-      >
-        右下角打开
-      </Button>
+      <DemoBlock title="自定义样式">
+        <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
+          自定义样式
+        </Button>
+      </DemoBlock>
 
       <StyledModal
         visible={visible}

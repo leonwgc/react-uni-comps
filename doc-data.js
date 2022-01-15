@@ -46,7 +46,6 @@ module.exports = [
       {
         name: 'Drawer',
         title: 'Drawer 抽屉',
-        mobile: false,
       },
       {
         name: 'AlertDialog',

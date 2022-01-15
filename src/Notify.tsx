@@ -11,10 +11,8 @@ const transitionDuration = animationNormal;
 
 const StyledNotify = styled.div`
   position: fixed;
-  z-index: 1200;
-  transition-property: all;
-  transition-timing-function: ease-in-out;
-  transition-duration: ${transitionDuration}ms;
+  z-index: 600;
+  transition: all ${transitionDuration}ms ease-in-out;
   top: 0;
   left: 0;
   right: 0;
@@ -22,7 +20,7 @@ const StyledNotify = styled.div`
   justify-content: center;
 
   &.from {
-    transform: translate(0, -100%);
+    transform: translate3d(0, -100%, 0);
     opacity: 0;
   }
 
@@ -33,6 +31,11 @@ const StyledNotify = styled.div`
 
   .content {
     padding: 8px 12px;
+    height: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &.pc {
@@ -49,8 +52,6 @@ const StyledNotify = styled.div`
       ${getThemeColorCss('background-color')};
       color: #fff;
       width: 100%;
-      display: flex;
-      justify-content: center;
     }
   }
 `;
@@ -87,7 +88,7 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
   useImperativeHandle(ref, () => elRef.current);
 
   useLayoutEffect(() => {
-    if (elRef.current) {
+    if (!isMobile && elRef.current) {
       if (allNotifies.length > 0) {
         const lastElPos = allNotifies[allNotifies.length - 1];
         elRef.current.style.top = lastElPos.top + lastElPos.height + 16 + 'px';
@@ -114,20 +115,20 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
   }, []);
 
   return (
-    <>
+    <StyledNotify
+      {...rest}
+      ref={elRef}
+      className={clsx('uc-notify', className, { mobile: isMobile, pc: !isMobile })}
+    >
       {isMobile && <Mask style={{ background: 'transparent' }} />}
-      <StyledNotify
-        {...rest}
-        ref={elRef}
-        className={clsx('uc-notify', className, { mobile: isMobile, pc: !isMobile })}
-      >
-        <div className={clsx('content')} style={style}>
-          {content}
-        </div>
-      </StyledNotify>
-    </>
+      <div className={clsx('content')} style={style}>
+        {content}
+      </div>
+    </StyledNotify>
   );
 });
+
+let t = 0;
 
 /**
  * 顶部全局消息通知静态调用
@@ -135,6 +136,10 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
  * @param {StaticProps} props
  */
 Notify.show = (props: StaticProps | React.ReactNode) => {
+  if (isMobile && t > 0) {
+    return;
+  }
+  t++;
   let notifyProps = {};
   let _duration = 2000;
 
@@ -160,6 +165,9 @@ Notify.show = (props: StaticProps | React.ReactNode) => {
   );
   window.setTimeout(() => {
     dispose(beforeDispose);
+    if (t > 0) {
+      t = 0;
+    }
   }, _duration);
 };
 

@@ -2044,6 +2044,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-transition-group@^4.4.4":
+  version "4.4.4"
+  resolved "https://registry.npmmirror.com/@types/react-transition-group/download/@types/react-transition-group-4.4.4.tgz?cache=0&sync_timestamp=1637270349219&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Freact-transition-group%2Fdownload%2F%40types%2Freact-transition-group-4.4.4.tgz#acd4cceaa2be6b757db61ed7b432e103242d163e"
+  integrity sha1-rNTM6qK+a3V9th7XtDLhAyQtFj4=
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.37":
   version "17.0.38"
   resolved "https://registry.npmmirror.com/@types/react/download/@types/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"

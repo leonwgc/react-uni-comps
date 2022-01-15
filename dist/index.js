@@ -7164,7 +7164,7 @@ var _excluded$J = ["content", "style", "className"],
 
 var _templateObject$J;
 var transitionDuration$2 = animationNormal;
-var StyledNotify = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  transition-duration: ", "ms;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate(0, -100%);\n    opacity: 0;\n  }\n\n  &.to {\n    transform: none;\n    opacity: 1;\n  }\n\n  .content {\n    padding: 8px 12px;\n  }\n\n  &.pc {\n    top: 16px;\n    .content {\n      box-shadow: ", ";\n      background-color: #fff;\n      border-radius: 2px;\n    }\n  }\n\n  &.mobile {\n    .content {\n      ", ";\n      color: #fff;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n    }\n  }\n"])), transitionDuration$2, boxShadow, getThemeColorCss('background-color'));
+var StyledNotify = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 600;\n  transition: all ", "ms ease-in-out;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate3d(0, -100%, 0);\n    opacity: 0;\n  }\n\n  &.to {\n    transform: none;\n    opacity: 1;\n  }\n\n  .content {\n    padding: 8px 12px;\n    height: 40px;\n    min-height: 40px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n\n  &.pc {\n    top: 16px;\n    .content {\n      box-shadow: ", ";\n      background-color: #fff;\n      border-radius: 2px;\n    }\n  }\n\n  &.mobile {\n    .content {\n      ", ";\n      color: #fff;\n      width: 100%;\n    }\n  }\n"])), transitionDuration$2, boxShadow, getThemeColorCss('background-color'));
 var allNotifies = [];
 /** 顶部全局消息通知 */
 
@@ -7179,7 +7179,7 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return elRef.current;
   });
   React.useLayoutEffect(function () {
-    if (elRef.current) {
+    if (!isMobile && elRef.current) {
       if (allNotifies.length > 0) {
         var lastElPos = allNotifies[allNotifies.length - 1];
         elRef.current.style.top = lastElPos.top + lastElPos.height + 16 + 'px';
@@ -7203,21 +7203,22 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
       };
     }
   }, []);
-  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, isMobile && /*#__PURE__*/React__default['default'].createElement(Mask, {
-    style: {
-      background: 'transparent'
-    }
-  }), /*#__PURE__*/React__default['default'].createElement(StyledNotify, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledNotify, _extends({}, rest, {
     ref: elRef,
     className: clsx__default['default']('uc-notify', className, {
       mobile: isMobile,
       pc: !isMobile
     })
+  }), isMobile && /*#__PURE__*/React__default['default'].createElement(Mask, {
+    style: {
+      background: 'transparent'
+    }
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content'),
     style: style
-  }, content)));
+  }, content));
 });
+var t = 0;
 /**
  * 顶部全局消息通知静态调用
  *
@@ -7225,6 +7226,11 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
  */
 
 Notify.show = function (props) {
+  if (isMobile && t > 0) {
+    return;
+  }
+
+  t++;
   var notifyProps = {};
   var _duration = 2000;
 
@@ -7248,6 +7254,10 @@ Notify.show = function (props) {
   }, /*#__PURE__*/React__default['default'].createElement(Notify, notifyProps)), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
+
+    if (t > 0) {
+      t = 0;
+    }
   }, _duration);
 };
 
