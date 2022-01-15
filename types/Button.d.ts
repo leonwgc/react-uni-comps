@@ -27,5 +27,9 @@ declare const Button: React.ForwardRefExoticComponent<{
     /** 是否幽灵按钮 */
     ghost?: boolean;
     htmlType?: 'submit' | 'reset' | 'button' | undefined;
+    /** 点击回调 */
+    onClick?: (e: React.SyntheticEvent) => void;
+    /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
+    wait?: number | boolean;
 } & React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>>;
 export default Button;

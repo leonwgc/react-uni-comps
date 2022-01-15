@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Space, Button, Icon } from 'react-uni-comps';
+import { Space, Button, Icon, Toast } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -11,7 +11,9 @@ export default function App() {
           <Button>Default</Button>
           <Button active>Outline</Button>
           <Button type="primary">Primary</Button>
-          <Button danger>Danger</Button>
+          <Button danger onClick={() => Toast.show('danger')}>
+            Danger
+          </Button>
         </Space>
       </DemoBlock>
 
@@ -115,6 +117,30 @@ export default function App() {
 
           <Button disabled danger>
             Disabled
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="防止重复click">
+        <Space wrap>
+          <Button
+            active
+            wait
+            onClick={() => {
+              console.log(1);
+            }}
+          >
+            1s内只能点一次
+          </Button>
+
+          <Button
+            active
+            wait={2000}
+            onClick={() => {
+              console.log(2);
+            }}
+          >
+            2s内只能点一次
           </Button>
         </Space>
       </DemoBlock>

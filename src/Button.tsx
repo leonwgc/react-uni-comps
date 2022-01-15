@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -34,6 +34,10 @@ type Props = {
   /** 是否幽灵按钮 */
   ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
+  /** 点击回调 */
+  onClick?: (e: React.SyntheticEvent) => void;
+  /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
+  wait?: number | boolean;
 } & HTMLAttributes<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
 
 const StyledButton = styled.button`
@@ -168,10 +172,23 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     danger,
     loading,
     ghost,
+    onClick,
+    wait,
     ...rest
   } = props;
 
-  const icon = props.icon || (loading ? <Spin /> : null);
+  const [waiting, setWaiting] = useState(false);
+
+  const waitTime =
+    typeof wait === 'number' && wait > 0
+      ? wait
+      : typeof wait === 'boolean' && wait === true
+      ? 1000
+      : 0;
+
+  const usingWait = waitTime > 0;
+
+  const icon = props.icon || (loading || waiting ? <Spin /> : null);
 
   return (
     <StyledButton
@@ -179,11 +196,20 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       ref={ref}
       disabled={disabled}
       type={htmlType}
+      onClick={(e) => {
+        onClick?.(e);
+        if (typeof onClick === 'function' && usingWait) {
+          setWaiting(true);
+          setTimeout(() => {
+            setWaiting(false);
+          }, waitTime);
+        }
+      }}
       className={clsx(
         'uc-btn',
         type,
         {
-          disabled: disabled || loading,
+          disabled: disabled || loading || waiting,
           block: block,
           circle: circle,
           dashed: dashed,
@@ -197,16 +223,10 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
         className
       )}
     >
-      {icon && children ? (
-        <Space>
-          {icon}
-          {children}
-        </Space>
-      ) : icon ? (
-        icon
-      ) : (
-        children
-      )}
+      <Space align="baseline">
+        {icon}
+        {children}
+      </Space>
     </StyledButton>
   );
 });
