@@ -39,7 +39,7 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -64,15 +64,33 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       danger = props.danger,
       loading = props.loading,
       ghost = props.ghost,
-      rest = __rest(props, ["type", "disabled", "active", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost"]);
+      _onClick = props.onClick,
+      wait = props.wait,
+      rest = __rest(props, ["type", "disabled", "active", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"]);
 
-  var icon = props.icon || (loading ? /*#__PURE__*/React.createElement(Spin, null) : null);
+  var _b = useState(false),
+      waiting = _b[0],
+      setWaiting = _b[1];
+
+  var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 1000 : 0;
+  var usingWait = waitTime > 0;
+  var icon = props.icon || (loading || waiting ? /*#__PURE__*/React.createElement(Spin, null) : null);
   return /*#__PURE__*/React.createElement(StyledButton, __assign({}, rest, {
     ref: ref,
     disabled: disabled,
     type: htmlType,
+    onClick: function onClick(e) {
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
+
+      if (typeof _onClick === 'function' && usingWait) {
+        setWaiting(true);
+        setTimeout(function () {
+          setWaiting(false);
+        }, waitTime);
+      }
+    },
     className: clsx('uc-btn', type, {
-      disabled: disabled || loading,
+      disabled: disabled || loading || waiting,
       block: block,
       circle: circle,
       dashed: dashed,
@@ -83,7 +101,9 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       anchor: rest.as === 'a',
       active: active
     }, className)
-  }), icon && children ? /*#__PURE__*/React.createElement(Space, null, icon, children) : icon ? icon : children);
+  }), /*#__PURE__*/React.createElement(Space, {
+    align: "baseline"
+  }, icon, children));
 });
 Button.displayName = 'UC-Button';
 export default Button;
