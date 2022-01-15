@@ -7,6 +7,6 @@ declare type Props = {
     /** 包裹的元素,只能一个 */
     children: React.ReactElement;
 };
-/** 复制文本到剪贴板 */
+/** 复制文本*/
 declare const CopyToClipboard: React.ForwardRefExoticComponent<Props & React.RefAttributes<React.ReactElement<any, string | React.JSXElementConstructor<any>>>>;
 export default CopyToClipboard;
