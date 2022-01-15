@@ -130,7 +130,7 @@ export default function App() {
               console.log(1);
             }}
           >
-            1s内只能点一次
+            1s内点一次
           </Button>
 
           <Button
@@ -140,7 +140,7 @@ export default function App() {
               console.log(2);
             }}
           >
-            2s内只能点一次
+            2s内点一次
           </Button>
         </Space>
       </DemoBlock>
