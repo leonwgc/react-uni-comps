@@ -28,14 +28,9 @@ function ownKeys(object, enumerableOnly) {
 
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
-
-    if (enumerableOnly) {
-      symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-    }
-
-    keys.push.apply(keys, symbols);
+    enumerableOnly && (symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
   }
 
   return keys;
@@ -43,19 +38,12 @@ function ownKeys(object, enumerableOnly) {
 
 function _objectSpread2(target) {
   for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
   }
 
   return target;
@@ -64,17 +52,11 @@ function _objectSpread2(target) {
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -96,6 +78,9 @@ function _defineProperties(target, props) {
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
   return Constructor;
 }
 
@@ -143,6 +128,9 @@ function _inherits(subClass, superClass) {
       writable: true,
       configurable: true
     }
+  });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
   });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
@@ -2095,32 +2083,55 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Pullup.displayName = 'UC-Pullup';
 
-var _excluded$7 = ["position", "color"];
+var _excluded$7 = ["position", "borderRadius", "color", "className", "mobile", "children"];
 
 var _templateObject$6;
 /** 显示1px的边 */
 
-var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n  &:after {\n    content: '';\n    pointer-events: none;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    ", ": 1px solid ", ";\n\n    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n      width: 200%;\n      height: 200%;\n      transform: scale(0.5);\n      transform-origin: 0 0;\n    }\n  }\n"])), function (_ref) {
-  var position = _ref.position;
-  return "border".concat(position === 'all' ? '' : '-' + position);
+var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n  border-radius: ", "px;\n\n  &.mobile {\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-radius: ", "px;\n      ", ": 1px solid ", ";\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  &.pc {\n    ", ": 1px solid ", ";\n  }\n"])), function (_ref) {
+  var borderRadius = _ref.borderRadius;
+  return borderRadius;
 }, function (_ref2) {
-  var color = _ref2.color;
+  var borderRadius = _ref2.borderRadius;
+  return borderRadius;
+}, function (_ref3) {
+  var position = _ref3.position;
+  return "border".concat(position === 'all' ? '' : '-' + position);
+}, function (_ref4) {
+  var color = _ref4.color;
+  return color;
+}, function (_ref5) {
+  var position = _ref5.position;
+  return "border".concat(position === 'all' ? '' : '-' + position);
+}, function (_ref6) {
+  var color = _ref6.color;
   return color;
 });
-/** 包含1px的边的容器div */
+/** 移动端1像素边框容器 */
 
 var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
+      _props$borderRadius = props.borderRadius,
+      borderRadius = _props$borderRadius === void 0 ? 0 : _props$borderRadius,
       _props$color = props.color,
       color = _props$color === void 0 ? '#dcdcdc' : _props$color,
+      className = props.className,
+      _props$mobile = props.mobile,
+      mobile = _props$mobile === void 0 ? true : _props$mobile,
+      children = props.children,
       rest = _objectWithoutProperties(props, _excluded$7);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({}, rest, {
     ref: ref,
+    className: clsx__default['default']('uc-hairlinebox', className, {
+      mobile: isMobile,
+      pc: !isMobile && !mobile
+    }),
     position: position,
-    color: color
-  }));
+    color: color,
+    borderRadius: borderRadius
+  }), children);
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 

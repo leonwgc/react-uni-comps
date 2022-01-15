@@ -11,5 +11,7 @@ declare const HairLineBox: React.ForwardRefExoticComponent<{
     style?: React.CSSProperties;
     /** 圆角,默认0*/
     borderRadius?: number;
+    /** 只在移动端显示 */
+    mobile?: boolean;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default HairLineBox;
