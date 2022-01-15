@@ -20,6 +20,36 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> Collapse
+          </Space>
+        }
+        description="Collapse"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Collapse')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <IconComponent /> ProgressBar
+          </Space>
+        }
+        description="ProgressBar"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ProgressBar')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <IconComponent /> QRCode
+          </Space>
+        }
+        description="QRCode"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('QRCode')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> Picker
           </Space>
         }
