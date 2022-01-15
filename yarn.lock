@@ -12292,11 +12292,6 @@ signale@1.4.0:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-signature_pad@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.npmmirror.com/signature_pad/download/signature_pad-4.0.1.tgz#ff91cc22726f25d71c5edb18a1162861325b59a6"
-  integrity sha512-VoXBsoQRXNPHj+bTyufvQCWmOaccfvEy9w91zrtHmi2dSW4vmf3LqXL64z8a1NCcUBtOrcA3iRuOYKyjgc8iDQ==
-
 simple-redux-store@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmmirror.com/simple-redux-store/download/simple-redux-store-1.0.2.tgz#dc66ac46ef3af094673aa74c649b9a497486128c"
