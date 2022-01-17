@@ -148,6 +148,7 @@ yarn add react-uni-comps
 - WaitLoading (延时显示 Loading/Spin 防止闪烁)
 - ErrorBoudary （错误边界）
 - Waypoint （可见/不可见指示）
+- AutoCenter (自动居中)
 
 ### 工具函数
 

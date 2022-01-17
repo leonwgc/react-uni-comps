@@ -66,6 +66,7 @@ export { default as DatePicker } from './DatePicker';
 export { default as QRCode } from './QRCode';
 export { default as Collapse } from './Collapse';
 export { default as ProgressBar } from './ProgressBar';
+export { default as AutoCenter } from './AutoCenter';
 
 /** helper & dom */
 export { debounce, throttle } from './helper';

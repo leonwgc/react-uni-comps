@@ -9719,6 +9719,26 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ProgressBar.displayName = 'UC-ProgressBar';
 
+var _excluded$V = ["children"];
+
+var _templateObject$S;
+
+var StyledWrap$4 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  .content {\n    flex: 0 1 auto;\n  }\n"])));
+/** 自动居中 */
+
+var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$V);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-autocenter')
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "content"
+  }, children));
+});
+AutoCenter.displayName = 'UC-AutoCenter';
+
 /**
  * 返回防抖函数
  *
@@ -9843,6 +9863,7 @@ exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
+exports.AutoCenter = AutoCenter;
 exports.Avatar = Avatar;
 exports.Badge = Badge;
 exports.Button = Button;
