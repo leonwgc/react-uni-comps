@@ -43,20 +43,20 @@ const StyledWrapper = styled.div`
     &.disabled {
       opacity: 0.4;
     }
-  }
 
-  .header {
-    background: #fff;
-    height: 50px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
+    .header {
+      background: #fff;
+      height: 50px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
 
-  .content {
-    color: #999;
+    .content {
+      color: #999;
+    }
   }
 `;
 
