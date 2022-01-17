@@ -12,13 +12,9 @@ export default function App() {
             AlertDialog.show({
               title: '提示',
               content: '确定要这么做吗',
-              confirmText: '决定了,2s后关闭',
-              wait: 2000,
+              confirmText: '决定了',
               onConfirm: (close) => {
-                Toast.show('你点击了确定');
-                setTimeout(() => {
-                  close();
-                }, 2000);
+                close();
               },
             })
           }
@@ -35,21 +31,56 @@ export default function App() {
               content: '确定要这么做吗',
               onConfirm: (close) => {
                 Toast.show('你点击了确定');
-                setTimeout(() => {
-                  close();
-                }, 1000);
+                close();
               },
               cancelText: '取消',
               onCancel: (close) => {
                 Toast.show('你点击了取消');
-                setTimeout(() => {
-                  close();
-                }, 1000);
+                close();
               },
             })
           }
         >
           模拟window.confirm
+        </Button>
+      </DemoBlock>
+
+      <DemoBlock title="可关闭">
+        <Button
+          onClick={() =>
+            AlertDialog.show({
+              closable: true,
+              title: '提示',
+              content: '确定要这么做吗',
+              confirmText: '确定',
+              onConfirm: (close) => {
+                close();
+              },
+            })
+          }
+        >
+          模拟window.alert
+        </Button>
+      </DemoBlock>
+
+      <DemoBlock title="按钮防重复点击">
+        <Button
+          onClick={() =>
+            AlertDialog.show({
+              title: '提示',
+              content: '确定要这么做吗',
+              confirmText: '决定了,2s后关闭',
+              wait: 2000,
+              onConfirm: (close) => {
+                Toast.show('你点击了确定');
+                setTimeout(() => {
+                  close();
+                }, 2000);
+              },
+            })
+          }
+        >
+          模拟window.alert
         </Button>
       </DemoBlock>
 
@@ -71,7 +102,7 @@ export default function App() {
                   close();
                 }, 1000);
               },
-              wrapStyle: { width: 280, height: 220, background: 'pink' },
+              wrapStyle: { width: 300, height: 180, background: '#00bc8d' },
             })
           }
         >
