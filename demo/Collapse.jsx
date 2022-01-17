@@ -58,7 +58,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="多选(默认展开)">
-        <Collapse keys={['0', '2']} onChange={console.log}>
+        <Collapse animated keys={['0', '2']} onChange={console.log}>
           <Collapse.Item key="0" title="Header of Item1">
             <div style={{ background: '#fff', height: 100 }}>
               This is content of item1. This is content of item1. This is content of item1.

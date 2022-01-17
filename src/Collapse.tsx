@@ -79,7 +79,7 @@ const ItemContent = (props) => {
   const { visible, children } = props;
   const innerRef = useRef<HTMLDivElement>(null);
 
-  const [{ height, opacity }, api] = useSpring(() => ({
+  const [styles, api] = useSpring(() => ({
     from: { height: 0, opacity: 0 },
     config: {
       duration: animationNormal,
@@ -119,19 +119,7 @@ const ItemContent = (props) => {
   }, [visible]);
 
   return (
-    <animated.div
-      className={`content`}
-      style={{
-        opacity,
-        height: height.to((v) => {
-          if (height.idle && visible) {
-            return 'auto';
-          } else {
-            return v;
-          }
-        }),
-      }}
-    >
+    <animated.div className={`content`} style={styles}>
       <div ref={innerRef}>{children}</div>
     </animated.div>
   );
