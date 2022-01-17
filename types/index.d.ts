@@ -85,3 +85,4 @@ export { default as useUnmount } from './hooks/useUnmount';
 export { default as styled } from 'styled-components';
 export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
+export { useSpring, animated } from '@react-spring/web';

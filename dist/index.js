@@ -9963,6 +9963,18 @@ Object.defineProperty(exports, 'styled', {
     return styled__default['default'];
   }
 });
+Object.defineProperty(exports, 'animated', {
+  enumerable: true,
+  get: function () {
+    return web.animated;
+  }
+});
+Object.defineProperty(exports, 'useSpring', {
+  enumerable: true,
+  get: function () {
+    return web.useSpring;
+  }
+});
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
