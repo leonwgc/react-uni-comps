@@ -9593,7 +9593,7 @@ var useMount = function useMount(fn) {
 var _excluded$T = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$R;
-var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n  }\n"])));
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
 /**
  *  子项，放在Collapse里面
  *
@@ -9929,6 +9929,20 @@ var useCountdown = function useCountdown() {
   };
 };
 
+/**
+ *  组件卸载执行回调
+ *
+ * @param {() => void} fn 执行的回调
+ */
+
+var useUnmount = function useUnmount(fn) {
+  React.useLayoutEffect(function () {
+    return function () {
+      fn === null || fn === void 0 ? void 0 : fn();
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
 Object.keys(reactTransitionGroup).forEach(function (k) {
   if (k !== 'default') Object.defineProperty(exports, k, {
     enumerable: true,
@@ -10029,6 +10043,8 @@ exports.useCallbackRef = useCallbackRef;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
 exports.useInViewport = useInViewport;
+exports.useMount = useMount;
 exports.useThrottle = useThrottle;
+exports.useUnmount = useUnmount;
 exports.useUpdateEffect = useUpdateEffect;
 exports.useUpdateLayoutEffect = useUpdateLayoutEffect;
