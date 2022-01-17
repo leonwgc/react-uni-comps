@@ -203,6 +203,8 @@ type StaticProps = {
   wrapStyle?: React.CSSProperties;
   /** 透传给button  */
   wait?: number | boolean;
+  /** 显示关闭按钮  */
+  closable?: boolean;
 };
 
 type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
@@ -338,6 +340,7 @@ AlertDialog.show = (props: StaticProps) => {
     onCancel,
     wait,
     wrapStyle,
+    ...rest
   } = props;
 
   const container = document.createElement('div');
@@ -347,6 +350,7 @@ AlertDialog.show = (props: StaticProps) => {
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>
       <AlertDialog
+        {...rest}
         title={title}
         content={content}
         visible

@@ -4466,7 +4466,8 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$u = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"];
+var _excluded$u = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
+    _excluded2$2 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
 
 var _templateObject$s;
 var StyledAlertDialog = styled__default['default'](Popup)(_templateObject$s || (_templateObject$s = _taggedTemplateLiteral(["\n  // effect\n  &.from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.5);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.5);\n    }\n  }\n\n  &.to {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n  // end effect\n\n  &.mobile {\n    width: 280px;\n    padding: 20px 0 0;\n\n    .header {\n      text-align: center;\n    }\n\n    .body {\n      padding: 16px;\n      overflow-y: scroll;\n      -webkit-overflow-scrolling: touch;\n      &::-webkit-scrollbar {\n        display: none;\n      }\n    }\n\n    .footer {\n      position: relative;\n      display: flex;\n      height: 48px;\n      padding: 0;\n      overflow: hidden;\n      .confirm {\n        ", "\n      }\n\n      .m-btn {\n        height: 48px;\n        line-height: 48px;\n        text-align: center;\n        flex: 1;\n        user-select: none;\n        &:active {\n          background-color: rgba(0, 0, 0, 0.1);\n        }\n      }\n\n      &:after {\n        content: '';\n        pointer-events: none;\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        left: 0;\n        top: 0;\n        border-top: 1px solid ", ";\n\n        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n          width: 200%;\n          height: 200%;\n          transform: scale(0.5);\n          transform-origin: 0 0;\n        }\n      }\n    }\n  }\n\n  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);\n  background-color: #fff;\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: initial;\n  border-radius: 8px;\n  padding: 32px 32px 24px;\n  box-sizing: border-box;\n  white-space: normal;\n  max-width: calc(100vw - 56px);\n  max-height: calc(100vh - 112px);\n  width: 420px;\n  display: flex;\n  flex-direction: column;\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .header {\n    font-size: 16px;\n    line-height: 20px;\n    color: #333;\n    box-sizing: border-box;\n    font-weight: 500;\n  }\n  .body {\n    font-size: 14px;\n    line-height: 20px;\n    max-height: calc(100vh - 256px);\n    padding: 24px 0 32px;\n    flex: 1;\n\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n  .footer {\n    text-align: right;\n\n    .uc-btn {\n      min-width: 80px;\n    }\n  }\n"])), getThemeColorCss('color'), border);
@@ -4582,12 +4583,14 @@ AlertDialog.show = function (props) {
       cancelText = props.cancelText,
       _onCancel = props.onCancel,
       wait = props.wait,
-      wrapStyle = props.wrapStyle;
+      wrapStyle = props.wrapStyle,
+      rest = _objectWithoutProperties(props, _excluded2$2);
+
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration$1);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration$1
-  }, /*#__PURE__*/React__default['default'].createElement(AlertDialog, {
+  }, /*#__PURE__*/React__default['default'].createElement(AlertDialog, _extends({}, rest, {
     title: title,
     content: content,
     visible: true,
@@ -4611,7 +4614,7 @@ AlertDialog.show = function (props) {
     mountContainer: function mountContainer() {
       return container;
     }
-  })), container);
+  }))), container);
 };
 
 var _excluded$v = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];
@@ -7177,7 +7180,7 @@ var WaterMark = function WaterMark(props) {
 WaterMark.displayName = 'UC-WaterMark';
 
 var _excluded$J = ["content", "style", "className"],
-    _excluded2$2 = ["duration"];
+    _excluded2$3 = ["duration"];
 
 var _templateObject$J;
 var transitionDuration$2 = animationNormal;
@@ -7254,7 +7257,7 @@ Notify.show = function (props) {
   if (_typeof(props) === 'object' && 'content' in props) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 2000 : _props$duration,
-        rest = _objectWithoutProperties(props, _excluded2$2);
+        rest = _objectWithoutProperties(props, _excluded2$3);
 
     notifyProps = rest;
     _duration = duration;

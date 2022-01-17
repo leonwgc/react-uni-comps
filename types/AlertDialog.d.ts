@@ -52,6 +52,8 @@ declare type StaticProps = {
     wrapStyle?: React.CSSProperties;
     /** 透传给button  */
     wait?: number | boolean;
+    /** 显示关闭按钮  */
+    closable?: boolean;
 };
 declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
     /**

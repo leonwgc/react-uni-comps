@@ -164,12 +164,14 @@ AlertDialog.show = function (props) {
       cancelText = props.cancelText,
       _onCancel = props.onCancel,
       wait = props.wait,
-      wrapStyle = props.wrapStyle;
+      wrapStyle = props.wrapStyle,
+      rest = __rest(props, ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"]);
+
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
-  }, /*#__PURE__*/React.createElement(AlertDialog, {
+  }, /*#__PURE__*/React.createElement(AlertDialog, __assign({}, rest, {
     title: title,
     content: content,
     visible: true,
@@ -193,7 +195,7 @@ AlertDialog.show = function (props) {
     mountContainer: function mountContainer() {
       return container;
     }
-  })), container);
+  }))), container);
 };
 
 export default AlertDialog;
