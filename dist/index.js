@@ -9630,9 +9630,7 @@ var ItemContent = function ItemContent(props) {
     };
   }),
       _useSpring2 = _slicedToArray(_useSpring, 2),
-      _useSpring2$ = _useSpring2[0],
-      height = _useSpring2$.height,
-      opacity = _useSpring2$.opacity,
+      styles = _useSpring2[0],
       api = _useSpring2[1];
 
   useMount(function () {
@@ -9656,28 +9654,20 @@ var ItemContent = function ItemContent(props) {
       });
     } else {
       api.start({
-        height: inner.offsetHeight,
-        opacity: 1,
-        immediate: true
-      });
-      api.start({
-        height: 0,
-        opacity: 0
+        from: {
+          height: inner.offsetHeight,
+          opacity: 1
+        },
+        to: {
+          height: 0,
+          opacity: 0
+        }
       });
     }
   }, [visible]);
   return /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     className: "content",
-    style: {
-      opacity: opacity,
-      height: height.to(function (v) {
-        if (height.idle && visible) {
-          return 'auto';
-        } else {
-          return v;
-        }
-      })
-    }
+    style: styles
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     ref: innerRef
   }, children));
@@ -9767,7 +9757,7 @@ var Collapse = function Collapse(_ref2) {
           disabled: _disabled
         })
       }, /*#__PURE__*/React__default['default'].createElement("span", null, typeof title === 'function' ? title(_active, _disabled) : title), /*#__PURE__*/React__default['default'].createElement("span", null, arrow && /*#__PURE__*/React__default['default'].createElement(IconArrow, {
-        direction: _active ? 'down' : 'right'
+        direction: _active ? 'top' : 'down'
       }))), animated ? /*#__PURE__*/React__default['default'].createElement(ItemContent, {
         visible: _active
       }, _children) : _active && /*#__PURE__*/React__default['default'].createElement("div", {

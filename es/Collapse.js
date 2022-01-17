@@ -94,9 +94,7 @@ var ItemContent = function ItemContent(props) {
       }
     };
   }),
-      _b = _a[0],
-      height = _b.height,
-      opacity = _b.opacity,
+      styles = _a[0],
       api = _a[1];
 
   useMount(function () {
@@ -120,28 +118,20 @@ var ItemContent = function ItemContent(props) {
       });
     } else {
       api.start({
-        height: inner.offsetHeight,
-        opacity: 1,
-        immediate: true
-      });
-      api.start({
-        height: 0,
-        opacity: 0
+        from: {
+          height: inner.offsetHeight,
+          opacity: 1
+        },
+        to: {
+          height: 0,
+          opacity: 0
+        }
       });
     }
   }, [visible]);
   return /*#__PURE__*/React.createElement(animated.div, {
     className: "content",
-    style: {
-      opacity: opacity,
-      height: height.to(function (v) {
-        if (height.idle && visible) {
-          return 'auto';
-        } else {
-          return v;
-        }
-      })
-    }
+    style: styles
   }, /*#__PURE__*/React.createElement("div", {
     ref: innerRef
   }, children));
@@ -228,7 +218,7 @@ var Collapse = function Collapse(_a) {
           disabled: disabled_1
         })
       }, /*#__PURE__*/React.createElement("span", null, typeof title === 'function' ? title(active_1, disabled_1) : title), /*#__PURE__*/React.createElement("span", null, arrow && /*#__PURE__*/React.createElement(IconArrow, {
-        direction: active_1 ? 'down' : 'right'
+        direction: active_1 ? 'top' : 'down'
       }))), animated ? /*#__PURE__*/React.createElement(ItemContent, {
         visible: active_1
       }, children_1) : active_1 && /*#__PURE__*/React.createElement("div", {

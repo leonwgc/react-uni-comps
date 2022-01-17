@@ -107,13 +107,14 @@ const ItemContent = (props) => {
       });
     } else {
       api.start({
-        height: inner.offsetHeight,
-        opacity: 1,
-        immediate: true,
-      });
-      api.start({
-        height: 0,
-        opacity: 0,
+        from: {
+          height: inner.offsetHeight,
+          opacity: 1,
+        },
+        to: {
+          height: 0,
+          opacity: 0,
+        },
       });
     }
   }, [visible]);
