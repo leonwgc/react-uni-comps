@@ -10,6 +10,7 @@ var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
 var color = require('color');
+var web = require('@react-spring/web');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -9572,10 +9573,27 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 QRCode$1.displayName = 'UC-QRCode';
 
-var _excluded$T = ["children", "onChange", "className", "keys"];
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  组件加载执行回调
+ *
+ * @param {() => void} fn 加载执行的回调
+ */
+
+var useMount = function useMount(fn) {
+  var isMounted = React.useRef(false);
+  React.useLayoutEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      fn === null || fn === void 0 ? void 0 : fn();
+    }
+  }, []);
+};
+
+var _excluded$T = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$R;
-var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n\n    display: none;\n    &.active {\n      display: unset;\n    }\n  }\n"])));
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n  }\n"])));
 /**
  *  子项，放在Collapse里面
  *
@@ -9588,6 +9606,83 @@ var Item = function Item(_ref) {
   return children;
 };
 /**
+ *  content renderer
+ *
+ * @param {*} props
+ * @return {*}
+ */
+
+
+var ItemContent = function ItemContent(props) {
+  var visible = props.visible,
+      children = props.children;
+  var innerRef = React.useRef(null);
+
+  var _useSpring = web.useSpring(function () {
+    return {
+      from: {
+        height: 0,
+        opacity: 0
+      },
+      config: {
+        duration: animationNormal
+      }
+    };
+  }),
+      _useSpring2 = _slicedToArray(_useSpring, 2),
+      _useSpring2$ = _useSpring2[0],
+      height = _useSpring2$.height,
+      opacity = _useSpring2$.opacity,
+      api = _useSpring2[1];
+
+  useMount(function () {
+    if (!visible) return;
+    var inner = innerRef.current;
+    if (!inner) return;
+    api.start({
+      height: inner.offsetHeight,
+      opacity: 1,
+      immediate: true
+    });
+  });
+  useUpdateLayoutEffect(function () {
+    var inner = innerRef.current;
+    if (!inner) return;
+
+    if (visible) {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1
+      });
+    } else {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1,
+        immediate: true
+      });
+      api.start({
+        height: 0,
+        opacity: 0
+      });
+    }
+  }, [visible]);
+  return /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
+    className: "content",
+    style: {
+      opacity: opacity,
+      height: height.to(function (v) {
+        if (height.idle && visible) {
+          return 'auto';
+        } else {
+          return v;
+        }
+      })
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: innerRef
+  }, children));
+};
+/**
  * 折叠面板
  */
 
@@ -9596,6 +9691,7 @@ var Collapse = function Collapse(_ref2) {
   var children = _ref2.children,
       onChange = _ref2.onChange,
       className = _ref2.className,
+      animated = _ref2.animated,
       _ref2$keys = _ref2.keys,
       keys = _ref2$keys === void 0 ? '' : _ref2$keys,
       rest = _objectWithoutProperties(_ref2, _excluded$T);
@@ -9626,20 +9722,24 @@ var Collapse = function Collapse(_ref2) {
       var _ref3 = child.props,
           _ref3$title = _ref3.title,
           title = _ref3$title === void 0 ? '' : _ref3$title,
-          disabled = _ref3.disabled,
+          _disabled = _ref3.disabled,
+          _ref3$arrow = _ref3.arrow,
+          arrow = _ref3$arrow === void 0 ? true : _ref3$arrow,
           _children = _ref3.children;
-      var active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
+
+      var _active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
+
       return /*#__PURE__*/React__default['default'].createElement("div", {
         key: key,
         className: clsx__default['default']('item', {
-          active: active,
-          disabled: disabled
+          active: _active,
+          disabled: _disabled
         }),
         onClick: function onClick() {
-          if (!disabled) {
+          if (!_disabled) {
             var _keys2;
 
-            if (active) {
+            if (_active) {
               if (isSingleMode) {
                 _keys2 = '';
               } else {
@@ -9664,14 +9764,14 @@ var Collapse = function Collapse(_ref2) {
         }
       }, /*#__PURE__*/React__default['default'].createElement("div", {
         className: clsx__default['default']('header', {
-          disabled: disabled
+          disabled: _disabled
         })
-      }, /*#__PURE__*/React__default['default'].createElement("span", null, title), /*#__PURE__*/React__default['default'].createElement("span", null, /*#__PURE__*/React__default['default'].createElement(IconArrow, {
-        direction: active ? 'down' : 'right'
-      }))), /*#__PURE__*/React__default['default'].createElement("div", {
-        className: clsx__default['default']('content', {
-          active: active
-        })
+      }, /*#__PURE__*/React__default['default'].createElement("span", null, typeof title === 'function' ? title(_active, _disabled) : title), /*#__PURE__*/React__default['default'].createElement("span", null, arrow && /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+        direction: _active ? 'down' : 'right'
+      }))), animated ? /*#__PURE__*/React__default['default'].createElement(ItemContent, {
+        visible: _active
+      }, _children) : _active && /*#__PURE__*/React__default['default'].createElement("div", {
+        className: clsx__default['default']('content')
       }, _children));
     }
   }));

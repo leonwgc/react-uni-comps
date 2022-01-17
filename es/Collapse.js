@@ -49,12 +49,16 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
   return to.concat(ar || Array.prototype.slice.call(from));
 };
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useSpring, animated } from '@react-spring/web';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import IconArrow from './IconArrow';
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n\n    display: none;\n    &.active {\n      display: unset;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n\n    display: none;\n    &.active {\n      display: unset;\n    }\n  }\n"])));
+import useMount from './hooks/useMount';
+import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
+import { animationNormal } from './vars';
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n  }\n\n  .header {\n    background: #fff;\n    height: 50px;\n    color: #333;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    width: 100%;\n  }\n\n  .content {\n    color: #999;\n  }\n"])));
 /**
  *  子项，放在Collapse里面
  *
@@ -67,6 +71,82 @@ var Item = function Item(_a) {
   return children;
 };
 /**
+ *  content renderer
+ *
+ * @param {*} props
+ * @return {*}
+ */
+
+
+var ItemContent = function ItemContent(props) {
+  var visible = props.visible,
+      children = props.children;
+  var innerRef = useRef(null);
+
+  var _a = useSpring(function () {
+    return {
+      from: {
+        height: 0,
+        opacity: 0
+      },
+      config: {
+        duration: animationNormal
+      }
+    };
+  }),
+      _b = _a[0],
+      height = _b.height,
+      opacity = _b.opacity,
+      api = _a[1];
+
+  useMount(function () {
+    if (!visible) return;
+    var inner = innerRef.current;
+    if (!inner) return;
+    api.start({
+      height: inner.offsetHeight,
+      opacity: 1,
+      immediate: true
+    });
+  });
+  useUpdateLayoutEffect(function () {
+    var inner = innerRef.current;
+    if (!inner) return;
+
+    if (visible) {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1
+      });
+    } else {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1,
+        immediate: true
+      });
+      api.start({
+        height: 0,
+        opacity: 0
+      });
+    }
+  }, [visible]);
+  return /*#__PURE__*/React.createElement(animated.div, {
+    className: "content",
+    style: {
+      opacity: opacity,
+      height: height.to(function (v) {
+        if (height.idle && visible) {
+          return 'auto';
+        } else {
+          return v;
+        }
+      })
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: innerRef
+  }, children));
+};
+/**
  * 折叠面板
  */
 
@@ -75,9 +155,10 @@ var Collapse = function Collapse(_a) {
   var children = _a.children,
       onChange = _a.onChange,
       className = _a.className,
+      animated = _a.animated,
       _b = _a.keys,
       keys = _b === void 0 ? '' : _b,
-      rest = __rest(_a, ["children", "onChange", "className", "keys"]);
+      rest = __rest(_a, ["children", "onChange", "className", "animated", "keys"]);
 
   var count = React.Children.count(children); // 手风琴模式
 
@@ -105,6 +186,8 @@ var Collapse = function Collapse(_a) {
           _b = _a.title,
           title = _b === void 0 ? '' : _b,
           disabled_1 = _a.disabled,
+          _c = _a.arrow,
+          arrow = _c === void 0 ? true : _c,
           children_1 = _a.children;
       var active_1 = isSingleMode ? _keys === key_1 : _keys.indexOf(key_1) > -1;
       return /*#__PURE__*/React.createElement("div", {
@@ -144,12 +227,12 @@ var Collapse = function Collapse(_a) {
         className: clsx('header', {
           disabled: disabled_1
         })
-      }, /*#__PURE__*/React.createElement("span", null, title), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement(IconArrow, {
+      }, /*#__PURE__*/React.createElement("span", null, typeof title === 'function' ? title(active_1, disabled_1) : title), /*#__PURE__*/React.createElement("span", null, arrow && /*#__PURE__*/React.createElement(IconArrow, {
         direction: active_1 ? 'down' : 'right'
-      }))), /*#__PURE__*/React.createElement("div", {
-        className: clsx('content', {
-          active: active_1
-        })
+      }))), animated ? /*#__PURE__*/React.createElement(ItemContent, {
+        visible: active_1
+      }, children_1) : active_1 && /*#__PURE__*/React.createElement("div", {
+        className: clsx('content')
       }, children_1));
     }
   }));

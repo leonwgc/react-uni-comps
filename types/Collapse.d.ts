@@ -8,6 +8,8 @@ declare type CollapseProps = {
     onChange?: (keys: string[] | string) => void;
     className?: string;
     style?: React.CSSProperties;
+    /** 展开动画, 默认false */
+    animated?: boolean;
 };
 /**
  *  子项，放在Collapse里面

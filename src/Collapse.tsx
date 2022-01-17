@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useSpring, animated } from '@react-spring/web';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import IconArrow from './IconArrow';
+import useMount from './hooks/useMount';
+import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
+import { animationNormal } from './vars';
 
 type CollapseProps = {
   /** 子元素*/
@@ -13,17 +17,21 @@ type CollapseProps = {
   onChange?: (keys: string[] | string) => void;
   className?: string;
   style?: React.CSSProperties;
+  /** 展开动画, 默认false */
+  animated?: boolean;
 };
 
 type ItemProps = {
   /** 不可交互状态 */
   disabled?: boolean;
   /** 面板头内容 */
-  title?: React.ReactNode;
+  title?: React.ReactNode | ((active: boolean, disabled: boolean) => React.ReactNode);
   /** 面板key */
   key?: string;
   /** 面板内容 */
   children?: React.ReactElement;
+  /** 显示箭头:默认true */
+  arrow?: boolean;
 };
 
 const StyledWrapper = styled.div`
@@ -49,11 +57,6 @@ const StyledWrapper = styled.div`
 
   .content {
     color: #999;
-
-    display: none;
-    &.active {
-      display: unset;
-    }
   }
 `;
 
@@ -66,6 +69,73 @@ const StyledWrapper = styled.div`
 const Item = ({ children }) => {
   return children;
 };
+/**
+ *  content renderer
+ *
+ * @param {*} props
+ * @return {*}
+ */
+const ItemContent = (props) => {
+  const { visible, children } = props;
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const [{ height, opacity }, api] = useSpring(() => ({
+    from: { height: 0, opacity: 0 },
+    config: {
+      duration: animationNormal,
+    },
+  }));
+
+  useMount(() => {
+    if (!visible) return;
+    const inner = innerRef.current;
+    if (!inner) return;
+    api.start({
+      height: inner.offsetHeight,
+      opacity: 1,
+      immediate: true,
+    });
+  });
+
+  useUpdateLayoutEffect(() => {
+    const inner = innerRef.current;
+    if (!inner) return;
+    if (visible) {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1,
+      });
+    } else {
+      api.start({
+        height: inner.offsetHeight,
+        opacity: 1,
+        immediate: true,
+      });
+      api.start({
+        height: 0,
+        opacity: 0,
+      });
+    }
+  }, [visible]);
+
+  return (
+    <animated.div
+      className={`content`}
+      style={{
+        opacity,
+        height: height.to((v) => {
+          if (height.idle && visible) {
+            return 'auto';
+          } else {
+            return v;
+          }
+        }),
+      }}
+    >
+      <div ref={innerRef}>{children}</div>
+    </animated.div>
+  );
+};
 
 /**
  * 折叠面板
@@ -74,6 +144,7 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
   children,
   onChange,
   className,
+  animated,
   keys = '',
   ...rest
 }) => {
@@ -99,7 +170,7 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
         if (React.isValidElement(child)) {
           let { key } = child;
           key = key || index + '';
-          const { title = '', disabled, children } = child.props as ItemProps;
+          const { title = '', disabled, arrow = true, children } = child.props as ItemProps;
           const active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
           return (
             <div
@@ -137,13 +208,14 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
                   disabled: disabled,
                 })}
               >
-                <span>{title}</span>
-                <span>
-                  <IconArrow direction={active ? 'down' : 'right'} />
-                </span>
+                <span>{typeof title === 'function' ? title(active, disabled) : title}</span>
+                <span>{arrow && <IconArrow direction={active ? 'top' : 'down'} />}</span>
               </div>
-
-              <div className={clsx('content', { active })}>{children}</div>
+              {animated ? (
+                <ItemContent visible={active}>{children}</ItemContent>
+              ) : (
+                active && <div className={clsx('content')}>{children}</div>
+              )}
             </div>
           );
         }

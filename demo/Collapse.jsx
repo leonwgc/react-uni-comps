@@ -1,13 +1,13 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Collapse } from 'react-uni-comps';
+import { Collapse, Space, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="手风琴">
-        <Collapse>
+        <Collapse animated>
           <Collapse.Item title="Header of Item1">
             This is content of item1. This is content of item1. This is content of item1.
           </Collapse.Item>
@@ -15,6 +15,29 @@ export default function App() {
             This is content of item2. This is content of item2. This is content of item2.
           </Collapse.Item>
           <Collapse.Item title="Header of Item3">
+            This is content of item3. This is content of item3. This is content of item3.
+          </Collapse.Item>
+        </Collapse>
+      </DemoBlock>
+
+      <DemoBlock title="自定义标题">
+        <Collapse animated>
+          <Collapse.Item title="Header of Item1">
+            This is content of item1. This is content of item1. This is content of item1.
+          </Collapse.Item>
+          <Collapse.Item
+            title={(active) => {
+              return (
+                <Space>
+                  <Icon type={active ? 'uc-icon-xianshi' : 'uc-icon-yincang'} /> 自定义标题
+                </Space>
+              );
+            }}
+            arrow={false}
+          >
+            This is content of item3. This is content of item3. This is content of item3.
+          </Collapse.Item>
+          <Collapse.Item title="没有箭头" arrow={false}>
             This is content of item3. This is content of item3. This is content of item3.
           </Collapse.Item>
         </Collapse>
