@@ -9,11 +9,12 @@ import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 import useCallbackRef from '../hooks/useCallbackRef';
 import useUpdateEffect from '../hooks/useUpdateEffect';
-import { boxShadow } from '../vars';
+import { boxShadow, animationFast } from '../vars';
+import { useSpring, animated, easings } from '@react-spring/web';
 
 // port from https://github.com/bytedance/guide and refactor
 
-const StyledPopover = styled.div`
+const StyledPopover = styled(animated.div)`
   position: absolute;
   z-index: 1000;
   background: #fff;
@@ -49,7 +50,7 @@ const StyledPopover = styled.div`
 `;
 
 export type Props = {
-  /** 弹框位置,包含-的-后面指示arrow位置 */
+  /** 弹框位置,默认bottom */
   placement?: Placement;
   /** 触发元素 */
   children: React.ReactElement;
@@ -78,7 +79,7 @@ export type Props = {
   offset?: Offset;
   /** 弹框mount位置，默认为document.body */
   mountContainer?: () => HTMLElement;
-  /** 点击外部区域是否关闭*/
+  /** 点击外部区域是否关闭,默认true*/
   closeOnClickOutside?: boolean;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
@@ -106,13 +107,13 @@ const Popover = (props: Props): React.ReactElement => {
     maskStyle,
     maskClass,
     mountContainer,
-    closeOnClickOutside,
+    closeOnClickOutside = true,
     closeOnMaskClick = true,
     offset = {},
     ...rest
   } = props;
 
-  const childrenRef = useRef<HTMLElement>();
+  const anchorRef = useRef<HTMLElement>();
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
   const offsetRef = useRef<Offset>(offset);
@@ -120,6 +121,9 @@ const Popover = (props: Props): React.ReactElement => {
 
   const [modalStyle, setModalStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
+
+  // animation effect
+  const [active, setActive] = useState(true);
 
   const mountNode = mountContainer?.() || document.body;
 
@@ -132,7 +136,7 @@ const Popover = (props: Props): React.ReactElement => {
   }, [visible]);
 
   useEffect(() => {
-    const anchorEl = childrenRef.current;
+    const anchorEl = anchorRef.current;
     const scrollContainer = getScrollContainer(anchorEl);
     // todo: support cust scroll container , by now it's window
 
@@ -176,7 +180,8 @@ const Popover = (props: Props): React.ReactElement => {
   const closeOutsideHandler = useCallback(
     (e) => {
       const el = popoverRef.current;
-      const anchor = childrenRef.current;
+      const anchor = anchorRef.current;
+
       if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
         onCloseRef.current?.();
       }
@@ -186,55 +191,95 @@ const Popover = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     if (closeOnClickOutside) {
-      window.addEventListener('click', closeOutsideHandler);
+      window.addEventListener('click', closeOutsideHandler, false);
 
       return () => {
-        window.removeEventListener('click', closeOutsideHandler);
+        window.removeEventListener('click', closeOutsideHandler, false);
       };
     }
   }, [closeOnClickOutside, closeOutsideHandler]);
 
+  const { translate, opacity, scale } = useSpring({
+    translate: visible ? 0 : 5,
+    opacity: visible ? 1 : 0,
+    scale: visible ? 1 : 0.92,
+    onStart: () => {
+      setActive(true);
+    },
+    onRest: () => {
+      setActive(visible);
+    },
+    config: {
+      duration: animationFast,
+      easing: easings.easeInOutQuart,
+    },
+  });
+
   return (
     <>
-      {React.cloneElement(children, { ref: childrenRef })}
-      {visible
-        ? ReactDOM.createPortal(
-            <div className={clsx('uc-popover-wrap')}>
-              {mask && (
-                <Mask
-                  className={maskClass}
-                  style={maskStyle}
-                  onClick={() => {
-                    closeOnMaskClick && onClose?.();
-                  }}
-                />
-              )}
+      {React.cloneElement(children, { ref: anchorRef })}
+      {ReactDOM.createPortal(
+        <div className={clsx('uc-popover')}>
+          {mask && (
+            <Mask
+              className={maskClass}
+              style={maskStyle}
+              onClick={() => {
+                closeOnMaskClick && onClose?.();
+              }}
+            />
+          )}
 
-              <StyledPopover
-                {...rest}
-                ref={popoverRef}
-                className={clsx(className, 'uc-popover', { mask: mask })}
-                style={{ ...modalStyle, ...style }}
-              >
-                {/* arrow */}
-                {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+          <StyledPopover
+            {...rest}
+            ref={popoverRef}
+            className={clsx(className, 'uc-popover', { mask: mask })}
+            style={{
+              ...modalStyle,
+              ...style,
+              opacity,
+              display: visible || active ? 'unset' : 'none',
+              transform: translate.to((v) => {
+                const p = placement.split('-')[0];
 
-                {/* close */}
-                {closable && (
-                  <Icon
-                    type="uc-icon-guanbi"
-                    className={clsx('uc-popover-close')}
-                    onClick={onClose}
-                  />
-                )}
+                if (p === 'bottom') {
+                  return `translate(0, -${v}%)`;
+                }
+                if (p === 'top') {
+                  return `translate(0, ${v}%)`;
+                }
+                if (p === 'left') {
+                  return `translate(${v}%, 0)`;
+                }
+                if (p === 'right') {
+                  return `translate(-${v}%, 0)`;
+                }
+                return 'none';
+              }),
+            }}
+          >
+            {/* arrow */}
+            {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-                {/** content */}
-                <div className={clsx('uc-popover-content')}>{content}</div>
-              </StyledPopover>
-            </div>,
-            mountNode
-          )
-        : null}
+            {/* close */}
+            {closable && (
+              <Icon type="uc-icon-guanbi" className={clsx('uc-popover-close')} onClick={onClose} />
+            )}
+
+            {/** content */}
+
+            <animated.div
+              className={clsx('uc-popover-content')}
+              style={{
+                scale,
+              }}
+            >
+              {content}
+            </animated.div>
+          </StyledPopover>
+        </div>,
+        mountNode
+      )}
     </>
   );
 };
