@@ -49,6 +49,7 @@ type Props = {
 };
 
 const StyledAlertDialog = styled(Popup)`
+  overflow: hidden;
   // effect
   &.from {
     opacity: 0;
@@ -96,15 +97,10 @@ const StyledAlertDialog = styled(Popup)`
         ${getThemeColorCss('color')}
       }
 
-      .m-btn {
+      .uc-btn {
         height: 48px;
-        line-height: 48px;
-        text-align: center;
+        border: none;
         flex: 1;
-        user-select: none;
-        &:active {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
       }
 
       &:after {
@@ -289,8 +285,8 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
           <>
             {cancelText ? (
               <>
-                <div
-                  className={clsx('m-btn', 'cancel')}
+                <Button
+                  className={clsx('cancel')}
                   onClick={() => {
                     onCancel?.(onClose);
 
@@ -300,15 +296,16 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                   }}
                 >
                   {cancelText}
-                </div>
+                </Button>
                 <Divider
                   type="vertical"
                   style={{ height: '100%', color: vars.border, margin: 0 }}
                 />
               </>
             ) : null}
-            <div
-              className={clsx('m-btn', 'confirm')}
+            <Button
+              className={clsx('confirm')}
+              wait={wait}
               onClick={() => {
                 onConfirm?.(onClose);
 
@@ -318,7 +315,7 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
               }}
             >
               {confirmText}
-            </div>
+            </Button>
           </>
         )}
       </div>
