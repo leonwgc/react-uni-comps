@@ -73,7 +73,7 @@ export default function App() {
 
       <DemoBlock title="使用antd Menu">
         <PopMenu
-          trigger="hover"
+          trigger="click"
           content={
             <Menu style={{ width: 120, textAlign: 'center' }}>
               <Menu.Item key="0">

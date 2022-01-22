@@ -9,7 +9,7 @@ import Mask from '../Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 import useCallbackRef from '../hooks/useCallbackRef';
 import useUpdateEffect from '../hooks/useUpdateEffect';
-import { boxShadow, animationFast } from '../vars';
+import { boxShadow, animationNormal } from '../vars';
 import { useSpring, animated, easings } from '@react-spring/web';
 
 // port from https://github.com/bytedance/guide and refactor
@@ -123,7 +123,7 @@ const Popover = (props: Props): React.ReactElement => {
   const [arrowStyle, setArrowStyle] = useState({});
 
   // animation effect
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(visible);
 
   const mountNode = mountContainer?.() || document.body;
 
@@ -199,10 +199,9 @@ const Popover = (props: Props): React.ReactElement => {
     }
   }, [closeOnClickOutside, closeOutsideHandler]);
 
-  const { translate, opacity, scale } = useSpring({
-    translate: visible ? 0 : 5,
+  const { translate, opacity } = useSpring({
+    translate: visible ? 0 : 10,
     opacity: visible ? 1 : 0,
-    scale: visible ? 1 : 0.92,
     onStart: () => {
       setActive(true);
     },
@@ -210,7 +209,7 @@ const Popover = (props: Props): React.ReactElement => {
       setActive(visible);
     },
     config: {
-      duration: animationFast,
+      duration: animationNormal,
       easing: easings.easeInOutQuart,
     },
   });
@@ -219,65 +218,63 @@ const Popover = (props: Props): React.ReactElement => {
     <>
       {React.cloneElement(children, { ref: anchorRef })}
       {ReactDOM.createPortal(
-        <div className={clsx('uc-popover')}>
-          {mask && (
-            <Mask
-              className={maskClass}
-              style={maskStyle}
-              onClick={() => {
-                closeOnMaskClick && onClose?.();
-              }}
-            />
-          )}
-
-          <StyledPopover
-            {...rest}
-            ref={popoverRef}
-            className={clsx(className, 'uc-popover', { mask: mask })}
-            style={{
-              ...modalStyle,
-              ...style,
-              opacity,
-              display: visible || active ? 'unset' : 'none',
-              transform: translate.to((v) => {
-                const p = placement.split('-')[0];
-
-                if (p === 'bottom') {
-                  return `translate(0, -${v}%)`;
-                }
-                if (p === 'top') {
-                  return `translate(0, ${v}%)`;
-                }
-                if (p === 'left') {
-                  return `translate(${v}%, 0)`;
-                }
-                if (p === 'right') {
-                  return `translate(-${v}%, 0)`;
-                }
-                return 'none';
-              }),
-            }}
-          >
-            {/* arrow */}
-            {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
-
-            {/* close */}
-            {closable && (
-              <Icon type="uc-icon-guanbi" className={clsx('uc-popover-close')} onClick={onClose} />
+        (visible || active) && (
+          <div className={clsx('uc-popover-wrap')}>
+            {mask && (
+              <Mask
+                className={maskClass}
+                style={maskStyle}
+                onClick={() => {
+                  closeOnMaskClick && onClose?.();
+                }}
+              />
             )}
 
-            {/** content */}
-
-            <animated.div
-              className={clsx('uc-popover-content')}
+            <StyledPopover
+              {...rest}
+              ref={popoverRef}
+              className={clsx(className, 'uc-popover', { mask: mask })}
               style={{
-                scale,
+                ...modalStyle,
+                ...style,
+                opacity,
+                transform: translate.to((v) => {
+                  const p = placement.split('-')[0];
+
+                  if (p === 'bottom') {
+                    return `translate(0, -${v}%)`;
+                  }
+                  if (p === 'top') {
+                    return `translate(0, ${v}%)`;
+                  }
+                  if (p === 'left') {
+                    return `translate(${v}%, 0)`;
+                  }
+                  if (p === 'right') {
+                    return `translate(-${v}%, 0)`;
+                  }
+                  return 'none';
+                }),
               }}
             >
-              {content}
-            </animated.div>
-          </StyledPopover>
-        </div>,
+              {/* arrow */}
+              {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+
+              {/* close */}
+              {closable && (
+                <Icon
+                  type="uc-icon-guanbi"
+                  className={clsx('uc-popover-close')}
+                  onClick={onClose}
+                />
+              )}
+
+              {/** content */}
+
+              <div className={clsx('uc-popover-content')}>{content}</div>
+            </StyledPopover>
+          </div>
+        ),
         mountNode
       )}
     </>

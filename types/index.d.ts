@@ -67,6 +67,7 @@ export { default as QRCode } from './QRCode';
 export { default as Collapse } from './Collapse';
 export { default as ProgressBar } from './ProgressBar';
 export { default as AutoCenter } from './AutoCenter';
+export { default as RollingNumber } from './RollingNumber';
 /** helper & dom */
 export { debounce, throttle } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
