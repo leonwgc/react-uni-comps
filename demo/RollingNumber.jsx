@@ -12,6 +12,12 @@ export default function App() {
         </AutoCenter>
       </DemoBlock>
 
+      <DemoBlock title="延迟一秒">
+        <AutoCenter>
+          <RollingNumber delay={1000} number={100}></RollingNumber>
+        </AutoCenter>
+      </DemoBlock>
+
       <DemoBlock title="样式">
         <AutoCenter>
           <RollingNumber

@@ -16,7 +16,6 @@ const RollingNumber = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
   const { number, delay = 200, className, ...rest } = props;
 
   const spring = useSpring({
-    // reset: true,
     from: { number: 0 },
     number,
     delay,
