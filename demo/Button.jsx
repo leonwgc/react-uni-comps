@@ -124,7 +124,6 @@ export default function App() {
       <DemoBlock title="防止重复click">
         <Space wrap>
           <Button
-            active
             wait
             onClick={() => {
               console.log(1);

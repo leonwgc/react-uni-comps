@@ -46,6 +46,7 @@ module.exports = [
       {
         name: 'Drawer',
         title: 'Drawer 抽屉',
+        mobile: false,
       },
       {
         name: 'AlertDialog',
@@ -250,6 +251,10 @@ module.exports = [
       {
         name: 'NoticeList',
         title: 'NoticeList 垂直通知栏',
+      },
+      {
+        name: 'RollingNumber',
+        title: 'RollingNumber 滚动数字',
       },
     ],
   },
