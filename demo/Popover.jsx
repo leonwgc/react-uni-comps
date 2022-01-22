@@ -29,7 +29,7 @@ export default function App() {
           placement={placements[indexRef.current]}
           visible={visible}
           onClose={() => setVisible(false)}
-          content={<div style={{ padding: 16 }}>I'm here</div>}
+          content={<div style={{ padding: 16 }}>I'm here ({placements[indexRef.current]})</div>}
           onVisibleChange={(v) => {
             if (v) {
               indexRef.current++;
@@ -40,11 +40,11 @@ export default function App() {
           }}
         >
           <Button
-            style={{ margin: '10px 0px 10px 100px' }}
+            style={{ margin: '10px 0px 10px 150px' }}
             onMouseOut={() => setVisible(false)}
             onMouseOver={() => setVisible(true)}
           >
-            hi, there
+            hi, there~
           </Button>
         </Popover>
       </DemoBlock>
