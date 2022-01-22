@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { QRCode } from 'react-uni-comps';
+import { QRCode, AutoCenter } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState(0);
@@ -14,15 +14,21 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <QRCode text={text} onClick={changeText}></QRCode>
+        <AutoCenter>
+          <QRCode text={text} onClick={changeText}></QRCode>
+        </AutoCenter>
       </DemoBlock>
 
       <DemoBlock title="尺寸">
-        <QRCode text={text} size={180} onClick={changeText}></QRCode>
+        <AutoCenter>
+          <QRCode text={text} size={180} onClick={changeText}></QRCode>
+        </AutoCenter>
       </DemoBlock>
 
       <DemoBlock title="颜色">
-        <QRCode text={text} colorDark="red" colorLight="#ccc" onClick={changeText}></QRCode>
+        <AutoCenter>
+          <QRCode text={text} colorDark="red" colorLight="#ccc" onClick={changeText}></QRCode>
+        </AutoCenter>
       </DemoBlock>
     </PageWrap>
   );
