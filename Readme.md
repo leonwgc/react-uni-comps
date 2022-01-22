@@ -134,6 +134,7 @@ yarn add react-uni-comps
 - Slide (轮播)
 - NoticeBar (通告栏)
 - NoticeList (多条信息垂直滚动通知栏)
+- RollingNumber (滚动数字)
 
 ### 动画/过渡
 
