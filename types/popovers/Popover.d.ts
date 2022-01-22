@@ -35,6 +35,8 @@ export declare type Props = {
     closeOnClickOutside?: boolean;
     /** 点击遮罩是否关闭,默认true*/
     closeOnMaskClick?: boolean;
+    /** 展开动画, 默认true */
+    animated?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层

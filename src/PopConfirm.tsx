@@ -73,6 +73,8 @@ export type Props = {
   onOk?: () => void;
   /** 点击外部区域是否关闭*/
   closeOnClickOutside?: boolean;
+  /** 展开动画, 默认true */
+  animated?: boolean;
 };
 
 /**

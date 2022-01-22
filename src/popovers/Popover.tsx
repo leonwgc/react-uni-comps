@@ -83,6 +83,8 @@ export type Props = {
   closeOnClickOutside?: boolean;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
+  /** 展开动画, 默认true */
+  animated?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 /**
@@ -109,6 +111,7 @@ const Popover = (props: Props): React.ReactElement => {
     mountContainer,
     closeOnClickOutside = true,
     closeOnMaskClick = true,
+    animated = true,
     offset = {},
     ...rest
   } = props;
@@ -208,6 +211,7 @@ const Popover = (props: Props): React.ReactElement => {
     onRest: () => {
       setActive(visible);
     },
+    immediate: !animated,
     config: {
       duration: animationNormal,
       easing: easings.easeInOutQuart,

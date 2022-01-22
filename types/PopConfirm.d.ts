@@ -38,6 +38,8 @@ export declare type Props = {
     onOk?: () => void;
     /** 点击外部区域是否关闭*/
     closeOnClickOutside?: boolean;
+    /** 展开动画, 默认true */
+    animated?: boolean;
 };
 /**
  * 点击元素，弹出气泡式的确认框。基于PopMenu

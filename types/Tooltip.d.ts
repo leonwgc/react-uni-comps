@@ -20,6 +20,8 @@ export declare type Props = {
     hoverDelay?: number;
     /** visible状态变化回调 */
     onVisibleChange?: (visible: boolean) => void;
+    /** 展开动画, 默认true */
+    animated?: boolean;
 };
 /** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {

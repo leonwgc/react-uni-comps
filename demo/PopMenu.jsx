@@ -3,7 +3,15 @@ import PageWrap from './common/PageWrap';
 import color from 'color';
 import DemoBlock from './common/Block';
 import { Menu } from 'antd';
-import { Button, PopMenu, styled, useUpdateLayoutEffect, Toast } from 'react-uni-comps';
+import {
+  Button,
+  PopMenu,
+  styled,
+  useUpdateLayoutEffect,
+  Toast,
+  Cell,
+  Switch,
+} from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
   width: 240px;
@@ -41,6 +49,7 @@ export default function App() {
 
   const [placement, setPlacement] = useState('right-top');
   const [v, setV] = useState(false);
+  const [animated, setAnimated] = useState(true);
 
   useUpdateLayoutEffect(() => {
     if (v) {
@@ -50,11 +59,16 @@ export default function App() {
   }, [v]);
   return (
     <PageWrap>
-      <DemoBlock title="自定义下拉列表">
+      <Cell
+        title="动画效果"
+        content={<Switch checked={animated} onChange={setAnimated}></Switch>}
+      ></Cell>
+      <DemoBlock title="自定义菜单">
         <StyledPopMenu
           arrow={true}
           onVisibleChange={setV}
           placement={placement}
+          animated={animated}
           trigger="hover"
           content={
             <div className="list">
@@ -74,6 +88,7 @@ export default function App() {
       <DemoBlock title="使用antd Menu">
         <PopMenu
           trigger="click"
+          animated={animated}
           content={
             <Menu style={{ width: 120, textAlign: 'center' }}>
               <Menu.Item key="0">

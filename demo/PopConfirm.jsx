@@ -1,15 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button, Toast, Icon, PopConfirm, Space } from 'react-uni-comps';
+import { Button, Toast, Icon, PopConfirm, Cell, Switch } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
+  const [animated, setAnimated] = useState(true);
+
   return (
     <PageWrap>
+      <Cell
+        title="动画效果"
+        content={<Switch checked={animated} onChange={setAnimated}></Switch>}
+      ></Cell>
       <DemoBlock title="默认">
         <PopConfirm
           placement="bottom-left"
+          animated={animated}
           title="确定发布此页面?"
           style={{ width: 300 }}
           onOk={() => {
@@ -22,6 +29,7 @@ export default function App() {
 
       <DemoBlock title="自定义样式">
         <PopConfirm
+          animated={animated}
           ref={ref}
           placement="right"
           icon={<Icon type="uc-icon-yiwen" />}

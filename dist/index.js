@@ -9,8 +9,8 @@ require('intersection-observer');
 var clsx = require('clsx');
 var styled = require('styled-components');
 var reactIs = require('react-is');
-var color = require('color');
 var web = require('@react-spring/web');
+var color = require('color');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -3562,11 +3562,11 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$m = ["placement", "content", "arrow", "visible", "closable", "onVisibleChange", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "offset"];
+var _excluded$m = ["placement", "content", "arrow", "visible", "closable", "onVisibleChange", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "animated", "offset"];
 
 var _templateObject$l;
 
-var StyledPopover = styled__default['default'].div(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: ", ";\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])), boxShadow);
+var StyledPopover = styled__default['default'](web.animated.div)(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  position: absolute;\n  z-index: 1000;\n  background: #fff;\n  border-radius: 2px;\n\n  box-shadow: ", ";\n  .uc-popover-content {\n  }\n\n  .uc-popover-close {\n    position: absolute;\n    z-index: 10;\n    top: 12px;\n    right: 12px;\n    cursor: pointer;\n    color: #000;\n    opacity: 0.35;\n    font-size: 16px;\n\n    :hover {\n      opacity: 0.75;\n    }\n  }\n\n  .uc-popover-arrow {\n    position: absolute;\n    width: 6px;\n    height: 6px;\n    z-index: -1;\n    background: inherit;\n    transform: rotate(45deg);\n  }\n"])), boxShadow);
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
@@ -3591,14 +3591,17 @@ var Popover = function Popover(props) {
       maskStyle = props.maskStyle,
       maskClass = props.maskClass,
       mountContainer = props.mountContainer,
-      closeOnClickOutside = props.closeOnClickOutside,
+      _props$closeOnClickOu = props.closeOnClickOutside,
+      closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       _props$closeOnMaskCli = props.closeOnMaskClick,
       closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
+      _props$animated = props.animated,
+      animated = _props$animated === void 0 ? true : _props$animated,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
       rest = _objectWithoutProperties(props, _excluded$m);
 
-  var childrenRef = React.useRef();
+  var anchorRef = React.useRef();
   var popoverRef = React.useRef(null);
   var resizeTimerRef = React.useRef(0);
   var offsetRef = React.useRef(offset);
@@ -3612,7 +3615,13 @@ var Popover = function Popover(props) {
   var _useState3 = React.useState({}),
       _useState4 = _slicedToArray(_useState3, 2),
       arrowStyle = _useState4[0],
-      setArrowStyle = _useState4[1];
+      setArrowStyle = _useState4[1]; // animation effect
+
+
+  var _useState5 = React.useState(visible),
+      _useState6 = _slicedToArray(_useState5, 2),
+      active = _useState6[0],
+      setActive = _useState6[1];
 
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   React.useEffect(function () {
@@ -3622,7 +3631,7 @@ var Popover = function Popover(props) {
     onVisibleChange === null || onVisibleChange === void 0 ? void 0 : onVisibleChange(visible);
   }, [visible]);
   React.useEffect(function () {
-    var anchorEl = childrenRef.current;
+    var anchorEl = anchorRef.current;
     var scrollContainer = getScrollContainer(anchorEl); // todo: support cust scroll container , by now it's window
 
     var calculateStyle = function calculateStyle(anchorEl, scrollContainer) {
@@ -3653,7 +3662,7 @@ var Popover = function Popover(props) {
   }, [visible, placement, mask]);
   var closeOutsideHandler = React.useCallback(function (e) {
     var el = popoverRef.current;
-    var anchor = childrenRef.current;
+    var anchor = anchorRef.current;
 
     if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
       var _onCloseRef$current;
@@ -3663,15 +3672,34 @@ var Popover = function Popover(props) {
   }, [onCloseRef]);
   React.useEffect(function () {
     if (closeOnClickOutside) {
-      window.addEventListener('click', closeOutsideHandler);
+      window.addEventListener('click', closeOutsideHandler, false);
       return function () {
-        window.removeEventListener('click', closeOutsideHandler);
+        window.removeEventListener('click', closeOutsideHandler, false);
       };
     }
   }, [closeOnClickOutside, closeOutsideHandler]);
+
+  var _useSpring = web.useSpring({
+    translate: visible ? 0 : 10,
+    opacity: visible ? 1 : 0,
+    onStart: function onStart() {
+      setActive(true);
+    },
+    onRest: function onRest() {
+      setActive(visible);
+    },
+    immediate: !animated,
+    config: {
+      duration: animationNormal,
+      easing: web.easings.easeInOutQuart
+    }
+  }),
+      translate = _useSpring.translate,
+      opacity = _useSpring.opacity;
+
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].cloneElement(children, {
-    ref: childrenRef
-  }), visible ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: anchorRef
+  }), /*#__PURE__*/ReactDOM__default['default'].createPortal((visible || active) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popover-wrap')
   }, mask && /*#__PURE__*/React__default['default'].createElement(Mask, {
     className: maskClass,
@@ -3684,7 +3712,30 @@ var Popover = function Popover(props) {
     className: clsx__default['default'](className, 'uc-popover', {
       mask: mask
     }),
-    style: _objectSpread2(_objectSpread2({}, modalStyle), style)
+    style: _objectSpread2(_objectSpread2(_objectSpread2({}, modalStyle), style), {}, {
+      opacity: opacity,
+      transform: translate.to(function (v) {
+        var p = placement.split('-')[0];
+
+        if (p === 'bottom') {
+          return "translate(0, -".concat(v, "%)");
+        }
+
+        if (p === 'top') {
+          return "translate(0, ".concat(v, "%)");
+        }
+
+        if (p === 'left') {
+          return "translate(".concat(v, "%, 0)");
+        }
+
+        if (p === 'right') {
+          return "translate(-".concat(v, "%, 0)");
+        }
+
+        return 'none';
+      })
+    })
   }), arrow && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('uc-popover-arrow'),
     style: arrowStyle
@@ -3694,7 +3745,7 @@ var Popover = function Popover(props) {
     onClick: onClose
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popover-content')
-  }, content))), mountNode) : null);
+  }, content))), mountNode));
 };
 
 var _excluded$n = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
@@ -9593,7 +9644,7 @@ var useMount = function useMount(fn) {
 var _excluded$T = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$R;
-var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
 /**
  *  子项，放在Collapse里面
  *
@@ -9812,7 +9863,6 @@ ProgressBar.displayName = 'UC-ProgressBar';
 var _excluded$V = ["children"];
 
 var _templateObject$S;
-
 var StyledWrap$4 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  .content {\n    flex: 0 1 auto;\n  }\n"])));
 /** 自动居中 */
 
@@ -9822,12 +9872,39 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-autocenter')
+    className: clsx__default['default']('uc-auto-center')
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content"
   }, children));
 });
 AutoCenter.displayName = 'UC-AutoCenter';
+
+var _excluded$W = ["number", "delay", "className"];
+
+/** 滚动数字 */
+var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var number = props.number,
+      _props$delay = props.delay,
+      delay = _props$delay === void 0 ? 200 : _props$delay,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$W);
+
+  var spring = web.useSpring({
+    from: {
+      number: 0
+    },
+    number: number,
+    delay: delay,
+    config: web.config.molasses
+  });
+  return /*#__PURE__*/React__default['default'].createElement(web.animated.span, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-rolling-number', className)
+  }), spring.number.to(function (n) {
+    return ~~n;
+  }));
+});
+RollingNumber.displayName = 'UC-RollingNumber';
 
 /**
  * 返回防抖函数
@@ -10025,6 +10102,7 @@ exports.QRCode = QRCode$1;
 exports.Radio = Radio;
 exports.RadioGroup = RadioGroup;
 exports.Rate = Rate;
+exports.RollingNumber = RollingNumber;
 exports.ScrollTop = ScrollTop;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
