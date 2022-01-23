@@ -20,6 +20,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> SafeArea
+          </Space>
+        }
+        description="SafeArea"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SafeArea')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> RollingNumber
           </Space>
         }

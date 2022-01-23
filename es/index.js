@@ -68,6 +68,7 @@ export { default as Collapse } from './Collapse';
 export { default as ProgressBar } from './ProgressBar';
 export { default as AutoCenter } from './AutoCenter';
 export { default as RollingNumber } from './RollingNumber';
+export { default as SafeArea } from './SafeArea';
 /** helper & dom */
 
 export { debounce, throttle } from './helper';

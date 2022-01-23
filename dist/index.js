@@ -9907,6 +9907,32 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 RollingNumber.displayName = 'UC-RollingNumber';
 
+var _excluded$X = ["position", "className", "style", "children"];
+
+/** 安全区 */
+var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _objectSpread2$1;
+
+  var _props$position = props.position,
+      position = _props$position === void 0 ? 'bottom' : _props$position,
+      className = props.className,
+      style = props.style,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$X);
+
+  var styles = _objectSpread2(_objectSpread2({
+    display: 'block',
+    width: '100%'
+  }, style), {}, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, "padding-".concat(position), "constant(safe-area-inset-".concat(position, ")")), _defineProperty(_objectSpread2$1, "padding-".concat(position), "env(safe-area-inset-".concat(position, ")")), _objectSpread2$1));
+
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-safe-area', className),
+    style: styles
+  }), children);
+});
+SafeArea.displayName = 'UC-SafeArea';
+
 /**
  * 返回防抖函数
  *
@@ -10104,6 +10130,7 @@ exports.Radio = Radio;
 exports.RadioGroup = RadioGroup;
 exports.Rate = Rate;
 exports.RollingNumber = RollingNumber;
+exports.SafeArea = SafeArea;
 exports.ScrollTop = ScrollTop;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
