@@ -35,7 +35,7 @@ const StyledLoading = styled.div`
   position: relative;
   width: 1em;
   height: 1em;
-  vertical-align: text-bottom;
+  vertical-align: middle;
   animation: loading 1s steps(60, end) infinite;
   :before,
   :after {
