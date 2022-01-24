@@ -19,13 +19,13 @@ export default function App() {
           <Space direction="vertical" size={16} style={{ width: '100%' }}>
             <Cell title="姓名">
               <Field name="username" rules={[{ required: true, message: '请填写姓名' }]}>
-                <Input placeholder="请填写姓名" />
+                <Input placeholder="请填写姓名" clearable />
               </Field>
             </Cell>
 
             <Cell title="密码">
               <Field name="password" rules={[{ required: true, message: '请填写密码' }]}>
-                <Input placeholder="请填写密码" />
+                <Input placeholder="请填写密码" clearable />
               </Field>
             </Cell>
 
