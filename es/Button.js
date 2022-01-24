@@ -82,7 +82,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onClick: function onClick(e) {
       _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
 
-      if (typeof _onClick === 'function' && usingWait) {
+      if (usingWait) {
         setWaiting(true);
         setTimeout(function () {
           setWaiting(false);

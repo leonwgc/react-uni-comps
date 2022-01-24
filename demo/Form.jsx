@@ -1,8 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import Form, { Field } from 'rc-field-form';
-import { Button, Input, Space, Toast, Cell } from 'react-uni-comps';
+import { Button, Input, Space, Toast, Cell, Form, Field } from 'react-uni-comps';
 
 export default function App() {
   const [form] = Form.useForm();

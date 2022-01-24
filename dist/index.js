@@ -11,6 +11,7 @@ var styled = require('styled-components');
 var reactIs = require('react-is');
 var web = require('@react-spring/web');
 var color = require('color');
+var rcFieldForm = require('rc-field-form');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -19,6 +20,7 @@ var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
+var rcFieldForm__default = /*#__PURE__*/_interopDefaultLegacy(rcFieldForm);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -2579,7 +2581,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     onClick: function onClick(e) {
       _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
 
-      if (typeof _onClick === 'function' && usingWait) {
+      if (usingWait) {
         setWaiting(true);
         setTimeout(function () {
           setWaiting(false);
@@ -10077,6 +10079,18 @@ Object.defineProperty(exports, 'useSpring', {
   enumerable: true,
   get: function () {
     return web.useSpring;
+  }
+});
+Object.defineProperty(exports, 'Field', {
+  enumerable: true,
+  get: function () {
+    return rcFieldForm.Field;
+  }
+});
+Object.defineProperty(exports, 'Form', {
+  enumerable: true,
+  get: function () {
+    return rcFieldForm__default['default'];
   }
 });
 exports.ActionSheet = ActionSheet;
