@@ -10998,7 +10998,7 @@ rc-dropdown@^3.2.0, rc-dropdown@~3.2.0:
     classnames "^2.2.6"
     rc-trigger "^5.0.4"
 
-rc-field-form@~1.22.0-2:
+rc-field-form@^1.22.1, rc-field-form@~1.22.0-2:
   version "1.22.1"
   resolved "https://registry.npmmirror.com/rc-field-form/download/rc-field-form-1.22.1.tgz#0bd2f4e730ff2f071529d00bef28e062362890f5"
   integrity sha512-LweU7nBeqmC5r3HDUjRprcOXXobHXp/TGIxD7ppBq5FX6Iptt3ibdpRVg4RSyNulBNGHOuknHlRcguuIpvVMVg==

@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Form',
+    component: lazy(() => import('./Form')),
+  },
+  {
     path: '/SafeArea',
     component: lazy(() => import('./SafeArea')),
   },

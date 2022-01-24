@@ -198,7 +198,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       type={htmlType}
       onClick={(e) => {
         onClick?.(e);
-        if (typeof onClick === 'function' && usingWait) {
+        if (usingWait) {
           setWaiting(true);
           setTimeout(() => {
             setWaiting(false);
