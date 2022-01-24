@@ -2175,10 +2175,10 @@ var WaitLoading = function WaitLoading(props) {
 
 var _templateObject$7;
 /**
- *  get a css snippet with theme color
+ *  获取包含主题色的styled-components css片段
  *
- * @param {string} prop
- * @param {string} [leftValue='']
+ * @param {string} css属性
+ * @param {string} [leftValue=''] 左侧值
  * @return {*}  {*}
  */
 
@@ -10165,6 +10165,7 @@ exports.WaitLoading = WaitLoading;
 exports.WaterMark = WaterMark;
 exports.Waypoint = Waypoint;
 exports.debounce = debounce;
+exports.getThemeColorCss = getThemeColorCss;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
 exports.loadResource = loadResource;

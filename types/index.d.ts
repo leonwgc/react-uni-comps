@@ -73,6 +73,7 @@ export { default as SafeArea } from './SafeArea';
 export { debounce, throttle } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
+export { getThemeColorCss } from './themeHelper';
 /** hooks */
 export { default as useUpdateEffect } from './hooks/useUpdateEffect';
 export { default as useUpdateLayoutEffect } from './hooks/useUpdateLayoutEffect';

@@ -3,10 +3,10 @@ import { isBrowser } from './dom';
 import * as vars from './vars';
 
 /**
- *  get a css snippet with theme color
+ *  获取包含主题色的styled-components css片段
  *
- * @param {string} prop
- * @param {string} [leftValue='']
+ * @param {string} css属性
+ * @param {string} [leftValue=''] 左侧值
  * @return {*}  {*}
  */
 export const getThemeColorCss = (prop: string, leftValue = ''): any => {
