@@ -11,6 +11,8 @@ declare type Props = PopupProps & {
     closable?: boolean;
     className?: string;
     style?: React.CSSProperties;
+    /** 关闭后卸载组件,默认true*/
+    unmountOnExit: any;
 };
 /** 对话框,基于Popup */
 declare const Modal: {

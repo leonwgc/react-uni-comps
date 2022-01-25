@@ -46,6 +46,8 @@ type Props = {
   wrapStyle?: React.CSSProperties;
   /** 透传给 pc confirm button  */
   wait?: number | boolean;
+  /** 关闭后卸载组件,默认true*/
+  unmountOnExit?: boolean;
 };
 
 const StyledAlertDialog = styled(Popup)`
@@ -342,7 +344,7 @@ AlertDialog.show = (props: StaticProps) => {
 
   const container = document.createElement('div');
 
-  const beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration);
+  const beforeDispose = beforeDisposeGen(container, '.uc-popup', transitionDuration);
 
   const dispose: Dispose = renderElement(
     <TransitionElement duration={transitionDuration}>

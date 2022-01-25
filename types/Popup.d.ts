@@ -26,6 +26,8 @@ export declare type Props = {
     closeOnMaskClick?: boolean;
     /** pc端从点击元素飞出动画效果，默认true */
     flip?: boolean;
+    /** 关闭后卸载组件,默认true*/
+    unmountOnExit?: boolean;
 };
 /**
  *

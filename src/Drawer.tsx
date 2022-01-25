@@ -12,6 +12,8 @@ type Props = PopupProps & {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  /** 关闭后卸载组件,默认true*/
+  unmountOnExit?: boolean;
 };
 
 const StyledDrawer = styled(Popup)`

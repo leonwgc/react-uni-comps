@@ -34,6 +34,8 @@ declare type Props = {
     wrapStyle?: React.CSSProperties;
     /** 透传给 pc confirm button  */
     wait?: number | boolean;
+    /** 关闭后卸载组件,默认true*/
+    unmountOnExit?: boolean;
 };
 declare type StaticProps = {
     /** 标题 */

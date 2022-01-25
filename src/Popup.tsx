@@ -141,6 +141,8 @@ export type Props = {
   closeOnMaskClick?: boolean;
   /** pc端从点击元素飞出动画效果，默认true */
   flip?: boolean;
+  /** 关闭后卸载组件,默认true*/
+  unmountOnExit?: boolean;
 };
 
 type MousePosition = {
@@ -186,6 +188,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     duration = animationFast,
     flip = true,
     mountContainer,
+    unmountOnExit = true,
     style,
     className,
   } = props;
@@ -218,7 +221,9 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
         dialogEl.style.transitionDuration = duration + 'ms';
       } else {
         setTimeout(() => {
-          dialogEl.style.transformOrigin = 'unset';
+          if (dialogEl) {
+            dialogEl.style.transformOrigin = 'unset';
+          }
         }, duration);
       }
     },
@@ -245,7 +250,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, [mask, visible]);
 
   return ReactDOM.createPortal(
-    <div className={clsx('uc-popup-container-' + position)}>
+    <div>
       {mask && visible && (
         <Mask
           ref={maskRef}
@@ -254,12 +259,12 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
           onClick={() => closeOnMaskClick && onClose?.()}
         />
       )}
-      <Transition in={visible} timeout={duration}>
+      <Transition in={visible} timeout={duration} unmountOnExit={unmountOnExit}>
         {(status) => (
           <StyledWrapper
             ref={wrapRef}
             style={{ ...style, position: showPosition, transitionDuration: duration + 'ms' }}
-            className={clsx('uc-popup-wrap', className, position, status, position + '-' + status, {
+            className={clsx('uc-popup', className, position, status, position + '-' + status, {
               mobile: isMobile,
               pc: !isMobile,
             })}

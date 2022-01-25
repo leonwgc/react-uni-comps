@@ -169,7 +169,7 @@ AlertDialog.show = function (props) {
       rest = __rest(props, ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"]);
 
   var container = document.createElement('div');
-  var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration);
+  var beforeDispose = beforeDisposeGen(container, '.uc-popup', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
   }, /*#__PURE__*/React.createElement(AlertDialog, __assign({}, rest, {

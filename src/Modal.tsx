@@ -16,6 +16,8 @@ type Props = PopupProps & {
   closable?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  /** 关闭后卸载组件,默认true*/
+  unmountOnExit;
 };
 
 const StyledModal = styled(Popup)`

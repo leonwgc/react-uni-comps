@@ -794,6 +794,8 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _props$flip = props.flip,
       flip = _props$flip === void 0 ? true : _props$flip,
       mountContainer = props.mountContainer,
+      _props$unmountOnExit = props.unmountOnExit,
+      unmountOnExit = _props$unmountOnExit === void 0 ? true : _props$unmountOnExit,
       style = props.style,
       className = props.className;
   var wrapRef = React.useRef();
@@ -820,7 +822,9 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       dialogEl.style.transitionDuration = duration + 'ms';
     } else {
       setTimeout(function () {
-        dialogEl.style.transformOrigin = 'unset';
+        if (dialogEl) {
+          dialogEl.style.transformOrigin = 'unset';
+        }
       }, duration);
     }
   }, [duration]);
@@ -842,9 +846,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('uc-popup-container-' + position)
-  }, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
+  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", null, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
     ref: maskRef,
     className: maskClass,
     style: maskStyle,
@@ -853,7 +855,8 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }), /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
     "in": visible,
-    timeout: duration
+    timeout: duration,
+    unmountOnExit: unmountOnExit
   }, function (status) {
     return /*#__PURE__*/React__default['default'].createElement(StyledWrapper, {
       ref: wrapRef,
@@ -861,7 +864,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
         position: showPosition,
         transitionDuration: duration + 'ms'
       }),
-      className: clsx__default['default']('uc-popup-wrap', className, position, status, position + '-' + status, {
+      className: clsx__default['default']('uc-popup', className, position, status, position + '-' + status, {
         mobile: isMobile,
         pc: !isMobile
       })
@@ -4656,7 +4659,7 @@ AlertDialog.show = function (props) {
       rest = _objectWithoutProperties(props, _excluded2$2);
 
   var container = document.createElement('div');
-  var beforeDispose = beforeDisposeGen(container, '.uc-popup-wrap', transitionDuration$1);
+  var beforeDispose = beforeDisposeGen(container, '.uc-popup', transitionDuration$1);
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration$1
   }, /*#__PURE__*/React__default['default'].createElement(AlertDialog, _extends({}, rest, {

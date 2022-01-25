@@ -78,6 +78,8 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       _e = props.flip,
       flip = _e === void 0 ? true : _e,
       mountContainer = props.mountContainer,
+      _f = props.unmountOnExit,
+      unmountOnExit = _f === void 0 ? true : _f,
       style = props.style,
       className = props.className;
   var wrapRef = useRef();
@@ -104,7 +106,9 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       dialogEl.style.transitionDuration = duration + 'ms';
     } else {
       setTimeout(function () {
-        dialogEl.style.transformOrigin = 'unset';
+        if (dialogEl) {
+          dialogEl.style.transformOrigin = 'unset';
+        }
       }, duration);
     }
   }, [duration]);
@@ -126,9 +130,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", {
-    className: clsx('uc-popup-container-' + position)
-  }, mask && visible && /*#__PURE__*/React.createElement(Mask, {
+  return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", null, mask && visible && /*#__PURE__*/React.createElement(Mask, {
     ref: maskRef,
     className: maskClass,
     style: maskStyle,
@@ -137,7 +139,8 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
     }
   }), /*#__PURE__*/React.createElement(Transition, {
     in: visible,
-    timeout: duration
+    timeout: duration,
+    unmountOnExit: unmountOnExit
   }, function (status) {
     return /*#__PURE__*/React.createElement(StyledWrapper, {
       ref: wrapRef,
@@ -145,7 +148,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
         position: showPosition,
         transitionDuration: duration + 'ms'
       }),
-      className: clsx('uc-popup-wrap', className, position, status, position + '-' + status, {
+      className: clsx('uc-popup', className, position, status, position + '-' + status, {
         mobile: isMobile,
         pc: !isMobile
       })
