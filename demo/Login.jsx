@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Toast, Input, styled, Button, HairLineBox, useCountdown, Icon } from 'react-uni-comps';
+import { Toast, Input, styled, Button, Cell, useCountdown, Icon } from 'react-uni-comps';
 
 //#region  style
 
@@ -9,17 +9,17 @@ const isValidPhone = (tel = '') => {
   return /^1\d{10}$/.test(tel);
 };
 
-const StyledHairBox = styled(HairLineBox)`
-  font-family: PingFangSC, PingFangSC-Regular;
-  font-weight: 400;
-  text-align: left;
-  color: #cccccc;
-  line-height: 22px;
-  padding: 12px 0;
-  input {
-    font-size: 16px;
-  }
-`;
+// const StyledHairBox = styled(HairLineBox)`
+//   font-family: PingFangSC, PingFangSC-Regular;
+//   font-weight: 400;
+//   text-align: left;
+//   color: #cccccc;
+//   line-height: 22px;
+//   padding: 12px 0;
+//   input {
+//     font-size: 16px;
+//   }
+// `;
 
 //#endregion
 
@@ -53,7 +53,7 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="登录">
-        <StyledHairBox>
+        <Cell>
           <Input
             clearable
             type="number"
@@ -61,9 +61,9 @@ export default function App() {
             value={tel}
             onChange={(val) => setFieldValue('tel', val)}
           />
-        </StyledHairBox>
+        </Cell>
 
-        <StyledHairBox>
+        <Cell>
           <Input
             clearable
             placeholder="请输入验证码"
@@ -76,7 +76,7 @@ export default function App() {
               </Button>
             }
           />
-        </StyledHairBox>
+        </Cell>
 
         <Button
           type="primary"

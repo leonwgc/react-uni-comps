@@ -42,46 +42,61 @@ var __rest = this && this.__rest || function (s, e) {
 import React from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
+import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
-var StyledCell = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"], ["\n  background-color: #fff;\n  padding-left: 12px;\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    .cell-title {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .title {\n        color: #333;\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), vars.activeBg);
+var StyledCell = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: #fff;\n\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  &.has-label {\n    padding-left: 12px;\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    &.pc {\n      align-items: center;\n    }\n\n    .cell-label {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .label {\n        color: #333;\n\n        &.required::before {\n          content: '*';\n          margin-right: 2px;\n          color: ", ";\n          vertical-align: middle;\n        }\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"], ["\n  background-color: #fff;\n\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  &.has-label {\n    padding-left: 12px;\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    &.pc {\n      align-items: center;\n    }\n\n    .cell-label {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .label {\n        color: #333;\n\n        &.required::before {\n          content: '*';\n          margin-right: 2px;\n          color: ", ";\n          vertical-align: middle;\n        }\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), vars.activeBg, vars.danger);
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var title = props.title,
+      required = props.required,
+      label = props.label,
+      labelWidth = props.labelWidth,
       description = props.description,
       className = props.className,
       content = props.content,
       _a = props.lineColor,
       lineColor = _a === void 0 ? vars.border : _a,
       children = props.children,
-      rest = __rest(props, ["title", "description", "className", "content", "lineColor", "children"]);
+      rest = __rest(props, ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"]);
 
   if (content && children) {
     throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
   }
 
+  var hasInput = !!children;
+  var hasLabel = label || title;
   return /*#__PURE__*/React.createElement(StyledCell, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-cell', className, {
-      clickable: typeof rest.onClick === 'function'
+      'clickable': typeof rest.onClick === 'function',
+      'has-label': hasLabel
     })
   }), /*#__PURE__*/React.createElement(HairLineBox, {
     color: lineColor,
     className: "cell-line"
   }, /*#__PURE__*/React.createElement("div", {
-    className: clsx('cell-inner')
-  }, /*#__PURE__*/React.createElement("div", {
-    className: clsx('cell-title', {
-      input: !!children
+    className: clsx('cell-inner', {
+      mobile: isMobile,
+      pc: !isMobile
     })
+  }, hasLabel && /*#__PURE__*/React.createElement("div", {
+    className: clsx('cell-label', {
+      input: hasInput
+    }),
+    style: {
+      width: labelWidth
+    }
   }, /*#__PURE__*/React.createElement("span", {
-    className: "title"
-  }, title), description && /*#__PURE__*/React.createElement("div", {
+    className: clsx('label', {
+      required: required
+    })
+  }, label || title), description && /*#__PURE__*/React.createElement("div", {
     className: "description"
   }, description)), /*#__PURE__*/React.createElement("div", {
     className: clsx('cell-content', {
-      input: !!children
+      input: hasInput
     })
   }, content, children))));
 });

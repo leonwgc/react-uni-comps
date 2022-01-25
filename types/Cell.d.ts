@@ -1,8 +1,13 @@
 import React from 'react';
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<{
-    /** 标题 */
+    /** 是否显示红色*标记 */
+    required?: boolean;
     title?: React.ReactNode;
+    /** 标题 */
+    label?: React.ReactNode;
+    /** 标题宽度*/
+    labelWidth?: number;
     /** 标题下方描述 */
     description?: React.ReactNode;
     /** 右侧内容 */

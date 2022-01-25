@@ -1,12 +1,18 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
+import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 
 type Props = {
-  /** 标题 */
+  /** 是否显示红色*标记 */
+  required?: boolean;
   title?: React.ReactNode;
+  /** 标题 */
+  label?: React.ReactNode;
+  /** 标题宽度*/
+  labelWidth?: number;
   /** 标题下方描述 */
   description?: React.ReactNode;
   /** 右侧内容 */
@@ -21,11 +27,15 @@ type Props = {
 
 const StyledCell = styled.div`
   background-color: #fff;
-  padding-left: 12px;
+
   &.clickable {
     &:active {
       background-color: ${vars.activeBg};
     }
+  }
+
+  &.has-label {
+    padding-left: 12px;
   }
 
   .cell-inner {
@@ -38,14 +48,25 @@ const StyledCell = styled.div`
     font-size: 14px;
     line-height: 24px;
 
-    .cell-title {
+    &.pc {
+      align-items: center;
+    }
+
+    .cell-label {
       box-sizing: border-box;
       margin-right: 12px;
       text-align: left;
       flex: 1;
 
-      .title {
+      .label {
         color: #333;
+
+        &.required::before {
+          content: '*';
+          margin-right: 2px;
+          color: ${vars.danger};
+          vertical-align: middle;
+        }
       }
 
       .description {
@@ -82,6 +103,9 @@ const StyledCell = styled.div`
 const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     title,
+    required,
+    label,
+    labelWidth,
     description,
     className,
     content,
@@ -93,19 +117,27 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     throw new Error(`Cell: 不能同时设置content和子元素`);
   }
 
+  const hasInput = !!children;
+  const hasLabel = label || title;
+
   return (
     <StyledCell
       {...rest}
       ref={ref}
-      className={clsx('uc-cell', className, { clickable: typeof rest.onClick === 'function' })}
+      className={clsx('uc-cell', className, {
+        'clickable': typeof rest.onClick === 'function',
+        'has-label': hasLabel,
+      })}
     >
       <HairLineBox color={lineColor} className="cell-line">
-        <div className={clsx('cell-inner')}>
-          <div className={clsx('cell-title', { input: !!children })}>
-            <span className="title">{title}</span>
-            {description && <div className="description">{description}</div>}
-          </div>
-          <div className={clsx('cell-content', { input: !!children })}>
+        <div className={clsx('cell-inner', { mobile: isMobile, pc: !isMobile })}>
+          {hasLabel && (
+            <div className={clsx('cell-label', { input: hasInput })} style={{ width: labelWidth }}>
+              <span className={clsx('label', { required: required })}>{label || title}</span>
+              {description && <div className="description">{description}</div>}
+            </div>
+          )}
+          <div className={clsx('cell-content', { input: hasInput })}>
             {content}
             {children}
           </div>
