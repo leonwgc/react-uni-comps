@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button, Input, Toast, Form } from 'react-uni-comps';
+import { Button, Input, Form } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -11,10 +11,9 @@ export default function App() {
           onFinish={(values) => {
             console.log('Finish:', values);
           }}
-          onFinishFailed={(err) => {
-            Toast.show(err.errorFields[0].errors[0]);
-          }}
-          requiredMark
+          toastError
+          layout="horizontal"
+          labelWidth={50}
         >
           <Form.Item
             label="姓名"
@@ -22,7 +21,7 @@ export default function App() {
             rules={[
               { required: true, message: '请填写姓名' },
               {
-                len: 5,
+                max: 5,
                 message: '不能超过5个字',
               },
             ]}

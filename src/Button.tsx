@@ -188,7 +188,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const usingWait = waitTime > 0;
 
-  const icon = props.icon || (loading || waiting ? <Spin /> : null);
+  const icon = props.icon || (loading ? <Spin /> : null);
 
   return (
     <StyledButton

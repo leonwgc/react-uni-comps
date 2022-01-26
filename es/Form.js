@@ -34,12 +34,8 @@ import { Field, default as RcForm } from 'rc-field-form';
 import clsx from 'clsx';
 import Cell from './Cell';
 import Space from './Space';
-export var defaultContext = {
-  layout: 'vertical',
-  labelWidth: 80,
-  gap: 16
-};
-export var FormContext = /*#__PURE__*/React.createContext(defaultContext);
+import Toast from './Toast';
+export var FormContext = /*#__PURE__*/React.createContext(null);
 /** 表单 */
 
 var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -53,15 +49,25 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _d = props.layout,
       layout = _d === void 0 ? 'vertical' : _d,
       className = props.className,
-      rest = __rest(props, ["children", "gap", "labelWidth", "requiredMark", "layout", "className"]);
+      _onFinishFailed = props.onFinishFailed,
+      _e = props.toastError,
+      toastError = _e === void 0 ? false : _e,
+      rest = __rest(props, ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError"]);
 
   return /*#__PURE__*/React.createElement(RcForm, __assign({}, rest, {
     ref: ref,
-    className: clsx('uc-form', className)
+    className: clsx('uc-form', className),
+    onFinishFailed: function onFinishFailed(errInfo) {
+      if (toastError) {
+        try {
+          Toast.show(errInfo.errorFields[0].errors[0]);
+        } catch (ex) {}
+      }
+
+      _onFinishFailed === null || _onFinishFailed === void 0 ? void 0 : _onFinishFailed(errInfo);
+    }
   }), /*#__PURE__*/React.createElement(FormContext.Provider, {
     value: {
-      layout: layout,
-      gap: gap,
       labelWidth: labelWidth,
       requiredMark: requiredMark
     }

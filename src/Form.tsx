@@ -5,38 +5,35 @@ import type { FormProps as RcFormProps, FormInstance } from 'rc-field-form';
 import clsx from 'clsx';
 import Cell from './Cell';
 import Space from './Space';
+import Toast from './Toast';
 
 /** 排列方式 */
 type FormLayout = 'vertical' | 'horizontal';
 
 type FormContextType = {
-  /** 排列方式 */
-  layout: FormLayout;
   /** 标题宽度,默认80*/
   labelWidth?: number;
-  /** 控件和控件距离, 默认16 */
-  gap?: number;
   /** 是否显示星号，当rules包含required时，默认true */
   requiredMark?: boolean;
 };
 
 export type FormProps = RcFormProps & {
+  /** 控件和控件距离, 默认16 */
+  gap?: number;
+  /** 字段没有通过验证是否提示错误，默认false */
+  toastError?: boolean;
+  /** 排列方式 */
+  layout: FormLayout;
   className?: string;
   style?: React.CSSProperties;
 } & FormContextType;
-
-export const defaultContext: FormContextType = {
-  layout: 'vertical',
-  labelWidth: 80,
-  gap: 16,
-};
 
 type FormItemProps = FieldProps & {
   /** 标题 */
   label?: React.ReactNode;
 };
 
-export const FormContext = React.createContext<FormContextType>(defaultContext);
+export const FormContext = React.createContext<FormContextType>(null);
 
 /** 表单 */
 const Form: React.ForwardRefExoticComponent<FormProps> & {
@@ -50,14 +47,26 @@ const Form: React.ForwardRefExoticComponent<FormProps> & {
     requiredMark = true,
     layout = 'vertical',
     className,
+    onFinishFailed,
+    toastError = false,
     ...rest
   } = props;
   return (
-    <RcForm {...rest} ref={ref} className={clsx('uc-form', className)}>
+    <RcForm
+      {...rest}
+      ref={ref}
+      className={clsx('uc-form', className)}
+      onFinishFailed={(errInfo) => {
+        if (toastError) {
+          try {
+            Toast.show(errInfo.errorFields[0].errors[0]);
+          } catch (ex) {}
+        }
+        onFinishFailed?.(errInfo);
+      }}
+    >
       <FormContext.Provider
         value={{
-          layout,
-          gap,
           labelWidth,
           requiredMark,
         }}

@@ -2614,7 +2614,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 1000 : 0;
   var usingWait = waitTime > 0;
-  var icon = props.icon || (loading || waiting ? /*#__PURE__*/React__default['default'].createElement(Spin, null) : null);
+  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spin, null) : null);
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
     ref: ref,
     disabled: disabled,
@@ -10090,16 +10090,11 @@ var useUnmount = function useUnmount(fn) {
   }, []);
 };
 
-var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className"],
+var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError"],
     _excluded2$4 = ["children", "label", "name"];
 /** 排列方式 */
 
-var defaultContext = {
-  layout: 'vertical',
-  labelWidth: 80,
-  gap: 16
-};
-var FormContext = /*#__PURE__*/React__default['default'].createContext(defaultContext);
+var FormContext = /*#__PURE__*/React__default['default'].createContext(null);
 /** 表单 */
 
 var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10113,15 +10108,25 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       _props$layout = props.layout,
       layout = _props$layout === void 0 ? 'vertical' : _props$layout,
       className = props.className,
+      _onFinishFailed = props.onFinishFailed,
+      _props$toastError = props.toastError,
+      toastError = _props$toastError === void 0 ? false : _props$toastError,
       rest = _objectWithoutProperties(props, _excluded$Y);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-form', className)
+    className: clsx__default['default']('uc-form', className),
+    onFinishFailed: function onFinishFailed(errInfo) {
+      if (toastError) {
+        try {
+          Toast.show(errInfo.errorFields[0].errors[0]);
+        } catch (ex) {}
+      }
+
+      _onFinishFailed === null || _onFinishFailed === void 0 ? void 0 : _onFinishFailed(errInfo);
+    }
   }), /*#__PURE__*/React__default['default'].createElement(FormContext.Provider, {
     value: {
-      layout: layout,
-      gap: gap,
       labelWidth: labelWidth,
       requiredMark: requiredMark
     }
