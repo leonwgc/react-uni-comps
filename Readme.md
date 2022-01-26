@@ -240,6 +240,9 @@ import { clsx } from 'react-uni-comps';
 
 // react-transition-group
 import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
+
+// react-spring
+import { useSpring, animated, easings } from 'react-uni-comps';
 ```
 
 ### 参考
