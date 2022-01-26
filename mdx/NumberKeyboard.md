@@ -1,6 +1,6 @@
 ---
 title: NumberKeyboard 数字键盘
-order: 7
+order: 8
 mobile: true
 group:
   title: 数据录入

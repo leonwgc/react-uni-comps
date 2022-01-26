@@ -1,6 +1,6 @@
 ---
 title: Picker 弹出选择器
-order: 8
+order: 9
 mobile: true
 group:
   title: 数据录入

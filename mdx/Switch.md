@@ -1,6 +1,6 @@
 ---
 title: Switch 开关
-order: 5
+order: 6
 mobile: true
 group:
   title: 数据录入

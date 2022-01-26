@@ -1,6 +1,6 @@
 ---
 title: PasswordInput 自定义密码输入框
-order: 6
+order: 7
 mobile: true
 group:
   title: 数据录入

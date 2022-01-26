@@ -133,6 +133,10 @@ module.exports = [
     path: 'data',
     comps: [
       {
+        name: 'Form',
+        title: 'Form 表单',
+      },
+      {
         name: 'Checkbox',
         title: 'Checkbox 复选框',
       },

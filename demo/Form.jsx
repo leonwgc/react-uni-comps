@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button, Input, Form } from 'react-uni-comps';
+import { Button, Input, Form, Toast } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -9,10 +9,9 @@ export default function App() {
       <DemoBlock title="form" padding="0">
         <Form
           onFinish={(values) => {
-            console.log('Finish:', values);
+            Toast.show(JSON.stringify(values));
           }}
           toastError
-          layout="horizontal"
           labelWidth={50}
         >
           <Form.Item

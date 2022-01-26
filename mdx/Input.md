@@ -1,6 +1,6 @@
 ---
 title: Input 输入框
-order: 4
+order: 5
 mobile: true
 group:
   title: 数据录入

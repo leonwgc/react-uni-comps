@@ -1,6 +1,6 @@
 ---
 title: Radio 单选框
-order: 2
+order: 3
 mobile: true
 group:
   title: 数据录入
