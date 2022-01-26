@@ -71,7 +71,7 @@ export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
 /** helper & dom */
 
-export { debounce, throttle } from './helper';
+export { debounce, throttle, uniqArray } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
@@ -93,5 +93,6 @@ export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
 export { useSpring, animated } from '@react-spring/web';
 /** form */
+// export { default as Form, Field } from 'rc-field-form';
 
-export { default as Form, Field } from 'rc-field-form';
+export { default as Form } from './Form';

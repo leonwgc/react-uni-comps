@@ -11,7 +11,7 @@ var styled = require('styled-components');
 var reactIs = require('react-is');
 var web = require('@react-spring/web');
 var color = require('color');
-var rcFieldForm = require('rc-field-form');
+var RcForm = require('rc-field-form');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -20,7 +20,7 @@ var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
-var rcFieldForm__default = /*#__PURE__*/_interopDefaultLegacy(rcFieldForm);
+var RcForm__default = /*#__PURE__*/_interopDefaultLegacy(RcForm);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -1821,6 +1821,30 @@ var getProps = function getProps() {
   }
 
   return isIncluded ? required : rest;
+};
+/**
+ * 数组去重
+ *
+ * @template T
+ * @param {T[]} arr 待去重数组
+ * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @return {*}  {T[]}
+ */
+
+var uniqArray = function uniqArray(arr, predicate) {
+  var rt = [];
+
+  if (Array.isArray(arr)) {
+    arr.map(function (item) {
+      if (!rt.find(function (d) {
+        return predicate(item, d);
+      })) {
+        rt.push(item);
+      }
+    });
+  }
+
+  return rt;
 };
 
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -10066,6 +10090,89 @@ var useUnmount = function useUnmount(fn) {
   }, []);
 };
 
+var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className"],
+    _excluded2$4 = ["children", "label", "name"];
+/** 排列方式 */
+
+var defaultContext = {
+  layout: 'vertical',
+  labelWidth: 80,
+  gap: 16
+};
+var FormContext = /*#__PURE__*/React__default['default'].createContext(defaultContext);
+/** 表单 */
+
+var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      _props$gap = props.gap,
+      gap = _props$gap === void 0 ? 16 : _props$gap,
+      _props$labelWidth = props.labelWidth,
+      labelWidth = _props$labelWidth === void 0 ? 80 : _props$labelWidth,
+      _props$requiredMark = props.requiredMark,
+      requiredMark = _props$requiredMark === void 0 ? true : _props$requiredMark,
+      _props$layout = props.layout,
+      layout = _props$layout === void 0 ? 'vertical' : _props$layout,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$Y);
+
+  return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-form', className)
+  }), /*#__PURE__*/React__default['default'].createElement(FormContext.Provider, {
+    value: {
+      layout: layout,
+      gap: gap,
+      labelWidth: labelWidth,
+      requiredMark: requiredMark
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(Space, {
+    direction: layout,
+    size: gap,
+    style: {
+      width: '100%'
+    }
+  }, children)));
+});
+
+var FormItem = function FormItem(props) {
+  var _useContext = React.useContext(FormContext),
+      labelWidth = _useContext.labelWidth,
+      requiredMark = _useContext.requiredMark;
+
+  var children = props.children,
+      label = props.label,
+      name = props.name,
+      fieldProps = _objectWithoutProperties(props, _excluded2$4);
+
+  var required = false;
+
+  if ('rules' in fieldProps) {
+    var rules = fieldProps.rules;
+
+    if (Array.isArray(rules)) {
+      required = rules.some(function (rule) {
+        if (rule && _typeof(rule) === 'object' && rule.required) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(Cell, {
+    labelWidth: labelWidth,
+    label: label,
+    required: requiredMark && required
+  }, /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
+    name: name
+  }, fieldProps), children));
+};
+
+FormItem.displayName = 'UC-FormItem';
+Form.displayName = 'UC-Form';
+Form.Item = FormItem;
+
 Object.keys(reactTransitionGroup).forEach(function (k) {
   if (k !== 'default') Object.defineProperty(exports, k, {
     enumerable: true,
@@ -10098,18 +10205,6 @@ Object.defineProperty(exports, 'useSpring', {
     return web.useSpring;
   }
 });
-Object.defineProperty(exports, 'Field', {
-  enumerable: true,
-  get: function () {
-    return rcFieldForm.Field;
-  }
-});
-Object.defineProperty(exports, 'Form', {
-  enumerable: true,
-  get: function () {
-    return rcFieldForm__default['default'];
-  }
-});
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -10131,6 +10226,7 @@ exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.FingerGestureElement = FingerGestureElement;
+exports.Form = Form;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;
 exports.IconArrow = IconArrow;
@@ -10188,6 +10284,7 @@ exports.isMobile = isMobile;
 exports.loadResource = loadResource;
 exports.observe = observe;
 exports.throttle = throttle;
+exports.uniqArray = uniqArray;
 exports.unobserve = unobserve;
 exports.useCallbackRef = useCallbackRef;
 exports.useCountdown = useCountdown;

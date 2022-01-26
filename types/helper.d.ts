@@ -25,3 +25,12 @@ export declare const throttle: (fn: F, timeout?: number, last?: boolean) => F;
  * @return {*}  {Record<string, unknown>}
  */
 export declare const getProps: (props: {}, propKeys: string[], isIncluded?: boolean) => Record<string, unknown>;
+/**
+ * 数组去重
+ *
+ * @template T
+ * @param {T[]} arr 待去重数组
+ * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @return {*}  {T[]}
+ */
+export declare const uniqArray: <T>(arr: T[], predicate: (l: T, r: T) => boolean) => T[];

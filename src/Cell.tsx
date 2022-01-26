@@ -5,7 +5,7 @@ import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 
-type Props = {
+export type Props = {
   /** 是否显示红色*标记 */
   required?: boolean;
   title?: React.ReactNode;
