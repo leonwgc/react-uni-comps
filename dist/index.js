@@ -10204,6 +10204,12 @@ Object.defineProperty(exports, 'animated', {
     return web.animated;
   }
 });
+Object.defineProperty(exports, 'easings', {
+  enumerable: true,
+  get: function () {
+    return web.easings;
+  }
+});
 Object.defineProperty(exports, 'useSpring', {
   enumerable: true,
   get: function () {

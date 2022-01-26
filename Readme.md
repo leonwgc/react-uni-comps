@@ -158,6 +158,7 @@ yarn add react-uni-comps
 - loadResource(动态加载 js/css 文件)
 - observe (使用 IntersectionObserver 监视 dom 元素在文档视口的可见性)
 - unobserve (取消 observe 监控)
+- uniqArray (数组去重)
 
 ### 常量
 
