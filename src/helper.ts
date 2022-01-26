@@ -90,3 +90,25 @@ export const getProps = (
 
   return isIncluded ? required : rest;
 };
+
+/**
+ * 数组去重
+ *
+ * @template T
+ * @param {T[]} arr 待去重数组
+ * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @return {*}  {T[]}
+ */
+export const uniqArray = <T>(arr: T[], predicate: (l: T, r: T) => boolean): T[] => {
+  const rt: T[] = [];
+
+  if (Array.isArray(arr)) {
+    arr.map((item) => {
+      if (!rt.find((d) => predicate(item, d))) {
+        rt.push(item);
+      }
+    });
+  }
+
+  return rt;
+};

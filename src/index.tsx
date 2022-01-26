@@ -71,7 +71,7 @@ export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
 
 /** helper & dom */
-export { debounce, throttle } from './helper';
+export { debounce, throttle, uniqArray } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
