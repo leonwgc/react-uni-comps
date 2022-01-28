@@ -72,7 +72,9 @@ export default function App() {
           <Button block style={{ borderRadius: 0 }}>
             Rect Button
           </Button>
-          <Button circle>X</Button>
+          <Button circle>
+            <Icon type="uc-icon-guanbi" />
+          </Button>
           <Button type="primary">Default Button</Button>
           <Button type="primary" style={{ borderRadius: 20 }}>
             Rounded Button
