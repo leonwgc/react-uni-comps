@@ -1,1 +1,0 @@
-(self["webpackChunkreact_uni_comps"]=self["webpackChunkreact_uni_comps"]||[]).push([[513],{513:function(c,n,e){"use strict";e.r(n),n["default"]="@import '~antd/dist/antd.less';\n\n// theme color\n@primary-color: #005cff;\n@link-color: #005cff;"}}]);

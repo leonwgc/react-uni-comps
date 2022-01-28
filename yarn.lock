@@ -5230,7 +5230,7 @@ dumi-theme-default@1.1.20:
     rc-tabs "^11.7.1"
     rc-tree "^5.2.0"
 
-dumi-theme-mobile@^1.1.18:
+dumi-theme-mobile@^1.1.21:
   version "1.1.21"
   resolved "https://registry.npmmirror.com/dumi-theme-mobile/download/dumi-theme-mobile-1.1.21.tgz#16dd998962aa94335aee96e63cf3603cde6fcf3a"
   integrity sha512-hz8hWRutUl+l8OxlCj7apS7SAq5YViDiuowzaQrTk1VCdmBCjSzsFx7VMqKRq9GG7ky2nnZXkf0cEJaJK5C/GA==

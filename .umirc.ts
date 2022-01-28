@@ -18,11 +18,7 @@ export default defineConfig({
     development: {
       output: './.mfsu-dev',
     },
-    production: {
-      output: './.mfsu-prod',
-    },
   },
-  dynamicImport: false,
   hash: true,
   webpack5: {},
   fastRefresh: {},
