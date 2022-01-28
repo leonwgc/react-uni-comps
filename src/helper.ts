@@ -91,20 +91,22 @@ export const getProps = (
   return isIncluded ? required : rest;
 };
 
+const defaultEqualFn = (a, b) => a === b;
+
 /**
  * 数组去重
  *
  * @template T
  * @param {T[]} arr 待去重数组
- * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
  * @return {*}  {T[]}
  */
-export const uniqArray = <T>(arr: T[], predicate: (l: T, r: T) => boolean): T[] => {
+export const uniqArray = <T>(arr: T[], equalFn: (a: T, b: T) => boolean = defaultEqualFn): T[] => {
   const rt: T[] = [];
 
   if (Array.isArray(arr)) {
     arr.map((item) => {
-      if (!rt.find((d) => predicate(item, d))) {
+      if (!rt.find((d) => equalFn(item, d))) {
         rt.push(item);
       }
     });

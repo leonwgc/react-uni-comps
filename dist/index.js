@@ -1822,22 +1822,28 @@ var getProps = function getProps() {
 
   return isIncluded ? required : rest;
 };
+
+var defaultEqualFn = function defaultEqualFn(a, b) {
+  return a === b;
+};
 /**
  * 数组去重
  *
  * @template T
  * @param {T[]} arr 待去重数组
- * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
  * @return {*}  {T[]}
  */
 
-var uniqArray = function uniqArray(arr, predicate) {
+
+var uniqArray = function uniqArray(arr) {
+  var equalFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultEqualFn;
   var rt = [];
 
   if (Array.isArray(arr)) {
     arr.map(function (item) {
       if (!rt.find(function (d) {
-        return predicate(item, d);
+        return equalFn(item, d);
       })) {
         rt.push(item);
       }

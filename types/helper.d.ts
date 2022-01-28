@@ -30,7 +30,7 @@ export declare const getProps: (props: {}, propKeys: string[], isIncluded?: bool
  *
  * @template T
  * @param {T[]} arr 待去重数组
- * @param {(l: T, r: T) => boolean} predicate 判断函数,数组重复条件, e.g. l===r / l.id===r.id
+ * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
  * @return {*}  {T[]}
  */
-export declare const uniqArray: <T>(arr: T[], predicate: (l: T, r: T) => boolean) => T[];
+export declare const uniqArray: <T>(arr: T[], equalFn?: (a: T, b: T) => boolean) => T[];
