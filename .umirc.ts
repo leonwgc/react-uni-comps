@@ -22,6 +22,7 @@ export default defineConfig({
       output: './.mfsu-prod',
     },
   },
+  dynamicImport: false,
   hash: true,
   webpack5: {},
   fastRefresh: {},

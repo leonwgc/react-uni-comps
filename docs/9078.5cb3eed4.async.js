@@ -1,0 +1,1 @@
+(self["webpackChunkreact_uni_comps"]=self["webpackChunkreact_uni_comps"]||[]).push([[9078],{9078:function(n,e,t){"use strict";t.r(e),e["default"]=".my-tab {\n  .uc-tabs-header-wrap {\n    height: 52px;\n    .uc-tabs-header-item {\n      min-width: 120px;\n      &.active {\n        background: #ebf0fa;\n        border-bottom: 2px solid;\n      }\n    }\n  }\n}"}}]);
