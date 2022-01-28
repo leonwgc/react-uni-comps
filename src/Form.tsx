@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
+import { isMobile } from './dom';
 
 /** 排列方式 */
 type FormLayout = 'vertical' | 'horizontal';
@@ -20,8 +21,10 @@ type FormContextType = {
 export type FormProps = RcFormProps & {
   /** 控件和控件距离, 默认16 */
   gap?: number;
-  /** 字段没有通过验证是否提示错误，默认false */
+  /** 字段没有通过验证是否提示错误，移动端默认true */
   toastError?: boolean;
+  /** 是否平滑滚动到错误字段，移动端默认true */
+  scrollIntoErrorField?: boolean;
   /** 排列方式 */
   layout: FormLayout;
   className?: string;
@@ -48,7 +51,8 @@ const Form: React.ForwardRefExoticComponent<FormProps> & {
     layout = 'vertical',
     className,
     onFinishFailed,
-    toastError = false,
+    toastError = isMobile,
+    scrollIntoErrorField = isMobile,
     ...rest
   } = props;
   return (
@@ -58,9 +62,14 @@ const Form: React.ForwardRefExoticComponent<FormProps> & {
       className={clsx('uc-form', className)}
       onFinishFailed={(errInfo) => {
         if (toastError) {
-          try {
-            Toast.show(errInfo.errorFields[0].errors[0]);
-          } catch (ex) {}
+          Toast.show(errInfo.errorFields[0].errors[0]);
+        }
+        if (scrollIntoErrorField) {
+          const name = errInfo.errorFields[0].name[0];
+          const el = document.querySelector(`[data-name=${name}]`);
+          if (el instanceof HTMLElement) {
+            el?.scrollIntoView({ behavior: 'smooth' });
+          }
         }
         onFinishFailed?.(errInfo);
       }}
@@ -97,7 +106,12 @@ const FormItem = (props: FormItemProps) => {
   }
 
   return (
-    <Cell labelWidth={labelWidth} label={label} required={requiredMark && required}>
+    <Cell
+      labelWidth={labelWidth}
+      label={label}
+      data-name={name}
+      required={requiredMark && required}
+    >
       <Field name={name} {...fieldProps}>
         {children}
       </Field>

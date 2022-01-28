@@ -10096,7 +10096,7 @@ var useUnmount = function useUnmount(fn) {
   }, []);
 };
 
-var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError"],
+var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
     _excluded2$4 = ["children", "label", "name"];
 /** 排列方式 */
 
@@ -10116,7 +10116,9 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       className = props.className,
       _onFinishFailed = props.onFinishFailed,
       _props$toastError = props.toastError,
-      toastError = _props$toastError === void 0 ? false : _props$toastError,
+      toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
+      _props$scrollIntoErro = props.scrollIntoErrorField,
+      scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
       rest = _objectWithoutProperties(props, _excluded$Y);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
@@ -10124,9 +10126,18 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     className: clsx__default['default']('uc-form', className),
     onFinishFailed: function onFinishFailed(errInfo) {
       if (toastError) {
-        try {
-          Toast.show(errInfo.errorFields[0].errors[0]);
-        } catch (ex) {}
+        Toast.show(errInfo.errorFields[0].errors[0]);
+      }
+
+      if (scrollIntoErrorField) {
+        var name = errInfo.errorFields[0].name[0];
+        var el = document.querySelector("[data-name=".concat(name, "]"));
+
+        if (el instanceof HTMLElement) {
+          el === null || el === void 0 ? void 0 : el.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       }
 
       _onFinishFailed === null || _onFinishFailed === void 0 ? void 0 : _onFinishFailed(errInfo);
@@ -10174,6 +10185,7 @@ var FormItem = function FormItem(props) {
   return /*#__PURE__*/React__default['default'].createElement(Cell, {
     labelWidth: labelWidth,
     label: label,
+    "data-name": name,
     required: requiredMark && required
   }, /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
     name: name

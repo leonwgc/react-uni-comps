@@ -12,8 +12,10 @@ declare type FormContextType = {
 export declare type FormProps = RcFormProps & {
     /** 控件和控件距离, 默认16 */
     gap?: number;
-    /** 字段没有通过验证是否提示错误，默认false */
+    /** 字段没有通过验证是否提示错误，移动端默认true */
     toastError?: boolean;
+    /** 是否平滑滚动到错误字段，移动端默认true */
+    scrollIntoErrorField?: boolean;
     /** 排列方式 */
     layout: FormLayout;
     className?: string;

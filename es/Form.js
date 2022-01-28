@@ -35,6 +35,7 @@ import clsx from 'clsx';
 import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
+import { isMobile } from './dom';
 export var FormContext = /*#__PURE__*/React.createContext(null);
 /** 表单 */
 
@@ -51,17 +52,28 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = props.className,
       _onFinishFailed = props.onFinishFailed,
       _e = props.toastError,
-      toastError = _e === void 0 ? false : _e,
-      rest = __rest(props, ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError"]);
+      toastError = _e === void 0 ? isMobile : _e,
+      _f = props.scrollIntoErrorField,
+      scrollIntoErrorField = _f === void 0 ? isMobile : _f,
+      rest = __rest(props, ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"]);
 
   return /*#__PURE__*/React.createElement(RcForm, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-form', className),
     onFinishFailed: function onFinishFailed(errInfo) {
       if (toastError) {
-        try {
-          Toast.show(errInfo.errorFields[0].errors[0]);
-        } catch (ex) {}
+        Toast.show(errInfo.errorFields[0].errors[0]);
+      }
+
+      if (scrollIntoErrorField) {
+        var name = errInfo.errorFields[0].name[0];
+        var el = document.querySelector("[data-name=".concat(name, "]"));
+
+        if (el instanceof HTMLElement) {
+          el === null || el === void 0 ? void 0 : el.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       }
 
       _onFinishFailed === null || _onFinishFailed === void 0 ? void 0 : _onFinishFailed(errInfo);
@@ -109,6 +121,7 @@ var FormItem = function FormItem(props) {
   return /*#__PURE__*/React.createElement(Cell, {
     labelWidth: labelWidth,
     label: label,
+    "data-name": name,
     required: requiredMark && required
   }, /*#__PURE__*/React.createElement(Field, __assign({
     name: name

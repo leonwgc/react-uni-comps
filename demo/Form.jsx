@@ -11,7 +11,6 @@ export default function App() {
           onFinish={(values) => {
             Toast.show(JSON.stringify(values));
           }}
-          toastError
           labelWidth={50}
         >
           <Form.Item
