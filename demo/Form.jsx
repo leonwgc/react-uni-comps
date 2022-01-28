@@ -1,43 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button, Input, Form, Toast } from 'react-uni-comps';
+import { Input, Form, Button, useCountdown } from 'react-uni-comps';
 
 export default function App() {
+  const { countdown, isRunning, start, isReStarted } = useCountdown(60);
+
+  const [result, setResult] = useState(null);
+
   return (
     <PageWrap>
-      <DemoBlock title="form" padding="0">
-        <Form
-          onFinish={(values) => {
-            Toast.show(JSON.stringify(values));
-          }}
-          labelWidth={50}
-        >
+      <DemoBlock title="登录">
+        <Form onFinish={setResult} toastError>
           <Form.Item
-            label="姓名"
-            name="username"
+            name="phone"
             rules={[
-              { required: true, message: '请填写姓名' },
+              { required: true, message: '请输入手机号码' },
               {
-                max: 5,
-                message: '不能超过5个字',
+                pattern: /^1\d{10}$/,
+                message: '请输入正确的手机号码',
               },
             ]}
           >
-            <Input placeholder="请填写姓名" clearable />
+            <Input placeholder="请输入手机号码" clearable />
           </Form.Item>
 
-          <Form.Item label="密码" name="password">
-            <Input placeholder="请填写密码" clearable />
+          <Form.Item name="code">
+            <Input
+              clearable
+              placeholder="请输入验证码"
+              maxLength={6}
+              suffix={
+                <Button as="a" onClick={isRunning ? null : start}>
+                  {isRunning ? countdown + '秒' : `${isReStarted ? '重新获取' : '获取验证码'}`}
+                </Button>
+              }
+            />
           </Form.Item>
 
-          <div style={{ padding: 12 }}>
-            <Button type="primary" wait block>
-              确定
-            </Button>
-          </div>
+          <Button
+            type="primary"
+            block
+            wait
+            style={{
+              borderRadius: 20,
+              height: 36,
+              margin: '20px auto',
+            }}
+          >
+            登录
+          </Button>
         </Form>
       </DemoBlock>
+      <DemoBlock>{result ? JSON.stringify(result) : '请填写'}</DemoBlock>
     </PageWrap>
   );
 }

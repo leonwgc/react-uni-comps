@@ -96,16 +96,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PickerView')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> Login
-          </Space>
-        }
-        description="移动端登录风格"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Login')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

@@ -14,21 +14,17 @@ export default defineConfig({
   resolve: {
     includes: ['mdx'],
   },
+  mfsu: {
+    development: {
+      output: './.mfsu-dev',
+    },
+    production: {
+      output: './.mfsu-prod',
+    },
+  },
   hash: true,
   webpack5: {},
   fastRefresh: {},
-  chainWebpack(memo, { env, webpack, createCSSRule }) {
-    memo.cache = {
-      type: 'filesystem',
-      name: 'dumi',
-      buildDependencies: {
-        config: [__filename],
-      },
-      store: 'pack',
-    };
-    memo.plugins.delete('friendly-error');
-    memo.plugins.delete('copy');
-  },
   // Because of using GitHub Pages
   base: `/${repo}/`,
   publicPath: `/${repo}/`,
