@@ -68,7 +68,7 @@ const Form: React.ForwardRefExoticComponent<FormProps> & {
           const name = errInfo.errorFields[0].name[0];
           const el = document.querySelector(`[data-name=${name}]`);
           if (el instanceof HTMLElement) {
-            el?.scrollIntoView({ behavior: 'smooth' });
+            el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         }
         onFinishFailed?.(errInfo);
