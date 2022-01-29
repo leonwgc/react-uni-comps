@@ -29,7 +29,6 @@ const StyledWrap = styled.div`
     bottom: 0;
     left: 0;
     border-radius: 50%;
-    background-color: currentColor;
   }
 `;
 
