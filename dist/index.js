@@ -9983,6 +9983,101 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
+var _excluded$Y = ["className", "color", "children"];
+
+var _templateObject$T;
+var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  vertical-align: middle;\n  .uc-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: inherit;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
+/** 波纹效果,给子元素添加点击波纹效果 */
+
+var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'currentColor' : _props$color,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$Y);
+
+  var elRef = React.useRef(null);
+  var isRunningRef = React.useRef(false);
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+
+  var _useSpring = web.useSpring(function () {
+    return {
+      from: {
+        scale: 1,
+        opacity: 0,
+        width: '',
+        height: '',
+        top: '',
+        left: ''
+      },
+      config: {
+        duration: 500,
+        easing: web.easings.easeInOutQuad
+      },
+      onStart: function onStart() {
+        isRunningRef.current = true;
+      },
+      onRest: function onRest() {
+        isRunningRef.current = false;
+        api.start({
+          width: '',
+          height: '',
+          top: '',
+          left: '',
+          immediate: true
+        });
+      }
+    };
+  }),
+      _useSpring2 = _slicedToArray(_useSpring, 2),
+      styles = _useSpring2[0],
+      api = _useSpring2[1];
+
+  var start = React__default['default'].useCallback(function (event) {
+    if (isRunningRef.current) {
+      return;
+    }
+
+    var element = elRef.current;
+    var rect = element.getBoundingClientRect(); //  size of the ripple
+
+    var _ref = event.touches ? event.touches[0] : event,
+        clientX = _ref.clientX,
+        clientY = _ref.clientY;
+
+    var rippleX = Math.round(clientX - rect.left);
+    var rippleY = Math.round(clientY - rect.top);
+    var sizeX = Math.max(Math.abs((element ? element.clientWidth : 0) - rippleX), rippleX) * 2 + 2;
+    var sizeY = Math.max(Math.abs((element ? element.clientHeight : 0) - rippleY), rippleY) * 2 + 2;
+    var rippleSize = Math.sqrt(Math.pow(sizeX, 2) + Math.pow(sizeY, 2));
+    api.start({
+      width: rippleSize + 'px',
+      height: rippleSize + 'px',
+      top: -(rippleSize / 2) + rippleY + 'px',
+      left: -(rippleSize / 2) + rippleX + 'px',
+      immediate: true,
+      scale: 0
+    });
+    api.start({
+      scale: 1
+    });
+  }, [api]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
+    ref: elRef,
+    className: clsx__default['default']('uc-ripple', className),
+    onClick: start
+  }), children, /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
+    className: "uc-el",
+    style: _objectSpread2(_objectSpread2({}, styles), {}, {
+      opacity: styles.scale.to([0, 0.4, 0.9, 1], [0.1, 0.2, 0.3, 0]),
+      backgroundColor: color
+    })
+  }));
+});
+Ripple.displayName = 'UC-Ripple';
+
 /**
  * 返回防抖函数
  *
@@ -10097,7 +10192,7 @@ var useUnmount = function useUnmount(fn) {
   }, []);
 };
 
-var _excluded$Y = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
+var _excluded$Z = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
     _excluded2$4 = ["children", "label", "name"];
 /** 排列方式 */
 
@@ -10120,7 +10215,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
       _props$scrollIntoErro = props.scrollIntoErrorField,
       scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
-      rest = _objectWithoutProperties(props, _excluded$Y);
+      rest = _objectWithoutProperties(props, _excluded$Z);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
@@ -10286,6 +10381,7 @@ exports.QRCode = QRCode$1;
 exports.Radio = Radio;
 exports.RadioGroup = RadioGroup;
 exports.Rate = Rate;
+exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
 exports.ScrollTop = ScrollTop;

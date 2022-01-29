@@ -29,7 +29,7 @@ const StyledWrap = styled.div`
   }
 `;
 
-/** 波纹效果 */
+/** 波纹效果,给子元素添加点击波纹效果 */
 const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, color = 'currentColor', children, ...rest } = props;
 

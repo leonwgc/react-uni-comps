@@ -69,6 +69,7 @@ export { default as ProgressBar } from './ProgressBar';
 export { default as AutoCenter } from './AutoCenter';
 export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
+export { default as Ripple } from './Ripple';
 /** helper & dom */
 export { debounce, throttle, uniqArray } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
