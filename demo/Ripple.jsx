@@ -1,37 +1,34 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button } from 'react-uni-comps';
-import Ripple from '../src/Ripple';
+import { Ripple, Button } from 'react-uni-comps';
 
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock title="默认底部">
-        <Button type="primary">hello,world</Button>
+      <DemoBlock title="点击波纹效果">
+        <Ripple
+          style={{
+            height: 100,
+            width: '100%',
+            border: '1px solid #eee',
+          }}
+        ></Ripple>
+      </DemoBlock>
+      <DemoBlock title="button">
         <Ripple>
-          <Button as="div" style={{ width: 200, height: 150 }}>
-            hello,world
-          </Button>
+          <Button>hello, world</Button>
         </Ripple>
-
-        <Ripple>
-          <Button outlined>hello,world</Button>
-        </Ripple>
-
-        <Ripple>
-          <Button type="primary">hello,world</Button>
-        </Ripple>
-
-        <Ripple>
-          <div
-            style={{
-              height: 100,
-              width: 200,
-              background: 'red',
-            }}
-          ></div>
-        </Ripple>
+      </DemoBlock>
+      <DemoBlock title="波纹颜色">
+        <Ripple
+          color="red"
+          style={{
+            height: 100,
+            width: '100%',
+            border: '1px solid #eee',
+          }}
+        ></Ripple>
       </DemoBlock>
     </PageWrap>
   );
