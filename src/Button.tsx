@@ -10,8 +10,10 @@ import Space from './Space';
 type Props = {
   /** default 线框，primary 实色框 */
   type?: 'primary' | 'default';
-  /** 线框使用主题色 */
+  /** 线框使用主题色，请使用 outlined, 后续会删除此属性*/
   active?: boolean;
+  /** 线框使用主题色, */
+  outlined?: boolean;
   /** 禁用 */
   disabled?: boolean;
   style?: React.CSSProperties;
@@ -77,7 +79,7 @@ const StyledButton = styled.button`
       opacity: 0.8;
     }
     &.pc:hover,
-    &.active {
+    &.outlined {
       ${getThemeColorCss('border-color')}
       ${getThemeColorCss('color')}
     }
@@ -163,6 +165,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     type = 'default',
     disabled,
     active,
+    outlined,
     block,
     className,
     children,
@@ -218,7 +221,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           mobile: isMobile,
           pc: !isMobile,
           anchor: rest.as === 'a',
-          active,
+          outlined: outlined || active,
         },
         className
       )}

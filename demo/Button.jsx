@@ -9,7 +9,7 @@ export default function App() {
       <DemoBlock title="不同类型的按钮">
         <Space wrap>
           <Button>Default</Button>
-          <Button active>Outline</Button>
+          <Button outlined>Outlined</Button>
           <Button type="primary">Primary</Button>
           <Button danger onClick={() => Toast.show('danger')}>
             Danger
@@ -88,8 +88,8 @@ export default function App() {
             default
           </Button>
 
-          <Button block ghost active>
-            active
+          <Button block ghost type="primary">
+            primary
           </Button>
 
           <Button ghost block danger dashed>
@@ -135,7 +135,7 @@ export default function App() {
           </Button>
 
           <Button
-            active
+            outlined
             wait={2000}
             onClick={() => {
               console.log(2);
