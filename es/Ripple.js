@@ -43,7 +43,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { useSpring, animated, easings } from '@react-spring/web';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .uc-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .uc-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -125,7 +125,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: clsx('uc-ripple', className),
     onClick: start
   }), children, /*#__PURE__*/React.createElement(animated.div, {
-    className: "uc-el",
+    className: "ripple-el",
     style: __assign(__assign({}, styles), {
       opacity: styles.scale.to([0, 0.4, 0.9, 1], [0.1, 0.2, 0.3, 0]),
       backgroundColor: color

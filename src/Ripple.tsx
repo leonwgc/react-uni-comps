@@ -15,7 +15,8 @@ const StyledWrap = styled.div`
   overflow: hidden;
   position: relative;
   display: inline-flex;
-  .uc-el {
+  cursor: pointer;
+  .ripple-el {
     position: absolute;
     z-index: 0;
     top: 0;
@@ -92,10 +93,20 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 
   return (
-    <StyledWrap {...rest} ref={elRef} className={clsx('uc-ripple', className)} onClick={start}>
+    <StyledWrap
+      {...rest}
+      ref={elRef}
+      className={clsx('uc-ripple', className)}
+      onClick={(e) => {
+        start(e);
+        if (React.isValidElement(children)) {
+          children.props.onClick?.(e);
+        }
+      }}
+    >
       {children}
       <animated.div
-        className="uc-el"
+        className="ripple-el"
         style={{
           ...styles,
           opacity: styles.scale.to([0, 0.4, 0.9, 1], [0.1, 0.2, 0.3, 0]),

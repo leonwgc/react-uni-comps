@@ -56,7 +56,7 @@ yarn add react-uni-comps
 
 3. 不想使用 css/less/sass，偏向 css-in-js 技术的开发者
 
-4. 开发同时支持 pc 和 h5 的页面，pc 和 h5 同一套组件库，同一套技术方案，一致的开发体验，本库组件同时支持 pc 和 h5，按需加载，体积小巧
+4. pc 和 h5 同一套组件库，同一套技术方案，一致的开发体验
 
 5. 当前使用的组件库不包含某些组件或者某些组件很难使用，本库包含的/易用的，
 
@@ -73,7 +73,6 @@ yarn add react-uni-comps
 - HairLineBox (包含 1px 的边的容器 div)
 - Avatar (头像)
 - Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
-
 #### 操作反馈
 
 - Drawer (抽屉)
@@ -140,6 +139,7 @@ yarn add react-uni-comps
 
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
 - AnimationElement(元素应用 animation 动画,和 TransitionElement 一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
+- Ripple  (给子元素添加点击波纹效果)
 
 ### 其他组件
 

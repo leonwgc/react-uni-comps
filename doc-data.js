@@ -274,6 +274,10 @@ module.exports = [
         name: 'AnimationElement',
         title: 'Animation动画',
       },
+      {
+        name: 'Ripple',
+        title: 'Ripple 点击波纹效果',
+      },
     ],
   },
 ];
