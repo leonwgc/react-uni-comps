@@ -71,7 +71,8 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
         if (el instanceof HTMLElement) {
           el === null || el === void 0 ? void 0 : el.scrollIntoView({
-            behavior: 'smooth'
+            behavior: 'smooth',
+            block: 'center'
           });
         }
       }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 declare type Props = {
     className?: string;
     style?: React.CSSProperties;
@@ -9,6 +9,7 @@ declare type Props = {
     startScale?: number;
     /** 动画持续时间,默认300 */
     duration?: number;
+    onClick?: (e: SyntheticEvent) => void;
 };
 /** 波纹效果,给子元素添加点击波纹效果 */
 declare const Ripple: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;

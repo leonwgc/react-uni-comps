@@ -50,12 +50,13 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       _a = props.color,
       color = _a === void 0 ? '#ccc' : _a,
+      _onClick = props.onClick,
       _b = props.duration,
       duration = _b === void 0 ? 300 : _b,
       _c = props.startScale,
       startScale = _c === void 0 ? 0.2 : _c,
       children = props.children,
-      rest = __rest(props, ["className", "color", "duration", "startScale", "children"]);
+      rest = __rest(props, ["className", "color", "onClick", "duration", "startScale", "children"]);
 
   var elRef = useRef(null);
   var isRunningRef = useRef(false);
@@ -131,6 +132,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       var _a, _b;
 
       start(e);
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
 
       if ( /*#__PURE__*/React.isValidElement(children)) {
         (_b = (_a = children.props).onClick) === null || _b === void 0 ? void 0 : _b.call(_a, e);

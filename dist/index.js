@@ -9983,7 +9983,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$Y = ["className", "color", "duration", "startScale", "children"];
+var _excluded$Y = ["className", "color", "onClick", "duration", "startScale", "children"];
 
 var _templateObject$T;
 var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
@@ -9993,6 +9993,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var className = props.className,
       _props$color = props.color,
       color = _props$color === void 0 ? '#ccc' : _props$color,
+      _onClick = props.onClick,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 300 : _props$duration,
       _props$startScale = props.startScale,
@@ -10073,6 +10074,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     className: clsx__default['default']('uc-ripple', className),
     onClick: function onClick(e) {
       start(e);
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
 
       if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
         var _children$props$onCli, _children$props;
@@ -10243,7 +10245,8 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 
         if (el instanceof HTMLElement) {
           el === null || el === void 0 ? void 0 : el.scrollIntoView({
-            behavior: 'smooth'
+            behavior: 'smooth',
+            block: 'center'
           });
         }
       }
