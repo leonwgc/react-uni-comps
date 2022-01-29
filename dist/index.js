@@ -9986,7 +9986,7 @@ SafeArea.displayName = 'UC-SafeArea';
 var _excluded$Y = ["className", "color", "children"];
 
 var _templateObject$T;
-var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
+var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10067,7 +10067,15 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
     ref: elRef,
     className: clsx__default['default']('uc-ripple', className),
-    onClick: start
+    onClick: function onClick(e) {
+      start(e);
+
+      if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
+        var _children$props$onCli, _children$props;
+
+        (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props, e);
+      }
+    }
   }), children, /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     className: "ripple-el",
     style: _objectSpread2(_objectSpread2({}, styles), {}, {
