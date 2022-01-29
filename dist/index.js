@@ -9983,7 +9983,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$Y = ["className", "color", "children"];
+var _excluded$Y = ["className", "color", "duration", "startScale", "children"];
 
 var _templateObject$T;
 var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
@@ -9992,7 +9992,11 @@ var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templat
 var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       _props$color = props.color,
-      color = _props$color === void 0 ? 'currentColor' : _props$color,
+      color = _props$color === void 0 ? '#ccc' : _props$color,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 300 : _props$duration,
+      _props$startScale = props.startScale,
+      startScale = _props$startScale === void 0 ? 0.2 : _props$startScale,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$Y);
 
@@ -10013,7 +10017,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
         left: ''
       },
       config: {
-        duration: 500,
+        duration: duration,
         easing: web.easings.easeInOutQuad
       },
       onStart: function onStart() {
@@ -10058,12 +10062,12 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       top: -(rippleSize / 2) + rippleY + 'px',
       left: -(rippleSize / 2) + rippleX + 'px',
       immediate: true,
-      scale: 0
+      scale: startScale
     });
     api.start({
       scale: 1
     });
-  }, [api]);
+  }, [api, startScale]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
     ref: elRef,
     className: clsx__default['default']('uc-ripple', className),

@@ -49,9 +49,13 @@ var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTempla
 var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       _a = props.color,
-      color = _a === void 0 ? 'currentColor' : _a,
+      color = _a === void 0 ? '#ccc' : _a,
+      _b = props.duration,
+      duration = _b === void 0 ? 300 : _b,
+      _c = props.startScale,
+      startScale = _c === void 0 ? 0.2 : _c,
       children = props.children,
-      rest = __rest(props, ["className", "color", "children"]);
+      rest = __rest(props, ["className", "color", "duration", "startScale", "children"]);
 
   var elRef = useRef(null);
   var isRunningRef = useRef(false);
@@ -59,7 +63,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return elRef.current;
   });
 
-  var _b = useSpring(function () {
+  var _d = useSpring(function () {
     return {
       from: {
         scale: 1,
@@ -70,7 +74,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
         left: ''
       },
       config: {
-        duration: 500,
+        duration: duration,
         easing: easings.easeInOutQuad
       },
       onStart: function onStart() {
@@ -88,8 +92,8 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     };
   }),
-      styles = _b[0],
-      api = _b[1];
+      styles = _d[0],
+      api = _d[1];
 
   var start = React.useCallback(function (event) {
     if (isRunningRef.current) {
@@ -114,12 +118,12 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       top: -(rippleSize / 2) + rippleY + 'px',
       left: -(rippleSize / 2) + rippleX + 'px',
       immediate: true,
-      scale: 0
+      scale: startScale
     });
     api.start({
       scale: 1
     });
-  }, [api]);
+  }, [api, startScale]);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     ref: elRef,
     className: clsx('uc-ripple', className),

@@ -6,9 +6,13 @@ import { useSpring, animated, easings } from '@react-spring/web';
 type Props = {
   className?: string;
   style?: React.CSSProperties;
-  /** 波纹效果背景色,默认 currentColor */
+  /** 波纹效果背景色,默认 #ccc */
   color?: string;
   children?: React.ReactNode;
+  /** 波纹起始缩放大小,默认0.2 */
+  startScale?: number;
+  /** 动画持续时间,默认300 */
+  duration?: number;
 };
 
 const StyledWrap = styled.div`
@@ -30,7 +34,7 @@ const StyledWrap = styled.div`
 
 /** 波纹效果,给子元素添加点击波纹效果 */
 const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, color = 'currentColor', children, ...rest } = props;
+  const { className, color = '#ccc', duration = 300, startScale = 0.2, children, ...rest } = props;
 
   const elRef = useRef(null);
   const isRunningRef = useRef(false);
@@ -40,7 +44,7 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [styles, api] = useSpring(() => ({
     from: { scale: 1, opacity: 0, width: '', height: '', top: '', left: '' },
     config: {
-      duration: 500,
+      duration,
       easing: easings.easeInOutQuad,
     },
     onStart: () => {
@@ -82,14 +86,14 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         top: -(rippleSize / 2) + rippleY + 'px',
         left: -(rippleSize / 2) + rippleX + 'px',
         immediate: true,
-        scale: 0,
+        scale: startScale,
       });
 
       api.start({
         scale: 1,
       });
     },
-    [api]
+    [api, startScale]
   );
 
   return (

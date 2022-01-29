@@ -20,6 +20,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> Ripple
+          </Space>
+        }
+        description="Ripple"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Ripple')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> Form
           </Space>
         }
