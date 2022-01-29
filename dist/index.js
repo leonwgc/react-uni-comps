@@ -9986,7 +9986,7 @@ SafeArea.displayName = 'UC-SafeArea';
 var _excluded$Y = ["className", "color", "children"];
 
 var _templateObject$T;
-var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  vertical-align: middle;\n  .uc-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: inherit;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
+var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  .uc-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n    background-color: currentColor;\n  }\n"])));
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10041,7 +10041,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     }
 
     var element = elRef.current;
-    var rect = element.getBoundingClientRect(); //  size of the ripple
+    var rect = element.getBoundingClientRect();
 
     var _ref = event.touches ? event.touches[0] : event,
         clientX = _ref.clientX,

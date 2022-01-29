@@ -15,7 +15,6 @@ const StyledWrap = styled.div`
   overflow: hidden;
   position: relative;
   display: inline-flex;
-  vertical-align: middle;
   .uc-el {
     position: absolute;
     z-index: 0;
@@ -23,7 +22,6 @@ const StyledWrap = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    border-radius: inherit;
     border-radius: 50%;
     background-color: currentColor;
   }
@@ -67,7 +65,6 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       const element = elRef.current;
       const rect = element.getBoundingClientRect();
 
-      //  size of the ripple
       const { clientX, clientY } = event.touches ? event.touches[0] : event;
       const rippleX = Math.round(clientX - rect.left);
       const rippleY = Math.round(clientY - rect.top);
