@@ -1,4 +1,4 @@
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { useSpring, animated, easings } from '@react-spring/web';
@@ -13,6 +13,7 @@ type Props = {
   startScale?: number;
   /** 动画持续时间,默认300 */
   duration?: number;
+  onClick?: (e: SyntheticEvent) => void;
 };
 
 const StyledWrap = styled.div`
@@ -34,7 +35,15 @@ const StyledWrap = styled.div`
 
 /** 波纹效果,给子元素添加点击波纹效果 */
 const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, color = '#ccc', duration = 300, startScale = 0.2, children, ...rest } = props;
+  const {
+    className,
+    color = '#ccc',
+    onClick,
+    duration = 300,
+    startScale = 0.2,
+    children,
+    ...rest
+  } = props;
 
   const elRef = useRef(null);
   const isRunningRef = useRef(false);
@@ -103,6 +112,7 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       className={clsx('uc-ripple', className)}
       onClick={(e) => {
         start(e);
+        onClick?.(e);
         if (React.isValidElement(children)) {
           children.props.onClick?.(e);
         }
