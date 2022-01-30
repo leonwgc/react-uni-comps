@@ -159,6 +159,8 @@ yarn add react-uni-comps
 - observe (使用 IntersectionObserver 监视 dom 元素在文档视口的可见性)
 - unobserve (取消 observe 监控)
 - uniqArray (数组去重)
+- flatSimpleArray (扁平化简单数组)
+- flatArray (扁平化对象数组) 
 
 ### 常量
 
