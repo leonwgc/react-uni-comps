@@ -224,15 +224,14 @@ const Popover = (props: Props): React.ReactElement => {
       {ReactDOM.createPortal(
         (visible || active) && (
           <div className={clsx('uc-popover-wrap')}>
-            {mask && (
-              <Mask
-                className={maskClass}
-                style={maskStyle}
-                onClick={() => {
-                  closeOnMaskClick && onClose?.();
-                }}
-              />
-            )}
+            <Mask
+              visible={mask}
+              className={maskClass}
+              style={maskStyle}
+              onClick={() => {
+                closeOnMaskClick && onClose?.();
+              }}
+            />
 
             <StyledPopover
               {...rest}

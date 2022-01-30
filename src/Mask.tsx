@@ -1,9 +1,10 @@
-import React, { HTMLAttributes, ReactElement, useEffect } from 'react';
-import TransitionElement from './TransitionElement';
+import React, { HTMLAttributes, ReactElement, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import { useSpring, animated, easings } from '@react-spring/web';
+import * as vars from './vars';
 
-const StyledMask = styled.div`
+const StyledMask = styled(animated.div)`
   background-color: rgba(0, 0, 0);
   z-index: 100;
   position: fixed;
@@ -12,49 +13,72 @@ const StyledMask = styled.div`
   bottom: 0;
   right: 0;
   width: 100%;
-  transition: opacity 0.22s linear;
   touch-action: none;
-
-  &.from {
-    opacity: 0.4;
-  }
-  &.to {
-    opacity: 0.45;
-  }
 `;
 
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
   hideOverflow?: boolean;
   style?: React.CSSProperties;
+  visible?: boolean;
+  /** 动画时间,默认220 */
+  duration?: number;
   className?: string;
-  /** 上层元素 */
   children?: ReactElement;
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, className, hideOverflow = true, ...rest } = props;
+  const {
+    children,
+    className,
+    visible,
+    duration = vars.animationNormal,
+    style,
+    hideOverflow = true,
+    ...rest
+  } = props;
+
+  // animation effect
+  const [active, setActive] = useState(visible);
+
+  const originOverflow = useRef<string>();
+
+  const styles = useSpring({
+    opacity: visible ? 0.45 : 0,
+    onStart: () => {
+      setActive(true);
+    },
+    onRest: () => {
+      setActive(visible);
+    },
+    config: {
+      duration,
+      easing: easings.easeInOutQuad,
+    },
+  });
 
   useEffect(() => {
+    document.body.style.overflow = visible && hideOverflow ? 'hidden' : '';
+  }, [visible, hideOverflow]);
+
+  useEffect(() => {
+    originOverflow.current = document.body.style.overflow;
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = originOverflow.current;
     };
   }, []);
 
-  useEffect(() => {
-    if (hideOverflow) {
-      document.body.style.overflow = hideOverflow ? 'hidden' : '';
-    }
-  }, [hideOverflow]);
-
-  return (
-    <TransitionElement ref={ref}>
-      <StyledMask {...rest} className={clsx('uc-mask', className)}>
-        {children}
-      </StyledMask>
-    </TransitionElement>
-  );
+  return active || visible ? (
+    <StyledMask
+      ref={ref}
+      {...rest}
+      className={clsx('uc-mask', className)}
+      style={{ ...styles, ...style }}
+    >
+      {children}
+    </StyledMask>
+  ) : null;
 });
 
 Mask.displayName = 'UC-Mask';

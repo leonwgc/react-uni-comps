@@ -86,7 +86,7 @@ const Toast: React.ForwardRefExoticComponent<Props> & {
 
   return visible ? (
     <>
-      {modal && visible && <Mask style={{ opacity: 0, ...maskStyle }} />}
+      <Mask visible={modal} style={{ opacity: 0, ...maskStyle }} />
       <StyledToast {...rest} ref={ref} className={clsx('uc-toast', className)}>
         {content}
       </StyledToast>

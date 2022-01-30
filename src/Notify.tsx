@@ -120,7 +120,7 @@ const Notify: React.ForwardRefExoticComponent<Props> & {
       ref={elRef}
       className={clsx('uc-notify', className, { mobile: isMobile, pc: !isMobile })}
     >
-      {isMobile && <Mask style={{ background: 'transparent' }} />}
+      <Mask style={{ background: 'transparent' }} visible={isMobile} />
       <div className={clsx('content')} style={style}>
         {content}
       </div>

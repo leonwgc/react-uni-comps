@@ -251,14 +251,14 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return ReactDOM.createPortal(
     <div>
-      {mask && visible && (
-        <Mask
-          ref={maskRef}
-          className={maskClass}
-          style={maskStyle}
-          onClick={() => closeOnMaskClick && onClose?.()}
-        />
-      )}
+      <Mask
+        visible={visible && mask}
+        ref={maskRef}
+        className={maskClass}
+        duration={duration}
+        style={maskStyle}
+        onClick={() => closeOnMaskClick && onClose?.()}
+      />
       <Transition in={visible} timeout={duration} unmountOnExit={unmountOnExit}>
         {(status) => (
           <StyledWrapper

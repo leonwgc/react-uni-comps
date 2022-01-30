@@ -19,9 +19,8 @@ export default function App() {
   const [l, setL] = useState(false);
   const [t, setT] = useState(false);
 
-  const [a, setA] = useState(false);
-  const [il, setIl] = useState(false);
-  const bRef = useRef();
+  const [x, setX] = useState(false);
+  const ref = useRef();
 
   return (
     <div>
@@ -33,38 +32,10 @@ export default function App() {
       </Space>
 
       <StyleedPopupBottom position="bottom" visible={b} onClose={() => setB(false)}>
-        <div className="content" ref={bRef}>
-          <Button type="primary" onClick={() => setA(true)}>
-            open alert
+        <div className="content">
+          <Button type="primary" onClick={() => setB(false)}>
+            close
           </Button>
-          <Button type="primary" onClick={() => setIl(true)}>
-            open left
-          </Button>
-          <AlertDialog
-            visible={a}
-            onClose={() => setA(false)}
-            content={<span>hello</span>}
-          ></AlertDialog>
-          <Popup
-            position="left"
-            className="bref"
-            mountContainer={() => bRef.current}
-            style={{ height: '100%', background: '#ccc' }}
-            visible={il}
-            mask={false}
-          >
-            <div
-              style={{
-                display: 'flex',
-                height: '100%',
-                padding: '16px',
-              }}
-            >
-              <Button type="primary" onClick={() => setIl(false)}>
-                close
-              </Button>
-            </div>
-          </Popup>
         </div>
       </StyleedPopupBottom>
       <Popup
@@ -108,6 +79,37 @@ export default function App() {
           hello, world
         </div>
       </Popup>
+      <div
+        ref={ref}
+        style={{
+          position: 'absolute',
+          top: 100,
+          left: 0,
+          width: 300,
+          height: 300,
+          border: '1px solid red',
+        }}
+      ></div>
+      <Popup
+        position="left"
+        mountContainer={() => ref.current}
+        style={{ height: '100%', background: '#ccc' }}
+        visible={x}
+        mask={false}
+      >
+        <div
+          style={{
+            display: 'flex',
+            height: '100%',
+            padding: '16px',
+          }}
+        >
+          <Button type="primary" onClick={() => setX(false)}>
+            close
+          </Button>
+        </div>
+      </Popup>
+      <Button onClick={() => setX(true)}>红色方框</Button>
     </div>
   );
 }
