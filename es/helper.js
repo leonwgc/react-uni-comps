@@ -158,3 +158,55 @@ export var uniqArray = function uniqArray(arr, equalFn) {
 
   return rt;
 };
+export var isObject = function isObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+};
+/**
+ * 扁平化对象数组
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性
+ * @return {*}
+ */
+
+export var flatArray = function flatArray(arr, childrenProp) {
+  if (childrenProp === void 0) {
+    childrenProp = 'children';
+  }
+
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      if (Array.isArray(v)) {
+        a = a.concat(flatArray(v, childrenProp));
+      } else if (isObject(v)) {
+        a = a.concat(v);
+
+        if (Array.isArray(v[childrenProp])) {
+          a = a.concat(flatArray(v[childrenProp], childrenProp));
+        }
+      }
+
+      return a;
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ * 扁平化简单数组(元素不是对象)
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @return {*}
+ */
+
+export var flatSimpleArray = function flatSimpleArray(arr) {
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
+    }, []);
+  }
+
+  return arr;
+};

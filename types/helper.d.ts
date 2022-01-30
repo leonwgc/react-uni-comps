@@ -34,3 +34,21 @@ export declare const getProps: (props: {}, propKeys: string[], isIncluded?: bool
  * @return {*}  {T[]}
  */
 export declare const uniqArray: <T>(arr: T[], equalFn?: (a: T, b: T) => boolean) => T[];
+export declare const isObject: (obj: any) => boolean;
+/**
+ * 扁平化对象数组
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性
+ * @return {*}
+ */
+export declare const flatArray: <T>(arr: T[], childrenProp?: string) => T[];
+/**
+ * 扁平化简单数组(元素不是对象)
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @return {*}
+ */
+export declare const flatSimpleArray: <T>(arr: T[]) => T[];

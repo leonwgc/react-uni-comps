@@ -42,19 +42,22 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useRef, useImperativeHandle } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
+import { isTouch } from './dom';
 import { useSpring, animated, easings } from '@react-spring/web';
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n  }\n"])));
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var _a;
+
   var className = props.className,
-      _a = props.color,
-      color = _a === void 0 ? '#ccc' : _a,
-      _onClick = props.onClick,
-      _b = props.duration,
-      duration = _b === void 0 ? 300 : _b,
-      _c = props.startScale,
-      startScale = _c === void 0 ? 0.2 : _c,
+      _b = props.color,
+      color = _b === void 0 ? '#ccc' : _b,
+      onClick = props.onClick,
+      _c = props.duration,
+      duration = _c === void 0 ? 300 : _c,
+      _d = props.startScale,
+      startScale = _d === void 0 ? 0.2 : _d,
       children = props.children,
       rest = __rest(props, ["className", "color", "onClick", "duration", "startScale", "children"]);
 
@@ -64,7 +67,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return elRef.current;
   });
 
-  var _d = useSpring(function () {
+  var _e = useSpring(function () {
     return {
       from: {
         scale: 1,
@@ -93,8 +96,8 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     };
   }),
-      styles = _d[0],
-      api = _d[1];
+      styles = _e[0],
+      api = _e[1];
 
   var start = React.useCallback(function (event) {
     if (isRunningRef.current) {
@@ -125,19 +128,18 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       scale: 1
     });
   }, [api, startScale]);
-  return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
-    ref: elRef,
-    className: clsx('uc-ripple', className),
-    onClick: function onClick(e) {
-      var _a, _b;
+  var triggerProps = (_a = {}, _a[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
+    var _a, _b;
 
-      start(e);
-      _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
+    start(e);
 
-      if ( /*#__PURE__*/React.isValidElement(children)) {
-        (_b = (_a = children.props).onClick) === null || _b === void 0 ? void 0 : _b.call(_a, e);
-      }
+    if ( /*#__PURE__*/React.isValidElement(children)) {
+      (_b = (_a = children.props).onClick) === null || _b === void 0 ? void 0 : _b.call(_a, e);
     }
+  }, _a.onClick = onClick, _a);
+  return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, triggerProps, {
+    ref: elRef,
+    className: clsx('uc-ripple', className)
   }), children, /*#__PURE__*/React.createElement(animated.div, {
     className: "ripple-el",
     style: __assign(__assign({}, styles), {

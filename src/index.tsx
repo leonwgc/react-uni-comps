@@ -72,7 +72,7 @@ export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
 
 /** helper & dom */
-export { debounce, throttle, uniqArray } from './helper';
+export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './helper';
 export { isBrowser, isMobile, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';

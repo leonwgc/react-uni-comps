@@ -1852,6 +1852,56 @@ var uniqArray = function uniqArray(arr) {
 
   return rt;
 };
+var isObject = function isObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+};
+/**
+ * 扁平化对象数组
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性
+ * @return {*}
+ */
+
+var flatArray = function flatArray(arr) {
+  var childrenProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'children';
+
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      if (Array.isArray(v)) {
+        a = a.concat(flatArray(v, childrenProp));
+      } else if (isObject(v)) {
+        a = a.concat(v);
+
+        if (Array.isArray(v[childrenProp])) {
+          a = a.concat(flatArray(v[childrenProp], childrenProp));
+        }
+      }
+
+      return a;
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ * 扁平化简单数组(元素不是对象)
+ *
+ * @template T
+ * @param {*} arr 待处理数组
+ * @return {*}
+ */
+
+var flatSimpleArray = function flatSimpleArray(arr) {
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
+    }, []);
+  }
+
+  return arr;
+};
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -9990,10 +10040,12 @@ var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templat
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _triggerProps;
+
   var className = props.className,
       _props$color = props.color,
       color = _props$color === void 0 ? '#ccc' : _props$color,
-      _onClick = props.onClick,
+      onClick = props.onClick,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 300 : _props$duration,
       _props$startScale = props.startScale,
@@ -10069,19 +10121,18 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       scale: 1
     });
   }, [api, startScale]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
-    ref: elRef,
-    className: clsx__default['default']('uc-ripple', className),
-    onClick: function onClick(e) {
-      start(e);
-      _onClick === null || _onClick === void 0 ? void 0 : _onClick(e);
+  var triggerProps = (_triggerProps = {}, _defineProperty(_triggerProps, isTouch ? 'onTouchStart' : 'onMouseDown', function (e) {
+    start(e);
 
-      if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
-        var _children$props$onCli, _children$props;
+    if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
+      var _children$props$onCli, _children$props;
 
-        (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props, e);
-      }
+      (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props, e);
     }
+  }), _defineProperty(_triggerProps, "onClick", onClick), _triggerProps);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, triggerProps, {
+    ref: elRef,
+    className: clsx__default['default']('uc-ripple', className)
   }), children, /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     className: "ripple-el",
     style: _objectSpread2(_objectSpread2({}, styles), {}, {
@@ -10419,6 +10470,8 @@ exports.WaitLoading = WaitLoading;
 exports.WaterMark = WaterMark;
 exports.Waypoint = Waypoint;
 exports.debounce = debounce;
+exports.flatArray = flatArray;
+exports.flatSimpleArray = flatSimpleArray;
 exports.getThemeColorCss = getThemeColorCss;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
