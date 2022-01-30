@@ -1,7 +1,8 @@
 import React, { HTMLAttributes, ReactElement, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { useSpring, animated, easings } from '@react-spring/web';
+import { useSpring, animated } from '@react-spring/web';
+import useUnmount from './hooks/useUnmount';
 import * as vars from './vars';
 
 const StyledMask = styled(animated.div)`
@@ -42,8 +43,6 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   // animation effect
   const [active, setActive] = useState(visible);
 
-  const originOverflow = useRef<string>();
-
   const styles = useSpring({
     opacity: visible ? 0.45 : 0,
     onStart: () => {
@@ -61,12 +60,9 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     document.body.style.overflow = visible && hideOverflow ? 'hidden' : '';
   }, [visible, hideOverflow]);
 
-  useEffect(() => {
-    originOverflow.current = document.body.style.overflow;
-    return () => {
-      document.body.style.overflow = originOverflow.current;
-    };
-  }, []);
+  useUnmount(() => {
+    document.body.style.overflow = '';
+  });
 
   return active || visible ? (
     <StyledMask
