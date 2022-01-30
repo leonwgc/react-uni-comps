@@ -1,6 +1,7 @@
 import React, { useRef, useImperativeHandle, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
+import { isTouch } from './dom';
 import { useSpring, animated, easings } from '@react-spring/web';
 
 type Props = {
@@ -104,19 +105,18 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     [api, startScale]
   );
 
+  const triggerProps = {
+    [isTouch ? 'onTouchStart' : 'onMouseDown']: (e) => {
+      start(e);
+      if (React.isValidElement(children)) {
+        children.props.onClick?.(e);
+      }
+    },
+    onClick: onClick, // keep the origin click
+  };
+
   return (
-    <StyledWrap
-      {...rest}
-      ref={elRef}
-      className={clsx('uc-ripple', className)}
-      onClick={(e) => {
-        start(e);
-        onClick?.(e);
-        if (React.isValidElement(children)) {
-          children.props.onClick?.(e);
-        }
-      }}
-    >
+    <StyledWrap {...rest} {...triggerProps} ref={elRef} className={clsx('uc-ripple', className)}>
       {children}
       <animated.div
         className="ripple-el"

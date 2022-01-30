@@ -28,9 +28,9 @@ export default function App() {
       <DemoBlock title="带点击事件按钮">
         <Space>
           <Ripple>
-            <Button onClick={() => Toast.show('hi,there')}>点击波纹效果</Button>
+            <Button onClick={() => Toast.show('hi from button')}>点击波纹效果</Button>
           </Ripple>
-          <Ripple onClick={() => Toast.show('hi,there1')}>
+          <Ripple onClick={() => Toast.show('hi from Ripple')}>
             <Button type="primary">点击波纹效果1</Button>
           </Ripple>
         </Space>
