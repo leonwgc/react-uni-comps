@@ -165,9 +165,9 @@ export var isObject = function isObject(obj) {
  * 扁平化对象数组
  *
  * @template T
- * @param {*} arr 待处理数组
- * @param {string} [childrenProp='children'] 子数组属性
- * @return {*}
+ * @param {T[]} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性, 默认 children
+ * @return {*}  {T[]}
  */
 
 export var flatArray = function flatArray(arr, childrenProp) {
@@ -194,11 +194,11 @@ export var flatArray = function flatArray(arr, childrenProp) {
   return arr;
 };
 /**
- * 扁平化简单数组(元素不是对象)
+ * 扁平化简单数组
  *
  * @template T
- * @param {*} arr 待处理数组
- * @return {*}
+ * @param {T[]} arr 待处理数组
+ * @return {*}  {T[]}
  */
 
 export var flatSimpleArray = function flatSimpleArray(arr) {

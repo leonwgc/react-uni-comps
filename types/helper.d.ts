@@ -39,16 +39,16 @@ export declare const isObject: (obj: any) => boolean;
  * 扁平化对象数组
  *
  * @template T
- * @param {*} arr 待处理数组
- * @param {string} [childrenProp='children'] 子数组属性
- * @return {*}
+ * @param {T[]} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性, 默认 children
+ * @return {*}  {T[]}
  */
-export declare const flatArray: <T>(arr: T[], childrenProp?: string) => T[];
+export declare const flatArray: <T extends Record<string, unknown>>(arr: T[], childrenProp?: string) => T[];
 /**
- * 扁平化简单数组(元素不是对象)
+ * 扁平化简单数组
  *
  * @template T
- * @param {*} arr 待处理数组
- * @return {*}
+ * @param {T[]} arr 待处理数组
+ * @return {*}  {T[]}
  */
-export declare const flatSimpleArray: <T>(arr: T[]) => T[];
+export declare const flatSimpleArray: <T extends string | number>(arr: T[]) => T[];
