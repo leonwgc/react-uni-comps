@@ -54,7 +54,6 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     },
     config: {
       duration,
-      easing: easings.easeInOutQuad,
     },
   });
 
