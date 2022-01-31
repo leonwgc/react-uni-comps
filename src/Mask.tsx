@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, useState, useRef, useEffect } from 'react';
+import React, { HTMLAttributes, ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';

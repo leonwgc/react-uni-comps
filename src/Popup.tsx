@@ -256,7 +256,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
         ref={maskRef}
         className={maskClass}
         duration={duration}
-        style={maskStyle}
+        style={{ position: showPosition, ...maskStyle }}
         onClick={() => closeOnMaskClick && onClose?.()}
       />
       <Transition in={visible} timeout={duration} unmountOnExit={unmountOnExit}>

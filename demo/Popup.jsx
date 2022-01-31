@@ -83,25 +83,26 @@ export default function App() {
         ref={ref}
         style={{
           position: 'absolute',
-          top: 100,
+          bottom: 0,
           left: 0,
-          width: 300,
+          right: 0,
           height: 300,
-          border: '1px solid red',
+          border: '1px solid #eee',
         }}
       ></div>
       <Popup
         position="left"
         mountContainer={() => ref.current}
-        style={{ height: '100%', background: '#ccc' }}
         visible={x}
-        mask={false}
+        onClose={() => setX(false)}
+        maskStyle={{ background: 'red' }}
       >
         <div
           style={{
             display: 'flex',
             height: '100%',
             padding: '16px',
+            background: '#ccc',
           }}
         >
           <Button type="primary" onClick={() => setX(false)}>
@@ -109,7 +110,7 @@ export default function App() {
           </Button>
         </div>
       </Popup>
-      <Button onClick={() => setX(true)}>红色方框</Button>
+      <Button onClick={() => setX((v) => !v)}>底部容器左侧滑出</Button>
     </div>
   );
 }
