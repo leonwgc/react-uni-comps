@@ -54,7 +54,7 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     from: { scale: 1, opacity: 0, width: '', height: '', top: '', left: '' },
     config: {
       duration,
-      easing: easings.easeInOutQuad,
+      easing: easings.easeInOutQuart,
     },
     onStart: () => {
       isRunningRef.current = true;

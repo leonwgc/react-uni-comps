@@ -11,30 +11,10 @@ const StyledModal = styled(Modal)`
     font-weight: 600;
     text-align: left;
     line-height: 20px;
+    color: red;
   }
   .body {
     padding-top: 16px;
-  }
-`;
-
-const StyleMobileModal = styled(Modal)`
-  width: 297px;
-  border-radius: 12px;
-
-  .body {
-    font-size: 15px;
-    font-family: PingFangSC, PingFangSC-Medium;
-    font-weight: 500;
-    text-align: center;
-    color: #262626;
-    line-height: 22px;
-    margin-bottom: 20px;
-  }
-
-  .uc-btn {
-    width: 120px;
-    height: 39px;
-    border-radius: 21px;
   }
 `;
 
@@ -45,14 +25,14 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Button type="primary" onClick={() => setVisible(true)}>
-          打开弹框
+        <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
+          给张伟投票
         </Button>
       </DemoBlock>
 
       <DemoBlock title="自定义样式">
-        <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
-          自定义样式
+        <Button type="primary" onClick={() => setVisible(true)}>
+          新建角色
         </Button>
       </DemoBlock>
 
@@ -83,21 +63,18 @@ export default function App() {
         <div>body 区域</div>
       </StyledModal>
 
-      <StyleMobileModal
-        visible={v}
-        closeOnMaskClick={false}
-        onClose={() => setV(false)}
-        footer={
-          <Space size={16} style={{ display: 'flex', justifyContent: 'center' }}>
+      <Modal visible={v} onClose={() => setV(false)}>
+        <Space direction="vertical" size={30} style={{ width: 280 }}>
+          <h3>投票确认</h3>
+          <div>确认给张伟投票?</div>
+          <Space size={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button onClick={() => setV(false)}>取消</Button>
             <Button type="primary" onClick={() => setV(false)}>
               确定
             </Button>
           </Space>
-        }
-      >
-        确认给张伟投票?
-      </StyleMobileModal>
+        </Space>
+      </Modal>
     </PageWrap>
   );
 }

@@ -95,14 +95,13 @@ export default function App() {
         mountContainer={() => ref.current}
         visible={x}
         onClose={() => setX(false)}
-        maskStyle={{ background: 'red' }}
+        style={{ backgroundColor: '#fff' }}
       >
         <div
           style={{
             display: 'flex',
             height: '100%',
             padding: '16px',
-            background: '#ccc',
           }}
         >
           <Button type="primary" onClick={() => setX(false)}>
