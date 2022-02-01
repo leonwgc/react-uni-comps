@@ -51,6 +51,7 @@ module.exports = [
       {
         name: 'AlertDialog',
         title: 'AlertDialog alert/confirm弹框',
+        mobile: false,
       },
       {
         name: 'Tooltip',
