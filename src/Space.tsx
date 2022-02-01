@@ -17,7 +17,7 @@ type ItemProps = {
 };
 
 function SpaceItem({
-  className,
+  className = 'uc-space-item',
   direction,
   index,
   marginDirection,

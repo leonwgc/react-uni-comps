@@ -1,6 +1,6 @@
 ---
 title: Tabs 选项卡
-order: 7
+order: 6
 mobile: true
 group:
   title: 导航和布局

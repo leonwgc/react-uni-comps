@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Space, Button } from 'react-uni-comps';
+import { Space, Button, Divider } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -43,6 +43,15 @@ export default function App() {
           <Button>按钮1</Button>
           <Button>按钮2</Button>
           <Button>按钮3</Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="设置拆分">
+        <Space split={<Divider type="vertical" />}>
+          Text
+          <a href="#">Link</a>
+          <a href="#">Link</a>
+          <a href="#">Link</a>
         </Space>
       </DemoBlock>
     </PageWrap>

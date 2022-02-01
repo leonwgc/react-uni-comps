@@ -7,7 +7,10 @@ module.exports = [
         name: 'Button',
         title: 'Button 按钮',
       },
-
+      {
+        name: 'Space',
+        title: 'Space 间距',
+      },
       {
         name: 'HairLineBox',
         title: 'HairLineBox 一像素边框容器',
@@ -102,10 +105,6 @@ module.exports = [
     title: '导航和布局',
     path: 'navlayout',
     comps: [
-      {
-        name: 'Space',
-        title: 'Space 间距',
-      },
       {
         name: 'AutoCenter',
         title: 'AutoCenter 自动居中',

@@ -1,6 +1,6 @@
 ---
 title: SafeArea 安全区
-order: 6
+order: 5
 mobile: true
 group:
   title: 导航和布局

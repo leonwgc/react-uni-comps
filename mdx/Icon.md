@@ -1,6 +1,6 @@
 ---
 title: Icon 图标
-order: 3
+order: 4
 mobile: true
 group:
   title: 基础组件

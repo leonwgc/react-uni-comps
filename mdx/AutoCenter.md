@@ -1,6 +1,6 @@
 ---
 title: AutoCenter 自动居中
-order: 1
+order: 0
 mobile: true
 group:
   title: 导航和布局

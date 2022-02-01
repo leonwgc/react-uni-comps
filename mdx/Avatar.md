@@ -1,6 +1,6 @@
 ---
 title: Avatar 头像
-order: 2
+order: 3
 mobile: true
 group:
   title: 基础组件

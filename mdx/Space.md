@@ -1,11 +1,11 @@
 ---
 title: Space 间距
-order: 0
+order: 1
 mobile: true
 group:
-  title: 导航和布局
-  order: 2
-  path: navlayout
+  title: 基础组件
+  order: 0
+  path: base
 ---
 
 <code src="../demo/Space.jsx"></code>
