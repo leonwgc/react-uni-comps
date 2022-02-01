@@ -40,6 +40,8 @@ type Props = {
   cancelText?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  /** 元素高度，默认 35 */
+  itemHeight?: number;
   /** 滚动变化回调 */
   onWheelChange?: (index: number, wheelIndex: number) => void;
 };
@@ -81,6 +83,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     onOk,
     onChange,
     onWheelChange,
+    itemHeight = 35,
     className,
     value = [],
     data = [],
@@ -128,6 +131,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
       }
     >
       <PickerView
+        itemHeight={itemHeight}
         ref={pickerViewRef}
         data={data}
         cols={cols}
