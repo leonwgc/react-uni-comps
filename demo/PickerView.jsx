@@ -165,13 +165,16 @@ export default function App() {
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [value3, setValue3] = useState(['选项二', '选项B']);
+  const [v, setV] = useState();
 
   return (
     <PageWrap>
+      <div>当前值：{v}</div>
       <PickerView
         onChange={(v) => {
           setValue(v);
           console.log(v);
+          setV(v);
         }}
         value={value}
         cols={1}
@@ -182,6 +185,7 @@ export default function App() {
         onChange={(v) => {
           setValue1(v);
           console.log(v);
+          setV(v);
         }}
         cols={2}
         data={twoColsData}
@@ -191,6 +195,7 @@ export default function App() {
         onChange={(v) => {
           setValue2(v);
           console.log(v);
+          setV(v);
         }}
         cols={3}
         data={areas}
@@ -201,6 +206,7 @@ export default function App() {
         onChange={(v) => {
           setValue3(v);
           console.log(v);
+          setV(v);
         }}
         cols={2}
         data={UnlinkedTwo}

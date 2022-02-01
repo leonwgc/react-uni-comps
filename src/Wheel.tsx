@@ -5,7 +5,8 @@ import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { animationSlow } from './vars';
+import useDebounce from './hooks/useDebounce';
+import { useSpring, animated, config } from '@react-spring/web';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -27,10 +28,8 @@ type Props = {
   onIndexChange?: (newIndex: number) => void;
 };
 
-const StyledWrap = styled.div`
+const StyledWrap = styled(animated.div)`
   transform: translate3d(0px, 105px, 0px);
-  transition-duration: ${animationSlow}ms;
-  transition-property: transform;
   touch-action: none;
   flex: 1;
   .item {
@@ -52,7 +51,7 @@ const MOMENTUM_LIMIT_TIME = 300;
 const MOMENTUM_LIMIT_DISTANCE = 15;
 
 const Wheel = (props: Props): React.ReactElement => {
-  const { onIndexChange, data = [], index = 0, className, ...rest } = props;
+  const { onIndexChange, style, data = [], index = 0, className, ...rest } = props;
   const elRef = useRef<HTMLElement>();
   const onIndexChangeRef = useCallbackRef(onIndexChange);
   const yRef = useRef(firstItemY);
@@ -62,18 +61,15 @@ const Wheel = (props: Props): React.ReactElement => {
     touchStartTime: 0,
   });
 
-  const scrollToIndex = useCallback(
-    (index, useTransition = true) => {
-      if (elRef.current) {
-        elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
-        const y = firstItemY - itemHeight * index;
-        yRef.current = y;
-        if (elRef.current) {
-          elRef.current.style.transform = `translate3d(0,${y}px,0)`;
-        }
-      }
+  const [styles, api] = useSpring(() => ({ y: 105, config: config.default }));
+
+  const scrollToIndex = useDebounce(
+    (index: number, effect = true) => {
+      yRef.current = firstItemY - itemHeight * index;
+      api.start({ y: yRef.current, immediate: !effect });
     },
-    [yRef]
+    100,
+    [api, yRef]
   );
 
   const getIndexByY = useCallback(() => {
@@ -120,8 +116,10 @@ const Wheel = (props: Props): React.ReactElement => {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex, false);
-    _setIndex(newIndex);
+    scrollToIndex(newIndex);
+    setTimeout(() => {
+      _setIndex(newIndex);
+    }, 300);
   };
 
   const touchEndRef = useCallbackRef(touchEnd);
@@ -132,7 +130,6 @@ const Wheel = (props: Props): React.ReactElement => {
     let isMoving = false;
 
     const touchStart = () => {
-      elRef.current.style.transitionProperty = 'none';
       isMoving = true;
       momentumRef.current.touchStartTime = Date.now();
     };
@@ -168,20 +165,21 @@ const Wheel = (props: Props): React.ReactElement => {
 
         const distance = e.deltaY;
         const duration = Date.now() - momentumRef.current.touchStartTime;
-        elRef.current.style.transform = `translate3d(0,${yRef.current}px,0)`;
+        api.start({ y: yRef.current });
 
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
           // momentum effect
-          elRef.current.style.transitionProperty = 'transform';
-          elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
-          elRef.current.offsetHeight;
           const speed = Math.abs(distance / duration);
           yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
         }
       }}
     >
-      <StyledWrap {...rest} className={clsx('uc-wheel', className)}>
+      <StyledWrap
+        {...rest}
+        className={clsx('uc-wheel', className)}
+        style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
+      >
         {data.map((item) => (
           <div className="item" key={item.value}>
             {item.label}
