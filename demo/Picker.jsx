@@ -27,7 +27,7 @@ var city = {
   15: '内蒙古',
   21: '辽宁',
   22: '吉林',
-  23: '黑龙江 ',
+  23: '黑龙江',
   31: '上海',
   32: '江苏',
   33: '浙江',
@@ -36,7 +36,7 @@ var city = {
   36: '江西',
   37: '山东',
   41: '河南',
-  42: '湖北 ',
+  42: '湖北',
   43: '湖南',
   44: '广东',
   45: '广西',
@@ -57,7 +57,7 @@ var city = {
   91: '国外 ',
 };
 
-const oneColData = Object.values(city).map((v) => ({ label: v, value: v }));
+const oneColData = Object.values(city).map((v) => ({ label: v.trim(), value: v.trim() }));
 
 const twoColsData = [
   {
@@ -176,7 +176,7 @@ const areas = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(['湖北']);
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [value3, setValue3] = useState(['选项二', '选项B']);

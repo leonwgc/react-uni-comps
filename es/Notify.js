@@ -95,10 +95,11 @@ var Notify = /*#__PURE__*/forwardRef(function (props, ref) {
       mobile: isMobile,
       pc: !isMobile
     })
-  }), isMobile && /*#__PURE__*/React.createElement(Mask, {
+  }), /*#__PURE__*/React.createElement(Mask, {
     style: {
       background: 'transparent'
-    }
+    },
+    visible: isMobile
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('content'),
     style: style

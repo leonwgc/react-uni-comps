@@ -7,6 +7,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
+import Text from './Text';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -24,6 +25,8 @@ type Props = {
   data?: Array<DataItem>;
   /** 当前滚动值的索引 */
   index?: number;
+  /** 元素高度，默认 35 */
+  itemHeight?: number;
   /** 索引改变回调 */
   onIndexChange?: (newIndex: number) => void;
 };
@@ -43,15 +46,14 @@ const StyledWrap = styled(animated.div)`
   }
 `;
 
-const itemHeight = 35;
-const firstItemY = 105;
-
 // 惯性滑动
 const MOMENTUM_LIMIT_TIME = 300;
 const MOMENTUM_LIMIT_DISTANCE = 15;
 
 const Wheel = (props: Props): React.ReactElement => {
-  const { onIndexChange, style, data = [], index = 0, className, ...rest } = props;
+  const { onIndexChange, itemHeight = 35, style, data = [], index = 0, className, ...rest } = props;
+  const firstItemY = itemHeight * 3;
+
   const elRef = useRef<HTMLElement>();
   const onIndexChangeRef = useCallbackRef(onIndexChange);
   const yRef = useRef(firstItemY);
@@ -76,7 +78,7 @@ const Wheel = (props: Props): React.ReactElement => {
     const y = yRef.current;
     const d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [yRef]);
+  }, [yRef, itemHeight, firstItemY]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -181,9 +183,9 @@ const Wheel = (props: Props): React.ReactElement => {
         style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
       >
         {data.map((item) => (
-          <div className="item" key={item.value}>
+          <Text className="item" key={item.value} style={{ height: itemHeight }}>
             {item.label}
-          </div>
+          </Text>
         ))}
       </StyledWrap>
     </FingerGestureElement>

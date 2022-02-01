@@ -184,7 +184,8 @@ var Popover = function Popover(props) {
     ref: anchorRef
   }), /*#__PURE__*/ReactDOM.createPortal((visible || active) && /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-popover-wrap')
-  }, mask && /*#__PURE__*/React.createElement(Mask, {
+  }, /*#__PURE__*/React.createElement(Mask, {
+    visible: mask,
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {

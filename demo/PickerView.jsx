@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
 import { PickerView } from 'react-uni-comps';
 
 //#region  data
@@ -42,7 +43,7 @@ var city = {
   91: '国外 ',
 };
 
-const oneColData = Object.values(city).map((v) => ({ label: v, value: v }));
+const oneColData = Object.values(city).map((v) => ({ label: v.trim(), value: v.trim() }));
 
 const twoColsData = [
   {
@@ -161,7 +162,7 @@ const areas = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(['湖北']);
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [value3, setValue3] = useState(['选项二', '选项B']);
@@ -169,11 +170,11 @@ export default function App() {
 
   return (
     <PageWrap>
-      <div>当前值：{v}</div>
+      <DemoBlock title="当前值：">{v}</DemoBlock>
       <PickerView
+        itemHeight={40}
         onChange={(v) => {
           setValue(v);
-          console.log(v);
           setV(v);
         }}
         value={value}
@@ -184,7 +185,7 @@ export default function App() {
         value={value1}
         onChange={(v) => {
           setValue1(v);
-          console.log(v);
+
           setV(v);
         }}
         cols={2}
@@ -194,7 +195,7 @@ export default function App() {
         value={value2}
         onChange={(v) => {
           setValue2(v);
-          console.log(v);
+
           setV(v);
         }}
         cols={3}
@@ -205,7 +206,6 @@ export default function App() {
         value={value3}
         onChange={(v) => {
           setValue3(v);
-          console.log(v);
           setV(v);
         }}
         cols={2}

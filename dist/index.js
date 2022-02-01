@@ -5,11 +5,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var ReactDOM = require('react-dom');
 var reactTransitionGroup = require('react-transition-group');
-require('intersection-observer');
-var clsx = require('clsx');
 var styled = require('styled-components');
-var reactIs = require('react-is');
+var clsx = require('clsx');
 var web = require('@react-spring/web');
+var reactIs = require('react-is');
+require('intersection-observer');
 var color = require('color');
 var RcForm = require('rc-field-form');
 
@@ -17,8 +17,8 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
-var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
+var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
 var RcForm__default = /*#__PURE__*/_interopDefaultLegacy(RcForm);
 
@@ -380,6 +380,89 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
+/**
+ *  组件卸载执行回调
+ *
+ * @param {() => void} fn 执行的回调
+ */
+
+var useUnmount = function useUnmount(fn) {
+  React.useLayoutEffect(function () {
+    return function () {
+      fn === null || fn === void 0 ? void 0 : fn();
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
+/** 统一浅色边框色 */
+var border = '#eee';
+var disabledText = 'rgba(0, 0, 0, 0.25)';
+var primary = '#005cff';
+var danger = '#ff4d4f';
+var activeBg = 'rgba(0, 0, 0, 0.1)';
+/** 统一边框阴影 */
+
+var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
+/** 慢速动画时间, 单位:ms */
+
+var animationSlow = 280;
+/** 中速动画时间, 单位:ms */
+
+var animationNormal = 220;
+/** 快速动画时间, 单位:ms  */
+
+var animationFast = 160;
+
+var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow"];
+
+var _templateObject;
+var StyledMask = styled__default['default'](web.animated.div)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  touch-action: none;\n"])));
+
+/** 遮罩层 */
+var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      className = props.className,
+      visible = props.visible,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? animationNormal : _props$duration,
+      style = props.style,
+      _props$hideOverflow = props.hideOverflow,
+      hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
+      rest = _objectWithoutProperties(props, _excluded); // animation effect
+
+
+  var _useState = React.useState(visible),
+      _useState2 = _slicedToArray(_useState, 2),
+      active = _useState2[0],
+      setActive = _useState2[1];
+
+  var styles = web.useSpring({
+    opacity: visible ? 0.45 : 0,
+    onStart: function onStart() {
+      setActive(true);
+    },
+    onRest: function onRest() {
+      setActive(visible);
+    },
+    config: {
+      duration: duration
+    }
+  });
+  React.useEffect(function () {
+    document.body.style.overflow = visible && hideOverflow ? 'hidden' : '';
+  }, [visible, hideOverflow]);
+  useUnmount(function () {
+    document.body.style.overflow = '';
+  });
+  return active || visible ? /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({
+    ref: ref
+  }, rest, {
+    className: clsx__default['default']('uc-mask', className),
+    style: _objectSpread2(_objectSpread2({}, styles), style)
+  }), children) : null;
+});
+Mask.displayName = 'UC-Mask';
+
 var flexGapSupported;
 /**
  * 检查浏览器支持gap
@@ -545,210 +628,6 @@ var getScrollTop = function getScrollTop(ele) {
 };
 var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
 
-var intersectionObserver;
-var handlers = new Map();
-
-if (isBrowser) {
-  intersectionObserver = new IntersectionObserver(function (entries) {
-    var _iterator = _createForOfIteratorHelper(entries),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var entry = _step.value;
-        var el = entry.target;
-
-        if (handlers.has(el)) {
-          var _handlers$get;
-
-          (_handlers$get = handlers.get(el)) === null || _handlers$get === void 0 ? void 0 : _handlers$get(entry.isIntersecting);
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  });
-}
-/**
- * 使用IntersectionObserver监视dom元素在文档视口的可见性
- *
- * @param {Element} el 监听dom元素
- * @param {Handler} action 元素isIntersecting状态变化回调
- */
-
-
-var observe = function observe(el, action) {
-  if (el) {
-    var _intersectionObserver, _intersectionObserver2;
-
-    (_intersectionObserver = (_intersectionObserver2 = intersectionObserver).observe) === null || _intersectionObserver === void 0 ? void 0 : _intersectionObserver.call(_intersectionObserver2, el);
-    handlers.set(el, action);
-  }
-};
-/**
- * 取消监视
- *
- * @param {Element} el
- */
-
-var unobserve = function unobserve(el) {
-  if (el) {
-    var _intersectionObserver3, _intersectionObserver4;
-
-    (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
-    handlers["delete"](el);
-  }
-};
-
-/* eslint-disable react-hooks/exhaustive-deps */
-/**
- * 监视元素在文档视口的可见性，可见性变化时触发回调
- *
- * @param {RefObject<HTMLElement>} elRef 监视元素ref
- * @param {(visible: boolean) => void} onVisibleChange 回调
- * @param {boolean} [unobserveWhenVisible=true] 元素可见时取消监控，默认true
- */
-
-var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
-  var unobserveWhenVisible = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  React.useLayoutEffect(function () {
-    observe(elRef.current, function (visible) {
-      onVisibleChange(visible);
-
-      if (unobserveWhenVisible && visible) {
-        unobserve(elRef.current);
-      }
-    });
-    return function () {
-      if (elRef.current) {
-        unobserve(elRef.current);
-      }
-    };
-  }, []);
-};
-
-/** 统一浅色边框色 */
-var border = '#eee';
-var disabledText = 'rgba(0, 0, 0, 0.25)';
-var primary = '#005cff';
-var danger = '#ff4d4f';
-var activeBg = 'rgba(0, 0, 0, 0.1)';
-/** 统一边框阴影 */
-
-var boxShadow = '0 2px 12px 0 rgba(0, 0, 0, 0.1)';
-/** 慢速动画时间, 单位:ms */
-
-var animationSlow = 280;
-/** 中速动画时间, 单位:ms */
-
-var animationNormal = 220;
-/** 快速动画时间, 单位:ms  */
-
-var animationFast = 160;
-
-var getClassName = function getClassName(state) {
-  var fromClass = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'from';
-  var toClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'to';
-
-  if (state === 'entering' || state === 'entered') {
-    return toClass;
-  } else {
-    return fromClass;
-  }
-};
-/**
- *  子元素执行transition过渡动画
- *  fromClass定义初始状态类名，默认:from
- *  toClass 定义最终状态类名，默认:to
- *  执行时机:
- *  1.初次mount并在可视区域
- *  2.从不可见到可见状态
- */
-
-
-var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var children = props.children,
-      _props$duration = props.duration,
-      duration = _props$duration === void 0 ? animationNormal : _props$duration,
-      _props$fromClass = props.fromClass,
-      fromClass = _props$fromClass === void 0 ? 'from' : _props$fromClass,
-      _props$toClass = props.toClass,
-      toClass = _props$toClass === void 0 ? 'to' : _props$toClass;
-  var elRef = React.useRef();
-
-  var _useState = React.useState(),
-      _useState2 = _slicedToArray(_useState, 2),
-      isInViewport = _useState2[0],
-      setIsInViewport = _useState2[1];
-
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  useVisibleObserve(elRef, setIsInViewport);
-  var count = React__default['default'].Children.count(children);
-
-  if (count > 1) {
-    throw new Error('TransitionElement:只能包含一个子元素.');
-  }
-
-  if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
-    return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-      "in": isInViewport,
-      timeout: duration
-    }, function (state) {
-      var _children$props, _children$props2;
-
-      return /*#__PURE__*/React__default['default'].cloneElement(children, {
-        ref: elRef,
-        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, getClassName(state, fromClass, toClass)),
-        style: _objectSpread2(_objectSpread2({}, (_children$props2 = children.props) === null || _children$props2 === void 0 ? void 0 : _children$props2.style), {}, {
-          transitionDuration: duration + 'ms'
-        })
-      });
-    });
-  } else {
-    if (process.env.NODE_ENV !== 'production') {
-      throw new Error('TransitionElement:子元素必须为ReactElement');
-    }
-
-    return children;
-  }
-});
-TransitionElement.displayName = 'UC-TransitionElement';
-
-var _excluded = ["children", "className", "hideOverflow"];
-
-var _templateObject;
-var StyledMask = styled__default['default'].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.22s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.45;\n  }\n"])));
-
-/** 遮罩层 */
-var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var children = props.children,
-      className = props.className,
-      _props$hideOverflow = props.hideOverflow,
-      hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
-      rest = _objectWithoutProperties(props, _excluded);
-
-  React.useEffect(function () {
-    return function () {
-      document.body.style.overflow = '';
-    };
-  }, []);
-  React.useEffect(function () {
-    if (hideOverflow) {
-      document.body.style.overflow = hideOverflow ? 'hidden' : '';
-    }
-  }, [hideOverflow]);
-  return /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
-    ref: ref
-  }, /*#__PURE__*/React__default['default'].createElement(StyledMask, _extends({}, rest, {
-    className: clsx__default['default']('uc-mask', className)
-  }), children));
-});
-Mask.displayName = 'UC-Mask';
-
 var _templateObject$1;
 var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.4);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.4);\n    }\n  }\n"])));
 var mousePosition = null;
@@ -846,10 +725,14 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", null, mask && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
+  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", null, /*#__PURE__*/React__default['default'].createElement(Mask, {
+    visible: visible && mask,
     ref: maskRef,
     className: maskClass,
-    style: maskStyle,
+    duration: duration,
+    style: _objectSpread2({
+      position: showPosition
+    }, maskStyle),
     onClick: function onClick() {
       return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
@@ -1043,6 +926,160 @@ var Space = function Space(props) {
 };
 
 Space.displayName = 'UC-Space';
+
+var intersectionObserver;
+var handlers = new Map();
+
+if (isBrowser) {
+  intersectionObserver = new IntersectionObserver(function (entries) {
+    var _iterator = _createForOfIteratorHelper(entries),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var entry = _step.value;
+        var el = entry.target;
+
+        if (handlers.has(el)) {
+          var _handlers$get;
+
+          (_handlers$get = handlers.get(el)) === null || _handlers$get === void 0 ? void 0 : _handlers$get(entry.isIntersecting);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
+}
+/**
+ * 使用IntersectionObserver监视dom元素在文档视口的可见性
+ *
+ * @param {Element} el 监听dom元素
+ * @param {Handler} action 元素isIntersecting状态变化回调
+ */
+
+
+var observe = function observe(el, action) {
+  if (el) {
+    var _intersectionObserver, _intersectionObserver2;
+
+    (_intersectionObserver = (_intersectionObserver2 = intersectionObserver).observe) === null || _intersectionObserver === void 0 ? void 0 : _intersectionObserver.call(_intersectionObserver2, el);
+    handlers.set(el, action);
+  }
+};
+/**
+ * 取消监视
+ *
+ * @param {Element} el
+ */
+
+var unobserve = function unobserve(el) {
+  if (el) {
+    var _intersectionObserver3, _intersectionObserver4;
+
+    (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
+    handlers["delete"](el);
+  }
+};
+
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ * 监视元素在文档视口的可见性，可见性变化时触发回调
+ *
+ * @param {RefObject<HTMLElement>} elRef 监视元素ref
+ * @param {(visible: boolean) => void} onVisibleChange 回调
+ * @param {boolean} [unobserveWhenVisible=true] 元素可见时取消监控，默认true
+ */
+
+var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
+  var unobserveWhenVisible = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  React.useLayoutEffect(function () {
+    observe(elRef.current, function (visible) {
+      onVisibleChange(visible);
+
+      if (unobserveWhenVisible && visible) {
+        unobserve(elRef.current);
+      }
+    });
+    return function () {
+      if (elRef.current) {
+        unobserve(elRef.current);
+      }
+    };
+  }, []);
+};
+
+var getClassName = function getClassName(state) {
+  var fromClass = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'from';
+  var toClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'to';
+
+  if (state === 'entering' || state === 'entered') {
+    return toClass;
+  } else {
+    return fromClass;
+  }
+};
+/**
+ *  子元素执行transition过渡动画
+ *  fromClass定义初始状态类名，默认:from
+ *  toClass 定义最终状态类名，默认:to
+ *  执行时机:
+ *  1.初次mount并在可视区域
+ *  2.从不可见到可见状态
+ */
+
+
+var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? animationNormal : _props$duration,
+      _props$fromClass = props.fromClass,
+      fromClass = _props$fromClass === void 0 ? 'from' : _props$fromClass,
+      _props$toClass = props.toClass,
+      toClass = _props$toClass === void 0 ? 'to' : _props$toClass;
+  var elRef = React.useRef();
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      isInViewport = _useState2[0],
+      setIsInViewport = _useState2[1];
+
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  useVisibleObserve(elRef, setIsInViewport);
+  var count = React__default['default'].Children.count(children);
+
+  if (count > 1) {
+    throw new Error('TransitionElement:只能包含一个子元素.');
+  }
+
+  if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
+    return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
+      "in": isInViewport,
+      timeout: duration
+    }, function (state) {
+      var _children$props, _children$props2;
+
+      return /*#__PURE__*/React__default['default'].cloneElement(children, {
+        ref: elRef,
+        className: clsx__default['default']((_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.className, getClassName(state, fromClass, toClass)),
+        style: _objectSpread2(_objectSpread2({}, (_children$props2 = children.props) === null || _children$props2 === void 0 ? void 0 : _children$props2.style), {}, {
+          transitionDuration: duration + 'ms'
+        })
+      });
+    });
+  } else {
+    if (process.env.NODE_ENV !== 'production') {
+      throw new Error('TransitionElement:子元素必须为ReactElement');
+    }
+
+    return children;
+  }
+});
+TransitionElement.displayName = 'UC-TransitionElement';
 
 /** 子元素animation动画,可以结合animate.css使用,参考https://animate.style/#usage（请直接使用@keyframes)*/
 var AnimationElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3801,7 +3838,8 @@ var Popover = function Popover(props) {
     ref: anchorRef
   }), /*#__PURE__*/ReactDOM__default['default'].createPortal((visible || active) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-popover-wrap')
-  }, mask && /*#__PURE__*/React__default['default'].createElement(Mask, {
+  }, /*#__PURE__*/React__default['default'].createElement(Mask, {
+    visible: mask,
     className: maskClass,
     style: maskStyle,
     onClick: function onClick() {
@@ -4217,7 +4255,8 @@ var Toast = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$p);
 
-  return visible ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, modal && visible && /*#__PURE__*/React__default['default'].createElement(Mask, {
+  return visible ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
+    visible: modal,
     style: _objectSpread2({
       opacity: 0
     }, maskStyle)
@@ -5311,18 +5350,37 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-var _excluded$A = ["onIndexChange", "data", "index", "className"];
+/**
+ * 返回防抖函数
+ *
+ * @param {F} fn fn改变debounce fn不会变
+ * @param {number} [timeout=180]
+ * @param {Array<unknown>} [fnDeps=[]]
+ * @return {*}  {F}
+ */
+var useDebounce = function useDebounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
+  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  return (// eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useMemo(function () {
+      return debounce(fn, timeout);
+    }, fnDeps)
+  );
+};
+
+var _excluded$A = ["onIndexChange", "itemHeight", "style", "data", "index", "className"];
 
 var _templateObject$z;
-var StyledWrap$1 = styled__default['default'].div(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: ", "ms;\n  transition-property: transform;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"])), animationSlow);
-var itemHeight = 35;
-var firstItemY = 105; // 惯性滑动
+var StyledWrap$1 = styled__default['default'](web.animated.div)(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
 
 var Wheel = function Wheel(props) {
   var onIndexChange = props.onIndexChange,
+      _props$itemHeight = props.itemHeight,
+      itemHeight = _props$itemHeight === void 0 ? 35 : _props$itemHeight,
+      style = props.style,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
       _props$index = props.index,
@@ -5330,6 +5388,7 @@ var Wheel = function Wheel(props) {
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$A);
 
+  var firstItemY = itemHeight * 3;
   var elRef = React.useRef();
   var onIndexChangeRef = useCallbackRef(onIndexChange);
   var yRef = React.useRef(firstItemY);
@@ -5342,24 +5401,30 @@ var Wheel = function Wheel(props) {
   var momentumRef = React.useRef({
     touchStartTime: 0
   });
-  var scrollToIndex = React.useCallback(function (index) {
-    var useTransition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-    if (elRef.current) {
-      elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
-      var y = firstItemY - itemHeight * index;
-      yRef.current = y;
+  var _useSpring = web.useSpring(function () {
+    return {
+      y: 105,
+      config: web.config["default"]
+    };
+  }),
+      _useSpring2 = _slicedToArray(_useSpring, 2),
+      styles = _useSpring2[0],
+      api = _useSpring2[1];
 
-      if (elRef.current) {
-        elRef.current.style.transform = "translate3d(0,".concat(y, "px,0)");
-      }
-    }
-  }, [yRef]);
+  var scrollToIndex = useDebounce(function (index) {
+    var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    yRef.current = firstItemY - itemHeight * index;
+    api.start({
+      y: yRef.current,
+      immediate: !effect
+    });
+  }, 100, [api, yRef]);
   var getIndexByY = React.useCallback(function () {
     var y = yRef.current;
     var d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [yRef]); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yRef, itemHeight, firstItemY]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   React.useEffect(function () {
     // guard to prevent from index out of range
@@ -5395,9 +5460,10 @@ var Wheel = function Wheel(props) {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex, false);
-
-    _setIndex(newIndex);
+    scrollToIndex(newIndex);
+    setTimeout(function () {
+      _setIndex(newIndex);
+    }, 300);
   };
 
   var touchEndRef = useCallbackRef(touchEnd);
@@ -5407,7 +5473,6 @@ var Wheel = function Wheel(props) {
     var isMoving = false;
 
     var touchStart = function touchStart() {
-      elRef.current.style.transitionProperty = 'none';
       isMoving = true;
       momentumRef.current.touchStartTime = Date.now();
     };
@@ -5442,35 +5507,50 @@ var Wheel = function Wheel(props) {
       yRef.current += e.deltaY;
       var distance = e.deltaY;
       var duration = Date.now() - momentumRef.current.touchStartTime;
-      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
+      api.start({
+        y: yRef.current
+      });
 
       if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
         // momentum effect
-        elRef.current.style.transitionProperty = 'transform';
-        elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
-        elRef.current.offsetHeight;
         var speed = Math.abs(distance / duration);
         yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
         scrollToIndex(getIndexByY());
       }
     }
   }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
-    className: clsx__default['default']('uc-wheel', className)
+    className: clsx__default['default']('uc-wheel', className),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      transform: styles.y.to(function (v) {
+        return "translate3d(0,".concat(v, "px,0)");
+      })
+    })
   }), data.map(function (item) {
-    return /*#__PURE__*/React__default['default'].createElement("div", {
+    return /*#__PURE__*/React__default['default'].createElement(Text, {
       className: "item",
-      key: item.value
+      key: item.value,
+      style: {
+        height: itemHeight
+      }
     }, item.label);
   })));
 };
 
 Wheel.displayName = 'UC-Wheel';
 
-var _excluded$B = ["className", "onChange", "onWheelChange", "value", "data", "cols"];
+var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data", "cols"];
 
 var _templateObject$A;
 
-var StyledWrap$2 = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"]))); //#endregion
+var StyledWrap$2 = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: ", "px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% ", "px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: ", "px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: ", "px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"])), function (props) {
+  return props.itemHeight * 7;
+}, function (props) {
+  return props.itemHeight * 3;
+}, function (props) {
+  return props.itemHeight;
+}, function (props) {
+  return props.itemHeight * 3;
+}); //#endregion
 
 /**
  *  convert data to 2 dimension array ;
@@ -5544,6 +5624,8 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   var className = props.className,
       onChange = props.onChange,
       onWheelChange = props.onWheelChange,
+      _props$itemHeight = props.itemHeight,
+      itemHeight = _props$itemHeight === void 0 ? 35 : _props$itemHeight,
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
@@ -5582,7 +5664,8 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     setList(convertPickerData(data, cols, value));
   }, [data]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
-    className: clsx__default['default']('uc-pickerview', className)
+    className: clsx__default['default']('uc-pickerview', className),
+    itemHeight: itemHeight
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "mask"
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -5593,6 +5676,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     className: "wheel-wrap"
   }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
     return /*#__PURE__*/React__default['default'].createElement(Wheel, {
+      itemHeight: itemHeight,
       data: listItem,
       key: listItem.length + '-' + idx,
       index: indexArr[idx],
@@ -7382,10 +7466,11 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
       mobile: isMobile,
       pc: !isMobile
     })
-  }), isMobile && /*#__PURE__*/React__default['default'].createElement(Mask, {
+  }), /*#__PURE__*/React__default['default'].createElement(Mask, {
     style: {
       background: 'transparent'
-    }
+    },
+    visible: isMobile
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content'),
     style: style
@@ -10071,7 +10156,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       },
       config: {
         duration: duration,
-        easing: web.easings.easeInOutQuad
+        easing: web.easings.easeInOutQuart
       },
       onStart: function onStart() {
         isRunningRef.current = true;
@@ -10142,24 +10227,6 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }));
 });
 Ripple.displayName = 'UC-Ripple';
-
-/**
- * 返回防抖函数
- *
- * @param {F} fn fn改变debounce fn不会变
- * @param {number} [timeout=180]
- * @param {Array<unknown>} [fnDeps=[]]
- * @return {*}  {F}
- */
-var useDebounce = function useDebounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
-  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  return (// eslint-disable-next-line react-hooks/exhaustive-deps
-    React.useMemo(function () {
-      return debounce(fn, timeout);
-    }, fnDeps)
-  );
-};
 
 /**
  * 返回节流函数
@@ -10241,20 +10308,6 @@ var useCountdown = function useCountdown() {
     reset: reset,
     isReStarted: isReStarted
   };
-};
-
-/**
- *  组件卸载执行回调
- *
- * @param {() => void} fn 执行的回调
- */
-
-var useUnmount = function useUnmount(fn) {
-  React.useLayoutEffect(function () {
-    return function () {
-      fn === null || fn === void 0 ? void 0 : fn();
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 };
 
 var _excluded$Z = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
@@ -10366,16 +10419,16 @@ Object.keys(reactTransitionGroup).forEach(function (k) {
     }
   });
 });
-Object.defineProperty(exports, 'clsx', {
-  enumerable: true,
-  get: function () {
-    return clsx__default['default'];
-  }
-});
 Object.defineProperty(exports, 'styled', {
   enumerable: true,
   get: function () {
     return styled__default['default'];
+  }
+});
+Object.defineProperty(exports, 'clsx', {
+  enumerable: true,
+  get: function () {
+    return clsx__default['default'];
   }
 });
 Object.defineProperty(exports, 'animated', {

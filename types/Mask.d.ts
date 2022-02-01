@@ -4,8 +4,10 @@ declare const Mask: React.ForwardRefExoticComponent<{
     /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
     hideOverflow?: boolean;
     style?: React.CSSProperties;
+    visible?: boolean;
+    /** 动画时间,默认220 */
+    duration?: number;
     className?: string;
-    /** 上层元素 */
     children?: ReactElement;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Mask;

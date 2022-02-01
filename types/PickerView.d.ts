@@ -18,6 +18,8 @@ declare type Props = {
     onChange?: (value: Array<string | number>) => void;
     className?: string;
     style?: React.CSSProperties;
+    /** 元素高度，默认 35 */
+    itemHeight?: number;
     /** 滚动变化回调 */
     onWheelChange?: (index: number, wheelIndex: number) => void;
 };

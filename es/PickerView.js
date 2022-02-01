@@ -54,7 +54,15 @@ import styled from 'styled-components';
 import Wheel from './Wheel';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"], ["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: 245px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% 105px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: 35px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: 105px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"]))); //#endregion
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: ", "px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% ", "px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: ", "px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: ", "px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"], ["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: ", "px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% ", "px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: ", "px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: ", "px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"])), function (props) {
+  return props.itemHeight * 7;
+}, function (props) {
+  return props.itemHeight * 3;
+}, function (props) {
+  return props.itemHeight;
+}, function (props) {
+  return props.itemHeight * 3;
+}); //#endregion
 
 /**
  *  convert data to 2 dimension array ;
@@ -140,28 +148,30 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       onChange = props.onChange,
       onWheelChange = props.onWheelChange,
-      _a = props.value,
-      value = _a === void 0 ? [] : _a,
-      _b = props.data,
-      data = _b === void 0 ? [] : _b,
-      _c = props.cols,
-      cols = _c === void 0 ? 1 : _c,
-      rest = __rest(props, ["className", "onChange", "onWheelChange", "value", "data", "cols"]); // 非级联
+      _a = props.itemHeight,
+      itemHeight = _a === void 0 ? 35 : _a,
+      _b = props.value,
+      value = _b === void 0 ? [] : _b,
+      _c = props.data,
+      data = _c === void 0 ? [] : _c,
+      _d = props.cols,
+      cols = _d === void 0 ? 1 : _d,
+      rest = __rest(props, ["className", "onChange", "onWheelChange", "itemHeight", "value", "data", "cols"]); // 非级联
 
 
   var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
 
-  var _d = useState(function () {
+  var _e = useState(function () {
     return convertPickerData(data, cols, value);
   }),
-      list = _d[0],
-      setList = _d[1];
+      list = _e[0],
+      setList = _e[1];
 
-  var _e = useState(function () {
+  var _f = useState(function () {
     return getIndexArrayFromValue(value, list, cols);
   }),
-      indexArr = _e[0],
-      setIndexArr = _e[1];
+      indexArr = _f[0],
+      setIndexArr = _f[1];
 
   useImperativeHandle(ref, function () {
     return {
@@ -176,7 +186,8 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
     setList(convertPickerData(data, cols, value));
   }, [data]);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
-    className: clsx('uc-pickerview', className)
+    className: clsx('uc-pickerview', className),
+    itemHeight: itemHeight
   }), /*#__PURE__*/React.createElement("div", {
     className: "mask"
   }), /*#__PURE__*/React.createElement("div", {
@@ -187,6 +198,7 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: "wheel-wrap"
   }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
     return /*#__PURE__*/React.createElement(Wheel, {
+      itemHeight: itemHeight,
       data: listItem,
       key: listItem.length + '-' + idx,
       index: indexArr[idx],

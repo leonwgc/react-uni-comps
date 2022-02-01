@@ -79,7 +79,7 @@ var Ripple = /*#__PURE__*/React.forwardRef(function (props, ref) {
       },
       config: {
         duration: duration,
-        easing: easings.easeInOutQuad
+        easing: easings.easeInOutQuart
       },
       onStart: function onStart() {
         isRunningRef.current = true;

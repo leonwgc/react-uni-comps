@@ -26,15 +26,17 @@ type Props = {
   onChange?: (value: Array<string | number>) => void;
   className?: string;
   style?: React.CSSProperties;
+  /** 元素高度，默认 35 */
+  itemHeight?: number;
   /** 滚动变化回调 */
   onWheelChange?: (index: number, wheelIndex: number) => void;
 };
 
-const StyledWrap = styled.div`
+const StyledWrap = styled.div<{ itemHeight: number }>`
   display: flex;
   position: relative;
   background-color: #fff;
-  height: 245px;
+  height: ${(props) => props.itemHeight * 7}px;
   touch-action: none;
 
   .mask {
@@ -51,16 +53,16 @@ const StyledWrap = styled.div`
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     pointer-events: none;
-    background-size: 100% 105px;
+    background-size: 100% ${(props) => props.itemHeight * 3}px;
   }
 
   .hairline {
     position: absolute;
-    height: 35px;
+    height: ${(props) => props.itemHeight}px;
     width: 100%;
     border-left: 0;
     border-right: 0;
-    top: 105px;
+    top: ${(props) => props.itemHeight * 3}px;
 
     &:after {
       content: '';
@@ -156,7 +158,16 @@ export interface PickerViewRefType {
 
 /** 平铺选择器 */
 const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
-  const { className, onChange, onWheelChange, value = [], data = [], cols = 1, ...rest } = props;
+  const {
+    className,
+    onChange,
+    onWheelChange,
+    itemHeight = 35,
+    value = [],
+    data = [],
+    cols = 1,
+    ...rest
+  } = props;
 
   // 非级联
   const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
@@ -176,7 +187,7 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   }, [data]);
 
   return (
-    <StyledWrap {...rest} className={clsx('uc-pickerview', className)}>
+    <StyledWrap {...rest} className={clsx('uc-pickerview', className)} itemHeight={itemHeight}>
       <div className="mask"></div>
       <div className="hairline"></div>
       <div className="columnitem">
@@ -184,6 +195,7 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
           {list?.map((listItem, idx) => {
             return (
               <Wheel
+                itemHeight={itemHeight}
                 data={listItem}
                 key={listItem.length + '-' + idx}
                 index={indexArr[idx]}

@@ -130,10 +130,14 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", null, mask && visible && /*#__PURE__*/React.createElement(Mask, {
+  return /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Mask, {
+    visible: visible && mask,
     ref: maskRef,
     className: maskClass,
-    style: maskStyle,
+    duration: duration,
+    style: __assign({
+      position: showPosition
+    }, maskStyle),
     onClick: function onClick() {
       return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }

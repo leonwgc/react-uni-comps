@@ -14,6 +14,8 @@ declare type Props = {
     data?: Array<DataItem>;
     /** 当前滚动值的索引 */
     index?: number;
+    /** 元素高度，默认 35 */
+    itemHeight?: number;
     /** 索引改变回调 */
     onIndexChange?: (newIndex: number) => void;
 };

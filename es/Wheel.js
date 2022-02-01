@@ -46,54 +46,64 @@ import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { animationSlow } from './vars';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: ", "ms;\n  transition-property: transform;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  transition-duration: ", "ms;\n  transition-property: transform;\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"])), animationSlow);
-var itemHeight = 35;
-var firstItemY = 105; // 惯性滑动
+import useDebounce from './hooks/useDebounce';
+import { useSpring, animated, config } from '@react-spring/web';
+import Text from './Text';
+var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
 
 var Wheel = function Wheel(props) {
   var onIndexChange = props.onIndexChange,
-      _a = props.data,
-      data = _a === void 0 ? [] : _a,
-      _b = props.index,
-      index = _b === void 0 ? 0 : _b,
+      _a = props.itemHeight,
+      itemHeight = _a === void 0 ? 35 : _a,
+      style = props.style,
+      _b = props.data,
+      data = _b === void 0 ? [] : _b,
+      _c = props.index,
+      index = _c === void 0 ? 0 : _c,
       className = props.className,
-      rest = __rest(props, ["onIndexChange", "data", "index", "className"]);
+      rest = __rest(props, ["onIndexChange", "itemHeight", "style", "data", "index", "className"]);
 
+  var firstItemY = itemHeight * 3;
   var elRef = useRef();
   var onIndexChangeRef = useCallbackRef(onIndexChange);
   var yRef = useRef(firstItemY);
 
-  var _c = useState(index),
-      _index = _c[0],
-      _setIndex = _c[1];
+  var _d = useState(index),
+      _index = _d[0],
+      _setIndex = _d[1];
 
   var momentumRef = useRef({
     touchStartTime: 0
   });
-  var scrollToIndex = useCallback(function (index, useTransition) {
-    if (useTransition === void 0) {
-      useTransition = true;
+
+  var _e = useSpring(function () {
+    return {
+      y: 105,
+      config: config.default
+    };
+  }),
+      styles = _e[0],
+      api = _e[1];
+
+  var scrollToIndex = useDebounce(function (index, effect) {
+    if (effect === void 0) {
+      effect = true;
     }
 
-    if (elRef.current) {
-      elRef.current.style.transitionProperty = useTransition ? 'transform' : 'none';
-      var y = firstItemY - itemHeight * index;
-      yRef.current = y;
-
-      if (elRef.current) {
-        elRef.current.style.transform = "translate3d(0,".concat(y, "px,0)");
-      }
-    }
-  }, [yRef]);
+    yRef.current = firstItemY - itemHeight * index;
+    api.start({
+      y: yRef.current,
+      immediate: !effect
+    });
+  }, 100, [api, yRef]);
   var getIndexByY = useCallback(function () {
     var y = yRef.current;
     var d = Math.round((firstItemY - y) / itemHeight);
     return d;
-  }, [yRef]); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yRef, itemHeight, firstItemY]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(function () {
     // guard to prevent from index out of range
@@ -129,9 +139,10 @@ var Wheel = function Wheel(props) {
       newIndex = getIndexByY();
     }
 
-    scrollToIndex(newIndex, false);
-
-    _setIndex(newIndex);
+    scrollToIndex(newIndex);
+    setTimeout(function () {
+      _setIndex(newIndex);
+    }, 300);
   };
 
   var touchEndRef = useCallbackRef(touchEnd);
@@ -141,7 +152,6 @@ var Wheel = function Wheel(props) {
     var isMoving = false;
 
     var touchStart = function touchStart() {
-      elRef.current.style.transitionProperty = 'none';
       isMoving = true;
       momentumRef.current.touchStartTime = Date.now();
     };
@@ -176,24 +186,31 @@ var Wheel = function Wheel(props) {
       yRef.current += e.deltaY;
       var distance = e.deltaY;
       var duration = Date.now() - momentumRef.current.touchStartTime;
-      elRef.current.style.transform = "translate3d(0,".concat(yRef.current, "px,0)");
+      api.start({
+        y: yRef.current
+      });
 
       if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
         // momentum effect
-        elRef.current.style.transitionProperty = 'transform';
-        elRef.current.style.transitionTimingFunction = 'cubic-bezier(0.19, 1, 0.22, 1)';
-        elRef.current.offsetHeight;
         var speed = Math.abs(distance / duration);
         yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
         scrollToIndex(getIndexByY());
       }
     }
   }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
-    className: clsx('uc-wheel', className)
+    className: clsx('uc-wheel', className),
+    style: __assign(__assign({}, style), {
+      transform: styles.y.to(function (v) {
+        return "translate3d(0,".concat(v, "px,0)");
+      })
+    })
   }), data.map(function (item) {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement(Text, {
       className: "item",
-      key: item.value
+      key: item.value,
+      style: {
+        height: itemHeight
+      }
     }, item.label);
   })));
 };

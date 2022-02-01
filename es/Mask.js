@@ -39,35 +39,55 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useEffect } from 'react';
-import TransitionElement from './TransitionElement';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledMask = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.22s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.45;\n  }\n"], ["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  transition: opacity 0.22s linear;\n  touch-action: none;\n\n  &.from {\n    opacity: 0.4;\n  }\n  &.to {\n    opacity: 0.45;\n  }\n"])));
+import { useSpring, animated } from '@react-spring/web';
+import useUnmount from './hooks/useUnmount';
+import * as vars from './vars';
+var StyledMask = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  touch-action: none;\n"], ["\n  background-color: rgba(0, 0, 0);\n  z-index: 100;\n  position: fixed;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100%;\n  touch-action: none;\n"])));
 /** 遮罩层 */
 
 var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       className = props.className,
-      _a = props.hideOverflow,
-      hideOverflow = _a === void 0 ? true : _a,
-      rest = __rest(props, ["children", "className", "hideOverflow"]);
+      visible = props.visible,
+      _a = props.duration,
+      duration = _a === void 0 ? vars.animationNormal : _a,
+      style = props.style,
+      _b = props.hideOverflow,
+      hideOverflow = _b === void 0 ? true : _b,
+      rest = __rest(props, ["children", "className", "visible", "duration", "style", "hideOverflow"]); // animation effect
 
-  useEffect(function () {
-    return function () {
-      document.body.style.overflow = '';
-    };
-  }, []);
-  useEffect(function () {
-    if (hideOverflow) {
-      document.body.style.overflow = hideOverflow ? 'hidden' : '';
+
+  var _c = useState(visible),
+      active = _c[0],
+      setActive = _c[1];
+
+  var styles = useSpring({
+    opacity: visible ? 0.45 : 0,
+    onStart: function onStart() {
+      setActive(true);
+    },
+    onRest: function onRest() {
+      setActive(visible);
+    },
+    config: {
+      duration: duration
     }
-  }, [hideOverflow]);
-  return /*#__PURE__*/React.createElement(TransitionElement, {
+  });
+  useEffect(function () {
+    document.body.style.overflow = visible && hideOverflow ? 'hidden' : '';
+  }, [visible, hideOverflow]);
+  useUnmount(function () {
+    document.body.style.overflow = '';
+  });
+  return active || visible ? /*#__PURE__*/React.createElement(StyledMask, __assign({
     ref: ref
-  }, /*#__PURE__*/React.createElement(StyledMask, __assign({}, rest, {
-    className: clsx('uc-mask', className)
-  }), children));
+  }, rest, {
+    className: clsx('uc-mask', className),
+    style: __assign(__assign({}, styles), style)
+  }), children) : null;
 });
 Mask.displayName = 'UC-Mask';
 export default Mask;

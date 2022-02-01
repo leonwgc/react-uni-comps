@@ -59,7 +59,8 @@ var Toast = /*#__PURE__*/forwardRef(function (props, ref) {
       className = props.className,
       rest = __rest(props, ["content", "visible", "modal", "maskStyle", "className"]);
 
-  return visible ? /*#__PURE__*/React.createElement(React.Fragment, null, modal && visible && /*#__PURE__*/React.createElement(Mask, {
+  return visible ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Mask, {
+    visible: modal,
     style: __assign({
       opacity: 0
     }, maskStyle)
