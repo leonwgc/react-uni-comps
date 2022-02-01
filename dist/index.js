@@ -5398,6 +5398,7 @@ var Wheel = function Wheel(props) {
       _index = _useState2[0],
       _setIndex = _useState2[1];
 
+  var isMovingRef = React.useRef(false);
   var momentumRef = React.useRef({
     touchStartTime: 0
   });
@@ -5430,7 +5431,7 @@ var Wheel = function Wheel(props) {
     // guard to prevent from index out of range
     if (_index < 0) {
       _setIndex(0);
-    } else if (_index >= data.length) {
+    } else if (_index >= data.length && data.length) {
       _setIndex(data.length - 1);
     }
   }); // sync outside
@@ -5448,6 +5449,11 @@ var Wheel = function Wheel(props) {
   }, [_index, scrollToIndex]);
 
   var touchEnd = function touchEnd() {
+    if (!isMovingRef.current) {
+      return;
+    }
+
+    isMovingRef.current = false;
     var min = -1 * (data.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
     var newIndex;
@@ -5455,7 +5461,7 @@ var Wheel = function Wheel(props) {
     if (yRef.current >= max - itemHeight / 2) {
       newIndex = 0;
     } else if (yRef.current <= min) {
-      newIndex = data.length - 1;
+      newIndex = Math.max(data.length - 1, 0);
     } else {
       newIndex = getIndexByY();
     }
@@ -5466,41 +5472,19 @@ var Wheel = function Wheel(props) {
     }, 300);
   };
 
-  var touchEndRef = useCallbackRef(touchEnd);
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
+    isMovingRef.current = true;
+    momentumRef.current.touchStartTime = Date.now();
+  };
+
   React.useLayoutEffect(function () {
-    var el = elRef.current;
-    var elTouchEnd = touchEndRef.current;
-    var isMoving = false;
-
-    var touchStart = function touchStart() {
-      isMoving = true;
-      momentumRef.current.touchStartTime = Date.now();
-    };
-
-    var touchEnd = function touchEnd() {
-      if (isMoving) {
-        elTouchEnd();
-      }
-
-      isMoving = false;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    }
-
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     return function () {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  }, [touchEndRef]);
+  });
   return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: elRef,
     onPressMove: function onPressMove(e) {
@@ -5518,7 +5502,7 @@ var Wheel = function Wheel(props) {
         scrollToIndex(getIndexByY());
       }
     }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
+  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, evtProps, {
     className: clsx__default['default']('uc-wheel', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       transform: styles.y.to(function (v) {
@@ -5538,9 +5522,26 @@ var Wheel = function Wheel(props) {
 
 Wheel.displayName = 'UC-Wheel';
 
-var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data", "cols"];
+/**
+ * 强制render组件
+ *
+ * @return {*}
+ */
+
+var useForceUpdate = function useForceUpdate() {
+  var _useReducer = React.useReducer(function (x) {
+    return x + 1;
+  }, 0),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
+      forceUpdate = _useReducer2[1];
+
+  return forceUpdate;
+};
+
+var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"];
 
 var _templateObject$A;
+//#region type & helper
 
 var StyledWrap$2 = styled__default['default'].div(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  display: flex;\n  position: relative;\n  background-color: #fff;\n  height: ", "px;\n  touch-action: none;\n\n  .mask {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),\n      linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));\n    background-repeat: no-repeat;\n    background-position: top, bottom;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n    pointer-events: none;\n    background-size: 100% ", "px;\n  }\n\n  .hairline {\n    position: absolute;\n    height: ", "px;\n    width: 100%;\n    border-left: 0;\n    border-right: 0;\n    top: ", "px;\n\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-top: 1px solid #d8d8d8;\n      border-bottom: 1px solid #d8d8d8;\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  .columnitem {\n    width: 0;\n    flex-grow: 1;\n    height: 100%;\n\n    .wheel-wrap {\n      display: flex;\n      position: relative;\n      text-align: center;\n      overflow-y: hidden;\n      height: 100%;\n    }\n  }\n"])), function (props) {
   return props.itemHeight * 7;
@@ -5550,8 +5551,7 @@ var StyledWrap$2 = styled__default['default'].div(_templateObject$A || (_templat
   return props.itemHeight;
 }, function (props) {
   return props.itemHeight * 3;
-}); //#endregion
-
+});
 /**
  *  convert data to 2 dimension array ;
  *
@@ -5619,8 +5619,22 @@ var getIndexArrayFromValue = function getIndexArrayFromValue() {
   return ar;
 };
 
+var formatSimpleData = function formatSimpleData() {
+  var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return arr.map(function (i) {
+    return {
+      label: i,
+      value: i
+    };
+  });
+}; //#endregion
+
 /** 平铺选择器 */
+
+
 var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _cdata, _listRef$current;
+
   var className = props.className,
       onChange = props.onChange,
       onWheelChange = props.onWheelChange,
@@ -5630,38 +5644,59 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      _props$cols = props.cols,
-      cols = _props$cols === void 0 ? 1 : _props$cols,
-      rest = _objectWithoutProperties(props, _excluded$B); // 非级联
+      rest = _objectWithoutProperties(props, _excluded$B);
+
+  var cols = 1;
+  var cdata = data || []; // 非级联
+
+  var isUnLinked = true;
+
+  if (!((_cdata = cdata) === null || _cdata === void 0 ? void 0 : _cdata.length)) {
+    cols = 1;
+  } else {
+    var firstItem = cdata[0];
+
+    if (Array.isArray(firstItem)) {
+      // 非级联
+      isUnLinked = true;
+      cols = cdata.length;
+    } else if (!isObject(firstItem)) {
+      cdata = formatSimpleData(cdata);
+    } else {
+      var c = 1;
+      var t = firstItem;
+
+      while (Array.isArray(t.children)) {
+        if (isUnLinked) {
+          isUnLinked = false;
+        } // linked
 
 
-  var isUnLinked = (data === null || data === void 0 ? void 0 : data.length) > 0 && Array.isArray(data[0]);
+        c++;
+        t = t.children[0];
+      }
 
-  var _useState = React.useState(function () {
-    return convertPickerData(data, cols, value);
-  }),
-      _useState2 = _slicedToArray(_useState, 2),
-      list = _useState2[0],
-      setList = _useState2[1];
+      cols = c;
+    }
+  }
 
-  var _useState3 = React.useState(function () {
-    return getIndexArrayFromValue(value, list, cols);
-  }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      indexArr = _useState4[0],
-      setIndexArr = _useState4[1];
-
+  var forceUpdate = useForceUpdate();
+  var listRef = React.useRef(convertPickerData(cdata, cols, value));
+  var indexArrRef = React.useRef(getIndexArrayFromValue(value, listRef.current, cols));
   React.useImperativeHandle(ref, function () {
     return {
       getValue: function getValue() {
-        return list.map(function (e, i) {
-          return e[indexArr[i]].value;
+        return listRef.current.map(function (e, i) {
+          return e[indexArrRef.current[i]].value;
         });
       }
     };
   });
   useUpdateEffect(function () {
-    setList(convertPickerData(data, cols, value));
+    var list = convertPickerData(cdata, cols, value);
+    listRef.current = list;
+    indexArrRef.current = getIndexArrayFromValue(value, list, cols);
+    forceUpdate();
   }, [data]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
     className: clsx__default['default']('uc-pickerview', className),
@@ -5674,36 +5709,40 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     className: "columnitem"
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "wheel-wrap"
-  }, list === null || list === void 0 ? void 0 : list.map(function (listItem, idx) {
+  }, (_listRef$current = listRef.current) === null || _listRef$current === void 0 ? void 0 : _listRef$current.map(function (listItem, idx) {
     return /*#__PURE__*/React__default['default'].createElement(Wheel, {
       itemHeight: itemHeight,
       data: listItem,
-      key: listItem.length + '-' + idx,
-      index: indexArr[idx],
+      key: idx,
+      index: indexArrRef.current[idx],
       onIndexChange: function onIndexChange(index) {
-        indexArr[idx] = index;
+        indexArrRef.current[idx] = index;
         var nextIndex = idx + 1;
 
         if (nextIndex <= cols - 1) {
           while (nextIndex <= cols - 1) {
             // next wheel refresh  & update value to next&first
             if (!isUnLinked) {
-              var _list$indexArr;
+              var _listRef$current$inde, _listRef$current$next;
 
               // linked
-              list[nextIndex] = ((_list$indexArr = list[nextIndex - 1][indexArr[nextIndex - 1]]) === null || _list$indexArr === void 0 ? void 0 : _list$indexArr.children) || [];
-              indexArr[nextIndex] = 0;
+              listRef.current[nextIndex] = ((_listRef$current$inde = listRef.current[nextIndex - 1][indexArrRef.current[nextIndex - 1]]) === null || _listRef$current$inde === void 0 ? void 0 : _listRef$current$inde.children) || [];
+
+              if ((!indexArrRef.current[nextIndex] || indexArrRef.current[nextIndex] === -1) && indexArrRef.current[nextIndex] < ((_listRef$current$next = listRef.current[nextIndex]) === null || _listRef$current$next === void 0 ? void 0 : _listRef$current$next.length)) {
+                indexArrRef.current[nextIndex] = 0;
+              }
             }
 
             nextIndex++;
           }
 
-          setList(_toConsumableArray(list));
-          setIndexArr(_toConsumableArray(indexArr));
+          listRef.current = _toConsumableArray(listRef.current);
+          indexArrRef.current = _toConsumableArray(indexArrRef.current);
+          forceUpdate();
         }
 
-        onChange === null || onChange === void 0 ? void 0 : onChange(list.map(function (e, i) {
-          return e[indexArr[i]].value;
+        onChange === null || onChange === void 0 ? void 0 : onChange(listRef.current.map(function (e, i) {
+          return e[indexArrRef.current[i]].value;
         }));
         onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(index, idx);
       }
@@ -5712,7 +5751,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "className", "value", "data", "cols"];
+var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"];
 
 var _templateObject$B;
 
@@ -5732,6 +5771,8 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       onOk = props.onOk,
       onChange = props.onChange,
       onWheelChange = props.onWheelChange,
+      _props$itemHeight = props.itemHeight,
+      itemHeight = _props$itemHeight === void 0 ? 35 : _props$itemHeight,
       className = props.className,
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
@@ -5776,6 +5817,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       }
     }, okText))
   }), /*#__PURE__*/React__default['default'].createElement(PickerView, {
+    itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,
     cols: cols,

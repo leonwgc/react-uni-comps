@@ -217,7 +217,7 @@ export default function App() {
           </Button>
 
           <StyledPicker
-            itemHeight={50}
+            itemHeight={40}
             visible={visible === 1}
             onClose={() => setVisible(false)}
             onOk={(v) => {

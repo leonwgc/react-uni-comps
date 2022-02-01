@@ -7,11 +7,13 @@ export declare type DataItem = {
     /** 级联数据用children */
     children?: DataItem[];
 };
+declare type SimpleDatas = string[] | number[];
+declare type ObjectDatas = DataItem[] | DataItem[][];
 declare type Props = {
     /** 列数，最多3列,默认1 */
     cols?: 1 | 2 | 3;
     /** 数据 */
-    data?: DataItem[] | DataItem[][];
+    data?: ObjectDatas | SimpleDatas;
     /** 值 */
     value?: Array<string | number>;
     /** 值改变回调 */

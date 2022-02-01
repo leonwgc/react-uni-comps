@@ -62,23 +62,25 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onOk = props.onOk,
       onChange = props.onChange,
       onWheelChange = props.onWheelChange,
+      _d = props.itemHeight,
+      itemHeight = _d === void 0 ? 35 : _d,
       className = props.className,
-      _d = props.value,
-      value = _d === void 0 ? [] : _d,
-      _e = props.data,
-      data = _e === void 0 ? [] : _e,
-      _f = props.cols,
-      cols = _f === void 0 ? 1 : _f,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "className", "value", "data", "cols"]);
+      _e = props.value,
+      value = _e === void 0 ? [] : _e,
+      _f = props.data,
+      data = _f === void 0 ? [] : _f,
+      _g = props.cols,
+      cols = _g === void 0 ? 1 : _g,
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"]);
 
   var pickerViewRef = useRef();
   useImperativeHandle(ref, function () {
     return pickerViewRef.current;
   });
 
-  var _g = useState(value),
-      val = _g[0],
-      setVal = _g[1];
+  var _h = useState(value),
+      val = _h[0],
+      setVal = _h[1];
 
   var onChangeRef = useCallbackRef(onChange);
   var onValueChange = useCallback(function (value) {
@@ -105,6 +107,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }, okText))
   }), /*#__PURE__*/React.createElement(PickerView, {
+    itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,
     cols: cols,

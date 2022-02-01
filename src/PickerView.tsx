@@ -1,10 +1,14 @@
-import React, { useState, useImperativeHandle } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
 import Wheel from './Wheel';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import useForceUpdate from './hooks/useForceUpdate';
+import { isObject } from './helper';
 
 //#region def
+
+//#region type & helper
 
 export type DataItem = {
   /** 数据显示文本 */
@@ -15,11 +19,14 @@ export type DataItem = {
   children?: DataItem[];
 };
 
+type SimpleDatas = string[] | number[];
+type ObjectDatas = DataItem[] | DataItem[][];
+
 type Props = {
   /** 列数，最多3列,默认1 */
   cols?: 1 | 2 | 3;
   /** 数据 */
-  data?: DataItem[] | DataItem[][];
+  data?: ObjectDatas | SimpleDatas;
   /** 值 */
   value?: Array<string | number>;
   /** 值改变回调 */
@@ -99,8 +106,6 @@ const StyledWrap = styled.div<{ itemHeight: number }>`
   }
 `;
 
-//#endregion
-
 /**
  *  convert data to 2 dimension array ;
  *
@@ -109,7 +114,7 @@ const StyledWrap = styled.div<{ itemHeight: number }>`
  * @param {*} [value=[]]
  * @return {*}
  */
-const convertPickerData = (data: DataItem[] | DataItem[][], cols = 1, value = []) => {
+const convertPickerData = (data: ObjectDatas, cols = 1, value = []) => {
   const ret = [];
   for (let i = 0; i < cols; i++) {
     ret.push([]);
@@ -156,6 +161,12 @@ export interface PickerViewRefType {
   getValue: () => Array<string | number>;
 }
 
+const formatSimpleData = (arr: string[] | number[] = []) => {
+  return arr.map((i) => ({ label: i, value: i }));
+};
+
+//#endregion
+
 /** 平铺选择器 */
 const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   const {
@@ -165,25 +176,57 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     itemHeight = 35,
     value = [],
     data = [],
-    cols = 1,
+    // cols = 1,
     ...rest
   } = props;
 
+  let cols = 1;
+
+  let cdata = data || [];
+
   // 非级联
-  const isUnLinked = data?.length > 0 && Array.isArray(data[0]);
+  let isUnLinked = true;
 
-  const [list, setList] = useState(() => {
-    return convertPickerData(data, cols, value);
-  });
+  if (!cdata?.length) {
+    cols = 1;
+  } else {
+    const firstItem = cdata[0];
 
-  const [indexArr, setIndexArr] = useState(() => getIndexArrayFromValue(value, list, cols));
+    if (Array.isArray(firstItem)) {
+      // 非级联
+      isUnLinked = true;
+      cols = cdata.length;
+    } else if (!isObject(firstItem)) {
+      cdata = formatSimpleData(cdata as string[] | number[]) as DataItem[];
+    } else {
+      let c = 1;
+      let t = firstItem as DataItem;
+      while (Array.isArray(t.children)) {
+        if (isUnLinked) {
+          isUnLinked = false;
+        }
+        // linked
+        c++;
+        t = t.children[0];
+      }
+      cols = c;
+    }
+  }
+
+  const forceUpdate = useForceUpdate();
+
+  const listRef = useRef(convertPickerData(cdata as ObjectDatas, cols, value));
+  const indexArrRef = useRef(getIndexArrayFromValue(value, listRef.current, cols));
 
   useImperativeHandle(ref, () => ({
-    getValue: () => list.map((e, i) => e[indexArr[i]].value),
+    getValue: () => listRef.current.map((e, i) => e[indexArrRef.current[i]].value),
   }));
 
   useUpdateEffect(() => {
-    setList(convertPickerData(data, cols, value));
+    const list = convertPickerData(cdata as ObjectDatas, cols, value);
+    listRef.current = list;
+    indexArrRef.current = getIndexArrayFromValue(value, list, cols);
+    forceUpdate();
   }, [data]);
 
   return (
@@ -192,15 +235,15 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
       <div className="hairline"></div>
       <div className="columnitem">
         <div className="wheel-wrap">
-          {list?.map((listItem, idx) => {
+          {listRef.current?.map((listItem, idx) => {
             return (
               <Wheel
                 itemHeight={itemHeight}
                 data={listItem}
-                key={listItem.length + '-' + idx}
-                index={indexArr[idx]}
+                key={idx}
+                index={indexArrRef.current[idx]}
                 onIndexChange={(index) => {
-                  indexArr[idx] = index;
+                  indexArrRef.current[idx] = index;
 
                   let nextIndex = idx + 1;
 
@@ -209,18 +252,27 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
                       // next wheel refresh  & update value to next&first
                       if (!isUnLinked) {
                         // linked
-                        list[nextIndex] =
-                          list[nextIndex - 1][indexArr[nextIndex - 1]]?.children || [];
+                        listRef.current[nextIndex] =
+                          listRef.current[nextIndex - 1][indexArrRef.current[nextIndex - 1]]
+                            ?.children || [];
 
-                        indexArr[nextIndex] = 0;
+                        if (
+                          (!indexArrRef.current[nextIndex] ||
+                            indexArrRef.current[nextIndex] === -1) &&
+                          indexArrRef.current[nextIndex] < listRef.current[nextIndex]?.length
+                        ) {
+                          indexArrRef.current[nextIndex] = 0;
+                        }
                       }
                       nextIndex++;
                     }
-                    setList([...list]);
-                    setIndexArr([...indexArr]);
+
+                    listRef.current = [...listRef.current];
+                    indexArrRef.current = [...indexArrRef.current];
+                    forceUpdate();
                   }
 
-                  onChange?.(list.map((e, i) => e[indexArr[i]].value));
+                  onChange?.(listRef.current.map((e, i) => e[indexArrRef.current[i]].value));
                   onWheelChange?.(index, idx);
                 }}
               />

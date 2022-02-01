@@ -59,6 +59,7 @@ const Wheel = (props: Props): React.ReactElement => {
   const yRef = useRef(firstItemY);
   const [_index, _setIndex] = useState(index);
 
+  const isMovingRef = useRef(false);
   const momentumRef = useRef({
     touchStartTime: 0,
   });
@@ -85,7 +86,7 @@ const Wheel = (props: Props): React.ReactElement => {
     // guard to prevent from index out of range
     if (_index < 0) {
       _setIndex(0);
-    } else if (_index >= data.length) {
+    } else if (_index >= data.length && data.length) {
       _setIndex(data.length - 1);
     }
   });
@@ -106,6 +107,10 @@ const Wheel = (props: Props): React.ReactElement => {
   }, [_index, scrollToIndex]);
 
   const touchEnd = () => {
+    if (!isMovingRef.current) {
+      return;
+    }
+    isMovingRef.current = false;
     const min = -1 * (data.length - 1) * itemHeight + firstItemY;
     const max = firstItemY;
 
@@ -113,7 +118,7 @@ const Wheel = (props: Props): React.ReactElement => {
     if (yRef.current >= max - itemHeight / 2) {
       newIndex = 0;
     } else if (yRef.current <= min) {
-      newIndex = data.length - 1;
+      newIndex = Math.max(data.length - 1, 0);
     } else {
       newIndex = getIndexByY();
     }
@@ -124,40 +129,20 @@ const Wheel = (props: Props): React.ReactElement => {
     }, 300);
   };
 
-  const touchEndRef = useCallbackRef(touchEnd);
+  const evtProps: any = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = () => {
+    isMovingRef.current = true;
+    momentumRef.current.touchStartTime = Date.now();
+  };
 
   useLayoutEffect(() => {
-    const el = elRef.current;
-    const elTouchEnd = touchEndRef.current;
-    let isMoving = false;
-
-    const touchStart = () => {
-      isMoving = true;
-      momentumRef.current.touchStartTime = Date.now();
-    };
-
-    const touchEnd = () => {
-      if (isMoving) {
-        elTouchEnd();
-      }
-      isMoving = false;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    }
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
 
     return () => {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  }, [touchEndRef]);
+  });
 
   return (
     <FingerGestureElement
@@ -179,6 +164,7 @@ const Wheel = (props: Props): React.ReactElement => {
     >
       <StyledWrap
         {...rest}
+        {...evtProps}
         className={clsx('uc-wheel', className)}
         style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
       >

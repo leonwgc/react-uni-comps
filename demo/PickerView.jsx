@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { PickerView } from 'react-uni-comps';
+import { PickerView, Button, Affix } from 'react-uni-comps';
 
 //#region  data
 
@@ -43,6 +43,7 @@ var city = {
   91: '国外 ',
 };
 
+const simpleOneColData = ['北京', '天津', '湖北', '山西'];
 const oneColData = Object.values(city).map((v) => ({ label: v.trim(), value: v.trim() }));
 
 const twoColsData = [
@@ -88,7 +89,41 @@ const UnlinkedTwo = [
   ],
 ];
 
-const areas = [
+const UnlinkedThree = [
+  [
+    { value: '选项一', label: '选项一' },
+    { value: '选项二', label: '选项二' },
+  ],
+  [
+    { value: '选项A', label: '选项A' },
+    { value: '选项B', label: '选项B' },
+  ],
+  [
+    { value: '111', label: '111' },
+    { value: '222', label: '333' },
+  ],
+];
+
+const UnlinkedFour = [
+  [
+    { value: '选项一', label: '选项一' },
+    { value: '选项二', label: '选项二' },
+  ],
+  [
+    { value: '选项A', label: '选项A' },
+    { value: '选项B', label: '选项B' },
+  ],
+  [
+    { value: '111', label: '111' },
+    { value: '222', label: '222' },
+  ],
+  [
+    { value: 'xxxx', label: 'xxxx' },
+    { value: 'yyyy', label: 'yyyy' },
+  ],
+];
+
+const threeColData = [
   {
     label: '上海',
     value: '上海',
@@ -166,51 +201,102 @@ export default function App() {
   const [value1, setValue1] = useState(['北京', '北京2']);
   const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
   const [value3, setValue3] = useState(['选项二', '选项B']);
+
+  const [data, setData] = useState([]);
   const [v, setV] = useState();
 
   return (
     <PageWrap>
-      <DemoBlock title="当前值：">{v}</DemoBlock>
-      <PickerView
-        itemHeight={40}
-        onChange={(v) => {
-          setValue(v);
-          setV(v);
-        }}
-        value={value}
-        cols={1}
-        data={oneColData}
-      />
-      <PickerView
-        value={value1}
-        onChange={(v) => {
-          setValue1(v);
+      <Affix>
+        <DemoBlock title="当前值：" style={{ background: '#fff' }}>
+          {v}
+        </DemoBlock>
+      </Affix>
 
-          setV(v);
-        }}
-        cols={2}
-        data={twoColsData}
-      />
-      <PickerView
-        value={value2}
-        onChange={(v) => {
-          setValue2(v);
+      <DemoBlock title="一列 字符串数组">
+        <PickerView
+          onChange={(v) => {
+            setValue(v);
+            setV(v);
+          }}
+          value={value}
+          data={simpleOneColData}
+        />
+      </DemoBlock>
 
-          setV(v);
-        }}
-        cols={3}
-        data={areas}
-      />
+      <DemoBlock title="一列 label，value对象数组">
+        <PickerView
+          onChange={(v) => {
+            setValue(v);
+            setV(v);
+          }}
+          value={value}
+          data={oneColData}
+        />
+      </DemoBlock>
 
-      <PickerView
-        value={value3}
-        onChange={(v) => {
-          setValue3(v);
-          setV(v);
-        }}
-        cols={2}
-        data={UnlinkedTwo}
-      />
+      <DemoBlock title="联动二列">
+        <PickerView
+          onChange={(v) => {
+            setValue1(v);
+            setV(v);
+          }}
+          value={value1}
+          data={twoColsData}
+        />
+      </DemoBlock>
+
+      <DemoBlock title="联动三列">
+        <PickerView
+          onChange={(v) => {
+            setValue2(v);
+            setV(v);
+          }}
+          value={value2}
+          data={threeColData}
+        />
+      </DemoBlock>
+
+      <DemoBlock title="联动二列，动态设置数据源">
+        <PickerView
+          value={value1}
+          onChange={(v) => {
+            setValue1(v);
+            setV(v);
+          }}
+          data={data}
+        />
+        <Button onClick={() => setData(twoColsData)}>设置数据</Button>
+      </DemoBlock>
+
+      <DemoBlock title="非联动二列">
+        <PickerView
+          value={value3}
+          onChange={(v) => {
+            setValue3(v);
+            setV(v);
+          }}
+          data={UnlinkedTwo}
+        />
+      </DemoBlock>
+
+      <DemoBlock title="非联动三列">
+        <PickerView
+          onChange={(v) => {
+            setV(v);
+          }}
+          data={UnlinkedThree}
+        />
+      </DemoBlock>
+
+      <DemoBlock title="非联动四列">
+        <PickerView
+          onChange={(v) => {
+            setV(v);
+          }}
+          data={UnlinkedFour}
+        />
+      </DemoBlock>
     </PageWrap>
   );
 }

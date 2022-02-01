@@ -75,6 +75,7 @@ var Wheel = function Wheel(props) {
       _index = _d[0],
       _setIndex = _d[1];
 
+  var isMovingRef = useRef(false);
   var momentumRef = useRef({
     touchStartTime: 0
   });
@@ -109,7 +110,7 @@ var Wheel = function Wheel(props) {
     // guard to prevent from index out of range
     if (_index < 0) {
       _setIndex(0);
-    } else if (_index >= data.length) {
+    } else if (_index >= data.length && data.length) {
       _setIndex(data.length - 1);
     }
   }); // sync outside
@@ -127,6 +128,11 @@ var Wheel = function Wheel(props) {
   }, [_index, scrollToIndex]);
 
   var touchEnd = function touchEnd() {
+    if (!isMovingRef.current) {
+      return;
+    }
+
+    isMovingRef.current = false;
     var min = -1 * (data.length - 1) * itemHeight + firstItemY;
     var max = firstItemY;
     var newIndex;
@@ -134,7 +140,7 @@ var Wheel = function Wheel(props) {
     if (yRef.current >= max - itemHeight / 2) {
       newIndex = 0;
     } else if (yRef.current <= min) {
-      newIndex = data.length - 1;
+      newIndex = Math.max(data.length - 1, 0);
     } else {
       newIndex = getIndexByY();
     }
@@ -145,41 +151,19 @@ var Wheel = function Wheel(props) {
     }, 300);
   };
 
-  var touchEndRef = useCallbackRef(touchEnd);
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
+    isMovingRef.current = true;
+    momentumRef.current.touchStartTime = Date.now();
+  };
+
   useLayoutEffect(function () {
-    var el = elRef.current;
-    var elTouchEnd = touchEndRef.current;
-    var isMoving = false;
-
-    var touchStart = function touchStart() {
-      isMoving = true;
-      momentumRef.current.touchStartTime = Date.now();
-    };
-
-    var touchEnd = function touchEnd() {
-      if (isMoving) {
-        elTouchEnd();
-      }
-
-      isMoving = false;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    el.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    }
-
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     return function () {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-      el.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  }, [touchEndRef]);
+  });
   return /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: elRef,
     onPressMove: function onPressMove(e) {
@@ -197,7 +181,7 @@ var Wheel = function Wheel(props) {
         scrollToIndex(getIndexByY());
       }
     }
-  }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
+  }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, evtProps, {
     className: clsx('uc-wheel', className),
     style: __assign(__assign({}, style), {
       transform: styles.y.to(function (v) {
