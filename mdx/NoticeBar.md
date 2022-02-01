@@ -1,6 +1,6 @@
 ---
 title: NoticeBar 水平通知栏
-order: 10
+order: 9
 mobile: true
 group:
   title: 数据展示

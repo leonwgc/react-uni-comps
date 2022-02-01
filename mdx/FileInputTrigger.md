@@ -1,6 +1,6 @@
 ---
 title: FileInputTrigger 图片文件上传
-order: 13
+order: 12
 mobile: true
 group:
   title: 数据录入

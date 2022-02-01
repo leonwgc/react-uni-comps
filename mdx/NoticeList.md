@@ -1,6 +1,6 @@
 ---
 title: NoticeList 垂直通知栏
-order: 11
+order: 10
 mobile: true
 group:
   title: 数据展示

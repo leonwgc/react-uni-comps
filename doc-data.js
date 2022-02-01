@@ -7,10 +7,6 @@ module.exports = [
         name: 'Button',
         title: 'Button 按钮',
       },
-      {
-        name: 'Divider',
-        title: 'Divider 分割线',
-      },
 
       {
         name: 'HairLineBox',
@@ -43,11 +39,7 @@ module.exports = [
         title: 'Modal 弹框',
         mobile: false,
       },
-      {
-        name: 'Drawer',
-        title: 'Drawer 抽屉',
-        mobile: false,
-      },
+
       {
         name: 'AlertDialog',
         title: 'AlertDialog alert/confirm弹框',
@@ -107,9 +99,38 @@ module.exports = [
     ],
   },
   {
-    title: '导航组件',
-    path: 'nav',
+    title: '导航和布局',
+    path: 'navlayout',
     comps: [
+      {
+        name: 'Space',
+        title: 'Space 间距',
+      },
+      {
+        name: 'AutoCenter',
+        title: 'AutoCenter 自动居中',
+      },
+      {
+        name: 'Collapse',
+        title: 'Collapse 折叠面板',
+      },
+      {
+        name: 'Divider',
+        title: 'Divider 分割线',
+      },
+      {
+        name: 'IndexList',
+        title: 'IndexList 索引列表',
+      },
+      {
+        name: 'Drawer',
+        title: 'Drawer 抽屉',
+        mobile: false,
+      },
+      {
+        name: 'SafeArea',
+        title: 'SafeArea 安全区',
+      },
       {
         name: 'Tabs',
         title: 'Tabs 选项卡',
@@ -118,10 +139,7 @@ module.exports = [
         name: 'Affix',
         title: 'Affix 固钉',
       },
-      {
-        name: 'Steps',
-        title: 'Steps 步骤条',
-      },
+
       {
         name: 'PopMenu',
         title: 'PopMenu 弹出菜单',
@@ -181,10 +199,7 @@ module.exports = [
         name: 'Rate',
         title: 'Rate 评分',
       },
-      {
-        name: 'IndexList',
-        title: 'IndexList 索引列表',
-      },
+
       {
         name: 'FileInputTrigger',
         title: 'FileInputTrigger 图片文件上传',
@@ -203,6 +218,7 @@ module.exports = [
       },
     ],
   },
+
   {
     title: '数据展示',
     path: 'display',
@@ -240,10 +256,7 @@ module.exports = [
         name: 'ProgressCircle',
         title: 'ProgressCircle 环形进度条',
       },
-      {
-        name: 'Collapse',
-        title: 'Collapse 折叠面板',
-      },
+
       {
         name: 'Slide',
         title: 'Slide 轮播/幻灯片',
@@ -260,6 +273,10 @@ module.exports = [
       {
         name: 'RollingNumber',
         title: 'RollingNumber 滚动数字',
+      },
+      {
+        name: 'Steps',
+        title: 'Steps 步骤条',
       },
     ],
   },

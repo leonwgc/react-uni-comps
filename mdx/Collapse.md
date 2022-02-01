@@ -1,11 +1,11 @@
 ---
 title: Collapse 折叠面板
-order: 8
+order: 2
 mobile: true
 group:
-  title: 数据展示
-  order: 4
-  path: display
+  title: 导航和布局
+  order: 2
+  path: navlayout
 ---
 
 <code src="../demo/Collapse.jsx"></code>

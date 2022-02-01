@@ -1,11 +1,11 @@
 ---
 title: PopMenu 弹出菜单
-order: 3
+order: 9
 mobile: false
 group:
-  title: 导航组件
+  title: 导航和布局
   order: 2
-  path: nav
+  path: navlayout
 ---
 
 <code src="../demo/PopMenu.jsx"></code>

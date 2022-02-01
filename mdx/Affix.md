@@ -1,11 +1,11 @@
 ---
 title: Affix 固钉
-order: 1
+order: 8
 mobile: true
 group:
-  title: 导航组件
+  title: 导航和布局
   order: 2
-  path: nav
+  path: navlayout
 ---
 
 <code src="../demo/Affix.jsx"></code>

@@ -1,6 +1,6 @@
 ---
 title: DatePicker 移动端日期选择
-order: 15
+order: 14
 mobile: true
 group:
   title: 数据录入

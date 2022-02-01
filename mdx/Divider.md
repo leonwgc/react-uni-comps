@@ -1,11 +1,11 @@
 ---
 title: Divider 分割线
-order: 1
+order: 3
 mobile: true
 group:
-  title: 基础组件
-  order: 0
-  path: base
+  title: 导航和布局
+  order: 2
+  path: navlayout
 ---
 
 <code src="../demo/Divider.jsx"></code>

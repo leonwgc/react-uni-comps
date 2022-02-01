@@ -1,11 +1,11 @@
 ---
 title: Tabs 选项卡
-order: 0
+order: 7
 mobile: true
 group:
-  title: 导航组件
+  title: 导航和布局
   order: 2
-  path: nav
+  path: navlayout
 ---
 
 <code src="../demo/Tabs.jsx"></code>

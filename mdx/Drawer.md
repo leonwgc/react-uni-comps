@@ -1,11 +1,11 @@
 ---
 title: Drawer 抽屉
-order: 3
+order: 5
 mobile: false
 group:
-  title: 操作反馈
-  order: 1
-  path: feedback
+  title: 导航和布局
+  order: 2
+  path: navlayout
 ---
 
 <code src="../demo/Drawer.jsx"></code>

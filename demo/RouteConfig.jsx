@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Space',
+    component: lazy(() => import('./Space')),
+  },
+  {
     path: '/Ripple',
     component: lazy(() => import('./Ripple')),
   },

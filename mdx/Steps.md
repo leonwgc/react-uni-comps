@@ -1,11 +1,11 @@
 ---
 title: Steps 步骤条
-order: 2
+order: 12
 mobile: true
 group:
-  title: 导航组件
-  order: 2
-  path: nav
+  title: 数据展示
+  order: 4
+  path: display
 ---
 
 <code src="../demo/Steps.jsx"></code>

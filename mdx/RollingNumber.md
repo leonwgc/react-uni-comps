@@ -1,6 +1,6 @@
 ---
 title: RollingNumber 滚动数字
-order: 12
+order: 11
 mobile: true
 group:
   title: 数据展示
