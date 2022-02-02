@@ -106,7 +106,7 @@ const Wheel = (props: Props): React.ReactElement => {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
-  const touchEnd = () => {
+  const touchEnd = useCallback(() => {
     if (!isMovingRef.current) {
       return;
     }
@@ -127,7 +127,7 @@ const Wheel = (props: Props): React.ReactElement => {
     setTimeout(() => {
       _setIndex(newIndex);
     }, 300);
-  };
+  }, [scrollToIndex, itemHeight, firstItemY, getIndexByY, data]);
 
   const evtProps: any = {};
 
@@ -142,7 +142,7 @@ const Wheel = (props: Props): React.ReactElement => {
     return () => {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  });
+  }, [touchEnd]);
 
   return (
     <FingerGestureElement
