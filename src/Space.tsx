@@ -97,7 +97,7 @@ const StyledSpace = styled.div<{
   align-items: ${({ align }) => align};
 `;
 
-/** 间距容器,参考 https://ant.design/components/space-cn/ */
+/** 间距 */
 const Space: React.FC<SpaceProps> = (props) => {
   const {
     size = 8,
