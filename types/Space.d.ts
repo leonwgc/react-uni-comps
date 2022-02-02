@@ -14,6 +14,6 @@ declare type SpaceProps = {
     /** 是否自动换行，仅在 horizontal 时有效 */
     wrap?: boolean;
 };
-/** 间距容器,参考 https://ant.design/components/space-cn/ */
+/** 间距 */
 declare const Space: React.FC<SpaceProps>;
 export default Space;

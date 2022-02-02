@@ -11,7 +11,7 @@ import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isTouch } from './dom';
-import { animationSlow } from './vars';
+import { animationNormal } from './vars';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -21,7 +21,6 @@ const StyledSlide = styled.div`
     position: relative;
     display: flex;
     flex-wrap: nowrap;
-    transition: transform ${animationSlow}ms ease-in-out;
     touch-action: none;
 
     &.vertical {
@@ -47,7 +46,7 @@ const StyledSlide = styled.div`
       width: 19px;
       height: 4px;
       background: rgba(255, 255, 255, 0.6);
-      transition: all ease-in-out ${animationSlow}ms;
+      transition: all ease-in-out ${animationNormal}ms;
 
       &:not(:last-child) {
         margin-right: 4px;
@@ -97,6 +96,8 @@ export type Props = {
   showPageIndicator?: boolean;
   /** 滑动比例多少切换，默认0.1 */
   ratio?: number;
+  /** 动画时间，默认280 */
+  duration?: number;
 };
 
 export interface SlideRefType {
@@ -140,6 +141,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     onPageChange,
     direction = 'horizontal',
     interval = 3000,
+    duration = 280,
     children,
     className,
     height = 160,
@@ -274,34 +276,22 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     }
   }, [direction, pageIndex, ratio, slideToPageIndex]);
 
+  const evtProps: any = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = (e) => {
+    e.preventDefault();
+    const s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
   useLayoutEffect(() => {
-    const el = wrapElRef.current;
-
-    const touchStart = (e) => {
-      e.preventDefault();
-      const s = thisRef.current;
-      s.isMoving = true;
-      wrapElRef.current.style.transitionProperty = 'none';
-      s.lastX = s.x;
-      s.lastY = s.y;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    } else {
-      el.addEventListener('touchend', touchEnd);
-    }
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
 
     return () => {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      } else {
-        el.removeEventListener('touchend', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
 
@@ -338,6 +328,8 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
           onTransitionEnd={() => {
             ensurePageIndex();
           }}
+          {...evtProps}
+          style={{ transition: `transform ${duration}ms ease-in-out` }}
         >
           {items}
         </div>

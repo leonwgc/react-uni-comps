@@ -18,6 +18,8 @@ export declare type Props = {
     showPageIndicator?: boolean;
     /** 滑动比例多少切换，默认0.1 */
     ratio?: number;
+    /** 动画时间，默认280 */
+    duration?: number;
 };
 export interface SlideRefType {
     prev: () => void;
