@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/PullToRefresh',
+    component: lazy(() => import('./PullToRefresh')),
+  },
+  {
     path: '/Space',
     component: lazy(() => import('./Space')),
   },

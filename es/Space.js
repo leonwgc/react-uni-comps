@@ -48,7 +48,8 @@ import clsx from 'clsx';
 function SpaceItem(_a) {
   var _b;
 
-  var className = _a.className,
+  var _c = _a.className,
+      className = _c === void 0 ? 'uc-space-item' : _c,
       direction = _a.direction,
       index = _a.index,
       marginDirection = _a.marginDirection,
@@ -56,11 +57,11 @@ function SpaceItem(_a) {
       split = _a.split,
       wrap = _a.wrap;
 
-  var _c = React.useContext(SpaceContext),
-      horizontalSize = _c.horizontalSize,
-      verticalSize = _c.verticalSize,
-      latestIndex = _c.latestIndex,
-      supportFlexGap = _c.supportFlexGap;
+  var _d = React.useContext(SpaceContext),
+      horizontalSize = _d.horizontalSize,
+      verticalSize = _d.verticalSize,
+      latestIndex = _d.latestIndex,
+      supportFlexGap = _d.supportFlexGap;
 
   var style = {};
 
@@ -108,7 +109,7 @@ var StyledSpace = styled.div(templateObject_1 || (templateObject_1 = __makeTempl
   var align = _a.align;
   return align;
 });
-/** 间距容器,参考 https://ant.design/components/space-cn/ */
+/** 间距 */
 
 var Space = function Space(props) {
   var _a = props.size,

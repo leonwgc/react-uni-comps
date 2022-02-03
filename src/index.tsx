@@ -70,6 +70,7 @@ export { default as AutoCenter } from './AutoCenter';
 export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
+export { default as PullToRefresh } from './PullToRefresh';
 
 /** helper & dom */
 export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './helper';

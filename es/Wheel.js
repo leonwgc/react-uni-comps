@@ -126,8 +126,7 @@ var Wheel = function Wheel(props) {
   useEffect(function () {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
-
-  var touchEnd = function touchEnd() {
+  var touchEnd = useCallback(function () {
     if (!isMovingRef.current) {
       return;
     }
@@ -149,8 +148,7 @@ var Wheel = function Wheel(props) {
     setTimeout(function () {
       _setIndex(newIndex);
     }, 300);
-  };
-
+  }, [scrollToIndex, itemHeight, firstItemY, getIndexByY, data]);
   var evtProps = {};
 
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
@@ -163,7 +161,7 @@ var Wheel = function Wheel(props) {
     return function () {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  });
+  }, [touchEnd]);
   return /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: elRef,
     onPressMove: function onPressMove(e) {

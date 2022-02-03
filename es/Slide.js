@@ -45,8 +45,8 @@ import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isTouch } from './dom';
-import { animationSlow } from './vars';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationSlow, animationSlow);
+import { animationNormal } from './vars';
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -92,25 +92,27 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       direction = _c === void 0 ? 'horizontal' : _c,
       _d = props.interval,
       interval = _d === void 0 ? 3000 : _d,
+      _e = props.duration,
+      duration = _e === void 0 ? 280 : _e,
       children = props.children,
       className = props.className,
-      _e = props.height,
-      height = _e === void 0 ? 160 : _e,
+      _f = props.height,
+      height = _f === void 0 ? 160 : _f,
       style = props.style,
-      _f = props.showPageIndicator,
-      showPageIndicator = _f === void 0 ? true : _f,
-      _g = props.ratio,
-      ratio = _g === void 0 ? 0.1 : _g,
-      rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showPageIndicator", "ratio"]);
+      _g = props.showPageIndicator,
+      showPageIndicator = _g === void 0 ? true : _g,
+      _h = props.ratio,
+      ratio = _h === void 0 ? 0.1 : _h,
+      rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"]);
 
   var containerRef = useRef();
   var wrapElRef = useRef();
 
-  var _h = useState(function () {
+  var _j = useState(function () {
     return getItems(children, loop, height);
   }),
-      items = _h[0],
-      setItems = _h[1];
+      items = _j[0],
+      setItems = _j[1];
 
   var count = items.length;
   var len = React.Children.count(children);
@@ -124,9 +126,9 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     isMoving: false
   });
 
-  var _j = useState(0),
-      pageIndex = _j[0],
-      setPageIndex = _j[1]; // !loop:0~len-1, loop: -1~len
+  var _k = useState(0),
+      pageIndex = _k[0],
+      setPageIndex = _k[1]; // !loop:0~len-1, loop: -1~len
 
 
   var exp = count > len; // expanded
@@ -234,34 +236,21 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       slideToPageIndex(pageIndex);
     }
   }, [direction, pageIndex, ratio, slideToPageIndex]);
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
+    e.preventDefault();
+    var s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
   useLayoutEffect(function () {
-    var el = wrapElRef.current;
-
-    var touchStart = function touchStart(e) {
-      e.preventDefault();
-      var s = thisRef.current;
-      s.isMoving = true;
-      wrapElRef.current.style.transitionProperty = 'none';
-      s.lastX = s.x;
-      s.lastY = s.y;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    } else {
-      el.addEventListener('touchend', touchEnd);
-    }
-
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     return function () {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      } else {
-        el.removeEventListener('touchend', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
   return /*#__PURE__*/React.createElement(StyledSlide, __assign({
@@ -293,14 +282,18 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
         wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
       }
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", __assign({
     className: clsx('wrap', {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
       ensurePageIndex();
     }
-  }, items)), pagerRender());
+  }, evtProps, {
+    style: {
+      transition: "transform ".concat(duration, "ms ease-in-out")
+    }
+  }), items)), pagerRender());
 });
 Slide.displayName = 'UC-Slide';
 export default Slide;

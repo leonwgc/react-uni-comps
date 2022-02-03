@@ -58,6 +58,42 @@ function _typeof(obj) {
   }, _typeof(obj);
 }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -779,7 +815,8 @@ var _excluded$1 = ["size", "align", "className", "children", "direction", "split
 var _templateObject$2;
 
 function SpaceItem(_ref) {
-  var className = _ref.className,
+  var _ref$className = _ref.className,
+      className = _ref$className === void 0 ? 'uc-space-item' : _ref$className,
       direction = _ref.direction,
       index = _ref.index,
       marginDirection = _ref.marginDirection,
@@ -839,7 +876,7 @@ var StyledSpace = styled__default['default'].div(_templateObject$2 || (_template
   var align = _ref4.align;
   return align;
 });
-/** 间距容器,参考 https://ant.design/components/space-cn/ */
+/** 间距 */
 
 var Space = function Space(props) {
   var _props$size = props.size,
@@ -5447,8 +5484,7 @@ var Wheel = function Wheel(props) {
   React.useEffect(function () {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
-
-  var touchEnd = function touchEnd() {
+  var touchEnd = React.useCallback(function () {
     if (!isMovingRef.current) {
       return;
     }
@@ -5470,8 +5506,7 @@ var Wheel = function Wheel(props) {
     setTimeout(function () {
       _setIndex(newIndex);
     }, 300);
-  };
-
+  }, [scrollToIndex, itemHeight, firstItemY, getIndexByY, data]);
   var evtProps = {};
 
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
@@ -5484,7 +5519,7 @@ var Wheel = function Wheel(props) {
     return function () {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
-  });
+  }, [touchEnd]);
   return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
     ref: elRef,
     onPressMove: function onPressMove(e) {
@@ -7041,10 +7076,10 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "children", "className", "height", "style", "showPageIndicator", "ratio"];
+var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
 
 var _templateObject$G;
-var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    transition: transform ", "ms ease-in-out;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationSlow, animationSlow);
+var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -7090,6 +7125,8 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
       _props$interval = props.interval,
       interval = _props$interval === void 0 ? 3000 : _props$interval,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 280 : _props$duration,
       children = props.children,
       className = props.className,
       _props$height = props.height,
@@ -7231,34 +7268,21 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       slideToPageIndex(pageIndex);
     }
   }, [direction, pageIndex, ratio, slideToPageIndex]);
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
+    e.preventDefault();
+    var s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
   React.useLayoutEffect(function () {
-    var el = wrapElRef.current;
-
-    var touchStart = function touchStart(e) {
-      e.preventDefault();
-      var s = thisRef.current;
-      s.isMoving = true;
-      wrapElRef.current.style.transitionProperty = 'none';
-      s.lastX = s.x;
-      s.lastY = s.y;
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    } else {
-      el.addEventListener('touchend', touchEnd);
-    }
-
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     return function () {
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      } else {
-        el.removeEventListener('touchend', touchEnd);
-      }
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
@@ -7290,14 +7314,18 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
         wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
       }
     }
-  }, /*#__PURE__*/React__default['default'].createElement("div", {
+  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
     className: clsx__default['default']('wrap', {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
       ensurePageIndex();
     }
-  }, items)), pagerRender());
+  }, evtProps, {
+    style: {
+      transition: "transform ".concat(duration, "ms ease-in-out")
+    }
+  }), items)), pagerRender());
 });
 Slide.displayName = 'UC-Slide';
 
@@ -10270,6 +10298,293 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Ripple.displayName = 'UC-Ripple';
 
+var _excluded$Z = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
+
+var _templateObject$U;
+
+var sleep = function sleep(time) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, time);
+  });
+};
+
+var StyledWrap$6 = styled__default['default'](web.animated.div)(_templateObject$U || (_templateObject$U = _taggedTemplateLiteral(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
+
+/** 下拉刷新 */
+var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$pullingText = props.pullingText,
+      pullingText = _props$pullingText === void 0 ? '下拉刷新' : _props$pullingText,
+      _props$canReleaseText = props.canReleaseText,
+      canReleaseText = _props$canReleaseText === void 0 ? '释放立即刷新' : _props$canReleaseText,
+      _props$refreshingText = props.refreshingText,
+      refreshingText = _props$refreshingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D...") : _props$refreshingText,
+      _props$completeText = props.completeText,
+      completeText = _props$completeText === void 0 ? '刷新成功' : _props$completeText,
+      _props$completeDelay = props.completeDelay,
+      completeDelay = _props$completeDelay === void 0 ? 500 : _props$completeDelay,
+      _props$useWindowScrol = props.useWindowScroll,
+      useWindowScroll = _props$useWindowScrol === void 0 ? true : _props$useWindowScrol,
+      onRefresh = props.onRefresh,
+      _props$headHeight = props.headHeight,
+      headHeight = _props$headHeight === void 0 ? 40 : _props$headHeight,
+      _props$threshold = props.threshold,
+      threshold = _props$threshold === void 0 ? 60 : _props$threshold,
+      className = props.className,
+      renderText = props.renderText,
+      children = props.children,
+      style = props.style,
+      rest = _objectWithoutProperties(props, _excluded$Z);
+
+  var _useState = React.useState('pulling'),
+      _useState2 = _slicedToArray(_useState, 2),
+      status = _useState2[0],
+      setStatus = _useState2[1];
+
+  var dRef = React.useRef(0);
+
+  var _useSpring = web.useSpring(function () {
+    return {
+      from: {
+        height: 0
+      },
+      config: {
+        tension: 300,
+        friction: 30,
+        clamp: true
+      }
+    };
+  }),
+      _useSpring2 = _slicedToArray(_useSpring, 2),
+      springStyles = _useSpring2[0],
+      api = _useSpring2[1];
+
+  var wrapRef = React.useRef(null);
+  var isPullingRef = React.useRef(false);
+  React.useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  });
+
+  function doRefresh() {
+    return _doRefresh.apply(this, arguments);
+  }
+
+  function _doRefresh() {
+    _doRefresh = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              api.start({
+                height: headHeight
+              });
+              setStatus('refreshing');
+              _context4.prev = 2;
+              _context4.next = 5;
+              return onRefresh === null || onRefresh === void 0 ? void 0 : onRefresh();
+
+            case 5:
+              setStatus('complete');
+              _context4.next = 12;
+              break;
+
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](2);
+              api.start({
+                to: function () {
+                  var _to = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(next) {
+                    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            _context2.next = 2;
+                            return next({
+                              height: 0
+                            });
+
+                          case 2:
+                            setStatus('pulling');
+
+                          case 3:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  }));
+
+                  function to(_x) {
+                    return _to.apply(this, arguments);
+                  }
+
+                  return to;
+                }()
+              });
+              throw _context4.t0;
+
+            case 12:
+              if (!(completeDelay > 0)) {
+                _context4.next = 15;
+                break;
+              }
+
+              _context4.next = 15;
+              return sleep(completeDelay);
+
+            case 15:
+              api.start({
+                to: function () {
+                  var _to2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(next) {
+                    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            _context3.next = 2;
+                            return next({
+                              height: 0
+                            });
+
+                          case 2:
+                            setStatus('pulling');
+
+                          case 3:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  function to(_x2) {
+                    return _to2.apply(this, arguments);
+                  }
+
+                  return to;
+                }()
+              });
+
+            case 16:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[2, 8]]);
+    }));
+    return _doRefresh.apply(this, arguments);
+  }
+
+  var renderStatusText = function renderStatusText() {
+    if (renderText) {
+      return renderText(status);
+    }
+
+    if (status === 'pulling') return pullingText;
+    if (status === 'canRelease') return canReleaseText;
+    if (status === 'refreshing') return refreshingText;
+    if (status === 'complete') return completeText;
+  };
+
+  var touchEnd = React.useCallback( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            dRef.current = 0;
+
+            if (isPullingRef.current) {
+              _context.next = 3;
+              break;
+            }
+
+            return _context.abrupt("return");
+
+          case 3:
+            isPullingRef.current = false;
+
+            if (!(status === 'refreshing' || status === 'complete')) {
+              _context.next = 6;
+              break;
+            }
+
+            return _context.abrupt("return");
+
+          case 6:
+            if (!(status === 'canRelease')) {
+              _context.next = 15;
+              break;
+            }
+
+            _context.prev = 7;
+            _context.next = 10;
+            return doRefresh();
+
+          case 10:
+            _context.prev = 10;
+            setStatus('pulling');
+            return _context.finish(10);
+
+          case 13:
+            _context.next = 16;
+            break;
+
+          case 15:
+            api.start({
+              height: 0
+            });
+
+          case 16:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[7,, 10, 13]]);
+  })), [api, status]);
+  React.useLayoutEffect(function () {
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+    return function () {
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+    };
+  }, [touchEnd]);
+
+  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+    ref: wrapRef,
+    onPressMove: function onPressMove(e) {
+      var el = wrapRef.current;
+      var scrollTop = getScrollTop(useWindowScroll ? window : el);
+      dRef.current = Math.min(threshold, dRef.current + e.deltaY);
+
+      if (scrollTop <= 0 && dRef.current > 0) {
+        isPullingRef.current = true;
+      }
+
+      if (!isPullingRef.current) {
+        return;
+      }
+
+      api.start({
+        height: dRef.current
+      });
+      setStatus(dRef.current >= threshold ? 'canRelease' : 'pulling');
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
+    className: clsx__default['default'](className, 'uc-pull-to-refresh'),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      touchAction: 'pan-y'
+    })
+  }), /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
+    style: springStyles,
+    className: "head"
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "status-text",
+    style: {
+      height: headHeight
+    }
+  }, renderStatusText())), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "content"
+  }, children)));
+});
+PullToRefresh.displayName = 'UC-PullToRefresh';
+
 /**
  * 返回节流函数
  *
@@ -10352,7 +10667,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$Z = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
+var _excluded$_ = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
     _excluded2$4 = ["children", "label", "name"];
 /** 排列方式 */
 
@@ -10375,7 +10690,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
       _props$scrollIntoErro = props.scrollIntoErrorField,
       scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
-      rest = _objectWithoutProperties(props, _excluded$Z);
+      rest = _objectWithoutProperties(props, _excluded$_);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
@@ -10537,6 +10852,7 @@ exports.Popover = Popover;
 exports.Popup = Popup;
 exports.ProgressBar = ProgressBar;
 exports.ProgressCircle = ProgressCircle;
+exports.PullToRefresh = PullToRefresh;
 exports.Pullup = Pullup;
 exports.QRCode = QRCode$1;
 exports.Radio = Radio;
