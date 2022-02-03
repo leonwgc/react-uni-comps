@@ -22,4 +22,4 @@ const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) =
 
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
-export default FingerGestureElement;
+export default React.memo(FingerGestureElement);

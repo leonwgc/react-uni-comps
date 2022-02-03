@@ -190,13 +190,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { getScrollTop, isTouch } from './dom';
 import Spin from './Spin';
 import Space from './Space';
-
-var sleep = function sleep(time) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, time);
-  });
-};
-
+import { sleep } from './helper';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
@@ -446,6 +440,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(FingerGestureElement, {
     ref: wrapRef,
     onPressMove: function onPressMove(e) {
+      console.log(e.deltaY);
       var el = wrapRef.current;
       var scrollTop = getScrollTop(useWindowScroll ? window : el);
       dRef.current = Math.min(threshold, dRef.current + e.deltaY);

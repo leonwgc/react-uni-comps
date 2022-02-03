@@ -210,3 +210,14 @@ export var flatSimpleArray = function flatSimpleArray(arr) {
 
   return arr;
 };
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+
+export var sleep = function sleep(time) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, time);
+  });
+};

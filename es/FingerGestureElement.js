@@ -52,4 +52,4 @@ var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
-export default FingerGestureElement;
+export default /*#__PURE__*/React.memo(FingerGestureElement);

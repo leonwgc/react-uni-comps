@@ -1,6 +1,6 @@
 ---
 title: FingerGestureElement 手势
-order: 14
+order: 15
 mobile: true
 group:
   title: 操作反馈

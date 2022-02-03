@@ -52,3 +52,9 @@ export declare const flatArray: <T extends Record<string, unknown>>(arr: T[], ch
  * @return {*}  {T[]}
  */
 export declare const flatSimpleArray: <T extends string | number>(arr: T[]) => T[];
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+export declare const sleep: (time: number) => Promise<unknown>;

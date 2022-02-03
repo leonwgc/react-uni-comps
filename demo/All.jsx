@@ -20,6 +20,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> PullToRefresh
+          </Space>
+        }
+        description="PullToRefresh"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PullToRefresh')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> Ripple
           </Space>
         }

@@ -13,8 +13,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { getScrollTop, isTouch } from './dom';
 import Spin from './Spin';
 import Space from './Space';
-
-const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+import { sleep } from './helper';
 
 const StyledWrap = styled(animated.div)`
   color: #999;
@@ -89,11 +88,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const [springStyles, api] = useSpring(() => ({
     from: { height: 0 },
-    config: {
-      tension: 300,
-      friction: 30,
-      clamp: true,
-    },
   }));
 
   const wrapRef = useRef<HTMLDivElement>(null);

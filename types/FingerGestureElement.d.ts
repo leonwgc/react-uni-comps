@@ -1,7 +1,6 @@
 import React from 'react';
-/** 手势操作元素 */
-declare const FingerGestureElement: React.ForwardRefExoticComponent<{
-    children: React.ReactElement;
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<{
+    children: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
 } & Partial<Partial<{
     onTouchStart: (evt: React.SyntheticEvent<Element, Event>) => void;
     onTouchMove: (evt: React.SyntheticEvent<Element, Event>) => void;
@@ -27,5 +26,5 @@ declare const FingerGestureElement: React.ForwardRefExoticComponent<{
         direction: "left" | "right" | "down" | "up";
     }) => void;
     onTwoFingerPressMove: () => void;
-}>> & React.RefAttributes<HTMLElement>>;
-export default FingerGestureElement;
+}>> & React.RefAttributes<HTMLElement>>>;
+export default _default;

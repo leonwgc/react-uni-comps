@@ -1976,19 +1976,33 @@ var flatSimpleArray = function flatSimpleArray(arr) {
 
   return arr;
 };
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+
+var sleep = function sleep(time) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, time);
+  });
+};
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
 var useGesture = function useGesture(elRef, option) {
+  var fgRef = React.useRef();
   React.useEffect(function () {
     if (elRef.current instanceof Element) {
       var gestureProps = getProps(option, supportedGestures);
-      var fg = new FingerGesture(elRef.current, gestureProps);
-      return function () {
-        fg.destroy();
-      };
+      fgRef.current = new FingerGesture(elRef.current, gestureProps);
     }
   }, [option]);
+  useUnmount(function () {
+    if (fgRef.current) {
+      fgRef.current.destroy();
+    }
+  });
 };
 
 var _excluded$5 = ["children"];
@@ -2014,6 +2028,7 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
   }));
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
+var FingerGestureElement$1 = /*#__PURE__*/React__default['default'].memo(FingerGestureElement);
 
 /**
  *  保存最新的值在ref中
@@ -2200,7 +2215,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React__default['default'].createElement("div", {
     className: "loading"
   }, loading ? loadingText : finished ? finishedText : null));
-  return typeof refresh === 'function' ? /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+  return typeof refresh === 'function' ? /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
     ref: wrapRef,
     onPressMove: function onPressMove(e) {
       // no refresh no pulldown handle
@@ -5203,7 +5218,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, [touchEnd, touchStart]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, {
     className: clsx__default['default']('uc-swipe-action')
-  }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+  }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
     ref: elRef,
     onPressMove: function onPressMove(e) {
       var v = thisRef.current;
@@ -5520,7 +5535,7 @@ var Wheel = function Wheel(props) {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
-  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
     ref: elRef,
     onPressMove: function onPressMove(e) {
       yRef.current += e.deltaY;
@@ -7292,7 +7307,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
-  }), /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+  }), /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
     ref: wrapElRef,
     onPressMove: function onPressMove(e) {
       e.preventDefault();
@@ -10301,13 +10316,6 @@ Ripple.displayName = 'UC-Ripple';
 var _excluded$Z = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
 
 var _templateObject$U;
-
-var sleep = function sleep(time) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, time);
-  });
-};
-
 var StyledWrap$6 = styled__default['default'](web.animated.div)(_templateObject$U || (_templateObject$U = _taggedTemplateLiteral(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 
 /** 下拉刷新 */
@@ -10546,9 +10554,10 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     };
   }, [touchEnd]);
 
-  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement, {
+  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
     ref: wrapRef,
     onPressMove: function onPressMove(e) {
+      console.log(e.deltaY);
       var el = wrapRef.current;
       var scrollTop = getScrollTop(useWindowScroll ? window : el);
       dRef.current = Math.min(threshold, dRef.current + e.deltaY);
@@ -10826,7 +10835,7 @@ exports.Drag = Drag;
 exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
-exports.FingerGestureElement = FingerGestureElement;
+exports.FingerGestureElement = FingerGestureElement$1;
 exports.Form = Form;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;

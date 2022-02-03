@@ -1,5 +1,5 @@
 ---
-title: Pullup 上拉加载/下拉刷新
+title: Pullup 上拉加载
 order: 5
 mobile: true
 group:

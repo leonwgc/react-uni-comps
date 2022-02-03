@@ -162,3 +162,10 @@ export const flatSimpleArray = <T extends string | number>(arr: T[]): T[] => {
 
   return arr;
 };
+
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+export const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));

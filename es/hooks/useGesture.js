@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import FingerGesture, { supportedGestures } from './FingerGesture';
 import { getProps } from '../helper';
+import useUnmount from './useUnmount';
 
 var useGesture = function useGesture(elRef, option) {
+  var fgRef = useRef();
   useEffect(function () {
     if (elRef.current instanceof Element) {
       var gestureProps = getProps(option, supportedGestures);
-      var fg_1 = new FingerGesture(elRef.current, gestureProps);
-      return function () {
-        fg_1.destroy();
-      };
+      fgRef.current = new FingerGesture(elRef.current, gestureProps);
     }
   }, [option]);
+  useUnmount(function () {
+    if (fgRef.current) {
+      fgRef.current.destroy();
+    }
+  });
 };
 
 export default useGesture;

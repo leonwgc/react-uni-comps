@@ -1,6 +1,6 @@
 ---
 title: Notify 顶部消息通知
-order: 8
+order: 9
 mobile: true
 group:
   title: 操作反馈

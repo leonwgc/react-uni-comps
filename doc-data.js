@@ -54,7 +54,11 @@ module.exports = [
       },
       {
         name: 'Pullup',
-        title: 'Pullup 上拉加载/下拉刷新',
+        title: 'Pullup 上拉加载',
+      },
+      {
+        name: 'PullToRefresh',
+        title: 'PullToRefresh 下拉刷新',
       },
       {
         name: 'Toast',
