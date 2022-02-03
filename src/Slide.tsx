@@ -9,7 +9,7 @@ import React, {
 import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
-import { isTouch } from './dom';
+import { isMobile, isTouch } from './dom';
 import { animationNormal } from './vars';
 import FingerGesture from './FingerGesture';
 
@@ -232,7 +232,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   }, [slideToPageIndex]);
 
   useEffect(() => {
-    if (autoPlay && len > 1) {
+    if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       const timer = window.setTimeout(() => {
         slideToPageIndex(pageIndex + 1);
       }, interval);
@@ -259,7 +259,18 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     );
   };
 
-  const touchEnd = useCallback(() => {
+  const evtProps: any = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = (e) => {
+    !isMobile && e.preventDefault();
+    const s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
+  evtProps[isTouch ? 'onTouchEnd' : 'onMouseUp'] = () => {
     const s = thisRef.current;
     if (!s.isMoving) {
       return;
@@ -274,26 +285,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       // reset
       slideToPageIndex(pageIndex);
     }
-  }, [direction, pageIndex, ratio, slideToPageIndex]);
-
-  const evtProps: any = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = (e) => {
-    e.preventDefault();
-    const s = thisRef.current;
-    s.isMoving = true;
-    wrapElRef.current.style.transitionProperty = 'none';
-    s.lastX = s.x;
-    s.lastY = s.y;
   };
-
-  useLayoutEffect(() => {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    return () => {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
 
   useLayoutEffect(() => {
     const wrapEl = wrapElRef.current;
