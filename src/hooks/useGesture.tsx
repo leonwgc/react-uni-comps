@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, MutableRefObject, useRef } from 'react';
-import FingerGesture, { Option, supportedGestures } from './FingerGesture';
+import FingerGesture, { Option, supportedGestures } from '../FingerGesture';
 import { getProps } from '../helper';
 import useUnmount from './useUnmount';
 

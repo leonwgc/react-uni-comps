@@ -7,11 +7,11 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isTouch } from './dom';
 import { animationNormal } from './vars';
+import FingerGesture from './FingerGesture';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -295,6 +295,30 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     };
   }, [touchEnd]);
 
+  useLayoutEffect(() => {
+    const wrapEl = wrapElRef.current;
+    const fg = new FingerGesture(wrapEl, {
+      onPressMove: (e) => {
+        const s = thisRef.current;
+
+        if (direction === 'horizontal') {
+          if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+            return;
+          }
+          s.x += e.deltaX;
+          wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
+        } else {
+          if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+            return;
+          }
+          s.y += e.deltaY;
+          wrapElRef.current.style.transform = `translate3d(0, ${s.y}px, 0)`;
+        }
+      },
+    });
+    return () => fg.destroy();
+  }, [count, direction]);
+
   return (
     <StyledSlide
       ref={containerRef}
@@ -302,38 +326,18 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       className={clsx('uc-slide', className)}
       style={{ ...style, height }}
     >
-      <FingerGestureElement
+      <div
         ref={wrapElRef}
-        onPressMove={(e) => {
-          e.preventDefault();
-          const s = thisRef.current;
-
-          if (direction === 'horizontal') {
-            if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
-              return;
-            }
-            s.x += e.deltaX;
-            wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
-          } else {
-            if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
-              return;
-            }
-            s.y += e.deltaY;
-            wrapElRef.current.style.transform = `translate3d(0, ${s.y}px, 0)`;
-          }
+        className={clsx('wrap', { vertical: direction === 'vertical' })}
+        onTransitionEnd={() => {
+          ensurePageIndex();
         }}
+        {...evtProps}
+        style={{ transition: `transform ${duration}ms ease-in-out` }}
       >
-        <div
-          className={clsx('wrap', { vertical: direction === 'vertical' })}
-          onTransitionEnd={() => {
-            ensurePageIndex();
-          }}
-          {...evtProps}
-          style={{ transition: `transform ${duration}ms ease-in-out` }}
-        >
-          {items}
-        </div>
-      </FingerGestureElement>
+        {items}
+      </div>
+
       {pagerRender()}
     </StyledSlide>
   );

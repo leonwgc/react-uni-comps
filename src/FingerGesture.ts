@@ -3,7 +3,7 @@
  */
 
 import { SyntheticEvent } from 'react';
-import { isTouch } from '../dom';
+import { isTouch } from './dom';
 
 export const supportedGestures = [
   'onMultipointStart',

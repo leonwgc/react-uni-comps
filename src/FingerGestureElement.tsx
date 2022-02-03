@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle } from 'react';
 import useGesture from './hooks/useGesture';
-import { Option, supportedGestures } from './hooks/FingerGesture';
+import { Option, supportedGestures } from './FingerGesture';
 import { getProps } from './helper';
 
 type Props = {
