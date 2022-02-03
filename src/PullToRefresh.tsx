@@ -57,6 +57,8 @@ type Props = {
   style?: React.CSSProperties;
   /** 是否使用window滚动,默认 true  */
   useWindowScroll?: boolean;
+  /** 触发下拉刷新的元素,比如Pull */
+  children?: React.ReactElement;
 };
 
 /** 下拉刷新 */
@@ -163,32 +165,76 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
   }, [touchEnd]);
 
+  useLayoutEffect(() => {
+    // https://zhuanlan.zhihu.com/p/322525887
+
+    let y = 0;
+
+    const _touchStart = (e) => (y = e.touches[0].pageY);
+    const _touchEnd = () => {
+      y = 0;
+      touchEnd();
+    };
+
+    const _touchMove = (e) => {
+      const el = wrapRef.current;
+      const scrollTop = getScrollTop(useWindowScroll ? window : el);
+      const y1 = e.touches[0].pageY;
+      if (y1 - y > 0 && scrollTop === 0) {
+        e.preventDefault();
+        isPullingRef.current = true;
+      }
+    };
+
+    const options: any = { passive: false };
+
+    document.addEventListener('touchstart', (e) => {
+      y = e.touches[0].pageY;
+    });
+    document.addEventListener('touchmove', _touchMove, options);
+    document.addEventListener('touchend', _touchEnd);
+
+    return () => {
+      document.removeEventListener('touchstart', _touchStart);
+      document.removeEventListener('touchmove', _touchMove, options);
+      document.removeEventListener('touchend', _touchEnd);
+    };
+  }, [useWindowScroll, touchEnd]);
+
   const evtProps: any = {};
 
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = () => {
     dRef.current = 0;
   };
 
+  const statusText = (
+    <animated.div style={springStyles} className={`head`}>
+      <div className={`status-text`} style={{ height: headHeight }}>
+        {renderStatusText()}
+      </div>
+    </animated.div>
+  );
+
+  if (children && !React.isValidElement(children)) {
+    throw Error('children must be a valid ReactElement');
+  }
+
+  const childrenProps: any = { ...children?.props, ref: wrapRef };
+
+  if (!useWindowScroll) {
+    // Pullup or any other comp
+    childrenProps.children = statusText;
+  }
+
   return (
     <FingerGestureElement
       ref={wrapRef}
       onPressMove={(e) => {
-        const el = wrapRef.current;
-
-        const scrollTop = getScrollTop(useWindowScroll ? window : el);
-        dRef.current = Math.min(threshold, dRef.current + e.deltaY);
-
-        if (scrollTop <= 0 && dRef.current > 0) {
-          isPullingRef.current = true;
-        }
-
-        if (!isPullingRef.current) {
-          return;
-        }
-
+        if (!isPullingRef.current) return;
+        dRef.current = Math.min(threshold + 10, dRef.current + e.deltaY);
         api.start({ height: dRef.current });
 
-        setStatus(dRef.current >= threshold ? 'canRelease' : 'pulling');
+        setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
       }}
     >
       <StyledWrap
@@ -196,12 +242,10 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         className={clsx(className, 'uc-pull-to-refresh')}
         style={{ ...style, touchAction: 'pan-y' }}
       >
-        <animated.div style={springStyles} className={`head`}>
-          <div className={`status-text`} style={{ height: headHeight }}>
-            {renderStatusText()}
-          </div>
-        </animated.div>
-        <div className={`content`}>{children}</div>
+        {useWindowScroll && statusText}
+        <div className={`content`}>
+          {React.isValidElement(children) ? React.cloneElement(children, childrenProps) : children}
+        </div>
       </StyledWrap>
     </FingerGestureElement>
   );

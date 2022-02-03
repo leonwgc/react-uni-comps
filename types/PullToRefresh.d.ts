@@ -23,6 +23,8 @@ declare type Props = {
     style?: React.CSSProperties;
     /** 是否使用window滚动,默认 true  */
     useWindowScroll?: boolean;
+    /** 触发下拉刷新的元素,比如Pull */
+    children?: React.ReactElement;
 };
 /** 下拉刷新 */
 declare const PullToRefresh: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;

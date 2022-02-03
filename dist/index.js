@@ -1384,6 +1384,186 @@ function usePrevious(value) {
   return ref.current;
 }
 
+var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "children", "footer"];
+
+var _templateObject$5;
+var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"]))); // check isInViewport in vertical direction
+
+function isInViewport(el, container) {
+  var _el$getBoundingClient = el.getBoundingClientRect(),
+      top = _el$getBoundingClient.top,
+      bottom = _el$getBoundingClient.bottom;
+
+  if (!container) {
+    return bottom >= 0 && top < window.innerHeight;
+  } else {
+    var brc = container.getBoundingClientRect();
+    return bottom <= brc.bottom && top >= brc.top;
+  }
+}
+
+var DefaultLoadingText = /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D");
+/**
+ *  上拉加载/下拉刷新
+ *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
+ */
+
+var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$dataList = props.dataList,
+      dataList = _props$dataList === void 0 ? [] : _props$dataList,
+      _props$dataRender = props.dataRender,
+      dataRender = _props$dataRender === void 0 ? function () {
+    return null;
+  } : _props$dataRender,
+      fetchData = props.fetchData,
+      _props$loadingText = props.loadingText,
+      loadingText = _props$loadingText === void 0 ? DefaultLoadingText : _props$loadingText,
+      _props$finishedText = props.finishedText,
+      finishedText = _props$finishedText === void 0 ? '我是有底线的' : _props$finishedText,
+      _props$finished = props.finished,
+      finished = _props$finished === void 0 ? false : _props$finished,
+      className = props.className,
+      useWindowScroll = props.useWindowScroll,
+      children = props.children,
+      footer = props.footer,
+      rest = _objectWithoutProperties(props, _excluded$5);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var waypointRef = React.useRef();
+  var wrapRef = React.useRef();
+  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : wrapRef);
+  var lastIsAtBottom = usePrevious(isAtBottom);
+  React.useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  });
+  React.useEffect(function () {
+    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : wrapRef.current))) {
+      setLoading(true);
+      fetchData().then(function () {
+        setLoading(false);
+      })["catch"](function () {
+        setLoading(false);
+      });
+    }
+  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({
+    ref: wrapRef
+  }, rest, {
+    className: clsx__default['default']('uc-pullup', className, {
+      'dom-scroll': !useWindowScroll,
+      'window-scroll': useWindowScroll
+    })
+  }), children, dataList.map(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
+      key: idx
+    }, dataRender(item, idx));
+  }), /*#__PURE__*/React__default['default'].createElement("span", {
+    className: "waypoint",
+    style: {
+      fontSize: 0
+    },
+    ref: waypointRef
+  }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "loading"
+  }, loading ? loadingText : finished ? finishedText : null));
+});
+Pullup.displayName = 'UC-Pullup';
+
+var _excluded$6 = ["position", "borderRadius", "color", "className", "mobile", "children"];
+
+var _templateObject$6;
+/** 显示1px的边 */
+
+var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n\n  &.mobile {\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-radius: ", "px;\n      ", ": 1px solid ", ";\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  &.pc {\n    border-radius: ", "px;\n    ", ": 1px solid ", ";\n  }\n"])), function (_ref) {
+  var borderRadius = _ref.borderRadius;
+  return borderRadius;
+}, function (_ref2) {
+  var position = _ref2.position;
+  return "border".concat(position === 'all' ? '' : '-' + position);
+}, function (_ref3) {
+  var color = _ref3.color;
+  return color;
+}, function (_ref4) {
+  var borderRadius = _ref4.borderRadius;
+  return borderRadius;
+}, function (_ref5) {
+  var position = _ref5.position;
+  return "border".concat(position === 'all' ? '' : '-' + position);
+}, function (_ref6) {
+  var color = _ref6.color;
+  return color;
+});
+/** 移动端1像素边框容器 */
+
+var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$position = props.position,
+      position = _props$position === void 0 ? 'bottom' : _props$position,
+      _props$borderRadius = props.borderRadius,
+      borderRadius = _props$borderRadius === void 0 ? 0 : _props$borderRadius,
+      _props$color = props.color,
+      color = _props$color === void 0 ? '#dcdcdc' : _props$color,
+      className = props.className,
+      _props$mobile = props.mobile,
+      mobile = _props$mobile === void 0 ? true : _props$mobile,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$6);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-hairlinebox', className, {
+      mobile: isMobile,
+      pc: !isMobile && !mobile
+    }),
+    position: position,
+    color: color,
+    borderRadius: borderRadius
+  }), children);
+});
+HairLineBox.displayName = 'UC-HairLineBox';
+
+/**  等待wait毫秒且visible是true才渲染子元素, 一般用于防止loading闪烁等问题 */
+var WaitLoading = function WaitLoading(props) {
+  var _props$wait = props.wait,
+      wait = _props$wait === void 0 ? 600 : _props$wait,
+      _props$visible = props.visible,
+      visible = _props$visible === void 0 ? false : _props$visible,
+      children = props.children;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      show = _useState2[0],
+      setShow = _useState2[1];
+
+  var ref = React.useRef();
+  React.useEffect(function () {
+    if (visible) {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      ref.current = window.setTimeout(function () {
+        setShow(true);
+      }, wait);
+    } else {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      setShow(false);
+    }
+
+    return function () {
+      setShow(false);
+      clearTimeout(ref.current);
+    };
+  }, [visible, wait]);
+  return show ? children : null;
+};
+
 var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove']; // eslint-disable-next-line @typescript-eslint/no-empty-function
 
 var noop = function noop() {};
@@ -2005,346 +2185,6 @@ var useGesture = function useGesture(elRef, option) {
   });
 };
 
-var _excluded$5 = ["children"];
-
-/** 手势操作元素 */
-var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _children$props;
-
-  var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$5);
-
-  var elRef = React.useRef();
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  useGesture(elRef, rest);
-  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, getProps(rest, supportedGestures, false)), {}, {
-    // filter out gesture evts
-    ref: elRef,
-    style: _objectSpread2({
-      touchAction: 'none'
-    }, children === null || children === void 0 ? void 0 : (_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.style)
-  }));
-});
-FingerGestureElement.displayName = 'UC-FingerGestureElement';
-var FingerGestureElement$1 = /*#__PURE__*/React__default['default'].memo(FingerGestureElement);
-
-/**
- *  保存最新的值在ref中
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useCallbackRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
-
-var _excluded$6 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "refreshText", "finished", "className", "style", "useWindowScroll", "refresh", "footer"];
-
-var _templateObject$5;
-var RefreshDistance = 30;
-var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  transition: transform ", "ms ease-in-out;\n\n  .loading {\n    color: #909090;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 16px;\n    height: 50px;\n\n    .uc-spin {\n      font-size: 20px;\n    }\n  }\n\n  .refresh {\n    transition: height ", "ms ease-in-out;\n    height: 0;\n    &.active {\n      height: 40px;\n    }\n  }\n"])), animationSlow, animationNormal); // check isInViewport in vertical direction
-
-function isInViewport(el, container) {
-  var _el$getBoundingClient = el.getBoundingClientRect(),
-      top = _el$getBoundingClient.top,
-      bottom = _el$getBoundingClient.bottom;
-
-  if (!container) {
-    return bottom >= 0 && top < window.innerHeight;
-  } else {
-    var brc = container.getBoundingClientRect();
-    return bottom <= brc.bottom && top >= brc.top;
-  }
-}
-
-var DefaultLoadingText = /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D");
-/**
- *  上拉加载/下拉刷新
- *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
- */
-
-var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$dataList = props.dataList,
-      dataList = _props$dataList === void 0 ? [] : _props$dataList,
-      _props$dataRender = props.dataRender,
-      dataRender = _props$dataRender === void 0 ? function () {
-    return null;
-  } : _props$dataRender,
-      fetchData = props.fetchData,
-      _props$loadingText = props.loadingText,
-      loadingText = _props$loadingText === void 0 ? DefaultLoadingText : _props$loadingText,
-      _props$finishedText = props.finishedText,
-      finishedText = _props$finishedText === void 0 ? '我是有底线的' : _props$finishedText,
-      _props$refreshText = props.refreshText,
-      refreshText = _props$refreshText === void 0 ? DefaultLoadingText : _props$refreshText,
-      _props$finished = props.finished,
-      finished = _props$finished === void 0 ? false : _props$finished,
-      className = props.className,
-      style = props.style,
-      useWindowScroll = props.useWindowScroll,
-      refresh = props.refresh,
-      footer = props.footer,
-      rest = _objectWithoutProperties(props, _excluded$6);
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      loading = _useState2[0],
-      setLoading = _useState2[1];
-
-  var waypointRef = React.useRef();
-  var wrapRef = React.useRef();
-  var isAtBottom = useInViewport(waypointRef, useWindowScroll ? null : wrapRef);
-  var lastIsAtBottom = usePrevious(isAtBottom);
-  var moveRef = React.useRef({
-    isMoving: false,
-    isRefreshing: false,
-    y: 0
-  });
-
-  var _useState3 = React.useState(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      isRefreshing = _useState4[0],
-      setIsRefreshing = _useState4[1];
-
-  var refreshRef = useCallbackRef(refresh);
-  React.useImperativeHandle(ref, function () {
-    return wrapRef.current;
-  });
-  React.useEffect(function () {
-    if (!loading && !finished && (!lastIsAtBottom && isAtBottom || isInViewport(waypointRef.current, useWindowScroll ? null : wrapRef.current))) {
-      setLoading(true);
-      fetchData().then(function () {
-        setLoading(false);
-      })["catch"](function () {
-        setLoading(false);
-      });
-    }
-  }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
-  var resetRefreshStatus = React.useCallback(function () {
-    var el = wrapRef.current;
-    var moveInfo = moveRef.current;
-    setIsRefreshing(false);
-    moveInfo.isRefreshing = false;
-    moveInfo.y = 0;
-    el.style.transform = 'none';
-  }, []);
-  React.useEffect(function () {
-    // no refresh no pulldown handle
-    var supportRefresh = typeof refreshRef.current === 'function';
-    if (!supportRefresh) return;
-    var el = wrapRef.current;
-    var moveInfo = moveRef.current;
-
-    var touchStart = function touchStart() {
-      el.style.transitionProperty = 'none';
-      document.body.offsetHeight;
-      moveInfo.isMoving = true;
-      moveInfo.y = 0;
-    };
-
-    var touchEnd = function touchEnd() {
-      if (moveInfo.isMoving) {
-        moveInfo.isMoving = false;
-        setTimeout(resetRefreshStatus, 300);
-      }
-    };
-
-    el.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-    if (!isTouch) {
-      document.addEventListener('mouseup', touchEnd);
-    } else {
-      el.addEventListener('touchend', touchEnd);
-    }
-
-    return function () {
-      if (!supportRefresh) return;
-      el.removeEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-
-      if (!isTouch) {
-        document.removeEventListener('mouseup', touchEnd);
-      } else {
-        el.removeEventListener('touchend', touchEnd);
-      }
-    };
-  }, [resetRefreshStatus, refreshRef]);
-  var setRefreshStatus = React.useCallback(function () {
-    var el = wrapRef.current;
-    setIsRefreshing(true);
-    moveRef.current.isRefreshing = true;
-    el.style.transitionProperty = 'transform';
-    refreshRef.current().then(resetRefreshStatus)["catch"](resetRefreshStatus);
-  }, [resetRefreshStatus, refreshRef]);
-  var supportRefresh = typeof refreshRef.current === 'function';
-
-  var wrapStyle = _objectSpread2({}, style);
-
-  if (supportRefresh) {
-    wrapStyle.touchAction = 'pan-y';
-  }
-
-  var content = /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({}, rest, {
-    style: wrapStyle,
-    className: clsx__default['default']('uc-pullup', className, {
-      'dom-scroll': !useWindowScroll,
-      'window-scroll': useWindowScroll
-    })
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('loading refresh', {
-      active: isRefreshing
-    })
-  }, isRefreshing && refreshText), dataList.map(function (item, idx) {
-    return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
-      key: idx
-    }, dataRender(item, idx));
-  }), /*#__PURE__*/React__default['default'].createElement("span", {
-    className: "waypoint",
-    style: {
-      fontSize: 0
-    },
-    ref: waypointRef
-  }), typeof footer === 'function' ? footer(loading, finished) : /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "loading"
-  }, loading ? loadingText : finished ? finishedText : null));
-  return typeof refresh === 'function' ? /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
-    ref: wrapRef,
-    onPressMove: function onPressMove(e) {
-      // no refresh no pulldown handle
-      if (typeof refreshRef.current !== 'function') return;
-      var el = wrapRef.current;
-      var moveInfo = moveRef.current;
-
-      if (!moveInfo.isMoving) {
-        return resetRefreshStatus();
-      }
-
-      var scrollTop = getScrollTop(useWindowScroll ? window : el);
-      moveInfo.y = Math.min(RefreshDistance, moveInfo.y + e.deltaY);
-
-      if (moveInfo.y > 0 && moveInfo.y < RefreshDistance) {
-        // down
-        el.style.transform = "translate3d(0, ".concat(moveInfo.y, "px, 0)");
-      }
-
-      if (scrollTop <= 0 && !moveInfo.isRefreshing && moveInfo.y === RefreshDistance) {
-        setRefreshStatus();
-      } // double check
-
-
-      setTimeout(function () {
-        if (!moveInfo.isRefreshing) {
-          if (scrollTop <= 0 && moveInfo.y === RefreshDistance) {
-            setRefreshStatus();
-          } else {
-            resetRefreshStatus();
-          }
-        }
-      }, 1000);
-    }
-  }, content) : content;
-});
-Pullup.displayName = 'UC-Pullup';
-
-var _excluded$7 = ["position", "borderRadius", "color", "className", "mobile", "children"];
-
-var _templateObject$6;
-/** 显示1px的边 */
-
-var StyledDiv = styled__default['default'].div(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n  position: relative;\n\n  &.mobile {\n    &:after {\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      left: 0;\n      top: 0;\n      border-radius: ", "px;\n      ", ": 1px solid ", ";\n\n      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {\n        width: 200%;\n        height: 200%;\n        transform: scale(0.5);\n        transform-origin: 0 0;\n      }\n    }\n  }\n\n  &.pc {\n    border-radius: ", "px;\n    ", ": 1px solid ", ";\n  }\n"])), function (_ref) {
-  var borderRadius = _ref.borderRadius;
-  return borderRadius;
-}, function (_ref2) {
-  var position = _ref2.position;
-  return "border".concat(position === 'all' ? '' : '-' + position);
-}, function (_ref3) {
-  var color = _ref3.color;
-  return color;
-}, function (_ref4) {
-  var borderRadius = _ref4.borderRadius;
-  return borderRadius;
-}, function (_ref5) {
-  var position = _ref5.position;
-  return "border".concat(position === 'all' ? '' : '-' + position);
-}, function (_ref6) {
-  var color = _ref6.color;
-  return color;
-});
-/** 移动端1像素边框容器 */
-
-var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$position = props.position,
-      position = _props$position === void 0 ? 'bottom' : _props$position,
-      _props$borderRadius = props.borderRadius,
-      borderRadius = _props$borderRadius === void 0 ? 0 : _props$borderRadius,
-      _props$color = props.color,
-      color = _props$color === void 0 ? '#dcdcdc' : _props$color,
-      className = props.className,
-      _props$mobile = props.mobile,
-      mobile = _props$mobile === void 0 ? true : _props$mobile,
-      children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$7);
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledDiv, _extends({}, rest, {
-    ref: ref,
-    className: clsx__default['default']('uc-hairlinebox', className, {
-      mobile: isMobile,
-      pc: !isMobile && !mobile
-    }),
-    position: position,
-    color: color,
-    borderRadius: borderRadius
-  }), children);
-});
-HairLineBox.displayName = 'UC-HairLineBox';
-
-/**  等待wait毫秒且visible是true才渲染子元素, 一般用于防止loading闪烁等问题 */
-var WaitLoading = function WaitLoading(props) {
-  var _props$wait = props.wait,
-      wait = _props$wait === void 0 ? 600 : _props$wait,
-      _props$visible = props.visible,
-      visible = _props$visible === void 0 ? false : _props$visible,
-      children = props.children;
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      show = _useState2[0],
-      setShow = _useState2[1];
-
-  var ref = React.useRef();
-  React.useEffect(function () {
-    if (visible) {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      ref.current = window.setTimeout(function () {
-        setShow(true);
-      }, wait);
-    } else {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      setShow(false);
-    }
-
-    return function () {
-      setShow(false);
-      clearTimeout(ref.current);
-    };
-  }, [visible, wait]);
-  return show ? children : null;
-};
-
 var _templateObject$7;
 /**
  *  获取包含主题色的styled-components css片段
@@ -2390,7 +2230,7 @@ var useUpdateEffect = function useUpdateEffect(effect) {
   }, deps);
 };
 
-var _excluded$8 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
+var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2;
 var isMobileEnv = isMobile;
@@ -2427,7 +2267,7 @@ var Tabs = function Tabs(_ref2) {
       extra = _ref2.extra,
       swipe = _ref2.swipe,
       className = _ref2.className,
-      rest = _objectWithoutProperties(_ref2, _excluded$8);
+      rest = _objectWithoutProperties(_ref2, _excluded$7);
 
   var count = React__default['default'].Children.count(children);
   var underlineElRef = React.useRef();
@@ -2551,7 +2391,7 @@ var Tabs = function Tabs(_ref2) {
 
 Tabs.Tab = Tab;
 
-var _excluded$9 = ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"];
+var _excluded$8 = ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"];
 
 var _templateObject$9;
 var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  &.has-label {\n    padding-left: 12px;\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    &.pc {\n      align-items: center;\n    }\n\n    .cell-label {\n      box-sizing: border-box;\n      margin-right: 12px;\n      text-align: left;\n      flex: 1;\n\n      .label {\n        color: #333;\n\n        &.required::before {\n          content: '*';\n          margin-right: 2px;\n          color: ", ";\n          vertical-align: middle;\n        }\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg, danger);
@@ -2568,7 +2408,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       _props$lineColor = props.lineColor,
       lineColor = _props$lineColor === void 0 ? border : _props$lineColor,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$9);
+      rest = _objectWithoutProperties(props, _excluded$8);
 
   if (content && children) {
     throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
@@ -2611,7 +2451,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Cell.displayName = 'UC-Cell';
 
-var _excluded$a = ["animate", "width", "height", "shape"],
+var _excluded$9 = ["animate", "width", "height", "shape"],
     _excluded2 = ["style", "className"];
 
 var _templateObject$a;
@@ -2626,7 +2466,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       height = _props$height === void 0 ? 16 : _props$height,
       _props$shape = props.shape,
       shape = _props$shape === void 0 ? 'rect' : _props$shape,
-      other = _objectWithoutProperties(props, _excluded$a);
+      other = _objectWithoutProperties(props, _excluded$9);
 
   var _other$style = other.style,
       style = _other$style === void 0 ? {} : _other$style,
@@ -2647,7 +2487,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 
-var _excluded$b = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
+var _excluded$a = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
 
 var _templateObject$b;
 
@@ -2669,7 +2509,7 @@ var Skeleton = function Skeleton(props) {
       className = props.className,
       children = props.children,
       loading = props.loading,
-      rest = _objectWithoutProperties(props, _excluded$b);
+      rest = _objectWithoutProperties(props, _excluded$a);
 
   if (row < 1) {
     throw new Error('row必须大于等于1,默认4');
@@ -2728,7 +2568,24 @@ var Skeleton = function Skeleton(props) {
   })) : children;
 };
 
-var _excluded$c = ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
+/**
+ *  保存最新的值在ref中
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useCallbackRef(value) {
+  var ref = React.useRef(value);
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
+var _excluded$b = ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
 
 var _templateObject$c;
 var StyledButton = styled__default['default'].button(_templateObject$c || (_templateObject$c = _taggedTemplateLiteral(["\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  box-sizing: border-box;\n  outline: 0;\n  position: relative;\n  align-items: center;\n  user-select: none;\n  vertical-align: middle;\n  justify-content: center;\n  text-decoration: none;\n  background-color: transparent;\n  appearance: none;\n  -webkit-tap-highlight-color: transparent;\n\n  font-weight: 400;\n  white-space: nowrap;\n  background-image: none;\n  transition: all 0.3s ease;\n  user-select: none;\n  touch-action: manipulation;\n  padding: 4px 16px;\n  font-size: 14px;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  height: 32px;\n\n  &.default {\n    background-color: #fff;\n    border-color: ", ";\n\n    ", " {\n      opacity: 0.8;\n    }\n    &.pc:hover,\n    &.outlined {\n      ", "\n      ", "\n    }\n\n    &.mobile:active {\n      background-color: ", ";\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.primary {\n    ", "\n    ", "\n    color: #fff;\n\n    ", " {\n      opacity: 0.8;\n    }\n\n    &.ghost,\n    &.ghost:hover,\n    &.ghost:active {\n      background-color: transparent !important;\n      ", "\n      ", "\n\n      &.danger {\n        color: ", ";\n      }\n    }\n\n    &.danger,\n    &.danger:hover,\n    &.danger:active {\n      background-color: ", ";\n      border-color: ", ";\n    }\n  }\n  &.block {\n    width: 100%;\n  }\n  &.circle {\n    min-width: 32px;\n    padding: 0;\n    border-radius: 50%;\n  }\n  &.dashed {\n    border-style: dashed;\n  }\n\n  &.anchor {\n    border: none;\n    ", "\n    height: unset;\n    padding: unset;\n    margin: unset;\n    background: unset;\n  }\n\n  &.disabled,\n  &.disabled:hover,\n  &.disabled:active {\n    opacity: 0.6;\n    cursor: not-allowed;\n    pointer-events: none;\n  }\n  &.ghost,\n  &.ghost:hover {\n    background-color: transparent;\n    border-color: ", ";\n    color: ", ";\n  }\n"])), border, isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
@@ -2751,7 +2608,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost = props.ghost,
       _onClick = props.onClick,
       wait = props.wait,
-      rest = _objectWithoutProperties(props, _excluded$c);
+      rest = _objectWithoutProperties(props, _excluded$b);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2793,7 +2650,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Button.displayName = 'UC-Button';
 
-var _excluded$d = ["type", "className"];
+var _excluded$c = ["type", "className"];
 
 var _templateObject$d;
 var StyledIcon = styled__default['default'].span(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["\n  display: inline-block;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"])));
@@ -2807,7 +2664,7 @@ var SVGProps = {
 var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var type = props.type,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$c);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
     ref: ref,
@@ -2830,7 +2687,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
-var _excluded$e = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
+var _excluded$d = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
 
 var _templateObject$e, _templateObject2$1;
 var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
@@ -2851,7 +2708,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       checked = props.checked,
       disabled = props.disabled,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$e);
+      rest = _objectWithoutProperties(props, _excluded$d);
 
   var _useState = React.useState(typeof checked === 'boolean' ? checked : defaultChecked),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2922,7 +2779,7 @@ var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Checkbox.displayName = 'UC-Checkbox';
 
-var _excluded$f = ["className", "button", "onChange", "options", "value", "disabled"];
+var _excluded$e = ["className", "button", "onChange", "options", "value", "disabled"];
 
 var _templateObject$f;
 var StyledCheckboxGroup = styled__default['default'].div(_templateObject$f || (_templateObject$f = _taggedTemplateLiteral([""])));
@@ -2937,7 +2794,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       disabled = props.disabled,
-      rest = _objectWithoutProperties(props, _excluded$f);
+      rest = _objectWithoutProperties(props, _excluded$e);
 
   var onChangeRef = useCallbackRef(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
@@ -2986,13 +2843,13 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';
 
-var _excluded$g = ["size"];
+var _excluded$f = ["size"];
 
 /** 单选框 */
 var Radio = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$size = props.size,
       size = _props$size === void 0 ? 20 : _props$size,
-      rest = _objectWithoutProperties(props, _excluded$g);
+      rest = _objectWithoutProperties(props, _excluded$f);
 
   return /*#__PURE__*/React__default['default'].createElement(CheckboxBase, _extends({}, rest, {
     size: size,
@@ -3002,7 +2859,7 @@ var Radio = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Radio.displayName = 'UC-Radio';
 
-var _excluded$h = ["className", "button", "onChange", "options", "value", "disabled"];
+var _excluded$g = ["className", "button", "onChange", "options", "value", "disabled"];
 
 var _templateObject$g;
 var StyledRadioGroup = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral([""])));
@@ -3017,7 +2874,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       disabled = props.disabled,
-      rest = _objectWithoutProperties(props, _excluded$h);
+      rest = _objectWithoutProperties(props, _excluded$g);
 
   var onChangeRef = useCallbackRef(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
@@ -3056,7 +2913,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 RadioGroup.displayName = 'UC-RadioGroup';
 
-var _excluded$i = ["disabled", "checked", "defaultChecked", "className", "onChange"];
+var _excluded$h = ["disabled", "checked", "defaultChecked", "className", "onChange"];
 
 var _templateObject$h;
 var StyledSwitch = styled__default['default'].div(_templateObject$h || (_templateObject$h = _taggedTemplateLiteral(["\n  position: relative;\n  box-sizing: border-box;\n  width: 44px;\n  height: 22px;\n  border-radius: 100px;\n  border: none;\n  background-color: rgba(0, 0, 0, 0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n\n  color: inherit;\n  cursor: pointer;\n  margin: 0;\n  display: inline-flex;\n  align-items: center;\n  outline: 0;\n  position: relative;\n  user-select: none;\n  -moz-appearance: none;\n  text-decoration: none;\n  -webkit-appearance: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n\n  &::after {\n    background-color: #fff;\n    position: absolute;\n    left: 2px;\n    width: 18px;\n    height: 18px;\n    border-radius: 50%;\n    content: ' ';\n    cursor: pointer;\n    transition: left 0.3s ease-in-out;\n  }\n\n  &.checked {\n    ", "\n    ", "\n\n    &::after {\n      left: calc(100% - 20px);\n    }\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.6;\n\n    &::after {\n      cursor: not-allowed;\n    }\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'));
@@ -3068,7 +2925,7 @@ var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       defaultChecked = props.defaultChecked,
       className = props.className,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$i);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -3148,7 +3005,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   return ErrorBoundary;
 }(React__default['default'].Component);
 
-var _excluded$j = ["type", "textPosition", "className", "dashed", "color", "children"];
+var _excluded$i = ["type", "textPosition", "className", "dashed", "color", "children"];
 
 var _templateObject$i;
 var StyledDivider = styled__default['default'].div(_templateObject$i || (_templateObject$i = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 16px 0;\n  padding: 0;\n  color: #000000d9;\n  font-size: 14px;\n  font-variant: tabular-nums;\n  line-height: 1.5715;\n  list-style: none;\n  font-feature-settings: 'tnum';\n  border: none;\n  border-top: 1px solid ", ";\n\n  &.horizontal {\n    display: flex;\n    clear: both;\n    width: 100%;\n    min-width: 100%;\n  }\n\n  &.dashed {\n    border-top-style: dashed;\n  }\n\n  &.text {\n    border-top: 0;\n    .inner-text {\n      display: inline-block;\n      padding: 0 1em;\n      white-space: nowrap;\n      text-align: center;\n    }\n    &::before,\n    &::after {\n      width: 50%;\n      border-top: 1px solid ", ";\n      transform: translateY(50%);\n      content: '';\n    }\n\n    &.dashed {\n      &::before,\n      &::after {\n        border-top-style: dashed;\n      }\n    }\n\n    &.left {\n      &::before {\n        width: 5%;\n      }\n      &::after {\n        width: 95%;\n      }\n    }\n    &.right {\n      &::before {\n        width: 95%;\n      }\n      &::after {\n        width: 5%;\n      }\n    }\n  }\n\n  &.vertical {\n    position: relative;\n    top: -0.06em;\n    display: inline-block;\n    height: 0.9em;\n    margin: 0 8px;\n    vertical-align: middle;\n    border-top: 0;\n    border-left: 1px solid ", ";\n  }\n"])), function (_ref) {
@@ -3173,7 +3030,7 @@ var Divider = function Divider(props) {
       _props$color = props.color,
       color = _props$color === void 0 ? border : _props$color,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$j);
+      rest = _objectWithoutProperties(props, _excluded$i);
 
   var hasText = !!children;
   return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({}, rest, {
@@ -3187,7 +3044,7 @@ var Divider = function Divider(props) {
   }, children) : null);
 };
 
-var _excluded$k = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
+var _excluded$j = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
 
 var _templateObject$j;
 var StyledFileInputTrigger = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
@@ -3203,7 +3060,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       capture = props.capture,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$k);
+      rest = _objectWithoutProperties(props, _excluded$j);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({}, rest, {
     onClick: function onClick() {
@@ -3234,7 +3091,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
   }), children);
 };
 
-var _excluded$l = ["onVisible", "onInVisible"];
+var _excluded$k = ["onVisible", "onInVisible"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3242,7 +3099,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
-      rest = _objectWithoutProperties(props, _excluded$l);
+      rest = _objectWithoutProperties(props, _excluded$k);
 
   var vv = useCallbackRef(onVisible);
   var vi = useCallbackRef(onInVisible);
@@ -3751,7 +3608,7 @@ var getArrowStyle = function getArrowStyle(modalEl) {
   }
 };
 
-var _excluded$m = ["placement", "content", "arrow", "visible", "closable", "onVisibleChange", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "animated", "offset"];
+var _excluded$l = ["placement", "content", "arrow", "visible", "closable", "onVisibleChange", "onClose", "className", "style", "children", "mask", "maskStyle", "maskClass", "mountContainer", "closeOnClickOutside", "closeOnMaskClick", "animated", "offset"];
 
 var _templateObject$l;
 
@@ -3788,7 +3645,7 @@ var Popover = function Popover(props) {
       animated = _props$animated === void 0 ? true : _props$animated,
       _props$offset = props.offset,
       offset = _props$offset === void 0 ? {} : _props$offset,
-      rest = _objectWithoutProperties(props, _excluded$m);
+      rest = _objectWithoutProperties(props, _excluded$l);
 
   var anchorRef = React.useRef();
   var popoverRef = React.useRef(null);
@@ -3938,7 +3795,7 @@ var Popover = function Popover(props) {
   }, content))), mountNode));
 };
 
-var _excluded$n = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
+var _excluded$m = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
 
 var _templateObject$m;
 var StylePopover = styled__default['default'](Popover)(_templateObject$m || (_templateObject$m = _taggedTemplateLiteral(["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"])));
@@ -3957,7 +3814,7 @@ var Tooltip = function Tooltip(props) {
       offset = props.offset,
       className = props.className,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$n); // 鼠标移到popover内容区，不关闭popover
+      popoverRest = _objectWithoutProperties(props, _excluded$m); // 鼠标移到popover内容区，不关闭popover
 
 
   var ref = React.useRef(0);
@@ -4267,7 +4124,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
-var _excluded$o = ["lines", "children", "className"];
+var _excluded$n = ["lines", "children", "className"];
 
 var _templateObject$n, _templateObject2$2;
 var StyledMultiLines = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: ", ";\n  overflow: hidden;\n"])), function (props) {
@@ -4281,7 +4138,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       lines = _props$lines === void 0 ? 1 : _props$lines,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$o);
+      rest = _objectWithoutProperties(props, _excluded$n);
 
   return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledMultiLines : StyledLine, _objectSpread2(_objectSpread2({}, rest), {}, {
     className: clsx__default['default']('uc-text', className),
@@ -4291,7 +4148,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Text.displayName = 'UC-Text';
 
-var _excluded$p = ["content", "visible", "modal", "maskStyle", "className"],
+var _excluded$o = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2$1 = ["duration"];
 
 var _templateObject$o;
@@ -4305,7 +4162,7 @@ var Toast = /*#__PURE__*/React.forwardRef(function (props, ref) {
       modal = _props$modal === void 0 ? true : _props$modal,
       maskStyle = props.maskStyle,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$p);
+      rest = _objectWithoutProperties(props, _excluded$o);
 
   return visible ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
     visible: modal,
@@ -4358,7 +4215,7 @@ Toast.show = function (props) {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$q = ["direction", "className"];
+var _excluded$p = ["direction", "className"];
 
 var _templateObject$p;
 var StyledArrow = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  vertical-align: middle;\n\n  svg {\n    transition: transform ", "ms ease-in-out;\n  }\n\n  &.right {\n    svg {\n      transform: rotate(-90deg);\n    }\n  }\n\n  &.left {\n    svg {\n      transform: rotate(90deg);\n    }\n  }\n  &.top {\n    svg {\n      transform: rotate(-180deg);\n    }\n  }\n\n  &.bottom {\n  }\n"])), animationSlow);
@@ -4373,7 +4230,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$q);
+      rest = _objectWithoutProperties(props, _excluded$p);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({}, rest, {
     ref: ref,
@@ -4388,7 +4245,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 IconArrow.displayName = 'UC-IconArrow';
 
-var _excluded$r = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
+var _excluded$q = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
 
 var _templateObject$q;
 var StyledNoticeBar = styled__default['default'].div(_templateObject$q || (_templateObject$q = _taggedTemplateLiteral(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
@@ -4409,7 +4266,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$r);
+      rest = _objectWithoutProperties(props, _excluded$q);
 
   var wrapRef = React.useRef();
   var contentRef = React.useRef();
@@ -4482,7 +4339,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 NoticeBar.displayName = 'UC-NoticeBar';
 
-var _excluded$s = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
+var _excluded$r = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
 /**  port from zarm Affix & refactor  */
 
 /** 将页面元素钉在可视范围*/
@@ -4492,7 +4349,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       offsetBottom = props.offsetBottom,
       target = props.target,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$s);
+      rest = _objectWithoutProperties(props, _excluded$r);
 
   var innerRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -4638,7 +4495,7 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Affix.displayName = 'UC-Affix';
 
-var _excluded$t = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
+var _excluded$s = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
 
 var _templateObject$r;
 var StyledActionSheet = styled__default['default'](Popup)(_templateObject$r || (_templateObject$r = _taggedTemplateLiteral(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), border, border);
@@ -4656,7 +4513,7 @@ var ActionSheet = function ActionSheet(props) {
       onClose = props.onClose,
       className = props.className,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$t);
+      rest = _objectWithoutProperties(props, _excluded$s);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
     className: clsx__default['default']('uc-actionsheet', className),
@@ -4709,7 +4566,7 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$u = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
+var _excluded$t = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
     _excluded2$2 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
 
 var _templateObject$s;
@@ -4740,7 +4597,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = props.className,
       wrapStyle = props.wrapStyle,
       wait = props.wait,
-      rest = _objectWithoutProperties(props, _excluded$u);
+      rest = _objectWithoutProperties(props, _excluded$t);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({}, rest, {
     ref: ref,
@@ -4861,7 +4718,7 @@ AlertDialog.show = function (props) {
   }))), container);
 };
 
-var _excluded$v = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];
+var _excluded$u = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];
 
 var _templateObject$t;
 var StyledPasswordInput = styled__default['default'].div(_templateObject$t || (_templateObject$t = _taggedTemplateLiteral(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n    @keyframes blink {\n      0% {\n        opacity: 0;\n      }\n      50% {\n        opacity: 1;\n      }\n      100% {\n        opacity: 0;\n      }\n    }\n    .virtual-input {\n      &.blink {\n        width: 1px;\n        height: 50%;\n        background-color: #333;\n        animation: 1s blink infinite;\n      }\n    }\n  }\n"])), border, border);
@@ -4893,7 +4750,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       onFinish = props.onFinish,
       onFocus = props.onFocus,
       _onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$v);
+      rest = _objectWithoutProperties(props, _excluded$u);
 
   var arRef = React.useRef(getArray(length));
   var inputRefArray = React.useRef([]);
@@ -4974,7 +4831,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PasswordInput.displayName = 'UC-PasswordInput';
 
-var _excluded$w = ["onClick", "okText", "customKey", "className"];
+var _excluded$v = ["onClick", "okText", "customKey", "className"];
 
 var _templateObject$u, _templateObject2$3;
 var StyledNumberKeyboardBase = styled__default['default'].div(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  padding-bottom: 22px;\n  background-color: #f2f3f5;\n  user-select: none;\n\n  .body {\n    display: flex;\n    padding: 6px 0 0 6px;\n\n    .keys {\n      display: flex;\n      flex: 3;\n      flex-wrap: wrap;\n\n      &.sidebar {\n        display: flex;\n        flex: 1;\n        flex-direction: column;\n        max-width: 33%;\n\n        .key {\n          max-width: 100%;\n        }\n      }\n\n      .key {\n        position: relative;\n        flex: 1;\n        flex-basis: 33%;\n        box-sizing: border-box;\n        padding: 0 6px 6px 0;\n\n        &.zero {\n          flex-basis: 66%;\n        }\n        &.empty {\n          display: none;\n        }\n      }\n    }\n  }\n"])));
@@ -4988,7 +4845,7 @@ var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(funct
       _props$customKey = props.customKey,
       customKey = _props$customKey === void 0 ? '' : _props$customKey,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$w);
+      rest = _objectWithoutProperties(props, _excluded$v);
 
   var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
   return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardBase, _extends({}, rest, {
@@ -5039,7 +4896,7 @@ var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(funct
 });
 NumberKeyboardBase.displayName = 'UC-NumberKeyboardBase';
 
-var _excluded$x = ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"];
+var _excluded$w = ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"];
 
 var _templateObject$v;
 var StyledNumberKeyboard = styled__default['default'](Popup)(_templateObject$v || (_templateObject$v = _taggedTemplateLiteral(["\n  width: 100%;\n  height: 300px;\n"])));
@@ -5057,7 +4914,7 @@ var NumberKeyboard = function NumberKeyboard(props) {
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$x);
+      rest = _objectWithoutProperties(props, _excluded$w);
 
   var _useState = React.useState(''),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5099,6 +4956,31 @@ var NumberKeyboard = function NumberKeyboard(props) {
 };
 
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
+
+var _excluded$x = ["children"];
+
+/** 手势操作元素 */
+var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _children$props;
+
+  var children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$x);
+
+  var elRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  useGesture(elRef, rest);
+  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, getProps(rest, supportedGestures, false)), {}, {
+    // filter out gesture evts
+    ref: elRef,
+    style: _objectSpread2({
+      touchAction: 'none'
+    }, children === null || children === void 0 ? void 0 : (_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.style)
+  }));
+});
+FingerGestureElement.displayName = 'UC-FingerGestureElement';
+var FingerGestureElement$1 = /*#__PURE__*/React__default['default'].memo(FingerGestureElement);
 
 var _templateObject$w, _templateObject2$4;
 var StyledSwipeAction = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
@@ -10354,11 +10236,6 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     return {
       from: {
         height: 0
-      },
-      config: {
-        tension: 300,
-        friction: 30,
-        clamp: true
       }
     };
   }),
@@ -10553,34 +10430,46 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
+  React.useLayoutEffect(function () {
+    // https://zhuanlan.zhihu.com/p/322525887
+    var y = 0;
 
-  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
-    ref: wrapRef,
-    onPressMove: function onPressMove(e) {
-      console.log(e.deltaY);
+    var _touchStart = function _touchStart(e) {
+      return y = e.touches[0].pageY;
+    };
+
+    var _touchEnd = function _touchEnd() {
+      y = 0;
+      touchEnd();
+    };
+
+    var _touchMove = function _touchMove(e) {
       var el = wrapRef.current;
       var scrollTop = getScrollTop(useWindowScroll ? window : el);
-      dRef.current = Math.min(threshold, dRef.current + e.deltaY);
+      var y1 = e.touches[0].pageY;
 
-      if (scrollTop <= 0 && dRef.current > 0) {
+      if (y1 - y > 0 && scrollTop === 0) {
+        e.preventDefault();
         isPullingRef.current = true;
       }
+    };
 
-      if (!isPullingRef.current) {
-        return;
-      }
+    var options = {
+      passive: false
+    };
+    document.addEventListener('touchstart', function (e) {
+      y = e.touches[0].pageY;
+    });
+    document.addEventListener('touchmove', _touchMove, options);
+    document.addEventListener('touchend', _touchEnd);
+    return function () {
+      document.removeEventListener('touchstart', _touchStart);
+      document.removeEventListener('touchmove', _touchMove, options);
+      document.removeEventListener('touchend', _touchEnd);
+    };
+  }, [useWindowScroll, touchEnd]);
 
-      api.start({
-        height: dRef.current
-      });
-      setStatus(dRef.current >= threshold ? 'canRelease' : 'pulling');
-    }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
-    className: clsx__default['default'](className, 'uc-pull-to-refresh'),
-    style: _objectSpread2(_objectSpread2({}, style), {}, {
-      touchAction: 'pan-y'
-    })
-  }), /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
+  var statusText = /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     style: springStyles,
     className: "head"
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -10588,9 +10477,39 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     style: {
       height: headHeight
     }
-  }, renderStatusText())), /*#__PURE__*/React__default['default'].createElement("div", {
+  }, renderStatusText()));
+
+  if (children && ! /*#__PURE__*/React__default['default'].isValidElement(children)) {
+    throw Error('children must be a valid ReactElement');
+  }
+
+  var childrenProps = _objectSpread2(_objectSpread2({}, children === null || children === void 0 ? void 0 : children.props), {}, {
+    ref: wrapRef
+  });
+
+  if (!useWindowScroll) {
+    // Pullup or any other comp
+    childrenProps.children = statusText;
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
+    ref: wrapRef,
+    onPressMove: function onPressMove(e) {
+      if (!isPullingRef.current) return;
+      dRef.current = Math.min(threshold + 10, dRef.current + e.deltaY);
+      api.start({
+        height: dRef.current
+      });
+      setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
+    className: clsx__default['default'](className, 'uc-pull-to-refresh'),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      touchAction: 'pan-y'
+    })
+  }), useWindowScroll && statusText, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content"
-  }, children)));
+  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childrenProps) : children)));
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
@@ -10895,6 +10814,7 @@ exports.flatSimpleArray = flatSimpleArray;
 exports.getThemeColorCss = getThemeColorCss;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
+exports.isTouch = isTouch;
 exports.loadResource = loadResource;
 exports.observe = observe;
 exports.throttle = throttle;

@@ -6,10 +6,6 @@ declare type Props = {
     dataRender: (data: unknown, index: number) => React.ReactNode;
     /** ajax获取数据，返回Promise,当拉到底部，还有更多数据时调用 */
     fetchData: () => Promise<unknown>;
-    /** 下拉刷新加载数据 */
-    refresh?: () => Promise<unknown>;
-    /** 下拉刷新文字提示*/
-    refreshText?: React.ReactNode;
     /** 指示是否还有更多数据,true没有更多,false还有 */
     finished: boolean;
     /** 拉到底部，没有更多数据时显示的文本 */
@@ -24,6 +20,7 @@ declare type Props = {
     useWindowScroll?: boolean;
     /** 自定义footer */
     footer?: (loading: boolean, finished: boolean) => React.ReactNode;
+    children?: React.ReactNode;
 };
 /**
  *  上拉加载/下拉刷新

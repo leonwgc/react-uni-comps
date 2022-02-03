@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
-import { Button, Pullup, ScrollTop, HairLineBox } from 'react-uni-comps';
+import DemoBlock from './common/Block';
+import { Pullup, PullToRefresh, Cell, Toast } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 25;
@@ -30,7 +31,7 @@ const PullupDom = () => {
     });
   };
 
-  const refresh = () => {
+  const onRefresh = () => {
     return new Promise((resolve) => {
       ref.current = 0;
       var ar = [];
@@ -49,36 +50,18 @@ const PullupDom = () => {
   };
 
   return (
-    <PageWrap style={{ background: '#eee', height: '100vh' }}>
-      <Pullup
-        style={{ height: '50vh', marginTop: 30, background: '#fff' }}
-        dataList={list}
-        fetchData={fetchData}
-        // refresh={refresh}
-        finished={finished}
-        dataRender={(data) => {
-          return (
-            <HairLineBox style={{ padding: '10px 16px' }} position="top">
-              {data}
-            </HairLineBox>
-          );
-        }}
-      ></Pullup>
-      <ScrollTop visibilityHeight={100}>
-        <Button
-          type="primary"
-          circle
-          style={{
-            width: 40,
-            height: 40,
-            position: 'fixed',
-            bottom: 60,
-            right: 20,
-          }}
-        >
-          top
-        </Button>
-      </ScrollTop>
+    <PageWrap style={{ height: '100vh' }}>
+      <DemoBlock title="搭配pullup">
+        <PullToRefresh onRefresh={onRefresh} useWindowScroll={false}>
+          <Pullup
+            dataList={list}
+            fetchData={fetchData}
+            style={{ height: '50vh', marginTop: 100, background: '#fff' }}
+            finished={finished}
+            dataRender={(data) => <Cell>{data}</Cell>}
+          ></Pullup>
+        </PullToRefresh>
+      </DemoBlock>
     </PageWrap>
   );
 };

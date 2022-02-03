@@ -74,7 +74,7 @@ export { default as PullToRefresh } from './PullToRefresh';
 
 /** helper & dom */
 export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './helper';
-export { isBrowser, isMobile, loadResource } from './dom';
+export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
 

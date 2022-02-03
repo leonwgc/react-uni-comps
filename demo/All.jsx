@@ -30,6 +30,25 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> Pullup
+          </Space>
+        }
+        description="上拉无限加载"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Pullup')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <IconComponent /> PullupDom
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PullupDom')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> Ripple
           </Space>
         }
@@ -459,25 +478,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> Pullup & ScrollTop
-          </Space>
-        }
-        description="上拉无限加载"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Pullup')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> PullupDom
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PullupDom')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

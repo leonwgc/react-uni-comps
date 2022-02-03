@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Button, Pullup, ScrollTop, Cell, Spin, Space } from 'react-uni-comps';
+import { Button, Pullup, ScrollTop, Cell, PullToRefresh } from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -29,13 +29,12 @@ const App = () => {
     });
   }, []);
 
-  // 定义refresh才支持下拉刷新
-  const refresh = useCallback(() => {
+  const onRefresh = useCallback(() => {
     return new Promise((resolve) => {
       ref.current = 0;
       setFinished(false);
       var ar = [];
-      const randomChar = Math.random().toString()[6];
+      const randomChar = Math.random().toString().slice(2, 4);
       for (var i = 0; i < pageSize; i++) {
         ar.push(i + 1 + '-' + randomChar);
       }
@@ -48,21 +47,15 @@ const App = () => {
   }, []);
 
   return (
-    <PageWrap style={{ padding: 0, userSelect: 'none' }}>
-      <Pullup
-        useWindowScroll
-        dataList={list}
-        refreshText={
-          <Space>
-            <Spin />
-            下拉刷新~
-          </Space>
-        }
-        fetchData={fetchData}
-        refresh={refresh}
-        finished={finished}
-        dataRender={(data) => <Cell title={`item${data}`} />}
-      />
+    <PageWrap style={{ padding: 0 }}>
+      <PullToRefresh onRefresh={onRefresh}>
+        <Pullup
+          dataList={list}
+          fetchData={fetchData}
+          finished={finished}
+          dataRender={(data) => <Cell title={`item${data}`} />}
+        />
+      </PullToRefresh>
 
       <ScrollTop visibilityHeight={100}>
         <Button
