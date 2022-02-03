@@ -1,7 +1,17 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Button, Pullup, ScrollTop, Cell, PullToRefresh, Toast } from 'react-uni-comps';
+import {
+  Button,
+  Pullup,
+  ScrollTop,
+  Cell,
+  PullToRefresh,
+  Notify,
+  Ripple,
+  Spin,
+  Space,
+} from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -50,10 +60,18 @@ const App = () => {
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="下拉执行onRefresh">
-        <PullToRefresh onRefresh={() => Toast.show('刷新.....')}>
-          <div
+        <PullToRefresh
+          onRefresh={() =>
+            Notify.show(
+              <Space>
+                <Spin /> 刷新.....
+              </Space>
+            )
+          }
+        >
+          <Ripple
             style={{
-              height: '30vh',
+              height: '20vh',
               width: '100%',
               border: '1px solid #ccc',
               writingMode: 'vertical-lr',
@@ -63,8 +81,8 @@ const App = () => {
               fontSize: 20,
             }}
           >
-            下拉触发刷新
-          </div>
+            下拉刷新
+          </Ripple>
         </PullToRefresh>
       </DemoBlock>
 
