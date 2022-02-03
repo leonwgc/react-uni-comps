@@ -23,7 +23,7 @@ declare type Props = {
     children?: React.ReactNode;
 };
 /**
- *  上拉加载/下拉刷新
+ *  上拉无限滚动
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 declare const Pullup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;

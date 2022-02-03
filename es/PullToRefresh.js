@@ -421,12 +421,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   }, [api, status]);
   useLayoutEffect(function () {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    return function () {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
-  useLayoutEffect(function () {
     // https://zhuanlan.zhihu.com/p/322525887
     var y = 0;
 
@@ -497,7 +491,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: wrapRef,
     onPressMove: function onPressMove(e) {
       if (!isPullingRef.current) return;
-      dRef.current = Math.min(threshold + 10, dRef.current + e.deltaY);
+      dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
       api.start({
         height: dRef.current
       });

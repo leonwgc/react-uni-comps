@@ -53,7 +53,7 @@ const App = () => {
         <PullToRefresh onRefresh={() => Toast.show('刷新.....')}>
           <div
             style={{
-              height: '50vh',
+              height: '30vh',
               width: '100%',
               border: '1px solid #ccc',
               writingMode: 'vertical-lr',

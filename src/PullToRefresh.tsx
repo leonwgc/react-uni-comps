@@ -158,14 +158,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, [api, status]);
 
   useLayoutEffect(() => {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    return () => {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
-
-  useLayoutEffect(() => {
     // https://zhuanlan.zhihu.com/p/322525887
 
     let y = 0;
@@ -231,7 +223,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ref={wrapRef}
       onPressMove={(e) => {
         if (!isPullingRef.current) return;
-        dRef.current = Math.min(threshold + 10, dRef.current + e.deltaY);
+        dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
         api.start({ height: dRef.current });
 
         setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');

@@ -1404,7 +1404,7 @@ function isInViewport(el, container) {
 
 var DefaultLoadingText = /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D");
 /**
- *  上拉加载/下拉刷新
+ *  上拉无限滚动
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 
@@ -10425,12 +10425,6 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     }, _callee, null, [[7,, 10, 13]]);
   })), [api, status]);
   React.useLayoutEffect(function () {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    return function () {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
-  React.useLayoutEffect(function () {
     // https://zhuanlan.zhihu.com/p/322525887
     var y = 0;
 
@@ -10496,7 +10490,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     ref: wrapRef,
     onPressMove: function onPressMove(e) {
       if (!isPullingRef.current) return;
-      dRef.current = Math.min(threshold + 10, dRef.current + e.deltaY);
+      dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
       api.start({
         height: dRef.current
       });
