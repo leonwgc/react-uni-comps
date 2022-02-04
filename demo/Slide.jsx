@@ -12,7 +12,7 @@ export default function App() {
     'https://t7.baidu.com/it/u=1811223786,2017754440&fm=193&f=GIF',
     'https://t7.baidu.com/it/u=2783075563,3362558456&fm=193&f=GIF',
     'https://t7.baidu.com/it/u=2466425392,342874463&fm=193&f=GIF',
-    'https://t7.baidu.com/it/u=1139638767,225908414&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=2488490742,1686455852&fm=193&f=GIF',
   ];
 
   return (

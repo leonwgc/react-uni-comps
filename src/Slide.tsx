@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import { isMobile, isTouch } from './dom';
 import { animationNormal } from './vars';
 import FingerGesture from './FingerGesture';
+import useCallbackRef from './hooks/useCallbackRef';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -28,7 +29,6 @@ const StyledSlide = styled.div`
     }
 
     .uc-slide-page {
-      backface-visibility: hidden;
       width: 100%;
       flex-shrink: 0;
     }
@@ -172,6 +172,21 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
 
+  const min = exp ? -1 : 0;
+  const max = exp ? len : len - 1;
+
+  const autoRef = useCallbackRef<{
+    pageIndex: number;
+    min: number;
+    max: number;
+    exp: boolean;
+  }>({
+    pageIndex,
+    min,
+    max,
+    exp,
+  });
+
   const slideToPageIndex = useCallback(
     (newPageIndex: number, transition = true) => {
       const s = thisRef.current;
@@ -194,12 +209,10 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     prev: () => {
-      const min = exp ? -1 : 0;
-      slideToPageIndex(Math.max(min, pageIndex - 1));
+      slideToPageIndex(Math.max(autoRef.current.min, pageIndex - 1));
     },
     next: () => {
-      const max = exp ? len : len - 1;
-      slideToPageIndex(Math.min(max, pageIndex + 1));
+      slideToPageIndex(Math.min(autoRef.current.max, pageIndex + 1));
     },
   }));
 
@@ -275,6 +288,16 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     if (!s.isMoving) {
       return;
     }
+
+    const instance = autoRef.current;
+
+    if (
+      instance.exp &&
+      (instance.max === instance.pageIndex || instance.min === instance.pageIndex)
+    ) {
+      slideToPageIndex(instance.pageIndex === max ? 0 : len - 1, false);
+      return;
+    }
     s.isMoving = false;
 
     if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
@@ -292,6 +315,14 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     const fg = new FingerGesture(wrapEl, {
       onPressMove: (e) => {
         const s = thisRef.current;
+        const instance = autoRef.current;
+
+        if (
+          instance.exp &&
+          (instance.max === instance.pageIndex || instance.min === instance.pageIndex)
+        ) {
+          return;
+        }
 
         if (direction === 'horizontal') {
           if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
@@ -309,7 +340,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       },
     });
     return () => fg.destroy();
-  }, [count, direction]);
+  }, [count, direction, autoRef]);
 
   return (
     <StyledSlide
