@@ -168,6 +168,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     wrapHeight: 0,
     wrapWidth: 0,
     isMoving: false,
+    timer: 0,
   });
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
@@ -190,19 +191,22 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const slideToPageIndex = useCallback(
     (newPageIndex: number, transition = true) => {
       const s = thisRef.current;
+      const el = wrapElRef.current;
 
-      wrapElRef.current.style.transitionProperty = transition ? 'transform' : 'none';
-      if (direction === 'horizontal') {
-        const x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
-        wrapElRef.current.style.transform = `translate3d(${x}px, 0, 0)`;
-        s.x = x;
-      } else {
-        const y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
-        wrapElRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
-        s.y = y;
+      if (el) {
+        el.style.transitionProperty = transition ? 'transform' : 'none';
+        if (direction === 'horizontal') {
+          const x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
+          el.style.transform = `translate3d(${x}px, 0, 0)`;
+          s.x = x;
+        } else {
+          const y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
+          el.style.transform = `translate3d(0, ${y}px, 0)`;
+          s.y = y;
+        }
+
+        setPageIndex(newPageIndex);
       }
-
-      setPageIndex(newPageIndex);
     },
     [thisRef, direction, exp]
   );
@@ -245,16 +249,22 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   }, [slideToPageIndex]);
 
   useEffect(() => {
-    if (autoPlay && len > 1 && !thisRef.current.isMoving) {
-      const timer = window.setTimeout(() => {
-        slideToPageIndex(pageIndex + 1);
-      }, interval);
+    if (autoPlay && len > 1) {
+      const timer = window.setInterval(
+        (p) => {
+          if (!thisRef.current.isMoving) {
+            slideToPageIndex(p + 1);
+          }
+        },
+        interval,
+        pageIndex
+      );
 
       return () => {
-        window.clearTimeout(timer);
+        window.clearInterval(timer);
       };
     }
-  }, [pageIndex, slideToPageIndex, autoPlay, interval, len, exp]);
+  }, [slideToPageIndex, autoPlay, interval, len, exp, pageIndex]);
 
   const pagerRender = (): React.ReactNode => {
     if (!showPageIndicator || len <= 1) return null;
@@ -276,7 +286,9 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = (e) => {
     !isMobile && e.preventDefault();
+
     const s = thisRef.current;
+    clearTimeout(s.timer);
     s.isMoving = true;
     wrapElRef.current.style.transitionProperty = 'none';
     s.lastX = s.x;
