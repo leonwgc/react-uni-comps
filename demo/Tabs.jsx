@@ -151,8 +151,8 @@ export default function App() {
         </Tabs>
       </DemoBlock>
 
-      <DemoBlock title="可滑动非受控">
-        <Tabs swipe defaultValue={2}>
+      <DemoBlock title="非受控">
+        <Tabs swipe defaultValue={2} onChange={console.log}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
