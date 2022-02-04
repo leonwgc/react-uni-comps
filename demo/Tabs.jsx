@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
 import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
-import 'animate.css';
-import './Tab.less';
 
 const StyledTabsNew = styled(Tabs)`
   background-color: #fff;
@@ -41,12 +39,6 @@ const StyledTabsNew1 = styled(Tabs)`
   }
 `;
 
-const StyledApp = styled.div`
-  .uc-tabs {
-    margin: 10px 0;
-  }
-`;
-
 const StyledTabs = styled(Tabs)`
   .uc-tabs-header-item {
     flex: none;
@@ -79,6 +71,34 @@ export default function App() {
           </Tabs.Tab>
         </Tabs>
       </DemoBlock>
+      <DemoBlock title="自定义下划线">
+        <Tabs value={value} onChange={setValue} underline="30px">
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
+      </DemoBlock>
+
+      <DemoBlock title="无下划线">
+        <Tabs underline={false} value={value} onChange={setValue}>
+          <Tabs.Tab title="title1">
+            <StyledContent>content1</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title2">
+            <StyledContent>content2</StyledContent>
+          </Tabs.Tab>
+          <Tabs.Tab title="title3">
+            <StyledContent>content3</StyledContent>
+          </Tabs.Tab>
+        </Tabs>
+      </DemoBlock>
+
       <DemoBlock title="包含extra配置">
         <StyledTabs
           value={value}
@@ -115,20 +135,6 @@ export default function App() {
             return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
           })}
         </StyledTabs>
-      </DemoBlock>
-
-      <DemoBlock title="无下划线">
-        <Tabs underline={false} value={value} onChange={setValue}>
-          <Tabs.Tab title="title1">
-            <StyledContent>content1</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title2">
-            <StyledContent>content2</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <StyledContent>content3</StyledContent>
-          </Tabs.Tab>
-        </Tabs>
       </DemoBlock>
 
       <DemoBlock title="可滑动">

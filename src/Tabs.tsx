@@ -1,14 +1,14 @@
-import React, { useState, useLayoutEffect, useRef, useCallback, useEffect, RefObject } from 'react';
+//#region  top
+
+import React, { useState, useLayoutEffect, useRef, RefObject } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import useGesture from './hooks/useGesture';
-import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
-
-const isMobileEnv = isMobile;
+import FingerGesture from './FingerGesture';
+import useCallbackRef from './hooks/useCallbackRef';
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
@@ -99,7 +99,7 @@ const StyledTabHeadItem = styled.div<{
       top: 0;
       pointer-events: none;
       transition: transform 0.3s ease;
-      transform: translateX(${(props) => props.value * 100 + '%'});
+      transform: translate3d(${(props) => props.value * 100 + '%'}, 0, 0);
 
       .line {
         position: absolute;
@@ -120,6 +120,8 @@ const StyledTabHeadItem = styled.div<{
 const Tab: React.FC<TabProp> = ({ children }) => {
   return children;
 };
+
+//#endregion
 
 /**
  * 选项卡切换
@@ -142,22 +144,35 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
 
-  useGesture(contentWrapElRef, {
-    onSwipe: (e) => {
-      e.preventDefault();
-      if (e.direction === 'right' && _v > 0) {
-        // go to left tab
-        const prevIndex = _v - 1;
-        _setV(prevIndex);
-        onChange?.(prevIndex);
-      } else if (e.direction === 'left' && _v < count - 1) {
-        // go to right tab
-        const nextIndex = _v + 1;
-        _setV(nextIndex);
-        onChange?.(nextIndex);
+  const valRef = useCallbackRef<number>(_v);
+  const onChangeRef = useCallbackRef(onChange);
+
+  useLayoutEffect(() => {
+    let fg;
+    if (swipe && contentWrapElRef.current) {
+      const el = contentWrapElRef.current;
+      fg = new FingerGesture(el, {
+        onSwipe: (e) => {
+          if (e.direction === 'right' && valRef.current > 0) {
+            // go to left tab
+            const prevIndex = valRef.current - 1;
+            _setV(prevIndex);
+            onChangeRef.current?.(prevIndex);
+          } else if (e.direction === 'left' && valRef.current < count - 1) {
+            // go to right tab
+            const nextIndex = valRef.current + 1;
+            _setV(nextIndex);
+            onChangeRef.current?.(nextIndex);
+          }
+        },
+      });
+    }
+    return () => {
+      if (swipe && fg) {
+        fg?.destroy();
       }
-    },
-  });
+    };
+  }, [swipe, valRef, count, onChangeRef]);
 
   useUpdateEffect(() => {
     if (value !== _v) {
@@ -165,34 +180,34 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
     }
   }, [value]);
 
-  const setUnderlineSize = useCallback(() => {
-    if (underline) {
-      const underlineEl = underlineElRef.current;
-      const next = underlineEl.nextSibling as HTMLElement;
-      if (next) {
-        underlineEl.style.width = next.offsetWidth + 'px';
-      }
-    }
-  }, [underline]);
-
   useLayoutEffect(() => {
-    setUnderlineSize();
-  }, [setUnderlineSize]);
+    const setUnderlineSize = throttle(() => {
+      const underlineEl = underlineElRef.current;
+      if (underline && underlineEl) {
+        const next = underlineEl.nextSibling as HTMLElement;
+        if (next) {
+          underlineEl.style.width = next.offsetWidth + 'px';
+        }
+      }
+    }, 34);
 
-  useEffect(() => {
-    const throttledSetUnderlineSize = throttle(setUnderlineSize, 34);
-    window.addEventListener('resize', throttledSetUnderlineSize);
+    if (underline) {
+      window.addEventListener('resize', setUnderlineSize);
+    }
+
+    setUnderlineSize();
 
     return () => {
-      window.removeEventListener('resize', throttledSetUnderlineSize);
+      if (underline) {
+        window.removeEventListener('resize', setUnderlineSize);
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [underline]);
 
   return (
     <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>
       <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
-        {underline ? (
+        {underline && (
           <StyledTabHeadItem
             ref={underlineElRef}
             className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
@@ -204,7 +219,7 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
               style={{ width: typeof underline === 'boolean' ? '100%' : underline }}
             ></div>
           </StyledTabHeadItem>
-        ) : null}
+        )}
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (React.isValidElement(child)) {
             const { title = '', disabled } = child.props as TabProp;
@@ -227,11 +242,9 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
             );
           }
         })}
-        {extra ? (
-          <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>
-        ) : null}
+        {extra && <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>}
       </div>
-      <div className={`uc-tabs-content-wrap`} ref={isMobileEnv && swipe ? contentWrapElRef : null}>
+      <div className={`uc-tabs-content-wrap`} ref={contentWrapElRef}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (React.isValidElement(child)) {
             const { children, disabled } = child.props as TabProp;
