@@ -20,6 +20,26 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> Slide FullPage
+          </Space>
+        }
+        description="全屏滑动幻灯片示例"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SlideFullPage')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
+            <IconComponent /> Slide
+          </Space>
+        }
+        description="幻灯片"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Slide')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> ScrollToTop
           </Space>
         }
@@ -337,26 +357,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ProgressCircle')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> Slide FullPage
-          </Space>
-        }
-        description="全屏滑动幻灯片示例"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SlideFullPage')}
-      ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> Slide
-          </Space>
-        }
-        description="幻灯片"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Slide')}
-      ></Cell>
+
       <Cell
         title={
           <Space>
