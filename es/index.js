@@ -23,7 +23,7 @@ export { default as Divider } from './Divider';
 export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
 export { default as IndexList } from './IndexList';
-export { default as ScrollTop } from './ScrollTop';
+export { default as ScrollToTop } from './ScrollToTop';
 export { default as Popover } from './Popover';
 export { default as Tooltip } from './Tooltip';
 export { default as ThemeProvider } from './ThemeProvider';

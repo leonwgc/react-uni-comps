@@ -158,7 +158,9 @@ var Affix = /*#__PURE__*/React.forwardRef(function (props, ref) {
     t.addEventListener('scroll', onScroll);
     onScroll();
     return function () {
-      return t.removeEventListener('scroll', onScroll);
+      if (t) {
+        t.removeEventListener('scroll', onScroll);
+      }
     };
   }, [offsetRef, onScrollUpdate]);
   var affixed = data.affixed;

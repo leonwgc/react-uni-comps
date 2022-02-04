@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Button, Pullup, ScrollTop, Cell, PullToRefresh } from 'react-uni-comps';
+import { Button, Pullup, ScrollToTop, Cell, PullToRefresh } from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -50,7 +50,6 @@ const App = () => {
     <PageWrap style={{ padding: 0 }}>
       <PullToRefresh onRefresh={onRefresh} useWindowScroll>
         <Pullup
-          useWindowScroll
           dataList={list}
           fetchData={fetchData}
           finished={finished}
@@ -58,7 +57,7 @@ const App = () => {
         />
       </PullToRefresh>
 
-      <ScrollTop visibilityHeight={100}>
+      <ScrollToTop visibilityHeight={100}>
         <Button
           type="primary"
           circle
@@ -72,7 +71,7 @@ const App = () => {
         >
           top
         </Button>
-      </ScrollTop>
+      </ScrollToTop>
     </PageWrap>
   );
 };

@@ -73,6 +73,7 @@ yarn add react-uni-comps
 - HairLineBox (包含 1px 的边的容器 div)
 - Avatar (头像)
 - Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
+
 #### 操作反馈
 
 - Drawer (抽屉)
@@ -90,7 +91,7 @@ yarn add react-uni-comps
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
 - Spin（加载中指示器）
-- ScrollTop (平滑滚动到顶部)
+- ScrollToTop (平滑滚动到顶部)
 
 #### 导航组件
 
@@ -138,7 +139,7 @@ yarn add react-uni-comps
 
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
 - AnimationElement(元素应用 animation 动画,和 TransitionElement 一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
-- Ripple  (给子元素添加点击波纹效果)
+- Ripple (给子元素添加点击波纹效果)
 
 ### 其他组件
 
@@ -159,7 +160,7 @@ yarn add react-uni-comps
 - unobserve (取消 observe 监控)
 - uniqArray (数组去重)
 - flatSimpleArray (扁平化简单数组)
-- flatArray (扁平化对象数组) 
+- flatArray (扁平化对象数组)
 
 ### 常量
 

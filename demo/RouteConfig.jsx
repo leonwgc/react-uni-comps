@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/ScrollToTop',
+    component: lazy(() => import('./ScrollToTop')),
+  },
+  {
     path: '/PullToRefresh',
     component: lazy(() => import('./PullToRefresh')),
   },

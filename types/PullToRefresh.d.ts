@@ -21,7 +21,7 @@ declare type Props = {
     renderText?: (status: PullStatus) => ReactNode;
     className?: string;
     style?: React.CSSProperties;
-    /** 是否使用window滚动,默认 true  */
+    /** 检查window滚动还是子元素滚动,默认false  */
     useWindowScroll?: boolean;
     /** 触发下拉刷新的元素,比如Pull */
     children?: React.ReactElement;

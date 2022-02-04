@@ -1384,10 +1384,10 @@ function usePrevious(value) {
   return ref.current;
 }
 
-var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "children", "footer"];
+var _excluded$5 = ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "style", "height", "children", "footer"];
 
 var _templateObject$5;
-var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled__default['default'].div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  &.use-dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _el$getBoundingClient = el.getBoundingClientRect(),
@@ -1423,7 +1423,10 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       _props$finished = props.finished,
       finished = _props$finished === void 0 ? false : _props$finished,
       className = props.className,
-      useWindowScroll = props.useWindowScroll,
+      _props$useWindowScrol = props.useWindowScroll,
+      useWindowScroll = _props$useWindowScrol === void 0 ? true : _props$useWindowScrol,
+      style = props.style,
+      height = props.height,
       children = props.children,
       footer = props.footer,
       rest = _objectWithoutProperties(props, _excluded$5);
@@ -1450,12 +1453,20 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
+
+  if (!useWindowScroll && !height) {
+    throw new Error('Pullup: useWindowScroll为false，必须通过height设置容器高度');
+  }
+
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap, _extends({
     ref: wrapRef
   }, rest, {
     className: clsx__default['default']('uc-pullup', className, {
-      'dom-scroll': !useWindowScroll,
-      'window-scroll': useWindowScroll
+      'use-dom-scroll': !useWindowScroll,
+      'use-window-scroll': useWindowScroll
+    }),
+    style: _objectSpread2(_objectSpread2({}, style), {}, {
+      height: height
     })
   }), children, dataList.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, {
@@ -3204,12 +3215,12 @@ var IndexList = function IndexList(props) {
 IndexList.displayName = 'UC-IndexList';
 
 /**
- * windows回到顶部
+ * 回到页面顶部
  *
  * @param {Props} props
  * @return {*}  {React.ReactElement}
  */
-var ScrollTop = function ScrollTop(props) {
+var ScrollToTop = function ScrollToTop(props) {
   var children = props.children,
       _props$visibilityHeig = props.visibilityHeight,
       visibilityHeight = _props$visibilityHeig === void 0 ? 100 : _props$visibilityHeig;
@@ -3220,7 +3231,7 @@ var ScrollTop = function ScrollTop(props) {
       setVisible = _useState2[1];
 
   var top = 0;
-  React.useEffect(function () {
+  React.useLayoutEffect(function () {
     var onScroll = throttle(function () {
       if (window.pageYOffset >= visibilityHeight) {
         setVisible(true);
@@ -3259,7 +3270,7 @@ var ScrollTop = function ScrollTop(props) {
   }) : null;
 };
 
-ScrollTop.displayName = 'UC-ScrollTop';
+ScrollToTop.displayName = 'UC-ScrollToTop';
 
 /**
  * Get the window object using this function rather then simply use `window` because
@@ -4439,7 +4450,9 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     t.addEventListener('scroll', onScroll);
     onScroll();
     return function () {
-      return t.removeEventListener('scroll', onScroll);
+      if (t) {
+        t.removeEventListener('scroll', onScroll);
+      }
     };
   }, [offsetRef, onScrollUpdate]);
   var affixed = data.affixed;
@@ -10173,8 +10186,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       completeText = _props$completeText === void 0 ? '刷新成功' : _props$completeText,
       _props$completeDelay = props.completeDelay,
       completeDelay = _props$completeDelay === void 0 ? 500 : _props$completeDelay,
-      _props$useWindowScrol = props.useWindowScroll,
-      useWindowScroll = _props$useWindowScrol === void 0 ? true : _props$useWindowScrol,
+      useWindowScroll = props.useWindowScroll,
       onRefresh = props.onRefresh,
       _props$headHeight = props.headHeight,
       headHeight = _props$headHeight === void 0 ? 40 : _props$headHeight,
@@ -10191,6 +10203,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       status = _useState2[0],
       setStatus = _useState2[1];
 
+  var statusRef = useCallbackRef(status);
   var dRef = React.useRef(0);
 
   var _useSpring = web.useSpring(function () {
@@ -10204,7 +10217,8 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       springStyles = _useSpring2[0],
       api = _useSpring2[1];
 
-  var wrapRef = React.useRef(null);
+  var wrapRef = React.useRef(null); // could be wrapper / children El instance
+
   var isPullingRef = React.useRef(false);
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
@@ -10386,8 +10400,8 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     }, _callee, null, [[7,, 10, 13]]);
   })), [api, status]);
   React.useLayoutEffect(function () {
-    // https://zhuanlan.zhihu.com/p/322525887
     var y = 0;
+    var el = wrapRef.current;
 
     var _touchStart = function _touchStart(e) {
       return y = e.touches[0].pageY;
@@ -10399,11 +10413,10 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     };
 
     var _touchMove = function _touchMove(e) {
-      var el = wrapRef.current;
       var scrollTop = getScrollTop(useWindowScroll ? window : el);
       var y1 = e.touches[0].pageY;
 
-      if (y1 - y > 0 && scrollTop === 0) {
+      if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
         isPullingRef.current = true;
       }
@@ -10412,15 +10425,21 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     var options = {
       passive: false
     };
-    document.addEventListener('touchstart', function (e) {
-      y = e.touches[0].pageY;
-    });
-    document.addEventListener('touchmove', _touchMove, options);
-    document.addEventListener('touchend', _touchEnd);
+
+    if (el) {
+      el.addEventListener('touchstart', function (e) {
+        y = e.touches[0].pageY;
+      });
+      el.addEventListener('touchmove', _touchMove, options);
+      el.addEventListener('touchend', _touchEnd);
+    }
+
     return function () {
-      document.removeEventListener('touchstart', _touchStart);
-      document.removeEventListener('touchmove', _touchMove, options);
-      document.removeEventListener('touchend', _touchEnd);
+      if (el) {
+        el.removeEventListener('touchstart', _touchStart);
+        el.removeEventListener('touchmove', _touchMove, options);
+        el.removeEventListener('touchend', _touchEnd);
+      }
     };
   }, [useWindowScroll, touchEnd]);
 
@@ -10438,20 +10457,11 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     throw Error('children must be a valid ReactElement');
   }
 
-  var childrenProps = _objectSpread2(_objectSpread2({}, children === null || children === void 0 ? void 0 : children.props), {}, {
-    ref: wrapRef
-  });
-
-  if (!useWindowScroll) {
-    // Pullup or any other comp
-    childrenProps.children = statusText;
-  }
-
   React.useLayoutEffect(function () {
     var el = wrapRef.current;
     var fg = new FingerGesture(el, {
       onPressMove: function onPressMove(e) {
-        if (!isPullingRef.current) return;
+        if (!isPullingRef.current || statusRef.current === 'refreshing' || statusRef.current === 'complete') return;
         dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
         api.start({
           height: dRef.current
@@ -10462,17 +10472,20 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     return function () {
       fg === null || fg === void 0 ? void 0 : fg.destroy();
     };
-  }, [api, threshold]);
+  }, [api, threshold, statusRef]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({
     ref: wrapRef
   }, rest, {
-    className: clsx__default['default'](className, 'uc-pull-to-refresh'),
+    className: clsx__default['default']('uc-pull-to-refresh', className, {
+      'use-dom-scroll': !useWindowScroll,
+      'use-window-scroll': useWindowScroll
+    }),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       touchAction: 'pan-y'
     })
-  }), useWindowScroll && statusText, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "content"
-  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childrenProps) : children));
+  }), statusText, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: wrapRef
+  }) : children);
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
@@ -10751,7 +10764,7 @@ exports.Rate = Rate;
 exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
-exports.ScrollTop = ScrollTop;
+exports.ScrollToTop = ScrollToTop;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;

@@ -46,7 +46,7 @@ import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  position: relative;\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"], ["\n  user-select: none;\n  position: relative;\n  &.dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"]))); // check isInViewport in vertical direction
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  position: relative;\n  &.use-dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"], ["\n  user-select: none;\n  position: relative;\n  &.use-dom-scroll {\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .loading {\n    color: #999;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 50px;\n  }\n"]))); // check isInViewport in vertical direction
 
 function isInViewport(el, container) {
   var _a = el.getBoundingClientRect(),
@@ -82,14 +82,17 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _e = props.finished,
       finished = _e === void 0 ? false : _e,
       className = props.className,
-      useWindowScroll = props.useWindowScroll,
+      _f = props.useWindowScroll,
+      useWindowScroll = _f === void 0 ? true : _f,
+      style = props.style,
+      height = props.height,
       children = props.children,
       footer = props.footer,
-      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "children", "footer"]);
+      rest = __rest(props, ["dataList", "dataRender", "fetchData", "loadingText", "finishedText", "finished", "className", "useWindowScroll", "style", "height", "children", "footer"]);
 
-  var _f = useState(false),
-      loading = _f[0],
-      setLoading = _f[1];
+  var _g = useState(false),
+      loading = _g[0],
+      setLoading = _g[1];
 
   var waypointRef = useRef();
   var wrapRef = useRef();
@@ -108,12 +111,20 @@ var Pullup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       });
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
+
+  if (!useWindowScroll && !height) {
+    throw new Error('Pullup: useWindowScroll为false，必须通过height设置容器高度');
+  }
+
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({
     ref: wrapRef
   }, rest, {
     className: clsx('uc-pullup', className, {
-      'dom-scroll': !useWindowScroll,
-      'window-scroll': useWindowScroll
+      'use-dom-scroll': !useWindowScroll,
+      'use-window-scroll': useWindowScroll
+    }),
+    style: __assign(__assign({}, style), {
+      height: height
     })
   }), children, dataList.map(function (item, idx) {
     return /*#__PURE__*/React.createElement(React.Fragment, {

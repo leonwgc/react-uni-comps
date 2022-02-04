@@ -191,6 +191,7 @@ import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
 import FingerGesture from './FingerGesture';
+import useCallbackRef from './hooks/useCallbackRef';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
@@ -205,36 +206,37 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       completeText = _d === void 0 ? '刷新成功' : _d,
       _e = props.completeDelay,
       completeDelay = _e === void 0 ? 500 : _e,
-      _f = props.useWindowScroll,
-      useWindowScroll = _f === void 0 ? true : _f,
+      useWindowScroll = props.useWindowScroll,
       onRefresh = props.onRefresh,
-      _g = props.headHeight,
-      headHeight = _g === void 0 ? 40 : _g,
-      _h = props.threshold,
-      threshold = _h === void 0 ? 60 : _h,
+      _f = props.headHeight,
+      headHeight = _f === void 0 ? 40 : _f,
+      _g = props.threshold,
+      threshold = _g === void 0 ? 60 : _g,
       className = props.className,
       renderText = props.renderText,
       children = props.children,
       style = props.style,
       rest = __rest(props, ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"]);
 
-  var _j = useState('pulling'),
-      status = _j[0],
-      setStatus = _j[1];
+  var _h = useState('pulling'),
+      status = _h[0],
+      setStatus = _h[1];
 
+  var statusRef = useCallbackRef(status);
   var dRef = useRef(0);
 
-  var _k = useSpring(function () {
+  var _j = useSpring(function () {
     return {
       from: {
         height: 0
       }
     };
   }),
-      springStyles = _k[0],
-      api = _k[1];
+      springStyles = _j[0],
+      api = _j[1];
 
-  var wrapRef = useRef(null);
+  var wrapRef = useRef(null); // could be wrapper / children El instance
+
   var isPullingRef = useRef(false);
   useImperativeHandle(ref, function () {
     return wrapRef.current;
@@ -421,8 +423,8 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   }, [api, status]);
   useLayoutEffect(function () {
-    // https://zhuanlan.zhihu.com/p/322525887
     var y = 0;
+    var el = wrapRef.current;
 
     var _touchStart = function _touchStart(e) {
       return y = e.touches[0].pageY;
@@ -434,11 +436,10 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     };
 
     var _touchMove = function _touchMove(e) {
-      var el = wrapRef.current;
       var scrollTop = getScrollTop(useWindowScroll ? window : el);
       var y1 = e.touches[0].pageY;
 
-      if (y1 - y > 0 && scrollTop === 0) {
+      if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
         isPullingRef.current = true;
       }
@@ -447,15 +448,21 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var options = {
       passive: false
     };
-    document.addEventListener('touchstart', function (e) {
-      y = e.touches[0].pageY;
-    });
-    document.addEventListener('touchmove', _touchMove, options);
-    document.addEventListener('touchend', _touchEnd);
+
+    if (el) {
+      el.addEventListener('touchstart', function (e) {
+        y = e.touches[0].pageY;
+      });
+      el.addEventListener('touchmove', _touchMove, options);
+      el.addEventListener('touchend', _touchEnd);
+    }
+
     return function () {
-      document.removeEventListener('touchstart', _touchStart);
-      document.removeEventListener('touchmove', _touchMove, options);
-      document.removeEventListener('touchend', _touchEnd);
+      if (el) {
+        el.removeEventListener('touchstart', _touchStart);
+        el.removeEventListener('touchmove', _touchMove, options);
+        el.removeEventListener('touchend', _touchEnd);
+      }
     };
   }, [useWindowScroll, touchEnd]);
   var evtProps = {};
@@ -478,20 +485,11 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     throw Error('children must be a valid ReactElement');
   }
 
-  var childrenProps = __assign(__assign({}, children === null || children === void 0 ? void 0 : children.props), {
-    ref: wrapRef
-  });
-
-  if (!useWindowScroll) {
-    // Pullup or any other comp
-    childrenProps.children = statusText;
-  }
-
   useLayoutEffect(function () {
     var el = wrapRef.current;
     var fg = new FingerGesture(el, {
       onPressMove: function onPressMove(e) {
-        if (!isPullingRef.current) return;
+        if (!isPullingRef.current || statusRef.current === 'refreshing' || statusRef.current === 'complete') return;
         dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
         api.start({
           height: dRef.current
@@ -502,17 +500,20 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return function () {
       fg === null || fg === void 0 ? void 0 : fg.destroy();
     };
-  }, [api, threshold]);
+  }, [api, threshold, statusRef]);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({
     ref: wrapRef
   }, rest, {
-    className: clsx(className, 'uc-pull-to-refresh'),
+    className: clsx('uc-pull-to-refresh', className, {
+      'use-dom-scroll': !useWindowScroll,
+      'use-window-scroll': useWindowScroll
+    }),
     style: __assign(__assign({}, style), {
       touchAction: 'pan-y'
     })
-  }), useWindowScroll && statusText, /*#__PURE__*/React.createElement("div", {
-    className: "content"
-  }, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, childrenProps) : children));
+  }), statusText, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, {
+    ref: wrapRef
+  }) : children);
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 export default PullToRefresh;

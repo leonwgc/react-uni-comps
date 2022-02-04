@@ -4,13 +4,13 @@ import DemoBlock from './common/Block';
 import {
   Button,
   Pullup,
-  ScrollTop,
+  ScrollToTop,
   Cell,
   PullToRefresh,
-  Notify,
   Ripple,
   Spin,
   Space,
+  Toast,
 } from 'react-uni-comps';
 
 const pageSize = 10;
@@ -62,11 +62,16 @@ const App = () => {
       <DemoBlock title="下拉执行onRefresh">
         <PullToRefresh
           onRefresh={() =>
-            Notify.show(
-              <Space>
-                <Spin /> 刷新.....
-              </Space>
-            )
+            Toast.show({
+              style: {
+                top: '60px',
+              },
+              content: (
+                <Space>
+                  <Spin /> 刷新
+                </Space>
+              ),
+            })
           }
         >
           <Ripple
@@ -86,18 +91,19 @@ const App = () => {
       </DemoBlock>
 
       <DemoBlock title="搭配Pullup">
-        <PullToRefresh onRefresh={onRefresh} useWindowScroll={true}>
+        <PullToRefresh onRefresh={onRefresh}>
           <Pullup
             dataList={list}
+            useWindowScroll={false}
             fetchData={fetchData}
-            style={{ height: 200, background: '#fff' }}
+            height={300}
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>
         </PullToRefresh>
       </DemoBlock>
 
-      <ScrollTop visibilityHeight={100}>
+      <ScrollToTop visibilityHeight={100}>
         <Button
           type="primary"
           circle
@@ -111,7 +117,7 @@ const App = () => {
         >
           top
         </Button>
-      </ScrollTop>
+      </ScrollToTop>
     </PageWrap>
   );
 };

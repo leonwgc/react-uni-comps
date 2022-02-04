@@ -1,17 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
-import { Pullup, PullToRefresh, Cell, Toast } from 'react-uni-comps';
+import { Button, Pullup, ScrollToTop, Cell, PullToRefresh } from 'react-uni-comps';
 
-// 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
-const pageSize = 25;
+const pageSize = 30;
 
-const PullupDom = () => {
+const App = () => {
   const [list, setList] = useState([]);
   const [finished, setFinished] = useState(false);
   const ref = useRef(0);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     return new Promise((resolve) => {
       var ar = [];
       for (var i = 0; i < pageSize; i++) {
@@ -27,47 +26,57 @@ const PullupDom = () => {
           setFinished(true);
         }
         resolve();
-      }, 900);
+      }, 1000);
     });
-  };
+  }, []);
 
-  const onRefresh = () => {
+  const onRefresh = useCallback(() => {
     return new Promise((resolve) => {
       ref.current = 0;
+      setFinished(false);
       var ar = [];
-      const randomChar = Math.random().toString()[6];
+      const randomChar = Math.random().toString().slice(2, 4);
       for (var i = 0; i < pageSize; i++) {
         ar.push(i + 1 + '-' + randomChar);
       }
       setTimeout(() => {
         setList(ar);
 
-        console.log(ref.current);
-
         resolve();
       }, 1000);
     });
-  };
-
-  const useWindowScroll = false;
+  }, []);
 
   return (
-    <PageWrap style={{ height: '100vh' }}>
-      <DemoBlock title="搭配pullup">
-        <PullToRefresh onRefresh={onRefresh} style={{ marginTop: 100 }}>
+    <PageWrap style={{ padding: 0 }}>
+      <DemoBlock title="下滑100px显示">
+        <PullToRefresh onRefresh={onRefresh} useWindowScroll>
           <Pullup
             dataList={list}
             fetchData={fetchData}
-            useWindowScroll={false}
-            height="50vh"
-            style={{ background: '#fff' }}
             finished={finished}
-            dataRender={(data) => <Cell>{data}</Cell>}
-          ></Pullup>
+            dataRender={(data) => <Cell title={`item${data}`} />}
+          />
         </PullToRefresh>
       </DemoBlock>
+
+      <ScrollToTop visibilityHeight={100}>
+        <Button
+          type="primary"
+          circle
+          style={{
+            width: 40,
+            height: 40,
+            position: 'fixed',
+            bottom: 60,
+            right: 20,
+          }}
+        >
+          top
+        </Button>
+      </ScrollToTop>
     </PageWrap>
   );
 };
 
-export default PullupDom;
+export default App;

@@ -1,9 +1,9 @@
-import React, { HTMLAttributes, useEffect, useState } from 'react';
+import React, { HTMLAttributes, useLayoutEffect, useState } from 'react';
 import { throttle } from './helper';
 
 type Props = {
   /**
-   * 滚动高度达到此参数值才出现 ScrollTop,默认100
+   * 滚动高度>visibilityHeight才显示子元素
    * @type {number}
    */
   visibilityHeight?: number;
@@ -11,17 +11,17 @@ type Props = {
 } & HTMLAttributes<HTMLSpanElement>;
 
 /**
- * windows回到顶部
+ * 回到页面顶部
  *
  * @param {Props} props
  * @return {*}  {React.ReactElement}
  */
-const ScrollTop = (props: Props): React.ReactElement => {
+const ScrollToTop = (props: Props): React.ReactElement => {
   const { children, visibilityHeight = 100 } = props;
   const [visible, setVisible] = useState(false);
   const top = 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onScroll = throttle(() => {
       if (window.pageYOffset >= visibilityHeight) {
         setVisible(true);
@@ -61,6 +61,6 @@ const ScrollTop = (props: Props): React.ReactElement => {
       })
     : null;
 };
-ScrollTop.displayName = 'UC-ScrollTop';
+ScrollToTop.displayName = 'UC-ScrollToTop';
 
-export default ScrollTop;
+export default ScrollToTop;

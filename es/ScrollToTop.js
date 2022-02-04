@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { throttle } from './helper';
 /**
- * windows回到顶部
+ * 回到页面顶部
  *
  * @param {Props} props
  * @return {*}  {React.ReactElement}
  */
 
-var ScrollTop = function ScrollTop(props) {
+var ScrollToTop = function ScrollToTop(props) {
   var children = props.children,
       _a = props.visibilityHeight,
       visibilityHeight = _a === void 0 ? 100 : _a;
@@ -17,7 +17,7 @@ var ScrollTop = function ScrollTop(props) {
       setVisible = _b[1];
 
   var top = 0;
-  useEffect(function () {
+  useLayoutEffect(function () {
     var onScroll = throttle(function () {
       if (window.pageYOffset >= visibilityHeight) {
         setVisible(true);
@@ -56,5 +56,5 @@ var ScrollTop = function ScrollTop(props) {
   }) : null;
 };
 
-ScrollTop.displayName = 'UC-ScrollTop';
-export default ScrollTop;
+ScrollToTop.displayName = 'UC-ScrollToTop';
+export default ScrollToTop;

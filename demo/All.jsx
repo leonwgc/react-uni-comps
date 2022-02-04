@@ -20,6 +20,16 @@ export default function All() {
       <Cell
         title={
           <Space>
+            <IconComponent /> ScrollToTop
+          </Space>
+        }
+        description="ScrollToTop"
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ScrollToTop')}
+      ></Cell>
+      <Cell
+        title={
+          <Space>
             <IconComponent /> PullToRefresh
           </Space>
         }

@@ -14,6 +14,7 @@ import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
 import FingerGesture from './FingerGesture';
+import useCallbackRef from './hooks/useCallbackRef';
 
 const StyledWrap = styled(animated.div)`
   color: #999;
@@ -55,7 +56,7 @@ type Props = {
   renderText?: (status: PullStatus) => ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  /** 是否使用window滚动,默认 true  */
+  /** 检查window滚动还是子元素滚动,默认false  */
   useWindowScroll?: boolean;
   /** 触发下拉刷新的元素,比如Pull */
   children?: React.ReactElement;
@@ -74,7 +75,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ),
     completeText = '刷新成功',
     completeDelay = 500,
-    useWindowScroll = true,
+    useWindowScroll,
     onRefresh,
     headHeight = 40,
     threshold = 60,
@@ -86,13 +87,14 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   } = props;
 
   const [status, setStatus] = useState<PullStatus>('pulling');
+  const statusRef = useCallbackRef(status);
   const dRef = useRef(0);
 
   const [springStyles, api] = useSpring(() => ({
     from: { height: 0 },
   }));
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null); // could be wrapper / children El instance
   const isPullingRef = useRef(false);
   useImperativeHandle(ref, () => wrapRef.current);
 
@@ -158,8 +160,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, [api, status]);
 
   useLayoutEffect(() => {
-    // https://zhuanlan.zhihu.com/p/322525887
-
     let y = 0;
     const el = wrapRef.current;
 
@@ -214,18 +214,16 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     throw Error('children must be a valid ReactElement');
   }
 
-  const childrenProps: any = { ...children?.props, ref: wrapRef };
-
-  if (!useWindowScroll) {
-    // Pullup or any other comp
-    childrenProps.children = statusText;
-  }
-
   useLayoutEffect(() => {
     const el = wrapRef.current;
     const fg = new FingerGesture(el, {
       onPressMove: (e) => {
-        if (!isPullingRef.current) return;
+        if (
+          !isPullingRef.current ||
+          statusRef.current === 'refreshing' ||
+          statusRef.current === 'complete'
+        )
+          return;
         dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
         api.start({ height: dRef.current });
 
@@ -236,19 +234,20 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     return () => {
       fg?.destroy();
     };
-  }, [api, threshold]);
+  }, [api, threshold, statusRef]);
 
   return (
     <StyledWrap
       ref={wrapRef}
       {...rest}
-      className={clsx(className, 'uc-pull-to-refresh')}
+      className={clsx('uc-pull-to-refresh', className, {
+        'use-dom-scroll': !useWindowScroll,
+        'use-window-scroll': useWindowScroll,
+      })}
       style={{ ...style, touchAction: 'pan-y' }}
     >
-      {useWindowScroll && statusText}
-      <div className={`content`}>
-        {React.isValidElement(children) ? React.cloneElement(children, childrenProps) : children}
-      </div>
+      {statusText}
+      {React.isValidElement(children) ? React.cloneElement(children, { ref: wrapRef }) : children}
     </StyledWrap>
   );
 });

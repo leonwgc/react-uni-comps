@@ -16,7 +16,7 @@ declare type Props = {
     style?: React.CSSProperties;
     /** 容器 class */
     className?: string;
-    /** 是否使用window滚动,默认false,如果为false wrap将作为滚动容器(需要设置wrap高度 height)  */
+    /** 是否使用window滚动,默认true,如果为false Pullup将作为滚动容器(需要设置height)  */
     useWindowScroll?: boolean;
     /** 容器高度,useWindowScroll为false时必须设置 */
     height?: number | string;

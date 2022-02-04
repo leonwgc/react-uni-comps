@@ -145,7 +145,11 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
 
     onScroll();
 
-    return () => t.removeEventListener('scroll', onScroll);
+    return () => {
+      if (t) {
+        t.removeEventListener('scroll', onScroll);
+      }
+    };
   }, [offsetRef, onScrollUpdate]);
 
   const { affixed } = data;
