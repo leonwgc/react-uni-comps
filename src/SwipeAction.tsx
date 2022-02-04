@@ -6,12 +6,12 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import FingerGestureElement from './FingerGestureElement';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import { isTouch } from './dom';
+import FingerGesture from './FingerGesture';
 
 type Action = {
   text: string;
@@ -70,6 +70,12 @@ const StyledSwipeAction = styled.div`
       font-size: 14px;
       color: #666;
       box-sizing: border-box;
+    }
+
+    .swipe-action-item {
+      * {
+        pointer-events: none;
+      }
     }
   }
 `;
@@ -197,41 +203,48 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
   }, [touchEnd, touchStart]);
 
+  useLayoutEffect(() => {
+    const el = elRef.current;
+    const fg = new FingerGesture(el, {
+      onPressMove: (e) => {
+        const v = thisRef.current;
+        v.x += e.deltaX;
+        // x<0:swipe left & show right
+        if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
+          v.el.style.transform = `translate3d(${v.x}px,0,0)`;
+        } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
+          v.el.style.transform = `translate3d(${v.x}px,0,0)`;
+        }
+      },
+    });
+
+    return () => {
+      fg?.destroy();
+    };
+  }, []);
+
   return (
     <StyledSwipeAction className={clsx('uc-swipe-action')}>
-      <FingerGestureElement
+      <div
         ref={elRef}
-        onPressMove={(e) => {
-          const v = thisRef.current;
-          v.x += e.deltaX;
-          // x<0:swipe left & show right
-          if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
-            v.el.style.transform = `translate3d(${v.x}px,0,0)`;
-          } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
-            v.el.style.transform = `translate3d(${v.x}px,0,0)`;
+        className="wrap"
+        onClick={(e: any) => {
+          if (autoClose && e.target?.classList?.contains('swipe-action-item')) {
+            startTransform('translate3d(0,0,0)', 0);
+            setIsOpen(false);
           }
         }}
       >
-        <div
-          className="wrap"
-          onClick={(e: any) => {
-            if (autoClose && e.target?.classList?.contains('swipe-action-item')) {
-              startTransform('translate3d(0,0,0)', 0);
-              setIsOpen(false);
-            }
-          }}
-        >
-          <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
-            {left.map((item, idx) => renderAction(item, idx))}
-          </div>
-
-          <div className="center-part">{children}</div>
-
-          <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
-            {right.map((item, idx) => renderAction(item, idx))}
-          </div>
+        <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
+          {left.map((item, idx) => renderAction(item, idx))}
         </div>
-      </FingerGestureElement>
+
+        <div className="center-part">{children}</div>
+
+        <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
+          {right.map((item, idx) => renderAction(item, idx))}
+        </div>
+      </div>
     </StyledSwipeAction>
   );
 });

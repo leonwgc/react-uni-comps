@@ -1,56 +1,56 @@
 import React from 'react';
-import { SwipeAction, HairLineBox, Toast, Divider } from 'react-uni-comps';
+import PageWrap from './common/PageWrap';
+import DemoBlock from './common/Block';
+import { SwipeAction, Toast } from 'react-uni-comps';
 
 export default function App() {
   return (
-    <div>
-      <Divider style={{ margin: 16 }}>左滑右滑</Divider>
+    <PageWrap>
+      <DemoBlock title="左滑右滑">
+        <SwipeAction
+          onOpen={() => {
+            console.log('open');
+          }}
+          onClose={() => {
+            console.log('close');
+          }}
+          left={[
+            {
+              text: '收藏',
+              onClick: () => {
+                Toast.show('收藏');
+              },
+            },
+          ]}
+          right={[
+            {
+              text: '取消关注',
+              color: '#ccc',
+              onClick: () => {
+                Toast.show('取消关注');
+              },
+            },
+            {
+              text: '免打扰',
+              color: 'orange',
+              onClick: () => {
+                Toast.show('免打扰');
+              },
+            },
+            {
+              text: '删除',
+              color: 'red',
+              onClick: () => {
+                Toast.show('删除');
+              },
+            },
+          ]}
+        >
+          左滑右滑都可以哦
+        </SwipeAction>
+      </DemoBlock>
 
-      <SwipeAction
-        onOpen={() => {
-          console.log('open');
-        }}
-        onClose={() => {
-          console.log('close');
-        }}
-        left={[
-          {
-            text: '收藏',
-            onClick: () => {
-              Toast.show('收藏');
-            },
-          },
-        ]}
-        right={[
-          {
-            text: '取消关注',
-            color: '#ccc',
-            onClick: () => {
-              Toast.show('取消关注');
-            },
-          },
-          {
-            text: '免打扰',
-            color: 'orange',
-            onClick: () => {
-              Toast.show('免打扰');
-            },
-          },
-          {
-            text: '删除',
-            color: 'red',
-            onClick: () => {
-              Toast.show('删除');
-            },
-          },
-        ]}
-      >
-        左滑右滑都可以哦
-      </SwipeAction>
-
-      <Divider style={{ margin: 16 }}>只有右边</Divider>
-
-      <HairLineBox>
+      <DemoBlock title="只有右边">
         <SwipeAction
           right={[
             {
@@ -78,7 +78,7 @@ export default function App() {
         >
           只有右边
         </SwipeAction>
-      </HairLineBox>
-    </div>
+      </DemoBlock>
+    </PageWrap>
   );
 }

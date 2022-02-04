@@ -98,11 +98,6 @@ module.exports = [
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',
       },
-
-      {
-        name: 'FingerGestureElement',
-        title: 'FingerGestureElement 手势',
-      },
     ],
   },
   {

@@ -185,12 +185,12 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useRef, useImperativeHandle, useCallback, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { animated, useSpring } from '@react-spring/web';
 import { getScrollTop, isTouch } from './dom';
 import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
+import FingerGesture from './FingerGesture';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
@@ -487,24 +487,32 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     childrenProps.children = statusText;
   }
 
-  return /*#__PURE__*/React.createElement(FingerGestureElement, {
-    ref: wrapRef,
-    onPressMove: function onPressMove(e) {
-      if (!isPullingRef.current) return;
-      dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
-      api.start({
-        height: dRef.current
-      });
-      setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
-    }
-  }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
+  useLayoutEffect(function () {
+    var el = wrapRef.current;
+    var fg = new FingerGesture(el, {
+      onPressMove: function onPressMove(e) {
+        if (!isPullingRef.current) return;
+        dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
+        api.start({
+          height: dRef.current
+        });
+        setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
+      }
+    });
+    return function () {
+      fg === null || fg === void 0 ? void 0 : fg.destroy();
+    };
+  }, [api, threshold]);
+  return /*#__PURE__*/React.createElement(StyledWrap, __assign({
+    ref: wrapRef
+  }, rest, {
     className: clsx(className, 'uc-pull-to-refresh'),
     style: __assign(__assign({}, style), {
       touchAction: 'pan-y'
     })
   }), useWindowScroll && statusText, /*#__PURE__*/React.createElement("div", {
     className: "content"
-  }, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, childrenProps) : children)));
+  }, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, childrenProps) : children));
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 export default PullToRefresh;

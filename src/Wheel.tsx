@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
+import FingerGesture from './FingerGesture';
 
 type DataItem = {
   /** 数据显示文本 */
@@ -144,10 +144,10 @@ const Wheel = (props: Props): React.ReactElement => {
     };
   }, [touchEnd]);
 
-  return (
-    <FingerGestureElement
-      ref={elRef}
-      onPressMove={(e) => {
+  useLayoutEffect(() => {
+    const el = elRef.current;
+    const fg = new FingerGesture(el, {
+      onPressMove: (e) => {
         yRef.current += e.deltaY;
 
         const distance = e.deltaY;
@@ -160,21 +160,25 @@ const Wheel = (props: Props): React.ReactElement => {
           yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
         }
-      }}
+      },
+    });
+    return () => fg.destroy();
+  }, [api, getIndexByY, scrollToIndex]);
+
+  return (
+    <StyledWrap
+      ref={elRef}
+      {...rest}
+      {...evtProps}
+      className={clsx('uc-wheel', className)}
+      style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
     >
-      <StyledWrap
-        {...rest}
-        {...evtProps}
-        className={clsx('uc-wheel', className)}
-        style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
-      >
-        {data.map((item) => (
-          <Text className="item" key={item.value} style={{ height: itemHeight }}>
-            {item.label}
-          </Text>
-        ))}
-      </StyledWrap>
-    </FingerGestureElement>
+      {data.map((item) => (
+        <Text className="item" key={item.value} style={{ height: itemHeight }}>
+          {item.label}
+        </Text>
+      ))}
+    </StyledWrap>
   );
 };
 

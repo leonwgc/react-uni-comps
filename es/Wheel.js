@@ -42,13 +42,13 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
+import FingerGesture from './FingerGesture';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
@@ -162,24 +162,32 @@ var Wheel = function Wheel(props) {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
-  return /*#__PURE__*/React.createElement(FingerGestureElement, {
-    ref: elRef,
-    onPressMove: function onPressMove(e) {
-      yRef.current += e.deltaY;
-      var distance = e.deltaY;
-      var duration = Date.now() - momentumRef.current.touchStartTime;
-      api.start({
-        y: yRef.current
-      });
+  useLayoutEffect(function () {
+    var el = elRef.current;
+    var fg = new FingerGesture(el, {
+      onPressMove: function onPressMove(e) {
+        yRef.current += e.deltaY;
+        var distance = e.deltaY;
+        var duration = Date.now() - momentumRef.current.touchStartTime;
+        api.start({
+          y: yRef.current
+        });
 
-      if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
-        // momentum effect
-        var speed = Math.abs(distance / duration);
-        yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
-        scrollToIndex(getIndexByY());
+        if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
+          // momentum effect
+          var speed = Math.abs(distance / duration);
+          yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
+          scrollToIndex(getIndexByY());
+        }
       }
-    }
-  }, /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, evtProps, {
+    });
+    return function () {
+      return fg.destroy();
+    };
+  }, [api, getIndexByY, scrollToIndex]);
+  return /*#__PURE__*/React.createElement(StyledWrap, __assign({
+    ref: elRef
+  }, rest, evtProps, {
     className: clsx('uc-wheel', className),
     style: __assign(__assign({}, style), {
       transform: styles.y.to(function (v) {
@@ -194,7 +202,7 @@ var Wheel = function Wheel(props) {
         height: itemHeight
       }
     }, item.label);
-  })));
+  }));
 };
 
 Wheel.displayName = 'UC-Wheel';

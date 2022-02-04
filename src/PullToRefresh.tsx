@@ -8,12 +8,12 @@ import React, {
 } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import { animated, useSpring } from '@react-spring/web';
 import { getScrollTop, isTouch } from './dom';
 import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
+import FingerGesture from './FingerGesture';
 
 const StyledWrap = styled(animated.div)`
   color: #999;
@@ -161,6 +161,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     // https://zhuanlan.zhihu.com/p/322525887
 
     let y = 0;
+    const el = wrapRef.current;
 
     const _touchStart = (e) => (y = e.touches[0].pageY);
     const _touchEnd = () => {
@@ -169,27 +170,29 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
 
     const _touchMove = (e) => {
-      const el = wrapRef.current;
       const scrollTop = getScrollTop(useWindowScroll ? window : el);
       const y1 = e.touches[0].pageY;
-      if (y1 - y > 0 && scrollTop === 0) {
+      if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
         isPullingRef.current = true;
       }
     };
 
     const options: any = { passive: false };
-
-    document.addEventListener('touchstart', (e) => {
-      y = e.touches[0].pageY;
-    });
-    document.addEventListener('touchmove', _touchMove, options);
-    document.addEventListener('touchend', _touchEnd);
+    if (el) {
+      el.addEventListener('touchstart', (e) => {
+        y = e.touches[0].pageY;
+      });
+      el.addEventListener('touchmove', _touchMove, options);
+      el.addEventListener('touchend', _touchEnd);
+    }
 
     return () => {
-      document.removeEventListener('touchstart', _touchStart);
-      document.removeEventListener('touchmove', _touchMove, options);
-      document.removeEventListener('touchend', _touchEnd);
+      if (el) {
+        el.removeEventListener('touchstart', _touchStart);
+        el.removeEventListener('touchmove', _touchMove, options);
+        el.removeEventListener('touchend', _touchEnd);
+      }
     };
   }, [useWindowScroll, touchEnd]);
 
@@ -218,28 +221,35 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     childrenProps.children = statusText;
   }
 
-  return (
-    <FingerGestureElement
-      ref={wrapRef}
-      onPressMove={(e) => {
+  useLayoutEffect(() => {
+    const el = wrapRef.current;
+    const fg = new FingerGesture(el, {
+      onPressMove: (e) => {
         if (!isPullingRef.current) return;
         dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
         api.start({ height: dRef.current });
 
         setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
-      }}
+      },
+    });
+
+    return () => {
+      fg?.destroy();
+    };
+  }, [api, threshold]);
+
+  return (
+    <StyledWrap
+      ref={wrapRef}
+      {...rest}
+      className={clsx(className, 'uc-pull-to-refresh')}
+      style={{ ...style, touchAction: 'pan-y' }}
     >
-      <StyledWrap
-        {...rest}
-        className={clsx(className, 'uc-pull-to-refresh')}
-        style={{ ...style, touchAction: 'pan-y' }}
-      >
-        {useWindowScroll && statusText}
-        <div className={`content`}>
-          {React.isValidElement(children) ? React.cloneElement(children, childrenProps) : children}
-        </div>
-      </StyledWrap>
-    </FingerGestureElement>
+      {useWindowScroll && statusText}
+      <div className={`content`}>
+        {React.isValidElement(children) ? React.cloneElement(children, childrenProps) : children}
+      </div>
+    </StyledWrap>
   );
 });
 

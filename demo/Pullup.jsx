@@ -25,7 +25,7 @@ const App = () => {
           setFinished(true);
         }
         resolve();
-      }, 500);
+      }, 1000);
     });
   }, []);
 
@@ -48,8 +48,9 @@ const App = () => {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <PullToRefresh onRefresh={onRefresh}>
+      <PullToRefresh onRefresh={onRefresh} useWindowScroll>
         <Pullup
+          useWindowScroll
           dataList={list}
           fetchData={fetchData}
           finished={finished}

@@ -13,7 +13,7 @@ import {
   Space,
 } from 'react-uni-comps';
 
-const pageSize = 30;
+const pageSize = 10;
 
 const App = () => {
   const [list, setList] = useState([]);
@@ -73,7 +73,6 @@ const App = () => {
             style={{
               height: '20vh',
               width: '100%',
-              border: '1px solid #ccc',
               writingMode: 'vertical-lr',
               display: 'flex',
               justifyContent: 'center',
@@ -87,14 +86,14 @@ const App = () => {
       </DemoBlock>
 
       <DemoBlock title="搭配Pullup">
-        <PullToRefresh onRefresh={onRefresh}>
+        <PullToRefresh onRefresh={onRefresh} useWindowScroll={true}>
           <Pullup
-            useWindowScroll
             dataList={list}
             fetchData={fetchData}
+            style={{ height: 200, background: '#fff' }}
             finished={finished}
-            dataRender={(data) => <Cell title={`item${data}`} />}
-          />
+            dataRender={(data) => <Cell>{data}</Cell>}
+          ></Pullup>
         </PullToRefresh>
       </DemoBlock>
 

@@ -86,7 +86,6 @@ yarn add react-uni-comps
 - Toast (黑背景提示,支持静态调用)
 - Notify (顶部全局消息通知,支持静态调用)
 - ActionSheet (移动端,动作面板)
-- FingerGestureElement (移动端手势操作,onTap,onDoubleTap,onLongTap,onPinch, onSwipe,onPressMove 等手势支持)
 - Switch (开关)
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)

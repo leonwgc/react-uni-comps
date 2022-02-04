@@ -9,7 +9,7 @@ import clsx from 'clsx';
 const StyledWrap = styled.div`
   user-select: none;
   position: relative;
-  &.dom-scroll {
+  &.use-dom-scroll {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 
@@ -56,8 +56,10 @@ type Props = {
   style?: React.CSSProperties;
   /** 容器 class */
   className?: string;
-  /** 是否使用window滚动,默认false,如果为false wrap将作为滚动容器(需要设置wrap高度)  */
+  /** 是否使用window滚动,默认true,如果为false div将作为滚动容器(需要设置wrap高度 height)  */
   useWindowScroll?: boolean;
+  /** 容器高度,useWindowScroll为false时必须设置 */
+  height?: number | string;
   /** 自定义footer */
   footer?: (loading: boolean, finished: boolean) => React.ReactNode;
   children?: React.ReactNode;
@@ -83,7 +85,9 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     finishedText = '我是有底线的',
     finished = false,
     className,
-    useWindowScroll,
+    useWindowScroll = true,
+    style,
+    height,
     children,
     footer,
     ...rest
@@ -115,14 +119,19 @@ const Pullup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [loading, isAtBottom, finished, setLoading, fetchData, lastIsAtBottom, useWindowScroll]);
 
+  if (!useWindowScroll && !height) {
+    throw new Error('Pullup: useWindowScroll为false，必须通过height设置容器高度');
+  }
+
   return (
     <StyledWrap
       ref={wrapRef}
       {...rest}
       className={clsx('uc-pullup', className, {
-        'dom-scroll': !useWindowScroll,
-        'window-scroll': useWindowScroll,
+        'use-dom-scroll': !useWindowScroll,
+        'use-window-scroll': useWindowScroll,
       })}
+      style={{ ...style, height }}
     >
       {children}
       {dataList.map((item, idx) => {

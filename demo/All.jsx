@@ -438,16 +438,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('HairLineBox')}
       ></Cell>
-      <Cell
-        title={
-          <Space>
-            <IconComponent /> FingerGestureElement
-          </Space>
-        }
-        description="手势操作"
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('FingerGestureElement')}
-      ></Cell>
+
       <Cell
         title={
           <Space>

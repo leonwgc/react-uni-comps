@@ -225,7 +225,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
         className
       )}
     >
-      <Space align="baseline">
+      <Space>
         {icon}
         {children}
       </Space>

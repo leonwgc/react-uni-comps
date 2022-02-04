@@ -102,9 +102,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       anchor: rest.as === 'a',
       outlined: outlined || active
     }, className)
-  }), /*#__PURE__*/React.createElement(Space, {
-    align: "baseline"
-  }, icon, children));
+  }), /*#__PURE__*/React.createElement(Space, null, icon, children));
 });
 Button.displayName = 'UC-Button';
 export default Button;

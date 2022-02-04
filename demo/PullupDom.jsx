@@ -56,7 +56,8 @@ const PullupDom = () => {
           <Pullup
             dataList={list}
             fetchData={fetchData}
-            style={{ height: '50vh', marginTop: 100, background: '#fff' }}
+            height="50vh"
+            style={{ marginTop: 100, background: '#fff' }}
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>

@@ -1564,7 +1564,219 @@ var WaitLoading = function WaitLoading(props) {
   return show ? children : null;
 };
 
-var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove']; // eslint-disable-next-line @typescript-eslint/no-empty-function
+var _templateObject$7;
+/**
+ *  获取包含主题色的styled-components css片段
+ *
+ * @param {string} css属性
+ * @param {string} [leftValue=''] 左侧值
+ * @return {*}  {*}
+ */
+
+var getThemeColorCss = function getThemeColorCss(prop) {
+  var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
+    return props.theme.color || primary;
+  }, prop, leftValue, primary);
+};
+/**
+ *  get theme color from root el
+ *
+ * @return {*}
+ */
+
+var getRootCssVarColor = function getRootCssVarColor() {
+  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
+};
+
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  执行异步更新effect
+ *
+ * @param {() => void} effect
+ * @param {Array<unknown>} [deps=[]]
+ */
+
+var useUpdateEffect = function useUpdateEffect(effect) {
+  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var isMounted = React.useRef(false);
+  React.useEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+    } else {
+      return effect();
+    }
+  }, deps);
+};
+
+/**
+ * 防抖
+ *
+ * @param {F} fn
+ * @param {number} [timeout=100]
+ * @return {*}  {F}
+ */
+var debounce = function debounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+  var timer = 0;
+  return function a() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var that = this;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+    }, timeout);
+  };
+};
+/**
+ * 节流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+
+var throttle = function throttle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var start = 0;
+  var timer = 0;
+
+  var ensureExecute = function ensureExecute(now, args, that) {
+    if (!last) return;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+      start = now;
+    }, timeout);
+  };
+
+  return function () {
+    var that = this;
+    var now = Date.now();
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    if (!start) {
+      start = now;
+      ensureExecute(now, args, that);
+      return;
+    }
+
+    if (now - start >= timeout) {
+      ensureExecute(now, args, that);
+      fn.apply(that, args);
+      start = now;
+    }
+  };
+};
+
+var defaultEqualFn = function defaultEqualFn(a, b) {
+  return a === b;
+};
+/**
+ * 数组去重
+ *
+ * @template T
+ * @param {T[]} arr 待去重数组
+ * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
+ * @return {*}  {T[]}
+ */
+
+
+var uniqArray = function uniqArray(arr) {
+  var equalFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultEqualFn;
+  var rt = [];
+
+  if (Array.isArray(arr)) {
+    arr.map(function (item) {
+      if (!rt.find(function (d) {
+        return equalFn(item, d);
+      })) {
+        rt.push(item);
+      }
+    });
+  }
+
+  return rt;
+};
+var isObject = function isObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+};
+/**
+ * 扁平化对象数组
+ *
+ * @template T
+ * @param {T[]} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性, 默认 children
+ * @return {*}  {T[]}
+ */
+
+var flatArray = function flatArray(arr) {
+  var childrenProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'children';
+
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      if (Array.isArray(v)) {
+        a = a.concat(flatArray(v, childrenProp));
+      } else if (isObject(v)) {
+        a = a.concat(v);
+
+        if (Array.isArray(v[childrenProp])) {
+          a = a.concat(flatArray(v[childrenProp], childrenProp));
+        }
+      }
+
+      return a;
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ * 扁平化简单数组
+ *
+ * @template T
+ * @param {T[]} arr 待处理数组
+ * @return {*}  {T[]}
+ */
+
+var flatSimpleArray = function flatSimpleArray(arr) {
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+
+var sleep = function sleep(time) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, time);
+  });
+};
 
 var noop = function noop() {};
 
@@ -1968,274 +2180,27 @@ FingerGesture.prototype = {
 };
 
 /**
- * 防抖
+ *  保存最新的值在ref中
  *
- * @param {F} fn
- * @param {number} [timeout=100]
- * @return {*}  {F}
- */
-var debounce = function debounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-  var timer = 0;
-  return function a() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var that = this;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-    }, timeout);
-  };
-};
-/**
- * 节流
- *
- * @param {F} fn
- * @param {number} [timeout=200]
- * @param {boolean} [last=true] 最后一个timeout是否执行
- * @return {*}  {F}
- */
-
-var throttle = function throttle(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
-  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var start = 0;
-  var timer = 0;
-
-  var ensureExecute = function ensureExecute(now, args, that) {
-    if (!last) return;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-      start = now;
-    }, timeout);
-  };
-
-  return function () {
-    var that = this;
-    var now = Date.now();
-
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    if (!start) {
-      start = now;
-      ensureExecute(now, args, that);
-      return;
-    }
-
-    if (now - start >= timeout) {
-      ensureExecute(now, args, that);
-      fn.apply(that, args);
-      start = now;
-    }
-  };
-};
-/**
- *  获取部分props
- *
- * @param {*} [props={}]
- * @param {string[]} propKeys
- * @param {boolean} [isIncluded=true]
- * @return {*}  {Record<string, unknown>}
- */
-
-var getProps = function getProps() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var propKeys = arguments.length > 1 ? arguments[1] : undefined;
-  var isIncluded = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var required = {};
-  var rest = {};
-  var keys = Object.keys(props);
-
-  if (propKeys === null || propKeys === void 0 ? void 0 : propKeys.length) {
-    keys.map(function (k) {
-      if (propKeys.includes(k)) {
-        required[k] = props[k];
-      } else {
-        rest[k] = props[k];
-      }
-    });
-  } else {
-    required = {};
-    rest = props;
-  }
-
-  return isIncluded ? required : rest;
-};
-
-var defaultEqualFn = function defaultEqualFn(a, b) {
-  return a === b;
-};
-/**
- * 数组去重
- *
+ * @export
  * @template T
- * @param {T[]} arr 待去重数组
- * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
- * @return {*}  {T[]}
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
  */
 
-
-var uniqArray = function uniqArray(arr) {
-  var equalFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultEqualFn;
-  var rt = [];
-
-  if (Array.isArray(arr)) {
-    arr.map(function (item) {
-      if (!rt.find(function (d) {
-        return equalFn(item, d);
-      })) {
-        rt.push(item);
-      }
-    });
-  }
-
-  return rt;
-};
-var isObject = function isObject(obj) {
-  return Object.prototype.toString.call(obj) === '[object Object]';
-};
-/**
- * 扁平化对象数组
- *
- * @template T
- * @param {T[]} arr 待处理数组
- * @param {string} [childrenProp='children'] 子数组属性, 默认 children
- * @return {*}  {T[]}
- */
-
-var flatArray = function flatArray(arr) {
-  var childrenProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'children';
-
-  if (Array.isArray(arr)) {
-    return arr.reduce(function (a, v) {
-      if (Array.isArray(v)) {
-        a = a.concat(flatArray(v, childrenProp));
-      } else if (isObject(v)) {
-        a = a.concat(v);
-
-        if (Array.isArray(v[childrenProp])) {
-          a = a.concat(flatArray(v[childrenProp], childrenProp));
-        }
-      }
-
-      return a;
-    }, []);
-  }
-
-  return arr;
-};
-/**
- * 扁平化简单数组
- *
- * @template T
- * @param {T[]} arr 待处理数组
- * @return {*}  {T[]}
- */
-
-var flatSimpleArray = function flatSimpleArray(arr) {
-  if (Array.isArray(arr)) {
-    return arr.reduce(function (a, v) {
-      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
-    }, []);
-  }
-
-  return arr;
-};
-/**
- *  sleep 一段时间
- *
- * @param {number} time
- */
-
-var sleep = function sleep(time) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, time);
-  });
-};
-
-/* eslint-disable react-hooks/exhaustive-deps */
-
-var useGesture = function useGesture(elRef, option) {
-  var fgRef = React.useRef();
+function useCallbackRef(value) {
+  var ref = React.useRef(value);
   React.useEffect(function () {
-    if (elRef.current instanceof Element) {
-      var gestureProps = getProps(option, supportedGestures);
-      fgRef.current = new FingerGesture(elRef.current, gestureProps);
-    }
-  }, [option]);
-  useUnmount(function () {
-    if (fgRef.current) {
-      fgRef.current.destroy();
-    }
-  });
-};
-
-var _templateObject$7;
-/**
- *  获取包含主题色的styled-components css片段
- *
- * @param {string} css属性
- * @param {string} [leftValue=''] 左侧值
- * @return {*}  {*}
- */
-
-var getThemeColorCss = function getThemeColorCss(prop) {
-  var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  return styled.css(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
-    return props.theme.color || primary;
-  }, prop, leftValue, primary);
-};
-/**
- *  get theme color from root el
- *
- * @return {*}
- */
-
-var getRootCssVarColor = function getRootCssVarColor() {
-  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
-};
-
-/* eslint-disable react-hooks/exhaustive-deps */
-/**
- *  执行异步更新effect
- *
- * @param {() => void} effect
- * @param {Array<unknown>} [deps=[]]
- */
-
-var useUpdateEffect = function useUpdateEffect(effect) {
-  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var isMounted = React.useRef(false);
-  React.useEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-    } else {
-      return effect();
-    }
-  }, deps);
-};
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
 
 var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2;
-var isMobileEnv = isMobile;
 var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translateX(", ");\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
 /**
@@ -2248,7 +2213,8 @@ var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_tem
 var Tab = function Tab(_ref) {
   var children = _ref.children;
   return children;
-};
+}; //#endregion
+
 /**
  * 选项卡切换
  */
@@ -2278,59 +2244,82 @@ var Tabs = function Tabs(_ref2) {
       _v = _useState2[0],
       _setV = _useState2[1];
 
-  useGesture(contentWrapElRef, {
-    onSwipe: function onSwipe(e) {
-      e.preventDefault();
+  var valRef = useCallbackRef(_v);
+  var onChangeRef = useCallbackRef(onChange);
+  React.useLayoutEffect(function () {
+    var fg;
 
-      if (e.direction === 'right' && _v > 0) {
-        // go to left tab
-        var prevIndex = _v - 1;
+    if (swipe && contentWrapElRef.current) {
+      var el = contentWrapElRef.current;
+      fg = new FingerGesture(el, {
+        onSwipe: function onSwipe(e) {
+          if (e.direction === 'right' && valRef.current > 0) {
+            var _onChangeRef$current;
 
-        _setV(prevIndex);
+            // go to left tab
+            var prevIndex = valRef.current - 1;
 
-        onChange === null || onChange === void 0 ? void 0 : onChange(prevIndex);
-      } else if (e.direction === 'left' && _v < count - 1) {
-        // go to right tab
-        var nextIndex = _v + 1;
+            _setV(prevIndex);
 
-        _setV(nextIndex);
+            (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, prevIndex);
+          } else if (e.direction === 'left' && valRef.current < count - 1) {
+            var _onChangeRef$current2;
 
-        onChange === null || onChange === void 0 ? void 0 : onChange(nextIndex);
-      }
+            // go to right tab
+            var nextIndex = valRef.current + 1;
+
+            _setV(nextIndex);
+
+            (_onChangeRef$current2 = onChangeRef.current) === null || _onChangeRef$current2 === void 0 ? void 0 : _onChangeRef$current2.call(onChangeRef, nextIndex);
+          }
+        }
+      });
     }
-  });
+
+    return function () {
+      if (swipe && fg) {
+        var _fg;
+
+        (_fg = fg) === null || _fg === void 0 ? void 0 : _fg.destroy();
+      }
+    };
+  }, [swipe, valRef, count, onChangeRef]);
   useUpdateEffect(function () {
     if (value !== _v) {
       _setV(value);
     }
   }, [value]);
-  var setUnderlineSize = React.useCallback(function () {
-    if (underline) {
-      var underlineEl = underlineElRef.current;
-      var next = underlineEl.nextSibling;
-
-      if (next) {
-        underlineEl.style.width = next.offsetWidth + 'px';
-      }
-    }
-  }, [underline]);
   React.useLayoutEffect(function () {
+    var setUnderlineSize = throttle(function () {
+      var underlineEl = underlineElRef.current;
+
+      if (underline && underlineEl) {
+        var next = underlineEl.nextSibling;
+
+        if (next) {
+          underlineEl.style.width = next.offsetWidth + 'px';
+        }
+      }
+    }, 34);
+
+    if (underline) {
+      window.addEventListener('resize', setUnderlineSize);
+    }
+
     setUnderlineSize();
-  }, [setUnderlineSize]);
-  React.useEffect(function () {
-    var throttledSetUnderlineSize = throttle(setUnderlineSize, 34);
-    window.addEventListener('resize', throttledSetUnderlineSize);
     return function () {
-      window.removeEventListener('resize', throttledSetUnderlineSize);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      if (underline) {
+        window.removeEventListener('resize', setUnderlineSize);
+      }
+    };
+  }, [underline]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-tabs-header-wrap', {
       'no-border': !border
     })
-  }, underline ? /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
+  }, underline && /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
     ref: underlineElRef,
     className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
     count: count,
@@ -2340,7 +2329,7 @@ var Tabs = function Tabs(_ref2) {
     style: {
       width: typeof underline === 'boolean' ? '100%' : underline
     }
-  })) : null, React__default['default'].Children.map(children, function (child, index) {
+  })), React__default['default'].Children.map(children, function (child, index) {
     if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
       var _ref3 = child.props,
           _ref3$title = _ref3.title,
@@ -2361,13 +2350,13 @@ var Tabs = function Tabs(_ref2) {
         }
       }, title);
     }
-  }), extra ? /*#__PURE__*/React__default['default'].createElement("span", {
+  }), extra && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('uc-tabs-extra', {
       underline: underline
     })
-  }, extra) : null), /*#__PURE__*/React__default['default'].createElement("div", {
+  }, extra)), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "uc-tabs-content-wrap",
-    ref: isMobileEnv && swipe ? contentWrapElRef : null
+    ref: contentWrapElRef
   }, React__default['default'].Children.map(children, function (child, index) {
     if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
       var _ref4 = child.props,
@@ -2568,23 +2557,6 @@ var Skeleton = function Skeleton(props) {
   })) : children;
 };
 
-/**
- *  保存最新的值在ref中
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useCallbackRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
-
 var _excluded$b = ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
 
 var _templateObject$c;
@@ -2644,9 +2616,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       anchor: rest.as === 'a',
       outlined: outlined || active
     }, className)
-  }), /*#__PURE__*/React__default['default'].createElement(Space, {
-    align: "baseline"
-  }, icon, children));
+  }), /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children));
 });
 Button.displayName = 'UC-Button';
 
@@ -4957,33 +4927,8 @@ var NumberKeyboard = function NumberKeyboard(props) {
 
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 
-var _excluded$x = ["children"];
-
-/** 手势操作元素 */
-var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _children$props;
-
-  var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$x);
-
-  var elRef = React.useRef();
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  useGesture(elRef, rest);
-  return /*#__PURE__*/React__default['default'].cloneElement(children, _objectSpread2(_objectSpread2({}, getProps(rest, supportedGestures, false)), {}, {
-    // filter out gesture evts
-    ref: elRef,
-    style: _objectSpread2({
-      touchAction: 'none'
-    }, children === null || children === void 0 ? void 0 : (_children$props = children.props) === null || _children$props === void 0 ? void 0 : _children$props.style)
-  }));
-});
-FingerGestureElement.displayName = 'UC-FingerGestureElement';
-var FingerGestureElement$1 = /*#__PURE__*/React__default['default'].memo(FingerGestureElement);
-
 var _templateObject$w, _templateObject2$4;
-var StyledSwipeAction = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n  }\n"])));
+var StyledSwipeAction = styled__default['default'].div(_templateObject$w || (_templateObject$w = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .swipe-action-item {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"])));
 var StyledButton$2 = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
 
@@ -5098,21 +5043,28 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     elRef.current.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
     elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
   }, [touchEnd, touchStart]);
+  React.useLayoutEffect(function () {
+    var el = elRef.current;
+    var fg = new FingerGesture(el, {
+      onPressMove: function onPressMove(e) {
+        var v = thisRef.current;
+        v.x += e.deltaX; // x<0:swipe left & show right
+
+        if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
+          v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
+        } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
+          v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
+        }
+      }
+    });
+    return function () {
+      fg === null || fg === void 0 ? void 0 : fg.destroy();
+    };
+  }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, {
     className: clsx__default['default']('uc-swipe-action')
-  }, /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
-    ref: elRef,
-    onPressMove: function onPressMove(e) {
-      var v = thisRef.current;
-      v.x += e.deltaX; // x<0:swipe left & show right
-
-      if (v.x < 0 && Math.abs(v.x) < v.rightWidth) {
-        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
-      } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
-        v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
-      }
-    }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: elRef,
     className: "wrap",
     onClick: function onClick(e) {
       var _e$target, _e$target$classList;
@@ -5138,11 +5090,11 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     className: clsx__default['default']('right-part')
   }, right.map(function (item, idx) {
     return renderAction(item, idx);
-  })))));
+  }))));
 });
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
+var _excluded$x = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
 
 var _templateObject$x;
 var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n\n    &.focused {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
@@ -5162,7 +5114,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       textarea = props.textarea,
       ime = props.ime,
       clearable = props.clearable,
-      rest = _objectWithoutProperties(props, _excluded$y);
+      rest = _objectWithoutProperties(props, _excluded$x);
 
   var inputRef = React.useRef();
   var isImeModeRef = React.useRef(false);
@@ -5247,7 +5199,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Input.displayName = 'UC-Input';
 
-var _excluded$z = ["className", "style", "header", "children", "footer", "position"];
+var _excluded$y = ["className", "style", "header", "children", "footer", "position"];
 
 var _templateObject$y;
 var StyledDrawer = styled__default['default'](Popup)(_templateObject$y || (_templateObject$y = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  background-color: #fff;\n  position: relative;\n\n  .body {\n    flex: 1;\n  }\n"])));
@@ -5261,7 +5213,7 @@ var Drawer = function Drawer(props) {
       footer = props.footer,
       _props$position = props.position,
       position = _props$position === void 0 ? 'right' : _props$position,
-      rest = _objectWithoutProperties(props, _excluded$z);
+      rest = _objectWithoutProperties(props, _excluded$y);
 
   var _style = position === 'left' || position === 'right' ? {
     height: '100vh'
@@ -5302,7 +5254,7 @@ var useDebounce = function useDebounce(fn) {
   );
 };
 
-var _excluded$A = ["onIndexChange", "itemHeight", "style", "data", "index", "className"];
+var _excluded$z = ["onIndexChange", "itemHeight", "style", "data", "index", "className"];
 
 var _templateObject$z;
 var StyledWrap$1 = styled__default['default'](web.animated.div)(_templateObject$z || (_templateObject$z = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
@@ -5320,7 +5272,7 @@ var Wheel = function Wheel(props) {
       _props$index = props.index,
       index = _props$index === void 0 ? 0 : _props$index,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$A);
+      rest = _objectWithoutProperties(props, _excluded$z);
 
   var firstItemY = itemHeight * 3;
   var elRef = React.useRef();
@@ -5417,24 +5369,32 @@ var Wheel = function Wheel(props) {
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
     };
   }, [touchEnd]);
-  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
-    ref: elRef,
-    onPressMove: function onPressMove(e) {
-      yRef.current += e.deltaY;
-      var distance = e.deltaY;
-      var duration = Date.now() - momentumRef.current.touchStartTime;
-      api.start({
-        y: yRef.current
-      });
+  React.useLayoutEffect(function () {
+    var el = elRef.current;
+    var fg = new FingerGesture(el, {
+      onPressMove: function onPressMove(e) {
+        yRef.current += e.deltaY;
+        var distance = e.deltaY;
+        var duration = Date.now() - momentumRef.current.touchStartTime;
+        api.start({
+          y: yRef.current
+        });
 
-      if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
-        // momentum effect
-        var speed = Math.abs(distance / duration);
-        yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
-        scrollToIndex(getIndexByY());
+        if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
+          // momentum effect
+          var speed = Math.abs(distance / duration);
+          yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
+          scrollToIndex(getIndexByY());
+        }
       }
-    }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, evtProps, {
+    });
+    return function () {
+      return fg.destroy();
+    };
+  }, [api, getIndexByY, scrollToIndex]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({
+    ref: elRef
+  }, rest, evtProps, {
     className: clsx__default['default']('uc-wheel', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       transform: styles.y.to(function (v) {
@@ -5449,7 +5409,7 @@ var Wheel = function Wheel(props) {
         height: itemHeight
       }
     }, item.label);
-  })));
+  }));
 };
 
 Wheel.displayName = 'UC-Wheel';
@@ -5470,7 +5430,7 @@ var useForceUpdate = function useForceUpdate() {
   return forceUpdate;
 };
 
-var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"];
+var _excluded$A = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"];
 
 var _templateObject$A;
 //#region type & helper
@@ -5576,7 +5536,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      rest = _objectWithoutProperties(props, _excluded$B);
+      rest = _objectWithoutProperties(props, _excluded$A);
 
   var cols = 1;
   var cdata = data || []; // 非级联
@@ -5683,7 +5643,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"];
+var _excluded$B = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"];
 
 var _templateObject$B;
 
@@ -5712,7 +5672,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       data = _props$data === void 0 ? [] : _props$data,
       _props$cols = props.cols,
       cols = _props$cols === void 0 ? 1 : _props$cols,
-      rest = _objectWithoutProperties(props, _excluded$C);
+      rest = _objectWithoutProperties(props, _excluded$B);
 
   var pickerViewRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -5760,7 +5720,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Picker.displayName = 'UC-Picker';
 
-var _excluded$D = ["current", "dotStyle", "className", "direction", "steps"];
+var _excluded$C = ["current", "dotStyle", "className", "direction", "steps"];
 
 var _templateObject$C;
 var StyledSteps = styled__default['default'].div(_templateObject$C || (_templateObject$C = _taggedTemplateLiteral(["\n  .step {\n    .step-box {\n      position: relative;\n      &::after {\n        content: '';\n        position: absolute;\n        background-color: #909ca4;\n      }\n\n      .step-circle {\n        position: relative;\n        display: flex;\n        width: 25px;\n        height: 25px;\n        font-size: 13px;\n        align-items: center;\n        justify-content: center;\n        z-index: 1;\n        color: #909ca4;\n        border: 1px solid #909ca4;\n        border-radius: 50%;\n        background-color: #fff;\n        padding: 0;\n\n        &.dot {\n          width: 8px;\n          height: 8px;\n        }\n\n        &.icon {\n          border: none;\n        }\n      }\n    }\n\n    &.finish {\n      .step-box {\n        &::after {\n          ", "\n        }\n      }\n      .step-circle {\n        ", "\n        ", "\n      }\n    }\n    &.current {\n      .step-circle {\n        color: #fff;\n        ", "\n        border:0;\n      }\n    }\n\n    &.finish,\n    &.current {\n      .step-title {\n        ", "\n      }\n      .step-circle {\n        &.dot {\n          ", "\n        }\n      }\n    }\n\n    &:last-child {\n      .step-box::after {\n        display: none;\n      }\n    }\n  }\n\n  &.horizontal {\n    display: flex;\n\n    .step {\n      &:not(:last-child) {\n        width: ", "px;\n      }\n      position: relative;\n\n      .step-box {\n        width: 24px;\n        height: 24px;\n        &::after {\n          left: 50%;\n          top: 50%;\n          height: 1px;\n          transform: translateY(-50%);\n          width: ", "px;\n          position: absolute;\n        }\n        .step-circle {\n          left: 50%;\n          top: 50%;\n          transform: translate(-50%, -50%);\n        }\n      }\n    }\n\n    .step-content {\n      font-size: 14px;\n      padding-top: 12px;\n      color: #999;\n      .step-title {\n      }\n      .step-description {\n        margin-top: 2px;\n      }\n    }\n  }\n\n  &.vertical {\n    .step {\n      display: flex;\n\n      &:not(:last-child) {\n        height: ", "px;\n      }\n\n      .step-box {\n        flex: none;\n        width: 24px;\n        margin-right: 8px;\n\n        &::after {\n          left: 50%;\n          top: 13px;\n          width: 1px;\n          transform: translateX(-50%);\n          height: 100%;\n        }\n        .step-circle {\n          top: 13px;\n          left: 50%;\n          transform: translate(-50%, -50%);\n        }\n      }\n\n      &:last-child {\n        .step-content {\n          padding-bottom: 0;\n        }\n      }\n      .step-content {\n        flex: auto;\n        padding: 3px 0 14px;\n        font-size: 14px;\n        color: #999;\n        .step-title {\n        }\n        .step-description {\n          margin-top: 10px;\n        }\n      }\n    }\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('color'), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('color'), getThemeColorCss('background-color'), function (props) {
@@ -5782,7 +5742,7 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
       _props$steps = props.steps,
       steps = _props$steps === void 0 ? [] : _props$steps,
-      rest = _objectWithoutProperties(props, _excluded$D);
+      rest = _objectWithoutProperties(props, _excluded$C);
 
   var domRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -6745,7 +6705,7 @@ function App(cavansRef) {
   };
 }
 
-var _excluded$E = ["padColor", "penColor", "className"];
+var _excluded$D = ["padColor", "penColor", "className"];
 
 var _templateObject$D;
 var StyledSignature = styled__default['default'].div(_templateObject$D || (_templateObject$D = _taggedTemplateLiteral(["\n  position: relative;\n  border: 1px solid ", ";\n  box-sizing: border-box;\n"])), border);
@@ -6755,7 +6715,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var padColor = props.padColor,
       penColor = props.penColor,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$E);
+      rest = _objectWithoutProperties(props, _excluded$D);
 
   var elRef = React.useRef();
   var canvasRef = React.useRef();
@@ -6794,7 +6754,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Signature.displayName = 'UC-Signature';
 
-var _excluded$F = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
+var _excluded$E = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
 
 var _templateObject$E;
 var StyledRate = styled__default['default'].div(_templateObject$E || (_templateObject$E = _taggedTemplateLiteral(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])));
@@ -6824,7 +6784,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       className = props.className,
       _props$allowClear = props.allowClear,
       allowClear = _props$allowClear === void 0 ? true : _props$allowClear,
-      rest = _objectWithoutProperties(props, _excluded$F);
+      rest = _objectWithoutProperties(props, _excluded$E);
 
   var _useState = React.useState(typeof value === 'number' ? value : defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6873,7 +6833,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Rate.displayName = 'UC-Rate';
 
-var _excluded$G = ["list", "stayTime", "icon", "closeable", "className", "onClose", "extra"];
+var _excluded$F = ["list", "stayTime", "icon", "closeable", "className", "onClose", "extra"];
 
 var _templateObject$F;
 var StyledNoticeList = styled__default['default'].div(_templateObject$F || (_templateObject$F = _taggedTemplateLiteral(["\n  font-size: 14px;\n  padding: 0px 12px;\n  height: 40px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n\n    .list {\n      height: 100%;\n      transition-property: transform;\n      transition-duration: 0.8s;\n      transition-timing-function: ease-in-out;\n      .item {\n        height: 100%;\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
@@ -6890,7 +6850,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$G);
+      rest = _objectWithoutProperties(props, _excluded$F);
 
   var listRef = React.useRef();
   var wrapRef = React.useRef();
@@ -6973,7 +6933,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
+var _excluded$G = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
 
 var _templateObject$G;
 var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
@@ -7033,7 +6993,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       showPageIndicator = _props$showPageIndica === void 0 ? true : _props$showPageIndica,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
-      rest = _objectWithoutProperties(props, _excluded$H);
+      rest = _objectWithoutProperties(props, _excluded$G);
 
   var containerRef = React.useRef();
   var wrapElRef = React.useRef();
@@ -7118,7 +7078,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     slideToPageIndex(0, false);
   }, [slideToPageIndex]);
   React.useEffect(function () {
-    if (autoPlay && len > 1) {
+    if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       var timer = window.setTimeout(function () {
         slideToPageIndex(pageIndex + 1);
       }, interval);
@@ -7147,7 +7107,18 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     }));
   };
 
-  var touchEnd = React.useCallback(function () {
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
+    !isMobile && e.preventDefault();
+    var s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
+  evtProps[isTouch ? 'onTouchEnd' : 'onMouseUp'] = function () {
     var s = thisRef.current;
 
     if (!s.isMoving) {
@@ -7164,24 +7135,35 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       // reset
       slideToPageIndex(pageIndex);
     }
-  }, [direction, pageIndex, ratio, slideToPageIndex]);
-  var evtProps = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
-    e.preventDefault();
-    var s = thisRef.current;
-    s.isMoving = true;
-    wrapElRef.current.style.transitionProperty = 'none';
-    s.lastX = s.x;
-    s.lastY = s.y;
   };
 
   React.useLayoutEffect(function () {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+    var wrapEl = wrapElRef.current;
+    var fg = new FingerGesture(wrapEl, {
+      onPressMove: function onPressMove(e) {
+        var s = thisRef.current;
+
+        if (direction === 'horizontal') {
+          if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+            return;
+          }
+
+          s.x += e.deltaX;
+          wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
+        } else {
+          if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+            return;
+          }
+
+          s.y += e.deltaY;
+          wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
+        }
+      }
+    });
     return function () {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+      return fg.destroy();
     };
-  }, [touchEnd]);
+  }, [count, direction]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
@@ -7189,29 +7171,8 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
-  }), /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
+  }), /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: wrapElRef,
-    onPressMove: function onPressMove(e) {
-      e.preventDefault();
-      var s = thisRef.current;
-
-      if (direction === 'horizontal') {
-        if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
-          return;
-        }
-
-        s.x += e.deltaX;
-        wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
-      } else {
-        if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
-          return;
-        }
-
-        s.y += e.deltaY;
-        wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
-      }
-    }
-  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
     className: clsx__default['default']('wrap', {
       vertical: direction === 'vertical'
     }),
@@ -7222,11 +7183,11 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: {
       transition: "transform ".concat(duration, "ms ease-in-out")
     }
-  }), items)), pagerRender());
+  }), items), pagerRender());
 });
 Slide.displayName = 'UC-Slide';
 
-var _excluded$I = ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"];
+var _excluded$H = ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"];
 
 var _templateObject$H;
 var StyledProgressCircle = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  position: relative;\n  .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n"])));
@@ -7244,7 +7205,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
       size = _props$size === void 0 ? 120 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$I);
+      rest = _objectWithoutProperties(props, _excluded$H);
 
   var theme = styled.useTheme() || {};
   var color = props.color || theme.color || primary;
@@ -7383,7 +7344,7 @@ var WaterMark = function WaterMark(props) {
 
 WaterMark.displayName = 'UC-WaterMark';
 
-var _excluded$J = ["content", "style", "className"],
+var _excluded$I = ["content", "style", "className"],
     _excluded2$3 = ["duration"];
 
 var _templateObject$J;
@@ -7396,7 +7357,7 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var content = props.content,
       style = props.style,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$J);
+      rest = _objectWithoutProperties(props, _excluded$I);
 
   var elRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -7488,7 +7449,7 @@ Notify.show = function (props) {
 
 Notify.displayName = 'UC-Notify';
 
-var _excluded$K = ["children", "className", "content", "badgeStyle"];
+var _excluded$J = ["children", "className", "content", "badgeStyle"];
 
 var _templateObject$K;
 var StyledBadge = styled__default['default'].div(_templateObject$K || (_templateObject$K = _taggedTemplateLiteral(["\n  display: inline-block;\n  position: relative;\n\n  .badge {\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    vertical-align: middle;\n    box-sizing: border-box;\n    border-radius: 100px;\n    padding: 2px 4px;\n    font-size: 9px;\n    line-height: 1.2;\n    white-space: nowrap;\n    position: absolute;\n    z-index: 1;\n    transform: translate(50%, -50%);\n    top: 0;\n    right: 0;\n    ", "\n\n    &.dot {\n      padding: 0;\n      width: 10px;\n      height: 10px;\n      border-radius: 50%;\n    }\n    &.without-children {\n      position: static;\n      transform: none;\n    }\n  }\n"])), getThemeColorCss('background-color'));
@@ -7499,7 +7460,7 @@ var Badge = function Badge(props) {
       className = props.className,
       content = props.content,
       badgeStyle = props.badgeStyle,
-      rest = _objectWithoutProperties(props, _excluded$K);
+      rest = _objectWithoutProperties(props, _excluded$J);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledBadge, _extends({}, rest, {
     className: clsx__default['default']('uc-badge', className)
@@ -7514,7 +7475,7 @@ var Badge = function Badge(props) {
 
 Badge.displayName = 'UC-Badge';
 
-var _excluded$L = ["size", "className", "shape", "style", "children"];
+var _excluded$K = ["size", "className", "shape", "style", "children"];
 
 var _templateObject$L;
 var StyledAvatar = styled__default['default'].div(_templateObject$L || (_templateObject$L = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  position: relative;\n  display: inline-flex;\n  overflow: hidden;\n  color: #666;\n  white-space: nowrap;\n  text-align: center;\n  vertical-align: middle;\n  align-items: center;\n  justify-content: center;\n  background: #ccc;\n\n  &.circle {\n    border-radius: 50%;\n  }\n  &.square {\n    border-radius: 2px;\n  }\n\n  img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n  }\n"])));
@@ -7528,7 +7489,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       shape = _props$shape === void 0 ? 'circle' : _props$shape,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$L);
+      rest = _objectWithoutProperties(props, _excluded$K);
 
   var s = _objectSpread2({
     width: size,
@@ -7546,7 +7507,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$M = ["className", "visible", "onClose", "images", "onIndexChange"];
+var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange"];
 
 var _templateObject$M;
 var StyledImageViewer = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 300;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  background-color: #000;\n\n  .navs {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #fff;\n    font-size: 18px;\n  }\n  .close {\n    position: fixed;\n    right: 24px;\n    top: 24px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 32px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    max-height: 70vh;\n    object-fit: contain;\n    flex-basis: 100vw;\n  }\n"])));
@@ -7558,7 +7519,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
-      rest = _objectWithoutProperties(props, _excluded$M);
+      rest = _objectWithoutProperties(props, _excluded$L);
 
   var _useState = React.useState(Array.isArray(images) ? images : [images]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7653,7 +7614,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _excluded$N = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
+var _excluded$M = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 
 var _templateObject$N;
 var StyledModal = styled__default['default'](Popup)(_templateObject$N || (_templateObject$N = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  min-width: 30px;\n  background-color: #fff;\n  padding: 32px 32px 24px;\n  position: relative;\n  border-radius: 8px;\n  box-shadow: ", ";\n\n  .close {\n    top: 16px;\n    right: 16px;\n    color: #999;\n    position: absolute;\n    display: inline-block;\n    cursor: pointer;\n    font-size: 16px;\n    transition: color 0.3s ease;\n\n    &:hover {\n      color: #666;\n    }\n  }\n\n  .body {\n    flex: 1;\n  }\n"])), boxShadow);
@@ -7667,7 +7628,7 @@ var Modal = function Modal(props) {
       header = props.header,
       children = props.children,
       footer = props.footer,
-      rest = _objectWithoutProperties(props, _excluded$N);
+      rest = _objectWithoutProperties(props, _excluded$M);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({}, rest, {
     visible: visible,
@@ -7689,7 +7650,7 @@ var Modal = function Modal(props) {
 
 Modal.displayName = 'UC-Modal';
 
-var _excluded$O = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
+var _excluded$N = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
 
 var _templateObject$O;
 var StyledPopover$1 = styled__default['default'](Popover)(_templateObject$O || (_templateObject$O = _taggedTemplateLiteral(["\n  background: #fff;\n  border-radius: 2px;\n  box-shadow: ", ";\n"])), boxShadow);
@@ -7724,7 +7685,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       _props$closeOnClickOu = props.closeOnClickOutside,
       closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$O);
+      popoverRest = _objectWithoutProperties(props, _excluded$N);
 
   var timerRef = React.useRef(0);
 
@@ -7799,7 +7760,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 PopMenu.displayName = 'UC-PopMenu';
 
-var _excluded$P = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
+var _excluded$O = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
 
 var _templateObject$P;
 var StyledMenu = styled__default['default'](PopMenu)(_templateObject$P || (_templateObject$P = _taggedTemplateLiteral(["\n  padding: 16px;\n\n  .popconfirm-content {\n    min-width: 120px;\n    .title {\n      display: flex;\n      color: #1a1a1a;\n      font-size: 14px;\n      align-items: center;\n      .pop-icon {\n        margin-right: 8px;\n        font-size: 20px;\n        color: #fab20a;\n      }\n    }\n\n    .ops {\n      display: flex;\n      justify-content: flex-end;\n      margin-top: 24px;\n\n      button {\n        height: 28px;\n        &:first-child {\n          margin-right: 12px;\n        }\n      }\n    }\n  }\n"])));
@@ -7839,7 +7800,7 @@ var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$closeOnClick = props.closeOnClick,
       closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
       onCancel = props.onCancel,
-      popomenuRest = _objectWithoutProperties(props, _excluded$P);
+      popomenuRest = _objectWithoutProperties(props, _excluded$O);
 
   var popmenuRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -8154,7 +8115,7 @@ var locales = /*#__PURE__*/Object.freeze({
   en: en
 });
 
-var _excluded$Q = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
+var _excluded$P = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
 
 var _templateObject$Q;
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
@@ -8184,7 +8145,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       onChange = props.onChange,
       _props$value = props.value,
       value = _props$value === void 0 ? new Date() : _props$value,
-      rest = _objectWithoutProperties(props, _excluded$Q);
+      rest = _objectWithoutProperties(props, _excluded$P);
 
   var max = props.max,
       min = props.min;
@@ -8283,7 +8244,7 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   }, deps);
 };
 
-var _excluded$R = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
+var _excluded$Q = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
 
 var locales$1 = {
   zh: {
@@ -8354,7 +8315,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       maxYear = _props$maxYear === void 0 ? 2030 : _props$maxYear,
       _props$locale = props.locale,
       locale = _props$locale === void 0 ? 'zh' : _props$locale,
-      rest = _objectWithoutProperties(props, _excluded$R);
+      rest = _objectWithoutProperties(props, _excluded$Q);
 
   var _useState = React.useState(getData(minYear, maxYear, locale)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -9727,7 +9688,7 @@ QRCode.prototype.clear = function () {
 
 QRCode.CorrectLevel = QRErrorCorrectLevel;
 
-var _excluded$S = ["text", "colorDark", "colorLight", "size", "className", "style"];
+var _excluded$R = ["text", "colorDark", "colorLight", "size", "className", "style"];
 
 /** 二维码 */
 var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9740,7 +9701,7 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
       size = _props$size === void 0 ? 128 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$S);
+      rest = _objectWithoutProperties(props, _excluded$R);
 
   var domRef = React.useRef();
   var qrRef = React.useRef();
@@ -9794,7 +9755,7 @@ var useMount = function useMount(fn) {
   }, []);
 };
 
-var _excluded$T = ["children", "onChange", "className", "animated", "keys"];
+var _excluded$S = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$R;
 var StyledWrapper$2 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
@@ -9888,7 +9849,7 @@ var Collapse = function Collapse(_ref2) {
       animated = _ref2.animated,
       _ref2$keys = _ref2.keys,
       keys = _ref2$keys === void 0 ? '' : _ref2$keys,
-      rest = _objectWithoutProperties(_ref2, _excluded$T);
+      rest = _objectWithoutProperties(_ref2, _excluded$S);
 
   var count = React__default['default'].Children.count(children); // 手风琴模式
 
@@ -9976,7 +9937,7 @@ Collapse.displayName = 'UC-Collapse';
 
 Collapse.Item = Item;
 
-var _excluded$U = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+var _excluded$T = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
 /** 进度条 */
 var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9989,7 +9950,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       percent = _props$percent === void 0 ? 0 : _props$percent,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$U);
+      rest = _objectWithoutProperties(props, _excluded$T);
 
   var theme = styled.useTheme() || {};
   var color = theme.color || primary;
@@ -10013,7 +9974,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ProgressBar.displayName = 'UC-ProgressBar';
 
-var _excluded$V = ["children"];
+var _excluded$U = ["children"];
 
 var _templateObject$S;
 var StyledWrap$4 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  .content {\n    flex: 0 1 auto;\n  }\n"])));
@@ -10021,7 +9982,7 @@ var StyledWrap$4 = styled__default['default'].div(_templateObject$S || (_templat
 
 var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$V);
+      rest = _objectWithoutProperties(props, _excluded$U);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({}, rest, {
     ref: ref,
@@ -10032,7 +9993,7 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 AutoCenter.displayName = 'UC-AutoCenter';
 
-var _excluded$W = ["number", "delay", "className"];
+var _excluded$V = ["number", "delay", "className"];
 
 /** 滚动数字 */
 var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10040,7 +10001,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 200 : _props$delay,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$W);
+      rest = _objectWithoutProperties(props, _excluded$V);
 
   var spring = web.useSpring({
     from: {
@@ -10059,7 +10020,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 RollingNumber.displayName = 'UC-RollingNumber';
 
-var _excluded$X = ["position", "className", "style", "children"];
+var _excluded$W = ["position", "className", "style", "children"];
 
 /** 安全区 */
 var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10070,7 +10031,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
       className = props.className,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$X);
+      rest = _objectWithoutProperties(props, _excluded$W);
 
   var styles = _objectSpread2(_objectSpread2({
     display: 'block',
@@ -10085,7 +10046,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$Y = ["className", "color", "onClick", "duration", "startScale", "children"];
+var _excluded$X = ["className", "color", "onClick", "duration", "startScale", "children"];
 
 var _templateObject$T;
 var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n  }\n"])));
@@ -10103,7 +10064,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       _props$startScale = props.startScale,
       startScale = _props$startScale === void 0 ? 0.2 : _props$startScale,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$Y);
+      rest = _objectWithoutProperties(props, _excluded$X);
 
   var elRef = React.useRef(null);
   var isRunningRef = React.useRef(false);
@@ -10195,7 +10156,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Ripple.displayName = 'UC-Ripple';
 
-var _excluded$Z = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
+var _excluded$Y = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
 
 var _templateObject$U;
 var StyledWrap$6 = styled__default['default'](web.animated.div)(_templateObject$U || (_templateObject$U = _taggedTemplateLiteral(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
@@ -10223,7 +10184,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       renderText = props.renderText,
       children = props.children,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$Z);
+      rest = _objectWithoutProperties(props, _excluded$Y);
 
   var _useState = React.useState('pulling'),
       _useState2 = _slicedToArray(_useState, 2),
@@ -10486,24 +10447,32 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     childrenProps.children = statusText;
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(FingerGestureElement$1, {
-    ref: wrapRef,
-    onPressMove: function onPressMove(e) {
-      if (!isPullingRef.current) return;
-      dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
-      api.start({
-        height: dRef.current
-      });
-      setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
-    }
-  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
+  React.useLayoutEffect(function () {
+    var el = wrapRef.current;
+    var fg = new FingerGesture(el, {
+      onPressMove: function onPressMove(e) {
+        if (!isPullingRef.current) return;
+        dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
+        api.start({
+          height: dRef.current
+        });
+        setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
+      }
+    });
+    return function () {
+      fg === null || fg === void 0 ? void 0 : fg.destroy();
+    };
+  }, [api, threshold]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({
+    ref: wrapRef
+  }, rest, {
     className: clsx__default['default'](className, 'uc-pull-to-refresh'),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       touchAction: 'pan-y'
     })
   }), useWindowScroll && statusText, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "content"
-  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childrenProps) : children)));
+  }, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, childrenProps) : children));
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
@@ -10589,7 +10558,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$_ = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
+var _excluded$Z = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
     _excluded2$4 = ["children", "label", "name"];
 /** 排列方式 */
 
@@ -10612,7 +10581,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
       _props$scrollIntoErro = props.scrollIntoErrorField,
       scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
-      rest = _objectWithoutProperties(props, _excluded$_);
+      rest = _objectWithoutProperties(props, _excluded$Z);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
@@ -10748,7 +10717,6 @@ exports.Drag = Drag;
 exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
-exports.FingerGestureElement = FingerGestureElement$1;
 exports.Form = Form;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;

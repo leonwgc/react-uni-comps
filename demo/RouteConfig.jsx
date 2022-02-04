@@ -179,10 +179,6 @@ const routes = [
     component: lazy(() => import('./NumberKeyboard')),
   },
   {
-    path: '/FingerGestureElement',
-    component: lazy(() => import('./FingerGestureElement')),
-  },
-  {
     path: '/HairLineBox',
     component: lazy(() => import('./HairLineBox')),
   },

@@ -40,7 +40,6 @@ export { default as AlertDialog } from './AlertDialog';
 export { default as PasswordInput } from './PasswordInput';
 export { default as NumberKeyboardBase } from './NumberKeyboardBase';
 export { default as NumberKeyboard } from './NumberKeyboard';
-export { default as FingerGestureElement } from './FingerGestureElement';
 export { default as SwipeAction } from './SwipeAction';
 export { default as Input } from './Input';
 export { default as Picker } from './Picker';

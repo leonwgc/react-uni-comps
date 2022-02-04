@@ -41,11 +41,11 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React, { useState, useRef, useCallback, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
-import FingerGestureElement from './FingerGestureElement';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
-import { isTouch } from './dom';
+import { isMobile, isTouch } from './dom';
 import { animationNormal } from './vars';
+import FingerGesture from './FingerGesture';
 var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      backface-visibility: hidden;\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
 
 var getItems = function getItems(children, loop, height) {
@@ -189,7 +189,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     slideToPageIndex(0, false);
   }, [slideToPageIndex]);
   useEffect(function () {
-    if (autoPlay && len > 1) {
+    if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       var timer_1 = window.setTimeout(function () {
         slideToPageIndex(pageIndex + 1);
       }, interval);
@@ -218,7 +218,18 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }));
   };
 
-  var touchEnd = useCallback(function () {
+  var evtProps = {};
+
+  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
+    !isMobile && e.preventDefault();
+    var s = thisRef.current;
+    s.isMoving = true;
+    wrapElRef.current.style.transitionProperty = 'none';
+    s.lastX = s.x;
+    s.lastY = s.y;
+  };
+
+  evtProps[isTouch ? 'onTouchEnd' : 'onMouseUp'] = function () {
     var s = thisRef.current;
 
     if (!s.isMoving) {
@@ -235,24 +246,35 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       // reset
       slideToPageIndex(pageIndex);
     }
-  }, [direction, pageIndex, ratio, slideToPageIndex]);
-  var evtProps = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
-    e.preventDefault();
-    var s = thisRef.current;
-    s.isMoving = true;
-    wrapElRef.current.style.transitionProperty = 'none';
-    s.lastX = s.x;
-    s.lastY = s.y;
   };
 
   useLayoutEffect(function () {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+    var wrapEl = wrapElRef.current;
+    var fg = new FingerGesture(wrapEl, {
+      onPressMove: function onPressMove(e) {
+        var s = thisRef.current;
+
+        if (direction === 'horizontal') {
+          if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+            return;
+          }
+
+          s.x += e.deltaX;
+          wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
+        } else {
+          if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+            return;
+          }
+
+          s.y += e.deltaY;
+          wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
+        }
+      }
+    });
     return function () {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
+      return fg.destroy();
     };
-  }, [touchEnd]);
+  }, [count, direction]);
   return /*#__PURE__*/React.createElement(StyledSlide, __assign({
     ref: containerRef
   }, rest, {
@@ -260,29 +282,8 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: __assign(__assign({}, style), {
       height: height
     })
-  }), /*#__PURE__*/React.createElement(FingerGestureElement, {
+  }), /*#__PURE__*/React.createElement("div", __assign({
     ref: wrapElRef,
-    onPressMove: function onPressMove(e) {
-      e.preventDefault();
-      var s = thisRef.current;
-
-      if (direction === 'horizontal') {
-        if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
-          return;
-        }
-
-        s.x += e.deltaX;
-        wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
-      } else {
-        if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
-          return;
-        }
-
-        s.y += e.deltaY;
-        wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
-      }
-    }
-  }, /*#__PURE__*/React.createElement("div", __assign({
     className: clsx('wrap', {
       vertical: direction === 'vertical'
     }),
@@ -293,7 +294,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: {
       transition: "transform ".concat(duration, "ms ease-in-out")
     }
-  }), items)), pagerRender());
+  }), items), pagerRender());
 });
 Slide.displayName = 'UC-Slide';
 export default Slide;
