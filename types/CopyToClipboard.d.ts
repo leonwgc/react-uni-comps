@@ -4,9 +4,10 @@ declare type Props = {
     text: string;
     /** 复制成功的回调 */
     onCopy?: () => void;
-    /** 包裹的元素,只能一个 */
-    children: React.ReactElement;
+    children?: React.ReactNode;
+    style?: React.CSSProperties;
+    className?: string;
 };
 /** 复制文本*/
-declare const CopyToClipboard: React.ForwardRefExoticComponent<Props & React.RefAttributes<React.ReactElement<any, string | React.JSXElementConstructor<any>>>>;
+declare const CopyToClipboard: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default CopyToClipboard;

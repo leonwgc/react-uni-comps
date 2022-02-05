@@ -75,6 +75,7 @@ export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './hel
 export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
+export { default as copy } from './copy';
 /** hooks */
 export { default as useUpdateEffect } from './hooks/useUpdateEffect';
 export { default as useUpdateLayoutEffect } from './hooks/useUpdateLayoutEffect';
@@ -89,6 +90,7 @@ export { default as useUnmount } from './hooks/useUnmount';
 export { default as styled } from 'styled-components';
 export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
+export { nanoid } from 'nanoid';
 export { useSpring, animated, easings } from '@react-spring/web';
 /** form */
 export { default as Form } from './Form';

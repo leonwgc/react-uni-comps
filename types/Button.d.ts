@@ -4,7 +4,7 @@ declare const Button: React.ForwardRefExoticComponent<{
     /** default 线框，primary 实色框 */
     type?: 'primary' | 'default';
     active?: boolean;
-    /** 主体色线框风格 */
+    /** 主题色线框风格 */
     outlined?: boolean;
     /** 禁用 */
     disabled?: boolean;

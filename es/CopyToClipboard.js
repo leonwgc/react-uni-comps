@@ -1,73 +1,66 @@
-import React from 'react';
-/**
- * https://github.com/sindresorhus/copy-text-to-clipboard
- *
- * @param {*} input
- * @param {*} [{ target = document.body }={}]
- * @return {*}
- */
-
-function copy(input, _a) {
-  var _b = _a === void 0 ? {} : _a,
-      _c = _b.target,
-      target = _c === void 0 ? document.body : _c;
-
-  var element = document.createElement('textarea');
-  var previouslyFocusedElement = document.activeElement;
-  element.value = input; // Prevent keyboard from showing on mobile
-
-  element.setAttribute('readonly', '');
-  element.style.contain = 'strict';
-  element.style.position = 'absolute';
-  element.style.left = '-9999px';
-  element.style.fontSize = '12pt'; // Prevent zooming on iOS
-
-  var selection = document.getSelection();
-  var originalRange = selection.rangeCount > 0 && selection.getRangeAt(0);
-  target.append(element);
-  element.select(); // Explicit selection workaround for iOS
-
-  element.selectionStart = 0;
-  element.selectionEnd = input.length;
-  var isSuccess = false;
-
-  try {
-    isSuccess = document.execCommand('copy');
-  } catch (_d) {}
-
-  element.remove();
-
-  if (originalRange) {
-    selection.removeAllRanges();
-    selection.addRange(originalRange);
-  } // Get the focus back on the previously focused element, if any
-
-
-  if (previouslyFocusedElement) {
-    previouslyFocusedElement.focus();
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
   }
 
-  return isSuccess;
-}
-/** 复制文本*/
+  return cooked;
+};
 
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+import React from 'react';
+import styled from 'styled-components';
+import copy from './copy';
+import clsx from 'clsx';
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  cursor: pointer;\n"], ["\n  display: inline-flex;\n  cursor: pointer;\n"])));
+/** 复制文本*/
 
 var CopyToClipboard = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var text = props.text,
       onCopy = props.onCopy,
-      children = props.children;
-  return /*#__PURE__*/React.cloneElement(children, {
+      children = props.children,
+      className = props.className,
+      rest = __rest(props, ["text", "onCopy", "children", "className"]);
+
+  return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     ref: ref,
+    className: clsx('uc-copy-to-clipboard', className),
     onClick: function onClick() {
-      var _a, _b;
-
-      if (copy(text)) {
-        onCopy === null || onCopy === void 0 ? void 0 : onCopy();
-      }
-
-      (_b = (_a = children.props).onClick) === null || _b === void 0 ? void 0 : _b.call(_a);
+      return copy(text) && (onCopy === null || onCopy === void 0 ? void 0 : onCopy());
     }
-  });
+  }), children);
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 export default CopyToClipboard;
+var templateObject_1;

@@ -161,6 +161,8 @@ yarn add react-uni-comps
 - uniqArray (数组去重)
 - flatSimpleArray (扁平化简单数组)
 - flatArray (扁平化对象数组)
+- copy (复制文本)
+- nanoid (生成随机字符串)
 
 ### 常量
 
