@@ -196,12 +196,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
   }, [useWindowScroll, touchEnd]);
 
-  const evtProps: any = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = () => {
-    dRef.current = 0;
-  };
-
   const statusText = (
     <animated.div style={springStyles} className={`head`}>
       <div className={`status-text`} style={{ height: headHeight }}>
