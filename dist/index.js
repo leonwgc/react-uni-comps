@@ -7022,13 +7022,12 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   var len = React__default['default'].Children.count(children);
   var thisRef = React.useRef({
     x: 0,
-    lastX: 0,
     y: 0,
+    lastX: 0,
     lastY: 0,
     wrapHeight: 0,
     wrapWidth: 0,
-    isMoving: false,
-    timer: 0
+    isMoving: false
   });
 
   var _useState3 = React.useState(0),
@@ -7138,7 +7137,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
     !isMobile && e.preventDefault();
     var s = thisRef.current;
-    clearTimeout(s.timer);
     s.isMoving = true;
     wrapElRef.current.style.transitionProperty = 'none';
     s.lastX = s.x;
@@ -10203,13 +10201,19 @@ var StyledWrap$6 = styled__default['default'](web.animated.div)(_templateObject$
 /** 下拉刷新 */
 var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$pullingText = props.pullingText,
-      pullingText = _props$pullingText === void 0 ? '下拉刷新' : _props$pullingText,
+      pullingText = _props$pullingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u4E0B\u62C9\u5237\u65B0") : _props$pullingText,
       _props$canReleaseText = props.canReleaseText,
-      canReleaseText = _props$canReleaseText === void 0 ? '释放立即刷新' : _props$canReleaseText,
+      canReleaseText = _props$canReleaseText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u91CA\u653E\u7ACB\u5373\u5237\u65B0") : _props$canReleaseText,
       _props$refreshingText = props.refreshingText,
       refreshingText = _props$refreshingText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Spin, null), "\u52A0\u8F7D\u4E2D...") : _props$refreshingText,
       _props$completeText = props.completeText,
-      completeText = _props$completeText === void 0 ? '刷新成功' : _props$completeText,
+      completeText = _props$completeText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Space, {
+    style: {
+      color: 'rgb(0, 188, 112)'
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-chenggong"
+  }), " \u5237\u65B0\u6210\u529F") : _props$completeText,
       _props$completeDelay = props.completeDelay,
       completeDelay = _props$completeDelay === void 0 ? 500 : _props$completeDelay,
       useWindowScroll = props.useWindowScroll,

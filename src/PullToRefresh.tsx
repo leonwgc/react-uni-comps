@@ -33,7 +33,7 @@ const StyledWrap = styled(animated.div)`
   }
 `;
 
-type PullStatus = 'pulling' | 'canRelease' | 'refreshing' | 'complete';
+type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 
 type Props = {
   /** 触发刷新时的处理函数 */
@@ -86,7 +86,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const [status, setStatus] = useState<PullStatus>('pulling');
+  const [status, setStatus] = useState<PullStatus>('init');
   const statusRef = useCallbackRef(status);
   const dRef = useRef(0);
 
@@ -107,8 +107,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     } catch (e) {
       api.start({
         to: async (next) => {
-          await next({ height: 0 });
-          setStatus('pulling');
+          await next({ height: 0, onRest: () => setStatus('init') });
         },
       });
 
@@ -119,8 +118,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
     api.start({
       to: async (next) => {
-        await next({ height: 0 });
-        setStatus('pulling');
+        await next({ height: 0, onRest: () => setStatus('init') });
       },
     });
   }
@@ -130,6 +128,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       return renderText(status);
     }
 
+    if (status === 'init') return null;
     if (status === 'pulling') return pullingText;
     if (status === 'canRelease') return canReleaseText;
     if (status === 'refreshing') return refreshingText;
@@ -141,7 +140,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     if (!isPullingRef.current) {
       return;
     }
-    isPullingRef.current = false;
 
     if (status === 'refreshing' || status === 'complete') {
       return;
@@ -151,11 +149,12 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       try {
         await doRefresh();
       } finally {
-        setStatus('pulling');
       }
     } else {
       api.start({ height: 0 });
     }
+
+    isPullingRef.current = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api, status]);
 
@@ -175,6 +174,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
         isPullingRef.current = true;
+        setStatus('pulling');
       }
     };
 

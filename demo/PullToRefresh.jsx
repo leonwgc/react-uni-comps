@@ -11,6 +11,7 @@ import {
   Spin,
   Space,
   Toast,
+  Icon,
 } from 'react-uni-comps';
 
 const pageSize = 10;
@@ -91,7 +92,15 @@ const App = () => {
       </DemoBlock>
 
       <DemoBlock title="搭配Pullup">
-        <PullToRefresh onRefresh={onRefresh}>
+        <PullToRefresh
+          onRefresh={onRefresh}
+          completeText={
+            <Space style={{ color: 'rgb(0, 188, 112)' }}>
+              <Icon type="uc-icon-chenggong" />
+              更新成功
+            </Space>
+          }
+        >
           <Pullup
             dataList={list}
             useWindowScroll={false}
@@ -100,6 +109,49 @@ const App = () => {
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>
+        </PullToRefresh>
+      </DemoBlock>
+
+      <DemoBlock title="自定义状态文本">
+        <PullToRefresh
+          pullingText={
+            <Space>
+              <Spin />
+              下拉刷新
+            </Space>
+          }
+          canReleaseText={
+            <Space>
+              <Spin />
+              释放立即刷新
+            </Space>
+          }
+          refreshingText={
+            <Space>
+              <Spin />
+              加载中...
+            </Space>
+          }
+          completeText={
+            <Space style={{ color: 'rgb(0, 188, 112)' }}>
+              <Icon type="uc-icon-chenggong" /> 刷新成功
+            </Space>
+          }
+          completeDelay={1000}
+        >
+          <Ripple
+            style={{
+              height: '20vh',
+              width: '100%',
+              writingMode: 'vertical-lr',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: 20,
+            }}
+          >
+            下拉刷新
+          </Ripple>
         </PullToRefresh>
       </DemoBlock>
 

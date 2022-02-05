@@ -192,18 +192,25 @@ import Space from './Space';
 import { sleep } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
+import Icon from './Icon';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
 var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.pullingText,
-      pullingText = _a === void 0 ? '下拉刷新' : _a,
+      pullingText = _a === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u4E0B\u62C9\u5237\u65B0") : _a,
       _b = props.canReleaseText,
-      canReleaseText = _b === void 0 ? '释放立即刷新' : _b,
+      canReleaseText = _b === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u91CA\u653E\u7ACB\u5373\u5237\u65B0") : _b,
       _c = props.refreshingText,
       refreshingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u52A0\u8F7D\u4E2D...") : _c,
       _d = props.completeText,
-      completeText = _d === void 0 ? '刷新成功' : _d,
+      completeText = _d === void 0 ? /*#__PURE__*/React.createElement(Space, {
+    style: {
+      color: 'rgb(0, 188, 112)'
+    }
+  }, /*#__PURE__*/React.createElement(Icon, {
+    type: "uc-icon-chenggong"
+  }), " \u5237\u65B0\u6210\u529F") : _d,
       _e = props.completeDelay,
       completeDelay = _e === void 0 ? 500 : _e,
       useWindowScroll = props.useWindowScroll,

@@ -119,13 +119,12 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var len = React.Children.count(children);
   var thisRef = useRef({
     x: 0,
-    lastX: 0,
     y: 0,
+    lastX: 0,
     lastY: 0,
     wrapHeight: 0,
     wrapWidth: 0,
-    isMoving: false,
-    timer: 0
+    isMoving: false
   });
 
   var _k = useState(0),
@@ -237,7 +236,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
     !isMobile && e.preventDefault();
     var s = thisRef.current;
-    clearTimeout(s.timer);
     s.isMoving = true;
     wrapElRef.current.style.transitionProperty = 'none';
     s.lastX = s.x;
