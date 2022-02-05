@@ -17,10 +17,10 @@ export default function App() {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <Cell title="自动轮播" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
-      <Cell title="循环" content={<Switch checked={loop} onChange={setLoop} />} />
-      <Cell title="显示分页指示器" content={<Switch checked={dot} onChange={setDot} />} />
-      <Cell title="水平轮播" content={<Switch checked={isH} onChange={setisH} />} />
+      <Cell label="自动轮播" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
+      <Cell label="循环" content={<Switch checked={loop} onChange={setLoop} />} />
+      <Cell label="显示分页指示器" content={<Switch checked={dot} onChange={setDot} />} />
+      <Cell label="水平轮播" content={<Switch checked={isH} onChange={setisH} />} />
       <Slide
         ref={ref}
         loop={loop}

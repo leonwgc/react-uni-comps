@@ -18,57 +18,52 @@ export default function All() {
   return (
     <div>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Slide FullPage
           </Space>
         }
-        description="全屏滑动幻灯片示例"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SlideFullPage')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Slide
           </Space>
         }
-        description="幻灯片"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Slide')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> ScrollToTop
           </Space>
         }
-        description="ScrollToTop"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ScrollToTop')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PullToRefresh
           </Space>
         }
-        description="PullToRefresh"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PullToRefresh')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Pullup
           </Space>
         }
-        description="上拉无限加载"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Pullup')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PullupDom
           </Space>
@@ -77,87 +72,79 @@ export default function All() {
         onClick={() => gotoPage('PullupDom')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Ripple
           </Space>
         }
-        description="Ripple"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Ripple')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Form
           </Space>
         }
-        description="Form"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Form')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> SafeArea
           </Space>
         }
-        description="SafeArea"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SafeArea')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> RollingNumber
           </Space>
         }
-        description="RollingNumber"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('RollingNumber')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Collapse
           </Space>
         }
-        description="Collapse"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Collapse')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> ProgressBar
           </Space>
         }
-        description="ProgressBar"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ProgressBar')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> QRCode
           </Space>
         }
-        description="QRCode"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('QRCode')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Picker
           </Space>
         }
-        description="移动端触屏选择器"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Picker')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PickerView
           </Space>
@@ -167,342 +154,309 @@ export default function All() {
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> DatePicker
           </Space>
         }
-        description="年月日选择"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('DatePicker')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Calendar
           </Space>
         }
-        description="移动端日历选择"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Calendar')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> WaitLoading
           </Space>
         }
-        description="防止spinner闪烁"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('WaitLoading')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PopConfirm
           </Space>
         }
-        description="二次确认气泡框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PopConfirm')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PopMenu
           </Space>
         }
-        description="弹出气泡框菜单"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PopMenu')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Modal
           </Space>
         }
-        description="中间弹出对话框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Modal')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Drawer
           </Space>
         }
-        description="上下左右抽屉"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Drawer')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> ImageViewer
           </Space>
         }
-        description="图片查看"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ImageViewer')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Avatar
           </Space>
         }
-        description="头像显示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Avatar')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Badge
           </Space>
         }
-        description="右上角添加标记"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Badge')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> AlertDialog
           </Space>
         }
-        description="当做window.alert使用"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AlertDialog')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Notify
           </Space>
         }
-        description="顶部弹出提示信息"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Notify')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Toast
           </Space>
         }
-        description="中间弹出黑色背景提示信息"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Toast')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Radio
           </Space>
         }
-        description="单选"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Radio')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> RadioGroup
           </Space>
         }
-        description="单选组"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('RadioGroup')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Checkbox
           </Space>
         }
-        description="多选"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Checkbox')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> CheckboxGroup
           </Space>
         }
-        description="多选组"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('CheckboxGroup')}
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> WaterMark
           </Space>
         }
-        description="文字/图片水印"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('WaterMark')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> ProgressCircle
           </Space>
         }
-        description="环形进度"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ProgressCircle')}
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> NoticeList
           </Space>
         }
-        description="垂直滚动信息提示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NoticeList')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> NoticeBar
           </Space>
         }
-        description="水平滚动信息提示"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NoticeBar')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Rate
           </Space>
         }
-        description="评价几颗星"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Rate')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Signature/Landscape
           </Space>
         }
-        description="横屏手写签名"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SignatureLandscape')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Signature
           </Space>
         }
-        description="手写签名"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Signature')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Input
           </Space>
         }
-        description="输入"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Input')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Steps
           </Space>
         }
-        description="步骤条"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Steps')}
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> SwipeAction
           </Space>
         }
-        description="滑动操作"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SwipeAction')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> HairLineBox
           </Space>
         }
-        description="一像素边框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('HairLineBox')}
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> NumberKeyboard
           </Space>
         }
-        description="数字键盘"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NumberKeyboard')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> PasswordInput
           </Space>
         }
-        description="自定义密码输入框"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PasswordInput')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> TransitionElement
           </Space>
         }
-        description="过渡动画"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
 
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> AnimationElement
           </Space>
         }
-        description="动画"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> LazyloadImage
           </Space>
         }
-        description="替换img,实现懒加载"
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('LazyloadImage')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> LazyLoadElement
           </Space>
@@ -511,7 +465,7 @@ export default function All() {
         onClick={() => gotoPage('LazyLoadElement')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Tabs
           </Space>
@@ -520,7 +474,7 @@ export default function All() {
         onClick={() => gotoPage('Tabs')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Skeleton
           </Space>
@@ -529,7 +483,7 @@ export default function All() {
         onClick={() => gotoPage('Skeleton')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Cell
           </Space>
@@ -538,7 +492,7 @@ export default function All() {
         onClick={() => gotoPage('Cell')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Spin
           </Space>
@@ -547,7 +501,7 @@ export default function All() {
         onClick={() => gotoPage('Spin')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Switch
           </Space>
@@ -556,7 +510,7 @@ export default function All() {
         onClick={() => gotoPage('Switch')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Divider
           </Space>
@@ -565,7 +519,7 @@ export default function All() {
         onClick={() => gotoPage('Divider')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> FileInputTrigger
           </Space>
@@ -574,7 +528,7 @@ export default function All() {
         onClick={() => gotoPage('FileInputTrigger')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Waypoint
           </Space>
@@ -583,7 +537,7 @@ export default function All() {
         onClick={() => gotoPage('Waypoint')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> IndexList
           </Space>
@@ -592,7 +546,7 @@ export default function All() {
         onClick={() => gotoPage('IndexList')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Popover
           </Space>
@@ -601,7 +555,7 @@ export default function All() {
         onClick={() => gotoPage('Popover')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Drag
           </Space>
@@ -610,7 +564,7 @@ export default function All() {
         onClick={() => gotoPage('Drag')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> CopyToClipboard
           </Space>
@@ -619,7 +573,7 @@ export default function All() {
         onClick={() => gotoPage('CopyToClipboard')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Text
           </Space>
@@ -628,7 +582,7 @@ export default function All() {
         onClick={() => gotoPage('Text')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Tooltip
           </Space>
@@ -637,7 +591,7 @@ export default function All() {
         onClick={() => gotoPage('Tooltip')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Popup
           </Space>
@@ -646,7 +600,7 @@ export default function All() {
         onClick={() => gotoPage('Popup')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Icon
           </Space>
@@ -655,7 +609,7 @@ export default function All() {
         onClick={() => gotoPage('Icon')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Button
           </Space>
@@ -664,7 +618,7 @@ export default function All() {
         onClick={() => gotoPage('Button')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> Affix
           </Space>
@@ -673,7 +627,7 @@ export default function All() {
         onClick={() => gotoPage('Affix')}
       ></Cell>
       <Cell
-        title={
+        label={
           <Space>
             <IconComponent /> ActionSheet
           </Space>
