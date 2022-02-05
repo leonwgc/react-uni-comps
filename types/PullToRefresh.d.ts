@@ -13,9 +13,9 @@ declare type Props = {
     completeText?: ReactNode;
     /** 完成后延迟消失的时间，单位为 ms,默认500ms */
     completeDelay?: number;
-    /** 头部提示内容区的高度，单位为 px */
+    /** 头部提示内容区的高度，单位px, 默认40 */
     headHeight?: number;
-    /** 触发刷新需要下拉多少距离，单位为 px */
+    /** 触发刷新需要下拉多少距离，单位px, 默认60 */
     threshold?: number;
     /** 根据下拉状态，自定义下拉提示文案 */
     renderText?: (status: PullStatus) => ReactNode;

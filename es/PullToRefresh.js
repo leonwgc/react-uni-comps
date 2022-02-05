@@ -186,7 +186,7 @@ import React, { useRef, useImperativeHandle, useCallback, useLayoutEffect, useSt
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { animated, useSpring } from '@react-spring/web';
-import { getScrollTop, isTouch } from './dom';
+import { getScrollTop } from './dom';
 import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
@@ -469,12 +469,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     };
   }, [useWindowScroll, touchEnd]);
-  var evtProps = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
-    dRef.current = 0;
-  };
-
   var statusText = /*#__PURE__*/React.createElement(animated.div, {
     style: springStyles,
     className: "head"

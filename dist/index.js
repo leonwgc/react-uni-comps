@@ -10483,7 +10483,6 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       }
     };
   }, [useWindowScroll, touchEnd]);
-
   var statusText = /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     style: springStyles,
     className: "head"
