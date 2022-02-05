@@ -11,6 +11,7 @@ type Props = {
   children?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
+  onClick?: () => void;
 };
 
 const StyledWrap = styled.div`
@@ -20,14 +21,17 @@ const StyledWrap = styled.div`
 
 /** 复制文本*/
 const CopyToClipboard = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { text, onCopy, children, className, ...rest } = props;
+  const { text, onClick, onCopy, children, className, ...rest } = props;
 
   return (
     <StyledWrap
       {...rest}
       ref={ref}
       className={clsx('uc-copy-to-clipboard', className)}
-      onClick={() => copy(text) && onCopy?.()}
+      onClick={() => {
+        copy(text) && onCopy?.();
+        onClick?.();
+      }}
     >
       {children}
     </StyledWrap>
