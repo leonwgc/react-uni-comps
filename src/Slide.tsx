@@ -162,13 +162,12 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   const thisRef = useRef({
     x: 0,
-    lastX: 0,
     y: 0,
+    lastX: 0,
     lastY: 0,
     wrapHeight: 0,
     wrapWidth: 0,
     isMoving: false,
-    timer: 0,
   });
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
@@ -288,7 +287,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     !isMobile && e.preventDefault();
 
     const s = thisRef.current;
-    clearTimeout(s.timer);
     s.isMoving = true;
     wrapElRef.current.style.transitionProperty = 'none';
     s.lastX = s.x;
