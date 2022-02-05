@@ -1,11 +1,11 @@
 ---
 title: Spin 加载中
-order: 1
+order: 4
 mobile: true
 group:
-  title: 操作反馈
-  order: 1
-  path: feedback
+  title: 基础组件
+  order: 0
+  path: base
 ---
 
 <code src="../demo/Spin.jsx"></code>

@@ -1,13 +1,18 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
+import WaitLoading from './WaitLoading';
 
 type Props = {
   style?: React.CSSProperties;
   className?: string;
+  /** 延迟显示等待时间，单位ms ,默认false ,如果是true ,默认延时700ms显示 */
+  wait?: boolean | number;
+  /** 是否显示,搭配wait使用，默认 true */
+  loading?: boolean;
 };
 
-const StyledLoading = styled.div`
+const StyledSpin = styled.div`
   @-webkit-keyframes loading {
     0% {
       -webkit-transform: rotate3d(0, 0, 1, 0deg);
@@ -64,9 +69,26 @@ const StyledLoading = styled.div`
 `;
 
 /** 加载中指示器,继承父容器颜色和字体大小 */
-const Spin = React.forwardRef<HTMLDivElement, Props>(({ className, ...rest }, ref) => {
-  return <StyledLoading {...rest} ref={ref} className={clsx(className, 'uc-spin')}></StyledLoading>;
-});
+const Spin = React.forwardRef<HTMLDivElement, Props>(
+  ({ wait, loading = true, className, ...rest }, ref) => {
+    const waitTime =
+      typeof wait === 'number' && wait > 0
+        ? wait
+        : typeof wait === 'boolean' && wait === true
+        ? 700
+        : 0;
+
+    const el = <StyledSpin {...rest} ref={ref} className={clsx(className, 'uc-spin')}></StyledSpin>;
+
+    return waitTime > 0 ? (
+      <WaitLoading visible={loading} wait={waitTime}>
+        {el}
+      </WaitLoading>
+    ) : (
+      el
+    );
+  }
+);
 
 Spin.displayName = 'UC-Spin';
 

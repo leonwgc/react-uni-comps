@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
-/**  等待wait毫秒且visible是true才渲染子元素, 一般用于防止loading闪烁等问题 */
+/** 延迟渲染子元素, 一般用于防止loading闪烁等问题 */
 
 var WaitLoading = function WaitLoading(props) {
   var _a = props.wait,
-      wait = _a === void 0 ? 600 : _a,
+      wait = _a === void 0 ? 700 : _a,
       _b = props.visible,
       visible = _b === void 0 ? false : _b,
       children = props.children;

@@ -1,6 +1,6 @@
 ---
 title: ActionSheet 动作面板
-order: 12
+order: 11
 mobile: true
 group:
   title: 操作反馈

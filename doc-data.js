@@ -12,16 +12,20 @@ module.exports = [
         title: 'Space 间距',
       },
       {
-        name: 'HairLineBox',
-        title: 'HairLineBox 一像素边框容器',
-      },
-      {
         name: 'Avatar',
         title: 'Avatar 头像',
       },
       {
         name: 'Icon',
         title: 'Icon 图标',
+      },
+      {
+        name: 'Spin',
+        title: 'Spin 加载中',
+      },
+      {
+        name: 'HairLineBox',
+        title: 'HairLineBox 一像素边框容器',
       },
     ],
   },
@@ -31,11 +35,7 @@ module.exports = [
     comps: [
       {
         name: 'WaitLoading',
-        title: 'WaitLoading (防闪烁)',
-      },
-      {
-        name: 'Spin',
-        title: 'Spin 加载中',
+        title: 'WaitLoading 延迟渲染子元素',
       },
       {
         name: 'Modal',

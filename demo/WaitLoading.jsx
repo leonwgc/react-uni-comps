@@ -4,20 +4,20 @@ import DemoBlock from './common/Block';
 import { Button, Space, WaitLoading, Spin } from 'react-uni-comps';
 
 export default function App() {
-  const [v, setV] = useState(false);
+  const [loading, setLoading] = useState(false);
   return (
     <PageWrap>
-      <DemoBlock title="防闪烁">
+      <DemoBlock title="延迟渲染子元素">
         <Space>
-          <Button type="primary" onClick={() => setV(true)} loading={v}>
-            1秒后显示 loading
+          <Button type="primary" onClick={() => setLoading(true)} loading={loading}>
+            700ms后显示 loading
           </Button>
 
-          <Button onClick={() => setV(false)}>隐藏loading </Button>
+          <Button onClick={() => setLoading(false)}>隐藏loading </Button>
         </Space>
 
         <div style={{ marginTop: 24 }}>
-          <WaitLoading wait={1000} visible={v}>
+          <WaitLoading visible={loading}>
             <Spin style={{ fontSize: 30, color: '#00bc8d' }} />
           </WaitLoading>
         </div>

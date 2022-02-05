@@ -1,6 +1,6 @@
 ---
 title: Pullup 上拉加载
-order: 5
+order: 4
 mobile: true
 group:
   title: 操作反馈
