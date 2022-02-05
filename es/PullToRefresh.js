@@ -192,25 +192,18 @@ import Space from './Space';
 import { sleep } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
-import Icon from './Icon';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
 var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.pullingText,
-      pullingText = _a === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u4E0B\u62C9\u5237\u65B0") : _a,
+      pullingText = _a === void 0 ? '下拉刷新' : _a,
       _b = props.canReleaseText,
-      canReleaseText = _b === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u91CA\u653E\u7ACB\u5373\u5237\u65B0") : _b,
+      canReleaseText = _b === void 0 ? '释放立即刷新' : _b,
       _c = props.refreshingText,
       refreshingText = _c === void 0 ? /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Spin, null), "\u52A0\u8F7D\u4E2D...") : _c,
       _d = props.completeText,
-      completeText = _d === void 0 ? /*#__PURE__*/React.createElement(Space, {
-    style: {
-      color: 'rgb(0, 188, 112)'
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    type: "uc-icon-chenggong"
-  }), " \u5237\u65B0\u6210\u529F") : _d,
+      completeText = _d === void 0 ? '刷新成功' : _d,
       _e = props.completeDelay,
       completeDelay = _e === void 0 ? 500 : _e,
       useWindowScroll = props.useWindowScroll,
@@ -225,7 +218,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style = props.style,
       rest = __rest(props, ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"]);
 
-  var _h = useState('pulling'),
+  var _h = useState('init'),
       status = _h[0],
       setStatus = _h[1];
 
@@ -290,13 +283,15 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
                         return [4
                         /*yield*/
                         , next({
-                          height: 0
+                          height: 0,
+                          onRest: function onRest() {
+                            return setStatus('init');
+                          }
                         })];
 
                       case 1:
                         _a.sent();
 
-                        setStatus('pulling');
                         return [2
                         /*return*/
                         ];
@@ -330,13 +325,15 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
                         return [4
                         /*yield*/
                         , next({
-                          height: 0
+                          height: 0,
+                          onRest: function onRest() {
+                            return setStatus('init');
+                          }
                         })];
 
                       case 1:
                         _a.sent();
 
-                        setStatus('pulling');
                         return [2
                         /*return*/
                         ];
@@ -358,6 +355,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return renderText(status);
     }
 
+    if (status === 'init') return null;
     if (status === 'pulling') return pullingText;
     if (status === 'canRelease') return canReleaseText;
     if (status === 'refreshing') return refreshingText;
@@ -376,8 +374,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
               /*return*/
               ];
             }
-
-            isPullingRef.current = false;
 
             if (status === 'refreshing' || status === 'complete') {
               return [2
@@ -405,7 +401,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
             , 4];
 
           case 3:
-            setStatus('pulling');
             return [7
             /*endfinally*/
             ];
@@ -422,6 +417,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
             _a.label = 6;
 
           case 6:
+            isPullingRef.current = false;
             return [2
             /*return*/
             ];
@@ -449,6 +445,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
         isPullingRef.current = true;
+        setStatus('pulling');
       }
     };
 

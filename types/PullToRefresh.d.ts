@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-declare type PullStatus = 'pulling' | 'canRelease' | 'refreshing' | 'complete';
+declare type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 declare type Props = {
     /** 触发刷新时的处理函数 */
     onRefresh?: () => Promise<any>;
