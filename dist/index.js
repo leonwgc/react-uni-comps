@@ -4095,7 +4095,7 @@ function copy(text) {
   return isSuccess;
 }
 
-var _excluded$n = ["text", "onCopy", "children", "className"];
+var _excluded$n = ["text", "onClick", "onCopy", "children", "className"];
 
 var _templateObject$n;
 var StyledWrap$1 = styled__default['default'].div(_templateObject$n || (_templateObject$n = _taggedTemplateLiteral(["\n  display: inline-flex;\n  cursor: pointer;\n"])));
@@ -4103,6 +4103,7 @@ var StyledWrap$1 = styled__default['default'].div(_templateObject$n || (_templat
 
 var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var text = props.text,
+      _onClick = props.onClick,
       onCopy = props.onCopy,
       children = props.children,
       className = props.className,
@@ -4112,7 +4113,8 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
     ref: ref,
     className: clsx__default['default']('uc-copy-to-clipboard', className),
     onClick: function onClick() {
-      return copy(text) && (onCopy === null || onCopy === void 0 ? void 0 : onCopy());
+      copy(text) && (onCopy === null || onCopy === void 0 ? void 0 : onCopy());
+      _onClick === null || _onClick === void 0 ? void 0 : _onClick();
     }
   }), children);
 });

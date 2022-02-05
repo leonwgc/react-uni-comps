@@ -7,6 +7,7 @@ declare type Props = {
     children?: React.ReactNode;
     style?: React.CSSProperties;
     className?: string;
+    onClick?: () => void;
 };
 /** 复制文本*/
 declare const CopyToClipboard: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
