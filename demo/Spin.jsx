@@ -21,7 +21,7 @@ export default function App() {
 
       <DemoBlock title="延迟显示">
         <Space wrap>
-          等700ms显示：
+          等700ms显示
           <Spin style={{ color: '#005cff', fontSize: 30 }} wait></Spin>
           等1.5s显示
           <Spin style={{ color: '#005cff', fontSize: 30 }} wait={1500}></Spin>
@@ -39,7 +39,7 @@ export default function App() {
 
         <div style={{ marginTop: 24 }}>
           <Space wrap>
-            等700ms显示：
+            等700ms显示
             <Spin wait loading={loading} style={{ color: '#005cff', fontSize: 30 }} wait></Spin>
             等1.5s显示
             <Spin

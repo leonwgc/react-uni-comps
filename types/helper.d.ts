@@ -17,15 +17,6 @@ export declare const debounce: (fn: F, timeout?: number) => F;
  */
 export declare const throttle: (fn: F, timeout?: number, last?: boolean) => F;
 /**
- *  获取部分props
- *
- * @param {*} [props={}]
- * @param {string[]} propKeys
- * @param {boolean} [isIncluded=true]
- * @return {*}  {Record<string, unknown>}
- */
-export declare const getProps: (props: {}, propKeys: string[], isIncluded?: boolean) => Record<string, unknown>;
-/**
  * 数组去重
  *
  * @template T

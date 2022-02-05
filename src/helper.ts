@@ -58,39 +58,6 @@ export const throttle = (fn: F, timeout = 200, last = true): F => {
   };
 };
 
-/**
- *  获取部分props
- *
- * @param {*} [props={}]
- * @param {string[]} propKeys
- * @param {boolean} [isIncluded=true]
- * @return {*}  {Record<string, unknown>}
- */
-export const getProps = (
-  props = {},
-  propKeys: string[],
-  isIncluded = true
-): Record<string, unknown> => {
-  let required = {};
-  let rest = {};
-  const keys = Object.keys(props);
-
-  if (propKeys?.length) {
-    keys.map((k) => {
-      if (propKeys.includes(k)) {
-        required[k] = props[k];
-      } else {
-        rest[k] = props[k];
-      }
-    });
-  } else {
-    required = {};
-    rest = props;
-  }
-
-  return isIncluded ? required : rest;
-};
-
 const defaultEqualFn = (a, b) => a === b;
 
 /**

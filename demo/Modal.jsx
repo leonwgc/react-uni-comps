@@ -25,9 +25,7 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Button onClick={() => setV(true)} style={{ marginRight: 20 }}>
-          给张伟投票
-        </Button>
+        <Button onClick={() => setV(true)}>给张伟投票</Button>
       </DemoBlock>
 
       <DemoBlock title="自定义样式">
@@ -64,7 +62,7 @@ export default function App() {
       </StyledModal>
 
       <Modal visible={v} onClose={() => setV(false)}>
-        <Space direction="vertical" size={30} style={{ width: 280 }}>
+        <Space direction="vertical" size={16} style={{ width: 280 }}>
           <h3>投票确认</h3>
           <div>确认给张伟投票?</div>
           <Space size={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
