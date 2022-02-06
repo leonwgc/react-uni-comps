@@ -1,12 +1,5 @@
 import React from 'react';
-export declare type DataItem = {
-    /** 数据显示文本 */
-    label: string;
-    /** 数据值 */
-    value: string | number;
-    /** 级联数据用children */
-    children?: DataItem[];
-};
+import { DataItem } from './Wheel';
 declare type SimpleDatas = string[] | number[];
 declare type ObjectDatas = DataItem[] | DataItem[][];
 declare type Props = {
@@ -22,6 +15,8 @@ declare type Props = {
     itemHeight?: number;
     /** 滚动变化回调 */
     onWheelChange?: (index: number, wheelIndex: number) => void;
+    /** 自定义label */
+    labelRender?: (item: DataItem) => React.ReactNode;
 };
 export interface PickerViewRefType {
     getValue: () => Array<string | number>;

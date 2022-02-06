@@ -9,11 +9,11 @@ import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
 import FingerGesture from './FingerGesture';
 
-type DataItem = {
-  /** 数据显示文本 */
-  label: string;
+export type DataItem = {
+  /** 数据显示 */
+  label: React.ReactNode;
   /** 数据值 */
-  value: string;
+  value: string | number;
   /** 级联数据用children */
   children?: DataItem[];
 };
@@ -29,6 +29,8 @@ type Props = {
   itemHeight?: number;
   /** 索引改变回调 */
   onIndexChange?: (newIndex: number) => void;
+  /** 自定义label */
+  labelRender?: (item: DataItem) => React.ReactNode;
 };
 
 const StyledWrap = styled(animated.div)`
@@ -50,8 +52,19 @@ const StyledWrap = styled(animated.div)`
 const MOMENTUM_LIMIT_TIME = 300;
 const MOMENTUM_LIMIT_DISTANCE = 15;
 
+const defaultLabelRender = (item: DataItem) => item.label;
+
 const Wheel = (props: Props): React.ReactElement => {
-  const { onIndexChange, itemHeight = 35, style, data = [], index = 0, className, ...rest } = props;
+  const {
+    onIndexChange,
+    itemHeight = 35,
+    style,
+    data = [],
+    labelRender = defaultLabelRender,
+    index = 0,
+    className,
+    ...rest
+  } = props;
   const firstItemY = itemHeight * 3;
 
   const elRef = useRef<HTMLElement>();
@@ -175,7 +188,7 @@ const Wheel = (props: Props): React.ReactElement => {
     >
       {data.map((item) => (
         <Text className="item" key={item.value} style={{ height: itemHeight }}>
-          {item.label}
+          {labelRender(item)}
         </Text>
       ))}
     </StyledWrap>

@@ -1,9 +1,9 @@
 import React from 'react';
-declare type DataItem = {
-    /** 数据显示文本 */
-    label: string;
+export declare type DataItem = {
+    /** 数据显示 */
+    label: React.ReactNode;
     /** 数据值 */
-    value: string;
+    value: string | number;
     /** 级联数据用children */
     children?: DataItem[];
 };
@@ -18,6 +18,8 @@ declare type Props = {
     itemHeight?: number;
     /** 索引改变回调 */
     onIndexChange?: (newIndex: number) => void;
+    /** 自定义label */
+    labelRender?: (item: DataItem) => React.ReactNode;
 };
 declare const Wheel: {
     (props: Props): React.ReactElement;

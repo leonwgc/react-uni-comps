@@ -1,13 +1,6 @@
 import React from 'react';
 import { PickerViewRefType } from './PickerView';
-export declare type DataItem = {
-    /** 数据显示文本 */
-    label: string;
-    /** 数据值 */
-    value: string | number;
-    /** 级联数据用children */
-    children?: DataItem[];
-};
+import { DataItem } from './Wheel';
 declare type Props = {
     /** 数据 */
     data?: DataItem[] | DataItem[][];
@@ -33,6 +26,8 @@ declare type Props = {
     itemHeight?: number;
     /** 滚动变化回调 */
     onWheelChange?: (index: number, wheelIndex: number) => void;
+    /** 自定义label */
+    labelRender?: (item: DataItem) => React.ReactNode;
 };
 /** picker 下方弹出选择器 */
 declare const Picker: React.ForwardRefExoticComponent<Props & React.RefAttributes<PickerViewRefType>>;

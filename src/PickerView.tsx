@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
-import Wheel from './Wheel';
+import Wheel, { DataItem } from './Wheel';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useForceUpdate from './hooks/useForceUpdate';
@@ -9,15 +9,6 @@ import { isObject } from './helper';
 //#region def
 
 //#region type & helper
-
-export type DataItem = {
-  /** 数据显示文本 */
-  label: string;
-  /** 数据值 */
-  value: string | number;
-  /** 级联数据用children */
-  children?: DataItem[];
-};
 
 type SimpleDatas = string[] | number[];
 type ObjectDatas = DataItem[] | DataItem[][];
@@ -35,6 +26,8 @@ type Props = {
   itemHeight?: number;
   /** 滚动变化回调 */
   onWheelChange?: (index: number, wheelIndex: number) => void;
+  /** 自定义label */
+  labelRender?: (item: DataItem) => React.ReactNode;
 };
 
 const StyledWrap = styled.div<{ itemHeight: number }>`
@@ -172,6 +165,7 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     onChange,
     onWheelChange,
     itemHeight = 35,
+    labelRender,
     value = [],
     data = [],
     ...rest
@@ -235,9 +229,11 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
           {listRef.current?.map((listItem, idx) => {
             return (
               <Wheel
+                labelRender={labelRender}
                 itemHeight={itemHeight}
                 data={listItem}
                 key={idx}
+                style={{ width: `${100 / cols}%` }}
                 index={indexArrRef.current[idx]}
                 onIndexChange={(index) => {
                   indexArrRef.current[idx] = index;
@@ -269,7 +265,15 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
                     forceUpdate();
                   }
 
-                  onChange?.(listRef.current.map((e, i) => e[indexArrRef.current[i]].value));
+                  onChange?.(
+                    listRef.current.map((e, i) => {
+                      let index = indexArrRef.current[i];
+                      if (index > e?.length - 1) {
+                        index = 0;
+                      }
+                      return e[index]?.value;
+                    })
+                  );
                   onWheelChange?.(index, idx);
                 }}
               />

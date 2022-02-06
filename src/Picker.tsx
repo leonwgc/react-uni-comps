@@ -4,18 +4,10 @@ import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView, { PickerViewRefType } from './PickerView';
+import { DataItem } from './Wheel';
 import useCallbackRef from './hooks/useCallbackRef';
 
 //#region def
-
-export type DataItem = {
-  /** 数据显示文本 */
-  label: string;
-  /** 数据值 */
-  value: string | number;
-  /** 级联数据用children */
-  children?: DataItem[];
-};
 
 type Props = {
   /** 数据 */
@@ -42,6 +34,8 @@ type Props = {
   itemHeight?: number;
   /** 滚动变化回调 */
   onWheelChange?: (index: number, wheelIndex: number) => void;
+  /** 自定义label */
+  labelRender?: (item: DataItem) => React.ReactNode;
 };
 
 const StyledDrawer = styled(Drawer)`
@@ -82,6 +76,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     onChange,
     onWheelChange,
     itemHeight = 35,
+    labelRender,
     className,
     value = [],
     data = [],
@@ -128,6 +123,7 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
       }
     >
       <PickerView
+        labelRender={labelRender}
         itemHeight={itemHeight}
         ref={pickerViewRef}
         data={data}

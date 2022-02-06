@@ -54,6 +54,10 @@ var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
 
+var defaultLabelRender = function defaultLabelRender(item) {
+  return item.label;
+};
+
 var Wheel = function Wheel(props) {
   var onIndexChange = props.onIndexChange,
       _a = props.itemHeight,
@@ -61,33 +65,35 @@ var Wheel = function Wheel(props) {
       style = props.style,
       _b = props.data,
       data = _b === void 0 ? [] : _b,
-      _c = props.index,
-      index = _c === void 0 ? 0 : _c,
+      _c = props.labelRender,
+      labelRender = _c === void 0 ? defaultLabelRender : _c,
+      _d = props.index,
+      index = _d === void 0 ? 0 : _d,
       className = props.className,
-      rest = __rest(props, ["onIndexChange", "itemHeight", "style", "data", "index", "className"]);
+      rest = __rest(props, ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"]);
 
   var firstItemY = itemHeight * 3;
   var elRef = useRef();
   var onIndexChangeRef = useCallbackRef(onIndexChange);
   var yRef = useRef(firstItemY);
 
-  var _d = useState(index),
-      _index = _d[0],
-      _setIndex = _d[1];
+  var _e = useState(index),
+      _index = _e[0],
+      _setIndex = _e[1];
 
   var isMovingRef = useRef(false);
   var momentumRef = useRef({
     touchStartTime: 0
   });
 
-  var _e = useSpring(function () {
+  var _f = useSpring(function () {
     return {
       y: 105,
       config: config.default
     };
   }),
-      styles = _e[0],
-      api = _e[1];
+      styles = _f[0],
+      api = _f[1];
 
   var scrollToIndex = useDebounce(function (index, effect) {
     if (effect === void 0) {
@@ -201,7 +207,7 @@ var Wheel = function Wheel(props) {
       style: {
         height: itemHeight
       }
-    }, item.label);
+    }, labelRender(item));
   }));
 };
 

@@ -38,12 +38,7 @@ export default function App() {
           Toast.show(dayjs(value).format('YYYY-MM-DD'));
           setVal(value);
         }}
-        onChange={(value) => {
-          Toast.show({
-            modal: false,
-            content: dayjs(value).format('YYYY-MM-DD'),
-          });
-        }}
+        onChange={console.log}
       />
     </PageWrap>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
+import areas from './area';
 import { Toast, Button, Picker, Space, styled } from 'react-uni-comps';
 
 //#region  data
@@ -102,83 +103,12 @@ const UnlinkedTwo = [
   ],
 ];
 
-const areas = [
-  {
-    label: '上海',
-    value: '上海',
-    children: [
-      {
-        label: '闵行',
-        value: '闵行',
-        children: [
-          {
-            label: '莘庄',
-            value: '莘庄',
-          },
-          {
-            label: '颛桥',
-            value: '颛桥',
-          },
-        ],
-      },
-      {
-        label: '浦东',
-        value: '浦东',
-        children: [
-          {
-            label: '浦东1',
-            value: '浦东1',
-          },
-          {
-            label: '浦东2',
-            value: '浦东2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: '北京',
-    value: '北京',
-    children: [
-      {
-        label: '北京1',
-        value: '北京1',
-        children: [
-          {
-            label: '北京11',
-            value: '北京11',
-          },
-          {
-            label: '北京12',
-            value: '北京12',
-          },
-        ],
-      },
-      {
-        label: '北京2',
-        value: '北京2',
-        children: [
-          {
-            label: '北京21',
-            value: '北京21',
-          },
-          {
-            label: '北京22',
-            value: '北京22',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 //#endregion
 
 export default function App() {
   const [value, setValue] = useState(['湖北']);
   const [value1, setValue1] = useState(['北京', '北京2']);
-  const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
+  const [value2, setValue2] = useState(['310000', '310100', '310110']); //上海杨浦
   const [value3, setValue3] = useState(['选项二', '选项B']);
   const [visible, setVisible] = useState(false);
 
@@ -204,7 +134,7 @@ export default function App() {
               setVisible(3);
             }}
           >
-            级联3列
+            城市选择
           </Button>
 
           <Button
@@ -228,9 +158,9 @@ export default function App() {
             cancelText="不选了"
             okText="选好了"
             value={value}
-            cols={1}
             data={oneColData}
           />
+
           <Picker
             visible={visible === 2}
             onClose={() => setVisible(false)}
@@ -239,18 +169,23 @@ export default function App() {
               setValue1(v);
               Toast.show(v);
             }}
-            cols={2}
             data={twoColsData}
           />
+
           <Picker
             visible={visible === 3}
             onClose={() => setVisible(false)}
             value={value2}
+            title="城市选择"
+            itemHeight={50}
+            onChange={console.log}
+            labelRender={(item) =>
+              item.label.length > 6 ? item.label.slice(0, 6) + '..' : item.label
+            }
             onOk={(v) => {
               setValue2(v);
               Toast.show(v);
             }}
-            cols={3}
             data={areas}
           />
 
@@ -262,7 +197,6 @@ export default function App() {
               setValue3(v);
               Toast.show(v);
             }}
-            cols={2}
             data={UnlinkedTwo}
           />
         </Space>

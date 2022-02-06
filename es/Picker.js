@@ -64,12 +64,13 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onWheelChange = props.onWheelChange,
       _d = props.itemHeight,
       itemHeight = _d === void 0 ? 35 : _d,
+      labelRender = props.labelRender,
       className = props.className,
       _e = props.value,
       value = _e === void 0 ? [] : _e,
       _f = props.data,
       data = _f === void 0 ? [] : _f,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data"]);
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "labelRender", "className", "value", "data"]);
 
   var pickerViewRef = useRef();
   useImperativeHandle(ref, function () {
@@ -105,6 +106,7 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }, okText))
   }), /*#__PURE__*/React.createElement(PickerView, {
+    labelRender: labelRender,
     itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,

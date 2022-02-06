@@ -167,11 +167,12 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onWheelChange = props.onWheelChange,
       _b = props.itemHeight,
       itemHeight = _b === void 0 ? 35 : _b,
+      labelRender = props.labelRender,
       _c = props.value,
       value = _c === void 0 ? [] : _c,
       _d = props.data,
       data = _d === void 0 ? [] : _d,
-      rest = __rest(props, ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"]);
+      rest = __rest(props, ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"]);
 
   var cols = 1;
   var cdata = data || []; // 非级联
@@ -238,9 +239,13 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: "wheel-wrap"
   }, (_a = listRef.current) === null || _a === void 0 ? void 0 : _a.map(function (listItem, idx) {
     return /*#__PURE__*/React.createElement(Wheel, {
+      labelRender: labelRender,
       itemHeight: itemHeight,
       data: listItem,
       key: idx,
+      style: {
+        width: "".concat(100 / cols, "%")
+      },
       index: indexArrRef.current[idx],
       onIndexChange: function onIndexChange(index) {
         var _a, _b;
@@ -269,7 +274,15 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
         }
 
         onChange === null || onChange === void 0 ? void 0 : onChange(listRef.current.map(function (e, i) {
-          return e[indexArrRef.current[i]].value;
+          var _a;
+
+          var index = indexArrRef.current[i];
+
+          if (index > (e === null || e === void 0 ? void 0 : e.length) - 1) {
+            index = 0;
+          }
+
+          return (_a = e[index]) === null || _a === void 0 ? void 0 : _a.value;
         }));
         onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(index, idx);
       }

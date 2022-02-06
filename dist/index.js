@@ -5282,13 +5282,17 @@ var useDebounce = function useDebounce(fn) {
   );
 };
 
-var _excluded$A = ["onIndexChange", "itemHeight", "style", "data", "index", "className"];
+var _excluded$A = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
 
 var _templateObject$A;
 var StyledWrap$2 = styled__default['default'](web.animated.div)(_templateObject$A || (_templateObject$A = _taggedTemplateLiteral(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
+
+var defaultLabelRender = function defaultLabelRender(item) {
+  return item.label;
+};
 
 var Wheel = function Wheel(props) {
   var onIndexChange = props.onIndexChange,
@@ -5297,6 +5301,8 @@ var Wheel = function Wheel(props) {
       style = props.style,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
+      _props$labelRender = props.labelRender,
+      labelRender = _props$labelRender === void 0 ? defaultLabelRender : _props$labelRender,
       _props$index = props.index,
       index = _props$index === void 0 ? 0 : _props$index,
       className = props.className,
@@ -5436,7 +5442,7 @@ var Wheel = function Wheel(props) {
       style: {
         height: itemHeight
       }
-    }, item.label);
+    }, labelRender(item));
   }));
 };
 
@@ -5458,7 +5464,7 @@ var useForceUpdate = function useForceUpdate() {
   return forceUpdate;
 };
 
-var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"];
+var _excluded$B = ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"];
 
 var _templateObject$B;
 //#region type & helper
@@ -5560,6 +5566,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       onWheelChange = props.onWheelChange,
       _props$itemHeight = props.itemHeight,
       itemHeight = _props$itemHeight === void 0 ? 35 : _props$itemHeight,
+      labelRender = props.labelRender,
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
@@ -5631,9 +5638,13 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     className: "wheel-wrap"
   }, (_listRef$current = listRef.current) === null || _listRef$current === void 0 ? void 0 : _listRef$current.map(function (listItem, idx) {
     return /*#__PURE__*/React__default['default'].createElement(Wheel, {
+      labelRender: labelRender,
       itemHeight: itemHeight,
       data: listItem,
       key: idx,
+      style: {
+        width: "".concat(100 / cols, "%")
+      },
       index: indexArrRef.current[idx],
       onIndexChange: function onIndexChange(index) {
         indexArrRef.current[idx] = index;
@@ -5662,7 +5673,15 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
         }
 
         onChange === null || onChange === void 0 ? void 0 : onChange(listRef.current.map(function (e, i) {
-          return e[indexArrRef.current[i]].value;
+          var _e$index;
+
+          var index = indexArrRef.current[i];
+
+          if (index > (e === null || e === void 0 ? void 0 : e.length) - 1) {
+            index = 0;
+          }
+
+          return (_e$index = e[index]) === null || _e$index === void 0 ? void 0 : _e$index.value;
         }));
         onWheelChange === null || onWheelChange === void 0 ? void 0 : onWheelChange(index, idx);
       }
@@ -5671,7 +5690,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data"];
+var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "labelRender", "className", "value", "data"];
 
 var _templateObject$C;
 
@@ -5693,6 +5712,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       onWheelChange = props.onWheelChange,
       _props$itemHeight = props.itemHeight,
       itemHeight = _props$itemHeight === void 0 ? 35 : _props$itemHeight,
+      labelRender = props.labelRender,
       className = props.className,
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
@@ -5735,6 +5755,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       }
     }, okText))
   }), /*#__PURE__*/React__default['default'].createElement(PickerView, {
+    labelRender: labelRender,
     itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,
@@ -8318,7 +8339,6 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
 };
 
 var _excluded$S = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
-
 var locales$1 = {
   zh: {
     year: '年',

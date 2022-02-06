@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
+import areas from './area';
 import { PickerView, Button, Affix } from 'react-uni-comps';
 
 //#region  data
@@ -123,77 +124,6 @@ const UnlinkedFour = [
   ],
 ];
 
-const threeColData = [
-  {
-    label: '上海',
-    value: '上海',
-    children: [
-      {
-        label: '闵行',
-        value: '闵行',
-        children: [
-          {
-            label: '莘庄',
-            value: '莘庄',
-          },
-          {
-            label: '颛桥',
-            value: '颛桥',
-          },
-        ],
-      },
-      {
-        label: '浦东',
-        value: '浦东',
-        children: [
-          {
-            label: '浦东1',
-            value: '浦东1',
-          },
-          {
-            label: '浦东2',
-            value: '浦东2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: '北京',
-    value: '北京',
-    children: [
-      {
-        label: '北京1',
-        value: '北京1',
-        children: [
-          {
-            label: '北京11',
-            value: '北京11',
-          },
-          {
-            label: '北京12',
-            value: '北京12',
-          },
-        ],
-      },
-      {
-        label: '北京2',
-        value: '北京2',
-        children: [
-          {
-            label: '北京21',
-            value: '北京21',
-          },
-          {
-            label: '北京22',
-            value: '北京22',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 //#endregion
 
 export default function App() {
@@ -224,6 +154,20 @@ export default function App() {
         />
       </DemoBlock>
 
+      <DemoBlock title="省市区">
+        <PickerView
+          onChange={(v) => {
+            setValue2(v);
+            setV(v);
+          }}
+          labelRender={(item) =>
+            item.label.length > 6 ? item.label.slice(0, 6) + '..' : item.label
+          }
+          value={value2}
+          data={areas}
+        />
+      </DemoBlock>
+
       <DemoBlock title="一列 label，value对象数组">
         <PickerView
           onChange={(v) => {
@@ -243,17 +187,6 @@ export default function App() {
           }}
           value={value1}
           data={twoColsData}
-        />
-      </DemoBlock>
-
-      <DemoBlock title="联动三列">
-        <PickerView
-          onChange={(v) => {
-            setValue2(v);
-            setV(v);
-          }}
-          value={value2}
-          data={threeColData}
         />
       </DemoBlock>
 
