@@ -6,7 +6,7 @@ import usePageTitle from './hooks/usePageTitle';
 import dayjs from 'dayjs';
 
 export default function App() {
-  usePageTitle('Calendar 日历');
+  usePageTitle('Calendar 移动端日历');
   const [range, setRange] = useState(false);
   // const [value, setValue] = useState([
   // dayjs().format('yyyy-MM-dd'),
