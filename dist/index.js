@@ -1220,9 +1220,9 @@ var LazyLoadElement = /*#__PURE__*/React__default['default'].forwardRef(function
   return !ready ? /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
     ref: elRef,
     style: newStyle
-  })) : /*#__PURE__*/React__default['default'].cloneElement(children, {
+  })) : /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: elRef
-  });
+  }) : children;
 });
 LazyLoadElement.displayName = 'UC-LazyLoadElement';
 
@@ -4956,7 +4956,7 @@ var NumberKeyboard = function NumberKeyboard(props) {
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 
 var _templateObject$x, _templateObject2$4;
-var StyledSwipeAction = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate(-100%);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate(100%);\n    }\n    .center-part {\n      display: block;\n      line-height: 20px;\n      padding: 13px 16px;\n      background: #fff;\n      font-size: 14px;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .swipe-action-item {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"])));
+var StyledSwipeAction = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n  cursor: grab;\n  box-sizing: border-box;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate3d(-100%, 0, 0);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate3d(100%, 0, 0);\n    }\n    .middle-part {\n      width: 100%;\n      box-sizing: border-box;\n      position: relative;\n      height: 44px;\n      padding: 0 16px;\n      display: flex;\n      align-items: center;\n      background: #fff;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .swipe-action-item {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"])));
 var StyledButton$2 = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
 
@@ -5110,7 +5110,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, left.map(function (item, idx) {
     return renderAction(item, idx);
   })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "center-part"
+    className: "middle-part"
   }, children), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: function ref(_ref2) {
       return thisRef.current.rightEl = _ref2;
@@ -5671,7 +5671,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"];
+var _excluded$C = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data"];
 
 var _templateObject$C;
 
@@ -5698,8 +5698,6 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      _props$cols = props.cols,
-      cols = _props$cols === void 0 ? 1 : _props$cols,
       rest = _objectWithoutProperties(props, _excluded$C);
 
   var pickerViewRef = React.useRef();
@@ -5740,7 +5738,6 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,
-    cols: cols,
     value: val,
     onChange: onValueChange,
     onWheelChange: onWheelChange
@@ -8167,17 +8164,41 @@ var locales = /*#__PURE__*/Object.freeze({
   en: en
 });
 
-var _excluded$Q = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
+var _excluded$Q = ["position", "className", "style", "children"];
+
+/** 安全区 */
+var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _objectSpread2$1;
+
+  var _props$position = props.position,
+      position = _props$position === void 0 ? 'bottom' : _props$position,
+      className = props.className,
+      style = props.style,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$Q);
+
+  var styles = _objectSpread2(_objectSpread2({
+    display: 'block',
+    width: '100%'
+  }, style), {}, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, "padding-".concat(position), "constant(safe-area-inset-".concat(position, ")")), _defineProperty(_objectSpread2$1, "padding-".concat(position), "env(safe-area-inset-".concat(position, ")")), _objectSpread2$1));
+
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default']('uc-safe-area', className),
+    style: styles
+  }), children);
+});
+SafeArea.displayName = 'UC-SafeArea';
+
+var _excluded$R = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
 
 var _templateObject$R;
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 
 //#region styled
-var StyledWrap$4 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    border-bottom: 1px solid ", ";\n    font-size: 14px;\n    color: #999;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      padding: 0 15px;\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      .day--today .day__content {\n        background-color: ", ";\n        ", "\n      }\n\n      .day--selected {\n        .day__content {\n          background-color: ", ";\n          color: #fff;\n          ", "\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), border, function (props) {
+var StyledWrap$4 = styled__default['default'].div(_templateObject$R || (_templateObject$R = _taggedTemplateLiteral(["\n  background-color: #fff;\n  user-select: none;\n\n  ul {\n    list-style-type: disc;\n\n    li {\n      display: inline-block;\n      width: 14.28571%;\n      text-align: center;\n      vertical-align: middle;\n    }\n  }\n\n  .head {\n    display: flex;\n    font-size: 14px;\n    color: #999;\n    margin: 0;\n    padding: 0 15px;\n    list-style-type: disc;\n\n    .item {\n      height: 40px;\n      line-height: 40px;\n    }\n    box-shadow: ", ";\n  }\n\n  .body {\n    padding: 10px 0;\n    overflow: auto;\n    max-height: 50vh;\n\n    .month {\n      color: #343434;\n\n      &:before {\n        content: attr(title);\n        display: block;\n        margin: 15px auto;\n        font-size: 17px;\n        font-weight: 500;\n        padding-left: 15px;\n      }\n\n      ul {\n        margin: 0;\n        padding: 0;\n      }\n\n      .day {\n        margin: 10px 0;\n        position: relative;\n        font-size: 16px;\n        cursor: pointer;\n        white-space: nowrap;\n      }\n      .day__content {\n        width: 30px;\n        height: 30px;\n        background-color: transparent;\n        border-radius: 50%;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin: 0 auto;\n      }\n      .day.firstday-1 {\n        margin-left: 14.28571%;\n      }\n      .day.firstday-2 {\n        margin-left: 28.57142%;\n      }\n      .day.firstday-3 {\n        margin-left: 42.85713%;\n      }\n      .day.firstday-4 {\n        margin-left: 57.14284%;\n      }\n      .day.firstday-5 {\n        margin-left: 71.42855%;\n      }\n      .day.firstday-6 {\n        margin-left: 85.71426%;\n      }\n      /* .day--today .day__content {\n        background-color: ", ";\n        ", "\n      } */\n\n      .day--selected {\n        .day__content {\n          ", "\n          ", "\n          color: #fff;\n        }\n      }\n\n      .day--disabled {\n        cursor: auto;\n      }\n      .day--disabled .day__content {\n        color: #bcbcbc;\n      }\n\n      .day--range {\n        background-color: ", ";\n        ", "\n\n        .day__content {\n          background-color: transparent;\n        }\n      }\n\n      .day.range-start.range-end {\n        background-image: none;\n      }\n      .day.range-start:not(.range-end):not(.d6):not(:last-child) {\n        background-image: linear-gradient(\n          to right,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n      .day.range-end:not(.range-start):not(.d7):not(:first-child) {\n        background-image: linear-gradient(\n          to left,\n          transparent 0,\n          transparent 50%,\n          ", " 50%\n        );\n      }\n    }\n  }\n"])), boxShadow, function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
-}, getThemeColorCss('color'), function (props) {
-  return color__default['default'](props.theme.color);
-}, getThemeColorCss('box-shadow', '0 0 4px 0'), function (props) {
+}, getThemeColorCss('color'), getThemeColorCss('background-color'), getThemeColorCss('box-shadow', '0 0 4px 0'), function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
 }, getThemeColorCss('color'), function (props) {
   return color__default['default'](props.theme.color).fade(0.72);
@@ -8197,7 +8218,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       onChange = props.onChange,
       _props$value = props.value,
       value = _props$value === void 0 ? new Date() : _props$value,
-      rest = _objectWithoutProperties(props, _excluded$Q);
+      rest = _objectWithoutProperties(props, _excluded$R);
 
   var max = props.max,
       min = props.min;
@@ -8268,11 +8289,11 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       key: week,
       className: "item"
     }, week);
-  })), /*#__PURE__*/React__default['default'].createElement("div", {
+  })), /*#__PURE__*/React__default['default'].createElement(SafeArea, null, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "body"
   }, arr.map(function (_item, i) {
     return renderMonth(utils.cloneDate(startMonth, 'm', i));
-  })));
+  }))));
 });
 Calendar.displayName = 'UC-Calendar';
 
@@ -8296,7 +8317,7 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   }, deps);
 };
 
-var _excluded$R = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
+var _excluded$S = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
 
 var locales$1 = {
   zh: {
@@ -8367,7 +8388,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       maxYear = _props$maxYear === void 0 ? 2030 : _props$maxYear,
       _props$locale = props.locale,
       locale = _props$locale === void 0 ? 'zh' : _props$locale,
-      rest = _objectWithoutProperties(props, _excluded$R);
+      rest = _objectWithoutProperties(props, _excluded$S);
 
   var _useState = React.useState(getData(minYear, maxYear, locale)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8387,7 +8408,6 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       setVal = _useState4[1];
 
   return /*#__PURE__*/React__default['default'].createElement(Picker, _extends({}, rest, {
-    cols: 3,
     data: list,
     onOk: function onOk(v) {
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));
@@ -9740,7 +9760,7 @@ QRCode.prototype.clear = function () {
 
 QRCode.CorrectLevel = QRErrorCorrectLevel;
 
-var _excluded$S = ["text", "colorDark", "colorLight", "size", "className", "style"];
+var _excluded$T = ["text", "colorDark", "colorLight", "size", "className", "style"];
 
 /** 二维码 */
 var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9753,7 +9773,7 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
       size = _props$size === void 0 ? 128 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$S);
+      rest = _objectWithoutProperties(props, _excluded$T);
 
   var domRef = React.useRef();
   var qrRef = React.useRef();
@@ -9807,7 +9827,7 @@ var useMount = function useMount(fn) {
   }, []);
 };
 
-var _excluded$T = ["children", "onChange", "className", "animated", "keys"];
+var _excluded$U = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$S;
 var StyledWrapper$2 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
@@ -9901,7 +9921,7 @@ var Collapse = function Collapse(_ref2) {
       animated = _ref2.animated,
       _ref2$keys = _ref2.keys,
       keys = _ref2$keys === void 0 ? '' : _ref2$keys,
-      rest = _objectWithoutProperties(_ref2, _excluded$T);
+      rest = _objectWithoutProperties(_ref2, _excluded$U);
 
   var count = React__default['default'].Children.count(children); // 手风琴模式
 
@@ -9989,7 +10009,7 @@ Collapse.displayName = 'UC-Collapse';
 
 Collapse.Item = Item;
 
-var _excluded$U = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+var _excluded$V = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
 /** 进度条 */
 var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10002,7 +10022,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       percent = _props$percent === void 0 ? 0 : _props$percent,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$U);
+      rest = _objectWithoutProperties(props, _excluded$V);
 
   var theme = styled.useTheme() || {};
   var color = theme.color || primary;
@@ -10026,7 +10046,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ProgressBar.displayName = 'UC-ProgressBar';
 
-var _excluded$V = ["children"];
+var _excluded$W = ["children"];
 
 var _templateObject$T;
 var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templateObject$T = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  .content {\n    flex: 0 1 auto;\n  }\n"])));
@@ -10034,7 +10054,7 @@ var StyledWrap$5 = styled__default['default'].div(_templateObject$T || (_templat
 
 var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$V);
+      rest = _objectWithoutProperties(props, _excluded$W);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
     ref: ref,
@@ -10045,7 +10065,7 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 AutoCenter.displayName = 'UC-AutoCenter';
 
-var _excluded$W = ["number", "delay", "className"];
+var _excluded$X = ["number", "delay", "className"];
 
 /** 滚动数字 */
 var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -10053,7 +10073,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 200 : _props$delay,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$W);
+      rest = _objectWithoutProperties(props, _excluded$X);
 
   var spring = web.useSpring({
     from: {
@@ -10071,32 +10091,6 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
   }));
 });
 RollingNumber.displayName = 'UC-RollingNumber';
-
-var _excluded$X = ["position", "className", "style", "children"];
-
-/** 安全区 */
-var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _objectSpread2$1;
-
-  var _props$position = props.position,
-      position = _props$position === void 0 ? 'bottom' : _props$position,
-      className = props.className,
-      style = props.style,
-      children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$X);
-
-  var styles = _objectSpread2(_objectSpread2({
-    display: 'block',
-    width: '100%'
-  }, style), {}, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, "padding-".concat(position), "constant(safe-area-inset-".concat(position, ")")), _defineProperty(_objectSpread2$1, "padding-".concat(position), "env(safe-area-inset-".concat(position, ")")), _objectSpread2$1));
-
-  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
-    ref: ref,
-    className: clsx__default['default']('uc-safe-area', className),
-    style: styles
-  }), children);
-});
-SafeArea.displayName = 'UC-SafeArea';
 
 var _excluded$Y = ["className", "color", "onClick", "duration", "startScale", "children"];
 

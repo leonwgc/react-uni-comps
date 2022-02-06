@@ -1,6 +1,6 @@
 import React from 'react';
 declare type Props = {
-    /** 需要lazyload的组件 */
+    /** 需要lazyload的元素 */
     children: React.ReactElement;
     /** placeholder 宽度 */
     width?: string | number;

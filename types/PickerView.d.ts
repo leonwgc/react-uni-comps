@@ -10,8 +10,6 @@ export declare type DataItem = {
 declare type SimpleDatas = string[] | number[];
 declare type ObjectDatas = DataItem[] | DataItem[][];
 declare type Props = {
-    /** 列数，最多3列,默认1 */
-    cols?: 1 | 2 | 3;
     /** 数据 */
     data?: ObjectDatas | SimpleDatas;
     /** 值 */

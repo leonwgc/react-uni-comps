@@ -132,7 +132,6 @@ var DatePicker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setVal = _f[1];
 
   return /*#__PURE__*/React.createElement(Picker, __assign({}, rest, {
-    cols: 3,
     data: list,
     onOk: function onOk(v) {
       _onOk === null || _onOk === void 0 ? void 0 : _onOk(new Date(v[0], v[1] - 1, v[2]));

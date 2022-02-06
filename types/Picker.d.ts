@@ -9,8 +9,6 @@ export declare type DataItem = {
     children?: DataItem[];
 };
 declare type Props = {
-    /** 列数，最多3列,默认1 */
-    cols?: 1 | 2 | 3;
     /** 数据 */
     data?: DataItem[] | DataItem[][];
     /** 值 */

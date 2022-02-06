@@ -69,9 +69,9 @@ var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return !ready ? /*#__PURE__*/React.createElement("span", __assign({}, rest, {
     ref: elRef,
     style: newStyle
-  })) : /*#__PURE__*/React.cloneElement(children, {
+  })) : /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, {
     ref: elRef
-  });
+  }) : children;
 });
 LazyLoadElement.displayName = 'UC-LazyLoadElement';
 export default LazyLoadElement;

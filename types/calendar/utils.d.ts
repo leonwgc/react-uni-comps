@@ -1,5 +1,5 @@
 declare type DateType = 'y' | 'yyyy' | 'm' | 'mm' | 'd' | 'dd';
-declare type DateOrString = Date | string;
+export declare type DateOrString = Date | string;
 declare const utils: {
     firstDayOfMonth(date: DateOrString): any;
     getDaysInMonth(year: number, month: number): number;

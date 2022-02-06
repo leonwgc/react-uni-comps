@@ -171,8 +171,7 @@ var PickerView = /*#__PURE__*/React.forwardRef(function (props, ref) {
       value = _c === void 0 ? [] : _c,
       _d = props.data,
       data = _d === void 0 ? [] : _d,
-      // cols = 1,
-  rest = __rest(props, ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"]);
+      rest = __rest(props, ["className", "onChange", "onWheelChange", "itemHeight", "value", "data"]);
 
   var cols = 1;
   var cdata = data || []; // 非级联

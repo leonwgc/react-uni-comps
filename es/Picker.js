@@ -69,18 +69,16 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       value = _e === void 0 ? [] : _e,
       _f = props.data,
       data = _f === void 0 ? [] : _f,
-      _g = props.cols,
-      cols = _g === void 0 ? 1 : _g,
-      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data", "cols"]);
+      rest = __rest(props, ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "className", "value", "data"]);
 
   var pickerViewRef = useRef();
   useImperativeHandle(ref, function () {
     return pickerViewRef.current;
   });
 
-  var _h = useState(value),
-      val = _h[0],
-      setVal = _h[1];
+  var _g = useState(value),
+      val = _g[0],
+      setVal = _g[1];
 
   var onChangeRef = useCallbackRef(onChange);
   var onValueChange = useCallback(function (value) {
@@ -110,7 +108,6 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
     itemHeight: itemHeight,
     ref: pickerViewRef,
     data: data,
-    cols: cols,
     value: val,
     onChange: onValueChange,
     onWheelChange: onWheelChange
