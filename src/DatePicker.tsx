@@ -97,7 +97,6 @@ const DatePicker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   return (
     <Picker
       {...rest}
-      cols={3}
       data={list}
       onOk={(v: number[]) => {
         onOk?.(new Date(v[0], v[1] - 1, v[2]));

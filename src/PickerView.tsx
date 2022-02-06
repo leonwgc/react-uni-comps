@@ -23,8 +23,6 @@ type SimpleDatas = string[] | number[];
 type ObjectDatas = DataItem[] | DataItem[][];
 
 type Props = {
-  /** 列数，最多3列,默认1 */
-  cols?: 1 | 2 | 3;
   /** 数据 */
   data?: ObjectDatas | SimpleDatas;
   /** 值 */
@@ -176,7 +174,6 @@ const PickerView = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     itemHeight = 35,
     value = [],
     data = [],
-    // cols = 1,
     ...rest
   } = props;
 

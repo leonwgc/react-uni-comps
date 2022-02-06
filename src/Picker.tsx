@@ -18,8 +18,6 @@ export type DataItem = {
 };
 
 type Props = {
-  /** 列数，最多3列,默认1 */
-  cols?: 1 | 2 | 3;
   /** 数据 */
   data?: DataItem[] | DataItem[][];
   /** 值 */
@@ -87,7 +85,6 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
     className,
     value = [],
     data = [],
-    cols = 1,
     ...rest
   } = props;
 
@@ -134,7 +131,6 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
         itemHeight={itemHeight}
         ref={pickerViewRef}
         data={data}
-        cols={cols}
         value={val}
         onChange={onValueChange}
         onWheelChange={onWheelChange}
