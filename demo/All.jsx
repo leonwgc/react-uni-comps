@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> LazyloadImage
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('LazyloadImage')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Calendar
           </Space>
         }
@@ -446,15 +455,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> LazyloadImage
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('LazyloadImage')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

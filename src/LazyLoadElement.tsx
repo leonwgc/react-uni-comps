@@ -2,7 +2,7 @@ import React, { useRef, useState, useLayoutEffect, useImperativeHandle } from 'r
 import { observe, unobserve } from './defaultIntersectionObserver';
 
 type Props = {
-  /** 需要lazyload的组件 */
+  /** 需要lazyload的元素 */
   children: React.ReactElement;
   /** placeholder 宽度 */
   width?: string | number;
@@ -46,10 +46,12 @@ const LazyLoadElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   return !ready ? (
     <span {...rest} ref={elRef} style={newStyle} />
-  ) : (
+  ) : React.isValidElement(children) ? (
     React.cloneElement(children, {
       ref: elRef,
     })
+  ) : (
+    children
   );
 });
 

@@ -214,6 +214,14 @@ module.exports = [
         name: 'Calendar',
         title: 'Calendar 移动端日历',
       },
+      {
+        name: 'LazyLoadImage',
+        title: 'LazyLoadImage 图片懒加载',
+      },
+      {
+        name: 'LazyLoadElement',
+        title: 'LazyLoadElement 组件懒加载',
+      },
     ],
   },
 
