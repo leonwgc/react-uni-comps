@@ -54,7 +54,7 @@ const StyledWrap = styled.div`
     font-size: 14px;
     color: #999;
     margin: 0;
-    padding: 0 15px;
+    padding: 0;
     list-style-type: disc;
 
     .item {
