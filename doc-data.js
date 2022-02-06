@@ -212,7 +212,7 @@ module.exports = [
       },
       {
         name: 'Calendar',
-        title: 'Calendar 移动端日历',
+        title: 'Calendar 日历',
       },
       {
         name: 'LazyLoadImage',

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Cell, Switch, Toast, Calendar } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
+import usePageTitle from './hooks/usePageTitle';
 import dayjs from 'dayjs';
 
 export default function App() {
+  usePageTitle('Calendar 日历');
   const [range, setRange] = useState(false);
   // const [value, setValue] = useState([
   // dayjs().format('yyyy-MM-dd'),
