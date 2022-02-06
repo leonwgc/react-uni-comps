@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Calendar
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Calendar')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> SwipeAction
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SwipeAction')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> DatePicker
           </Space>
         }
@@ -162,15 +180,6 @@ export default function All() {
         onClick={() => gotoPage('PickerView')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Calendar
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Calendar')}
-      ></Cell>
       <Cell
         label={
           <Space>
@@ -390,15 +399,6 @@ export default function All() {
         onClick={() => gotoPage('Steps')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> SwipeAction
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SwipeAction')}
-      ></Cell>
       <Cell
         label={
           <Space>

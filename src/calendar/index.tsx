@@ -3,10 +3,11 @@ import clsx from 'clsx';
 import styled from 'styled-components';
 import CalendarMonthView from './MonthView';
 import * as locales from './locale';
-import utils from './utils';
+import utils, { DateOrString } from './utils';
 import { getThemeColorCss } from '../themeHelper';
-import { border } from '../vars';
+import { boxShadow } from '../vars';
 import color from 'color';
+import SafeArea from '../SafeArea';
 
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 
@@ -16,11 +17,11 @@ type Props = {
   /**  最大可选日期,默认min+1年*/
   max?: Date;
   /** 值,默认当前日期 */
-  value?: Date | Date[];
+  value?: Date | Date[] | DateOrString | DateOrString[];
   /** 日期选择发生变化时触发的回调函数 */
   onChange?: (value?: Date | Date[]) => void;
   /** 是否选择一段时间范围,默认false */
-  range: boolean;
+  range?: boolean;
   /** 自定义日期渲染函数 */
   dateRender?: (date?: Date) => void;
   /** 日期是否禁止选择 */
@@ -50,7 +51,6 @@ const StyledWrap = styled.div`
 
   .head {
     display: flex;
-    border-bottom: 1px solid ${border};
     font-size: 14px;
     color: #999;
     margin: 0;
@@ -61,6 +61,7 @@ const StyledWrap = styled.div`
       height: 40px;
       line-height: 40px;
     }
+    box-shadow: ${boxShadow};
   }
 
   .body {
@@ -69,7 +70,6 @@ const StyledWrap = styled.div`
     max-height: 50vh;
 
     .month {
-      padding: 0 15px;
       color: #343434;
 
       &:before {
@@ -91,6 +91,7 @@ const StyledWrap = styled.div`
         position: relative;
         font-size: 16px;
         cursor: pointer;
+        white-space: nowrap;
       }
       .day__content {
         width: 30px;
@@ -120,16 +121,16 @@ const StyledWrap = styled.div`
       .day.firstday-6 {
         margin-left: 85.71426%;
       }
-      .day--today .day__content {
+      /* .day--today .day__content {
         background-color: ${(props) => color(props.theme.color).fade(0.72)};
         ${getThemeColorCss('color')}
-      }
+      } */
 
       .day--selected {
         .day__content {
-          background-color: ${(props) => color(props.theme.color)};
-          color: #fff;
+          ${getThemeColorCss('background-color')}
           ${getThemeColorCss('box-shadow', '0 0 4px 0')}
+          color: #fff;
         }
       }
 
@@ -248,9 +249,12 @@ const Calendar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           </li>
         ))}
       </ul>
-      <div className={`body`}>
-        {arr.map((_item, i) => renderMonth(utils.cloneDate(startMonth, 'm', i)))}
-      </div>
+
+      <SafeArea>
+        <div className={`body`}>
+          {arr.map((_item, i) => renderMonth(utils.cloneDate(startMonth, 'm', i)))}
+        </div>
+      </SafeArea>
     </StyledWrap>
   );
 });
