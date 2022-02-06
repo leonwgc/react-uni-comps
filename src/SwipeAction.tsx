@@ -40,6 +40,8 @@ const StyledSwipeAction = styled.div`
   position: relative;
   display: block;
   overflow: hidden;
+  cursor: grab;
+  box-sizing: border-box;
 
   .wrap {
     transition: transform 0.3s ease-in-out;
@@ -56,18 +58,21 @@ const StyledSwipeAction = styled.div`
 
     .left-part {
       left: 0px;
-      transform: translate(-100%);
+      transform: translate3d(-100%, 0, 0);
     }
     .right-part {
       right: 0px;
-      transform: translate(100%);
+      transform: translate3d(100%, 0, 0);
     }
-    .center-part {
-      display: block;
-      line-height: 20px;
-      padding: 13px 16px;
+    .middle-part {
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
       background: #fff;
-      font-size: 14px;
       color: #666;
       box-sizing: border-box;
     }
@@ -239,7 +244,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           {left.map((item, idx) => renderAction(item, idx))}
         </div>
 
-        <div className="center-part">{children}</div>
+        <div className="middle-part">{children}</div>
 
         <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
           {right.map((item, idx) => renderAction(item, idx))}

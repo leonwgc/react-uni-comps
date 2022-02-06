@@ -6,7 +6,7 @@ import { SwipeAction, Toast } from 'react-uni-comps';
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock title="左滑右滑">
+      <DemoBlock title="左滑右滑" padding={0}>
         <SwipeAction
           onOpen={() => {
             console.log('open');
@@ -50,7 +50,7 @@ export default function App() {
         </SwipeAction>
       </DemoBlock>
 
-      <DemoBlock title="只有右边">
+      <DemoBlock title="只有右边" padding={0}>
         <SwipeAction
           right={[
             {
