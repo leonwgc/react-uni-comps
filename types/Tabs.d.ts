@@ -18,21 +18,14 @@ declare type TabsProp = {
     border?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 declare type TabProp = {
+    /** 禁用 */
     disabled?: boolean;
-    title: React.ReactNode;
-    children: React.ReactElement;
+    /** 标题 */
+    title?: React.ReactNode;
+    /** 内容 */
+    children?: React.ReactNode;
 };
-/**
- *  选项卡项，放在Tabs里面
- *
- * @param {*} { children }
- * @return {*}
- */
-declare const Tab: React.FC<TabProp>;
-/**
- * 选项卡切换
- */
-declare const Tabs: React.FC<TabsProp> & {
-    Tab: typeof Tab;
+declare const _default: React.FC<TabsProp> & {
+    Tab: React.FC<TabProp>;
 };
-export default Tabs;
+export default _default;

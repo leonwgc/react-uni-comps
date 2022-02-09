@@ -7,19 +7,9 @@ import IconArrow from './IconArrow';
 import useMount from './hooks/useMount';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { animationNormal } from './vars';
+import { attachPropertiesToComponent } from './util';
 
-type CollapseProps = {
-  /** 子元素*/
-  children: typeof Item[];
-  /** 当前激活 tab 面板的 key, 如果是数组则可以展开多个项，否则只有一个展开项（手风琴模式） */
-  keys?: string[] | string;
-  /** 切换面板的回调 */
-  onChange?: (keys: string[] | string) => void;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 展开动画, 默认false */
-  animated?: boolean;
-};
+type KeysType = Array<string | number> | string | number;
 
 type ItemProps = {
   /** 不可交互状态 */
@@ -29,9 +19,32 @@ type ItemProps = {
   /** 面板key */
   key?: string;
   /** 面板内容 */
-  children?: React.ReactElement;
+  children?: React.ReactNode;
   /** 显示箭头:默认true */
   arrow?: boolean;
+};
+
+/**
+ *  子项，放在Collapse里面
+ *
+ * @param {*}
+ * @return {*}
+ */
+const Item = (props: ItemProps) => {
+  return props.children;
+};
+
+type CollapseProps = {
+  /** 子元素*/
+  children: React.ReactElement<ItemProps>[];
+  /** 当前激活 tab 面板的 key, 如果是数组则可以展开多个项，否则只有一个展开项（手风琴模式） */
+  keys?: KeysType;
+  /** 切换面板的回调 */
+  onChange?: (keys: KeysType) => void;
+  className?: string;
+  style?: React.CSSProperties;
+  /** 展开动画, 默认false */
+  animated?: boolean;
 };
 
 const StyledWrapper = styled.div`
@@ -61,15 +74,6 @@ const StyledWrapper = styled.div`
   }
 `;
 
-/**
- *  子项，放在Collapse里面
- *
- * @param {*} { children }
- * @return {*}
- */
-const Item = ({ children }) => {
-  return children;
-};
 /**
  *  content renderer
  *
@@ -130,7 +134,7 @@ const ItemContent = (props) => {
 /**
  * 折叠面板
  */
-const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
+const Collapse: React.FC<CollapseProps> = ({
   children,
   onChange,
   className,
@@ -141,10 +145,10 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
   const count = React.Children.count(children);
 
   // 手风琴模式
-  const isSingleMode = typeof keys === 'string';
+  const isSingleMode = !Array.isArray(keys);
 
   // inner keys
-  const [_keys, _setKeys] = useState(keys);
+  const [_keys, _setKeys] = useState<KeysType>(keys);
 
   useUpdateEffect(() => {
     _setKeys(keys);
@@ -156,12 +160,14 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
 
   return (
     <StyledWrapper {...rest} className={clsx('uc-collapse', className)}>
-      {React.Children.map(children, (child: ItemProps, index) => {
+      {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child)) {
           let { key } = child;
-          key = key || index + '';
+          key = key || index;
           const { title = '', disabled, arrow = true, children } = child.props as ItemProps;
-          const active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
+          const active = isSingleMode
+            ? _keys === key
+            : (_keys as Array<string | number>).indexOf(key) > -1;
           return (
             <div
               key={key}
@@ -176,16 +182,16 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
                     if (isSingleMode) {
                       keys = '';
                     } else {
-                      const idx = _keys.indexOf(key);
-                      (_keys as string[]).splice(idx, 1);
+                      const idx = (_keys as Array<string | number>).indexOf(key);
+                      (_keys as Array<string | number>).splice(idx, 1);
 
-                      keys = [...(_keys as string[])];
+                      keys = [...(_keys as Array<string | number>)];
                     }
                   } else {
                     if (isSingleMode) {
                       keys = key;
                     } else {
-                      keys = [...(_keys as string[]), key];
+                      keys = [...(_keys as Array<string | number>), key];
                     }
                   }
                   _setKeys(keys);
@@ -216,7 +222,4 @@ const Collapse: React.FC<CollapseProps> & { Item: typeof Item } = ({
 
 Collapse.displayName = 'UC-Collapse';
 
-/** 直接子元素 */
-Collapse.Item = Item;
-
-export default Collapse;
+export default attachPropertiesToComponent(Collapse, { Item });

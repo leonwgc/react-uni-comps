@@ -1,29 +1,30 @@
 import React from 'react';
+declare type KeysType = Array<string | number> | string | number;
+declare type ItemProps = {
+    /** 不可交互状态 */
+    disabled?: boolean;
+    /** 面板头内容 */
+    title?: React.ReactNode | ((active: boolean, disabled: boolean) => React.ReactNode);
+    /** 面板key */
+    key?: string;
+    /** 面板内容 */
+    children?: React.ReactNode;
+    /** 显示箭头:默认true */
+    arrow?: boolean;
+};
 declare type CollapseProps = {
     /** 子元素*/
-    children: typeof Item[];
+    children: React.ReactElement<ItemProps>[];
     /** 当前激活 tab 面板的 key, 如果是数组则可以展开多个项，否则只有一个展开项（手风琴模式） */
-    keys?: string[] | string;
+    keys?: KeysType;
     /** 切换面板的回调 */
-    onChange?: (keys: string[] | string) => void;
+    onChange?: (keys: KeysType) => void;
     className?: string;
     style?: React.CSSProperties;
     /** 展开动画, 默认false */
     animated?: boolean;
 };
-/**
- *  子项，放在Collapse里面
- *
- * @param {*} { children }
- * @return {*}
- */
-declare const Item: ({ children }: {
-    children: any;
-}) => any;
-/**
- * 折叠面板
- */
-declare const Collapse: React.FC<CollapseProps> & {
-    Item: typeof Item;
+declare const _default: React.FC<CollapseProps> & {
+    Item: (props: ItemProps) => React.ReactNode;
 };
-export default Collapse;
+export default _default;

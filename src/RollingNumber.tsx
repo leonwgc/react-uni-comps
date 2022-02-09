@@ -4,7 +4,7 @@ import { useSpring, animated, config } from '@react-spring/web';
 
 type Props = {
   /** 滚动数字 */
-  number: string;
+  number: number;
   /** 延迟开始时间,默认200ms */
   delay?: number;
   className?: string;

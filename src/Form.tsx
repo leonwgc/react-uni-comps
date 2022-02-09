@@ -122,4 +122,4 @@ FormItem.displayName = 'UC-FormItem';
 
 Form.displayName = 'UC-Form';
 
-export default attachPropertiesToComponent(Form, { Item: FormItem });
+export default attachPropertiesToComponent(Form, { /** 表单项 */ Item: FormItem });

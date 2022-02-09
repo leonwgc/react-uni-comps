@@ -24,6 +24,7 @@ type Props = {
   border?: string;
   height?: string | number;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 };
 
 export default function Block({

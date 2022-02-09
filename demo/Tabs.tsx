@@ -52,14 +52,14 @@ const StyledContent = styled.div`
 `;
 
 export default function App() {
-  const [tabTitles, setTabTitles] = useState([{ title: 'tab' }]);
+  const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([{ title: 'tab' }]);
   const maxCount = 5;
   const [value, setValue] = useState(0);
 
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="默认">
-        <Tabs value={value} onChange={setValue}>
+        <Tabs value={value} onChange={(v) => setValue(v)}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
@@ -72,7 +72,7 @@ export default function App() {
         </Tabs>
       </DemoBlock>
       <DemoBlock title="自定义下划线">
-        <Tabs value={value} onChange={setValue} underline="30px">
+        <Tabs value={value} onChange={(v) => setValue(v)} underline="30px">
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
@@ -86,7 +86,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="无下划线">
-        <Tabs underline={false} value={value} onChange={setValue}>
+        <Tabs underline={false} value={value} onChange={(v) => setValue(v)}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
@@ -102,7 +102,7 @@ export default function App() {
       <DemoBlock title="包含extra配置">
         <StyledTabs
           value={value}
-          onChange={setValue}
+          onChange={(v) => setValue(v)}
           extra={
             <Space>
               {tabTitles.length > 1 && (
@@ -123,7 +123,7 @@ export default function App() {
                   circle
                   icon={<Icon type="uc-icon-jia2" />}
                   onClick={() => {
-                    setTabTitles((t) => [...t, { key: tabTitles.length }]);
+                    setTabTitles((t) => [...t, { title: tabTitles.length }]);
                     setValue(tabTitles.length);
                   }}
                 ></Button>
@@ -138,7 +138,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="可滑动">
-        <Tabs swipe value={value} onChange={setValue}>
+        <Tabs swipe value={value} onChange={(v) => setValue(v)}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>

@@ -9,6 +9,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
+import { attachPropertiesToComponent } from './util';
 
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
@@ -30,9 +31,12 @@ type TabsProp = {
 } & React.HTMLAttributes<HTMLElement>;
 
 type TabProp = {
+  /** 禁用 */
   disabled?: boolean;
-  title: React.ReactNode;
-  children: React.ReactElement;
+  /** 标题 */
+  title?: React.ReactNode;
+  /** 内容 */
+  children?: React.ReactNode;
 };
 
 const StyledWrapper = styled.div`
@@ -118,7 +122,7 @@ const StyledTabHeadItem = styled.div<{
  * @return {*}
  */
 const Tab: React.FC<TabProp> = ({ children }) => {
-  return children;
+  return <div>{children}</div>;
 };
 
 //#endregion
@@ -126,7 +130,7 @@ const Tab: React.FC<TabProp> = ({ children }) => {
 /**
  * 选项卡切换
  */
-const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
+const Tabs: React.FC<TabsProp> = ({
   children,
   underline = true,
   value,
@@ -246,17 +250,8 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
       </div>
       <div className={`uc-tabs-content-wrap`} ref={contentWrapElRef}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
-          if (React.isValidElement(child)) {
-            const { children, disabled } = child.props as TabProp;
-            const style: React.CSSProperties = {};
-            if (index !== _v || disabled) {
-              style.display = 'none';
-            }
-            return (
-              <div key={index} style={style}>
-                {children}
-              </div>
-            );
+          if (_v === index && React.isValidElement(child)) {
+            return child;
           }
         })}
       </div>
@@ -264,7 +259,4 @@ const Tabs: React.FC<TabsProp> & { Tab: typeof Tab } = ({
   );
 };
 
-/** Tab直接子元素 */
-Tabs.Tab = Tab;
-
-export default Tabs;
+export default attachPropertiesToComponent(Tabs, { /** 子项 */ Tab });
