@@ -12,7 +12,7 @@ type Props = {
   children: React.ReactElement;
 };
 /** 拖拽 */
-const Drag = React.forwardRef<Element, Props>((props: Props, ref): React.ReactElement => {
+const Drag = React.forwardRef<HTMLElement, Props>((props: Props, ref) => {
   const { children, boundRef } = props;
   const elRef = useRef<HTMLElement>();
 

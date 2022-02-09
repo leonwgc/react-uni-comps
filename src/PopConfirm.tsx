@@ -46,11 +46,11 @@ export type Props = {
   arrow?: boolean;
   /** 显示位置,默认top,参考popover */
   placement?: Placement;
-  children: React.ReactElement;
+  children?: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
   /** 触发方式 */
-  trigger: 'click' | 'hover';
+  trigger?: 'click' | 'hover';
   /** 点击内容区域关闭,默认true */
   closeOnClick?: boolean;
   hoverDelay?: number;
@@ -75,6 +75,7 @@ export type Props = {
   closeOnClickOutside?: boolean;
   /** 展开动画, 默认true */
   animated?: boolean;
+  style?: React.CSSProperties;
 };
 
 /**

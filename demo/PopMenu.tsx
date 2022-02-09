@@ -61,7 +61,7 @@ export default function App() {
     <PageWrap>
       <Cell
         title="动画效果"
-        content={<Switch checked={animated} onChange={setAnimated}></Switch>}
+        content={<Switch checked={animated} onChange={(c) => setAnimated(c)}></Switch>}
       ></Cell>
       <DemoBlock title="自定义菜单">
         <StyledPopMenu
@@ -73,7 +73,7 @@ export default function App() {
           content={
             <div className="list">
               {arr.map((i) => (
-                <Button block>
+                <Button block key={i}>
                   item
                   {i}
                 </Button>

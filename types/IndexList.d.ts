@@ -1,19 +1,17 @@
 import React from 'react';
 declare type Item = {
-    label: React.ReactNode;
+    label?: React.ReactNode;
     value?: string;
-    subItems: Item[];
+    subItems?: Item[];
 };
 declare type Props = {
     className?: string;
+    style?: React.CSSProperties;
     /** 数据 */
-    data: Item[];
+    data?: Item[];
     /** 点击数据项回调 */
     onItemClick?: (item: Omit<Item, 'subItems'>) => void;
 };
 /** 索引列表 */
-declare const IndexList: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-};
+declare const IndexList: React.FC<Props>;
 export default IndexList;

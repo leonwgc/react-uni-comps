@@ -11,7 +11,7 @@ export default function App() {
     <PageWrap>
       <Cell
         title="动画效果"
-        content={<Switch checked={animated} onChange={setAnimated}></Switch>}
+        content={<Switch checked={animated} onChange={(c) => setAnimated(c)}></Switch>}
       ></Cell>
       <DemoBlock title="默认">
         <PopConfirm
@@ -35,6 +35,7 @@ export default function App() {
           icon={<Icon type="uc-icon-yiwen" />}
           title="确定删除吗?"
           okText="ok"
+          closeOnClick={false}
           onOk={() => {
             Toast.show('you clicked ok');
             setTimeout(() => {

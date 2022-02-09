@@ -52,7 +52,7 @@ export default function RightDrawer(props) {
         visible={visible}
         style={{ width: isMobile ? '80vw' : 600 }}
         header={
-          <StyledTabs underline={false} value={index} onChange={setIndex}>
+          <StyledTabs underline={false} value={index} onChange={(i) => setIndex(i)}>
             <Tabs.Tab title="tab1" />
             <Tabs.Tab title="tab2" />
           </StyledTabs>

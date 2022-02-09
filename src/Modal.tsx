@@ -51,7 +51,7 @@ const StyledModal = styled(Popup)`
 `;
 
 /** 对话框,基于Popup */
-const Modal = (props: Props): React.ReactElement => {
+const Modal: React.FC<Props> = (props) => {
   const { closable, visible, onClose, className, header, children, footer, ...rest } = props;
 
   return (

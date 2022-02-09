@@ -11,5 +11,5 @@ declare type Props = {
     children: React.ReactElement;
 };
 /** 拖拽 */
-declare const Drag: React.ForwardRefExoticComponent<Props & React.RefAttributes<Element>>;
+declare const Drag: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLElement>>;
 export default Drag;

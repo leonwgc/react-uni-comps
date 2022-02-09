@@ -37,6 +37,7 @@ export type Props = {
   closeOnClickOutside?: boolean;
   /** 展开动画, 默认true */
   animated?: boolean;
+  style?: React.CSSProperties;
 };
 
 export interface PopMenuRefType {

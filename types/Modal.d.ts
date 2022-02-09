@@ -15,8 +15,5 @@ declare type Props = PopupProps & {
     unmountOnExit?: boolean;
 };
 /** 对话框,基于Popup */
-declare const Modal: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-};
+declare const Modal: React.FC<Props>;
 export default Modal;

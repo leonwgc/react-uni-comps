@@ -126,7 +126,7 @@ export type Props = {
   /** 遮罩class*/
   maskClass?: string;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
-  position: 'top' | 'bottom' | 'left' | 'center' | 'right';
+  position?: 'top' | 'bottom' | 'left' | 'center' | 'right';
   /** 弹出动画时间，默认160ms */
   duration?: number;
   /** 弹框mount位置，默认为document.body */

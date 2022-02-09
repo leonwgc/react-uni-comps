@@ -5,15 +5,16 @@ import Waypoint from './Waypoint';
 import { getThemeColorCss } from './themeHelper';
 
 type Item = {
-  label: React.ReactNode;
+  label?: React.ReactNode;
   value?: string;
-  subItems: Item[];
+  subItems?: Item[];
 };
 
 type Props = {
   className?: string;
+  style?: React.CSSProperties;
   /** 数据 */
-  data: Item[];
+  data?: Item[];
   /** 点击数据项回调 */
   onItemClick?: (item: Omit<Item, 'subItems'>) => void;
 };
@@ -145,7 +146,7 @@ const renderItem = (
 };
 
 /** 索引列表 */
-const IndexList = (props: Props): React.ReactElement => {
+const IndexList: React.FC<Props> = (props) => {
   const { data = [], onItemClick, className } = props;
   const ref = useRef<HTMLDivElement>();
   const [index, setIndex] = useState(0);
