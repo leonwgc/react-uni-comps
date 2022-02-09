@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Collapse, Space, Icon } from 'react-uni-comps';
 
 export default function App() {

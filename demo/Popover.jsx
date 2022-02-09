@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Popover, Button } from 'react-uni-comps';
 
 const placements = [

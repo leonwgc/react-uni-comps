@@ -209,6 +209,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       }}
       className={clsx(
         'uc-btn',
+        'uc-button',
         type,
         {
           disabled: disabled || loading || waiting,

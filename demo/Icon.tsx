@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, styled, Space } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 

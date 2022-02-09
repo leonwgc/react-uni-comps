@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import color from 'color';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Menu } from 'antd';
 import {
   Button,

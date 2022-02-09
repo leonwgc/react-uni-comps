@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Rate, Space, Toast, styled, Icon } from 'react-uni-comps';
 
 const StyledRate = styled(Rate)`

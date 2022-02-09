@@ -14,7 +14,7 @@ import {
   Icon,
 } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import useBgColor from './hooks/useBgColor';
 
 const options2 = [

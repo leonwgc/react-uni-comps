@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import Block from './common/Block';
+import Block from './common/DemoBlock';
 import { Divider } from 'react-uni-comps';
 
 export default function App() {

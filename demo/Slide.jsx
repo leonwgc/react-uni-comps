@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Slide, Switch, Button, Cell } from 'react-uni-comps';
 
 export default function App() {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { NoticeList, Space, styled, Icon } from 'react-uni-comps';
 
 const StyledNoticeList = styled(NoticeList)`

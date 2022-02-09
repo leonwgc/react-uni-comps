@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
-import Wheel, { DataItem } from './Wheel';
+import Wheel from './Wheel';
+import type { DataItem } from './Wheel';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useForceUpdate from './hooks/useForceUpdate';
@@ -13,9 +14,11 @@ import { isObject } from './helper';
 type SimpleDatas = string[] | number[];
 type ObjectDatas = DataItem[] | DataItem[][];
 
+export type DataType = ObjectDatas | SimpleDatas;
+
 type Props = {
   /** 数据 */
-  data?: ObjectDatas | SimpleDatas;
+  data?: DataType;
   /** 值 */
   value?: Array<string | number>;
   /** 值改变回调 */

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Divider, Waypoint } from 'react-uni-comps';
 
 export default function App() {

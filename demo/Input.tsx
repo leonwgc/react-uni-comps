@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
 

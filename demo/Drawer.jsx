@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Tabs, Space, Button, Drawer, styled, isMobile, Modal, AlertDialog } from 'react-uni-comps';
 
 const StyledTabs = styled(Tabs)`

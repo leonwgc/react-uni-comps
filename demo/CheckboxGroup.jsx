@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { CheckboxGroup } from 'react-uni-comps';
 
 const options1 = [

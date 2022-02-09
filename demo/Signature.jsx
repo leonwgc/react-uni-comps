@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Signature, Button, Space } from 'react-uni-comps';
 
 export default function App() {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
 
 const StyledTabsNew = styled(Tabs)`

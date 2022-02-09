@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
-import PickerView, { PickerViewRefType } from './PickerView';
-import { DataItem } from './Wheel';
+import PickerView from './PickerView';
+import type { PickerViewRefType, DataType } from './Pickerview';
+import type { DataItem } from './Wheel';
 import useCallbackRef from './hooks/useCallbackRef';
 
 //#region def
 
 type Props = {
   /** 数据 */
-  data?: DataItem[] | DataItem[][];
+  data?: DataType;
   /** 值 */
   value?: Array<string | number>;
   /** 关闭回调 */

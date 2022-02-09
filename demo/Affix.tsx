@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
-import { Affix, Button, Space } from 'react-uni-comps';
+import DemoBlock from './common/DemoBlock';
+import { Affix, Button } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
   useEffect(() => {
     document.body.style.height = '200vh';
 
-    return () => (document.body.style.height = 'auto');
+    return () => {
+      document.body.style.height = 'auto';
+    };
   }, []);
   return (
     <PageWrap>

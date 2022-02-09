@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Button, Pullup, ScrollToTop, Cell, PullToRefresh } from 'react-uni-comps';
 
 const pageSize = 30;

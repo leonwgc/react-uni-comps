@@ -5,13 +5,10 @@ import React, {
   useRef,
   useState,
   useCallback,
-  useImperativeHandle,
 } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
-
-/**  port from zarm Affix & refactor  */
 
 type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */
@@ -37,10 +34,8 @@ type OffsetInfo = {
 };
 
 /** 将页面元素钉在可视范围*/
-const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
+const Affix: React.FC<Props> = (props: Props) => {
   const { children, offsetTop, offsetBottom, target, onChange, ...rest } = props;
-  const innerRef = useRef<HTMLDivElement>();
-  useImperativeHandle(ref, () => innerRef.current);
 
   const [data, setData] = useState<StateInfo>({
     affixed: false,
@@ -156,24 +151,20 @@ const Affix = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
 
   if (!affixed) {
     return (
-      <div ref={wrapElRef}>
-        {React.cloneElement(children, {
-          ref: innerRef,
-        })}
+      <div ref={wrapElRef} className="uc-affix">
+        {children}
       </div>
     );
   }
 
   return (
-    <div ref={wrapElRef} className={clsx('uc-affix')}>
+    <div ref={wrapElRef} className={clsx('uc-affix', 'affixed')}>
       <div ref={fixedElRef} {...rest} style={getAffixeStyle() as React.CSSProperties}>
-        {React.cloneElement(children, {
-          ref: innerRef,
-        })}
+        {children}
       </div>
     </div>
   );
-});
+};
 
 Affix.displayName = 'UC-Affix';
 

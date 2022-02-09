@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { styled, Space, Modal, Button, isMobile } from 'react-uni-comps';
 
 const StyledModal = styled(Modal)`

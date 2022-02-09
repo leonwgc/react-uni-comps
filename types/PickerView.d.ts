@@ -1,10 +1,11 @@
 import React from 'react';
-import { DataItem } from './Wheel';
+import type { DataItem } from './Wheel';
 declare type SimpleDatas = string[] | number[];
 declare type ObjectDatas = DataItem[] | DataItem[][];
+export declare type DataType = ObjectDatas | SimpleDatas;
 declare type Props = {
     /** 数据 */
-    data?: ObjectDatas | SimpleDatas;
+    data?: DataType;
     /** 值 */
     value?: Array<string | number>;
     /** 值改变回调 */

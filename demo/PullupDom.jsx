@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Pullup, PullToRefresh, Cell, Toast } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满

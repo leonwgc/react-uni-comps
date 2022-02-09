@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Tooltip, Button, Space, styled, Cell, Switch } from 'react-uni-comps';
 
 const StyledToolTip = styled(Tooltip)`

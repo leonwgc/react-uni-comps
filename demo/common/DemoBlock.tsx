@@ -17,15 +17,24 @@ const StyledBlock = styled.div`
   }
 `;
 
+type Props = {
+  title?: string;
+  padding?: string | number;
+  background?: string;
+  border?: string;
+  height?: string | number;
+  children?: React.ReactNode;
+};
+
 export default function Block({
   title = '',
   padding = '12px',
   background = '#fff',
-  border = 'solid 1px #eee',
-  height = 'auto',
+  border,
+  height,
   children,
   ...rest
-}) {
+}: Props) {
   return (
     <StyledBlock {...rest}>
       <div className="title">{title}</div>

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { RollingNumber, AutoCenter } from 'react-uni-comps';
 
 export default function App() {

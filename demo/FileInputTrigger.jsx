@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Space, FileInputTrigger, Button, Icon, ImageViewer, styled } from 'react-uni-comps';
 
 function getBase64(file) {

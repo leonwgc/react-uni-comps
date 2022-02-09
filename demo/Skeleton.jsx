@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { Skeleton, Switch, Space, styled, Avatar, Spin } from 'react-uni-comps';
 
 const StyledContent = styled.div`

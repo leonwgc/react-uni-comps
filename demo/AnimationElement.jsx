@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import { AnimationElement, styled, Space, Button } from 'react-uni-comps';
 import 'animate.css';
 import bird from './images/bird.png';

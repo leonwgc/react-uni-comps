@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import areas from './area';
 import { Toast, Button, Picker, Space, styled } from 'react-uni-comps';
 
@@ -106,11 +106,11 @@ const UnlinkedTwo = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState(['湖北']);
-  const [value1, setValue1] = useState(['北京', '北京2']);
-  const [value2, setValue2] = useState(['310000', '310100', '310110']); //上海杨浦
-  const [value3, setValue3] = useState(['选项二', '选项B']);
-  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState<any>(['湖北']);
+  const [value1, setValue1] = useState<any>(['北京', '北京2']);
+  const [value2, setValue2] = useState<any>(['310000', '310100', '310110']); //上海杨浦
+  const [value3, setValue3] = useState<any>(['选项二', '选项B']);
+  const [visible, setVisible] = useState<any>(false);
 
   return (
     <PageWrap>

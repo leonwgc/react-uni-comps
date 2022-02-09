@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Cell, Switch, Toast, Calendar } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/Block';
+import DemoBlock from './common/DemoBlock';
 import usePageTitle from './hooks/usePageTitle';
 import dayjs from 'dayjs';
 
@@ -25,27 +25,29 @@ export default function App() {
       <DemoBlock title="示例" padding={0}>
         <Cell
           title="禁用"
-          content={<Switch checked={disabled} onChange={setDisabled}></Switch>}
+          content={
+            <Switch checked={disabled} onChange={(checked) => setDisabled(checked)}></Switch>
+          }
           description="周二disabled"
         ></Cell>
         <Cell
           title="自定义渲染"
-          content={<Switch checked={custom} onChange={setCustom}></Switch>}
+          content={<Switch checked={custom} onChange={(checked) => setCustom(checked)}></Switch>}
           description="周末显示打烊"
         ></Cell>
         <Cell
           title="时间段选择"
-          content={<Switch checked={range} onChange={setRange}></Switch>}
+          content={<Switch checked={range} onChange={(checked) => setRange(checked)}></Switch>}
         ></Cell>
         <Cell
           title="最大最小时间"
           description="2021-10-29 ~ 2022-1-04"
-          content={<Switch checked={minMax} onChange={setMinMax}></Switch>}
+          content={<Switch checked={minMax} onChange={(checked) => setMinMax(checked)}></Switch>}
         ></Cell>
         <Cell
           title="中英切换"
           description={isZh ? '中文' : 'English'}
-          content={<Switch checked={isZh} onChange={setIsZh}></Switch>}
+          content={<Switch checked={isZh} onChange={(checked) => setIsZh(checked)}></Switch>}
         ></Cell>
       </DemoBlock>
 

@@ -10,7 +10,7 @@ type Props = {
 };
 
 /** 安全区 */
-const SafeArea = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const SafeArea: React.FC<Props> = (props: Props) => {
   const { position = 'bottom', className, style, children, ...rest } = props;
 
   const styles: React.CSSProperties = {
@@ -22,11 +22,11 @@ const SafeArea = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   return (
-    <div {...rest} ref={ref} className={clsx('uc-safe-area', className)} style={styles}>
+    <div {...rest} className={clsx('uc-safe-area', className)} style={styles}>
       {children}
     </div>
   );
-});
+};
 
 SafeArea.displayName = 'UC-SafeArea';
 
