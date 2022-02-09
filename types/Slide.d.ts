@@ -21,10 +21,10 @@ export declare type Props = {
     /** 动画时间，默认280 */
     duration?: number;
 };
-export interface SlideRefType {
+export declare type SlideRefType = {
     prev: () => void;
     next: () => void;
-}
+};
 /**
  *  轮播
  *

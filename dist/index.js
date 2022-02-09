@@ -2624,7 +2624,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
         }, waitTime);
       }
     },
-    className: clsx__default['default']('uc-btn', type, {
+    className: clsx__default['default']('uc-btn', 'uc-button', type, {
       disabled: disabled || loading || waiting,
       block: block,
       circle: circle,
@@ -2649,20 +2649,20 @@ var SVGProps = {
   height: '1em',
   fill: 'currentColor'
 };
-/** 图标 */
 
-var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+/** 图标 */
+var Icon = function Icon(props) {
   var type = props.type,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$c);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
-    ref: ref,
     className: clsx__default['default']('uc-icon', className, type)
   }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
     xlinkHref: "#".concat(type)
   })));
-});
+};
+
 Icon.displayName = 'UC-Icon';
 /**
  * 加载iconfont.cn图标
@@ -4336,21 +4336,15 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 NoticeBar.displayName = 'UC-NoticeBar';
 
 var _excluded$s = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
-/**  port from zarm Affix & refactor  */
 
 /** 将页面元素钉在可视范围*/
-var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var Affix = function Affix(props) {
   var children = props.children,
       offsetTop = props.offsetTop,
       offsetBottom = props.offsetBottom,
       target = props.target,
       onChange = props.onChange,
       rest = _objectWithoutProperties(props, _excluded$s);
-
-  var innerRef = React.useRef();
-  React.useImperativeHandle(ref, function () {
-    return innerRef.current;
-  });
 
   var _useState = React.useState({
     affixed: false,
@@ -4474,23 +4468,21 @@ var Affix = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   if (!affixed) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      ref: wrapElRef
-    }, /*#__PURE__*/React__default['default'].cloneElement(children, {
-      ref: innerRef
-    }));
+      ref: wrapElRef,
+      className: "uc-affix"
+    }, children);
   }
 
   return /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
-    className: clsx__default['default']('uc-affix')
+    className: clsx__default['default']('uc-affix', 'affixed')
   }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: fixedElRef
   }, rest, {
     style: getAffixeStyle()
-  }), /*#__PURE__*/React__default['default'].cloneElement(children, {
-    ref: innerRef
-  })));
-});
+  }), children));
+};
+
 Affix.displayName = 'UC-Affix';
 
 var _excluded$t = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
@@ -4960,7 +4952,7 @@ var StyledSwipeAction = styled__default['default'].div(_templateObject$x || (_te
 var StyledButton$2 = styled__default['default'](Button)(_templateObject2$4 || (_templateObject2$4 = _taggedTemplateLiteral(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
 
-var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var SwipeAction = function SwipeAction(props) {
   var _props$left = props.left,
       left = _props$left === void 0 ? [] : _props$left,
       _props$right = props.right,
@@ -4986,9 +4978,6 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     rightEl: null,
     leftWidth: 0,
     rightWidth: 0
-  });
-  React.useImperativeHandle(ref, function () {
-    return elRef.current;
   });
   React.useEffect(function () {
     if (isOpen) {
@@ -5119,7 +5108,8 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, right.map(function (item, idx) {
     return renderAction(item, idx);
   }))));
-});
+};
+
 SwipeAction.displayName = 'UC-SwipeAction';
 
 var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
@@ -5128,8 +5118,8 @@ var _templateObject$y;
 var StyledInput = styled__default['default'].div(_templateObject$y || (_templateObject$y = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n\n    &.focused {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
   return color__default['default'](getRootCssVarColor() || props.theme.color || primary).fade(0.85);
 });
-/** 单行/多行输入框 input/textarea */
 
+/** 单行/多行输入框 input/textarea */
 var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       style = props.style,
@@ -7041,7 +7031,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
       rest = _objectWithoutProperties(props, _excluded$H);
 
-  var containerRef = React.useRef();
+  var containerRef = React.useRef(null);
   var wrapElRef = React.useRef();
 
   var _useState = React.useState(function () {
@@ -8187,8 +8177,13 @@ var locales = /*#__PURE__*/Object.freeze({
 
 var _excluded$Q = ["position", "className", "style", "children"];
 
+function upperFirstLetter(str) {
+  return str[0].toUpperCase() + str.slice(1);
+}
 /** 安全区 */
-var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+
+
+var SafeArea = function SafeArea(props) {
   var _objectSpread2$1;
 
   var _props$position = props.position,
@@ -8201,14 +8196,14 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var styles = _objectSpread2(_objectSpread2({
     display: 'block',
     width: '100%'
-  }, style), {}, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, "padding-".concat(position), "constant(safe-area-inset-".concat(position, ")")), _defineProperty(_objectSpread2$1, "padding-".concat(position), "env(safe-area-inset-".concat(position, ")")), _objectSpread2$1));
+  }, style), {}, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, "padding".concat(upperFirstLetter(position)), "constant(safe-area-inset-".concat(position, ")")), _defineProperty(_objectSpread2$1, "padding".concat(upperFirstLetter(position)), "env(safe-area-inset-".concat(position, ")")), _objectSpread2$1));
 
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
-    ref: ref,
     className: clsx__default['default']('uc-safe-area', className),
     style: styles
   }), children);
-});
+};
+
 SafeArea.displayName = 'UC-SafeArea';
 
 var _excluded$R = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];

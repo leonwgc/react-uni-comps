@@ -1,11 +1,4 @@
-import React, {
-  useRef,
-  useImperativeHandle,
-  useLayoutEffect,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useRef, useLayoutEffect, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
@@ -24,7 +17,6 @@ type Props = {
   left?: Action[];
   /** 右边actions */
   right?: Action[];
-  children: React.ReactNode;
   /** 显示回调 */
   onOpen: () => void;
   /** 关闭回调 */
@@ -94,7 +86,7 @@ const StyledButton = styled(Button)`
 `;
 
 /** SwipeAction 滑动操作 */
-const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const SwipeAction: React.FC<Props> = (props) => {
   const {
     left = [],
     right = [],
@@ -115,8 +107,6 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     leftWidth: 0,
     rightWidth: 0,
   });
-
-  useImperativeHandle(ref, () => elRef.current);
 
   useEffect(() => {
     if (isOpen) {
@@ -252,7 +242,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       </div>
     </StyledSwipeAction>
   );
-});
+};
 
 SwipeAction.displayName = 'UC-SwipeAction';
 

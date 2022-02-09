@@ -1,13 +1,14 @@
 import React from 'react';
-import { DateOrString } from './utils';
+import type { DateOrString } from './utils';
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
+export declare type ValueType = Date | Date[] | DateOrString | DateOrString[];
 declare type Props = {
     /**  最小可选日期,默认当前日期*/
-    min?: Date;
+    min?: DateOrString;
     /**  最大可选日期,默认min+1年*/
-    max?: Date;
+    max?: DateOrString;
     /** 值,默认当前日期 */
-    value?: Date | Date[] | DateOrString | DateOrString[];
+    value?: ValueType;
     /** 日期选择发生变化时触发的回调函数 */
     onChange?: (value?: Date | Date[]) => void;
     /** 是否选择一段时间范围,默认false */

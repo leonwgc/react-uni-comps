@@ -10,7 +10,7 @@ var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked
   return cooked;
 };
 
-import React, { useRef, useImperativeHandle, useLayoutEffect, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
@@ -21,7 +21,7 @@ var StyledSwipeAction = styled.div(templateObject_1 || (templateObject_1 = __mak
 var StyledButton = styled(Button)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"], ["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
 
-var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
+var SwipeAction = function SwipeAction(props) {
   var _a = props.left,
       left = _a === void 0 ? [] : _a,
       _b = props.right,
@@ -46,9 +46,6 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
     rightEl: null,
     leftWidth: 0,
     rightWidth: 0
-  });
-  useImperativeHandle(ref, function () {
-    return elRef.current;
   });
   useEffect(function () {
     if (isOpen) {
@@ -179,7 +176,8 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, right.map(function (item, idx) {
     return renderAction(item, idx);
   }))));
-});
+};
+
 SwipeAction.displayName = 'UC-SwipeAction';
 export default SwipeAction;
 var templateObject_1, templateObject_2;

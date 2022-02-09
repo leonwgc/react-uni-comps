@@ -19,10 +19,22 @@ export default function App() {
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="自定义">
-        <Cell label="自动轮播" content={<Switch checked={autoPlay} onChange={setAutoPlay} />} />
-        <Cell label="循环" content={<Switch checked={loop} onChange={setLoop} />} />
-        <Cell label="显示分页指示器" content={<Switch checked={dot} onChange={setDot} />} />
-        <Cell label="水平轮播" content={<Switch checked={isH} onChange={setisH} />} />
+        <Cell
+          label="自动轮播"
+          content={<Switch checked={autoPlay} onChange={(checked) => setAutoPlay(checked)} />}
+        />
+        <Cell
+          label="循环"
+          content={<Switch checked={loop} onChange={(checked) => setLoop(checked)} />}
+        />
+        <Cell
+          label="显示分页指示器"
+          content={<Switch checked={dot} onChange={(checked) => setDot(checked)} />}
+        />
+        <Cell
+          label="水平轮播"
+          content={<Switch checked={isH} onChange={(checked) => setisH(checked)} />}
+        />
         <Slide
           ref={ref}
           loop={loop}

@@ -9,7 +9,6 @@ declare type Props = {
     left?: Action[];
     /** 右边actions */
     right?: Action[];
-    children: React.ReactNode;
     /** 显示回调 */
     onOpen: () => void;
     /** 关闭回调 */
@@ -20,5 +19,5 @@ declare type Props = {
     closeOnClickOutside?: boolean;
 };
 /** SwipeAction 滑动操作 */
-declare const SwipeAction: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+declare const SwipeAction: React.FC<Props>;
 export default SwipeAction;

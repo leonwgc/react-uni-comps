@@ -100,10 +100,10 @@ export type Props = {
   duration?: number;
 };
 
-export interface SlideRefType {
+export type SlideRefType = {
   prev: () => void;
   next: () => void;
-}
+};
 
 const getItems = (children, loop, height) => {
   const items = [].concat(children),
@@ -151,7 +151,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const containerRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const wrapElRef = useRef<HTMLDivElement>();
 

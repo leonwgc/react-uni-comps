@@ -27,24 +27,19 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useEffect, useRef, useState, useCallback, useImperativeHandle } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
 /** 将页面元素钉在可视范围*/
 
-var Affix = /*#__PURE__*/React.forwardRef(function (props, ref) {
+var Affix = function Affix(props) {
   var children = props.children,
       offsetTop = props.offsetTop,
       offsetBottom = props.offsetBottom,
       target = props.target,
       onChange = props.onChange,
       rest = __rest(props, ["children", "offsetTop", "offsetBottom", "target", "onChange"]);
-
-  var innerRef = useRef();
-  useImperativeHandle(ref, function () {
-    return innerRef.current;
-  });
 
   var _a = useState({
     affixed: false,
@@ -167,22 +162,20 @@ var Affix = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   if (!affixed) {
     return /*#__PURE__*/React.createElement("div", {
-      ref: wrapElRef
-    }, /*#__PURE__*/React.cloneElement(children, {
-      ref: innerRef
-    }));
+      ref: wrapElRef,
+      className: "uc-affix"
+    }, children);
   }
 
   return /*#__PURE__*/React.createElement("div", {
     ref: wrapElRef,
-    className: clsx('uc-affix')
+    className: clsx('uc-affix', 'affixed')
   }, /*#__PURE__*/React.createElement("div", __assign({
     ref: fixedElRef
   }, rest, {
     style: getAffixeStyle()
-  }), /*#__PURE__*/React.cloneElement(children, {
-    ref: innerRef
-  })));
-});
+  }), children));
+};
+
 Affix.displayName = 'UC-Affix';
 export default Affix;

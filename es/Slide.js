@@ -106,7 +106,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ratio = _h === void 0 ? 0.1 : _h,
       rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"]);
 
-  var containerRef = useRef();
+  var containerRef = useRef(null);
   var wrapElRef = useRef();
 
   var _j = useState(function () {

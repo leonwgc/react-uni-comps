@@ -183,7 +183,6 @@ export default function App() {
                 />
               }
             />
-            <Input placeholder="" />
             <Button block type="primary" style={{ marginTop: 32 }}>
               登录
             </Button>

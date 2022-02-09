@@ -1,11 +1,4 @@
-import React, {
-  HTMLAttributes,
-  ReactElement,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { HTMLAttributes, useEffect, useRef, useState, useCallback } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
@@ -15,7 +8,6 @@ type Props = {
   offsetTop?: number;
   /** 距离窗口底部达到指定偏移量后触发 */
   offsetBottom?: number;
-  children?: ReactElement;
   /** 固定状态改变时触发的回调函数 */
   onChange?: (affixed) => void;
   /**设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
@@ -34,7 +26,7 @@ type OffsetInfo = {
 };
 
 /** 将页面元素钉在可视范围*/
-const Affix: React.FC<Props> = (props: Props) => {
+const Affix: React.FC<Props> = (props) => {
   const { children, offsetTop, offsetBottom, target, onChange, ...rest } = props;
 
   const [data, setData] = useState<StateInfo>({

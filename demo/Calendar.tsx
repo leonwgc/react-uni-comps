@@ -12,13 +12,15 @@ export default function App() {
   // dayjs().format('yyyy-MM-dd'),
   // dayjs().add(10, 'day').format('yyyy-MM-dd'),
   // ]);
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState<Date | Array<Date>>(new Date());
   const [custom, setCustom] = useState(false);
   const [minMax, setMinMax] = useState(false);
   const [isZh, setIsZh] = useState(true);
   const [disabled, setDisabled] = useState(false);
 
-  const minMaxValue = minMax ? { min: '2021-10-29', max: '2022-1-04' } : null;
+  const minMaxValue: { min: string | Date; max: string | Date } = minMax
+    ? { min: '2021-10-29', max: '2022-1-04' }
+    : null;
 
   return (
     <PageWrap>
@@ -58,7 +60,7 @@ export default function App() {
         locale={isZh ? 'zh' : 'en'}
         {...minMaxValue}
         dateRender={(date) => {
-          if (custom && /(0|6)/.test(date.getDay())) {
+          if (custom && /(0|6)/.test(date.getDay() + '')) {
             return (
               <div style={{ fontSize: 12, color: '#999' }}>
                 <div>打烊</div>
@@ -69,7 +71,7 @@ export default function App() {
         }}
         disabledDate={(date) => {
           // disable 周二
-          if (disabled) return /(2)/.test(date.getDay());
+          if (disabled) return /(2)/.test(date.getDay() + '');
           return false;
         }}
         onChange={(value) => {
@@ -77,8 +79,8 @@ export default function App() {
 
           Toast.show(
             range
-              ? value.map((v) => dayjs(v).format('YYYY-MM-DD')).join('至')
-              : dayjs(value).format('YYYY-MM-DD')
+              ? (value as Date[]).map((v) => dayjs(v).format('YYYY-MM-DD')).join('至')
+              : dayjs(value as Date).format('YYYY-MM-DD')
           );
         }}
       />

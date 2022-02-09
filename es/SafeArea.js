@@ -29,9 +29,14 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React from 'react';
 import clsx from 'clsx';
+
+function upperFirstLetter(str) {
+  return str[0].toUpperCase() + str.slice(1);
+}
 /** 安全区 */
 
-var SafeArea = /*#__PURE__*/React.forwardRef(function (props, ref) {
+
+var SafeArea = function SafeArea(props) {
   var _a;
 
   var _b = props.position,
@@ -44,13 +49,13 @@ var SafeArea = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var styles = __assign(__assign({
     display: 'block',
     width: '100%'
-  }, style), (_a = {}, _a["padding-".concat(position)] = "constant(safe-area-inset-".concat(position, ")"), _a["padding-".concat(position)] = "env(safe-area-inset-".concat(position, ")"), _a));
+  }, style), (_a = {}, _a["padding".concat(upperFirstLetter(position))] = "constant(safe-area-inset-".concat(position, ")"), _a["padding".concat(upperFirstLetter(position))] = "env(safe-area-inset-".concat(position, ")"), _a));
 
   return /*#__PURE__*/React.createElement("div", __assign({}, rest, {
-    ref: ref,
     className: clsx('uc-safe-area', className),
     style: styles
   }), children);
-});
+};
+
 SafeArea.displayName = 'UC-SafeArea';
 export default SafeArea;

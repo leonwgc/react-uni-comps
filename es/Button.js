@@ -90,7 +90,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
         }, waitTime);
       }
     },
-    className: clsx('uc-btn', type, {
+    className: clsx('uc-btn', 'uc-button', type, {
       disabled: disabled || loading || waiting,
       block: block,
       circle: circle,
