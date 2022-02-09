@@ -25,7 +25,7 @@ export default function App() {
     <PageWrap>
       <StyledContent>
         <DemoBlock title="默认">
-          <Checkbox checked={checked} onChange={setChecked}>
+          <Checkbox checked={checked} onChange={(checked) => setChecked(checked)}>
             默认
           </Checkbox>
         </DemoBlock>

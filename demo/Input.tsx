@@ -156,7 +156,7 @@ export default function App() {
       <DemoBlock>
         <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
           <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
-            <Checkbox checked={ime} onChange={setIme}>
+            <Checkbox checked={ime} onChange={(checked) => setIme(checked)}>
               ime mode
             </Checkbox>
             <StyledInput
@@ -183,6 +183,7 @@ export default function App() {
                 />
               }
             />
+            <Input placeholder="" />
             <Button block type="primary" style={{ marginTop: 32 }}>
               登录
             </Button>

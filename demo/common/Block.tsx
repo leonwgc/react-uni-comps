@@ -18,11 +18,11 @@ const StyledBlock = styled.div`
 `;
 
 export default function Block({
-  title,
+  title = '',
   padding = '12px',
   background = '#fff',
-  border,
-  height,
+  border = 'solid 1px #eee',
+  height = 'auto',
   children,
   ...rest
 }) {

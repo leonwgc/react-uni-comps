@@ -1,9 +1,8 @@
 import React from 'react';
-import { Icon, styled, Divider, Space } from 'react-uni-comps';
+import { Icon, styled, Space } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/Block';
 
-// 加载在 iconfont.cn 的图标
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
 const StyledIcon = styled(Icon)`

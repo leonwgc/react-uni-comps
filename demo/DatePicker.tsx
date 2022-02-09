@@ -19,7 +19,7 @@ const StyledPicker = styled(DatePicker)`
 `;
 
 export default function App() {
-  const [v, setV] = useState();
+  const [v, setV] = useState<boolean>();
   const [val, setVal] = useState(new Date());
   return (
     <PageWrap>

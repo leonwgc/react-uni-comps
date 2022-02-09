@@ -7,28 +7,29 @@ import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
 
-export type Props = {
-  readOnly?: boolean;
-  value?: string;
-  defaultValue?: string;
-  /** input左边内容 */
-  prefix?: React.ReactNode;
-  /** input右边内容 */
-  suffix?: React.ReactNode;
-  /** 是否为多行文本输入 */
-  textarea?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 值变化时触发的回调函数 */
-  onChange?: (value: string) => void;
-  onFocus?: () => void;
-  /** textarea 是否高度自适应,默认true */
-  autoHeight?: boolean;
-  /** 处理IME输入法,默认 false */
-  ime?: boolean;
-  /** 是否显示清除按钮,默认false*/
-  clearable?: boolean;
-};
+export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> &
+  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix'> & {
+    readOnly?: boolean;
+    value?: string;
+    defaultValue?: string;
+    /** input左边内容 */
+    prefix?: React.ReactNode;
+    /** input右边内容 */
+    suffix?: React.ReactNode;
+    /** 是否为多行文本输入 */
+    textarea?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    /** 值变化时触发的回调函数 */
+    onChange?: (value: string) => void;
+    onFocus?: () => void;
+    /** textarea 是否高度自适应,默认true */
+    autoHeight?: boolean;
+    /** 处理IME输入法,默认 false */
+    ime?: boolean;
+    /** 是否显示清除按钮,默认false*/
+    clearable?: boolean;
+  };
 
 const StyledInput = styled.div`
   display: flex;
@@ -103,8 +104,10 @@ const StyledInput = styled.div`
   }
 `;
 
+type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
+
 /** 单行/多行输入框 input/textarea */
-const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((props, ref) => {
+const Input = React.forwardRef<RefType, Props>((props, ref) => {
   const {
     className,
     style,
@@ -118,7 +121,7 @@ const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>((p
     clearable,
     ...rest
   } = props;
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
+  const inputRef = useRef<RefType>();
   const isImeModeRef = useRef(false);
   const [compositionValue, setCompositionValue] = useState(value);
   const [focused, setFocused] = useState(false);

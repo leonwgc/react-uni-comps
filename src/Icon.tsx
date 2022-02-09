@@ -8,7 +8,7 @@ type Props = {
   style?: React.CSSProperties;
   /** 图标类型 */
   type: string;
-} & HTMLAttributes<HTMLSpanElement>;
+} & HTMLAttributes<HTMLElement>;
 
 const StyledIcon = styled.span`
   display: inline-block;
@@ -29,25 +29,29 @@ const SVGProps = {
   fill: 'currentColor',
 };
 
-/** 图标 */
-const Icon: React.ForwardRefExoticComponent<Props> & {
+type IconBase = {
   /**
-   * 加载在 iconfont.cn 上自行管理的图标
+   * 加载在 iconfont.cn 上的图标
    *
    * @param {string} scriptUrl
    */
-  loadFromIconfontCN?: (scriptUrl: string) => void;
-} = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
+  loadFromIconfontCN: (scriptUrl: string) => void;
+};
+
+type IconType = IconBase & React.FC<Props>;
+
+/** 图标 */
+const Icon: IconType = (props: Props) => {
   const { type, className, ...rest } = props;
 
   return (
-    <StyledIcon {...rest} ref={ref} className={clsx('uc-icon', className, type)}>
+    <StyledIcon {...rest} className={clsx('uc-icon', className, type)}>
       <svg {...SVGProps}>
         <use xlinkHref={`#${type}`} />
       </svg>
     </StyledIcon>
   );
-});
+};
 
 Icon.displayName = 'UC-Icon';
 /**
