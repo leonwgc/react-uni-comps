@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Input, Form, Button, useCountdown } from 'react-uni-comps';
+import type { FormInstance } from 'react-uni-comps';
 
 export default function App() {
   const { countdown, isRunning, start, isReStarted } = useCountdown(60);
 
   const [result, setResult] = useState(null);
 
+  const ref = useRef<FormInstance>();
+
+  useEffect(() => {
+    console.log(ref.current);
+  }, []);
+
   return (
     <PageWrap>
       <DemoBlock title="登录">
-        <Form onFinish={setResult} toastError>
+        <Form onFinish={setResult} toastError ref={ref}>
           <Form.Item
             name="phone"
             rules={[

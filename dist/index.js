@@ -4148,10 +4148,10 @@ var _excluded$p = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2$1 = ["duration"];
 
 var _templateObject$p;
-var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
+var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
 
-/** 黑背景轻提示 */
-var Toast = /*#__PURE__*/React.forwardRef(function (props, ref) {
+/** 轻提示 */
+var Toast = function Toast(props) {
   var content = props.content,
       visible = props.visible,
       _props$modal = props.modal,
@@ -4166,12 +4166,11 @@ var Toast = /*#__PURE__*/React.forwardRef(function (props, ref) {
       opacity: 0
     }, maskStyle)
   }), /*#__PURE__*/React__default['default'].createElement(StyledToast, _extends({}, rest, {
-    ref: ref,
     className: clsx__default['default']('uc-toast', className)
   }), content)) : null;
-});
+};
+
 var transitionDuration = 240;
-/** 黑背景提示,静态调用 */
 
 Toast.show = function (props) {
   var toastProps = {};
@@ -4193,11 +4192,9 @@ Toast.show = function (props) {
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
-  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
-    duration: transitionDuration
-  }, /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, toastProps, {
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, toastProps, {
     visible: true
-  }))), container);
+  })), container);
   window.setTimeout(function () {
     dispose(beforeDispose);
 
@@ -10620,9 +10617,46 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$_ = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"],
-    _excluded2$4 = ["children", "label", "name"];
+var _excluded$_ = ["children", "label", "name"],
+    _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
+
+var FormItem = function FormItem(props) {
+  var _useContext = React.useContext(FormContext),
+      labelWidth = _useContext.labelWidth,
+      requiredMark = _useContext.requiredMark;
+
+  var children = props.children,
+      label = props.label,
+      name = props.name,
+      fieldProps = _objectWithoutProperties(props, _excluded$_);
+
+  var required = false;
+
+  if ('rules' in fieldProps) {
+    var rules = fieldProps.rules;
+
+    if (Array.isArray(rules)) {
+      required = rules.some(function (rule) {
+        if (rule && _typeof(rule) === 'object' && rule.required) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(Cell, {
+    labelWidth: labelWidth,
+    label: label,
+    "data-name": name,
+    required: requiredMark && required
+  }, /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
+    name: name
+  }, fieldProps), children));
+};
 /** 排列方式 */
+
 
 var FormContext = /*#__PURE__*/React__default['default'].createContext(null);
 /** 表单 */
@@ -10643,7 +10677,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
       _props$scrollIntoErro = props.scrollIntoErrorField,
       scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
-      rest = _objectWithoutProperties(props, _excluded$_);
+      rest = _objectWithoutProperties(props, _excluded2$4);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
@@ -10680,46 +10714,9 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     }
   }, children)));
 });
-
-var FormItem = function FormItem(props) {
-  var _useContext = React.useContext(FormContext),
-      labelWidth = _useContext.labelWidth,
-      requiredMark = _useContext.requiredMark;
-
-  var children = props.children,
-      label = props.label,
-      name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded2$4);
-
-  var required = false;
-
-  if ('rules' in fieldProps) {
-    var rules = fieldProps.rules;
-
-    if (Array.isArray(rules)) {
-      required = rules.some(function (rule) {
-        if (rule && _typeof(rule) === 'object' && rule.required) {
-          return true;
-        }
-
-        return false;
-      });
-    }
-  }
-
-  return /*#__PURE__*/React__default['default'].createElement(Cell, {
-    labelWidth: labelWidth,
-    label: label,
-    "data-name": name,
-    required: requiredMark && required
-  }, /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
-    name: name
-  }, fieldProps), children));
-};
-
 FormItem.displayName = 'UC-FormItem';
 Form.displayName = 'UC-Form';
-Form.Item = FormItem;
+Form['Item'] = FormItem;
 
 Object.keys(reactTransitionGroup).forEach(function (k) {
   if (k !== 'default') Object.defineProperty(exports, k, {

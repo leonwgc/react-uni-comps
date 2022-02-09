@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Ripple, Button, Toast, Space } from 'react-uni-comps';
+import { Ripple, Button, Space } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -15,6 +15,7 @@ export default function App() {
           }}
         ></Ripple>
       </DemoBlock>
+
       <DemoBlock title="按钮">
         <Space>
           <Ripple>
@@ -25,16 +26,7 @@ export default function App() {
           </Ripple>
         </Space>
       </DemoBlock>
-      <DemoBlock title="带点击事件按钮">
-        <Space>
-          <Ripple>
-            <Button onClick={() => Toast.show('hi from button')}>点击波纹效果</Button>
-          </Ripple>
-          <Ripple onClick={() => Toast.show('hi from Ripple')}>
-            <Button type="primary">点击波纹效果1</Button>
-          </Ripple>
-        </Space>
-      </DemoBlock>
+
       <DemoBlock title="波纹颜色">
         <Ripple
           color="red"
@@ -45,10 +37,11 @@ export default function App() {
           }}
         ></Ripple>
       </DemoBlock>
+
       <DemoBlock title="波纹起始缩放大小和动画时间">
         <Ripple
-          startScale={0}
-          duration={180}
+          startScale={0.4}
+          duration={300}
           color="#005cff"
           style={{
             height: 100,

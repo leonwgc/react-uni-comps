@@ -94,3 +94,5 @@ export { nanoid } from 'nanoid';
 export { useSpring, animated, easings } from '@react-spring/web';
 /** form */
 export { default as Form } from './Form';
+/** types */
+export type { FormInstance } from './Form';

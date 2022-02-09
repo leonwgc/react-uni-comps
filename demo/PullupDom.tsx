@@ -26,7 +26,7 @@ const PullupDom = () => {
         if (ref.current > 3) {
           setFinished(true);
         }
-        resolve();
+        resolve(0);
       }, 900);
     });
   };
@@ -44,12 +44,10 @@ const PullupDom = () => {
 
         console.log(ref.current);
 
-        resolve();
+        resolve(0);
       }, 1000);
     });
   };
-
-  const useWindowScroll = false;
 
   return (
     <PageWrap style={{ height: '100vh' }}>

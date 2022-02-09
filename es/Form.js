@@ -36,6 +36,43 @@ import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
 import { isMobile } from './dom';
+
+var FormItem = function FormItem(props) {
+  var _a = useContext(FormContext),
+      labelWidth = _a.labelWidth,
+      requiredMark = _a.requiredMark;
+
+  var children = props.children,
+      label = props.label,
+      name = props.name,
+      fieldProps = __rest(props, ["children", "label", "name"]);
+
+  var required = false;
+
+  if ('rules' in fieldProps) {
+    var rules = fieldProps.rules;
+
+    if (Array.isArray(rules)) {
+      required = rules.some(function (rule) {
+        if (rule && _typeof(rule) === 'object' && rule.required) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+  }
+
+  return /*#__PURE__*/React.createElement(Cell, {
+    labelWidth: labelWidth,
+    label: label,
+    "data-name": name,
+    required: requiredMark && required
+  }, /*#__PURE__*/React.createElement(Field, __assign({
+    name: name
+  }, fieldProps), children));
+};
+
 export var FormContext = /*#__PURE__*/React.createContext(null);
 /** 表单 */
 
@@ -92,44 +129,7 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, children)));
 });
-
-var FormItem = function FormItem(props) {
-  var _a = useContext(FormContext),
-      labelWidth = _a.labelWidth,
-      requiredMark = _a.requiredMark;
-
-  var children = props.children,
-      label = props.label,
-      name = props.name,
-      fieldProps = __rest(props, ["children", "label", "name"]);
-
-  var required = false;
-
-  if ('rules' in fieldProps) {
-    var rules = fieldProps.rules;
-
-    if (Array.isArray(rules)) {
-      required = rules.some(function (rule) {
-        if (rule && _typeof(rule) === 'object' && rule.required) {
-          return true;
-        }
-
-        return false;
-      });
-    }
-  }
-
-  return /*#__PURE__*/React.createElement(Cell, {
-    labelWidth: labelWidth,
-    label: label,
-    "data-name": name,
-    required: requiredMark && required
-  }, /*#__PURE__*/React.createElement(Field, __assign({
-    name: name
-  }, fieldProps), children));
-};
-
 FormItem.displayName = 'UC-FormItem';
 Form.displayName = 'UC-Form';
-Form.Item = FormItem;
+Form['Item'] = FormItem;
 export default Form;

@@ -36,7 +36,7 @@ const App = () => {
         if (ref.current > 3) {
           setFinished(true);
         }
-        resolve();
+        resolve(0);
       }, 500);
     });
   }, []);
@@ -53,7 +53,7 @@ const App = () => {
       setTimeout(() => {
         setList(ar);
 
-        resolve();
+        resolve(0);
       }, 1000);
     });
   }, []);

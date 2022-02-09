@@ -7,6 +7,39 @@ import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
 import { isMobile } from './dom';
+export type { FormInstance } from 'rc-field-form';
+import { attachPropertiesToComponent } from './util';
+
+const FormItem: React.FC<FormItemProps> = (props) => {
+  const { labelWidth, requiredMark } = useContext(FormContext);
+  const { children, label, name, ...fieldProps } = props;
+
+  let required = false;
+  if ('rules' in fieldProps) {
+    const rules = fieldProps.rules;
+    if (Array.isArray(rules)) {
+      required = rules.some((rule) => {
+        if (rule && typeof rule === 'object' && rule.required) {
+          return true;
+        }
+        return false;
+      });
+    }
+  }
+
+  return (
+    <Cell
+      labelWidth={labelWidth}
+      label={label}
+      data-name={name}
+      required={requiredMark && required}
+    >
+      <Field name={name} {...fieldProps}>
+        {children}
+      </Field>
+    </Cell>
+  );
+};
 
 /** 排列方式 */
 type FormLayout = 'vertical' | 'horizontal';
@@ -18,7 +51,7 @@ type FormContextType = {
   requiredMark?: boolean;
 };
 
-export type FormProps = RcFormProps & {
+export type FormProps = Partial<RcFormProps> & {
   /** 控件和控件距离, 默认16 */
   gap?: number;
   /** 字段没有通过验证是否提示错误，移动端默认true */
@@ -26,7 +59,7 @@ export type FormProps = RcFormProps & {
   /** 是否平滑滚动到错误字段，移动端默认true */
   scrollIntoErrorField?: boolean;
   /** 排列方式 */
-  layout: FormLayout;
+  layout?: FormLayout;
   className?: string;
   style?: React.CSSProperties;
 } & FormContextType;
@@ -39,10 +72,7 @@ type FormItemProps = FieldProps & {
 export const FormContext = React.createContext<FormContextType>(null);
 
 /** 表单 */
-const Form: React.ForwardRefExoticComponent<FormProps> & {
-  /** 表单项 */
-  Item?: (props: FormItemProps) => React.ReactElement;
-} = React.forwardRef<FormInstance, FormProps>((props, ref) => {
+const Form = React.forwardRef<FormInstance, FormProps>((props, ref) => {
   const {
     children,
     gap = 16,
@@ -88,41 +118,8 @@ const Form: React.ForwardRefExoticComponent<FormProps> & {
   );
 });
 
-const FormItem = (props: FormItemProps) => {
-  const { labelWidth, requiredMark } = useContext(FormContext);
-  const { children, label, name, ...fieldProps } = props;
-
-  let required = false;
-  if ('rules' in fieldProps) {
-    const rules = fieldProps.rules;
-    if (Array.isArray(rules)) {
-      required = rules.some((rule) => {
-        if (rule && typeof rule === 'object' && rule.required) {
-          return true;
-        }
-        return false;
-      });
-    }
-  }
-
-  return (
-    <Cell
-      labelWidth={labelWidth}
-      label={label}
-      data-name={name}
-      required={requiredMark && required}
-    >
-      <Field name={name} {...fieldProps}>
-        {children}
-      </Field>
-    </Cell>
-  );
-};
-
 FormItem.displayName = 'UC-FormItem';
 
 Form.displayName = 'UC-Form';
 
-Form.Item = FormItem;
-
-export default Form;
+export default attachPropertiesToComponent(Form, { Item: FormItem });

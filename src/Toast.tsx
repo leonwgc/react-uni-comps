@@ -1,16 +1,15 @@
-import React, { forwardRef, ReactNode } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
 import { beforeDisposeGen, Dispose, renderElement } from './dom';
-import TransitionElement from './TransitionElement';
 
 const StyledToast = styled.div`
   z-index: 1000;
   padding: 12px 16px;
   display: inline-block;
   margin: 0 auto;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.75);
   color: #fff;
   border-radius: 2px;
   text-align: center;
@@ -18,14 +17,6 @@ const StyledToast = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  &.from {
-    opacity: 0;
-  }
-
-  &.to {
-    opacity: 1;
-  }
 `;
 
 type Props = {
@@ -56,48 +47,29 @@ type StaticToastProps =
       style?: React.CSSProperties;
       /** 模态时 mask style */
       maskStyle: React.CSSProperties;
-      /* Toast 隐藏后的回调函数 */
+      /** 隐藏后的回调函数 */
       afterClose?: () => void;
     };
 
-/** 黑背景轻提示 */
-const Toast: React.ForwardRefExoticComponent<Props> & {
-  /** 黑背景提示,静态调用 */ show?: (
-    props:
-      | ReactNode
-      | {
-          /** 内容 */
-          content: React.ReactNode;
-          /** 持续显示时间，默认1500ms */
-          duration?: number;
-          /** 模态, 默认true */
-          modal?: boolean;
-          className?: string;
-          /** 容器样式 */
-          style?: React.CSSProperties;
-          /** 模态时 mask style */
-          maskStyle: React.CSSProperties;
-          /* Toast 隐藏后的回调函数 */
-          afterClose?: () => void;
-        }
-  ) => void;
-} = forwardRef<HTMLDivElement, Props>((props, ref) => {
+/** 轻提示 */
+const Toast: React.FC<Props> & {
+  /** 轻提示静态调用 */ show: (props: StaticToastProps) => void;
+} = (props) => {
   const { content, visible, modal = true, maskStyle, className, ...rest } = props;
 
   return visible ? (
     <>
       <Mask visible={modal} style={{ opacity: 0, ...maskStyle }} />
-      <StyledToast {...rest} ref={ref} className={clsx('uc-toast', className)}>
+      <StyledToast {...rest} className={clsx('uc-toast', className)}>
         {content}
       </StyledToast>
     </>
   ) : null;
-});
+};
 
 const transitionDuration = 240;
 
-/** 黑背景提示,静态调用 */
-Toast.show = (props: StaticToastProps | React.ReactNode) => {
+Toast.show = (props: StaticToastProps) => {
   let toastProps = {};
   let _duration = 1500;
 
@@ -117,12 +89,7 @@ Toast.show = (props: StaticToastProps | React.ReactNode) => {
 
   const beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
 
-  const dispose: Dispose = renderElement(
-    <TransitionElement duration={transitionDuration}>
-      <Toast {...toastProps} visible />
-    </TransitionElement>,
-    container
-  );
+  const dispose: Dispose = renderElement(<Toast {...toastProps} visible />, container);
   window.setTimeout(() => {
     dispose(beforeDispose);
     if (isToastProps) {

@@ -41,16 +41,15 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
 import { beforeDisposeGen, renderElement } from './dom';
-import TransitionElement from './TransitionElement';
-var StyledToast = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.85);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n\n  &.from {\n    opacity: 0;\n  }\n\n  &.to {\n    opacity: 1;\n  }\n"])));
-/** 黑背景轻提示 */
+var StyledToast = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"], ["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
+/** 轻提示 */
 
-var Toast = /*#__PURE__*/forwardRef(function (props, ref) {
+var Toast = function Toast(props) {
   var content = props.content,
       visible = props.visible,
       _a = props.modal,
@@ -65,12 +64,11 @@ var Toast = /*#__PURE__*/forwardRef(function (props, ref) {
       opacity: 0
     }, maskStyle)
   }), /*#__PURE__*/React.createElement(StyledToast, __assign({}, rest, {
-    ref: ref,
     className: clsx('uc-toast', className)
   }), content)) : null;
-});
+};
+
 var transitionDuration = 240;
-/** 黑背景提示,静态调用 */
 
 Toast.show = function (props) {
   var toastProps = {};
@@ -92,11 +90,9 @@ Toast.show = function (props) {
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
-  var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
-    duration: transitionDuration
-  }, /*#__PURE__*/React.createElement(Toast, __assign({}, toastProps, {
+  var dispose = renderElement( /*#__PURE__*/React.createElement(Toast, __assign({}, toastProps, {
     visible: true
-  }))), container);
+  })), container);
   window.setTimeout(function () {
     var _a;
 

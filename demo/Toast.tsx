@@ -8,12 +8,12 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="默认">
         <Space>
-          <Button active onClick={() => Toast.show('hello,world')}>
+          <Button outlined onClick={() => Toast.show('hello,world')}>
             默认
           </Button>
 
           <Button
-            active
+            outlined
             onClick={() =>
               Toast.show({
                 content: '隐藏后的回调',
@@ -31,7 +31,7 @@ export default function App() {
       <DemoBlock title="自定义样式">
         <Space wrap size={16}>
           <Button
-            active
+            outlined
             onClick={() =>
               Toast.show({
                 content: (
@@ -49,7 +49,7 @@ export default function App() {
             自定义样式
           </Button>
           <Button
-            active
+            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -63,7 +63,7 @@ export default function App() {
           </Button>
 
           <Button
-            active
+            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -79,7 +79,7 @@ export default function App() {
           </Button>
 
           <Button
-            active
+            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -99,7 +99,7 @@ export default function App() {
 
       <DemoBlock title="自定义内容">
         <Button
-          active
+          outlined
           onClick={() =>
             Toast.show({
               content: (
@@ -120,7 +120,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="非模态">
-        <Button active onClick={() => Toast.show({ content: '非模态', modal: false })}>
+        <Button outlined onClick={() => Toast.show({ content: '非模态', modal: false })}>
           非模态
         </Button>
       </DemoBlock>
