@@ -810,6 +810,28 @@ function toArray(children) {
   });
   return ret;
 }
+/**
+ * attach static props to component
+ *
+ * @export
+ * @template C
+ * @template P
+ * @param {C} component
+ * @param {P} properties
+ * @return {*}  {(C & P)}
+ */
+
+function attachPropertiesToComponent(component, properties) {
+  var ret = component;
+
+  for (var key in properties) {
+    if (properties.hasOwnProperty(key)) {
+      ret[key] = properties[key];
+    }
+  }
+
+  return ret;
+}
 
 var _excluded$1 = ["size", "align", "className", "children", "direction", "split", "style", "wrap"];
 
@@ -2232,7 +2254,7 @@ var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_tem
 
 var Tab = function Tab(_ref) {
   var children = _ref.children;
-  return children;
+  return /*#__PURE__*/React__default['default'].createElement("div", null, children);
 }; //#endregion
 
 /**
@@ -2378,27 +2400,16 @@ var Tabs = function Tabs(_ref2) {
     className: "uc-tabs-content-wrap",
     ref: contentWrapElRef
   }, React__default['default'].Children.map(children, function (child, index) {
-    if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
-      var _ref4 = child.props,
-          _children = _ref4.children,
-          disabled = _ref4.disabled;
-      var style = {};
-
-      if (index !== _v || disabled) {
-        style.display = 'none';
-      }
-
-      return /*#__PURE__*/React__default['default'].createElement("div", {
-        key: index,
-        style: style
-      }, _children);
+    if (_v === index && /*#__PURE__*/React__default['default'].isValidElement(child)) {
+      return child;
     }
   })));
 };
-/** Tab直接子元素 */
 
-
-Tabs.Tab = Tab;
+var Tabs$1 = attachPropertiesToComponent(Tabs, {
+  /** 子项 */
+  Tab: Tab
+});
 
 var _excluded$8 = ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"];
 
@@ -9842,25 +9853,24 @@ var useMount = function useMount(fn) {
 var _excluded$U = ["children", "onChange", "className", "animated", "keys"];
 
 var _templateObject$S;
-var StyledWrapper$2 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
+
 /**
  *  子项，放在Collapse里面
  *
- * @param {*} { children }
+ * @param {*}
  * @return {*}
  */
-
-var Item = function Item(_ref) {
-  var children = _ref.children;
-  return children;
+var Item = function Item(props) {
+  return props.children;
 };
+
+var StyledWrapper$2 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
 /**
  *  content renderer
  *
  * @param {*} props
  * @return {*}
  */
-
 
 var ItemContent = function ItemContent(props) {
   var visible = props.visible,
@@ -9926,18 +9936,18 @@ var ItemContent = function ItemContent(props) {
  */
 
 
-var Collapse = function Collapse(_ref2) {
-  var children = _ref2.children,
-      onChange = _ref2.onChange,
-      className = _ref2.className,
-      animated = _ref2.animated,
-      _ref2$keys = _ref2.keys,
-      keys = _ref2$keys === void 0 ? '' : _ref2$keys,
-      rest = _objectWithoutProperties(_ref2, _excluded$U);
+var Collapse = function Collapse(_ref) {
+  var children = _ref.children,
+      onChange = _ref.onChange,
+      className = _ref.className,
+      animated = _ref.animated,
+      _ref$keys = _ref.keys,
+      keys = _ref$keys === void 0 ? '' : _ref$keys,
+      rest = _objectWithoutProperties(_ref, _excluded$U);
 
   var count = React__default['default'].Children.count(children); // 手风琴模式
 
-  var isSingleMode = typeof keys === 'string'; // inner keys
+  var isSingleMode = !Array.isArray(keys); // inner keys
 
   var _useState = React.useState(keys),
       _useState2 = _slicedToArray(_useState, 2),
@@ -9957,14 +9967,14 @@ var Collapse = function Collapse(_ref2) {
   }), React__default['default'].Children.map(children, function (child, index) {
     if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
       var key = child.key;
-      key = key || index + '';
-      var _ref3 = child.props,
-          _ref3$title = _ref3.title,
-          title = _ref3$title === void 0 ? '' : _ref3$title,
-          _disabled = _ref3.disabled,
-          _ref3$arrow = _ref3.arrow,
-          arrow = _ref3$arrow === void 0 ? true : _ref3$arrow,
-          _children = _ref3.children;
+      key = key || index;
+      var _ref2 = child.props,
+          _ref2$title = _ref2.title,
+          title = _ref2$title === void 0 ? '' : _ref2$title,
+          _disabled = _ref2.disabled,
+          _ref2$arrow = _ref2.arrow,
+          arrow = _ref2$arrow === void 0 ? true : _ref2$arrow,
+          _children = _ref2.children;
 
       var _active = isSingleMode ? _keys === key : _keys.indexOf(key) > -1;
 
@@ -10017,9 +10027,9 @@ var Collapse = function Collapse(_ref2) {
 };
 
 Collapse.displayName = 'UC-Collapse';
-/** 直接子元素 */
-
-Collapse.Item = Item;
+var Collapse$1 = attachPropertiesToComponent(Collapse, {
+  Item: Item
+});
 
 var _excluded$V = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
@@ -10716,7 +10726,10 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 FormItem.displayName = 'UC-FormItem';
 Form.displayName = 'UC-Form';
-Form['Item'] = FormItem;
+var Form$1 = attachPropertiesToComponent(Form, {
+  /** 表单项 */
+  Item: FormItem
+});
 
 Object.keys(reactTransitionGroup).forEach(function (k) {
   if (k !== 'default') Object.defineProperty(exports, k, {
@@ -10774,7 +10787,7 @@ exports.Calendar = Calendar;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
-exports.Collapse = Collapse;
+exports.Collapse = Collapse$1;
 exports.CopyToClipboard = CopyToClipboard;
 exports.DatePicker = DatePicker;
 exports.Divider = Divider;
@@ -10782,7 +10795,7 @@ exports.Drag = Drag;
 exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
-exports.Form = Form;
+exports.Form = Form$1;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;
 exports.IconArrow = IconArrow;
@@ -10826,7 +10839,7 @@ exports.Spin = Spin;
 exports.Steps = Steps;
 exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;
-exports.Tabs = Tabs;
+exports.Tabs = Tabs$1;
 exports.Text = Text;
 exports.ThemeProvider = ThemeProvider;
 exports.Toast = Toast;

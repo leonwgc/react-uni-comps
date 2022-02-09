@@ -36,6 +36,7 @@ import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
 import { isMobile } from './dom';
+import { attachPropertiesToComponent } from './util';
 
 var FormItem = function FormItem(props) {
   var _a = useContext(FormContext),
@@ -131,5 +132,7 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
 });
 FormItem.displayName = 'UC-FormItem';
 Form.displayName = 'UC-Form';
-Form['Item'] = FormItem;
-export default Form;
+export default attachPropertiesToComponent(Form, {
+  /** 表单项 */
+  Item: FormItem
+});

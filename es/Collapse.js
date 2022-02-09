@@ -58,25 +58,25 @@ import IconArrow from './IconArrow';
 import useMount from './hooks/useMount';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { animationNormal } from './vars';
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
+import { attachPropertiesToComponent } from './util';
 /**
  *  子项，放在Collapse里面
  *
- * @param {*} { children }
+ * @param {*}
  * @return {*}
  */
 
-var Item = function Item(_a) {
-  var children = _a.children;
-  return children;
+var Item = function Item(props) {
+  return props.children;
 };
+
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));
 /**
  *  content renderer
  *
  * @param {*} props
  * @return {*}
  */
-
 
 var ItemContent = function ItemContent(props) {
   var visible = props.visible,
@@ -152,7 +152,7 @@ var Collapse = function Collapse(_a) {
 
   var count = React.Children.count(children); // 手风琴模式
 
-  var isSingleMode = typeof keys === 'string'; // inner keys
+  var isSingleMode = !Array.isArray(keys); // inner keys
 
   var _c = useState(keys),
       _keys = _c[0],
@@ -171,7 +171,7 @@ var Collapse = function Collapse(_a) {
   }), React.Children.map(children, function (child, index) {
     if ( /*#__PURE__*/React.isValidElement(child)) {
       var key_1 = child.key;
-      key_1 = key_1 || index + '';
+      key_1 = key_1 || index;
       var _a = child.props,
           _b = _a.title,
           title = _b === void 0 ? '' : _b,
@@ -229,8 +229,7 @@ var Collapse = function Collapse(_a) {
 };
 
 Collapse.displayName = 'UC-Collapse';
-/** 直接子元素 */
-
-Collapse.Item = Item;
-export default Collapse;
+export default attachPropertiesToComponent(Collapse, {
+  Item: Item
+});
 var templateObject_1;

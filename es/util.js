@@ -17,3 +17,25 @@ export function toArray(children) {
   });
   return ret;
 }
+/**
+ * attach static props to component
+ *
+ * @export
+ * @template C
+ * @template P
+ * @param {C} component
+ * @param {P} properties
+ * @return {*}  {(C & P)}
+ */
+
+export function attachPropertiesToComponent(component, properties) {
+  var ret = component;
+
+  for (var key in properties) {
+    if (properties.hasOwnProperty(key)) {
+      ret[key] = properties[key];
+    }
+  }
+
+  return ret;
+}

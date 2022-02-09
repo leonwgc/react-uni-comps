@@ -49,6 +49,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
+import { attachPropertiesToComponent } from './util';
 var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), vars.border);
 var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"], ["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), vars.disabledText, function (props) {
   return props.value * 100 + '%';
@@ -62,7 +63,7 @@ var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __mak
 
 var Tab = function Tab(_a) {
   var children = _a.children;
-  return children;
+  return /*#__PURE__*/React.createElement("div", null, children);
 }; //#endregion
 
 /**
@@ -203,26 +204,14 @@ var Tabs = function Tabs(_a) {
     className: "uc-tabs-content-wrap",
     ref: contentWrapElRef
   }, React.Children.map(children, function (child, index) {
-    if ( /*#__PURE__*/React.isValidElement(child)) {
-      var _a = child.props,
-          children_1 = _a.children,
-          disabled = _a.disabled;
-      var style = {};
-
-      if (index !== _v || disabled) {
-        style.display = 'none';
-      }
-
-      return /*#__PURE__*/React.createElement("div", {
-        key: index,
-        style: style
-      }, children_1);
+    if (_v === index && /*#__PURE__*/React.isValidElement(child)) {
+      return child;
     }
   })));
 };
-/** Tab直接子元素 */
 
-
-Tabs.Tab = Tab;
-export default Tabs;
+export default attachPropertiesToComponent(Tabs, {
+  /** 子项 */
+  Tab: Tab
+});
 var templateObject_1, templateObject_2;
