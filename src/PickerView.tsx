@@ -6,12 +6,13 @@ import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useForceUpdate from './hooks/useForceUpdate';
 import { isObject } from './helper';
+import type { StringOrNumber } from './types';
 
 //#region def
 
 //#region type & helper
 
-type SimpleDatas = string[] | number[];
+type SimpleDatas = StringOrNumber[];
 type ObjectDatas = DataItem[] | DataItem[][];
 
 export type DataType = ObjectDatas | SimpleDatas;
@@ -20,9 +21,9 @@ type Props = {
   /** 数据 */
   data?: DataType;
   /** 值 */
-  value?: Array<string | number>;
+  value?: Array<StringOrNumber>;
   /** 值改变回调 */
-  onChange?: (value: Array<string | number>) => void;
+  onChange?: (value: Array<StringOrNumber>) => void;
   className?: string;
   style?: React.CSSProperties;
   /** 元素高度，默认 35 */
@@ -152,7 +153,7 @@ const getIndexArrayFromValue = (value = [], list, cols = 1) => {
 };
 
 export interface PickerViewRefType {
-  getValue: () => Array<string | number>;
+  getValue: () => Array<StringOrNumber>;
 }
 
 const formatSimpleData = (arr: string[] | number[] = []) => {

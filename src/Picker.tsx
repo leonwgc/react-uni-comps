@@ -7,6 +7,7 @@ import PickerView from './PickerView';
 import type { PickerViewRefType, DataType } from './Pickerview';
 import type { DataItem } from './Wheel';
 import useCallbackRef from './hooks/useCallbackRef';
+import type { StringOrNumber } from './types';
 
 //#region def
 
@@ -14,13 +15,13 @@ type Props = {
   /** 数据 */
   data?: DataType;
   /** 值 */
-  value?: Array<string | number>;
+  value?: Array<StringOrNumber>;
   /** 关闭回调 */
   onClose?: () => void;
   /** 点击确定回调 */
-  onOk?: (value: Array<string | number>) => void;
+  onOk?: (value: Array<StringOrNumber>) => void;
   /** 值改变回调 */
-  onChange?: (value: Array<string | number>) => void;
+  onChange?: (value: Array<StringOrNumber>) => void;
   /** 是否显示 */
   visible?: boolean;
   /** 确定文本 */

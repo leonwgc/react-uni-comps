@@ -1,15 +1,16 @@
 import React from 'react';
 import type { DataItem } from './Wheel';
-declare type SimpleDatas = string[] | number[];
+import type { StringOrNumber } from './types';
+declare type SimpleDatas = StringOrNumber[];
 declare type ObjectDatas = DataItem[] | DataItem[][];
 export declare type DataType = ObjectDatas | SimpleDatas;
 declare type Props = {
     /** 数据 */
     data?: DataType;
     /** 值 */
-    value?: Array<string | number>;
+    value?: Array<StringOrNumber>;
     /** 值改变回调 */
-    onChange?: (value: Array<string | number>) => void;
+    onChange?: (value: Array<StringOrNumber>) => void;
     className?: string;
     style?: React.CSSProperties;
     /** 元素高度，默认 35 */
@@ -20,7 +21,7 @@ declare type Props = {
     labelRender?: (item: DataItem) => React.ReactNode;
 };
 export interface PickerViewRefType {
-    getValue: () => Array<string | number>;
+    getValue: () => Array<StringOrNumber>;
 }
 /** 平铺选择器 */
 declare const PickerView: React.ForwardRefExoticComponent<Props & React.RefAttributes<PickerViewRefType>>;
