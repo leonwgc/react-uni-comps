@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placement } from './types';
+import type { Placement } from './types';
 import { Offset } from './utils/getModalStyle';
 export declare type Props = {
     /** 弹框位置,默认bottom */

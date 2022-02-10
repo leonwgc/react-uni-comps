@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Popover, Button } from 'react-uni-comps';
+import type { Placement } from 'react-uni-comps/es/Popover';
 
 const placements = [
   'top',
@@ -26,7 +27,7 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="气泡式卡片浮层">
         <Popover
-          placement={placements[indexRef.current]}
+          placement={placements[indexRef.current] as Placement}
           visible={visible}
           onClose={() => setVisible(false)}
           content={<div style={{ padding: 16 }}>I'm here ({placements[indexRef.current]})</div>}

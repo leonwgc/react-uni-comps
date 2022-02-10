@@ -4,7 +4,7 @@ import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as vars from './vars';
 
-type SigPadRefProps = {
+export type SigPadRef = {
   /** 获取图片dataURL字符串 */
   getData: () => string;
   /** 清空画布 */
@@ -15,12 +15,12 @@ type SigPadRefProps = {
 
 type Props = {
   /** 画布背景色 */
-  padColor: '';
+  padColor?: string;
   /** 画笔颜色 */
-  penColor: '';
+  penColor?: string;
   className?: string;
   style?: React.CSSProperties;
-} & RefAttributes<SigPadRefProps>;
+} & RefAttributes<SigPadRef>;
 
 const StyledSignature = styled.div`
   position: relative;
@@ -29,7 +29,7 @@ const StyledSignature = styled.div`
 `;
 
 /** 签名 */
-const Signature = React.forwardRef<SigPadRefProps, Props>((props, ref) => {
+const Signature = React.forwardRef<SigPadRef, Props>((props, ref) => {
   const { padColor, penColor, className, ...rest } = props;
   const elRef = useRef<HTMLDivElement>();
   const canvasRef = useRef<HTMLCanvasElement>();

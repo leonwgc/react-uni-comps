@@ -54,6 +54,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Checkbox from './Checkbox';
+import { isObject } from './helper';
 var StyledCheckboxGroup = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""])));
 /** 一组复选框 */
 
@@ -90,27 +91,25 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: ref,
     className: clsx(className, 'uc-checkbox-group')
   }), options.map(function (option) {
-    if (typeof option === 'string') {
-      return /*#__PURE__*/React.createElement(Checkbox, {
-        button: button,
-        disabled: disabled,
-        key: option,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option);
-        },
-        checked: value.indexOf(option) > -1
-      }, option);
+    var item = {};
+
+    if (isObject(option)) {
+      item.label = option.label;
+      item.value = option.value;
     } else {
-      return /*#__PURE__*/React.createElement(Checkbox, {
-        button: button,
-        disabled: disabled,
-        key: option.value,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option.value);
-        },
-        checked: value.indexOf(option.value) > -1
-      }, option.label);
+      item.label = option;
+      item.value = option;
     }
+
+    return /*#__PURE__*/React.createElement(Checkbox, {
+      button: button,
+      disabled: disabled,
+      key: item.value,
+      onChange: function onChange(c) {
+        return onCheckboxChange(c, item.value);
+      },
+      checked: value.indexOf(item.value) > -1
+    }, item.label);
   }));
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';

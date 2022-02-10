@@ -44,6 +44,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Radio from './Radio';
+import { isObject } from './helper';
 var StyledRadioGroup = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""])));
 /** 一组复选框 */
 
@@ -70,27 +71,25 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: ref,
     className: clsx(className, 'uc-checkbox-group')
   }), options.map(function (option) {
-    if (typeof option === 'string') {
-      return /*#__PURE__*/React.createElement(Radio, {
-        button: button,
-        disabled: disabled,
-        key: option,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option);
-        },
-        checked: value === option
-      }, option);
+    var item = {};
+
+    if (isObject(option)) {
+      item.label = option.label;
+      item.value = option.value;
     } else {
-      return /*#__PURE__*/React.createElement(Radio, {
-        button: button,
-        disabled: disabled,
-        key: option.value,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option.value);
-        },
-        checked: value === option.value
-      }, option.label);
+      item.label = option;
+      item.value = option;
     }
+
+    return /*#__PURE__*/React.createElement(Radio, {
+      button: button,
+      disabled: disabled,
+      key: item.value,
+      onChange: function onChange(c) {
+        return onCheckboxChange(c, item.value);
+      },
+      checked: value === item.value
+    }, item.label);
   }));
 });
 RadioGroup.displayName = 'UC-RadioGroup';

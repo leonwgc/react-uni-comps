@@ -2819,27 +2819,25 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
     ref: ref,
     className: clsx__default['default'](className, 'uc-checkbox-group')
   }), options.map(function (option) {
-    if (typeof option === 'string') {
-      return /*#__PURE__*/React__default['default'].createElement(Checkbox, {
-        button: button,
-        disabled: disabled,
-        key: option,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option);
-        },
-        checked: value.indexOf(option) > -1
-      }, option);
+    var item = {};
+
+    if (isObject(option)) {
+      item.label = option.label;
+      item.value = option.value;
     } else {
-      return /*#__PURE__*/React__default['default'].createElement(Checkbox, {
-        button: button,
-        disabled: disabled,
-        key: option.value,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option.value);
-        },
-        checked: value.indexOf(option.value) > -1
-      }, option.label);
+      item.label = option;
+      item.value = option;
     }
+
+    return /*#__PURE__*/React__default['default'].createElement(Checkbox, {
+      button: button,
+      disabled: disabled,
+      key: item.value,
+      onChange: function onChange(c) {
+        return onCheckboxChange(c, item.value);
+      },
+      checked: value.indexOf(item.value) > -1
+    }, item.label);
   }));
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';
@@ -2889,27 +2887,25 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     ref: ref,
     className: clsx__default['default'](className, 'uc-checkbox-group')
   }), options.map(function (option) {
-    if (typeof option === 'string') {
-      return /*#__PURE__*/React__default['default'].createElement(Radio, {
-        button: button,
-        disabled: disabled,
-        key: option,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option);
-        },
-        checked: value === option
-      }, option);
+    var item = {};
+
+    if (isObject(option)) {
+      item.label = option.label;
+      item.value = option.value;
     } else {
-      return /*#__PURE__*/React__default['default'].createElement(Radio, {
-        button: button,
-        disabled: disabled,
-        key: option.value,
-        onChange: function onChange(c) {
-          return onCheckboxChange(c, option.value);
-        },
-        checked: value === option.value
-      }, option.label);
+      item.label = option;
+      item.value = option;
     }
+
+    return /*#__PURE__*/React__default['default'].createElement(Radio, {
+      button: button,
+      disabled: disabled,
+      key: item.value,
+      onChange: function onChange(c) {
+        return onCheckboxChange(c, item.value);
+      },
+      checked: value === item.value
+    }, item.label);
   }));
 });
 RadioGroup.displayName = 'UC-RadioGroup';

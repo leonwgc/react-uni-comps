@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import Icon from '../Icon';
-import { Placement } from './types';
+import type { Placement } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import styled from 'styled-components';
 import clsx from 'clsx';
