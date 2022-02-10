@@ -101,8 +101,13 @@ const getArray = (len: number) => {
   return ar;
 };
 
+export type RefType = {
+  /** 触发获得焦点 */
+  focus: () => void;
+};
+
 /** 密码输入框 */
-const PasswordInput = React.forwardRef<{ focus: () => void }, Props>((props, ref) => {
+const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
   const {
     value = '',
     length = 6,

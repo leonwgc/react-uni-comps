@@ -21,7 +21,7 @@ export default function App() {
     <PageWrap>
       <Cell
         title="动画效果"
-        content={<Switch checked={animated} onChange={setAnimated}></Switch>}
+        content={<Switch checked={animated} onChange={(a) => setAnimated(a)}></Switch>}
       ></Cell>
       <DemoBlock title="不同位置">
         <Space size={16}>

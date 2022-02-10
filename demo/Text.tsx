@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Text, Tooltip, Divider } from 'react-uni-comps';
+import { Text } from 'react-uni-comps';
 
 const text =
   '规定了一个监听目标与边界盒交叉区域的比例值，可以是一个具体的数值或是一组0.0到1.0之间的数组。若指定值为0.0，则意味着监听元素即使与根有1像素交叉，此元素也会被视为可见.';

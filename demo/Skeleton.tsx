@@ -32,7 +32,7 @@ export default function SkeletonDemo() {
       <DemoBlock title="默认">
         <StyledContent>
           <Space>
-            <Switch checked={loading} onChange={setLoading} />
+            <Switch checked={loading} onChange={(v) => setLoading(v)} />
             {loading && <Spin />}加载中...
           </Space>
 
@@ -47,11 +47,9 @@ export default function SkeletonDemo() {
           >
             <div className="article">
               <div className="l">
-                <Avatar
-                  src={
-                    <Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  }
-                />
+                <Avatar>
+                  <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                </Avatar>
               </div>
               <div className="r">
                 <div> 自 2017 年以来，暴雪的每月平均活跃用户基数从 4600 万降至 2600 万</div>

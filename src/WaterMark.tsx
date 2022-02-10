@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 
-// port from antd mobile next
-
 type Props = {
   className?: string;
   style?: React.CSSProperties;
@@ -80,7 +78,7 @@ const StyledWaterMark = styled.div`
 `;
 
 /** 图片/文字水印 */
-const WaterMark = (props: Props): React.ReactNode => {
+const WaterMark: React.FC<Props> = (props) => {
   const {
     style,
     className,

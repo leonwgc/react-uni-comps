@@ -3,18 +3,17 @@ import styled from 'styled-components';
 import SkeletonBase from './SkeletonBase';
 import clsx from 'clsx';
 
-// ref to : https://vant-contrib.gitee.io/vant/#/en-US/skeleton
-
 type Props = {
   /** loading结束渲染的元素 */
-  children: React.ReactNode;
+  children?: React.ReactElement;
   /** 是否显示动画效果，默认显示 */
-  animate?: boolean;
-  row: number /** 几行，默认4行, 最小1行 */;
+  animated?: boolean;
+  /** 几行，默认4行, 最小1行 */
+  row?: number;
   /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */
-  rowWidth: string | string[];
+  rowWidth?: string | string[];
   /** 矩形条高度,默认16px*/
-  rowHeight: number;
+  rowHeight?: number;
   /** 是否显示头像，默认不显示 */
   avatar?: boolean;
   /** 头像大小，默认32px */
@@ -50,9 +49,9 @@ const StyledSkeleton = styled.div`
 `;
 
 /** 骨架屏 */
-const Skeleton = (props: Props): React.ReactNode => {
+const Skeleton: React.FC<Props> = (props) => {
   const {
-    animate = true,
+    animated = true,
     row = 4,
     rowWidth = ['40%', '100%', '100%', '60%'],
     rowHeight = 16,
@@ -87,7 +86,7 @@ const Skeleton = (props: Props): React.ReactNode => {
     avatar ? (
       <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
         <SkeletonBase
-          animate={animate}
+          animated={animated}
           shape="circle"
           className="avatar"
           width={avatarSize}
@@ -95,19 +94,19 @@ const Skeleton = (props: Props): React.ReactNode => {
         />
         <div className="rows">
           {rowWidthAr.map((v, idx) => (
-            <SkeletonBase animate={animate} key={idx} shape="rect" width={v} height={rowHeight} />
+            <SkeletonBase animated={animated} key={idx} shape="rect" width={v} height={rowHeight} />
           ))}
         </div>
       </StyledSkeleton>
     ) : (
       <StyledSkeleton {...rest} className={clsx({ avatar: avatar }, className)}>
         {rowWidthAr.map((v, idx) => (
-          <SkeletonBase animate={animate} key={idx} shape="rect" width={v} height={rowHeight} />
+          <SkeletonBase animated={animated} key={idx} shape="rect" width={v} height={rowHeight} />
         ))}
       </StyledSkeleton>
     )
   ) : (
-    children
+    <>{children}</>
   );
 };
 

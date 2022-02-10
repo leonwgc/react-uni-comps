@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Space, Button, Notify, Icon, isMobile } from 'react-uni-comps';
+import { Space, Button, Notify, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Divider, Waypoint } from 'react-uni-comps';

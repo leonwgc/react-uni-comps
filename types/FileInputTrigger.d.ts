@@ -1,13 +1,18 @@
 import React from 'react';
 declare type Props = {
+    /** 允许上传的附件格式 */
     accept?: string;
+    /** 值变化时触发的回调函数 */
     onChange?: (files: FileList) => void;
-    disabled?: false;
-    multiple?: false;
+    /** 是否禁用 */
+    disabled?: boolean;
+    /** 布尔值，如果出现，则表示用户可以选择多个文件 */
+    multiple?: boolean;
+    /** 捕获图像或视频数据的源 */
     capture?: 'user' | 'environment';
     style?: React.CSSProperties;
     className?: string;
 } & React.HTMLAttributes<HTMLInputElement>;
-/** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
+/** 触发文件上传 */
 declare const FileInputTrigger: (props: Props) => React.ReactElement;
 export default FileInputTrigger;

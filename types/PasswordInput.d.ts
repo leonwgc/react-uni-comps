@@ -19,8 +19,10 @@ declare type Props = {
     /** 自动获取焦点 */
     autoFocus?: boolean;
 };
-/** 密码输入框 */
-declare const PasswordInput: React.ForwardRefExoticComponent<Props & React.RefAttributes<{
+export declare type RefType = {
+    /** 触发获得焦点 */
     focus: () => void;
-}>>;
+};
+/** 密码输入框 */
+declare const PasswordInput: React.ForwardRefExoticComponent<Props & React.RefAttributes<RefType>>;
 export default PasswordInput;

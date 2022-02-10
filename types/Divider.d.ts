@@ -13,5 +13,5 @@ declare type Props = {
     color?: string;
 };
 /** 分割线 */
-declare const Divider: (props: Props) => React.ReactElement;
+declare const Divider: React.FC<Props>;
 export default Divider;

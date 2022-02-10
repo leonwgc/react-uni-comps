@@ -1,9 +1,9 @@
 import React from 'react';
-declare type Step = {
+export declare type Step = {
     /** 标题 */
-    title: string;
+    title?: React.ReactNode;
     /** 步骤的详情描述 */
-    description?: string;
+    description?: React.ReactNode;
     /** 步骤图标的类型 */
     icon?: React.ReactNode;
 };

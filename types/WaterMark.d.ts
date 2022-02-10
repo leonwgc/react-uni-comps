@@ -64,8 +64,5 @@ declare type Props = {
     fontSize?: number | string;
 };
 /** 图片/文字水印 */
-declare const WaterMark: {
-    (props: Props): React.ReactNode;
-    displayName: string;
-};
+declare const WaterMark: React.FC<Props>;
 export default WaterMark;

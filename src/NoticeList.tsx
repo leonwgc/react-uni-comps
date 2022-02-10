@@ -48,9 +48,11 @@ const StyledNoticeList = styled.div`
   }
 `;
 
-type Notice = {
-  text: string;
-  link: string;
+export type Notice = {
+  /** 公告内容 */
+  text: React.ReactNode;
+  /** 链接 */
+  link?: string;
 };
 
 type Props = {
@@ -128,10 +130,10 @@ const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =
             }
           }}
         >
-          {data.map((item) => {
+          {data.map((item, idx) => {
             return (
               <div
-                key={item.text}
+                key={idx}
                 onClick={() => {
                   if (item.link) {
                     location.href = item.link;

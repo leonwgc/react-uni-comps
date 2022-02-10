@@ -9,9 +9,9 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="示例">
-        <Space siz={16} wrap>
+        <Space size={16} wrap>
           <Space>
-            <Switch checked={c} onChange={setC} />
+            <Switch checked={c} onChange={(c) => setC(c)} />
             {c ? 'checked' : 'unchecked'}
           </Space>
 

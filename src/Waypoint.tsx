@@ -36,7 +36,15 @@ const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => elRef.current);
 
-  return <span {...rest} data-role="waypoint" style={{ fontSize: 0 }} ref={elRef}></span>;
+  return (
+    <span
+      {...rest}
+      data-role="waypoint"
+      className="uc-waypoint"
+      style={{ fontSize: 0 }}
+      ref={elRef}
+    ></span>
+  );
 });
 
 Waypoint.displayName = 'UC-Waypoint';

@@ -65,22 +65,24 @@ type Props = {
   className?: string;
 };
 
-type StaticProps = {
-  /** 内容 */
-  content: React.ReactNode;
-  /** 持续显示时间，默认2000ms */
-  duration?: number;
-  /** 内容样式 */
-  style?: React.CSSProperties;
-};
+type StaticProps =
+  | ReactNode
+  | {
+      /** 内容 */
+      content: React.ReactNode;
+      /** 持续显示时间，默认2000ms */
+      duration?: number;
+      /** 内容样式 */
+      style?: React.CSSProperties;
+    };
 
 type Pos = { top: number; height: number; el: HTMLElement };
 
 const allNotifies: Array<Pos> = [];
 
 /** 顶部全局消息通知 */
-const Notify: React.ForwardRefExoticComponent<Props> & {
-  /**顶部全局消息通知静态调用  */ show?: (props: StaticProps | ReactNode) => void;
+const Notify: React.FC<Props> & {
+  /**顶部全局消息通知静态调用  */ show?: (props: StaticProps) => void;
 } = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { content, style, className, ...rest } = props;
   const elRef = useRef<HTMLDivElement>();

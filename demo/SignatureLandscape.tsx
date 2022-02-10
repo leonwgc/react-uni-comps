@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Signature, Button, Space, styled } from 'react-uni-comps';
+import type { SigPadRef } from 'react-uni-comps/es/Signature';
 
 // simulate landscape mode
 
@@ -11,8 +12,8 @@ const StyledOps = styled.div`
 `;
 
 export default function App() {
-  const ref = useRef();
-  const imgRef = useRef();
+  const ref = useRef<SigPadRef>();
+  const imgRef = useRef<HTMLImageElement>();
 
   return (
     <div>

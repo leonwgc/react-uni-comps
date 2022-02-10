@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 type Props = {
   /** 是否显示动画效果，默认显示 */
-  animate?: boolean;
+  animated?: boolean;
   /** 形状：默认 react */
   shape?: 'rect' | 'circle';
   /** 高度，默认16px */
@@ -45,14 +45,14 @@ const StyledSkeletonBase = styled.div`
 
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 const SkeletonBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { animate = true, width, height = 16, shape = 'rect', ...other } = props;
+  const { animated = true, width, height = 16, shape = 'rect', ...other } = props;
   const { style = {}, className = '', ...rest } = other;
 
   return (
     <StyledSkeletonBase
       {...rest}
       ref={ref}
-      className={clsx('uc-skeleton', shape, { pulse: animate }, className)}
+      className={clsx('uc-skeleton', shape, { pulse: animated }, className)}
       style={{ width, height, ...style }}
     />
   );

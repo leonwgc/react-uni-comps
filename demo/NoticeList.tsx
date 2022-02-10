@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { NoticeList, Space, styled, Icon } from 'react-uni-comps';
+import type { Notice } from 'react-uni-comps/es/NoticeList';
 
 const StyledNoticeList = styled(NoticeList)`
   background-color: rgb(251, 248, 220);
@@ -10,7 +11,7 @@ const StyledNoticeList = styled(NoticeList)`
   padding: 0 8px;
 `;
 
-const list = [
+const list: Notice[] = [
   { text: '消息通知1' },
   { text: '消息通知2' },
   { text: '消息通知3' },

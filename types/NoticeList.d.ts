@@ -1,7 +1,9 @@
 import React from 'react';
-declare type Notice = {
-    text: string;
-    link: string;
+export declare type Notice = {
+    /** 公告内容 */
+    text: React.ReactNode;
+    /** 链接 */
+    link?: string;
 };
 /** 多条信息垂直滚动通知栏  */
 declare const NoticeList: React.ForwardRefExoticComponent<{

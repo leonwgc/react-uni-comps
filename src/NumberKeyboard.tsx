@@ -31,7 +31,7 @@ const StyledNumberKeyboard = styled(Popup)`
 `;
 
 /** 数字键盘 */
-const NumberKeyboard = (props: Props): React.ReactElement => {
+const NumberKeyboard: React.FC<Props> = (props) => {
   const {
     visible,
     okText,

@@ -40,14 +40,9 @@ export default function App() {
         <div style={{ marginTop: 24 }}>
           <Space wrap>
             等700ms显示
-            <Spin wait loading={loading} style={{ color: '#005cff', fontSize: 30 }} wait></Spin>
+            <Spin wait loading={loading} style={{ color: '#005cff', fontSize: 30 }}></Spin>
             等1.5s显示
-            <Spin
-              wait={1500}
-              loading={loading}
-              style={{ color: '#005cff', fontSize: 30 }}
-              wait={3000}
-            ></Spin>
+            <Spin wait={1500} loading={loading} style={{ color: '#005cff', fontSize: 30 }}></Spin>
           </Space>
         </div>
       </DemoBlock>

@@ -19,8 +19,5 @@ declare type Props = {
     closeOnMaskClick?: boolean;
 };
 /** 数字键盘 */
-declare const NumberKeyboard: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-};
+declare const NumberKeyboard: React.FC<Props>;
 export default NumberKeyboard;

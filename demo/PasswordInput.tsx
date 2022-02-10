@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import { PasswordInput, Button, Toast } from 'react-uni-comps';
+import { RefType } from 'react-uni-comps/es/PasswordInput';
 
 export default function App() {
   const [v, setV] = useState('');
-  const ref = useRef();
+  const ref = useRef<RefType>();
   return (
     <PageWrap>
       <PasswordInput
