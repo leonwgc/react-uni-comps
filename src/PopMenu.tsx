@@ -21,7 +21,7 @@ export type Props = {
   arrow?: boolean;
   /** 显示位置,默认bottom-right底部,参考popover */
   placement?: Placement;
-  /** 需要tooltip的子元素 */
+  /** 触发元素，如果是组件，需要forwardRef到dom */
   children: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;

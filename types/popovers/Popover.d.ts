@@ -4,7 +4,7 @@ import { Offset } from './utils/getModalStyle';
 export declare type Props = {
     /** 弹框位置,默认bottom */
     placement?: Placement;
-    /** 触发元素 */
+    /** 触发元素，如果是组件，需要forwardRef到dom */
     children: React.ReactElement;
     /** 弹框内容 */
     content?: React.ReactNode;

@@ -51,18 +51,18 @@ var SVGProps = {
 };
 /** 图标 */
 
-var Icon = function Icon(props) {
+var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var type = props.type,
       className = props.className,
       rest = __rest(props, ["type", "className"]);
 
   return /*#__PURE__*/React.createElement(StyledIcon, __assign({}, rest, {
+    ref: ref,
     className: clsx('uc-icon', className, type)
   }), /*#__PURE__*/React.createElement("svg", __assign({}, SVGProps), /*#__PURE__*/React.createElement("use", {
     xlinkHref: "#".concat(type)
   })));
-};
-
+});
 Icon.displayName = 'UC-Icon';
 /**
  * 加载iconfont.cn图标

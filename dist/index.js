@@ -2659,20 +2659,20 @@ var SVGProps = {
   height: '1em',
   fill: 'currentColor'
 };
-
 /** 图标 */
-var Icon = function Icon(props) {
+
+var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var type = props.type,
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$c);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
+    ref: ref,
     className: clsx__default['default']('uc-icon', className, type)
   }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
     xlinkHref: "#".concat(type)
   })));
-};
-
+});
 Icon.displayName = 'UC-Icon';
 /**
  * 加载iconfont.cn图标
