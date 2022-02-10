@@ -14,7 +14,7 @@ declare const CheckboxBase: React.ForwardRefExoticComponent<{
     /** 禁用 */
     disabled?: boolean;
     /** 右侧内容 */
-    children: React.ReactNode;
+    children?: React.ReactNode;
     /** box class */
     className?: string;
     /** box style */

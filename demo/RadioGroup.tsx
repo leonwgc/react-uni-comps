@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Divider, RadioGroup } from 'react-uni-comps';
+import { RadioGroup } from 'react-uni-comps';
 
 const options1 = [
   { label: 'apple', value: 0 },
@@ -10,9 +10,9 @@ const options1 = [
 ];
 
 export default function App() {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string | number>();
   const [options, setOptions] = useState(['item1', 'item2', 'item3']);
-  const [v, setV] = useState(1);
+  const [v, setV] = useState<string | number>(1);
 
   return (
     <PageWrap>

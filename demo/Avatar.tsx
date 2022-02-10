@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Avatar, Divider, Space } from 'react-uni-comps';
+import { Avatar, Space } from 'react-uni-comps';
 
 export default function App() {
   return (

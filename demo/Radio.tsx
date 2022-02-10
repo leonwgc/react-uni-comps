@@ -9,18 +9,16 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Radio checked={checked} onChange={setChecked}>
+        <Radio checked={checked} onChange={(c) => setChecked(c)}>
           默认
         </Radio>
       </DemoBlock>
 
       <DemoBlock title="非受控">
-        <Radio mode="radio" defaultChecked onChange={(c) => console.log(c)}>
+        <Radio defaultChecked onChange={(c) => console.log(c)}>
           非受控
         </Radio>
-        <Radio mode="radio" onChange={(c) => console.log(c)}>
-          非受控
-        </Radio>
+        <Radio onChange={(c) => console.log(c)}>非受控</Radio>
       </DemoBlock>
     </PageWrap>
   );

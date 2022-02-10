@@ -6,10 +6,15 @@ import * as vars from './vars';
 import clsx from 'clsx';
 
 type Action = {
-  text: string;
+  /** 标题  */
+  text?: React.ReactNode;
+  /** 是否为禁用状态  */
   disabled?: boolean;
-  description?: string;
+  /** 描述 */
+  description?: React.ReactNode;
+  /** 颜色 */
   color?: string;
+  /** 点击回调 */
   onClick?: () => void;
 };
 
@@ -115,7 +120,7 @@ const StyledActionSheet = styled(Popup)`
 `;
 
 /** 动作面板 */
-const ActionSheet = (props: Props): React.ReactElement => {
+const ActionSheet: React.FC<Props> = (props) => {
   const {
     visible = false,
     actions = [],

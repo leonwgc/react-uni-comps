@@ -85,9 +85,7 @@ const Animation = () => {
             iterationCount="infinite"
             fillMode="forwards"
           >
-            <Button type="primary" size="large">
-              hello,world
-            </Button>
+            <Button type="primary">hello,world</Button>
           </AnimationElement>
           <AnimationElement duration="2s" iterationCount="infinite" timingFunc="linear" name="fly">
             <StyledBird></StyledBird>

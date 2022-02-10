@@ -9,11 +9,11 @@ type Props = {
   /** 徽标背景色 */
   color?: string;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   style?: React.CSSProperties;
   /** 自定义徽标样式 */
   badgeStyle?: React.CSSProperties;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledBadge = styled.div`
   display: inline-block;
@@ -51,7 +51,7 @@ const StyledBadge = styled.div`
 `;
 
 /** 徽标:右上角添加标记 */
-const Badge = (props: Props): React.ReactNode => {
+const Badge: React.FC<Props> = (props) => {
   const { children, className, content, badgeStyle, ...rest } = props;
 
   return (

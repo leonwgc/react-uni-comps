@@ -1,25 +1,28 @@
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Radio from './Radio';
+import { isObject } from './helper';
 
-type labelValue = {
-  label: string;
-  value: string | number;
+type StringOrNumber = string | number;
+
+type LabelValue = {
+  label?: React.ReactNode;
+  value: StringOrNumber;
 };
 
 type Props = {
   /** 按钮风格，默认false */
   button?: boolean | 'fill' | 'outline';
   /** 受控模式下的默认值 */
-  value?: string;
+  value?: StringOrNumber;
   /** 禁用 */
   disabled?: boolean;
   /** 选项列表 */
-  options?: labelValue[] | string[];
+  options?: LabelValue[] | ReactNode[];
   /** 选项checked改变时回调 */
-  onChange?: (val: string) => void;
+  onChange?: (val: StringOrNumber) => void;
   className?: string;
   style?: React.CSSProperties;
 };
@@ -44,31 +47,27 @@ const RadioGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
     <StyledRadioGroup {...rest} ref={ref} className={clsx(className, 'uc-checkbox-group')}>
       {options.map((option) => {
-        if (typeof option === 'string') {
-          return (
-            <Radio
-              button={button}
-              disabled={disabled}
-              key={option}
-              onChange={(c) => onCheckboxChange(c, option)}
-              checked={value === option}
-            >
-              {option}
-            </Radio>
-          );
+        const item: LabelValue = {} as LabelValue;
+
+        if (isObject(option)) {
+          item.label = (option as LabelValue).label;
+          item.value = (option as LabelValue).value;
         } else {
-          return (
-            <Radio
-              button={button}
-              disabled={disabled}
-              key={option.value}
-              onChange={(c) => onCheckboxChange(c, option.value)}
-              checked={value === option.value}
-            >
-              {option.label}
-            </Radio>
-          );
+          item.label = option;
+          item.value = option as StringOrNumber;
         }
+
+        return (
+          <Radio
+            button={button}
+            disabled={disabled}
+            key={item.value}
+            onChange={(c) => onCheckboxChange(c, item.value)}
+            checked={value === item.value}
+          >
+            {item.label}
+          </Radio>
+        );
       })}
     </StyledRadioGroup>
   );

@@ -1,9 +1,14 @@
 import React, { HTMLAttributes } from 'react';
 declare type Action = {
-    text: string;
+    /** 标题  */
+    text?: React.ReactNode;
+    /** 是否为禁用状态  */
     disabled?: boolean;
-    description?: string;
+    /** 描述 */
+    description?: React.ReactNode;
+    /** 颜色 */
     color?: string;
+    /** 点击回调 */
     onClick?: () => void;
 };
 declare type Props = {
@@ -22,8 +27,5 @@ declare type Props = {
     closeOnMaskClick?: boolean;
 } & HTMLAttributes<HTMLElement>;
 /** 动作面板 */
-declare const ActionSheet: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-};
+declare const ActionSheet: React.FC<Props>;
 export default ActionSheet;

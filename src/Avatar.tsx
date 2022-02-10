@@ -12,7 +12,7 @@ type Props = {
   style?: React.CSSProperties;
   /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledAvatar = styled.div`
   box-sizing: border-box;

@@ -89,7 +89,7 @@ export default function App() {
             autoHeight={false}
             value={v}
             suffix={<span>{v.length}/60</span>}
-            onChange={setV}
+            onChange={(v) => setV(v)}
           />
         </Cell>
         <Cell label="多行文本auto-height">
@@ -99,7 +99,7 @@ export default function App() {
             placeholder="多行文本"
             maxLength={60}
             value={v}
-            onChange={setV}
+            onChange={(v) => setV(v)}
             suffix={<span>{v.length}/60</span>}
           />
         </Cell>
