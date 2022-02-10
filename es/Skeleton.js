@@ -47,8 +47,8 @@ var StyledSkeleton = styled.div(templateObject_1 || (templateObject_1 = __makeTe
 /** 骨架屏 */
 
 var Skeleton = function Skeleton(props) {
-  var _a = props.animate,
-      animate = _a === void 0 ? true : _a,
+  var _a = props.animated,
+      animated = _a === void 0 ? true : _a,
       _b = props.row,
       row = _b === void 0 ? 4 : _b,
       _c = props.rowWidth,
@@ -61,7 +61,7 @@ var Skeleton = function Skeleton(props) {
       className = props.className,
       children = props.children,
       loading = props.loading,
-      rest = __rest(props, ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"]);
+      rest = __rest(props, ["animated", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"]);
 
   if (row < 1) {
     throw new Error('row必须大于等于1,默认4');
@@ -90,7 +90,7 @@ var Skeleton = function Skeleton(props) {
       avatar: avatar
     }, className)
   }), /*#__PURE__*/React.createElement(SkeletonBase, {
-    animate: animate,
+    animated: animated,
     shape: "circle",
     className: "avatar",
     width: avatarSize,
@@ -99,7 +99,7 @@ var Skeleton = function Skeleton(props) {
     className: "rows"
   }, rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React.createElement(SkeletonBase, {
-      animate: animate,
+      animated: animated,
       key: idx,
       shape: "rect",
       width: v,
@@ -111,13 +111,13 @@ var Skeleton = function Skeleton(props) {
     }, className)
   }), rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React.createElement(SkeletonBase, {
-      animate: animate,
+      animated: animated,
       key: idx,
       shape: "rect",
       width: v,
       height: rowHeight
     });
-  })) : children;
+  })) : /*#__PURE__*/React.createElement(React.Fragment, null, children);
 };
 
 export default Skeleton;

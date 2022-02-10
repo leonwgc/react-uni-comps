@@ -39,12 +39,11 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { useRef } from 'react';
 var StyledFileInputTrigger = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"], ["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
-/** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
+/** 触发文件上传 */
 
 var FileInputTrigger = function FileInputTrigger(props) {
   var inputRef = useRef();

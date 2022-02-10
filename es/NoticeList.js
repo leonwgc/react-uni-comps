@@ -125,9 +125,9 @@ var NoticeList = /*#__PURE__*/React.forwardRef(function (props, ref) {
         setData(__spreadArray([], data, true));
       }
     }
-  }, data.map(function (item) {
+  }, data.map(function (item, idx) {
     return /*#__PURE__*/React.createElement("div", {
-      key: item.text,
+      key: idx,
       onClick: function onClick() {
         if (item.link) {
           location.href = item.link;

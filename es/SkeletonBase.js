@@ -46,14 +46,14 @@ var StyledSkeletonBase = styled.div(templateObject_1 || (templateObject_1 = __ma
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
 var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var _a = props.animate,
-      animate = _a === void 0 ? true : _a,
+  var _a = props.animated,
+      animated = _a === void 0 ? true : _a,
       width = props.width,
       _b = props.height,
       height = _b === void 0 ? 16 : _b,
       _c = props.shape,
       shape = _c === void 0 ? 'rect' : _c,
-      other = __rest(props, ["animate", "width", "height", "shape"]);
+      other = __rest(props, ["animated", "width", "height", "shape"]);
 
   var _d = other.style,
       style = _d === void 0 ? {} : _d,
@@ -64,7 +64,7 @@ var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledSkeletonBase, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-skeleton', shape, {
-      pulse: animate
+      pulse: animated
     }, className),
     style: __assign({
       width: width,

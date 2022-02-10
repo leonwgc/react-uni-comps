@@ -63,6 +63,7 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
   return /*#__PURE__*/React.createElement("span", __assign({}, rest, {
     "data-role": "waypoint",
+    className: "uc-waypoint",
     style: {
       fontSize: 0
     },

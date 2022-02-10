@@ -2471,7 +2471,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Cell.displayName = 'UC-Cell';
 
-var _excluded$9 = ["animate", "width", "height", "shape"],
+var _excluded$9 = ["animated", "width", "height", "shape"],
     _excluded2 = ["style", "className"];
 
 var _templateObject$a;
@@ -2479,8 +2479,8 @@ var StyledSkeletonBase = styled__default['default'].div(_templateObject$a || (_t
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
 var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$animate = props.animate,
-      animate = _props$animate === void 0 ? true : _props$animate,
+  var _props$animated = props.animated,
+      animated = _props$animated === void 0 ? true : _props$animated,
       width = props.width,
       _props$height = props.height,
       height = _props$height === void 0 ? 16 : _props$height,
@@ -2497,7 +2497,7 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
   return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-skeleton', shape, {
-      pulse: animate
+      pulse: animated
     }, className),
     style: _objectSpread2({
       width: width,
@@ -2507,16 +2507,15 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
 });
 SkeletonBase.displayName = 'UC-SkeletonBase';
 
-var _excluded$a = ["animate", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
+var _excluded$a = ["animated", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
 
 var _templateObject$b;
-
 var StyledSkeleton = styled__default['default'].div(_templateObject$b || (_templateObject$b = _taggedTemplateLiteral(["\n  .uc-skeleton {\n    &:not(:first-child) {\n      margin-top: 12px;\n    }\n\n    &:nth-child(2) {\n      margin-top: 20px;\n    }\n  }\n\n  &.avatar {\n    display: flex;\n\n    > .avatar {\n      flex: none;\n    }\n\n    > .rows {\n      flex: 1;\n      margin-left: 16px;\n      padding-top: 8px;\n    }\n  }\n"])));
 /** 骨架屏 */
 
 var Skeleton = function Skeleton(props) {
-  var _props$animate = props.animate,
-      animate = _props$animate === void 0 ? true : _props$animate,
+  var _props$animated = props.animated,
+      animated = _props$animated === void 0 ? true : _props$animated,
       _props$row = props.row,
       row = _props$row === void 0 ? 4 : _props$row,
       _props$rowWidth = props.rowWidth,
@@ -2558,7 +2557,7 @@ var Skeleton = function Skeleton(props) {
       avatar: avatar
     }, className)
   }), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-    animate: animate,
+    animated: animated,
     shape: "circle",
     className: "avatar",
     width: avatarSize,
@@ -2567,7 +2566,7 @@ var Skeleton = function Skeleton(props) {
     className: "rows"
   }, rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-      animate: animate,
+      animated: animated,
       key: idx,
       shape: "rect",
       width: v,
@@ -2579,13 +2578,13 @@ var Skeleton = function Skeleton(props) {
     }, className)
   }), rowWidthAr.map(function (v, idx) {
     return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-      animate: animate,
+      animated: animated,
       key: idx,
       shape: "rect",
       width: v,
       height: rowHeight
     });
-  })) : children;
+  })) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, children);
 };
 
 var _excluded$b = ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
@@ -3045,7 +3044,7 @@ var _excluded$j = ["onChange", "disabled", "multiple", "accept", "capture", "chi
 
 var _templateObject$j;
 var StyledFileInputTrigger = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
-/** 弹出选择文件窗口, 代替input.file使用，表层是div,可自定义样式，也可包裹一个组件,按包裹组件呈现 */
+/** 触发文件上传 */
 
 var FileInputTrigger = function FileInputTrigger(props) {
   var inputRef = React.useRef();
@@ -3124,6 +3123,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
   });
   return /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
     "data-role": "waypoint",
+    className: "uc-waypoint",
     style: {
       fontSize: 0
     },
@@ -4726,9 +4726,8 @@ var getArray = function getArray(len) {
 
   return ar;
 };
+
 /** 密码输入框 */
-
-
 var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -6948,9 +6947,9 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
         setData(_toConsumableArray(data));
       }
     }
-  }, data.map(function (item) {
+  }, data.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      key: item.text,
+      key: idx,
       onClick: function onClick() {
         if (item.link) {
           location.href = item.link;
@@ -7313,7 +7312,6 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
 ProgressCircle.displayName = 'UC-ProgressCircle';
 
 var _templateObject$J;
-
 var StyledWaterMark = styled__default['default'].div(_templateObject$J || (_templateObject$J = _taggedTemplateLiteral(["\n  position: fixed;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  pointer-events: none;\n  background-repeat: repeat;\n"])));
 /** 图片/文字水印 */
 
