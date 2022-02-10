@@ -63,7 +63,7 @@ var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __mak
 
 var Tab = function Tab(_a) {
   var children = _a.children;
-  return /*#__PURE__*/React.createElement("div", null, children);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, children);
 }; //#endregion
 
 /**

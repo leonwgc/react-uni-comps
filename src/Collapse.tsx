@@ -8,8 +8,9 @@ import useMount from './hooks/useMount';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { animationNormal } from './vars';
 import { attachPropertiesToComponent } from './util';
+import type { StringOrNumber } from './types';
 
-type KeysType = Array<string | number> | string | number;
+type KeysType = Array<StringOrNumber> | StringOrNumber;
 
 type ItemProps = {
   /** 不可交互状态 */
@@ -17,7 +18,7 @@ type ItemProps = {
   /** 面板头内容 */
   title?: React.ReactNode | ((active: boolean, disabled: boolean) => React.ReactNode);
   /** 面板key */
-  key?: string;
+  key?: StringOrNumber;
   /** 面板内容 */
   children?: React.ReactNode;
   /** 显示箭头:默认true */
@@ -30,8 +31,8 @@ type ItemProps = {
  * @param {*}
  * @return {*}
  */
-const Item = (props: ItemProps) => {
-  return props.children;
+const Item: React.FC<ItemProps> = (props) => {
+  return <>{props.children}</>;
 };
 
 type CollapseProps = {
@@ -167,7 +168,7 @@ const Collapse: React.FC<CollapseProps> = ({
           const { title = '', disabled, arrow = true, children } = child.props as ItemProps;
           const active = isSingleMode
             ? _keys === key
-            : (_keys as Array<string | number>).indexOf(key) > -1;
+            : (_keys as Array<StringOrNumber>).indexOf(key) > -1;
           return (
             <div
               key={key}
@@ -182,16 +183,16 @@ const Collapse: React.FC<CollapseProps> = ({
                     if (isSingleMode) {
                       keys = '';
                     } else {
-                      const idx = (_keys as Array<string | number>).indexOf(key);
-                      (_keys as Array<string | number>).splice(idx, 1);
+                      const idx = (_keys as Array<StringOrNumber>).indexOf(key);
+                      (_keys as Array<StringOrNumber>).splice(idx, 1);
 
-                      keys = [...(_keys as Array<string | number>)];
+                      keys = [...(_keys as Array<StringOrNumber>)];
                     }
                   } else {
                     if (isSingleMode) {
                       keys = key;
                     } else {
-                      keys = [...(_keys as Array<string | number>), key];
+                      keys = [...(_keys as Array<StringOrNumber>), key];
                     }
                   }
                   _setKeys(keys);

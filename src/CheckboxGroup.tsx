@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Checkbox from './Checkbox';
 import { isObject } from './helper';
-
-type StringOrNumber = string | number;
+import type { StringOrNumber } from './types';
 
 type LabelValue = {
   label?: React.ReactNode;

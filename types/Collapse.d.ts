@@ -1,12 +1,13 @@
 import React from 'react';
-declare type KeysType = Array<string | number> | string | number;
+import type { StringOrNumber } from './types';
+declare type KeysType = Array<StringOrNumber> | StringOrNumber;
 declare type ItemProps = {
     /** 不可交互状态 */
     disabled?: boolean;
     /** 面板头内容 */
     title?: React.ReactNode | ((active: boolean, disabled: boolean) => React.ReactNode);
     /** 面板key */
-    key?: string;
+    key?: StringOrNumber;
     /** 面板内容 */
     children?: React.ReactNode;
     /** 显示箭头:默认true */
@@ -25,6 +26,6 @@ declare type CollapseProps = {
     animated?: boolean;
 };
 declare const _default: React.FC<CollapseProps> & {
-    Item: (props: ItemProps) => React.ReactNode;
+    Item: React.FC<ItemProps>;
 };
 export default _default;

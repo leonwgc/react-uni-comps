@@ -47,9 +47,11 @@ const StyledTabs = styled(Tabs)`
 `;
 
 const StyledContent = styled.div`
-  padding: 30px 20px;
+  padding: 10px;
   background-color: #eee;
 `;
+
+const scrollTabs = Array.from(new Array(10), (v, i) => ({ title: 'title' + (i + 1) }));
 
 export default function App() {
   const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([{ title: 'tab' }]);
@@ -162,6 +164,14 @@ export default function App() {
           <Tabs.Tab title="title3">
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
+        </Tabs>
+      </DemoBlock>
+
+      <DemoBlock title="滚动">
+        <Tabs defaultValue={2} onChange={console.log}>
+          {scrollTabs.map((item, index) => (
+            <Tabs.Tab title={item.title} key={index}></Tabs.Tab>
+          ))}
         </Tabs>
       </DemoBlock>
 

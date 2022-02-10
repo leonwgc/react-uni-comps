@@ -11,14 +11,23 @@ import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 
+type ItemProp = {
+  /** 禁用 */
+  disabled?: boolean;
+  /** 标题 */
+  title?: React.ReactNode;
+  /** 内容 */
+  children?: React.ReactNode;
+};
+
 type TabsProp = {
   /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
   underline?: string | boolean;
   /** Tabs.Tab子元素*/
-  children: React.ReactElement[];
+  children: React.ReactElement<ItemProp>[];
   /** 选择的tab index,非受控模式使用*/
   defaultValue?: number;
-  /** 选择的tab index,0 */
+  /** 选择的tab index, 默认 0 */
   value?: number;
   /** 是否支持滑动切换(移动端)*/
   swipe?: boolean;
@@ -29,15 +38,6 @@ type TabsProp = {
   /** 是否显示border,默认显示 */
   border?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
-
-type TabProp = {
-  /** 禁用 */
-  disabled?: boolean;
-  /** 标题 */
-  title?: React.ReactNode;
-  /** 内容 */
-  children?: React.ReactNode;
-};
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
@@ -121,8 +121,8 @@ const StyledTabHeadItem = styled.div<{
  * @param {*} { children }
  * @return {*}
  */
-const Tab: React.FC<TabProp> = ({ children }) => {
-  return <div>{children}</div>;
+const Tab: React.FC<ItemProp> = ({ children }) => {
+  return <>{children}</>;
 };
 
 //#endregion
@@ -226,7 +226,7 @@ const Tabs: React.FC<TabsProp> = ({
         )}
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (React.isValidElement(child)) {
-            const { title = '', disabled } = child.props as TabProp;
+            const { title = '', disabled } = child.props as ItemProp;
             return (
               <StyledTabHeadItem
                 key={index}

@@ -2254,7 +2254,7 @@ var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_tem
 
 var Tab = function Tab(_ref) {
   var children = _ref.children;
-  return /*#__PURE__*/React__default['default'].createElement("div", null, children);
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, children);
 }; //#endregion
 
 /**
@@ -9855,7 +9855,7 @@ var _templateObject$S;
  * @return {*}
  */
 var Item = function Item(props) {
-  return props.children;
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, props.children);
 };
 
 var StyledWrapper$2 = styled__default['default'].div(_templateObject$S || (_templateObject$S = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n\n  .item {\n    overflow: hidden;\n\n    &.disabled {\n      opacity: 0.4;\n    }\n\n    .header {\n      background: #fff;\n      height: 50px;\n      color: #333;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      width: 100%;\n      cursor: pointer;\n    }\n\n    .content {\n      color: #999;\n    }\n  }\n"])));

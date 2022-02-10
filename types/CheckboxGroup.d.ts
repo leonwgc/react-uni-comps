@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-declare type StringOrNumber = string | number;
+import type { StringOrNumber } from './types';
 declare type LabelValue = {
     label?: React.ReactNode;
     value: StringOrNumber;
