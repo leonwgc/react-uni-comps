@@ -10786,6 +10786,7 @@ exports.Drag = Drag;
 exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
+exports.FingerGesture = FingerGesture;
 exports.Form = Form$1;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;
