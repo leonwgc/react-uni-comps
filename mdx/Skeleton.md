@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Skeleton.jsx"></code>
+<code src="../demo/Skeleton.tsx"></code>
 <API src="../src/Skeleton.tsx"></API>

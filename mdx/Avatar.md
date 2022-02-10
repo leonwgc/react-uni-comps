@@ -8,5 +8,5 @@ group:
   path: base
 ---
 
-<code src="../demo/Avatar.jsx"></code>
+<code src="../demo/Avatar.tsx"></code>
 <API src="../src/Avatar.tsx"></API>

@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/LazyLoadElement.jsx"></code>
+<code src="../demo/LazyLoadElement.tsx"></code>
 <API src="../src/LazyLoadElement.tsx"></API>

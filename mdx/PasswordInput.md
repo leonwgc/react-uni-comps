@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/PasswordInput.jsx"></code>
+<code src="../demo/PasswordInput.tsx"></code>
 <API src="../src/PasswordInput.tsx"></API>

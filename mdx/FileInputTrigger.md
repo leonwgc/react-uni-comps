@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/FileInputTrigger.jsx"></code>
+<code src="../demo/FileInputTrigger.tsx"></code>
 <API src="../src/FileInputTrigger.tsx"></API>

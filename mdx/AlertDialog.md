@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/AlertDialog.jsx"></code>
+<code src="../demo/AlertDialog.tsx"></code>
 <API src="../src/AlertDialog.tsx"></API>

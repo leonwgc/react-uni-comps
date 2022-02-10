@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/Tabs.jsx"></code>
+<code src="../demo/Tabs.tsx"></code>
 <API src="../src/Tabs.tsx"></API>

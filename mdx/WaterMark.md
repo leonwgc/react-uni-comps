@@ -8,5 +8,5 @@ group:
   path: display
 ---
 
-<code src="../demo/WaterMark.jsx"></code>
+<code src="../demo/WaterMark.tsx"></code>
 <API src="../src/WaterMark.tsx"></API>

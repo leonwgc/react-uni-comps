@@ -8,5 +8,5 @@ group:
   path: animation
 ---
 
-<code src="../demo/TransitionElement.jsx"></code>
+<code src="../demo/TransitionElement.tsx"></code>
 <API src="../src/TransitionElement.tsx"></API>

@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Picker.jsx"></code>
+<code src="../demo/Picker.tsx"></code>
 <API src="../src/Picker.tsx"></API>

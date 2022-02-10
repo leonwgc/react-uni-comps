@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/Divider.jsx"></code>
+<code src="../demo/Divider.tsx"></code>
 <API src="../src/Divider.tsx"></API>

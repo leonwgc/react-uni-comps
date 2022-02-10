@@ -8,5 +8,5 @@ group:
   path: display
 ---
 
-<code src="../demo/QRCode.jsx"></code>
+<code src="../demo/QRCode.tsx"></code>
 <API src="../src/QRCode.tsx"></API>

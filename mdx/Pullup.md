@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Pullup.jsx"></code>
+<code src="../demo/Pullup.tsx"></code>
 <API src="../src/Pullup.tsx"></API>

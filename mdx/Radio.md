@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Radio.jsx"></code>
+<code src="../demo/Radio.tsx"></code>
 <API src="../src/Radio.tsx"></API>

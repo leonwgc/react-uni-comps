@@ -8,5 +8,5 @@ group:
   path: display
 ---
 
-<code src="../demo/Badge.jsx"></code>
+<code src="../demo/Badge.tsx"></code>
 <API src="../src/Badge.tsx"></API>

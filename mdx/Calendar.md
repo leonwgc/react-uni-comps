@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Calendar.jsx"></code>
+<code src="../demo/Calendar.tsx"></code>
 <API src="../src/Calendar.tsx"></API>

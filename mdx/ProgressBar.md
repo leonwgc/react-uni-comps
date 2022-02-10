@@ -8,5 +8,5 @@ group:
   path: display
 ---
 
-<code src="../demo/ProgressBar.jsx"></code>
+<code src="../demo/ProgressBar.tsx"></code>
 <API src="../src/ProgressBar.tsx"></API>

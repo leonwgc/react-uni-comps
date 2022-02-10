@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Switch.jsx"></code>
+<code src="../demo/Switch.tsx"></code>
 <API src="../src/Switch.tsx"></API>

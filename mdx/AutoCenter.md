@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/AutoCenter.jsx"></code>
+<code src="../demo/AutoCenter.tsx"></code>
 <API src="../src/AutoCenter.tsx"></API>

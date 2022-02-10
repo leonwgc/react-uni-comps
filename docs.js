@@ -14,7 +14,7 @@ group:
   path: <%= groupPath %>
 ---
 
-<code src="../demo/<%= name %>.jsx"></code>
+<code src="../demo/<%= name %>.tsx"></code>
 <API src="../src/<%= name %>.tsx"></API>
 `;
 

@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Checkbox.jsx"></code>
+<code src="../demo/Checkbox.tsx"></code>
 <API src="../src/Checkbox.tsx"></API>

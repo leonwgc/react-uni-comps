@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/DatePicker.jsx"></code>
+<code src="../demo/DatePicker.tsx"></code>
 <API src="../src/DatePicker.tsx"></API>

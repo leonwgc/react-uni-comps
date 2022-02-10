@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/PullToRefresh.jsx"></code>
+<code src="../demo/PullToRefresh.tsx"></code>
 <API src="../src/PullToRefresh.tsx"></API>

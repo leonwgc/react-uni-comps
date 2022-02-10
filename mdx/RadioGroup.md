@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/RadioGroup.jsx"></code>
+<code src="../demo/RadioGroup.tsx"></code>
 <API src="../src/RadioGroup.tsx"></API>

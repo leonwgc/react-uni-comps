@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/ActionSheet.jsx"></code>
+<code src="../demo/ActionSheet.tsx"></code>
 <API src="../src/ActionSheet.tsx"></API>

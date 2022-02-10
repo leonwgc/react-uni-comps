@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/IndexList.jsx"></code>
+<code src="../demo/IndexList.tsx"></code>
 <API src="../src/IndexList.tsx"></API>

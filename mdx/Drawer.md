@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/Drawer.jsx"></code>
+<code src="../demo/Drawer.tsx"></code>
 <API src="../src/Drawer.tsx"></API>

@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/NumberKeyboard.jsx"></code>
+<code src="../demo/NumberKeyboard.tsx"></code>
 <API src="../src/NumberKeyboard.tsx"></API>

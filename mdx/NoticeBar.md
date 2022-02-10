@@ -8,5 +8,5 @@ group:
   path: display
 ---
 
-<code src="../demo/NoticeBar.jsx"></code>
+<code src="../demo/NoticeBar.tsx"></code>
 <API src="../src/NoticeBar.tsx"></API>

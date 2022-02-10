@@ -8,5 +8,5 @@ group:
   path: base
 ---
 
-<code src="../demo/Button.jsx"></code>
+<code src="../demo/Button.tsx"></code>
 <API src="../src/Button.tsx"></API>

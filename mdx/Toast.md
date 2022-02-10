@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Toast.jsx"></code>
+<code src="../demo/Toast.tsx"></code>
 <API src="../src/Toast.tsx"></API>

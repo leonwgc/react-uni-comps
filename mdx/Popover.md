@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Popover.jsx"></code>
+<code src="../demo/Popover.tsx"></code>
 <API src="../src/Popover.tsx"></API>

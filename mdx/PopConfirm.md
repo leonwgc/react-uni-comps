@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/PopConfirm.jsx"></code>
+<code src="../demo/PopConfirm.tsx"></code>
 <API src="../src/PopConfirm.tsx"></API>

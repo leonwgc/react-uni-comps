@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/WaitLoading.jsx"></code>
+<code src="../demo/WaitLoading.tsx"></code>
 <API src="../src/WaitLoading.tsx"></API>

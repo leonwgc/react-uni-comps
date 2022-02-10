@@ -8,5 +8,5 @@ group:
   path: animation
 ---
 
-<code src="../demo/Ripple.jsx"></code>
+<code src="../demo/Ripple.tsx"></code>
 <API src="../src/Ripple.tsx"></API>

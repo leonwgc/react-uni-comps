@@ -8,5 +8,5 @@ group:
   path: base
 ---
 
-<code src="../demo/HairLineBox.jsx"></code>
+<code src="../demo/HairLineBox.tsx"></code>
 <API src="../src/HairLineBox.tsx"></API>

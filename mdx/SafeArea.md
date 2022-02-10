@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/SafeArea.jsx"></code>
+<code src="../demo/SafeArea.tsx"></code>
 <API src="../src/SafeArea.tsx"></API>

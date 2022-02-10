@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/CopyToClipboard.jsx"></code>
+<code src="../demo/CopyToClipboard.tsx"></code>
 <API src="../src/CopyToClipboard.tsx"></API>

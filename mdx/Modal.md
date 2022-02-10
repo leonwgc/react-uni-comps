@@ -8,5 +8,5 @@ group:
   path: feedback
 ---
 
-<code src="../demo/Modal.jsx"></code>
+<code src="../demo/Modal.tsx"></code>
 <API src="../src/Modal.tsx"></API>

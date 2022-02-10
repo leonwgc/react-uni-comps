@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/Collapse.jsx"></code>
+<code src="../demo/Collapse.tsx"></code>
 <API src="../src/Collapse.tsx"></API>

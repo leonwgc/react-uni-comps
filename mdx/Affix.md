@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/Affix.jsx"></code>
+<code src="../demo/Affix.tsx"></code>
 <API src="../src/Affix.tsx"></API>

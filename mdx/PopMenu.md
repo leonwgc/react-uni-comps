@@ -8,5 +8,5 @@ group:
   path: navlayout
 ---
 
-<code src="../demo/PopMenu.jsx"></code>
+<code src="../demo/PopMenu.tsx"></code>
 <API src="../src/PopMenu.tsx"></API>

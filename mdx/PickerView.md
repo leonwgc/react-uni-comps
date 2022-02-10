@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/PickerView.jsx"></code>
+<code src="../demo/PickerView.tsx"></code>
 <API src="../src/PickerView.tsx"></API>

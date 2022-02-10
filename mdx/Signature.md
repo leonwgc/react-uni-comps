@@ -8,5 +8,5 @@ group:
   path: data
 ---
 
-<code src="../demo/Signature.jsx"></code>
+<code src="../demo/Signature.tsx"></code>
 <API src="../src/Signature.tsx"></API>
