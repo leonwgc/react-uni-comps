@@ -1916,12 +1916,10 @@ var FingerGesture = function FingerGesture(el, option) {
   this.scale = 1;
   this.isDoubleTap = false;
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  /** native events special care prevent from twice invoke  */
-
-  this.touchStart = new HandlerAdmin(this.element);
-  this.touchMove = new HandlerAdmin(this.element);
-  this.touchEnd = new HandlerAdmin(this.element);
-  this.touchCancel = new HandlerAdmin(this.element);
+  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
+  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
+  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
   this.isMoving = false;
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
   this.multipointEnd = wrapFunc(this.element, option.onMultipointEnd || noop);
@@ -1929,8 +1927,8 @@ var FingerGesture = function FingerGesture(el, option) {
   this.swipe = wrapFunc(this.element, option.onSwipe || noop);
   this.tap = wrapFunc(this.element, option.onTap || noop);
   this.doubleTap = wrapFunc(this.element, option.onDoubleTap || noop);
-  this.longTap = wrapFunc(this.element, option.onLongTap || noop);
-  this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
+  this.longTap = wrapFunc(this.element, option.onLongTap || noop); // this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
+
   this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
   this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
   this._cancelAllHandler = this.cancelAll.bind(this);
@@ -1938,8 +1936,8 @@ var FingerGesture = function FingerGesture(el, option) {
   this.delta = null;
   this.last = null;
   this.now = null;
-  this.tapTimeout = null;
-  this.singleTapTimeout = null;
+  this.tapTimeout = null; // this.singleTapTimeout = null;
+
   this.longTapTimeout = null;
   this.swipeTimeout = null;
   this.x1 = this.x2 = this.y1 = this.y2 = null;
@@ -1970,8 +1968,7 @@ FingerGesture.prototype = {
     this.touchStart.dispatch(evt, this.element);
 
     if (this.preTapPosition.x !== null) {
-      this.isDoubleTap = this.delta > 0 && this.delta <= 250 && Math.abs(this.preTapPosition.x - this.x1) < 30 && Math.abs(this.preTapPosition.y - this.y1) < 30;
-      if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
+      this.isDoubleTap = this.delta > 0 && this.delta <= 250 && Math.abs(this.preTapPosition.x - this.x1) < 30 && Math.abs(this.preTapPosition.y - this.y1) < 30; // if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
     }
 
     this.preTapPosition.x = this.x1;
@@ -1981,9 +1978,8 @@ FingerGesture.prototype = {
         len = evt.touches.length;
 
     if (len > 1) {
-      this._cancelLongTap();
+      this._cancelLongTap(); // this._cancelSingleTap();
 
-      this._cancelSingleTap();
 
       var v = {
         x: evt.touches[1].pageX - this.x1,
@@ -2132,15 +2128,11 @@ FingerGesture.prototype = {
           (_self$doubleTap = self.doubleTap) === null || _self$doubleTap === void 0 ? void 0 : _self$doubleTap.dispatch(evt, self.element);
           self.isDoubleTap = false;
         }
-      }, 0);
-
-      if (!self.isDoubleTap) {
-        self.singleTapTimeout = setTimeout(function () {
-          var _self$singleTap;
-
-          (_self$singleTap = self.singleTap) === null || _self$singleTap === void 0 ? void 0 : _self$singleTap.dispatch(evt, self.element);
-        }, 250);
-      }
+      }, 0); // if (!self.isDoubleTap) {
+      //   self.singleTapTimeout = setTimeout(function () {
+      //     self.singleTap?.dispatch(evt, self.element);
+      //   }, 250);
+      // }
     }
 
     (_this$touchEnd = this.touchEnd) === null || _this$touchEnd === void 0 ? void 0 : _this$touchEnd.dispatch(evt, this.element);
@@ -2151,8 +2143,8 @@ FingerGesture.prototype = {
     this.x1 = this.x2 = this.y1 = this.y2 = null;
   },
   cancelAll: function cancelAll() {
-    this._preventTap = true;
-    clearTimeout(this.singleTapTimeout);
+    this._preventTap = true; // clearTimeout(this.singleTapTimeout);
+
     clearTimeout(this.tapTimeout);
     clearTimeout(this.longTapTimeout);
     clearTimeout(this.swipeTimeout);
@@ -2164,9 +2156,9 @@ FingerGesture.prototype = {
   _cancelLongTap: function _cancelLongTap() {
     clearTimeout(this.longTapTimeout);
   },
-  _cancelSingleTap: function _cancelSingleTap() {
-    clearTimeout(this.singleTapTimeout);
-  },
+  // _cancelSingleTap: function () {
+  //   clearTimeout(this.singleTapTimeout);
+  // },
   _swipeDirection: function _swipeDirection(x1, x2, y1, y2) {
     return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? x1 - x2 > 0 ? 'left' : 'right' : y1 - y2 > 0 ? 'up' : 'down';
   },
@@ -2181,7 +2173,7 @@ FingerGesture.prototype = {
     }
   },
   destroy: function destroy() {
-    if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
+    // if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
@@ -2204,8 +2196,8 @@ FingerGesture.prototype = {
     this.swipe.del();
     this.tap.del();
     this.doubleTap.del();
-    this.longTap.del();
-    this.singleTap.del();
+    this.longTap.del(); // this.singleTap.del();
+
     this.pressMove.del();
     this.twoFingerPressMove.del();
     this.touchMove.del();
@@ -2215,7 +2207,9 @@ FingerGesture.prototype = {
       x: null,
       y: null
     };
-    this.isMoving = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = this.singleTapTimeout = this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = this.singleTap = this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
+    this.isMoving = this.pinchStartLen = this.scale = this.isDoubleTap = this.delta = this.last = this.now = this.tapTimeout = // this.singleTapTimeout =
+    this.longTapTimeout = this.swipeTimeout = this.x1 = this.x2 = this.y1 = this.y2 = this.preTapPosition = this.rotate = this.touchStart = this.multipointStart = this.multipointEnd = this.pinch = this.swipe = this.tap = this.doubleTap = this.longTap = // this.singleTap =
+    this.pressMove = this.touchMove = this.touchEnd = this.touchCancel = this.twoFingerPressMove = null;
     window.removeEventListener('scroll', this._cancelAllHandler);
     return null;
   }

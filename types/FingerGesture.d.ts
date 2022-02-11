@@ -11,11 +11,11 @@ export declare type Options = Partial<{
     onDoubleTap: () => void;
     /** 长按 */
     onLongTap: () => void;
-    onSingleTap: () => void;
     /** 旋转 */
     onRotate: (evt: SyntheticEvent & {
         angle: number;
     }) => void;
+    /** 缩放  */
     onPinch: (evt: SyntheticEvent & {
         scale: number;
     }) => void;
