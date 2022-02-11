@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/FingerGestureElement',
+    component: lazy(() => import('./FingerGestureElement')),
+  },
+  {
     path: '/ScrollToTop',
     component: lazy(() => import('./ScrollToTop')),
   },

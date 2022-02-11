@@ -1,8 +1,7 @@
 /*
  * refer to AlloyFinger & refactor
  */
-import { isTouch } from './dom';
-export var supportedGestures = ['onMultipointStart', 'onMultipointEnd', 'onTap', 'onDoubleTap', 'onLongTap', 'onSingleTap', 'onRotate', 'onPinch', 'onPressMove', 'onSwipe', 'onTwoFingerPressMove']; // eslint-disable-next-line @typescript-eslint/no-empty-function
+import { isTouch } from './dom'; // eslint-disable-next-line @typescript-eslint/no-empty-function
 
 var noop = function noop() {};
 

@@ -10536,6 +10536,45 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
+var _excluded$_ = ["children"];
+
+var throwCheckError = function throwCheckError() {
+  throw new Error('FingerGestureElement: 子元素必须是dom/forwardRef到dom的组件');
+};
+/** 给子元素添加手势操作 */
+
+
+var FingerGestureElement = function FingerGestureElement(props) {
+  var children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$_);
+
+  var elRef = React.useRef();
+  React.useLayoutEffect(function () {
+    var el = elRef.current;
+
+    if (!(el instanceof HTMLElement)) {
+      throwCheckError();
+    }
+
+    var fg = new FingerGesture(el, rest);
+    return function () {
+      var _fg$destroy;
+
+      (_fg$destroy = fg.destroy) === null || _fg$destroy === void 0 ? void 0 : _fg$destroy.call(fg);
+    };
+  }, []);
+
+  if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
+    throwCheckError();
+  }
+
+  return /*#__PURE__*/React__default['default'].cloneElement(children, {
+    ref: elRef
+  });
+};
+
+FingerGestureElement.displayName = 'UC-FingerGestureElement';
+
 /**
  * 返回节流函数
  *
@@ -10618,7 +10657,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$_ = ["children", "label", "name"],
+var _excluded$$ = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10629,7 +10668,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$_);
+      fieldProps = _objectWithoutProperties(props, _excluded$$);
 
   var required = false;
 
@@ -10787,6 +10826,7 @@ exports.Drawer = Drawer;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.FingerGesture = FingerGesture;
+exports.FingerGestureElement = FingerGestureElement;
 exports.Form = Form$1;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;

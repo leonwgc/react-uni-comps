@@ -5,20 +5,6 @@
 import { SyntheticEvent } from 'react';
 import { isTouch } from './dom';
 
-export const supportedGestures = [
-  'onMultipointStart',
-  'onMultipointEnd',
-  'onTap',
-  'onDoubleTap',
-  'onLongTap',
-  'onSingleTap',
-  'onRotate',
-  'onPinch',
-  'onPressMove',
-  'onSwipe',
-  'onTwoFingerPressMove',
-];
-
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = function () {};
 
@@ -84,7 +70,7 @@ function wrapFunc(el, handler) {
   return handlerAdmin;
 }
 
-export type Option = Partial<{
+export type Options = Partial<{
   onTouchStart: (evt: SyntheticEvent) => void;
   onTouchMove: (evt: SyntheticEvent) => void;
   onTouchEnd: (evt: SyntheticEvent) => void;
@@ -92,20 +78,25 @@ export type Option = Partial<{
   onMultipointStart: (evt: SyntheticEvent) => void;
   onMultipointEnd: (evt: SyntheticEvent) => void;
   onTap: () => void;
+  /** 点两次 */
   onDoubleTap: () => void;
+  /** 长按 */
   onLongTap: () => void;
   onSingleTap: () => void;
+  /** 旋转 */
   onRotate: (evt: SyntheticEvent & { angle: number }) => void;
   onPinch: (evt: SyntheticEvent & { scale: number }) => void;
+  /** 单指滑动 */
   onPressMove: (evt: SyntheticEvent & { deltaX: number; deltaY: number }) => void;
+  /** 左右滑动 */
   onSwipe: (evt: SyntheticEvent & { direction: 'left' | 'right' | 'up' | 'down' }) => void;
   onTwoFingerPressMove: () => void;
 }>;
 
 /** 手势操作 */
-const FingerGesture: (el: Element, option: Option) => void = function (
+const FingerGesture: (el: Element, option: Options) => void = function (
   el: Element,
-  option: Option
+  option: Options
 ) {
   this.element = el;
 
@@ -131,11 +122,11 @@ const FingerGesture: (el: Element, option: Option) => void = function (
   this.isDoubleTap = false;
 
   this.rotate = wrapFunc(this.element, option.onRotate || noop);
-  /** native events special care prevent from twice invoke  */
-  this.touchStart = new HandlerAdmin(this.element);
-  this.touchMove = new HandlerAdmin(this.element);
-  this.touchEnd = new HandlerAdmin(this.element);
-  this.touchCancel = new HandlerAdmin(this.element);
+
+  this.touchStart = wrapFunc(this.element, option.onTouchStart || noop);
+  this.touchMove = wrapFunc(this.element, option.onTouchMove || noop);
+  this.touchEnd = wrapFunc(this.element, option.onTouchEnd || noop);
+  this.touchCancel = wrapFunc(this.element, option.onTouchCancel || noop);
   this.isMoving = false;
 
   this.multipointStart = wrapFunc(this.element, option.onMultipointStart || noop);
