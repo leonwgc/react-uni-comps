@@ -11,6 +11,9 @@ export default function App() {
           onDoubleTap={() => {
             Toast.show('doubleTap');
           }}
+          onLongTap={() => {
+            Toast.show('longTap');
+          }}
           onTouchStart={() => {
             console.log('start');
           }}
@@ -24,7 +27,7 @@ export default function App() {
             console.log(e.deltaX, e.deltaY);
           }}
         >
-          <div style={{ width: 200, height: 200, border: '1px solid #eee' }} />
+          <div style={{ width: 100, height: 100, border: '1px solid red', position: 'relative' }} />
         </FingerGestureElement>
       </Block>
     </PageWrap>

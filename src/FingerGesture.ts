@@ -82,9 +82,10 @@ export type Options = Partial<{
   onDoubleTap: () => void;
   /** 长按 */
   onLongTap: () => void;
-  onSingleTap: () => void;
+  // onSingleTap: () => void;
   /** 旋转 */
   onRotate: (evt: SyntheticEvent & { angle: number }) => void;
+  /** 缩放  */
   onPinch: (evt: SyntheticEvent & { scale: number }) => void;
   /** 单指滑动 */
   onPressMove: (evt: SyntheticEvent & { deltaX: number; deltaY: number }) => void;
@@ -136,7 +137,7 @@ const FingerGesture: (el: Element, option: Options) => void = function (
   this.tap = wrapFunc(this.element, option.onTap || noop);
   this.doubleTap = wrapFunc(this.element, option.onDoubleTap || noop);
   this.longTap = wrapFunc(this.element, option.onLongTap || noop);
-  this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
+  // this.singleTap = wrapFunc(this.element, option.onSingleTap || noop);
   this.pressMove = wrapFunc(this.element, option.onPressMove || noop);
   this.twoFingerPressMove = wrapFunc(this.element, option.onTwoFingerPressMove || noop);
 
@@ -148,7 +149,7 @@ const FingerGesture: (el: Element, option: Options) => void = function (
   this.last = null;
   this.now = null;
   this.tapTimeout = null;
-  this.singleTapTimeout = null;
+  // this.singleTapTimeout = null;
   this.longTapTimeout = null;
   this.swipeTimeout = null;
   this.x1 = this.x2 = this.y1 = this.y2 = null;
@@ -178,7 +179,7 @@ FingerGesture.prototype = {
         this.delta <= 250 &&
         Math.abs(this.preTapPosition.x - this.x1) < 30 &&
         Math.abs(this.preTapPosition.y - this.y1) < 30;
-      if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
+      // if (this.isDoubleTap) clearTimeout(this.singleTapTimeout);
     }
     this.preTapPosition.x = this.x1;
     this.preTapPosition.y = this.y1;
@@ -187,7 +188,7 @@ FingerGesture.prototype = {
       len = evt.touches.length;
     if (len > 1) {
       this._cancelLongTap();
-      this._cancelSingleTap();
+      // this._cancelSingleTap();
       const v = { x: evt.touches[1].pageX - this.x1, y: evt.touches[1].pageY - this.y1 };
       preV.x = v.x;
       preV.y = v.y;
@@ -318,11 +319,11 @@ FingerGesture.prototype = {
         }
       }, 0);
 
-      if (!self.isDoubleTap) {
-        self.singleTapTimeout = setTimeout(function () {
-          self.singleTap?.dispatch(evt, self.element);
-        }, 250);
-      }
+      // if (!self.isDoubleTap) {
+      //   self.singleTapTimeout = setTimeout(function () {
+      //     self.singleTap?.dispatch(evt, self.element);
+      //   }, 250);
+      // }
     }
 
     this.touchEnd?.dispatch(evt, this.element);
@@ -335,7 +336,7 @@ FingerGesture.prototype = {
   },
   cancelAll: function () {
     this._preventTap = true;
-    clearTimeout(this.singleTapTimeout);
+    // clearTimeout(this.singleTapTimeout);
     clearTimeout(this.tapTimeout);
     clearTimeout(this.longTapTimeout);
     clearTimeout(this.swipeTimeout);
@@ -347,9 +348,9 @@ FingerGesture.prototype = {
   _cancelLongTap: function () {
     clearTimeout(this.longTapTimeout);
   },
-  _cancelSingleTap: function () {
-    clearTimeout(this.singleTapTimeout);
-  },
+  // _cancelSingleTap: function () {
+  //   clearTimeout(this.singleTapTimeout);
+  // },
   _swipeDirection: function (x1, x2, y1, y2) {
     return Math.abs(x1 - x2) >= Math.abs(y1 - y2)
       ? x1 - x2 > 0
@@ -373,7 +374,7 @@ FingerGesture.prototype = {
   },
 
   destroy: function () {
-    if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
+    // if (this.singleTapTimeout) clearTimeout(this.singleTapTimeout);
     if (this.tapTimeout) clearTimeout(this.tapTimeout);
     if (this.longTapTimeout) clearTimeout(this.longTapTimeout);
     if (this.swipeTimeout) clearTimeout(this.swipeTimeout);
@@ -398,7 +399,7 @@ FingerGesture.prototype = {
     this.tap.del();
     this.doubleTap.del();
     this.longTap.del();
-    this.singleTap.del();
+    // this.singleTap.del();
     this.pressMove.del();
     this.twoFingerPressMove.del();
     this.touchMove.del();
@@ -415,7 +416,7 @@ FingerGesture.prototype = {
       this.last =
       this.now =
       this.tapTimeout =
-      this.singleTapTimeout =
+      // this.singleTapTimeout =
       this.longTapTimeout =
       this.swipeTimeout =
       this.x1 =
@@ -432,7 +433,7 @@ FingerGesture.prototype = {
       this.tap =
       this.doubleTap =
       this.longTap =
-      this.singleTap =
+      // this.singleTap =
       this.pressMove =
       this.touchMove =
       this.touchEnd =
