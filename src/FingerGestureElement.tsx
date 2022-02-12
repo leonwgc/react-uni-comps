@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import FingerGesture, { Options } from './FingerGesture';
 
 type Props = {
@@ -11,9 +11,11 @@ const throwCheckError = () => {
 };
 
 /** 给子元素添加手势操作 */
-const FingerGestureElement: React.FC<Props> = (props) => {
+const FingerGestureElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { children, ...rest } = props;
   const elRef = useRef<HTMLElement>();
+
+  useImperativeHandle(ref, () => elRef.current);
 
   useLayoutEffect(() => {
     const el = elRef.current;
@@ -26,6 +28,7 @@ const FingerGestureElement: React.FC<Props> = (props) => {
     return () => {
       fg.destroy?.();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!React.isValidElement(children)) {
@@ -33,7 +36,7 @@ const FingerGestureElement: React.FC<Props> = (props) => {
   }
 
   return React.cloneElement(children, { ref: elRef });
-};
+});
 
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 

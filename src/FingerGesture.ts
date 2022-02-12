@@ -33,8 +33,8 @@ function getRotateAngle(v1, v2) {
   if (cross(v1, v2) > 0) {
     angle *= -1;
   }
-
-  return (angle * 180) / Math.PI;
+  return angle * 180;
+  // return (angle * 180) / Math.PI;
 }
 
 const HandlerAdmin = function (el) {
@@ -83,7 +83,8 @@ export type Options = Partial<{
   /** 长按 */
   onLongTap: () => void;
   // onSingleTap: () => void;
-  /** 旋转 */
+  /**  deg:There are 360 degrees in a full circle.  turn:There is 1 turn in a full circle. */
+  /** 旋转, 单位:deg */
   onRotate: (evt: SyntheticEvent & { angle: number }) => void;
   /** 缩放  */
   onPinch: (evt: SyntheticEvent & { scale: number }) => void;

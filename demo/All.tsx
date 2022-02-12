@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> FingerGestureElement
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('FingerGestureElement')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> DatePicker
           </Space>
         }
