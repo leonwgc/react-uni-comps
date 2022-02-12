@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
 type Props = {
-  /** 允许上传的附件格式 */
+  /** 允许上传的文件格式 */
   accept?: string;
   /** 值变化时触发的回调函数 */
   onChange?: (files: FileList) => void;
@@ -29,9 +29,11 @@ const StyledFileInputTrigger = styled.div`
 `;
 
 /** 触发文件上传 */
-const FileInputTrigger = (props: Props): React.ReactElement => {
+const FileInputTrigger = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const inputRef = useRef<HTMLInputElement>();
   const { onChange, disabled, multiple, accept, capture, children, className, ...rest } = props;
+
+  useImperativeHandle(ref, () => inputRef.current);
 
   return (
     <StyledFileInputTrigger
@@ -61,6 +63,8 @@ const FileInputTrigger = (props: Props): React.ReactElement => {
       {children}
     </StyledFileInputTrigger>
   );
-};
+});
+
+FileInputTrigger.displayName = 'UC-FileInputTrigger';
 
 export default FileInputTrigger;

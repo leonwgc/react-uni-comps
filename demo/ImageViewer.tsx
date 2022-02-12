@@ -12,7 +12,7 @@ const demoImages = [
 
 export default function App() {
   const [v, setV] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   return (
     <PageWrap>
       <DemoBlock title="单张图片预览">

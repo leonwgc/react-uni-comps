@@ -23,6 +23,7 @@ const StyledSlide = styled.div`
     display: flex;
     flex-wrap: nowrap;
     touch-action: none;
+    width: 100%;
 
     &.vertical {
       flex-direction: column;

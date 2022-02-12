@@ -87,7 +87,7 @@ export default function App() {
               <div className="del" onClick={() => setFiles([])}>
                 <Icon type="uc-icon-guanbi" />
               </div>
-              <img width={108} height={108} src={url} onClick={() => setV(true)} />
+              {url && <img width={108} height={108} src={url} onClick={() => setV(true)} />}
               <ImageViewer
                 images={[url]}
                 visible={v}

@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> ImageViewer
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ImageViewer')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> FingerGestureElement
           </Space>
         }
@@ -245,15 +254,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Drawer')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> ImageViewer
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('ImageViewer')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
