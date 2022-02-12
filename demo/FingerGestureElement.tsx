@@ -11,13 +11,10 @@ type Position = {
 };
 
 const update = (el, transform, statusEl) => {
-  el.style.transform = `translate(${transform.x}px,${transform.y}px) rotate(${transform.angle}deg) scale(${transform.scale})`;
+  const cssTransform = `translate(${transform.x}px,${transform.y}px) rotate(${transform.angle}deg) scale(${transform.scale})`;
 
-  updateStatus(statusEl, transform);
-};
-
-const updateStatus = (el, transform) => {
-  el.innerText = `translate(${transform.x}px,${transform.y}px) rotate(${transform.angle}deg) scale(${transform.scale})`;
+  el.style.transform = cssTransform;
+  statusEl.innerText = cssTransform;
 };
 
 export default function App() {
