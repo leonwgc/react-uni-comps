@@ -11,7 +11,7 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import FingerGesture from './FingerGesture';
 
 var throwCheckError = function throwCheckError() {
@@ -20,11 +20,14 @@ var throwCheckError = function throwCheckError() {
 /** 给子元素添加手势操作 */
 
 
-var FingerGestureElement = function FingerGestureElement(props) {
+var FingerGestureElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       rest = __rest(props, ["children"]);
 
   var elRef = useRef();
+  useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
   useLayoutEffect(function () {
     var el = elRef.current;
 
@@ -37,7 +40,7 @@ var FingerGestureElement = function FingerGestureElement(props) {
       var _a;
 
       (_a = fg.destroy) === null || _a === void 0 ? void 0 : _a.call(fg);
-    };
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (! /*#__PURE__*/React.isValidElement(children)) {
@@ -47,7 +50,6 @@ var FingerGestureElement = function FingerGestureElement(props) {
   return /*#__PURE__*/React.cloneElement(children, {
     ref: elRef
   });
-};
-
+});
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 export default FingerGestureElement;

@@ -1849,7 +1849,7 @@ function getRotateAngle(v1, v2) {
     angle *= -1;
   }
 
-  return angle * 180 / Math.PI;
+  return angle * 180; // return (angle * 180) / Math.PI;
 }
 
 var HandlerAdmin = function HandlerAdmin(el) {
@@ -10538,11 +10538,14 @@ var throwCheckError = function throwCheckError() {
 /** 给子元素添加手势操作 */
 
 
-var FingerGestureElement = function FingerGestureElement(props) {
+var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
       rest = _objectWithoutProperties(props, _excluded$_);
 
   var elRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
   React.useLayoutEffect(function () {
     var el = elRef.current;
 
@@ -10555,7 +10558,7 @@ var FingerGestureElement = function FingerGestureElement(props) {
       var _fg$destroy;
 
       (_fg$destroy = fg.destroy) === null || _fg$destroy === void 0 ? void 0 : _fg$destroy.call(fg);
-    };
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
@@ -10565,8 +10568,7 @@ var FingerGestureElement = function FingerGestureElement(props) {
   return /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: elRef
   });
-};
-
+});
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
 /**

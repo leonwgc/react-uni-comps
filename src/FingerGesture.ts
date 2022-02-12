@@ -83,7 +83,7 @@ export type Options = Partial<{
   /** 长按 */
   onLongTap: () => void;
   // onSingleTap: () => void;
-  /**  deg:There are 360 degrees in a full circle.  turn:There is 1 turn in a full circle. */
+
   /** 旋转, 单位:deg */
   onRotate: (evt: SyntheticEvent & { angle: number }) => void;
   /** 缩放  */

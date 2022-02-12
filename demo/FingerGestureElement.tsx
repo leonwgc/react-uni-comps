@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { FingerGestureElement, Toast, Affix, useMount } from 'react-uni-comps';
+import { FingerGestureElement, Toast, useMount, AutoCenter } from 'react-uni-comps';
 
 type Position = {
   x: number;
@@ -30,11 +30,11 @@ export default function App() {
 
   return (
     <PageWrap>
-      <Affix>
-        <DemoBlock title="当前值：" style={{ background: '#fff' }}>
+      <DemoBlock title="当前值：" style={{ background: '#fff' }}>
+        <AutoCenter>
           <div ref={statusElRef}></div>
-        </DemoBlock>
-      </Affix>
+        </AutoCenter>
+      </DemoBlock>
 
       <DemoBlock title="基础分割线">
         <FingerGestureElement
@@ -57,13 +57,11 @@ export default function App() {
             console.log('scale:', e.scale);
             ref.current.scale = e.scale;
             update(elRef.current, ref.current, statusElRef.current);
-            // elRef.current.style.transform = `translate(${ref.current.x}px,${ref.current.y}px) rotate(${ref.current.angle}) scale(${e.scale})`;
           }}
           onRotate={(e) => {
             console.log('angle:', e.angle);
             ref.current.angle += e.angle;
             update(elRef.current, ref.current, statusElRef.current);
-            // elRef.current.style.transform = `translate(${ref.current.x}px,${ref.current.y}px) rotate(${ref.current.angle})`;
           }}
           onPressMove={(e) => {
             console.log(e.deltaX, e.deltaY);
@@ -71,8 +69,6 @@ export default function App() {
             ref.current.y = ref.current.y + e.deltaY;
 
             update(elRef.current, ref.current, statusElRef.current);
-
-            // elRef.current.style.transform = `translate(${ref.current.x}px,${ref.current.y}px) rotate(${ref.current.angle})`;
           }}
           ref={elRef}
         >
@@ -80,7 +76,7 @@ export default function App() {
             style={{
               width: 100,
               height: 100,
-              border: '1px solid red',
+              backgroundColor: 'red',
               position: 'relative',
             }}
           />

@@ -32,7 +32,7 @@ function getRotateAngle(v1, v2) {
     angle *= -1;
   }
 
-  return angle * 180 / Math.PI;
+  return angle * 180; // return (angle * 180) / Math.PI;
 }
 
 var HandlerAdmin = function HandlerAdmin(el) {

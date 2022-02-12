@@ -4,7 +4,7 @@ import FingerGesture, { Options } from './FingerGesture';
 type Props = {
   /** 手势操作元素,如果是组件，需要forwardRef到dom */
   children: React.ReactElement;
-} & Partial<Options>;
+} & Options;
 
 const throwCheckError = () => {
   throw new Error('FingerGestureElement: 子元素必须是dom/forwardRef到dom的组件');
