@@ -21,7 +21,7 @@ type StaticProps = {
 
 /** 加载Loading */
 const Loading: React.FC<Props> & Partial<StaticProps> = (props) => {
-  return <StyledLoading {...props} content={<Spin />}></StyledLoading>;
+  return <StyledLoading visible {...props} content={<Spin />}></StyledLoading>;
 };
 
 let _hide = null;
@@ -29,7 +29,7 @@ let _hide = null;
 const show = () => {
   const container = document.createElement('div');
 
-  const dispose: Dispose = renderElement(<Loading visible className="uc-loading" />, container);
+  const dispose: Dispose = renderElement(<Loading className="uc-loading" />, container);
 
   _hide?.();
   _hide = dispose;

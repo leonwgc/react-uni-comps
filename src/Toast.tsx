@@ -23,7 +23,7 @@ export type Props = {
   content?: React.ReactNode;
   /** 模态, 默认true */
   modal?: boolean;
-  visible: boolean;
+  visible?: boolean;
   /** toast style */
   style?: React.CSSProperties;
   /** modal mask 样式 */

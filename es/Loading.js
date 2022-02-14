@@ -36,7 +36,9 @@ var StyledLoading = styled(Toast)(templateObject_1 || (templateObject_1 = __make
 /** 加载Loading */
 
 var Loading = function Loading(props) {
-  return /*#__PURE__*/React.createElement(StyledLoading, __assign({}, props, {
+  return /*#__PURE__*/React.createElement(StyledLoading, __assign({
+    visible: true
+  }, props, {
     content: /*#__PURE__*/React.createElement(Spin, null)
   }));
 };
@@ -46,7 +48,6 @@ var _hide = null;
 var show = function show() {
   var container = document.createElement('div');
   var dispose = renderElement( /*#__PURE__*/React.createElement(Loading, {
-    visible: true,
     className: "uc-loading"
   }), container);
   _hide === null || _hide === void 0 ? void 0 : _hide();

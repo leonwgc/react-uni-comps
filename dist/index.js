@@ -10586,7 +10586,9 @@ var StyledLoading = styled__default['default'](Toast)(_templateObject$W || (_tem
 
 /** 加载Loading */
 var Loading = function Loading(props) {
-  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({}, props, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
+    visible: true
+  }, props, {
     content: /*#__PURE__*/React__default['default'].createElement(Spin, null)
   }));
 };
@@ -10598,7 +10600,6 @@ var show = function show() {
 
   var container = document.createElement('div');
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Loading, {
-    visible: true,
     className: "uc-loading"
   }), container);
   (_hide2 = _hide) === null || _hide2 === void 0 ? void 0 : _hide2();
