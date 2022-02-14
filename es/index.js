@@ -71,6 +71,9 @@ export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
 export { default as PullToRefresh } from './PullToRefresh';
 export { default as FingerGestureElement } from './FingerGestureElement';
+/** only has static method */
+
+export { default as Loading } from './Loading';
 /** helper & dom */
 
 export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './helper';

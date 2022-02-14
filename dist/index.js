@@ -3040,7 +3040,7 @@ var _templateObject$j;
 var StyledFileInputTrigger = styled__default['default'].div(_templateObject$j || (_templateObject$j = _taggedTemplateLiteral(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
 /** 触发文件上传 */
 
-var FileInputTrigger = function FileInputTrigger(props) {
+var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var inputRef = React.useRef();
 
   var _onChange = props.onChange,
@@ -3052,6 +3052,9 @@ var FileInputTrigger = function FileInputTrigger(props) {
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$j);
 
+  React.useImperativeHandle(ref, function () {
+    return inputRef.current;
+  });
   return /*#__PURE__*/React__default['default'].createElement(StyledFileInputTrigger, _extends({}, rest, {
     onClick: function onClick() {
       inputRef.current.value = '';
@@ -3079,7 +3082,8 @@ var FileInputTrigger = function FileInputTrigger(props) {
       }
     }
   }), children);
-};
+});
+FileInputTrigger.displayName = 'UC-FileInputTrigger';
 
 var _excluded$k = ["onVisible", "onInVisible"];
 
@@ -4196,7 +4200,8 @@ Toast.show = function (props) {
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Toast, _extends({}, toastProps, {
     visible: true
   })), container);
-  window.setTimeout(function () {
+
+  var hide = function hide() {
     dispose(beforeDispose);
 
     if (isToastProps) {
@@ -4204,7 +4209,12 @@ Toast.show = function (props) {
 
       (_props$afterClose = props.afterClose) === null || _props$afterClose === void 0 ? void 0 : _props$afterClose.call(props);
     }
+  };
+
+  window.setTimeout(function () {
+    hide();
   }, _duration);
+  return hide;
 };
 
 Toast.displayName = 'UC-Toast';
@@ -6966,7 +6976,7 @@ NoticeList.displayName = 'UC-NoticeList';
 var _excluded$H = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
 
 var _templateObject$H;
-var StyledSlide = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
+var StyledSlide = styled__default['default'].div(_templateObject$H || (_templateObject$H = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -10571,6 +10581,41 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
+var _templateObject$W;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  border-radius: 4px;\n"])));
+
+/** 加载Loading */
+var Loading = function Loading(props) {
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({}, props, {
+    content: /*#__PURE__*/React__default['default'].createElement(Spin, null)
+  }));
+};
+
+var _hide = null;
+
+var show = function show() {
+  var _hide2;
+
+  var container = document.createElement('div');
+  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Loading, {
+    visible: true,
+    className: "uc-loading"
+  }), container);
+  (_hide2 = _hide) === null || _hide2 === void 0 ? void 0 : _hide2();
+  _hide = dispose;
+};
+
+var hide = function hide() {
+  var _hide3;
+
+  return (_hide3 = _hide) === null || _hide3 === void 0 ? void 0 : _hide3();
+};
+
+attachPropertiesToComponent(Loading, {
+  show: show,
+  hide: hide
+});
+
 /**
  * 返回节流函数
  *
@@ -10832,6 +10877,7 @@ exports.IndexList = IndexList;
 exports.Input = Input;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
+exports.Loading = Loading;
 exports.Mask = Mask;
 exports.Modal = Modal;
 exports.NoticeBar = NoticeBar;

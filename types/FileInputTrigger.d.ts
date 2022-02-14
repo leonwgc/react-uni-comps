@@ -1,6 +1,7 @@
 import React from 'react';
-declare type Props = {
-    /** 允许上传的附件格式 */
+/** 触发文件上传 */
+declare const FileInputTrigger: React.ForwardRefExoticComponent<{
+    /** 允许上传的文件格式 */
     accept?: string;
     /** 值变化时触发的回调函数 */
     onChange?: (files: FileList) => void;
@@ -12,7 +13,5 @@ declare type Props = {
     capture?: 'user' | 'environment';
     style?: React.CSSProperties;
     className?: string;
-} & React.HTMLAttributes<HTMLInputElement>;
-/** 触发文件上传 */
-declare const FileInputTrigger: (props: Props) => React.ReactElement;
+} & React.HTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;
 export default FileInputTrigger;

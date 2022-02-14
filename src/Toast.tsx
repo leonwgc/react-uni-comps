@@ -19,7 +19,7 @@ const StyledToast = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-type Props = {
+export type Props = {
   content?: React.ReactNode;
   /** 模态, 默认true */
   modal?: boolean;
@@ -90,12 +90,18 @@ Toast.show = (props: StaticToastProps) => {
   const beforeDispose = beforeDisposeGen(container, '.uc-toast', transitionDuration);
 
   const dispose: Dispose = renderElement(<Toast {...toastProps} visible />, container);
-  window.setTimeout(() => {
+
+  const hide = () => {
     dispose(beforeDispose);
     if (isToastProps) {
       props.afterClose?.();
     }
+  };
+  window.setTimeout(() => {
+    hide();
   }, _duration);
+
+  return hide;
 };
 
 Toast.displayName = 'UC-Toast';

@@ -39,13 +39,13 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 var StyledFileInputTrigger = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"], ["\n  position: relative;\n  display: inline-block;\n  vertical-align: middle;\n\n  &.disabled {\n    opacity: 0.4;\n    cursor: not-allowed;\n  }\n"])));
 /** 触发文件上传 */
 
-var FileInputTrigger = function FileInputTrigger(props) {
+var FileInputTrigger = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var inputRef = useRef();
 
   var _onChange = props.onChange,
@@ -57,6 +57,9 @@ var FileInputTrigger = function FileInputTrigger(props) {
       className = props.className,
       rest = __rest(props, ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"]);
 
+  useImperativeHandle(ref, function () {
+    return inputRef.current;
+  });
   return /*#__PURE__*/React.createElement(StyledFileInputTrigger, __assign({}, rest, {
     onClick: function onClick() {
       inputRef.current.value = '';
@@ -84,7 +87,7 @@ var FileInputTrigger = function FileInputTrigger(props) {
       }
     }
   }), children);
-};
-
+});
+FileInputTrigger.displayName = 'UC-FileInputTrigger';
 export default FileInputTrigger;
 var templateObject_1;

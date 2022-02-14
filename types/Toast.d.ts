@@ -1,5 +1,5 @@
 import React from 'react';
-declare type Props = {
+export declare type Props = {
     content?: React.ReactNode;
     /** 模态, 默认true */
     modal?: boolean;

@@ -93,7 +93,8 @@ Toast.show = function (props) {
   var dispose = renderElement( /*#__PURE__*/React.createElement(Toast, __assign({}, toastProps, {
     visible: true
   })), container);
-  window.setTimeout(function () {
+
+  var hide = function hide() {
     var _a;
 
     dispose(beforeDispose);
@@ -101,7 +102,12 @@ Toast.show = function (props) {
     if (isToastProps) {
       (_a = props.afterClose) === null || _a === void 0 ? void 0 : _a.call(props);
     }
+  };
+
+  window.setTimeout(function () {
+    hide();
   }, _duration);
+  return hide;
 };
 
 Toast.displayName = 'UC-Toast';
