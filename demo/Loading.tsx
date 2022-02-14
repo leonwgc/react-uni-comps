@@ -17,7 +17,7 @@ export default function App() {
               }, 3000);
             }}
           >
-            显示Loading,3秒后自动关闭
+            显示Loading
           </Button>
         </Space>
       </DemoBlock>
