@@ -1,6 +1,6 @@
 ---
 title: WaitLoading 延迟渲染子元素
-order: 0
+order: 13
 mobile: true
 group:
   title: 操作反馈

@@ -6,7 +6,7 @@ import { Button, Space, Loading } from 'react-uni-comps';
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock title="延迟渲染子元素">
+      <DemoBlock title="加载Loading">
         <Space>
           <Button
             onClick={() => {

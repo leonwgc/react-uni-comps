@@ -34,10 +34,6 @@ module.exports = [
     path: 'feedback',
     comps: [
       {
-        name: 'WaitLoading',
-        title: 'WaitLoading 延迟渲染子元素',
-      },
-      {
         name: 'Modal',
         title: 'Modal 弹框',
         mobile: false,
@@ -97,6 +93,14 @@ module.exports = [
       {
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',
+      },
+      {
+        name: 'WaitLoading',
+        title: 'WaitLoading 延迟渲染子元素',
+      },
+      {
+        name: 'Loading',
+        title: 'Loading 加载中 toast',
       },
     ],
   },

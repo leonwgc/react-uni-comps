@@ -67,12 +67,13 @@ yarn add react-uni-comps
 #### 基础组件
 
 - Button (按钮)
+- Space (间距容器)
+- Avatar (头像)
+- Icon (图标)
 - Mask (遮罩)
 - Divider (分割线)
-- Space (间距容器)
+- Spin（加载中指示器）
 - HairLineBox (包含 1px 的边的容器 div)
-- Avatar (头像)
-- Icon (图标,包含加载在 iconfont.cn 上自行管理的图标)
 
 #### 操作反馈
 
@@ -90,8 +91,8 @@ yarn add react-uni-comps
 - Switch (开关)
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
-- Spin（加载中指示器）
 - ScrollToTop (平滑滚动到顶部)
+- Loading (加载中toast)
 
 #### 导航组件
 
