@@ -10581,26 +10581,36 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
+var _excluded$$ = ["content"];
+
 var _templateObject$W;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  border-radius: 4px;\n"])));
+var StyledLoading = styled__default['default'](Toast)(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
-var Loading = function Loading(props) {
+var Loading = function Loading(_ref) {
+  var content = _ref.content,
+      restProps = _objectWithoutProperties(_ref, _excluded$$);
+
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
-  }, props, {
-    content: /*#__PURE__*/React__default['default'].createElement(Spin, null)
+  }, restProps, {
+    content: content ? content : /*#__PURE__*/React__default['default'].createElement(Spin, {
+      style: {
+        fontSize: 36
+      }
+    })
   }));
 };
 
 var _hide = null;
 
-var show = function show() {
+var show = function show(content) {
   var _hide2;
 
   var container = document.createElement('div');
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Loading, {
-    className: "uc-loading"
+    className: "uc-loading",
+    content: content
   }), container);
   (_hide2 = _hide) === null || _hide2 === void 0 ? void 0 : _hide2();
   _hide = dispose;
@@ -10699,7 +10709,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$$ = ["children", "label", "name"],
+var _excluded$10 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10710,7 +10720,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$$);
+      fieldProps = _objectWithoutProperties(props, _excluded$10);
 
   var required = false;
 
