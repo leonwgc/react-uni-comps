@@ -5,7 +5,6 @@ import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import useCallbackRef from './hooks/useCallbackRef';
 import Button from './Button';
 import Icon from './Icon';
 
@@ -32,7 +31,9 @@ type Props = {
   mode?: 'checkbox' | 'radio';
   /** 根据 value 进行比较，判断是否选中, 用于list */
   value?: string | number;
-} & HTMLAttributes<HTMLDivElement>;
+  /** 设置 indeterminate 状态，中间横线代替勾勾 */
+  indeterminate?: boolean;
+} & HTMLAttributes<HTMLDivElement | HTMLButtonElement>;
 
 const StyledButton = styled(Button)`
   &.fill {
@@ -60,10 +61,6 @@ const StyledCheckboxBaseWrapper = styled.div`
   user-select: none;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
-
-  &:not(:first-child) {
-    margin-left: 8px;
-  }
 
   .text {
     margin-left: 8px;
@@ -106,33 +103,27 @@ const StyledCheckboxBaseWrapper = styled.div`
     border: 1px solid ${vars.border};
     border-radius: 2px;
     background: #fff;
-    transition: all 0.24s ease-in-out;
     color: #fff;
   }
 `;
 
 /** Checkbox/Radiobox 的基础 */
-const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const CheckboxBase = React.forwardRef<any, Props>((props, ref) => {
   const {
     size = 18,
     className,
     button = false,
     onChange,
-    style,
     defaultChecked,
     mode = 'checkbox',
     checked,
     disabled,
     children,
+    indeterminate,
     ...rest
   } = props;
 
   const [c, setC] = useState(typeof checked === 'boolean' ? checked : defaultChecked);
-  const onChangeRef = useCallbackRef(onChange);
-
-  useUpdateEffect(() => {
-    onChangeRef.current?.(c);
-  }, [c]);
 
   useUpdateEffect(() => {
     if (c !== checked) {
@@ -140,15 +131,21 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [checked]);
 
+  const onClick = () => {
+    if (disabled) return;
+    if (mode === 'checkbox' || c !== true) {
+      const n = !c;
+      setC(n);
+      onChange?.(n);
+    }
+  };
+
   return button ? (
     <StyledButton
-      onClick={() => {
-        if (disabled) return;
-        if (mode === 'checkbox' || c !== true) {
-          setC(!c);
-        }
-      }}
-      className={clsx({
+      {...rest}
+      ref={ref}
+      onClick={onClick}
+      className={clsx(className, {
         fill: button === 'fill',
         outline: button === 'outline' || button === true,
         checked: c,
@@ -159,31 +156,25 @@ const CheckboxBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     </StyledButton>
   ) : (
     <StyledCheckboxBaseWrapper
+      {...rest}
       ref={ref}
-      className={clsx('uc-checkbox', mode, {
+      className={clsx('uc-checkbox', mode, className, {
         disabled: disabled,
-        checked: c,
+        checked: c || indeterminate,
         mobile: isMobile,
         pc: !isMobile,
       })}
-      onClick={() => {
-        if (disabled) return;
-        if (mode === 'checkbox' || c !== true) {
-          setC(!c);
-        }
-      }}
+      onClick={onClick}
     >
       <div
-        {...rest}
-        className={clsx('checkbox', className)}
+        className={clsx('checkbox')}
         style={{
-          ...style,
           width: size,
           height: size,
-          fontSize: size,
+          fontSize: indeterminate ? size * 0.8 : size,
         }}
       >
-        <Icon type="uc-icon-tick" />
+        <Icon type={!indeterminate ? 'uc-icon-tick' : 'uc-icon-jian2'} />
       </div>
       {children && <span className="text">{children}</span>}
     </StyledCheckboxBaseWrapper>

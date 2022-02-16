@@ -15,11 +15,11 @@ type Props = {
   /** 禁用 */
   disabled?: boolean;
   /** 右侧内容 */
-  children: React.ReactNode;
-  /** box class */
+  children?: React.ReactNode;
   className?: string;
-  /** box style */
   style?: React.CSSProperties;
+  /** 设置 indeterminate 状态，中间横线代替勾勾 */
+  indeterminate?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 /** 复选框 */

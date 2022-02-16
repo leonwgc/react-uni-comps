@@ -15,9 +15,7 @@ declare const Radio: React.ForwardRefExoticComponent<{
     disabled?: boolean;
     /** 右侧内容 */
     children?: React.ReactNode;
-    /** box class */
     className?: string;
-    /** box style */
     style?: React.CSSProperties;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Radio;

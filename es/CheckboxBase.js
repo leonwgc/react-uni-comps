@@ -46,11 +46,10 @@ import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import useCallbackRef from './hooks/useCallbackRef';
 import Button from './Button';
 import Icon from './Icon';
 var StyledButton = styled(Button)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"], ["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
-var StyledCheckboxBaseWrapper = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), vars.border, vars.border);
+var StyledCheckboxBaseWrapper = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    color: #fff;\n  }\n"], ["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), vars.border, vars.border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -60,68 +59,62 @@ var CheckboxBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _b = props.button,
       button = _b === void 0 ? false : _b,
       onChange = props.onChange,
-      style = props.style,
       defaultChecked = props.defaultChecked,
       _c = props.mode,
       mode = _c === void 0 ? 'checkbox' : _c,
       checked = props.checked,
       disabled = props.disabled,
       children = props.children,
-      rest = __rest(props, ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"]);
+      indeterminate = props.indeterminate,
+      rest = __rest(props, ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate"]);
 
   var _d = useState(typeof checked === 'boolean' ? checked : defaultChecked),
       c = _d[0],
       setC = _d[1];
 
-  var onChangeRef = useCallbackRef(onChange);
-  useUpdateEffect(function () {
-    var _a;
-
-    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, c);
-  }, [c]);
   useUpdateEffect(function () {
     if (c !== checked) {
       setC(checked);
     }
   }, [checked]);
-  return button ? /*#__PURE__*/React.createElement(StyledButton, {
-    onClick: function onClick() {
-      if (disabled) return;
 
-      if (mode === 'checkbox' || c !== true) {
-        setC(!c);
-      }
-    },
-    className: clsx({
+  var onClick = function onClick() {
+    if (disabled) return;
+
+    if (mode === 'checkbox' || c !== true) {
+      var n = !c;
+      setC(n);
+      onChange === null || onChange === void 0 ? void 0 : onChange(n);
+    }
+  };
+
+  return button ? /*#__PURE__*/React.createElement(StyledButton, __assign({}, rest, {
+    ref: ref,
+    onClick: onClick,
+    className: clsx(className, {
       fill: button === 'fill',
       outline: button === 'outline' || button === true,
       checked: c,
       disabled: disabled
     })
-  }, children) : /*#__PURE__*/React.createElement(StyledCheckboxBaseWrapper, {
+  }), children) : /*#__PURE__*/React.createElement(StyledCheckboxBaseWrapper, __assign({}, rest, {
     ref: ref,
-    className: clsx('uc-checkbox', mode, {
+    className: clsx('uc-checkbox', mode, className, {
       disabled: disabled,
-      checked: c,
+      checked: c || indeterminate,
       mobile: isMobile,
       pc: !isMobile
     }),
-    onClick: function onClick() {
-      if (disabled) return;
-
-      if (mode === 'checkbox' || c !== true) {
-        setC(!c);
-      }
-    }
-  }, /*#__PURE__*/React.createElement("div", __assign({}, rest, {
-    className: clsx('checkbox', className),
-    style: __assign(__assign({}, style), {
+    onClick: onClick
+  }), /*#__PURE__*/React.createElement("div", {
+    className: clsx('checkbox'),
+    style: {
       width: size,
       height: size,
-      fontSize: size
-    })
-  }), /*#__PURE__*/React.createElement(Icon, {
-    type: "uc-icon-tick"
+      fontSize: indeterminate ? size * 0.8 : size
+    }
+  }, /*#__PURE__*/React.createElement(Icon, {
+    type: !indeterminate ? 'uc-icon-tick' : 'uc-icon-jian2'
   })), children && /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, children));

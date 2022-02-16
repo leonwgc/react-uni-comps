@@ -2681,11 +2681,11 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
-var _excluded$d = ["size", "className", "button", "onChange", "style", "defaultChecked", "mode", "checked", "disabled", "children"];
+var _excluded$d = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate"];
 
 var _templateObject$e, _templateObject2$1;
 var StyledButton$1 = styled__default['default'](Button)(_templateObject$e || (_templateObject$e = _taggedTemplateLiteral(["\n  &.fill {\n    &.checked.default {\n      ", "\n      ", "\n      color: #fff;\n    }\n  }\n  &.outline {\n    &.checked {\n      ", "\n      ", "\n    }\n  }\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n"])), getThemeColorCss('background-color'), getThemeColorCss('border-color'), getThemeColorCss('border-color'), getThemeColorCss('color'));
-var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  &:not(:first-child) {\n    margin-left: 8px;\n  }\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    transition: all 0.24s ease-in-out;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
+var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  align-items: center;\n  cursor: pointer;\n  user-select: none;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n\n  .text {\n    margin-left: 8px;\n  }\n\n  &.disabled {\n    cursor: not-allowed;\n    opacity: 0.5;\n  }\n\n  &.pc {\n    .checkbox:hover {\n      ", "\n    }\n  }\n\n  &.radio {\n    .checkbox {\n      border-radius: 50%;\n    }\n  }\n\n  &.checked {\n    .checkbox {\n      ", "\n      ", "\n    }\n  }\n\n  &.disabled {\n    .checkbox {\n      border-color: ", ";\n    }\n  }\n\n  .checkbox {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    background: #fff;\n    color: #fff;\n  }\n"])), getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2695,13 +2695,13 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       _props$button = props.button,
       button = _props$button === void 0 ? false : _props$button,
       onChange = props.onChange,
-      style = props.style,
       defaultChecked = props.defaultChecked,
       _props$mode = props.mode,
       mode = _props$mode === void 0 ? 'checkbox' : _props$mode,
       checked = props.checked,
       disabled = props.disabled,
       children = props.children,
+      indeterminate = props.indeterminate,
       rest = _objectWithoutProperties(props, _excluded$d);
 
   var _useState = React.useState(typeof checked === 'boolean' ? checked : defaultChecked),
@@ -2709,55 +2709,49 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       c = _useState2[0],
       setC = _useState2[1];
 
-  var onChangeRef = useCallbackRef(onChange);
-  useUpdateEffect(function () {
-    var _onChangeRef$current;
-
-    (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, c);
-  }, [c]);
   useUpdateEffect(function () {
     if (c !== checked) {
       setC(checked);
     }
   }, [checked]);
-  return button ? /*#__PURE__*/React__default['default'].createElement(StyledButton$1, {
-    onClick: function onClick() {
-      if (disabled) return;
 
-      if (mode === 'checkbox' || c !== true) {
-        setC(!c);
-      }
-    },
-    className: clsx__default['default']({
+  var onClick = function onClick() {
+    if (disabled) return;
+
+    if (mode === 'checkbox' || c !== true) {
+      var n = !c;
+      setC(n);
+      onChange === null || onChange === void 0 ? void 0 : onChange(n);
+    }
+  };
+
+  return button ? /*#__PURE__*/React__default['default'].createElement(StyledButton$1, _extends({}, rest, {
+    ref: ref,
+    onClick: onClick,
+    className: clsx__default['default'](className, {
       fill: button === 'fill',
       outline: button === 'outline' || button === true,
       checked: c,
       disabled: disabled
     })
-  }, children) : /*#__PURE__*/React__default['default'].createElement(StyledCheckboxBaseWrapper, {
+  }), children) : /*#__PURE__*/React__default['default'].createElement(StyledCheckboxBaseWrapper, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-checkbox', mode, {
+    className: clsx__default['default']('uc-checkbox', mode, className, {
       disabled: disabled,
-      checked: c,
+      checked: c || indeterminate,
       mobile: isMobile,
       pc: !isMobile
     }),
-    onClick: function onClick() {
-      if (disabled) return;
-
-      if (mode === 'checkbox' || c !== true) {
-        setC(!c);
-      }
-    }
-  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
-    className: clsx__default['default']('checkbox', className),
-    style: _objectSpread2(_objectSpread2({}, style), {}, {
+    onClick: onClick
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('checkbox'),
+    style: {
       width: size,
       height: size,
-      fontSize: size
-    })
-  }), /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "uc-icon-tick"
+      fontSize: indeterminate ? size * 0.8 : size
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: !indeterminate ? 'uc-icon-tick' : 'uc-icon-jian2'
   })), children && /*#__PURE__*/React__default['default'].createElement("span", {
     className: "text"
   }, children));
@@ -2811,7 +2805,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
   return /*#__PURE__*/React__default['default'].createElement(StyledCheckboxGroup, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className, 'uc-checkbox-group')
-  }), options.map(function (option) {
+  }), /*#__PURE__*/React__default['default'].createElement(Space, null, options.map(function (option) {
     var item = {};
 
     if (isObject(option)) {
@@ -2823,6 +2817,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
     }
 
     return /*#__PURE__*/React__default['default'].createElement(Checkbox, {
+      className: "uc-checkbox-group-item",
       button: button,
       disabled: disabled,
       key: item.value,
@@ -2831,7 +2826,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
       },
       checked: value.indexOf(item.value) > -1
     }, item.label);
-  }));
+  })));
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';
 
@@ -3085,7 +3080,7 @@ var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(functio
 });
 FileInputTrigger.displayName = 'UC-FileInputTrigger';
 
-var _excluded$k = ["onVisible", "onInVisible"];
+var _excluded$k = ["onVisible", "onInVisible", "style", "className"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3093,6 +3088,8 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
+      style = props.style,
+      className = props.className,
       rest = _objectWithoutProperties(props, _excluded$k);
 
   var vv = useCallbackRef(onVisible);
@@ -3121,10 +3118,10 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
   });
   return /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
     "data-role": "waypoint",
-    className: "uc-waypoint",
-    style: {
+    className: clsx__default['default']('uc-waypoint', className),
+    style: _objectSpread2({
       fontSize: 0
-    },
+    }, style),
     ref: elRef
   }));
 });

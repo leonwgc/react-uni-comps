@@ -16,9 +16,8 @@ type Props = {
   disabled?: boolean;
   /** 右侧内容 */
   children?: React.ReactNode;
-  /** box class */
+
   className?: string;
-  /** box style */
   style?: React.CSSProperties;
 } & HTMLAttributes<HTMLDivElement>;
 

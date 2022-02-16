@@ -30,6 +30,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { observe, unobserve } from './defaultIntersectionObserver';
+import clsx from 'clsx';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -37,7 +38,9 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
-      rest = __rest(props, ["onVisible", "onInVisible"]);
+      style = props.style,
+      className = props.className,
+      rest = __rest(props, ["onVisible", "onInVisible", "style", "className"]);
 
   var vv = useCallbackRef(onVisible);
   var vi = useCallbackRef(onInVisible);
@@ -63,10 +66,10 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
   return /*#__PURE__*/React.createElement("span", __assign({}, rest, {
     "data-role": "waypoint",
-    className: "uc-waypoint",
-    style: {
+    className: clsx('uc-waypoint', className),
+    style: __assign({
       fontSize: 0
-    },
+    }, style),
     ref: elRef
   }));
 });

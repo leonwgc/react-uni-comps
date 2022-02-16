@@ -23,5 +23,7 @@ declare const CheckboxBase: React.ForwardRefExoticComponent<{
     mode?: 'checkbox' | 'radio';
     /** 根据 value 进行比较，判断是否选中, 用于list */
     value?: string | number;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+    /** 设置 indeterminate 状态，中间横线代替勾勾 */
+    indeterminate?: boolean;
+} & React.HTMLAttributes<HTMLButtonElement | HTMLDivElement> & React.RefAttributes<any>>;
 export default CheckboxBase;

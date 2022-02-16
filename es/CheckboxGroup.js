@@ -55,6 +55,7 @@ import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Checkbox from './Checkbox';
 import { isObject } from './helper';
+import Space from './Space';
 var StyledCheckboxGroup = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""])));
 /** 一组复选框 */
 
@@ -90,7 +91,7 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledCheckboxGroup, __assign({}, rest, {
     ref: ref,
     className: clsx(className, 'uc-checkbox-group')
-  }), options.map(function (option) {
+  }), /*#__PURE__*/React.createElement(Space, null, options.map(function (option) {
     var item = {};
 
     if (isObject(option)) {
@@ -102,6 +103,7 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
 
     return /*#__PURE__*/React.createElement(Checkbox, {
+      className: "uc-checkbox-group-item",
       button: button,
       disabled: disabled,
       key: item.value,
@@ -110,7 +112,7 @@ var CheckboxGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       },
       checked: value.indexOf(item.value) > -1
     }, item.label);
-  }));
+  })));
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';
 export default CheckboxGroup;

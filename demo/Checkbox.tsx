@@ -25,8 +25,20 @@ export default function App() {
     <PageWrap>
       <StyledContent>
         <DemoBlock title="默认">
+          <Checkbox />
+
           <Checkbox checked={checked} onChange={(checked) => setChecked(checked)}>
             默认
+          </Checkbox>
+
+          <Checkbox checked={checked} indeterminate>
+            半选状态
+          </Checkbox>
+
+          <Checkbox disabled>disabled</Checkbox>
+
+          <Checkbox checked disabled>
+            checked
           </Checkbox>
         </DemoBlock>
 
@@ -34,30 +46,6 @@ export default function App() {
           <Checkbox defaultChecked onChange={(c) => console.log(c)}>
             非受控
           </Checkbox>
-        </DemoBlock>
-
-        <DemoBlock title="自定义样式">
-          <Space wrap>
-            <Checkbox className="styled" defaultChecked>
-              自定义样式
-            </Checkbox>
-
-            <Checkbox style={{ borderRadius: '50%' }} size={60} defaultChecked>
-              自定义样式
-            </Checkbox>
-            <Checkbox
-              style={{ backgroundColor: 'red', borderRadius: '50%' }}
-              size={32}
-              defaultChecked
-              disabled
-            >
-              自定义样式
-            </Checkbox>
-            <Checkbox disabled>自定义样式</Checkbox>
-            <Checkbox disabled checked>
-              自定义样式
-            </Checkbox>
-          </Space>
         </DemoBlock>
       </StyledContent>
     </PageWrap>

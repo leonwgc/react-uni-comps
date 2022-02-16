@@ -5,6 +5,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import Checkbox from './Checkbox';
 import { isObject } from './helper';
 import type { StringOrNumber } from './types';
+import Space from './Space';
 
 type LabelValue = {
   label?: React.ReactNode;
@@ -53,29 +54,32 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <StyledCheckboxGroup {...rest} ref={ref} className={clsx(className, 'uc-checkbox-group')}>
-      {options.map((option) => {
-        const item: LabelValue = {} as LabelValue;
+      <Space>
+        {options.map((option) => {
+          const item: LabelValue = {} as LabelValue;
 
-        if (isObject(option)) {
-          item.label = (option as LabelValue).label;
-          item.value = (option as LabelValue).value;
-        } else {
-          item.label = option;
-          item.value = option as StringOrNumber;
-        }
+          if (isObject(option)) {
+            item.label = (option as LabelValue).label;
+            item.value = (option as LabelValue).value;
+          } else {
+            item.label = option;
+            item.value = option as StringOrNumber;
+          }
 
-        return (
-          <Checkbox
-            button={button}
-            disabled={disabled}
-            key={item.value}
-            onChange={(c) => onCheckboxChange(c, item.value)}
-            checked={value.indexOf(item.value) > -1}
-          >
-            {item.label}
-          </Checkbox>
-        );
-      })}
+          return (
+            <Checkbox
+              className="uc-checkbox-group-item"
+              button={button}
+              disabled={disabled}
+              key={item.value}
+              onChange={(c) => onCheckboxChange(c, item.value)}
+              checked={value.indexOf(item.value) > -1}
+            >
+              {item.label}
+            </Checkbox>
+          );
+        })}
+      </Space>
     </StyledCheckboxGroup>
   );
 });
