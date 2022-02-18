@@ -183,6 +183,7 @@ yarn add react-uni-comps
 - useCountdown (倒计时，常用于获取验证码)
 - useMount (组件加载执行回调)
 - useUnmount (组件卸载执行回调)
+- useForceUpdate (强制render组件)
 
 ### 按需加载
 
