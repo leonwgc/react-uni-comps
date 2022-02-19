@@ -71,6 +71,7 @@ export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
 export { default as PullToRefresh } from './PullToRefresh';
 export { default as FingerGestureElement } from './FingerGestureElement';
+export { default as Pagination } from './Pagination';
 /** only has static method */
 
 export { default as Loading } from './Loading';

@@ -92,7 +92,7 @@ yarn add react-uni-comps
 - Skeleton（骨架屏）
 - CopyToClipboard (复制文本到剪贴板)
 - ScrollToTop (平滑滚动到顶部)
-- Loading (加载中toast)
+- Loading (加载中 toast)
 
 #### 导航组件
 
@@ -100,6 +100,7 @@ yarn add react-uni-comps
 - Affix (将页面元素钉在可视范围)
 - Steps (步骤条)
 - PopMenu (弹出菜单)
+- Pagination (分页)
 
 ### 数据录入
 

@@ -147,6 +147,10 @@ module.exports = [
         title: 'PopMenu 弹出菜单',
         mobile: false,
       },
+      {
+        name: 'Pagination',
+        title: 'Pagination 分页',
+      },
     ],
   },
   {

@@ -10578,15 +10578,168 @@ var FingerGestureElement = /*#__PURE__*/React__default['default'].forwardRef(fun
 });
 FingerGestureElement.displayName = 'UC-FingerGestureElement';
 
-var _excluded$$ = ["content"];
+var _excluded$$ = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
 
 var _templateObject$W;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+
+/**
+ * get pages arr
+ *
+ * @param {number} currentPage
+ * @param {number} pageCount
+ * @param {number} visiblePageCount
+ * @return {*}  {Array<number>}
+ */
+function getPages(currentPage, pageCount, visiblePageCount) {
+  var low, high, v;
+  var pages = [];
+
+  if (pageCount === 0) {
+    return pages;
+  }
+
+  if (currentPage > pageCount) {
+    currentPage = 1;
+  }
+
+  if (pageCount <= visiblePageCount) {
+    low = 1;
+    high = pageCount;
+  } else {
+    v = Math.ceil(visiblePageCount / 2);
+    low = Math.max(currentPage - v, 1);
+    high = Math.min(low + visiblePageCount - 1, pageCount);
+
+    if (pageCount - high < v) {
+      low = high - visiblePageCount + 1;
+    }
+  }
+
+  for (; low <= high; low++) {
+    pages.push(low);
+  }
+
+  return pages;
+}
+
+var StyledWrap$8 = styled__default['default'].div(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  font-size: 14px;\n  .uc-button {\n    width: 32px;\n    padding: 0;\n    transition: none;\n  }\n\n  &.no-page {\n    display: flex;\n    width: 100%;\n    justify-content: space-between;\n  }\n"])));
+/** 分页 */
+
+var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$currentPage = props.currentPage,
+      currentPage = _props$currentPage === void 0 ? 1 : _props$currentPage,
+      pageCount = props.pageCount,
+      _props$visiblePageCou = props.visiblePageCount,
+      visiblePageCount = _props$visiblePageCou === void 0 ? 10 : _props$visiblePageCou,
+      _props$firstText = props.firstText,
+      firstText = _props$firstText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Button, {
+    as: "a"
+  }, "\u9996\u9875") : _props$firstText,
+      _props$lastText = props.lastText,
+      lastText = _props$lastText === void 0 ? /*#__PURE__*/React__default['default'].createElement(Button, {
+    as: "a"
+  }, "\u672B\u9875") : _props$lastText,
+      showFirstLastText = props.showFirstLastText,
+      showIfOnePage = props.showIfOnePage,
+      onPageChange = props.onPageChange,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$$);
+
+  var domRef = React.useRef();
+
+  var _useState = React.useState(currentPage),
+      _useState2 = _slicedToArray(_useState, 2),
+      page = _useState2[0],
+      setPage = _useState2[1];
+
+  var _useState3 = React.useState(function () {
+    return getPages(page, pageCount, visiblePageCount);
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      pages = _useState4[0],
+      setPages = _useState4[1];
+
+  useUpdateEffect(function () {
+    onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(page);
+  }, [page]); // outside
+
+  useUpdateEffect(function () {
+    if (page !== currentPage) {
+      setPage(currentPage);
+    }
+  }, [currentPage]);
+  useUpdateEffect(function () {
+    setPages(getPages(page, pageCount, visiblePageCount));
+  }, [visiblePageCount, page, pageCount]);
+  React.useImperativeHandle(ref, function () {
+    return domRef.current;
+  });
+
+  var renderPage = function renderPage() {
+    return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, showFirstLastText && /*#__PURE__*/React__default['default'].createElement(Button, {
+      className: "first-page",
+      onClick: function onClick() {
+        return setPage(1);
+      },
+      as: "a"
+    }, firstText), /*#__PURE__*/React__default['default'].createElement(Button, {
+      className: "prev-page",
+      disabled: page === 1,
+      onClick: function onClick() {
+        return setPage(function (p) {
+          return Math.max(1, p - 1);
+        });
+      }
+    }, /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+      direction: "left"
+    })), pages.map(function (p) {
+      return /*#__PURE__*/React__default['default'].createElement(Button, {
+        outlined: p === page,
+        className: clsx__default['default']('page-item', {
+          active: p === page
+        }),
+        key: p,
+        onClick: function onClick() {
+          return setPage(p);
+        }
+      }, p);
+    }), /*#__PURE__*/React__default['default'].createElement(Button, {
+      className: "next-page",
+      disabled: page === pageCount,
+      onClick: function onClick() {
+        return setPage(function (p) {
+          return Math.min(pageCount, p + 1);
+        });
+      }
+    }, /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+      direction: "right"
+    })), showFirstLastText && /*#__PURE__*/React__default['default'].createElement(Button, {
+      className: "last-page",
+      onClick: function onClick() {
+        return setPage(pageCount);
+      },
+      as: "a"
+    }, lastText));
+  };
+
+  return (showIfOnePage || pageCount > 1) && /*#__PURE__*/React__default['default'].createElement(StyledWrap$8, _extends({}, rest, {
+    ref: domRef,
+    className: clsx__default['default']('uc-pagination', className, {
+      'no-page': visiblePageCount === 0
+    })
+  }), visiblePageCount === 0 && renderPage(), visiblePageCount > 0 && /*#__PURE__*/React__default['default'].createElement(Space, null, renderPage()));
+});
+Pagination.displayName = 'UC-Pagination';
+
+var _excluded$10 = ["content"];
+
+var _templateObject$X;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$$);
+      restProps = _objectWithoutProperties(_ref, _excluded$10);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -10706,7 +10859,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$10 = ["children", "label", "name"],
+var _excluded$11 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10717,7 +10870,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$10);
+      fieldProps = _objectWithoutProperties(props, _excluded$11);
 
   var required = false;
 
@@ -10893,6 +11046,7 @@ exports.NoticeList = NoticeList;
 exports.Notify = Notify;
 exports.NumberKeyboard = NumberKeyboard;
 exports.NumberKeyboardBase = NumberKeyboardBase;
+exports.Pagination = Pagination;
 exports.PasswordInput = PasswordInput;
 exports.Picker = Picker;
 exports.PickerView = PickerView;

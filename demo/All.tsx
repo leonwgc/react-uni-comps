@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Pagination
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Pagination')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Loading
           </Space>
         }
