@@ -66,6 +66,11 @@ export default function App() {
 
               update(elRef.current, ref.current, statusElRef.current);
             }}
+            onTwoFingerPressMove={(e) => {
+              console.log(e.deltaX, e.deltaY);
+              ref.current.x = ref.current.x + e.deltaX;
+              ref.current.y = ref.current.y + e.deltaY;
+            }}
             ref={elRef}
           >
             <div

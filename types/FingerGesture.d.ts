@@ -28,7 +28,11 @@ export declare type Options = Partial<{
     onSwipe: (evt: SyntheticEvent & {
         direction: 'left' | 'right' | 'up' | 'down';
     }) => void;
-    onTwoFingerPressMove: () => void;
+    /** 双指滑动 */
+    onTwoFingerPressMove: (evt: SyntheticEvent & {
+        deltaX: number;
+        deltaY: number;
+    }) => void;
 }>;
 /** 手势操作 */
 declare const FingerGesture: (el: Element, option: Options) => void;

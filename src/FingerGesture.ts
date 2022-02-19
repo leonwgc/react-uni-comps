@@ -92,7 +92,8 @@ export type Options = Partial<{
   onPressMove: (evt: SyntheticEvent & { deltaX: number; deltaY: number }) => void;
   /** 左右滑动 */
   onSwipe: (evt: SyntheticEvent & { direction: 'left' | 'right' | 'up' | 'down' }) => void;
-  onTwoFingerPressMove: () => void;
+  /** 双指滑动 */
+  onTwoFingerPressMove: (evt: SyntheticEvent & { deltaX: number; deltaY: number }) => void;
 }>;
 
 /** 手势操作 */
