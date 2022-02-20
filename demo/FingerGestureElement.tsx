@@ -34,6 +34,9 @@ export default function App() {
       <DemoBlock title="基础分割线">
         <AutoCenter>
           <FingerGestureElement
+            onSingleTap={() => {
+              Toast.show('tap');
+            }}
             onDoubleTap={() => {
               Toast.show('doubleTap');
             }}
