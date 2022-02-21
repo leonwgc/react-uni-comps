@@ -91,6 +91,7 @@ export { default as useCallbackRef } from './hooks/useCallbackRef';
 export { default as useCountdown } from './hooks/useCountdown';
 export { default as useMount } from './hooks/useMount';
 export { default as useUnmount } from './hooks/useUnmount';
+export { default as useForceUpdate } from './hooks/useForceUpdate';
 /** third-party libs */
 export { default as styled } from 'styled-components';
 export { default as clsx } from 'clsx';

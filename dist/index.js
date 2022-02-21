@@ -11104,6 +11104,7 @@ exports.unobserve = unobserve;
 exports.useCallbackRef = useCallbackRef;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
+exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useMount = useMount;
 exports.useThrottle = useThrottle;
