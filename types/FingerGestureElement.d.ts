@@ -10,9 +10,9 @@ declare const FingerGestureElement: React.ForwardRefExoticComponent<{
     onTouchCancel: (evt: React.SyntheticEvent<Element, Event>) => void;
     onMultipointStart: (evt: React.SyntheticEvent<Element, Event>) => void;
     onMultipointEnd: (evt: React.SyntheticEvent<Element, Event>) => void;
-    onTap: () => void;
     onDoubleTap: () => void;
     onLongTap: () => void;
+    onSingleTap: () => void;
     onRotate: (evt: React.SyntheticEvent<Element, Event> & {
         angle: number;
     }) => void;
@@ -26,6 +26,9 @@ declare const FingerGestureElement: React.ForwardRefExoticComponent<{
     onSwipe: (evt: React.SyntheticEvent<Element, Event> & {
         direction: "left" | "right" | "down" | "up";
     }) => void;
-    onTwoFingerPressMove: () => void;
+    onTwoFingerPressMove: (evt: React.SyntheticEvent<Element, Event> & {
+        deltaX: number;
+        deltaY: number;
+    }) => void;
 }> & React.RefAttributes<HTMLElement>>;
 export default FingerGestureElement;

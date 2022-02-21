@@ -6,11 +6,12 @@ export declare type Options = Partial<{
     onTouchCancel: (evt: SyntheticEvent) => void;
     onMultipointStart: (evt: SyntheticEvent) => void;
     onMultipointEnd: (evt: SyntheticEvent) => void;
-    onTap: () => void;
     /** 点两次 */
     onDoubleTap: () => void;
     /** 长按 */
     onLongTap: () => void;
+    /** 按一次 */
+    onSingleTap: () => void;
     /** 旋转, 单位:deg */
     onRotate: (evt: SyntheticEvent & {
         angle: number;
@@ -28,7 +29,11 @@ export declare type Options = Partial<{
     onSwipe: (evt: SyntheticEvent & {
         direction: 'left' | 'right' | 'up' | 'down';
     }) => void;
-    onTwoFingerPressMove: () => void;
+    /** 双指滑动 */
+    onTwoFingerPressMove: (evt: SyntheticEvent & {
+        deltaX: number;
+        deltaY: number;
+    }) => void;
 }>;
 /** 手势操作 */
 declare const FingerGesture: (el: Element, option: Options) => void;
