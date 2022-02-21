@@ -5,14 +5,9 @@ import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
 
 const StyledTabsNew = styled(Tabs)`
   background-color: #fff;
-  flex-basis: 56px;
 
-  .uc-tabs-header-wrap {
-    height: 56px;
-  }
   .uc-tabs-header-item {
-    flex: 0 0 128px;
-    height: 40px;
+    width: 128px;
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
@@ -22,13 +17,20 @@ const StyledTabsNew = styled(Tabs)`
   }
 `;
 
+const StyledScroll = styled(Tabs)`
+  background-color: #fff;
+  margin-bottom: 10px;
+
+  .uc-tabs-header-item {
+    width: 60px;
+  }
+`;
+
 const StyledTabsNew1 = styled(Tabs)`
   background-color: #fff;
-  .uc-tabs-header-wrap {
-    height: 56px;
-  }
+
   .uc-tabs-header-item {
-    flex: 0 0 132px;
+    width: 132px;
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
@@ -39,23 +41,16 @@ const StyledTabsNew1 = styled(Tabs)`
   }
 `;
 
-const StyledTabs = styled(Tabs)`
-  .uc-tabs-header-item {
-    flex: none;
-    width: 120px;
-  }
-`;
-
 const StyledContent = styled.div`
   padding: 10px;
   background-color: #eee;
 `;
 
-const scrollTabs = Array.from(new Array(10), (v, i) => ({ title: 'title' + (i + 1) }));
+const scrollTabs = Array.from(new Array(20), (v, i) => ({ title: 'title' + (i + 1) }));
 
 export default function App() {
   const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([{ title: 'tab' }]);
-  const maxCount = 5;
+  const maxCount = 3;
   const [value, setValue] = useState(0);
 
   return (
@@ -102,7 +97,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="包含extra配置">
-        <StyledTabs
+        <Tabs
           value={value}
           onChange={(v) => setValue(v)}
           extra={
@@ -136,7 +131,7 @@ export default function App() {
           {tabTitles.map((item, idx) => {
             return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
           })}
-        </StyledTabs>
+        </Tabs>
       </DemoBlock>
 
       <DemoBlock title="可滑动">
@@ -168,11 +163,11 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="滚动">
-        <Tabs defaultValue={2} onChange={console.log}>
+        <StyledScroll defaultValue={2}>
           {scrollTabs.map((item, index) => (
             <Tabs.Tab title={item.title} key={index}></Tabs.Tab>
           ))}
-        </Tabs>
+        </StyledScroll>
       </DemoBlock>
 
       <DemoBlock title="自定义风格1">

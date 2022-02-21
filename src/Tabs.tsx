@@ -10,6 +10,7 @@ import { throttle } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
+import usePrevious from './hooks/usePrevious';
 
 type ItemProp = {
   /** 禁用 */
@@ -47,6 +48,7 @@ const StyledWrapper = styled.div`
   .uc-tabs-header-wrap {
     display: flex;
     height: 44px;
+    box-sizing: border-box;
     position: relative;
     margin: 0;
     padding: 0;
@@ -71,7 +73,6 @@ const StyledTabHeadItem = styled.div<{
   value?: number;
   count?: number;
 }>`
-  flex: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -80,7 +81,8 @@ const StyledTabHeadItem = styled.div<{
   justify-content: center;
   color: #000000d9;
   font-size: 14px;
-  min-width: 56px;
+  flex: none;
+  width: 56px;
   user-select: none;
 
   &.active {
@@ -209,6 +211,7 @@ const Tabs: React.FC<TabsProp> = ({
   }, [underline]);
 
   const xRef = useRef<Array<HTMLDivElement>>([]);
+  const prevVal = usePrevious(_v);
 
   useLayoutEffect(() => {
     const headerWrapEl = headerWrapElRef.current;
@@ -216,17 +219,18 @@ const Tabs: React.FC<TabsProp> = ({
       const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
 
       if (itemEl) {
-        // 倒数第二个开始吧
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
-          xRef.current[
-            Math.max(
-              _v + 1,
-              _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0,
-              _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0
-            )
-          ]?.scrollIntoView({
-            behavior: 'smooth',
-          });
+          if (_v > prevVal) {
+            xRef.current[
+              Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)
+            ]?.scrollIntoView({
+              behavior: 'smooth',
+            });
+          } else {
+            xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]?.scrollIntoView({
+              behavior: 'smooth',
+            });
+          }
         } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
           headerWrapEl.scroll({
             left: 0,
@@ -235,7 +239,7 @@ const Tabs: React.FC<TabsProp> = ({
         }
       }
     }
-  }, [_v]);
+  }, [_v, prevVal]);
 
   return (
     <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>

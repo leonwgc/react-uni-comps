@@ -50,8 +50,9 @@ import { throttle } from './helper';
 import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), vars.border);
-var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"], ["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), vars.disabledText, function (props) {
+import usePrevious from './hooks/usePrevious';
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), vars.border);
+var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  flex: none;\n  width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"], ["\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  flex: none;\n  width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), vars.disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
 /**
@@ -161,8 +162,9 @@ var Tabs = function Tabs(_a) {
     };
   }, [underline]);
   var xRef = useRef([]);
+  var prevVal = usePrevious(_v);
   useLayoutEffect(function () {
-    var _a;
+    var _a, _b;
 
     var headerWrapEl = headerWrapElRef.current;
 
@@ -170,11 +172,16 @@ var Tabs = function Tabs(_a) {
       var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
 
       if (itemEl) {
-        // 倒数第二个开始吧
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
-          (_a = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0, _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0)]) === null || _a === void 0 ? void 0 : _a.scrollIntoView({
-            behavior: 'smooth'
-          });
+          if (_v > prevVal) {
+            (_a = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)]) === null || _a === void 0 ? void 0 : _a.scrollIntoView({
+              behavior: 'smooth'
+            });
+          } else {
+            (_b = xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]) === null || _b === void 0 ? void 0 : _b.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
         } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
           headerWrapEl.scroll({
             left: 0,
@@ -183,7 +190,7 @@ var Tabs = function Tabs(_a) {
         }
       }
     }
-  }, [_v]);
+  }, [_v, prevVal]);
   return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
     className: clsx('uc-tabs', className)
   }), /*#__PURE__*/React.createElement("div", {

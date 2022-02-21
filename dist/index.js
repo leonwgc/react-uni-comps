@@ -2239,8 +2239,8 @@ function useCallbackRef(value) {
 var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2;
-var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
-var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  flex: 1;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  min-width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
+var StyledWrapper$1 = styled__default['default'].div(_templateObject$8 || (_templateObject$8 = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), border);
+var StyledTabHeadItem = styled__default['default'].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #000000d9;\n  font-size: 14px;\n  flex: none;\n  width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
 /**
@@ -2355,6 +2355,7 @@ var Tabs = function Tabs(_ref2) {
     };
   }, [underline]);
   var xRef = React.useRef([]);
+  var prevVal = usePrevious(_v);
   React.useLayoutEffect(function () {
     var headerWrapEl = headerWrapElRef.current;
 
@@ -2362,13 +2363,20 @@ var Tabs = function Tabs(_ref2) {
       var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
 
       if (itemEl) {
-        // 倒数第二个开始吧
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
-          var _xRef$current$Math$ma;
+          if (_v > prevVal) {
+            var _xRef$current$Math$ma;
 
-          (_xRef$current$Math$ma = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0, _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0)]) === null || _xRef$current$Math$ma === void 0 ? void 0 : _xRef$current$Math$ma.scrollIntoView({
-            behavior: 'smooth'
-          });
+            (_xRef$current$Math$ma = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)]) === null || _xRef$current$Math$ma === void 0 ? void 0 : _xRef$current$Math$ma.scrollIntoView({
+              behavior: 'smooth'
+            });
+          } else {
+            var _xRef$current$Math$mi;
+
+            (_xRef$current$Math$mi = xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]) === null || _xRef$current$Math$mi === void 0 ? void 0 : _xRef$current$Math$mi.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
         } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
           headerWrapEl.scroll({
             left: 0,
@@ -2377,7 +2385,7 @@ var Tabs = function Tabs(_ref2) {
         }
       }
     }
-  }, [_v]);
+  }, [_v, prevVal]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
