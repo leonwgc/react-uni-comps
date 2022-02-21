@@ -2278,6 +2278,7 @@ var Tabs = function Tabs(_ref2) {
   var count = React__default['default'].Children.count(children);
   var underlineElRef = React.useRef();
   var contentWrapElRef = React.useRef();
+  var headerWrapElRef = React.useRef();
 
   var _useState = React.useState(typeof value === 'undefined' ? defaultValue : value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2353,12 +2354,37 @@ var Tabs = function Tabs(_ref2) {
       }
     };
   }, [underline]);
+  var xRef = React.useRef([]);
+  React.useLayoutEffect(function () {
+    var headerWrapEl = headerWrapElRef.current;
+
+    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
+      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
+
+      if (itemEl) {
+        // 倒数第二个开始吧
+        if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
+          var _xRef$current$Math$ma;
+
+          (_xRef$current$Math$ma = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0, _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0)]) === null || _xRef$current$Math$ma === void 0 ? void 0 : _xRef$current$Math$ma.scrollIntoView({
+            behavior: 'smooth'
+          });
+        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [_v]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('uc-tabs-header-wrap', {
       'no-border': !border
-    })
+    }),
+    ref: headerWrapElRef
   }, underline && /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
     ref: underlineElRef,
     className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
@@ -2377,6 +2403,9 @@ var Tabs = function Tabs(_ref2) {
           disabled = _ref3.disabled;
       return /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
         key: index,
+        ref: function ref(r) {
+          xRef.current[index] = r;
+        },
         className: clsx__default['default']('uc-tabs-header-item', {
           active: index === _v,
           disabled: disabled

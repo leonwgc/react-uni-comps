@@ -89,6 +89,7 @@ var Tabs = function Tabs(_a) {
   var count = React.Children.count(children);
   var underlineElRef = useRef();
   var contentWrapElRef = useRef();
+  var headerWrapElRef = useRef();
 
   var _e = useState(typeof value === 'undefined' ? defaultValue : value),
       _v = _e[0],
@@ -159,12 +160,37 @@ var Tabs = function Tabs(_a) {
       }
     };
   }, [underline]);
+  var xRef = useRef([]);
+  useLayoutEffect(function () {
+    var _a;
+
+    var headerWrapEl = headerWrapElRef.current;
+
+    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
+      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
+
+      if (itemEl) {
+        // 倒数第二个开始吧
+        if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
+          (_a = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0, _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0)]) === null || _a === void 0 ? void 0 : _a.scrollIntoView({
+            behavior: 'smooth'
+          });
+        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [_v]);
   return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
     className: clsx('uc-tabs', className)
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx('uc-tabs-header-wrap', {
       'no-border': !border
-    })
+    }),
+    ref: headerWrapElRef
   }, underline && /*#__PURE__*/React.createElement(StyledTabHeadItem, {
     ref: underlineElRef,
     className: clsx('uc-tabs-header-item', 'uc-tabs-header-line'),
@@ -183,6 +209,9 @@ var Tabs = function Tabs(_a) {
           disabled_1 = _a.disabled;
       return /*#__PURE__*/React.createElement(StyledTabHeadItem, {
         key: index,
+        ref: function ref(r) {
+          xRef.current[index] = r;
+        },
         className: clsx('uc-tabs-header-item', {
           active: index === _v,
           disabled: disabled_1
