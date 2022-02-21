@@ -1,6 +1,6 @@
 //#region  top
 
-import React, { useState, useLayoutEffect, useRef, RefObject } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -70,7 +70,6 @@ const StyledWrapper = styled.div`
 const StyledTabHeadItem = styled.div<{
   value?: number;
   count?: number;
-  ref?: RefObject<HTMLDivElement>;
 }>`
   flex: 1;
   white-space: nowrap;
@@ -145,6 +144,7 @@ const Tabs: React.FC<TabsProp> = ({
   const count = React.Children.count(children);
   const underlineElRef = useRef<HTMLDivElement>();
   const contentWrapElRef = useRef<HTMLDivElement>();
+  const headerWrapElRef = useRef<HTMLDivElement>();
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
 
@@ -208,9 +208,38 @@ const Tabs: React.FC<TabsProp> = ({
     };
   }, [underline]);
 
+  const xRef = useRef<Array<HTMLDivElement>>([]);
+
+  useLayoutEffect(() => {
+    const headerWrapEl = headerWrapElRef.current;
+    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
+      const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
+
+      if (itemEl) {
+        // 倒数第二个开始吧
+        if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
+          xRef.current[
+            Math.max(
+              _v + 1,
+              _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0,
+              _v + 3 <= xRef.current.length - 1 ? _v + 3 : 0
+            )
+          ]?.scrollIntoView({
+            behavior: 'smooth',
+          });
+        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth',
+          });
+        }
+      }
+    }
+  }, [_v]);
+
   return (
     <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>
-      <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })}>
+      <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })} ref={headerWrapElRef}>
         {underline && (
           <StyledTabHeadItem
             ref={underlineElRef}
@@ -230,6 +259,9 @@ const Tabs: React.FC<TabsProp> = ({
             return (
               <StyledTabHeadItem
                 key={index}
+                ref={(r) => {
+                  xRef.current[index] = r;
+                }}
                 className={clsx('uc-tabs-header-item', {
                   active: index === _v,
                   disabled: disabled,
