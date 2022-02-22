@@ -2357,26 +2357,24 @@ var Tabs = function Tabs(_ref2) {
       var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
 
       if (itemEl) {
-        if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
-          if (_v > prevVal) {
-            // sibling 2
-            headerWrapEl.scroll({
-              left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
-              behavior: 'smooth'
-            });
-          } else {
-            // sibling 1
-            headerWrapEl.scroll({
-              left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
-              behavior: 'smooth'
-            });
-          }
-        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+        if (_v > prevVal) {
+          // right
           headerWrapEl.scroll({
-            left: 0,
+            left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
+            behavior: 'smooth'
+          });
+        } else {
+          // left
+          headerWrapEl.scroll({
+            left: (_v - 2) * itemEl.offsetWidth,
             behavior: 'smooth'
           });
         }
+      } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+        headerWrapEl.scroll({
+          left: 0,
+          behavior: 'smooth'
+        });
       }
     }
   }, [_v, prevVal]);
