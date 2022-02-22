@@ -192,12 +192,8 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
         el.onload = resolve;
         el.onerror = reject;
 
-        if (isCss) {
-          const head = document.getElementsByTagName('head')[0];
-          head.appendChild(el);
-        } else {
-          document.body.appendChild(el);
-        }
+        const head = document.getElementsByTagName('head')[0];
+        head.appendChild(el);
       });
     } else {
       return Promise.resolve();

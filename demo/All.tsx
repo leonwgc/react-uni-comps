@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Tabs
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Tabs')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Pagination
           </Space>
         }
@@ -495,15 +504,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('LazyLoadElement')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Tabs
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Tabs')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
