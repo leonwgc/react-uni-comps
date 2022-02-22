@@ -2349,9 +2349,8 @@ var Tabs = function Tabs(_ref2) {
       }
     };
   }, [underline]);
-  var xRef = React.useRef([]);
   var prevVal = usePrevious(_v);
-  React.useLayoutEffect(function () {
+  React.useEffect(function () {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
@@ -2360,19 +2359,19 @@ var Tabs = function Tabs(_ref2) {
       if (itemEl) {
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
           if (_v > prevVal) {
-            var _xRef$current$Math$ma;
-
-            (_xRef$current$Math$ma = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)]) === null || _xRef$current$Math$ma === void 0 ? void 0 : _xRef$current$Math$ma.scrollIntoView({
+            // sibling 2
+            headerWrapEl.scroll({
+              left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth'
             });
           } else {
-            var _xRef$current$Math$mi;
-
-            (_xRef$current$Math$mi = xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]) === null || _xRef$current$Math$mi === void 0 ? void 0 : _xRef$current$Math$mi.scrollIntoView({
+            // sibling 1
+            headerWrapEl.scroll({
+              left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth'
             });
           }
-        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
           headerWrapEl.scroll({
             left: 0,
             behavior: 'smooth'
@@ -2406,9 +2405,6 @@ var Tabs = function Tabs(_ref2) {
           disabled = _ref3.disabled;
       return /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
         key: index,
-        ref: function ref(r) {
-          xRef.current[index] = r;
-        },
         className: clsx__default['default']('uc-tabs-header-item', {
           active: index === _v,
           disabled: disabled

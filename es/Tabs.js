@@ -40,7 +40,7 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -161,11 +161,8 @@ var Tabs = function Tabs(_a) {
       }
     };
   }, [underline]);
-  var xRef = useRef([]);
   var prevVal = usePrevious(_v);
-  useLayoutEffect(function () {
-    var _a, _b;
-
+  useEffect(function () {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
@@ -174,15 +171,19 @@ var Tabs = function Tabs(_a) {
       if (itemEl) {
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
           if (_v > prevVal) {
-            (_a = xRef.current[Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)]) === null || _a === void 0 ? void 0 : _a.scrollIntoView({
+            // sibling 2
+            headerWrapEl.scroll({
+              left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth'
             });
           } else {
-            (_b = xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]) === null || _b === void 0 ? void 0 : _b.scrollIntoView({
+            // sibling 1
+            headerWrapEl.scroll({
+              left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth'
             });
           }
-        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
           headerWrapEl.scroll({
             left: 0,
             behavior: 'smooth'
@@ -216,9 +217,6 @@ var Tabs = function Tabs(_a) {
           disabled_1 = _a.disabled;
       return /*#__PURE__*/React.createElement(StyledTabHeadItem, {
         key: index,
-        ref: function ref(r) {
-          xRef.current[index] = r;
-        },
         className: clsx('uc-tabs-header-item', {
           active: index === _v,
           disabled: disabled_1

@@ -22,7 +22,7 @@ const StyledScroll = styled(Tabs)`
   margin-bottom: 10px;
 
   .uc-tabs-header-item {
-    width: 60px;
+    width: 90px;
   }
 `;
 

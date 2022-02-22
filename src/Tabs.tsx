@@ -1,6 +1,6 @@
 //#region  top
 
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -210,10 +210,9 @@ const Tabs: React.FC<TabsProp> = ({
     };
   }, [underline]);
 
-  const xRef = useRef<Array<HTMLDivElement>>([]);
   const prevVal = usePrevious(_v);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const headerWrapEl = headerWrapElRef.current;
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
       const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
@@ -221,17 +220,22 @@ const Tabs: React.FC<TabsProp> = ({
       if (itemEl) {
         if (itemEl.offsetWidth * (_v + 2) > headerWrapEl.offsetWidth) {
           if (_v > prevVal) {
-            xRef.current[
-              Math.max(_v + 1, _v + 2 <= xRef.current.length - 1 ? _v + 2 : 0)
-            ]?.scrollIntoView({
+            // sibling 2
+            headerWrapEl.scroll({
+              left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth',
             });
           } else {
-            xRef.current[Math.min(_v - 1, _v - 2 >= 0 ? _v - 2 : _v)]?.scrollIntoView({
+            // sibling 1
+            headerWrapEl.scroll({
+              left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
               behavior: 'smooth',
             });
           }
-        } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth) {
+        } else if (
+          itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth &&
+          headerWrapEl.scrollLeft > 0
+        ) {
           headerWrapEl.scroll({
             left: 0,
             behavior: 'smooth',
@@ -263,9 +267,6 @@ const Tabs: React.FC<TabsProp> = ({
             return (
               <StyledTabHeadItem
                 key={index}
-                ref={(r) => {
-                  xRef.current[index] = r;
-                }}
                 className={clsx('uc-tabs-header-item', {
                   active: index === _v,
                   disabled: disabled,
