@@ -69,30 +69,16 @@ export default function App() {
         </Tabs>
       </DemoBlock>
       <DemoBlock title="自定义下划线">
-        <Tabs value={value} onChange={(v) => setValue(v)} underline="30px">
-          <Tabs.Tab title="title1">
-            <StyledContent>content1</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title2">
-            <StyledContent>content2</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <StyledContent>content3</StyledContent>
-          </Tabs.Tab>
+        <Tabs underline="30px">
+          <Tabs.Tab title="title1"></Tabs.Tab>
+          <Tabs.Tab title="title2"></Tabs.Tab>
+          <Tabs.Tab title="title3"></Tabs.Tab>
         </Tabs>
-      </DemoBlock>
 
-      <DemoBlock title="无下划线">
-        <Tabs underline={false} value={value} onChange={(v) => setValue(v)}>
-          <Tabs.Tab title="title1">
-            <StyledContent>content1</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title2">
-            <StyledContent>content2</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <StyledContent>content3</StyledContent>
-          </Tabs.Tab>
+        <Tabs underline={false} style={{ marginTop: 20 }}>
+          <Tabs.Tab title="title1"></Tabs.Tab>
+          <Tabs.Tab title="title2"></Tabs.Tab>
+          <Tabs.Tab title="title3"></Tabs.Tab>
         </Tabs>
       </DemoBlock>
 
@@ -135,21 +121,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="可滑动">
-        <Tabs swipe value={value} onChange={(v) => setValue(v)}>
-          <Tabs.Tab title="title1">
-            <StyledContent>content1</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title2">
-            <StyledContent>content2</StyledContent>
-          </Tabs.Tab>
-          <Tabs.Tab title="title3">
-            <StyledContent>content3</StyledContent>
-          </Tabs.Tab>
-        </Tabs>
-      </DemoBlock>
-
-      <DemoBlock title="非受控">
-        <Tabs swipe defaultValue={2} onChange={console.log}>
+        <Tabs swipe>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
