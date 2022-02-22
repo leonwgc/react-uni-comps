@@ -636,13 +636,8 @@ var loadResource = function loadResource(url) {
 
         el.onload = resolve;
         el.onerror = reject;
-
-        if (isCss) {
-          var head = document.getElementsByTagName('head')[0];
-          head.appendChild(el);
-        } else {
-          document.body.appendChild(el);
-        }
+        var head = document.getElementsByTagName('head')[0];
+        head.appendChild(el);
       });
     } else {
       return Promise.resolve();
