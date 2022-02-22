@@ -3,41 +3,20 @@ import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
 
-const StyledTabsNew = styled(Tabs)`
-  background-color: #fff;
-
+const StyledTabs = styled(Tabs)`
   .uc-tabs-header-item {
     width: 128px;
 
     &.active {
       background: rgba(0, 75, 204, 0.08);
       color: #005cff;
-      font-weight: normal;
     }
   }
 `;
 
 const StyledScroll = styled(Tabs)`
-  background-color: #fff;
-  margin-bottom: 10px;
-
   .uc-tabs-header-item {
-    width: 90px;
-  }
-`;
-
-const StyledTabsNew1 = styled(Tabs)`
-  background-color: #fff;
-
-  .uc-tabs-header-item {
-    width: 132px;
-
-    &.active {
-      background: rgba(0, 75, 204, 0.08);
-      color: #005cff;
-      border-bottom: 2px solid #005cff;
-      font-weight: normal;
-    }
+    width: 60px;
   }
 `;
 
@@ -143,17 +122,10 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="自定义风格1">
-        <StyledTabsNew underline={false}>
+        <StyledTabs underline={false}>
           <Tabs.Tab title="title1"></Tabs.Tab>
           <Tabs.Tab title="title2"></Tabs.Tab>
-        </StyledTabsNew>
-      </DemoBlock>
-
-      <DemoBlock title="自定义风格2">
-        <StyledTabsNew1 underline={false}>
-          <Tabs.Tab title="title1"></Tabs.Tab>
-          <Tabs.Tab title="title2"></Tabs.Tab>
-        </StyledTabsNew1>
+        </StyledTabs>
       </DemoBlock>
     </PageWrap>
   );
