@@ -22,7 +22,7 @@ type ItemProp = {
 };
 
 type TabsProp = {
-  /** 下划线宽度,默认100%,可以使用百分比/px/true/false */
+  /** 下划线宽度,默认50%,可以使用百分比/px/true/false */
   underline?: string | boolean;
   /** Tabs.Tab子元素*/
   children: React.ReactElement<ItemProp>[];
@@ -30,7 +30,7 @@ type TabsProp = {
   defaultValue?: number;
   /** 选择的tab index, 默认 0 */
   value?: number;
-  /** 是否支持滑动切换(移动端)*/
+  /** 是否支持滑动切换*/
   swipe?: boolean;
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;
@@ -133,7 +133,7 @@ const Tab: React.FC<ItemProp> = ({ children }) => {
  */
 const Tabs: React.FC<TabsProp> = ({
   children,
-  underline = true,
+  underline = '50%',
   value,
   defaultValue = 0,
   border = true,

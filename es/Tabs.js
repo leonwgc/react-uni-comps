@@ -75,7 +75,7 @@ var Tab = function Tab(_a) {
 var Tabs = function Tabs(_a) {
   var children = _a.children,
       _b = _a.underline,
-      underline = _b === void 0 ? true : _b,
+      underline = _b === void 0 ? '50%' : _b,
       value = _a.value,
       _c = _a.defaultValue,
       defaultValue = _c === void 0 ? 0 : _c,

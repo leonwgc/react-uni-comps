@@ -48,7 +48,7 @@ export default function App() {
         </Tabs>
       </DemoBlock>
       <DemoBlock title="自定义下划线">
-        <Tabs underline="30px">
+        <Tabs underline="10px">
           <Tabs.Tab title="title1"></Tabs.Tab>
           <Tabs.Tab title="title2"></Tabs.Tab>
           <Tabs.Tab title="title3"></Tabs.Tab>

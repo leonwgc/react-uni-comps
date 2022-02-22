@@ -2258,7 +2258,7 @@ var Tab = function Tab(_ref) {
 var Tabs = function Tabs(_ref2) {
   var children = _ref2.children,
       _ref2$underline = _ref2.underline,
-      underline = _ref2$underline === void 0 ? true : _ref2$underline,
+      underline = _ref2$underline === void 0 ? '50%' : _ref2$underline,
       value = _ref2.value,
       _ref2$defaultValue = _ref2.defaultValue,
       defaultValue = _ref2$defaultValue === void 0 ? 0 : _ref2$defaultValue,
