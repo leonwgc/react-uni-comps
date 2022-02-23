@@ -11,6 +11,7 @@ import FingerGesture from './FingerGesture';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
+import useMount from './hooks/useMount';
 
 type ItemProp = {
   /** 禁用 */
@@ -242,6 +243,18 @@ const Tabs: React.FC<TabsProp> = ({
       }
     }
   }, [_v, prevVal]);
+
+  useMount(() => {
+    const headerWrapEl = headerWrapElRef.current;
+    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
+      const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
+
+      // scroll
+      headerWrapEl.scroll({
+        left: (_v - 2) * itemEl.offsetWidth,
+      });
+    }
+  });
 
   return (
     <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>
