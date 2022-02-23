@@ -147,7 +147,6 @@ export default function App() {
           </Button>
 
           <StyledPicker
-            itemHeight={40}
             visible={visible === 1}
             onClose={() => setVisible(false)}
             onOk={(v) => {
@@ -177,7 +176,7 @@ export default function App() {
             onClose={() => setVisible(false)}
             value={value2}
             title="城市选择"
-            itemHeight={50}
+            itemHeight={40}
             onChange={console.log}
             labelRender={(item) =>
               item.label.length > 6 ? item.label.slice(0, 6) + '..' : item.label
