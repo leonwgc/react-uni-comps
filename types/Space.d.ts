@@ -13,7 +13,7 @@ declare type SpaceProps = {
     split?: React.ReactNode;
     /** 是否自动换行，仅在 horizontal 时有效 */
     wrap?: boolean;
-};
+} & React.HTMLAttributes<HTMLElement>;
 /** 间距 */
 declare const Space: React.FC<SpaceProps>;
 export default Space;

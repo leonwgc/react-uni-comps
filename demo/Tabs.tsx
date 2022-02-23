@@ -20,6 +20,19 @@ const StyledScroll = styled(Tabs)`
   }
 `;
 
+const StyledTabBar = styled(Tabs)`
+  .uc-tabs-header-wrap {
+    height: 90px;
+    .uc-tabs-header-item {
+      width: 90px;
+
+      .uc-icon {
+        font-size: 28px;
+      }
+    }
+  }
+`;
+
 const StyledContent = styled.div`
   padding: 10px;
   background-color: #eee;
@@ -114,11 +127,32 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="滚动">
-        <StyledScroll defaultValue={2}>
+        <StyledScroll defaultValue={8}>
           {scrollTabs.map((item, index) => (
             <Tabs.Tab title={item.title} key={index}></Tabs.Tab>
           ))}
         </StyledScroll>
+      </DemoBlock>
+
+      <DemoBlock title="TabBar" padding={0}>
+        <StyledTabBar defaultValue={3}>
+          {['首页', '健康', '福利', '文化', '平台', '我的'].map((item, index) => (
+            <Tabs.Tab
+              title={
+                <Space
+                  className="tab-title"
+                  size={6}
+                  direction="vertical"
+                  onClick={() => console.log(item)}
+                >
+                  <Icon type="uc-icon-biaoqianlan_wode" />
+                  <div className="name">{item}</div>
+                </Space>
+              }
+              key={index}
+            ></Tabs.Tab>
+          ))}
+        </StyledTabBar>
       </DemoBlock>
 
       <DemoBlock title="自定义风格1">
