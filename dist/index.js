@@ -2231,6 +2231,23 @@ function useCallbackRef(value) {
   return ref;
 }
 
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  组件加载执行回调
+ *
+ * @param {() => void} fn 加载执行的回调
+ */
+
+var useMount = function useMount(fn) {
+  var isMounted = React.useRef(false);
+  React.useLayoutEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      fn === null || fn === void 0 ? void 0 : fn();
+    }
+  }, []);
+};
+
 var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
 var _templateObject$8, _templateObject2;
@@ -2378,6 +2395,17 @@ var Tabs = function Tabs(_ref2) {
       }
     }
   }, [_v, prevVal]);
+  useMount(function () {
+    var headerWrapEl = headerWrapElRef.current;
+
+    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
+      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item'); // scroll
+
+      headerWrapEl.scroll({
+        left: (_v - 2) * itemEl.offsetWidth
+      });
+    }
+  });
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
     className: clsx__default['default']('uc-tabs', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -9854,23 +9882,6 @@ var QRCode$1 = /*#__PURE__*/React__default['default'].forwardRef(function (props
   }));
 });
 QRCode$1.displayName = 'UC-QRCode';
-
-/* eslint-disable react-hooks/exhaustive-deps */
-/**
- *  组件加载执行回调
- *
- * @param {() => void} fn 加载执行的回调
- */
-
-var useMount = function useMount(fn) {
-  var isMounted = React.useRef(false);
-  React.useLayoutEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      fn === null || fn === void 0 ? void 0 : fn();
-    }
-  }, []);
-};
 
 var _excluded$U = ["children", "onChange", "className", "animated", "keys"];
 
