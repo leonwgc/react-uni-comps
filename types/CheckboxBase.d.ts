@@ -3,7 +3,7 @@ import React from 'react';
 declare const CheckboxBase: React.ForwardRefExoticComponent<{
     /** 按钮风格，默认false */
     button?: boolean | 'fill' | 'outline';
-    /** box宽高，默认18 */
+    /** box宽高，默认16 */
     size?: number;
     /** checked状态改变回调 */
     onChange?: (checked: boolean) => void;

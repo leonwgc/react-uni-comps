@@ -5,6 +5,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import Radio from './Radio';
 import { isObject } from './helper';
 import type { StringOrNumber } from './types';
+import Space from './Space';
 
 type LabelValue = {
   label?: React.ReactNode;
@@ -28,7 +29,7 @@ type Props = {
 
 const StyledRadioGroup = styled.div``;
 
-/** 一组复选框 */
+/** 一组单选框 */
 const RadioGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, button, onChange, options = [], value = [], disabled, ...rest } = props;
 
@@ -44,30 +45,32 @@ const RadioGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 
   return (
-    <StyledRadioGroup {...rest} ref={ref} className={clsx(className, 'uc-checkbox-group')}>
-      {options.map((option) => {
-        const item: LabelValue = {} as LabelValue;
+    <StyledRadioGroup {...rest} ref={ref} className={clsx(className, 'uc-radio-group')}>
+      <Space>
+        {options.map((option) => {
+          const item: LabelValue = {} as LabelValue;
 
-        if (isObject(option)) {
-          item.label = (option as LabelValue).label;
-          item.value = (option as LabelValue).value;
-        } else {
-          item.label = option;
-          item.value = option as StringOrNumber;
-        }
+          if (isObject(option)) {
+            item.label = (option as LabelValue).label;
+            item.value = (option as LabelValue).value;
+          } else {
+            item.label = option;
+            item.value = option as StringOrNumber;
+          }
 
-        return (
-          <Radio
-            button={button}
-            disabled={disabled}
-            key={item.value}
-            onChange={(c) => onCheckboxChange(c, item.value)}
-            checked={value === item.value}
-          >
-            {item.label}
-          </Radio>
-        );
-      })}
+          return (
+            <Radio
+              button={button}
+              disabled={disabled}
+              key={item.value}
+              onChange={(c) => onCheckboxChange(c, item.value)}
+              checked={value === item.value}
+            >
+              {item.label}
+            </Radio>
+          );
+        })}
+      </Space>
     </StyledRadioGroup>
   );
 });

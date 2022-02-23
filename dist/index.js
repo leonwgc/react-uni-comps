@@ -2748,7 +2748,7 @@ var StyledCheckboxBaseWrapper = styled__default['default'].div(_templateObject2$
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$size = props.size,
-      size = _props$size === void 0 ? 18 : _props$size,
+      size = _props$size === void 0 ? 16 : _props$size,
       className = props.className,
       _props$button = props.button,
       button = _props$button === void 0 ? false : _props$button,
@@ -2893,7 +2893,7 @@ var _excluded$f = ["size"];
 /** 单选框 */
 var Radio = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$size = props.size,
-      size = _props$size === void 0 ? 20 : _props$size,
+      size = _props$size === void 0 ? 16 : _props$size,
       rest = _objectWithoutProperties(props, _excluded$f);
 
   return /*#__PURE__*/React__default['default'].createElement(CheckboxBase, _extends({}, rest, {
@@ -2908,7 +2908,7 @@ var _excluded$g = ["className", "button", "onChange", "options", "value", "disab
 
 var _templateObject$g;
 var StyledRadioGroup = styled__default['default'].div(_templateObject$g || (_templateObject$g = _taggedTemplateLiteral([""])));
-/** 一组复选框 */
+/** 一组单选框 */
 
 var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
@@ -2931,8 +2931,8 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   }, [onChangeRef]);
   return /*#__PURE__*/React__default['default'].createElement(StyledRadioGroup, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](className, 'uc-checkbox-group')
-  }), options.map(function (option) {
+    className: clsx__default['default'](className, 'uc-radio-group')
+  }), /*#__PURE__*/React__default['default'].createElement(Space, null, options.map(function (option) {
     var item = {};
 
     if (isObject(option)) {
@@ -2952,7 +2952,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       },
       checked: value === item.value
     }, item.label);
-  }));
+  })));
 });
 RadioGroup.displayName = 'UC-RadioGroup';
 

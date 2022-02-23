@@ -11,7 +11,7 @@ import Icon from './Icon';
 type Props = {
   /** 按钮风格，默认false */
   button?: boolean | 'fill' | 'outline';
-  /** box宽高，默认18 */
+  /** box宽高，默认16 */
   size?: number;
   /** checked状态改变回调 */
   onChange?: (checked: boolean) => void;
@@ -110,7 +110,7 @@ const StyledCheckboxBaseWrapper = styled.div`
 /** Checkbox/Radiobox 的基础 */
 const CheckboxBase = React.forwardRef<any, Props>((props, ref) => {
   const {
-    size = 18,
+    size = 16,
     className,
     button = false,
     onChange,

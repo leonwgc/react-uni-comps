@@ -45,8 +45,9 @@ import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import Radio from './Radio';
 import { isObject } from './helper';
+import Space from './Space';
 var StyledRadioGroup = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""])));
-/** 一组复选框 */
+/** 一组单选框 */
 
 var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
@@ -69,8 +70,8 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, [onChangeRef]);
   return /*#__PURE__*/React.createElement(StyledRadioGroup, __assign({}, rest, {
     ref: ref,
-    className: clsx(className, 'uc-checkbox-group')
-  }), options.map(function (option) {
+    className: clsx(className, 'uc-radio-group')
+  }), /*#__PURE__*/React.createElement(Space, null, options.map(function (option) {
     var item = {};
 
     if (isObject(option)) {
@@ -90,7 +91,7 @@ var RadioGroup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       },
       checked: value === item.value
     }, item.label);
-  }));
+  })));
 });
 RadioGroup.displayName = 'UC-RadioGroup';
 export default RadioGroup;

@@ -54,7 +54,7 @@ var StyledCheckboxBaseWrapper = styled.div(templateObject_2 || (templateObject_2
 
 var CheckboxBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.size,
-      size = _a === void 0 ? 18 : _a,
+      size = _a === void 0 ? 16 : _a,
       className = props.className,
       _b = props.button,
       button = _b === void 0 ? false : _b,

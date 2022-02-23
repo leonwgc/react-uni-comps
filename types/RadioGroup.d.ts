@@ -18,6 +18,6 @@ declare type Props = {
     className?: string;
     style?: React.CSSProperties;
 };
-/** 一组复选框 */
+/** 一组单选框 */
 declare const RadioGroup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default RadioGroup;

@@ -23,7 +23,7 @@ type Props = {
 
 /** 单选框 */
 const Radio = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { size = 20, ...rest } = props;
+  const { size = 16, ...rest } = props;
   return <CheckboxBase {...rest} size={size} mode="radio" ref={ref} />;
 });
 
