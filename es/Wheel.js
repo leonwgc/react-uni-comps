@@ -48,7 +48,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
-import FingerGesture from './FingerGesture';
+import Touch from 'w-touch';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
@@ -170,7 +170,7 @@ var Wheel = function Wheel(props) {
   }, [touchEnd]);
   useLayoutEffect(function () {
     var el = elRef.current;
-    var fg = new FingerGesture(el, {
+    var fg = new Touch(el, {
       onPressMove: function onPressMove(e) {
         yRef.current += e.deltaY;
         var distance = e.deltaY;

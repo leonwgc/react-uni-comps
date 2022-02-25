@@ -15,8 +15,8 @@ const routes = [
     component: lazy(() => import('./Loading')),
   },
   {
-    path: '/FingerGestureElement',
-    component: lazy(() => import('./FingerGestureElement')),
+    path: '/TouchElement',
+    component: lazy(() => import('./TouchElement')),
   },
   {
     path: '/ScrollToTop',

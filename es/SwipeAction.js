@@ -16,7 +16,7 @@ import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import { isTouch } from './dom';
-import FingerGesture from './FingerGesture';
+import Touch from './Touch';
 var StyledSwipeAction = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n  cursor: grab;\n  box-sizing: border-box;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate3d(-100%, 0, 0);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate3d(100%, 0, 0);\n    }\n    .middle-part {\n      width: 100%;\n      box-sizing: border-box;\n      position: relative;\n      height: 44px;\n      padding: 0 16px;\n      display: flex;\n      align-items: center;\n      background: #fff;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .swipe-action-item {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"], ["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n  cursor: grab;\n  box-sizing: border-box;\n\n  .wrap {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .left-part,\n    .right-part {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .left-part {\n      left: 0px;\n      transform: translate3d(-100%, 0, 0);\n    }\n    .right-part {\n      right: 0px;\n      transform: translate3d(100%, 0, 0);\n    }\n    .middle-part {\n      width: 100%;\n      box-sizing: border-box;\n      position: relative;\n      height: 44px;\n      padding: 0 16px;\n      display: flex;\n      align-items: center;\n      background: #fff;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .swipe-action-item {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"])));
 var StyledButton = styled(Button)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"], ["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
 /** SwipeAction 滑动操作 */
@@ -130,7 +130,7 @@ var SwipeAction = function SwipeAction(props) {
   }, [touchEnd, touchStart]);
   useLayoutEffect(function () {
     var el = elRef.current;
-    var fg = new FingerGesture(el, {
+    var fg = new Touch(el, {
       onPressMove: function onPressMove(e) {
         var v = thisRef.current;
         v.x += e.deltaX; // x<0:swipe left & show right

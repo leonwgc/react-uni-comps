@@ -190,7 +190,7 @@ import { getScrollTop } from './dom';
 import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
-import FingerGesture from './FingerGesture';
+import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
@@ -485,7 +485,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   useLayoutEffect(function () {
     var el = wrapRef.current;
-    var fg = new FingerGesture(el, {
+    var fg = new Touch(el, {
       onPressMove: function onPressMove(e) {
         if (!isPullingRef.current || statusRef.current === 'refreshing' || statusRef.current === 'complete') return;
         dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);

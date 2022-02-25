@@ -4,7 +4,7 @@ import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import { isTouch } from './dom';
-import FingerGesture from './Touch';
+import Touch from './Touch';
 
 type Action = {
   text: string;
@@ -200,7 +200,7 @@ const SwipeAction: React.FC<Props> = (props) => {
 
   useLayoutEffect(() => {
     const el = elRef.current;
-    const fg = new FingerGesture(el, {
+    const fg = new Touch(el, {
       onPressMove: (e) => {
         const v = thisRef.current;
         v.x += e.deltaX;

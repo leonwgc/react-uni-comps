@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { FingerGestureElement, Toast, useMount, AutoCenter } from 'react-uni-comps';
+import { TouchElement, Toast, useMount, AutoCenter } from 'react-uni-comps';
 
 type Position = {
   x: number;
@@ -33,7 +33,7 @@ export default function App() {
 
       <DemoBlock title="基础分割线">
         <AutoCenter>
-          <FingerGestureElement
+          <TouchElement
             onSingleTap={() => {
               Toast.show('tap');
             }}
@@ -84,7 +84,7 @@ export default function App() {
                 position: 'relative',
               }}
             />
-          </FingerGestureElement>
+          </TouchElement>
         </AutoCenter>
       </DemoBlock>
     </PageWrap>

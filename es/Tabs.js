@@ -47,7 +47,7 @@ import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
-import FingerGesture from './FingerGesture';
+import Touch from './Touch';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
@@ -104,7 +104,7 @@ var Tabs = function Tabs(_a) {
 
     if (swipe && contentWrapElRef.current) {
       var el = contentWrapElRef.current;
-      fg = new FingerGesture(el, {
+      fg = new Touch(el, {
         onSwipe: function onSwipe(e) {
           var _a, _b;
 
