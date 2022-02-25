@@ -7,7 +7,7 @@ import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
-import FingerGesture from './FingerGesture';
+import Touch from './Touch';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
@@ -158,7 +158,7 @@ const Tabs: React.FC<TabsProp> = ({
     let fg;
     if (swipe && contentWrapElRef.current) {
       const el = contentWrapElRef.current;
-      fg = new FingerGesture(el, {
+      fg = new Touch(el, {
         onSwipe: (e) => {
           if (e.direction === 'right' && valRef.current > 0) {
             // go to left tab

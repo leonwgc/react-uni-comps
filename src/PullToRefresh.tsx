@@ -13,7 +13,7 @@ import { getScrollTop } from './dom';
 import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
-import FingerGesture from './FingerGesture';
+import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 
 const StyledWrap = styled(animated.div)`
@@ -210,7 +210,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useLayoutEffect(() => {
     const el = wrapRef.current;
-    const fg = new FingerGesture(el, {
+    const fg = new Touch(el, {
       onPressMove: (e) => {
         if (
           !isPullingRef.current ||

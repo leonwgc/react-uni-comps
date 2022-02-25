@@ -7,7 +7,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
-import FingerGesture from './FingerGesture';
+import Touch from 'w-touch';
 
 export type DataItem = {
   /** 数据显示 */
@@ -159,7 +159,7 @@ const Wheel = (props: Props): React.ReactElement => {
 
   useLayoutEffect(() => {
     const el = elRef.current;
-    const fg = new FingerGesture(el, {
+    const fg = new Touch(el, {
       onPressMove: (e) => {
         yRef.current += e.deltaY;
 

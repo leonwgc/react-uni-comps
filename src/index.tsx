@@ -82,7 +82,7 @@ export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
 export { default as copy } from './copy';
-export { default as FingerGesture } from './FingerGesture';
+export { default as FingerGesture } from './Touch';
 
 /** hooks */
 export { default as useUpdateEffect } from './hooks/useUpdateEffect';

@@ -95,7 +95,8 @@
     "rc-field-form": "^1.22.1",
     "react-is": "^17.0.2",
     "react-transition-group": "^4.4.2",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "w-touch": "^1.0.1"
   },
   "sideEffects": [
     "*.less"

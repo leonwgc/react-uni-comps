@@ -70,7 +70,7 @@ export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
 export { default as PullToRefresh } from './PullToRefresh';
-export { default as FingerGestureElement } from './FingerGestureElement';
+export { TouchElement } from 'w-touch';
 export { default as Pagination } from './Pagination';
 /** only has static method */
 export { default as Loading } from './Loading';
@@ -80,7 +80,7 @@ export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';
 export { default as copy } from './copy';
-export { default as FingerGesture } from './FingerGesture';
+export { default as Touch } from 'w-touch';
 /** hooks */
 export { default as useUpdateEffect } from './hooks/useUpdateEffect';
 export { default as useUpdateLayoutEffect } from './hooks/useUpdateLayoutEffect';

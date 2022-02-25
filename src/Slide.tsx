@@ -11,7 +11,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isMobile, isTouch } from './dom';
 import { animationNormal } from './vars';
-import FingerGesture from './FingerGesture';
+import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 
 const StyledSlide = styled.div`
@@ -323,7 +323,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   useLayoutEffect(() => {
     const wrapEl = wrapElRef.current;
-    const fg = new FingerGesture(wrapEl, {
+    const fg = new Touch(wrapEl, {
       onPressMove: (e) => {
         const s = thisRef.current;
         const instance = autoRef.current;
