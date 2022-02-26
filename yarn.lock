@@ -13894,10 +13894,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
 
-w-touch@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/w-touch/-/w-touch-1.0.1.tgz#e815e8ef1f42224c02f0655011294c3484aa634f"
-  integrity sha512-H4BMLynSfys3cALpJnrVPYMbOtjyFOa/Xiox2ppEWzhzJdKhI3OYrFr/Ck68MRMfLlZPj0RMzcnklA9hISb5yw==
+w-touch@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/w-touch/-/w-touch-1.0.2.tgz#f9f15c6bf56918647ecab69aa64b902a46360bd8"
+  integrity sha512-nug2uZW0VlYaU6UPcILwBf6HABgjpZnsdTnrt2dH2ZEKFkPXKjdwt8LcArs/H0rg4pDWeF9+soRSbhUzVr3TZw==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

@@ -4,7 +4,7 @@ import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import { isTouch } from './dom';
-import Touch from './Touch';
+import Touch from 'w-touch';
 
 type Action = {
   text: string;

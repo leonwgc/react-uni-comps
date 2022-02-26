@@ -7,7 +7,7 @@ import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { throttle } from './helper';
-import Touch from './Touch';
+import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
