@@ -143,6 +143,9 @@ yarn add react-uni-comps
 - AnimationElement(元素应用 animation 动画,和 TransitionElement 一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)
 - Ripple (给子元素添加点击波纹效果)
 
+### 手势
+- TouchElement (双击，长按，旋转，缩放，平移等)
+
 ### 其他组件
 
 - ThemeProvider (全局主题色配置)
