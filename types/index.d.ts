@@ -70,7 +70,7 @@ export { default as RollingNumber } from './RollingNumber';
 export { default as SafeArea } from './SafeArea';
 export { default as Ripple } from './Ripple';
 export { default as PullToRefresh } from './PullToRefresh';
-export { TouchElement } from 'w-touch';
+export { default as TouchElement } from './TouchElement';
 export { default as Pagination } from './Pagination';
 /** only has static method */
 export { default as Loading } from './Loading';

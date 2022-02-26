@@ -31,7 +31,7 @@ export default function App() {
         <div ref={statusElRef}></div>
       </DemoBlock>
 
-      <DemoBlock title="基础分割线">
+      <DemoBlock title="鼠标或触屏操作">
         <AutoCenter>
           <TouchElement
             onSingleTap={() => {

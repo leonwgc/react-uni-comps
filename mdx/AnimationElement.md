@@ -3,7 +3,7 @@ title: Animation动画
 order: 1
 mobile: true
 group:
-  title: 动画
+  title: 动画 / 效果
   order: 5
   path: animation
 ---

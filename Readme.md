@@ -137,7 +137,7 @@ yarn add react-uni-comps
 - NoticeList (多条信息垂直滚动通知栏)
 - RollingNumber (滚动数字)
 
-### 动画/过渡
+### 动画 / 效果
 
 - TransitionElement (给子元素添加出场过渡效果,出场包含 1.元素初次加载并可见 2.元素从不可见到可见的状态变化)
 - AnimationElement(元素应用 animation 动画,和 TransitionElement 一样，只有在元素出现在视口才会执行动画,属性参照 css animation,也可以和 animate.css 配合使用,参考 https://animate.style/#usage using `@keyframes`)

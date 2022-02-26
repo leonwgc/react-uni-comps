@@ -295,7 +295,7 @@ module.exports = [
     ],
   },
   {
-    title: '动画',
+    title: '动画 / 效果',
     path: 'animation',
     comps: [
       {
@@ -309,6 +309,16 @@ module.exports = [
       {
         name: 'Ripple',
         title: 'Ripple 点击波纹效果',
+      },
+    ],
+  },
+  {
+    title: '手势',
+    path: 'guesture',
+    comps: [
+      {
+        name: 'TouchElement',
+        title: 'TouchElement 手势',
       },
     ],
   },
