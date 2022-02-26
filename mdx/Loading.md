@@ -3,7 +3,7 @@ title: Loading 加载中 toast
 order: 14
 mobile: true
 group:
-  title: 操作反馈
+  title: 反馈
   order: 1
   path: feedback
 ---

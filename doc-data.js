@@ -30,7 +30,7 @@ module.exports = [
     ],
   },
   {
-    title: '操作反馈',
+    title: '反馈',
     path: 'feedback',
     comps: [
       {
@@ -101,6 +101,10 @@ module.exports = [
       {
         name: 'Loading',
         title: 'Loading 加载中 toast',
+      },
+      {
+        name: 'Empty',
+        title: 'Empty 空状态',
       },
     ],
   },

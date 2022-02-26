@@ -3,7 +3,7 @@ title: WaitLoading 延迟渲染子元素
 order: 13
 mobile: true
 group:
-  title: 操作反馈
+  title: 反馈
   order: 1
   path: feedback
 ---

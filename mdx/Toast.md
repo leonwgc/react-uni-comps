@@ -3,7 +3,7 @@ title: Toast 提示
 order: 5
 mobile: true
 group:
-  title: 操作反馈
+  title: 反馈
   order: 1
   path: feedback
 ---

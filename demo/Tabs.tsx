@@ -136,7 +136,7 @@ export default function App() {
 
       <DemoBlock title="TabBar" padding={0}>
         <StyledTabBar defaultValue={3}>
-          {['首页', '健康', '福利', '文化', '平台', '我的'].map((item, index) => (
+          {['Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5', 'Tab6', 'Tab7'].map((item, index) => (
             <Tabs.Tab
               title={
                 <Space

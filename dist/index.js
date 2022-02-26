@@ -10334,15 +10334,61 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 Pagination.displayName = 'UC-Pagination';
 
-var _excluded$$ = ["content"];
+var _excluded$$ = ["image", "description", "className"];
 
 var _templateObject$X;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+var StyledWrap$9 = styled__default['default'].div(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
+var img = /*#__PURE__*/React__default['default'].createElement("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 64 41"
+}, /*#__PURE__*/React__default['default'].createElement("g", {
+  transform: "translate(0 1)",
+  fill: "none",
+  fillRule: "evenodd"
+}, /*#__PURE__*/React__default['default'].createElement("ellipse", {
+  fill: "#f5f5f5",
+  cx: "32",
+  cy: "33",
+  rx: "32",
+  ry: "7"
+}), /*#__PURE__*/React__default['default'].createElement("g", {
+  stroke: "#d9d9d9"
+}, /*#__PURE__*/React__default['default'].createElement("path", {
+  d: "M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+}), /*#__PURE__*/React__default['default'].createElement("path", {
+  d: "M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z",
+  fill: "#fafafa"
+}))));
+/** 空状态 */
+
+var Empty = function Empty(props) {
+  var _props$image = props.image,
+      image = _props$image === void 0 ? img : _props$image,
+      _props$description = props.description,
+      description = _props$description === void 0 ? '暂无数据' : _props$description,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$$);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$9, _extends({}, rest, {
+    className: clsx__default['default']('uc-empty', className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "img"
+  }, image), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "desc"
+  }, description));
+};
+
+Empty.displayName = 'UC-Empty';
+
+var _excluded$10 = ["content"];
+
+var _templateObject$Y;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$Y || (_templateObject$Y = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$$);
+      restProps = _objectWithoutProperties(_ref, _excluded$10);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -10462,7 +10508,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$10 = ["children", "label", "name"],
+var _excluded$11 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10473,7 +10519,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$10);
+      fieldProps = _objectWithoutProperties(props, _excluded$11);
 
   var required = false;
 
@@ -10640,6 +10686,7 @@ exports.DatePicker = DatePicker;
 exports.Divider = Divider;
 exports.Drag = Drag;
 exports.Drawer = Drawer;
+exports.Empty = Empty;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
 exports.Form = Form$1;

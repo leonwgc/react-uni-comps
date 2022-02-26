@@ -3,7 +3,7 @@ title: AlertDialog alert/confirm弹框
 order: 1
 mobile: false
 group:
-  title: 操作反馈
+  title: 反馈
   order: 1
   path: feedback
 ---

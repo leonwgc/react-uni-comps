@@ -3,7 +3,7 @@ title: Modal 弹框
 order: 0
 mobile: false
 group:
-  title: 操作反馈
+  title: 反馈
   order: 1
   path: feedback
 ---
