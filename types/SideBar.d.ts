@@ -4,8 +4,6 @@ declare type ItemProp = {
     disabled?: boolean;
     /** 标题 */
     title?: React.ReactNode;
-    /** 内容 */
-    children?: React.ReactNode;
 };
 /**
  *  侧边导航项，放在SideBar里面

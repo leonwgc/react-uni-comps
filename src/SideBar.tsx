@@ -14,8 +14,6 @@ type ItemProp = {
   disabled?: boolean;
   /** 标题 */
   title?: React.ReactNode;
-  /** 内容 */
-  children?: React.ReactNode;
 };
 
 /**
