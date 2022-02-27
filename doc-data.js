@@ -155,6 +155,10 @@ module.exports = [
         name: 'Pagination',
         title: 'Pagination 分页',
       },
+      {
+        name: 'SideBar',
+        title: 'SideBar 侧边导航',
+      },
     ],
   },
   {

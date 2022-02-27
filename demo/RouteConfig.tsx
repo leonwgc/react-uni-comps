@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/SideBar',
+    component: lazy(() => import('./SideBar')),
+  },
+  {
     path: '/Empty',
     component: lazy(() => import('./Empty')),
   },

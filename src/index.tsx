@@ -73,6 +73,7 @@ export { default as PullToRefresh } from './PullToRefresh';
 export { default as TouchElement } from './TouchElement';
 export { default as Pagination } from './Pagination';
 export { default as Empty } from './Empty';
+export { default as SideBar } from './SideBar';
 
 /** only has static method */
 export { default as Loading } from './Loading';
