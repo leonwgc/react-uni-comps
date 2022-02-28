@@ -10403,35 +10403,24 @@ var Empty = function Empty(props) {
 
 Empty.displayName = 'UC-Empty';
 
-var _excluded$10 = ["children", "index", "defaultIndex", "onChange", "className"];
+var _excluded$10 = ["items", "index", "defaultIndex", "onChange", "className"];
 
 var _templateObject$Y;
-
-/**
- *  侧边导航项，放在SideBar里面
- *
- * @param {*} { children }
- * @return {*}
- */
-var Item$1 = function Item(_ref) {
-  var children = _ref.children;
-  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, children);
-};
-
 var StyledWrapper$3 = styled__default['default'].div(_templateObject$Y || (_templateObject$Y = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  overflow-y: scroll;\n  box-sizing: border-box;\n  position: relative;\n  font-size: 14px;\n  background-color: #fff;\n  user-select: none;\n  display: inline-flex;\n  flex-direction: column;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  .uc-sidebar-item {\n    box-sizing: border-box;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 14px 12px;\n    background-color: #f5f5f5;\n\n    &.active {\n      ", "\n      background-color: #fff;\n      border-radius: 0;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n    &.prev {\n      border-radius: 0 0 8px 0;\n    }\n    &.next {\n      border-radius: 0 8px 0 0;\n    }\n  }\n"])), getThemeColorCss('color'), disabledText); //#endregion
 
 /**
  * 侧边导航
  */
 
-var SideBar = function SideBar(_ref2) {
-  var children = _ref2.children,
-      index = _ref2.index,
-      _ref2$defaultIndex = _ref2.defaultIndex,
-      defaultIndex = _ref2$defaultIndex === void 0 ? 0 : _ref2$defaultIndex,
-      onChange = _ref2.onChange,
-      className = _ref2.className,
-      rest = _objectWithoutProperties(_ref2, _excluded$10);
+var SideBar = function SideBar(_ref) {
+  var _ref$items = _ref.items,
+      items = _ref$items === void 0 ? [] : _ref$items,
+      index = _ref.index,
+      _ref$defaultIndex = _ref.defaultIndex,
+      defaultIndex = _ref$defaultIndex === void 0 ? 0 : _ref$defaultIndex,
+      onChange = _ref.onChange,
+      className = _ref.className,
+      rest = _objectWithoutProperties(_ref, _excluded$10);
 
   var _useState = React.useState(typeof index === 'undefined' ? defaultIndex : index),
       _useState2 = _slicedToArray(_useState, 2),
@@ -10458,37 +10447,29 @@ var SideBar = function SideBar(_ref2) {
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$3, _extends({}, rest, {
     ref: wrapElRef,
     className: clsx__default['default']('uc-sidebar', className)
-  }), React__default['default'].Children.map(children, function (child, idx) {
-    if ( /*#__PURE__*/React__default['default'].isValidElement(child)) {
-      var _ref3 = child.props,
-          title = _ref3.title,
-          disabled = _ref3.disabled;
-      var prev = _v - 1 === idx;
-      var next = _v + 1 === idx;
-      return /*#__PURE__*/React__default['default'].createElement("div", {
-        key: idx,
-        className: clsx__default['default']('uc-sidebar-item', {
-          active: idx === _v,
-          disabled: disabled,
-          prev: prev,
-          next: next
-        }),
-        onClick: function onClick() {
-          if (!disabled && idx !== _v) {
-            onChange === null || onChange === void 0 ? void 0 : onChange(idx);
+  }), items.map(function (item, idx) {
+    var title = item.title,
+        disabled = item.disabled;
+    var prev = _v - 1 === idx;
+    var next = _v + 1 === idx;
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: item.key || idx,
+      className: clsx__default['default']('uc-sidebar-item', {
+        active: idx === _v,
+        disabled: disabled,
+        prev: prev,
+        next: next
+      }),
+      onClick: function onClick() {
+        if (!disabled && idx !== _v) {
+          onChange === null || onChange === void 0 ? void 0 : onChange(idx);
 
-            _setV(idx);
-          }
+          _setV(idx);
         }
-      }, title);
-    }
+      }
+    }, title);
   }));
 };
-
-var SideBar$1 = attachPropertiesToComponent(SideBar, {
-  /** 子项 */
-  Item: Item$1
-});
 
 var _excluded$11 = ["content"];
 
@@ -10836,7 +10817,7 @@ exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
 exports.ScrollToTop = ScrollToTop;
-exports.SideBar = SideBar$1;
+exports.SideBar = SideBar;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;

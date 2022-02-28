@@ -6,38 +6,30 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { attachPropertiesToComponent } from './util';
 import useMount from './hooks/useMount';
+import type { StringOrNumber } from './types';
 
-type ItemProp = {
+type ItemProps = {
   /** 禁用 */
   disabled?: boolean;
   /** 标题 */
   title?: React.ReactNode;
+  /** 配置项key */
+  key?: StringOrNumber;
 };
 
-/**
- *  侧边导航项，放在SideBar里面
- *
- * @param {*} { children }
- * @return {*}
- */
-const Item: React.FC<ItemProp> = ({ children }) => {
-  return <>{children}</>;
-};
-
-type SideBarProps = {
-  /** sidebar.Item子元素*/
-  children: React.ReactElement<typeof Item>[];
-  /** 选择的tab index,非受控模式使用*/
+type SideBarProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+  /** 选择的index,非受控模式使用*/
   defaultIndex?: number;
-  /** 选择的tab index, 默认 0 */
+  /** 选择的index, 默认 0 */
   index?: number;
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;
+  /** 配置项列表 */
+  items: Array<ItemProps>;
   style?: React.CSSProperties;
   className?: string;
-} & React.HTMLAttributes<HTMLElement>;
+};
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
@@ -87,7 +79,7 @@ const StyledWrapper = styled.div`
  * 侧边导航
  */
 const SideBar: React.FC<SideBarProps> = ({
-  children,
+  items = [],
   index,
   defaultIndex = 0,
   onChange,
@@ -118,34 +110,32 @@ const SideBar: React.FC<SideBarProps> = ({
 
   return (
     <StyledWrapper {...rest} ref={wrapElRef} className={clsx('uc-sidebar', className)}>
-      {React.Children.map(children, (child: React.ReactElement, idx) => {
-        if (React.isValidElement(child)) {
-          const { title, disabled } = child.props as ItemProp;
-          const prev = _v - 1 === idx;
-          const next = _v + 1 === idx;
-          return (
-            <div
-              key={idx}
-              className={clsx('uc-sidebar-item', {
-                active: idx === _v,
-                disabled: disabled,
-                prev: prev,
-                next: next,
-              })}
-              onClick={() => {
-                if (!disabled && idx !== _v) {
-                  onChange?.(idx);
-                  _setV(idx);
-                }
-              }}
-            >
-              {title}
-            </div>
-          );
-        }
+      {items.map((item: ItemProps, idx: number) => {
+        const { title, disabled } = item;
+        const prev = _v - 1 === idx;
+        const next = _v + 1 === idx;
+        return (
+          <div
+            key={item.key || idx}
+            className={clsx('uc-sidebar-item', {
+              active: idx === _v,
+              disabled: disabled,
+              prev: prev,
+              next: next,
+            })}
+            onClick={() => {
+              if (!disabled && idx !== _v) {
+                onChange?.(idx);
+                _setV(idx);
+              }
+            }}
+          >
+            {title}
+          </div>
+        );
       })}
     </StyledWrapper>
   );
 };
 
-export default attachPropertiesToComponent(SideBar, { /** 子项 */ Item });
+export default SideBar;

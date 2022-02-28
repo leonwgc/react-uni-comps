@@ -1,30 +1,27 @@
 import React from 'react';
-declare type ItemProp = {
+import type { StringOrNumber } from './types';
+declare type ItemProps = {
     /** 禁用 */
     disabled?: boolean;
     /** 标题 */
     title?: React.ReactNode;
+    /** 配置项key */
+    key?: StringOrNumber;
 };
-/**
- *  侧边导航项，放在SideBar里面
- *
- * @param {*} { children }
- * @return {*}
- */
-declare const Item: React.FC<ItemProp>;
-declare type SideBarProps = {
-    /** sidebar.Item子元素*/
-    children: React.ReactElement<typeof Item>[];
-    /** 选择的tab index,非受控模式使用*/
+declare type SideBarProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+    /** 选择的index,非受控模式使用*/
     defaultIndex?: number;
-    /** 选择的tab index, 默认 0 */
+    /** 选择的index, 默认 0 */
     index?: number;
     /** index变化时触发的回调函数 */
     onChange?: (index: number) => void;
+    /** 配置项列表 */
+    items: Array<ItemProps>;
     style?: React.CSSProperties;
     className?: string;
-} & React.HTMLAttributes<HTMLElement>;
-declare const _default: React.FC<SideBarProps> & {
-    Item: React.FC<ItemProp>;
 };
-export default _default;
+/**
+ * 侧边导航
+ */
+declare const SideBar: React.FC<SideBarProps>;
+export default SideBar;

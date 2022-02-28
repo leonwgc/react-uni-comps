@@ -35,22 +35,19 @@ export default function App() {
     <PageWrap>
       <Block title="默认" padding={0}>
         <StyledWrap>
-          <SideBar index={index} onChange={setIndex}>
-            {items.map((item, idx) => (
-              <SideBar.Item {...item} key={idx}></SideBar.Item>
-            ))}
-          </SideBar>
+          <SideBar index={index} onChange={setIndex} items={items}></SideBar>
           <div className="content">你选择了{items[index].title}</div>
         </StyledWrap>
       </Block>
 
       <Block title="自定义" padding={0}>
         <StyledWrap>
-          <SideBar style={{ height: 200, width: 105 }} onChange={setIndex} defaultIndex={4}>
-            {items.map((item, idx) => (
-              <SideBar.Item {...item} key={idx}></SideBar.Item>
-            ))}
-          </SideBar>
+          <SideBar
+            style={{ height: 200, width: 105 }}
+            onChange={setIndex}
+            defaultIndex={4}
+            items={items}
+          ></SideBar>
         </StyledWrap>
       </Block>
     </PageWrap>
