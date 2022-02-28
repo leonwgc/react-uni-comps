@@ -1,11 +1,11 @@
 ---
 title: LazyLoadImage 图片懒加载
-order: 16
+order: 0
 mobile: true
 group:
-  title: 数据录入
-  order: 3
-  path: data
+  title: 其他
+  order: 7
+  path: other
 ---
 
 <code src="../demo/LazyLoadImage.tsx"></code>

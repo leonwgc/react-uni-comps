@@ -58,7 +58,7 @@ module.exports = [
       },
       {
         name: 'Toast',
-        title: 'Toast 提示',
+        title: 'Toast 轻提示',
       },
       {
         name: 'PopConfirm',
@@ -203,7 +203,7 @@ module.exports = [
       },
       {
         name: 'Picker',
-        title: 'Picker 弹出选择器',
+        title: 'Picker 选择器',
       },
       {
         name: 'PickerView',
@@ -229,14 +229,6 @@ module.exports = [
       {
         name: 'Calendar',
         title: 'Calendar 移动端日历',
-      },
-      {
-        name: 'LazyLoadImage',
-        title: 'LazyLoadImage 图片懒加载',
-      },
-      {
-        name: 'LazyLoadElement',
-        title: 'LazyLoadElement 组件懒加载',
       },
     ],
   },
@@ -327,6 +319,20 @@ module.exports = [
       {
         name: 'TouchElement',
         title: 'TouchElement 手势',
+      },
+    ],
+  },
+  {
+    title: '其他',
+    path: 'other',
+    comps: [
+      {
+        name: 'LazyLoadImage',
+        title: 'LazyLoadImage 图片懒加载',
+      },
+      {
+        name: 'LazyLoadElement',
+        title: 'LazyLoadElement 组件懒加载',
       },
     ],
   },

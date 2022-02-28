@@ -1,5 +1,5 @@
 ---
-title: Toast 提示
+title: Toast 轻提示
 order: 5
 mobile: true
 group:

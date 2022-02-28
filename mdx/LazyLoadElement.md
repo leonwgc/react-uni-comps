@@ -1,11 +1,11 @@
 ---
 title: LazyLoadElement 组件懒加载
-order: 17
+order: 1
 mobile: true
 group:
-  title: 数据录入
-  order: 3
-  path: data
+  title: 其他
+  order: 7
+  path: other
 ---
 
 <code src="../demo/LazyLoadElement.tsx"></code>

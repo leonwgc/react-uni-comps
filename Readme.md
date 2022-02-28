@@ -67,75 +67,81 @@ yarn add react-uni-comps
 #### 基础组件
 
 - Button (按钮)
-- Space (间距容器)
+- Space (间距)
 - Avatar (头像)
 - Icon (图标)
+- Spin（加载中）
 - Mask (遮罩)
 - Divider (分割线)
-- Spin（加载中指示器）
-- HairLineBox (包含 1px 的边的容器 div)
+- HairLineBox (一像素边框容器)
 
-#### 操作反馈
+#### 反馈
 
-- Drawer (抽屉)
 - Modal (弹框)
-- Pullup (上拉加载数据)
-- AlertDialog (移动端/pc 端两种风格的 alert/confirm 弹窗,支持静态调用)
-- Popover (弹出带箭头的浮层)
-- Drag (拖拽)
-- Tooltip (文字提示)
-- PopConfirm (弹出气泡式的确认框)
-- Toast (黑背景提示,支持静态调用)
-- Notify (顶部全局消息通知,支持静态调用)
-- ActionSheet (移动端,动作面板)
-- Switch (开关)
-- Skeleton（骨架屏）
-- CopyToClipboard (复制文本到剪贴板)
-- ScrollToTop (平滑滚动到顶部)
-- Loading (加载中 toast)
+- AlertDialog (alert/confirm弹框)
+- Tooltip (提示)
+- Pullup (上拉加载)
+- PullToRefresh (下拉刷新)
+- Toast (轻提示)
+- PopConfirm（气泡确认框）
+- Notify （顶部消息通知）
+- Popover （带箭头的浮层）
+- Drag （拖拽）
+- ActionSheet （动作面板）
+- Skeleton （骨架屏）
+- CopyToClipboard （复制）
+- WaitLoading （延迟渲染子元素）
+- Loading （弹框加载中）
+- Empty (空状态)
 
-#### 导航组件
-
-- Tabs (选项卡切换)
-- Affix (将页面元素钉在可视范围)
-- Steps (步骤条)
+#### 导航和布局
+- AutoCenter (自动居中)
+- Collapse (折叠面板)
+- Divider (分割线)
+- IndexList (索引列表)
+- Drawer (抽屉)
+- SafeArea (安全区)
+- Tabs (选项卡)
+- Affix (固钉)
 - PopMenu (弹出菜单)
 - Pagination (分页)
+- SideBar (侧边tab导航)
 
 ### 数据录入
 
+- Form (表单)
 - Checkbox (复选框)
 - CheckboxGroup (复选框列表)
 - Radio (单选框)
 - RadioGroup (单选框列表)
-- Input (单行/多行输入框)
-- PasswordInput (移动端/pc, 密码输入框 )
-- NumberKeyboardBase (数字键盘,非弹出 )
+- Input (输入框)
+- Switch (开关)
+- PasswordInput (密码输入框 )
 - NumberKeyboard (数字键盘)
-- Picker (移动端选择器)
+- Picker (选择器)
 - PickerView (平铺选择器)
-- Rate (评分/几颗星)
-- IndexList (索引列表)
+- Rate (评分)
 - FileInputTrigger (触发文件上传)
 - Signature (手写签名)
 - DatePicker (移动端日期选择)
 - Calendar (移动端日历)
+- IndexList (索引列表)
 
 ### 数据展示
 
-- Cell（列表项，多用于移动端,可以和 input/textarea 组合使用）
+- Cell（列表项）
 - Badge (徽标)
 - WaterMark (图片/文字水印 )
 - Text (文本显示,单行/多行截断显示省略)
 - ImageViewer (图片查看器)
-- ProgressCircle (环形进度条)
-- ProgressBar (进度条)
 - QRCode (二维码)
-- Collapse (折叠面板)
+- ProgressBar (进度条)
+- ProgressCircle (环形进度条)
 - Slide (轮播)
 - NoticeBar (通告栏)
 - NoticeList (多条信息垂直滚动通知栏)
 - RollingNumber (滚动数字)
+- Steps (步骤条)
 
 ### 动画 / 效果
 
@@ -151,10 +157,8 @@ yarn add react-uni-comps
 - ThemeProvider (全局主题色配置)
 - LazyLoadElement（懒加载组件,在视口才渲染 children,不在则显示占位元素）
 - LazyLoadImage (懒加载图片，当做 img 标签使用, 在视口才加载图片)
-- WaitLoading (延时显示 Loading/Spin 防止闪烁)
 - ErrorBoudary （错误边界）
 - Waypoint （可见/不可见指示）
-- AutoCenter (自动居中)
 
 ### 工具函数
 
