@@ -49,3 +49,11 @@ export declare const flatSimpleArray: <T extends string | number>(arr: T[]) => T
  * @param {number} time
  */
 export declare const sleep: (time: number) => Promise<unknown>;
+/**
+ * 深复制
+ *
+ * @template T
+ * @param {T} src
+ * @return {*}  {T}
+ */
+export declare const deepClone: <T>(src: T) => T;

@@ -136,3 +136,22 @@ export const flatSimpleArray = <T extends string | number>(arr: T[]): T[] => {
  * @param {number} time
  */
 export const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+
+/**
+ * 深复制
+ *
+ * @template T
+ * @param {T} src
+ * @return {*}  {T}
+ */
+export const deepClone = <T>(src: T): T => {
+  if (!src || typeof src !== 'object') return src;
+  const dest = Array.isArray(src) ? [] : {};
+  for (const key of Object.keys(src)) {
+    if (!dest.hasOwnProperty(key)) {
+      const val = src[key];
+      dest[key] = deepClone(val);
+    }
+  }
+  return dest as T;
+};

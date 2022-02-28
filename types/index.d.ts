@@ -77,7 +77,7 @@ export { default as SideBar } from './SideBar';
 /** only has static method */
 export { default as Loading } from './Loading';
 /** helper & dom */
-export { debounce, throttle, uniqArray, flatArray, flatSimpleArray } from './helper';
+export { debounce, throttle, uniqArray, flatArray, flatSimpleArray, deepClone } from './helper';
 export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
 export { getThemeColorCss } from './themeHelper';

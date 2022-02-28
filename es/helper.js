@@ -1,3 +1,5 @@
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 /**
  * 防抖
  *
@@ -183,4 +185,27 @@ export var sleep = function sleep(time) {
   return new Promise(function (resolve) {
     return setTimeout(resolve, time);
   });
+};
+/**
+ * 深复制
+ *
+ * @template T
+ * @param {T} src
+ * @return {*}  {T}
+ */
+
+export var deepClone = function deepClone(src) {
+  if (!src || _typeof(src) !== 'object') return src;
+  var dest = Array.isArray(src) ? [] : {};
+
+  for (var _i = 0, _a = Object.keys(src); _i < _a.length; _i++) {
+    var key = _a[_i];
+
+    if (!dest.hasOwnProperty(key)) {
+      var val = src[key];
+      dest[key] = deepClone(val);
+    }
+  }
+
+  return dest;
 };

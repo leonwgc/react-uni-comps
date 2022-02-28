@@ -1816,6 +1816,29 @@ var sleep = function sleep(time) {
     return setTimeout(resolve, time);
   });
 };
+/**
+ * 深复制
+ *
+ * @template T
+ * @param {T} src
+ * @return {*}  {T}
+ */
+
+var deepClone = function deepClone(src) {
+  if (!src || _typeof(src) !== 'object') return src;
+  var dest = Array.isArray(src) ? [] : {};
+
+  for (var _i = 0, _Object$keys = Object.keys(src); _i < _Object$keys.length; _i++) {
+    var key = _Object$keys[_i];
+
+    if (!dest.hasOwnProperty(key)) {
+      var val = src[key];
+      dest[key] = deepClone(val);
+    }
+  }
+
+  return dest;
+};
 
 /**
  *  保存最新的值在ref中
@@ -10834,6 +10857,7 @@ exports.WaterMark = WaterMark;
 exports.Waypoint = Waypoint;
 exports.copy = copy;
 exports.debounce = debounce;
+exports.deepClone = deepClone;
 exports.flatArray = flatArray;
 exports.flatSimpleArray = flatSimpleArray;
 exports.getThemeColorCss = getThemeColorCss;
