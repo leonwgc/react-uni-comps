@@ -39,7 +39,7 @@ type TabsProp = {
   extra?: React.ReactNode;
   /** 是否显示border,默认显示 */
   border?: boolean;
-} & React.HTMLAttributes<HTMLElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

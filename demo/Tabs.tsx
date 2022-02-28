@@ -48,7 +48,7 @@ export default function App() {
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="默认">
-        <Tabs value={value} onChange={(v) => setValue(v)}>
+        <Tabs value={value} onChange={setValue}>
           <Tabs.Tab title="title1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
@@ -77,7 +77,7 @@ export default function App() {
       <DemoBlock title="包含extra配置">
         <Tabs
           value={value}
-          onChange={(v) => setValue(v)}
+          onChange={setValue}
           extra={
             <Space>
               {tabTitles.length > 1 && (
