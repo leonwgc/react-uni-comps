@@ -1,6 +1,6 @@
 import React from 'react';
 import type { StringOrNumber } from './types';
-declare type ItemProps = {
+declare type Item = {
     /** 禁用 */
     disabled?: boolean;
     /** 标题 */
@@ -16,7 +16,7 @@ declare type SideBarProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> 
     /** index变化时触发的回调函数 */
     onChange?: (index: number) => void;
     /** 配置项列表 */
-    items: Array<ItemProps>;
+    items: Array<Item>;
     style?: React.CSSProperties;
     className?: string;
 };

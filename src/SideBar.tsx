@@ -9,7 +9,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import useMount from './hooks/useMount';
 import type { StringOrNumber } from './types';
 
-type ItemProps = {
+type Item = {
   /** 禁用 */
   disabled?: boolean;
   /** 标题 */
@@ -26,7 +26,7 @@ type SideBarProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;
   /** 配置项列表 */
-  items: Array<ItemProps>;
+  items: Array<Item>;
   style?: React.CSSProperties;
   className?: string;
 };
@@ -110,7 +110,7 @@ const SideBar: React.FC<SideBarProps> = ({
 
   return (
     <StyledWrapper {...rest} ref={wrapElRef} className={clsx('uc-sidebar', className)}>
-      {items.map((item: ItemProps, idx: number) => {
+      {items.map((item: Item, idx: number) => {
         const { title, disabled } = item;
         const prev = _v - 1 === idx;
         const next = _v + 1 === idx;
