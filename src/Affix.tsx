@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
@@ -12,7 +12,7 @@ type Props = {
   onChange?: (affixed: boolean) => void;
   /**设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
   target?: () => HTMLElement | Window;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 type StateInfo = {
   affixed: boolean;

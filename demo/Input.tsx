@@ -126,7 +126,8 @@ export default function App() {
   const [data, setData] = useState({ account: '', pwd: '', eyeOn: false });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
   const { account = '', pwd = '', eyeOn } = data;
-  const [ime, setIme] = useState(false);
+
+  const [val, setVal] = useState('');
 
   useLayoutEffect(() => {
     const handler = throttle(() => {
@@ -156,13 +157,9 @@ export default function App() {
       <DemoBlock>
         <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
           <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
-            <Checkbox checked={ime} onChange={(checked) => setIme(checked)}>
-              ime mode
-            </Checkbox>
             <StyledInput
               clearable
               placeholder="请输入真实账号"
-              ime={ime}
               value={account}
               onChange={onFieldChange('account')}
               prefix={!isMobile && <Icon type="icon-yonghu" />}
@@ -183,6 +180,7 @@ export default function App() {
                 />
               }
             />
+            <Input value={val} onChange={setVal} />
             <Button block type="primary" style={{ marginTop: 32 }}>
               登录
             </Button>

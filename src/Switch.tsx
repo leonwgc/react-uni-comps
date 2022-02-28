@@ -1,7 +1,8 @@
-import React, { HTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
+import type { NoOnChangeHtmlElement } from './types';
 
 type Props = {
   disabled?: boolean;
@@ -11,7 +12,7 @@ type Props = {
   style?: React.CSSProperties;
   children?: React.ReactNode;
   className?: string;
-} & HTMLAttributes<HTMLElement>;
+} & NoOnChangeHtmlElement;
 
 const StyledSwitch = styled.div`
   position: relative;

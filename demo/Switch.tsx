@@ -11,7 +11,7 @@ export default function App() {
       <DemoBlock title="示例">
         <Space size={16} wrap>
           <Space>
-            <Switch checked={c} onChange={(c) => setC(c)} />
+            <Switch checked={c} onChange={setC} />
             {c ? 'checked' : 'unchecked'}
           </Space>
 

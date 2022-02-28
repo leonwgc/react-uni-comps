@@ -25,5 +25,5 @@ declare const CheckboxBase: React.ForwardRefExoticComponent<{
     value?: string | number;
     /** 设置 indeterminate 状态，中间横线代替勾勾 */
     indeterminate?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement | HTMLDivElement> & React.RefAttributes<any>>;
+} & Omit<React.HTMLAttributes<HTMLElement>, "onChange"> & React.RefAttributes<any>>;
 export default CheckboxBase;

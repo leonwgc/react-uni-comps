@@ -12,6 +12,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
 import useMount from './hooks/useMount';
+import type { NoOnChangeHtmlElement } from './types';
 
 type ItemProp = {
   /** 禁用 */
@@ -39,7 +40,7 @@ type TabsProp = {
   extra?: React.ReactNode;
   /** 是否显示border,默认显示 */
   border?: boolean;
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
+} & NoOnChangeHtmlElement;
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

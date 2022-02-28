@@ -1,4 +1,5 @@
 import React from 'react';
+import type { NoOnChangeHtmlElement } from './types';
 /** 评分 */
 declare const Rate: React.ForwardRefExoticComponent<{
     /** 是否允许再次点击后清除*/
@@ -18,5 +19,5 @@ declare const Rate: React.ForwardRefExoticComponent<{
     /**选择回调 */
     onChange?: (value: number) => void;
     className?: string;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & NoOnChangeHtmlElement & React.RefAttributes<HTMLDivElement>>;
 export default Rate;

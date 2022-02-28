@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -33,7 +33,7 @@ type Props = {
   value?: string | number;
   /** 设置 indeterminate 状态，中间横线代替勾勾 */
   indeterminate?: boolean;
-} & HTMLAttributes<HTMLDivElement | HTMLButtonElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 const StyledButton = styled(Button)`
   &.fill {

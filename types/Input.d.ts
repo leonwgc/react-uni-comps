@@ -1,5 +1,5 @@
 import React from 'react';
-export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix'> & {
+export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
     readOnly?: boolean;
     value?: string;
     defaultValue?: string;
@@ -23,7 +23,7 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'p
 };
 declare type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
 /** 单行/多行输入框 input/textarea */
-declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix"> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, "prefix"> & {
+declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "prefix"> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, "onChange" | "prefix"> & {
     readOnly?: boolean;
     value?: string;
     defaultValue?: string;

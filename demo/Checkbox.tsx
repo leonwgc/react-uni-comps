@@ -27,7 +27,7 @@ export default function App() {
         <DemoBlock title="默认">
           <Checkbox />
 
-          <Checkbox checked={checked} onChange={(checked) => setChecked(checked)}>
+          <Checkbox checked={checked} onChange={setChecked}>
             默认
           </Checkbox>
 

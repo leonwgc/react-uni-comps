@@ -9,7 +9,7 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Radio checked={checked} onChange={(c) => setChecked(c)}>
+        <Radio checked={checked} onChange={setChecked}>
           默认
         </Radio>
       </DemoBlock>

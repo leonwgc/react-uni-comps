@@ -1,4 +1,5 @@
 import React from 'react';
+import type { NoOnChangeHtmlElement } from './types';
 /** 开关 */
 declare const Switch: React.ForwardRefExoticComponent<{
     disabled?: boolean;
@@ -8,5 +9,5 @@ declare const Switch: React.ForwardRefExoticComponent<{
     style?: React.CSSProperties;
     children?: React.ReactNode;
     className?: string;
-} & React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLDivElement>>;
+} & NoOnChangeHtmlElement & React.RefAttributes<HTMLDivElement>>;
 export default Switch;

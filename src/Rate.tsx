@@ -1,8 +1,9 @@
-import React, { HTMLAttributes, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import type { NoOnChangeHtmlElement } from './types';
 
 const StyledRate = styled.div`
   display: inline-flex;
@@ -52,7 +53,7 @@ type Props = {
   /**选择回调 */
   onChange?: (value: number) => void;
   className?: string;
-} & HTMLAttributes<HTMLDivElement>;
+} & NoOnChangeHtmlElement;
 
 const defaultChar = (
   <svg viewBox="64 64 896 896" data-icon="star" width="1em" height="1em" fill="currentColor">

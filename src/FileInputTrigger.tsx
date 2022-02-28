@@ -15,7 +15,7 @@ type Props = {
   capture?: 'user' | 'environment';
   style?: React.CSSProperties;
   className?: string;
-} & React.HTMLAttributes<HTMLInputElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 const StyledFileInputTrigger = styled.div`
   position: relative;

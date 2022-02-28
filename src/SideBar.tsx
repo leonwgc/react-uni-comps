@@ -7,7 +7,7 @@ import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useMount from './hooks/useMount';
-import type { StringOrNumber } from './types';
+import type { StringOrNumber, NoOnChangeHtmlElement } from './types';
 
 type Item = {
   /** 禁用 */
@@ -18,7 +18,7 @@ type Item = {
   key?: StringOrNumber;
 };
 
-type SideBarProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+type SideBarProps = NoOnChangeHtmlElement & {
   /** 选择的index,非受控模式使用*/
   defaultIndex?: number;
   /** 选择的index, 默认 0 */

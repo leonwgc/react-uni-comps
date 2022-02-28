@@ -19,5 +19,5 @@ declare const Checkbox: React.ForwardRefExoticComponent<{
     style?: React.CSSProperties;
     /** 设置 indeterminate 状态，中间横线代替勾勾 */
     indeterminate?: boolean;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & Omit<React.HTMLAttributes<HTMLElement>, "onChange"> & React.RefAttributes<HTMLDivElement>>;
 export default Checkbox;

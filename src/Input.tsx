@@ -7,8 +7,8 @@ import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
 
-export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> &
-  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix'> & {
+export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> &
+  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
     readOnly?: boolean;
     value?: string;
     defaultValue?: string;

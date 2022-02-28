@@ -1,4 +1,5 @@
 import React from 'react';
+import type { NoOnChangeHtmlElement } from './types';
 declare type ItemProp = {
     /** 禁用 */
     disabled?: boolean;
@@ -24,7 +25,7 @@ declare type TabsProp = {
     extra?: React.ReactNode;
     /** 是否显示border,默认显示 */
     border?: boolean;
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
+} & NoOnChangeHtmlElement;
 declare const _default: React.FC<TabsProp> & {
     Tab: React.FC<ItemProp>;
 };

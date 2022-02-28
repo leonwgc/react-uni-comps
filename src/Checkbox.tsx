@@ -20,7 +20,7 @@ type Props = {
   style?: React.CSSProperties;
   /** 设置 indeterminate 状态，中间横线代替勾勾 */
   indeterminate?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 /** 复选框 */
 const Checkbox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {

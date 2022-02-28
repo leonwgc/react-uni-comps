@@ -66,7 +66,7 @@ const StyledImageUpload = styled.div`
 `;
 
 export default function App() {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<FileList>([]);
   const [url, setUrl] = useState('');
   const [v, setV] = useState(false);
 
@@ -97,21 +97,14 @@ export default function App() {
               />
               <FileInputTrigger
                 accept="image/*"
-                onChange={(files) => {
-                  setFiles(files);
-                }}
+                onChange={setFiles}
                 className="change-image-trigger"
               >
                 更换图片
               </FileInputTrigger>
             </StyledImageUpload>
           ) : (
-            <FileInputTrigger
-              accept="image/*"
-              onChange={(files) => {
-                setFiles(files);
-              }}
-            >
+            <FileInputTrigger accept="image/*" onChange={setFiles}>
               <StyledImageUpload>
                 <Icon
                   type="uc-icon-jia2"
@@ -123,23 +116,11 @@ export default function App() {
           )}
 
           {/* trigger from outside */}
-          <FileInputTrigger
-            accept="image/*"
-            capture="environment"
-            onChange={(files) => {
-              setFiles(files);
-            }}
-          >
+          <FileInputTrigger accept="image/*" capture="environment" onChange={setFiles}>
             <Button type="primary">调后置拍照</Button>
           </FileInputTrigger>
 
-          <FileInputTrigger
-            accept="image/*"
-            capture="user"
-            onChange={(files) => {
-              setFiles(files);
-            }}
-          >
+          <FileInputTrigger accept="image/*" capture="user" onChange={setFiles}>
             <Button type="primary">调前置拍照</Button>
           </FileInputTrigger>
 

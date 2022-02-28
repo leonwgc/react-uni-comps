@@ -13,5 +13,5 @@ declare const FileInputTrigger: React.ForwardRefExoticComponent<{
     capture?: 'user' | 'environment';
     style?: React.CSSProperties;
     className?: string;
-} & React.HTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;
+} & Omit<React.HTMLAttributes<HTMLElement>, "onChange"> & React.RefAttributes<HTMLInputElement>>;
 export default FileInputTrigger;

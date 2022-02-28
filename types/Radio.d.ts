@@ -17,5 +17,5 @@ declare const Radio: React.ForwardRefExoticComponent<{
     children?: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & Omit<React.HTMLAttributes<HTMLElement>, "onChange"> & React.RefAttributes<HTMLDivElement>>;
 export default Radio;

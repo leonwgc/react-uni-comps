@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import CheckboxBase from './CheckboxBase';
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 
   className?: string;
   style?: React.CSSProperties;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 /** 单选框 */
 const Radio = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
