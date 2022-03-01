@@ -3834,7 +3834,7 @@ var _excluded$p = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2$1 = ["duration"];
 
 var _templateObject$p;
-var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n  border-radius: 2px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
+var StyledToast = styled__default['default'].div(_templateObject$p || (_templateObject$p = _taggedTemplateLiteral(["\n  z-index: 1000;\n  padding: 12px 16px;\n  display: inline-block;\n  margin: 0 auto;\n  background-color: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  border-radius: 4px;\n  text-align: center;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n"])));
 
 /** 轻提示 */
 var Toast = function Toast(props) {
@@ -4800,7 +4800,7 @@ var SwipeAction = function SwipeAction(props) {
 
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"];
+var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable", "onClear"];
 
 var _templateObject$y;
 var StyledInput = styled__default['default'].div(_templateObject$y || (_templateObject$y = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover {\n      ", "\n    }\n\n    &.focused {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    color: #333;\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
@@ -4820,6 +4820,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       textarea = props.textarea,
       ime = props.ime,
       clearable = props.clearable,
+      onClear = props.onClear,
       rest = _objectWithoutProperties(props, _excluded$y);
 
   var inputRef = React.useRef();
@@ -4897,7 +4898,8 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   }, /*#__PURE__*/React__default['default'].createElement(Icon, {
     type: "uc-icon-clear",
     onClick: function onClick() {
-      return _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
+      onClear === null || onClear === void 0 ? void 0 : onClear();
     }
   })), suffix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('suffix')

@@ -64,7 +64,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
       textarea = props.textarea,
       ime = props.ime,
       clearable = props.clearable,
-      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable"]);
+      onClear = props.onClear,
+      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "textarea", "ime", "clearable", "onClear"]);
 
   var inputRef = useRef();
   var isImeModeRef = useRef(false);
@@ -139,7 +140,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, /*#__PURE__*/React.createElement(Icon, {
     type: "uc-icon-clear",
     onClick: function onClick() {
-      return _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
+      onClear === null || onClear === void 0 ? void 0 : onClear();
     }
   })), suffix && /*#__PURE__*/React.createElement("span", {
     className: clsx('suffix')
