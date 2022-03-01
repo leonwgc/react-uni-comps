@@ -9,8 +9,11 @@ import color from 'color';
 
 export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> &
   Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
+    /** 是否只读 */
     readOnly?: boolean;
+    /** 值 */
     value?: string;
+    /** 默认值 */
     defaultValue?: string;
     /** input左边内容 */
     prefix?: React.ReactNode;
@@ -29,6 +32,8 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' |
     ime?: boolean;
     /** 是否显示清除按钮,默认false*/
     clearable?: boolean;
+    /** 点击清除按钮后触发 */
+    onClear?: () => void;
   };
 
 const StyledInput = styled.div`
@@ -119,6 +124,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     textarea,
     ime,
     clearable,
+    onClear,
     ...rest
   } = props;
   const inputRef = useRef<RefType>();
@@ -189,7 +195,13 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
 
       {clearable && focused && typeof onChange === 'function' && value?.length > 0 && (
         <span className={clsx('suffix', 'clear')}>
-          <Icon type="uc-icon-clear" onClick={() => onChange?.('')} />
+          <Icon
+            type="uc-icon-clear"
+            onClick={() => {
+              onChange?.('');
+              onClear?.();
+            }}
+          />
         </span>
       )}
       {suffix && <span className={clsx('suffix')}>{suffix}</span>}

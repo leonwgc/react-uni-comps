@@ -1,7 +1,10 @@
 import React from 'react';
 export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
+    /** 是否只读 */
     readOnly?: boolean;
+    /** 值 */
     value?: string;
+    /** 默认值 */
     defaultValue?: string;
     /** input左边内容 */
     prefix?: React.ReactNode;
@@ -20,12 +23,17 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'p
     ime?: boolean;
     /** 是否显示清除按钮,默认false*/
     clearable?: boolean;
+    /** 点击清除按钮后触发 */
+    onClear?: () => void;
 };
 declare type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
 /** 单行/多行输入框 input/textarea */
 declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "prefix"> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, "onChange" | "prefix"> & {
+    /** 是否只读 */
     readOnly?: boolean;
+    /** 值 */
     value?: string;
+    /** 默认值 */
     defaultValue?: string;
     /** input左边内容 */
     prefix?: React.ReactNode;
@@ -44,5 +52,7 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     ime?: boolean;
     /** 是否显示清除按钮,默认false*/
     clearable?: boolean;
+    /** 点击清除按钮后触发 */
+    onClear?: () => void;
 } & React.RefAttributes<RefType>>;
 export default Input;

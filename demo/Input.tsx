@@ -180,7 +180,7 @@ export default function App() {
                 />
               }
             />
-            <Input value={val} onChange={setVal} />
+            <Input value={val} onChange={setVal} clearable onClear={() => console.log('cleared')} />
             <Button block type="primary" style={{ marginTop: 32 }}>
               登录
             </Button>
