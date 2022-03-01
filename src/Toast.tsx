@@ -9,9 +9,9 @@ const StyledToast = styled.div`
   padding: 12px 16px;
   display: inline-block;
   margin: 0 auto;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
   text-align: center;
   position: fixed;
   top: 50%;
