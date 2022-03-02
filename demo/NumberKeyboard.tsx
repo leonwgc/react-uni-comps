@@ -24,7 +24,7 @@ export default function App() {
         mask={false}
         value={v}
         onChange={setV}
-        // onFocus={() => setVisible(true)}
+        onFocus={() => setVisible(true)}
       />
 
       <NumberKeyboard

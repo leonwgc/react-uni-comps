@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'reac
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
-import { isMobile } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 
 type Props = {
@@ -18,8 +17,8 @@ type Props = {
   length?: number;
   /** 不显示原文 */
   mask?: boolean;
-  /** 使用虚拟键盘NumberKeyboard,移动端搭配使用，不弹出原生输入框 ,默认根据环境判断*/
-  virtualKeyboard?: boolean;
+  /** 使用模拟输入框，键盘无法输入*/
+  userVirtualInput?: boolean;
   style?: React.CSSProperties;
   className?: string;
   /** 自动获取焦点 */
@@ -114,7 +113,7 @@ const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
     className,
     mask = true,
     autoFocus = true,
-    virtualKeyboard = isMobile,
+    userVirtualInput,
     onFinish,
     onFocus,
     onChange,
@@ -150,14 +149,17 @@ const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
   }, [autoFocusRef, vRef]);
 
   // prev value check
-  const prevInputCheck = useCallback((idx) => {
-    for (let i = 0; i < idx; i++) {
-      if (!inputValueRef.current[i]) {
-        return false;
+  const prevInputCheck = useCallback(
+    (idx) => {
+      for (let i = 0; i < idx; i++) {
+        if (!inputValueRef.current[i]) {
+          return false;
+        }
       }
-    }
-    return true;
-  }, []);
+      return true;
+    },
+    [inputValueRef]
+  );
 
   return (
     <StyledPasswordInput {...rest} className={clsx('uc-password-input', className)}>
@@ -169,7 +171,7 @@ const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
             ) : (
               value[idx]
             )
-          ) : !virtualKeyboard ? (
+          ) : !userVirtualInput ? (
             <input
               ref={(r) => {
                 inputRefArray.current[idx] = r;
@@ -183,7 +185,18 @@ const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
                 }
               }}
               onKeyDown={(e) => {
-                if (!prevInputCheck(idx)) {
+                if (e.code === 'Backspace' || e.which === 8) {
+                  // back
+                  if (idx > 0) {
+                    const v = inputValueRef.current.slice(0, idx - 1).join('');
+                    onChange?.(v);
+                    setTimeout(() => {
+                      inputRefArray.current[Math.max(0, idx - 1)]?.focus();
+                    }, 100);
+                  } else {
+                    inputRefArray.current[0]?.focus();
+                  }
+                } else if (!prevInputCheck(idx)) {
                   e.preventDefault();
                 }
               }}
