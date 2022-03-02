@@ -28,7 +28,7 @@ export default function App() {
     <PageWrap>
       <DemoBlock>
         <ErrorBoundary
-          onError={(error) => {
+          onError={(error, info) => {
             Toast.show(error.message);
           }}
         >
