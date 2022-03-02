@@ -334,6 +334,10 @@ module.exports = [
         name: 'LazyLoadElement',
         title: 'LazyLoadElement 组件懒加载',
       },
+      {
+        name: 'ErrorBoundary',
+        title: 'ErrorBoundary 错误边界',
+      },
     ],
   },
 ];
