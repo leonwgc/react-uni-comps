@@ -122,11 +122,11 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
     ref: inputRef,
     readOnly: readOnly,
     disabled: disabled,
-    onkeydown: function onkeydown(e) {
+    onKeyDown: function onKeyDown(e) {
       var _a;
 
-      if (typeof onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        onEnter(e);
+      if (typeof props.onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        props.onEnter(e);
       }
 
       (_a = props.onKeyDown) === null || _a === void 0 ? void 0 : _a.call(props, e);

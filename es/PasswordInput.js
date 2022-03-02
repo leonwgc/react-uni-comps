@@ -43,7 +43,6 @@ import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'reac
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
-import { isMobile } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 var StyledPasswordInput = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n    @keyframes blink {\n      0% {\n        opacity: 0;\n      }\n      50% {\n        opacity: 1;\n      }\n      100% {\n        opacity: 0;\n      }\n    }\n    .virtual-input {\n      &.blink {\n        width: 1px;\n        height: 50%;\n        background-color: #333;\n        animation: 1s blink infinite;\n      }\n    }\n  }\n"], ["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n    @keyframes blink {\n      0% {\n        opacity: 0;\n      }\n      50% {\n        opacity: 1;\n      }\n      100% {\n        opacity: 0;\n      }\n    }\n    .virtual-input {\n      &.blink {\n        width: 1px;\n        height: 50%;\n        background-color: #333;\n        animation: 1s blink infinite;\n      }\n    }\n  }\n"])), vars.border, vars.border);
 
@@ -69,12 +68,11 @@ var PasswordInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
       mask = _c === void 0 ? true : _c,
       _d = props.autoFocus,
       autoFocus = _d === void 0 ? true : _d,
-      _e = props.virtualKeyboard,
-      virtualKeyboard = _e === void 0 ? isMobile : _e,
+      userVirtualInput = props.userVirtualInput,
       onFinish = props.onFinish,
       onFocus = props.onFocus,
       _onChange = props.onChange,
-      rest = __rest(props, ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"]);
+      rest = __rest(props, ["value", "length", "className", "mask", "autoFocus", "userVirtualInput", "onFinish", "onFocus", "onChange"]);
 
   var arRef = useRef(getArray(length));
   var inputRefArray = useRef([]);
@@ -116,7 +114,7 @@ var PasswordInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
 
     return true;
-  }, []);
+  }, [inputValueRef]);
   return /*#__PURE__*/React.createElement(StyledPasswordInput, __assign({}, rest, {
     className: clsx('uc-password-input', className)
   }), arRef.current.map(function (n, idx) {
@@ -125,7 +123,7 @@ var PasswordInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
       key: n
     }, value.length >= n ? mask ? /*#__PURE__*/React.createElement("div", {
       className: "dot"
-    }) : value[idx] : !virtualKeyboard ? /*#__PURE__*/React.createElement("input", {
+    }) : value[idx] : !userVirtualInput ? /*#__PURE__*/React.createElement("input", {
       ref: function ref(r) {
         inputRefArray.current[idx] = r;
       },
@@ -141,7 +139,22 @@ var PasswordInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
         }
       },
       onKeyDown: function onKeyDown(e) {
-        if (!prevInputCheck(idx)) {
+        var _a;
+
+        if (e.code === 'Backspace' || e.which === 8) {
+          // back
+          if (idx > 0) {
+            var v = inputValueRef.current.slice(0, idx - 1).join('');
+            _onChange === null || _onChange === void 0 ? void 0 : _onChange(v);
+            setTimeout(function () {
+              var _a;
+
+              (_a = inputRefArray.current[Math.max(0, idx - 1)]) === null || _a === void 0 ? void 0 : _a.focus();
+            }, 100);
+          } else {
+            (_a = inputRefArray.current[0]) === null || _a === void 0 ? void 0 : _a.focus();
+          }
+        } else if (!prevInputCheck(idx)) {
           e.preventDefault();
         }
       },

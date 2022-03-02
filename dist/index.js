@@ -2627,7 +2627,6 @@ Switch.displayName = 'UC-Switch';
  * @class ErrorBoundary
  * @extends {React.Component}
  */
-
 var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   _inherits(ErrorBoundary, _React$Component);
 
@@ -2653,6 +2652,13 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(ErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, info) {
+      var _this$props$onError, _this$props;
+
+      (_this$props$onError = (_this$props = this.props).onError) === null || _this$props$onError === void 0 ? void 0 : _this$props$onError.call(_this$props, error, info);
+    }
+  }, {
     key: "render",
     value: function render() {
       if (this.state.hasError) {
@@ -4397,7 +4403,7 @@ AlertDialog.show = function (props) {
   }))), container);
 };
 
-var _excluded$v = ["value", "length", "className", "mask", "autoFocus", "virtualKeyboard", "onFinish", "onFocus", "onChange"];
+var _excluded$v = ["value", "length", "className", "mask", "autoFocus", "userVirtualInput", "onFinish", "onFocus", "onChange"];
 
 var _templateObject$u;
 var StyledPasswordInput = styled__default['default'].div(_templateObject$u || (_templateObject$u = _taggedTemplateLiteral(["\n  user-select: none;\n  height: 50px;\n  cursor: pointer;\n  display: flex;\n  background-color: #fff;\n  border-radius: 4px;\n  padding: 8px;\n  border: 1px solid ", ";\n  margin: 0 16px;\n\n  .item {\n    flex: 1;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    font-size: 20px;\n    line-height: 1.2;\n    background-color: #fff;\n\n    &:not(:first-child) {\n      border-left: 1px solid ", ";\n    }\n\n    .dot {\n      width: 10px;\n      height: 10px;\n      background-color: #000;\n      border-radius: 100%;\n    }\n    input {\n      height: 100%;\n      width: 100%;\n      display: inline-block;\n      font-size: 16px;\n      text-align: center;\n      background-color: transparent;\n      border: 0;\n      resize: none;\n      outline: none;\n      -webkit-tap-highlight-color: transparent;\n      -webkit-appearance: none;\n      box-shadow: none;\n    }\n    @keyframes blink {\n      0% {\n        opacity: 0;\n      }\n      50% {\n        opacity: 1;\n      }\n      100% {\n        opacity: 0;\n      }\n    }\n    .virtual-input {\n      &.blink {\n        width: 1px;\n        height: 50%;\n        background-color: #333;\n        animation: 1s blink infinite;\n      }\n    }\n  }\n"])), border, border);
@@ -4423,8 +4429,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       mask = _props$mask === void 0 ? true : _props$mask,
       _props$autoFocus = props.autoFocus,
       autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus,
-      _props$virtualKeyboar = props.virtualKeyboard,
-      virtualKeyboard = _props$virtualKeyboar === void 0 ? isMobile : _props$virtualKeyboar,
+      userVirtualInput = props.userVirtualInput,
       onFinish = props.onFinish,
       onFocus = props.onFocus,
       _onChange = props.onChange,
@@ -4470,7 +4475,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
     }
 
     return true;
-  }, []);
+  }, [inputValueRef]);
   return /*#__PURE__*/React__default['default'].createElement(StyledPasswordInput, _extends({}, rest, {
     className: clsx__default['default']('uc-password-input', className)
   }), arRef.current.map(function (n, idx) {
@@ -4479,7 +4484,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       key: n
     }, value.length >= n ? mask ? /*#__PURE__*/React__default['default'].createElement("div", {
       className: "dot"
-    }) : value[idx] : !virtualKeyboard ? /*#__PURE__*/React__default['default'].createElement("input", {
+    }) : value[idx] : !userVirtualInput ? /*#__PURE__*/React__default['default'].createElement("input", {
       ref: function ref(r) {
         inputRefArray.current[idx] = r;
       },
@@ -4495,7 +4500,23 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
         }
       },
       onKeyDown: function onKeyDown(e) {
-        if (!prevInputCheck(idx)) {
+        if (e.code === 'Backspace' || e.which === 8) {
+          // back
+          if (idx > 0) {
+            var _v = inputValueRef.current.slice(0, idx - 1).join('');
+
+            _onChange === null || _onChange === void 0 ? void 0 : _onChange(_v);
+            setTimeout(function () {
+              var _inputRefArray$curren6;
+
+              (_inputRefArray$curren6 = inputRefArray.current[Math.max(0, idx - 1)]) === null || _inputRefArray$curren6 === void 0 ? void 0 : _inputRefArray$curren6.focus();
+            }, 100);
+          } else {
+            var _inputRefArray$curren7;
+
+            (_inputRefArray$curren7 = inputRefArray.current[0]) === null || _inputRefArray$curren7 === void 0 ? void 0 : _inputRefArray$curren7.focus();
+          }
+        } else if (!prevInputCheck(idx)) {
           e.preventDefault();
         }
       },
@@ -4880,11 +4901,11 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     ref: inputRef,
     readOnly: readOnly,
     disabled: disabled,
-    onkeydown: function onkeydown(e) {
+    onKeyDown: function onKeyDown(e) {
       var _props$onKeyDown;
 
-      if (typeof onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        onEnter(e);
+      if (typeof props.onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        props.onEnter(e);
       }
 
       (_props$onKeyDown = props.onKeyDown) === null || _props$onKeyDown === void 0 ? void 0 : _props$onKeyDown.call(props, e);

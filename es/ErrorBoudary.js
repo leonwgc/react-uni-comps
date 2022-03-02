@@ -25,8 +25,6 @@ var __extends = this && this.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 
 import React from 'react';
 /**
@@ -57,6 +55,12 @@ function (_super) {
       hasError: true,
       error: error
     };
+  };
+
+  ErrorBoundary.prototype.componentDidCatch = function (error, info) {
+    var _a, _b;
+
+    (_b = (_a = this.props).onError) === null || _b === void 0 ? void 0 : _b.call(_a, error, info);
   };
 
   ErrorBoundary.prototype.render = function () {

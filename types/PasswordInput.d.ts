@@ -12,8 +12,8 @@ declare type Props = {
     length?: number;
     /** 不显示原文 */
     mask?: boolean;
-    /** 使用虚拟键盘NumberKeyboard,移动端搭配使用，不弹出原生输入框 ,默认根据环境判断*/
-    virtualKeyboard?: boolean;
+    /** 使用模拟输入框，键盘无法输入*/
+    userVirtualInput?: boolean;
     style?: React.CSSProperties;
     className?: string;
     /** 自动获取焦点 */

@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/ErrorBoundary',
+    component: lazy(() => import('./ErrorBoundary')),
+  },
+  {
     path: '/SideBar',
     component: lazy(() => import('./SideBar')),
   },
@@ -132,7 +136,7 @@ const routes = [
   },
   {
     path: '/ErrorBoudary',
-    component: lazy(() => import('./ErrorBoudary')),
+    component: lazy(() => import('./ErrorBoundary')),
   },
   {
     path: '/Divider',
