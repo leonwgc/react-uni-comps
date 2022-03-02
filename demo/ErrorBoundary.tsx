@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { ErrorBoundary, Toast } from 'react-uni-comps';
+import { ErrorBoundary, Toast, Button } from 'react-uni-comps';
 
 const ErrorApp = () => {
-  throw new Error('Error App crashed');
+  const [dead, setDead] = useState(false);
+
+  if (dead) {
+    throw Error('挂了吧~~');
+  }
+  return (
+    <Button
+      as="div"
+      outlined
+      block
+      onClick={() => {
+        setDead(true);
+      }}
+    >
+      点击就挂
+    </Button>
+  );
 };
 
 export default function App() {
@@ -18,7 +34,9 @@ export default function App() {
         >
           <ErrorApp />
         </ErrorBoundary>
-        <div style={{ marginTop: 10 }}>这里不受影响</div>
+        <Button block style={{ marginTop: 50, height: 60 }}>
+          这里不受影响
+        </Button>
       </DemoBlock>
     </PageWrap>
   );
