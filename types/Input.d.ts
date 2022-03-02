@@ -1,7 +1,12 @@
 import React from 'react';
-export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
-    /** 是否只读 */
+declare type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
+export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
+    /** 只读 */
     readOnly?: boolean;
+    /** 禁用 */
+    disabled?: boolean;
+    /** 多行文本的显示行数,如果设置则组件显示为textarea */
+    rows?: number;
     /** 值 */
     value?: string;
     /** 默认值 */
@@ -10,14 +15,15 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'p
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    /** 是否为多行文本输入 */
-    textarea?: boolean;
     className?: string;
     style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
-    onFocus?: () => void;
-    /** textarea 是否高度自适应,默认true */
+    /** focus事件回调 */
+    onFocus?: (e: FocusEvent) => void;
+    /** blur事件回调 */
+    onBlur?: (e: FocusEvent) => void;
+    /** textarea 是否高度自适应,受控模式生效,默认false */
     autoHeight?: boolean;
     /** 处理IME输入法,默认 false */
     ime?: boolean;
@@ -25,12 +31,18 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'p
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
+    /** Enter回调 */
+    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 declare type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
 /** 单行/多行输入框 input/textarea */
-declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "prefix"> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, "onChange" | "prefix"> & {
-    /** 是否只读 */
+declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
+    /** 只读 */
     readOnly?: boolean;
+    /** 禁用 */
+    disabled?: boolean;
+    /** 多行文本的显示行数,如果设置则组件显示为textarea */
+    rows?: number;
     /** 值 */
     value?: string;
     /** 默认值 */
@@ -39,14 +51,15 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    /** 是否为多行文本输入 */
-    textarea?: boolean;
     className?: string;
     style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
-    onFocus?: () => void;
-    /** textarea 是否高度自适应,默认true */
+    /** focus事件回调 */
+    onFocus?: (e: FocusEvent) => void;
+    /** blur事件回调 */
+    onBlur?: (e: FocusEvent) => void;
+    /** textarea 是否高度自适应,受控模式生效,默认false */
     autoHeight?: boolean;
     /** 处理IME输入法,默认 false */
     ime?: boolean;
@@ -54,5 +67,7 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
+    /** Enter回调 */
+    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 } & React.RefAttributes<RefType>>;
 export default Input;

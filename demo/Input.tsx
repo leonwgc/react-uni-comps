@@ -1,81 +1,10 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { Input, Icon, Button, throttle, styled, clsx, Checkbox } from 'react-uni-comps';
+import React, { useState } from 'react';
+import { Input, Icon, Button, styled, clsx, Space, Toast, isMobile, Cell } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 
+//#region  styles
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2878668_3svlljpx94y.js');
-
-const StyledPage = styled.div`
-  transition: all 0.28s ease-in-out;
-  &.mobile {
-    padding: 20px 27px;
-  }
-
-  &.pc {
-    padding: 46px 40px 40px;
-    background-color: #fff;
-    margin: 150px auto 0;
-    width: 419px;
-    border-radius: 12px;
-    box-sizing: border-box;
-  }
-`;
-
-const StyledVa = styled.div`
-  .title {
-    height: 34px;
-    font-size: 24px;
-    font-family: PingFangSC, PingFangSC-Medium;
-    font-weight: 500;
-    text-align: left;
-    color: #000000;
-    line-height: 34px;
-  }
-
-  .desc {
-    height: 18px;
-    font-size: 13px;
-    font-family: PingFangSC, PingFangSC-Regular;
-    font-weight: 400;
-    text-align: left;
-    color: #8c8c8c;
-    line-height: 18px;
-    letter-spacing: 0px;
-    margin: 8px 0 30px;
-  }
-
-  .user {
-    display: flex;
-    font-size: 15px;
-    height: 16px;
-    font-family: PingFangSC, PingFangSC-Regular;
-    font-weight: 400;
-    text-align: left;
-    color: #8c8c8c;
-    line-height: 16px;
-    .icon {
-      margin-right: 4px;
-    }
-  }
-
-  &.pc {
-    .desc {
-      margin: 16px auto 34px;
-    }
-    .user {
-      height: 36px;
-      background: #f7f7f7;
-      border-radius: 6px;
-      line-height: 36px;
-      padding: 0 12px;
-      .icon {
-        font-size: 18px;
-        margin-right: 10px;
-        line-height: 40px;
-      }
-    }
-  }
-`;
 
 const StyledInput = styled(Input)`
   &.pc {
@@ -122,31 +51,14 @@ const StyledInput = styled(Input)`
   }
 `;
 
+//#endregion
+
 export default function App() {
   const [data, setData] = useState({ account: '', pwd: '', eyeOn: false });
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
   const { account = '', pwd = '', eyeOn } = data;
 
   const [val, setVal] = useState('');
-
-  useLayoutEffect(() => {
-    const handler = throttle(() => {
-      setIsMobile(window.innerWidth < 450);
-    });
-    window.addEventListener('resize', handler);
-
-    return () => {
-      window.removeEventListener('resize', handler);
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!isMobile) {
-      document.body.style.background = 'linear-gradient(144deg,#fff6e8 4%, #fff4ea 98%)';
-    } else {
-      document.body.style.background = '#fff';
-    }
-  }, [isMobile]);
+  const [val1, setVal1] = useState('高度自适应');
 
   const onFieldChange = (name) => (value) => {
     setData({ ...data, [name]: value });
@@ -154,38 +66,66 @@ export default function App() {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <DemoBlock>
-        <StyledPage className={clsx('page', { pc: !isMobile, mobile: isMobile })}>
-          <StyledVa className={clsx('container', { pc: !isMobile, mobile: isMobile })}>
-            <StyledInput
-              clearable
-              placeholder="请输入真实账号"
-              value={account}
-              onChange={onFieldChange('account')}
-              prefix={!isMobile && <Icon type="icon-yonghu" />}
+      <DemoBlock title="默认" padding={0}>
+        <Space direction="vertical" size={4} style={{ width: '100%' }}>
+          <Cell label="默认">
+            <Input value={val} onChange={setVal} />
+          </Cell>
+
+          <Cell label="非受控">
+            <Input />
+          </Cell>
+
+          <Cell label="按下Enter">
+            <Input onEnter={(e) => console.log(e.target.value)} />
+          </Cell>
+
+          <Cell label="只读">
+            <Input defaultValue="只读" readOnly />
+          </Cell>
+
+          <Cell label="禁用">
+            <Input defaultValue="禁用" disabled />
+          </Cell>
+
+          <Cell label="可清除">
+            <Input value={val} onChange={setVal} clearable onClear={() => Toast.show('已清空')} />
+          </Cell>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="多行">
+        <Space direction="vertical" size={24} style={{ width: '100%' }}>
+          <Input rows={2} />
+
+          <Input rows={1} autoHeight value={val1} onChange={setVal1} />
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="自定义">
+        <StyledInput
+          clearable
+          placeholder="请输入真实账号"
+          value={account}
+          onChange={onFieldChange('account')}
+          prefix={!isMobile && <Icon type="icon-yonghu" />}
+        />
+
+        <StyledInput
+          placeholder="请输入密码"
+          value={pwd}
+          type={eyeOn ? 'text' : 'password'}
+          onChange={onFieldChange('pwd')}
+          prefix={!isMobile && <Icon type="icon-lock_filled_regular" />}
+          clearable
+          suffix={
+            <Icon
+              className="icon"
+              onClick={() => onFieldChange('eyeOn')(!eyeOn)}
+              type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
             />
-            <StyledInput placeholder="请输入真实账号" value={account} disabled />
-            <StyledInput
-              placeholder="请输入密码"
-              value={pwd}
-              type={eyeOn ? 'text' : 'password'}
-              onChange={onFieldChange('pwd')}
-              prefix={!isMobile && <Icon type="icon-lock_filled_regular" />}
-              clearable
-              suffix={
-                <Icon
-                  className="icon"
-                  onClick={() => onFieldChange('eyeOn')(!eyeOn)}
-                  type={eyeOn ? 'icon-display_outlined_regular' : 'icon-hide_outlined_regular'}
-                />
-              }
-            />
-            <Input value={val} onChange={setVal} clearable onClear={() => console.log('cleared')} />
-            <Button block type="primary" style={{ marginTop: 32 }}>
-              登录
-            </Button>
-          </StyledVa>
-        </StyledPage>
+          }
+        />
       </DemoBlock>
     </PageWrap>
   );

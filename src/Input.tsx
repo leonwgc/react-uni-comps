@@ -7,10 +7,16 @@ import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
 
-export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'onChange'> &
-  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'prefix' | 'onChange'> & {
-    /** 是否只读 */
+type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
+
+export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> &
+  Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
+    /** 只读 */
     readOnly?: boolean;
+    /** 禁用 */
+    disabled?: boolean;
+    /** 多行文本的显示行数,如果设置则组件显示为textarea */
+    rows?: number;
     /** 值 */
     value?: string;
     /** 默认值 */
@@ -19,14 +25,15 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' |
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    /** 是否为多行文本输入 */
-    textarea?: boolean;
     className?: string;
     style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
-    onFocus?: () => void;
-    /** textarea 是否高度自适应,默认true */
+    /** focus事件回调 */
+    onFocus?: (e: FocusEvent) => void;
+    /** blur事件回调 */
+    onBlur?: (e: FocusEvent) => void;
+    /** textarea 是否高度自适应,受控模式生效,默认false */
     autoHeight?: boolean;
     /** 处理IME输入法,默认 false */
     ime?: boolean;
@@ -34,7 +41,11 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' |
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
+    /** Enter回调 */
+    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   };
+
+//#region  style
 
 const StyledInput = styled.div`
   display: flex;
@@ -45,17 +56,18 @@ const StyledInput = styled.div`
   background-color: #fff;
   overflow: hidden;
   box-sizing: border-box;
+  color: #333;
 
   &.pc {
     background-image: none;
     border: 1px solid ${vars.border};
     border-radius: 2px;
     transition: all 0.3s;
-    &:hover {
+    &:hover:not(.disabled, .read-only) {
       ${getThemeColorCss('border-color')}
     }
 
-    &.focused {
+    &.focused:not(.disabled, .read-only) {
       ${getThemeColorCss('border-color')}
       box-shadow: 0 0 2px 2px ${(props) =>
         color(getRootCssVarColor() || props.theme.color || vars.primary).fade(0.85)};
@@ -65,6 +77,13 @@ const StyledInput = styled.div`
     border: none;
     padding: 0 4px;
     line-height: 24px;
+  }
+
+  &.disabled {
+    color: #666;
+  }
+
+  &.read-only {
   }
 
   .prefix {
@@ -77,6 +96,7 @@ const StyledInput = styled.div`
 
   .clear {
     color: #bcbcbc;
+    cursor: pointer;
   }
 
   input,
@@ -86,7 +106,7 @@ const StyledInput = styled.div`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: #333;
+
     line-height: inherit;
     text-align: left;
     background-color: transparent;
@@ -108,7 +128,7 @@ const StyledInput = styled.div`
     }
   }
 `;
-
+//#endregion
 type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
 
 /** 单行/多行输入框 input/textarea */
@@ -120,38 +140,32 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     value,
     onChange,
     suffix,
-    autoHeight = true,
-    textarea,
+    autoHeight,
+    disabled,
+    readOnly,
+    rows,
     ime,
     clearable,
     onClear,
+    onEnter,
     ...rest
   } = props;
+
   const inputRef = useRef<RefType>();
   const isImeModeRef = useRef(false);
   const [compositionValue, setCompositionValue] = useState(value);
   const [focused, setFocused] = useState(false);
   useImperativeHandle(ref, () => inputRef.current);
 
+  const isTextArea = rows && typeof rows === 'number';
+
   useEffect(() => {
-    if (textarea && autoHeight) {
+    if (isTextArea && autoHeight) {
       inputRef.current.style.height = 'auto';
       inputRef.current.scrollTop = 0;
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   });
-
-  useEffect(() => {
-    inputRef.current.addEventListener('focus', () => {
-      setFocused(true);
-    });
-
-    inputRef.current.addEventListener('blur', () => {
-      setTimeout(() => {
-        setFocused(false);
-      }, 200);
-    });
-  }, []);
 
   const inputProps: Record<string, unknown> = {
     onChange: (e) => {
@@ -177,21 +191,48 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     };
   }
 
+  const elProps: any = {
+    ...rest,
+    ...inputProps,
+    ref: inputRef,
+    readOnly,
+    disabled,
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (typeof props.onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        props.onEnter(e);
+      }
+      props.onKeyDown?.(e);
+    },
+    onFocus: (e: FocusEvent) => {
+      setFocused(true);
+      props.onFocus?.(e);
+    },
+    onBlur: (e: FocusEvent) => {
+      props.onBlur?.(e);
+
+      setTimeout(() => {
+        setFocused(false);
+      }, 300);
+    },
+  };
+
+  if (isTextArea) {
+    elProps.rows = rows;
+  }
+
   return (
     <StyledInput
       style={style}
       className={clsx('uc-input', className, {
-        mobile: isMobile,
-        pc: !isMobile,
-        focused: focused,
+        'mobile': isMobile,
+        'pc': !isMobile,
+        'focused': focused,
+        'disabled': disabled,
+        'read-only': readOnly,
       })}
     >
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
-      {React.createElement(textarea ? 'textarea' : 'input', {
-        ...rest,
-        ...inputProps,
-        ref: inputRef,
-      })}
+      {React.createElement(isTextArea ? 'textarea' : 'input', elProps)}
 
       {clearable && focused && typeof onChange === 'function' && value?.length > 0 && (
         <span className={clsx('suffix', 'clear')}>
