@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { Stepper } from 'react-uni-comps';
+import { Stepper, Button, Space } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState(8);
@@ -24,7 +24,10 @@ export default function App() {
       </Block>
 
       <Block title="受控">
-        <Stepper step={2} value={v} min={2} max={16} onChange={setV} /> {v}
+        <Space>
+          <Stepper value={v} onChange={setV} /> {v}
+          <Button onClick={() => setV(6)}>设置为6</Button>
+        </Space>
       </Block>
     </PageWrap>
   );

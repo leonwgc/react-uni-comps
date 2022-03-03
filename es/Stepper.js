@@ -95,6 +95,11 @@ var Stepper = function Stepper(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(Number(val));
   }, [val]);
+  useUpdateEffect(function () {
+    if (value != val) {
+      setVal(value);
+    }
+  }, [value]);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     style: style,
     className: clsx('uc-stepper', className)

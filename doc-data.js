@@ -230,6 +230,10 @@ module.exports = [
         name: 'Calendar',
         title: 'Calendar 移动端日历',
       },
+      {
+        name: 'Stepper',
+        title: 'Stepper 步进器',
+      },
     ],
   },
 

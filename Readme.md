@@ -126,6 +126,7 @@ yarn add react-uni-comps
 - DatePicker (移动端日期选择)
 - Calendar (移动端日历)
 - IndexList (索引列表)
+- Stepper (步进器)
 
 ### 数据展示
 

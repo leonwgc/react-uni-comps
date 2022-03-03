@@ -110,6 +110,12 @@ const Stepper: React.FC<Props> = (props) => {
     onChange?.(Number(val));
   }, [val]);
 
+  useUpdateEffect(() => {
+    if (value != val) {
+      setVal(value);
+    }
+  }, [value]);
+
   return (
     <StyledWrap {...rest} style={style} className={clsx('uc-stepper', className)}>
       <Button icon={<Icon type="uc-icon-jian2" />} onClick={onMinus} disabled={disabled}></Button>
