@@ -320,6 +320,10 @@ module.exports = [
         name: 'TouchElement',
         title: 'TouchElement 手势',
       },
+      {
+        name: 'SortableList',
+        title: 'SortableList 拖拽排序列表',
+      },
     ],
   },
   {

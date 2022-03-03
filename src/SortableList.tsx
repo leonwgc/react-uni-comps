@@ -8,11 +8,15 @@ import Sortable from 'sortablejs';
 import { nanoid } from 'nanoid';
 
 type Props = {
+  /** 数据列表 */
   dataList?: Array<ObjectType>;
+  /** 数据项渲染 */
   dataRender?: (data: ObjectType) => ReactNode;
   style?: React.CSSProperties;
   className?: string;
+  /** 顺序改变回调 */
   onSort?: (list: Array<ObjectType>) => void;
+  /** sortablejs 配置 */
   config?: ObjectType;
 };
 
@@ -55,6 +59,8 @@ const SortableList: React.FC<Props> = (props) => {
     let st;
     if (el) {
       st = Sortable.create(el, {
+        ...ref.current.config,
+        dataIdAttr: 'data-id',
         store: {
           set: function (ss) {
             const ar = ss.toArray();
@@ -64,7 +70,6 @@ const SortableList: React.FC<Props> = (props) => {
             ref.current.onSort?.(newList);
           },
         },
-        ...ref.current.config,
       });
     }
     return () => {
@@ -75,7 +80,7 @@ const SortableList: React.FC<Props> = (props) => {
   return (
     <StyledWrapper {...rest} ref={wrapElRef} className={clsx('uc-sortable-list', className)}>
       {keyedList.map((item: any) => (
-        <div key={item._key} data-id={item._key}>
+        <div key={item._key} data-id={item._key} className="uc-sortable-item">
           {dataRender(item)}
         </div>
       ))}

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { styled, SideBar, Icon, Space, SortableList } from 'react-uni-comps';
+import { SortableList, Button } from 'react-uni-comps';
 
 const list = [
-  { title: '选项一' },
+  { title: '1' },
   {
-    title: '选项二',
+    title: '2',
   },
-  { title: '选项三' },
-  { title: '选项4' },
-  { title: '选项5' },
-  { title: '选项6' },
+  { title: '3' },
+  { title: '4' },
+  { title: '5' },
+  { title: '6' },
 ];
 
 export default function App() {
@@ -19,10 +19,9 @@ export default function App() {
     <PageWrap>
       <Block title="默认" padding={0}>
         <SortableList
+          style={{ display: 'flex', flexWrap: 'wrap' }}
           dataList={list}
-          dataRender={(data) => (
-            <div style={{ height: 50, borderBottom: '1px solid #ccc' }}>{data.title}</div>
-          )}
+          dataRender={(data) => <Button style={{ width: 120, height: 60 }}>{data.title}</Button>}
           onSort={(list) => {
             console.log(list.map((item) => item.title));
           }}

@@ -12,6 +12,7 @@ var reactIs = require('react-is');
 require('intersection-observer');
 var Touch = require('w-touch');
 var color = require('color');
+var Sortable = require('sortablejs');
 var nanoid = require('nanoid');
 var RcForm = require('rc-field-form');
 
@@ -23,6 +24,7 @@ var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
 var Touch__default = /*#__PURE__*/_interopDefaultLegacy(Touch);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
+var Sortable__default = /*#__PURE__*/_interopDefaultLegacy(Sortable);
 var RcForm__default = /*#__PURE__*/_interopDefaultLegacy(RcForm);
 
 function ownKeys(object, enumerableOnly) {
@@ -10521,15 +10523,105 @@ var SideBar = function SideBar(_ref) {
   }));
 };
 
-var _excluded$11 = ["content"];
+var _excluded$11 = ["dataList", "dataRender", "onSort", "config", "className"];
 
 var _templateObject$Z;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$Z || (_templateObject$Z = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+var StyledWrapper$4 = styled__default['default'].div(_templateObject$Z || (_templateObject$Z = _taggedTemplateLiteral([""]))); //#endregion
+
+var addKeyToList = function addKeyToList(list) {
+  var _iterator = _createForOfIteratorHelper(list),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var item = _step.value;
+
+      if (!item._key) {
+        item._key = nanoid.nanoid(6);
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return list;
+};
+/**
+ * 拖拽排序列表
+ */
+
+
+var SortableList = function SortableList(props) {
+  var _props$dataList = props.dataList,
+      dataList = _props$dataList === void 0 ? [] : _props$dataList,
+      dataRender = props.dataRender,
+      onSort = props.onSort,
+      config = props.config,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$11);
+
+  var wrapElRef = React.useRef();
+  var keyedList = addKeyToList(dataList);
+  var ref = React.useRef({
+    list: keyedList,
+    onSort: onSort,
+    config: config
+  });
+  ref.current = {
+    list: keyedList,
+    onSort: onSort,
+    config: config
+  };
+  React.useEffect(function () {
+    var el = wrapElRef.current;
+    var st;
+
+    if (el) {
+      st = Sortable__default['default'].create(el, _objectSpread2(_objectSpread2({}, ref.current.config), {}, {
+        dataIdAttr: 'data-id',
+        store: {
+          set: function set(ss) {
+            var _ref$current$onSort, _ref$current;
+
+            var ar = ss.toArray();
+            var newList = ref.current.list.sort(function (a, b) {
+              return ar.indexOf(a._key) - ar.indexOf(b._key);
+            });
+            (_ref$current$onSort = (_ref$current = ref.current).onSort) === null || _ref$current$onSort === void 0 ? void 0 : _ref$current$onSort.call(_ref$current, newList);
+          }
+        }
+      }));
+    }
+
+    return function () {
+      st.destroy();
+    };
+  }, [ref]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$4, _extends({}, rest, {
+    ref: wrapElRef,
+    className: clsx__default['default']('uc-sortable-list', className)
+  }), keyedList.map(function (item) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: item._key,
+      "data-id": item._key,
+      className: "uc-sortable-item"
+    }, dataRender(item));
+  }));
+};
+
+SortableList.displayName = 'UC-SortableList';
+
+var _excluded$12 = ["content"];
+
+var _templateObject$_;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$11);
+      restProps = _objectWithoutProperties(_ref, _excluded$12);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -10649,7 +10741,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$12 = ["children", "label", "name"],
+var _excluded$13 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10660,7 +10752,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$12);
+      fieldProps = _objectWithoutProperties(props, _excluded$13);
 
   var required = false;
 
@@ -10872,6 +10964,7 @@ exports.Signature = Signature;
 exports.Skeleton = Skeleton;
 exports.SkeletonBase = SkeletonBase;
 exports.Slide = Slide;
+exports.SortableList = SortableList;
 exports.Space = Space;
 exports.Spin = Spin;
 exports.Steps = Steps;

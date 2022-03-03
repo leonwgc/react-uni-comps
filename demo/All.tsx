@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> SortableList
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SortableList')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> PasswordInput
           </Space>
         }

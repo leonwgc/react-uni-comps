@@ -151,6 +151,7 @@ yarn add react-uni-comps
 
 ### 手势
 - TouchElement (双击，长按，旋转，缩放，平移等)
+- SortableList (拖拽排序列表)
 
 ### 其他组件
 
