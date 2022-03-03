@@ -10619,7 +10619,21 @@ var _templateObject$_;
 //#region  style
 var StyledWrap$a = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  width: 110px;\n  display: inline-flex;\n  .uc-button {\n    flex: none;\n    width: 28px;\n    height: 28px;\n    padding: 0;\n    background-color: #f5f5f5;\n    border: none;\n    font-weight: normal;\n    ", "\n  }\n\n  .uc-input {\n    flex: 1;\n    background-color: #f5f5f5;\n    border: none;\n    padding: 0;\n    height: 28px;\n    margin: 0 2px;\n\n    input {\n      text-align: center;\n    }\n\n    &:hover:not(.disabled, .read-only) {\n      border: none;\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      border: none;\n      box-shadow: none;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
+var limit = function limit(val, min, max) {
+  var v = val;
+
+  if (typeof max === 'number') {
+    v = Math.min(v, max);
+  }
+
+  if (typeof min === 'number') {
+    v = Math.max(min, v);
+  }
+
+  return v;
+};
 /** 步进器 */
+
 
 var Stepper = function Stepper(props) {
   var className = props.className,
@@ -10643,25 +10657,15 @@ var Stepper = function Stepper(props) {
   var onAdd = React.useCallback(function () {
     setVal(function (v) {
       var n = Number(v) + step;
-
-      if (typeof max === 'number') {
-        return Math.min(n, max);
-      }
-
-      return n;
+      return limit(n, min, max);
     });
-  }, [step, max]);
+  }, [step, min, max]);
   var onMinus = React.useCallback(function () {
     setVal(function (v) {
       var n = Number(v) - step;
-
-      if (typeof min === 'number') {
-        return Math.max(min, n);
-      }
-
-      return n;
+      return limit(n, min, max);
     });
-  }, [step, min]);
+  }, [step, min, max]);
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(Number(val));
   }, [val]);
@@ -10686,8 +10690,11 @@ var Stepper = function Stepper(props) {
       var num = Number(v);
 
       if (num === num) {
-        setVal(v + ''); // v maybe ''
+        setVal(v); // v maybe ''
       }
+    },
+    onBlur: function onBlur() {
+      setVal(limit(Number(val), min, max));
     }
   })), /*#__PURE__*/React__default['default'].createElement(Button, {
     icon: /*#__PURE__*/React__default['default'].createElement(Icon, {

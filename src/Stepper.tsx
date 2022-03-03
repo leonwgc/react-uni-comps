@@ -67,6 +67,18 @@ const StyledWrap = styled.div`
 
 //#endregion
 
+const limit = (val: number, min, max) => {
+  let v = val;
+  if (typeof max === 'number') {
+    v = Math.min(v, max);
+  }
+  if (typeof min === 'number') {
+    v = Math.max(min, v);
+  }
+
+  return v;
+};
+
 /** 步进器 */
 const Stepper: React.FC<Props> = (props) => {
   const {
@@ -87,24 +99,16 @@ const Stepper: React.FC<Props> = (props) => {
   const onAdd = useCallback(() => {
     setVal((v) => {
       const n = Number(v) + step;
-      if (typeof max === 'number') {
-        return Math.min(n, max);
-      }
-      return n;
+      return limit(n, min, max);
     });
-  }, [step, max]);
+  }, [step, min, max]);
 
   const onMinus = useCallback(() => {
     setVal((v) => {
       const n = Number(v) - step;
-
-      if (typeof min === 'number') {
-        return Math.max(min, n);
-      }
-
-      return n;
+      return limit(n, min, max);
     });
-  }, [step, min]);
+  }, [step, min, max]);
 
   useUpdateEffect(() => {
     onChange?.(Number(val));
@@ -126,8 +130,11 @@ const Stepper: React.FC<Props> = (props) => {
         onChange={(v) => {
           const num = Number(v);
           if (num === num) {
-            setVal(v + ''); // v maybe ''
+            setVal(v); // v maybe ''
           }
+        }}
+        onBlur={() => {
+          setVal(limit(Number(val), min, max));
         }}
       />
       <Button icon={<Icon type="uc-icon-jia2" />} onClick={onAdd} disabled={disabled}></Button>
