@@ -10613,15 +10613,97 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$12 = ["content"];
+var _excluded$12 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange"];
 
 var _templateObject$_;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+//#region  style
+var StyledWrap$a = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  width: 110px;\n  display: inline-flex;\n  .uc-button {\n    flex: none;\n    width: 28px;\n    height: 28px;\n    padding: 0;\n    background-color: #f5f5f5;\n    border: none;\n    font-weight: normal;\n    ", "\n  }\n\n  .uc-input {\n    flex: 1;\n    background-color: #f5f5f5;\n    border: none;\n    padding: 0;\n    height: 28px;\n    margin: 0 2px;\n\n    input {\n      text-align: center;\n    }\n\n    &:hover:not(.disabled, .read-only) {\n      border: none;\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      border: none;\n      box-shadow: none;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+
+/** 步进器 */
+
+var Stepper = function Stepper(props) {
+  var className = props.className,
+      style = props.style,
+      _props$defaultValue = props.defaultValue,
+      defaultValue = _props$defaultValue === void 0 ? '0' : _props$defaultValue,
+      value = props.value,
+      _props$step = props.step,
+      step = _props$step === void 0 ? 1 : _props$step,
+      min = props.min,
+      max = props.max,
+      disabled = props.disabled,
+      onChange = props.onChange,
+      rest = _objectWithoutProperties(props, _excluded$12);
+
+  var _useState = React.useState(value || defaultValue),
+      _useState2 = _slicedToArray(_useState, 2),
+      val = _useState2[0],
+      setVal = _useState2[1];
+
+  var onAdd = React.useCallback(function () {
+    setVal(function (v) {
+      var n = Number(v) + step;
+
+      if (typeof max === 'number') {
+        return Math.min(n, max);
+      }
+
+      return n;
+    });
+  }, [step, max]);
+  var onMinus = React.useCallback(function () {
+    setVal(function (v) {
+      var n = Number(v) - step;
+
+      if (typeof min === 'number') {
+        return Math.max(min, n);
+      }
+
+      return n;
+    });
+  }, [step, min]);
+  useUpdateEffect(function () {
+    onChange === null || onChange === void 0 ? void 0 : onChange(Number(val));
+  }, [val]);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$a, _extends({}, rest, {
+    style: style,
+    className: clsx__default['default']('uc-stepper', className)
+  }), /*#__PURE__*/React__default['default'].createElement(Button, {
+    icon: /*#__PURE__*/React__default['default'].createElement(Icon, {
+      type: "uc-icon-jian2"
+    }),
+    onClick: onMinus,
+    disabled: disabled
+  }), /*#__PURE__*/React__default['default'].createElement(Input, _extends({}, rest, {
+    disabled: disabled,
+    value: val + '',
+    onChange: function onChange(v) {
+      var num = Number(v);
+
+      if (num === num) {
+        setVal(v + ''); // v maybe ''
+      }
+    }
+  })), /*#__PURE__*/React__default['default'].createElement(Button, {
+    icon: /*#__PURE__*/React__default['default'].createElement(Icon, {
+      type: "uc-icon-jia2"
+    }),
+    onClick: onAdd,
+    disabled: disabled
+  }));
+};
+
+Stepper.displayName = 'UC-Stepper';
+
+var _excluded$13 = ["content"];
+
+var _templateObject$$;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$12);
+      restProps = _objectWithoutProperties(_ref, _excluded$13);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -10741,7 +10823,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$13 = ["children", "label", "name"],
+var _excluded$14 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10752,7 +10834,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$13);
+      fieldProps = _objectWithoutProperties(props, _excluded$14);
 
   var required = false;
 
@@ -10967,6 +11049,7 @@ exports.Slide = Slide;
 exports.SortableList = SortableList;
 exports.Space = Space;
 exports.Spin = Spin;
+exports.Stepper = Stepper;
 exports.Steps = Steps;
 exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;

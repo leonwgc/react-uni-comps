@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Stepper',
+    component: lazy(() => import('./Stepper')),
+  },
+  {
     path: '/SortableList',
     component: lazy(() => import('./SortableList')),
   },
