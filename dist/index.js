@@ -10707,15 +10707,55 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$13 = ["content"];
+var _excluded$13 = ["className", "style", "cancelText"];
 
 var _templateObject$$;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+//#region  style
+var StyledWrap$b = styled__default['default'].div(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding-left: 14px;\n\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    font-size: 15px;\n    line-height: 18px;\n  }\n"]))); //#endregion
+
+/** 搜索框 */
+
+var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      style = props.style,
+      _props$cancelText = props.cancelText,
+      cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
+      inputProps = _objectWithoutProperties(props, _excluded$13);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      focused = _useState2[0],
+      setFocused = _useState2[1];
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$b, {
+    ref: ref,
+    style: style,
+    className: clsx__default['default']('uc-search-bar', className)
+  }, /*#__PURE__*/React__default['default'].createElement(Input, _extends({
+    prefix: /*#__PURE__*/React__default['default'].createElement(Icon, {
+      type: "uc-icon-sousuo"
+    })
+  }, inputProps)), focused && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "cancel-text",
+    style: {
+      marginLeft: 12
+    },
+    onClick: function onClick() {
+      setFocused(false);
+    }
+  }, cancelText));
+});
+SearchBar.displayName = 'UC-SearchBar';
+
+var _excluded$14 = ["content"];
+
+var _templateObject$10;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$10 || (_templateObject$10 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$13);
+      restProps = _objectWithoutProperties(_ref, _excluded$14);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -10835,7 +10875,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$14 = ["children", "label", "name"],
+var _excluded$15 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10846,7 +10886,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$14);
+      fieldProps = _objectWithoutProperties(props, _excluded$15);
 
   var required = false;
 
@@ -11053,6 +11093,7 @@ exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
 exports.ScrollToTop = ScrollToTop;
+exports.SearchBar = SearchBar;
 exports.SideBar = SideBar;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
