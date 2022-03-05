@@ -14,7 +14,7 @@ export default function App() {
           value={val}
           onChange={setVal}
           onCancel={() => {
-            Toast.show('canceled');
+            console.log('canceled');
           }}
           onSearch={(v) => Toast.show(v)}
         />
