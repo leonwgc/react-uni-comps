@@ -11,7 +11,7 @@ import {
 export const getContainingBlock = (
   node: Element,
   callback?: (node: Element | null) => unknown
-): (Node & ParentNode) | null => {
+): Node | null => {
   callback?.(node);
   let currentNode = getParentNode(node);
 
@@ -60,7 +60,7 @@ export const getTrueOffsetParent = (node: HTMLElement): Element | null => {
 export const getOffsetParent = (
   node: Element | HTMLElement,
   callback?: (node: Element | null) => unknown
-): Element | (Node & ParentNode) | (Window & typeof globalThis) | null => {
+): Element | Node | Window | null => {
   const window = getWindow(node);
 
   callback?.(node);
