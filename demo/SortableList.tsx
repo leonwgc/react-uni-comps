@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { SortableList, Button } from 'react-uni-comps';
+import { SortableList, Button, Toast } from 'react-uni-comps';
 
 const list = [
   { title: '1' },
@@ -17,13 +17,16 @@ const list = [
 export default function App() {
   return (
     <PageWrap>
-      <Block title="默认" padding={0}>
+      <Block title="拖动方块排序" padding={0}>
         <SortableList
           style={{ display: 'flex', flexWrap: 'wrap' }}
           dataList={list}
-          dataRender={(data) => <Button style={{ width: 120, height: 60 }}>{data.title}</Button>}
+          dataRender={(data) => (
+            <Button style={{ width: 120, height: 60, margin: 20 }}>{data.title}</Button>
+          )}
           onSort={(list) => {
             console.log(list.map((item) => item.title));
+            Toast.show(list.map((item) => item.title).join(','));
           }}
         ></SortableList>
       </Block>

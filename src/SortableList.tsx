@@ -70,7 +70,7 @@ const SortableList: React.FC<Props> = (props) => {
             ref.current.onSort?.(newList);
           },
         },
-      });
+      } as any);
     }
     return () => {
       st.destroy();

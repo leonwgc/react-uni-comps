@@ -10612,13 +10612,14 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$12 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange"];
+var _excluded$12 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 
 var _templateObject$_;
 //#region  style
 var StyledWrap$a = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  width: 110px;\n  display: inline-flex;\n  .uc-button {\n    flex: none;\n    width: 28px;\n    height: 28px;\n    padding: 0;\n    background-color: #f5f5f5;\n    border: none;\n    font-weight: normal;\n    ", "\n  }\n\n  .uc-input {\n    flex: 1;\n    background-color: #f5f5f5;\n    border: none;\n    padding: 0;\n    height: 28px;\n    margin: 0 2px;\n\n    input {\n      text-align: center;\n    }\n\n    &:hover:not(.disabled, .read-only) {\n      border: none;\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      border: none;\n      box-shadow: none;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 var limit = function limit(val, min, max) {
+  var digits = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
   var v = val;
 
   if (typeof max === 'number') {
@@ -10629,7 +10630,7 @@ var limit = function limit(val, min, max) {
     v = Math.max(min, v);
   }
 
-  return v;
+  return Number(v.toFixed(digits));
 };
 /** 步进器 */
 
@@ -10646,6 +10647,7 @@ var Stepper = function Stepper(props) {
       max = props.max,
       disabled = props.disabled,
       onChange = props.onChange,
+      digits = props.digits,
       rest = _objectWithoutProperties(props, _excluded$12);
 
   var _useState = React.useState(value || defaultValue),
@@ -10656,15 +10658,15 @@ var Stepper = function Stepper(props) {
   var onAdd = React.useCallback(function () {
     setVal(function (v) {
       var n = Number(v) + step;
-      return limit(n, min, max);
+      return limit(n, min, max, digits);
     });
-  }, [step, min, max]);
+  }, [step, min, max, digits]);
   var onMinus = React.useCallback(function () {
     setVal(function (v) {
       var n = Number(v) - step;
-      return limit(n, min, max);
+      return limit(n, min, max, digits);
     });
-  }, [step, min, max]);
+  }, [step, min, max, digits]);
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(Number(val));
   }, [val]);
@@ -10689,11 +10691,11 @@ var Stepper = function Stepper(props) {
       var num = Number(v);
 
       if (num === num) {
-        setVal(v); // v maybe ''
+        setVal(v);
       }
     },
     onBlur: function onBlur() {
-      setVal(limit(Number(val), min, max));
+      setVal(limit(Number(val), min, max, digits));
     }
   })), /*#__PURE__*/React__default['default'].createElement(Button, {
     icon: /*#__PURE__*/React__default['default'].createElement(Icon, {
