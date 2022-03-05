@@ -1,7 +1,6 @@
-import React, { useRef, useImperativeHandle, SyntheticEvent } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import { isTouch } from './dom';
 import { useSpring, animated, easings } from '@react-spring/web';
 
 type Props = {
@@ -10,18 +9,22 @@ type Props = {
   /** 波纹效果背景色,默认 #ccc */
   color?: string;
   children?: React.ReactNode;
-  /** 波纹起始缩放大小,默认0.2 */
+  /** 波纹起始缩放大小,默认0.3 */
   startScale?: number;
   /** 动画持续时间,默认300 */
   duration?: number;
-  onClick?: (e: SyntheticEvent) => void;
-};
+  /** 100% 宽度 */
+  block?: boolean;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledWrap = styled.div`
   overflow: hidden;
   position: relative;
-  display: inline-flex;
+  display: inline-block;
   cursor: pointer;
+  &.block {
+    display: block;
+  }
   .ripple-el {
     position: absolute;
     z-index: 0;
@@ -31,6 +34,11 @@ const StyledWrap = styled.div`
     left: 0;
     border-radius: 50%;
   }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
 /** 波纹效果,给子元素添加点击波纹效果 */
@@ -38,10 +46,10 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     className,
     color = '#ccc',
-    onClick,
     duration = 300,
-    startScale = 0.2,
+    startScale = 0.3,
     children,
+    block,
     ...rest
   } = props;
 
@@ -105,18 +113,22 @@ const Ripple = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     [api, startScale]
   );
 
-  const triggerProps = {
-    [isTouch ? 'onTouchStart' : 'onMouseDown']: (e) => {
-      start(e);
-      if (React.isValidElement(children)) {
-        children.props.onClick?.(e);
-      }
-    },
-    onClick: onClick, // keep the origin click
-  };
-
   return (
-    <StyledWrap {...rest} {...triggerProps} ref={elRef} className={clsx('uc-ripple', className)}>
+    <StyledWrap
+      {...rest}
+      onClick={(e) => {
+        start(e);
+        props.onClick?.(e);
+
+        if (React.isValidElement(children)) {
+          children.props.onClick?.(e);
+        }
+      }}
+      ref={elRef}
+      className={clsx('uc-ripple', className, {
+        block: block,
+      })}
+    >
       {children}
       <animated.div
         className="ripple-el"

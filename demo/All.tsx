@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Ripple
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Ripple')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> SearchBar
           </Space>
         }
@@ -244,15 +253,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PullupDom')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Ripple
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Ripple')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

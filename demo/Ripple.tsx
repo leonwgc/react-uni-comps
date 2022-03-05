@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Ripple, Button, Space } from 'react-uni-comps';
+import { Ripple, Button, Space, Toast } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -49,6 +49,24 @@ export default function App() {
             border: '1px solid #eee',
           }}
         ></Ripple>
+      </DemoBlock>
+
+      <DemoBlock title="other">
+        <Ripple block>
+          <div
+            style={{
+              height: 200,
+              border: '1px solid #ccc',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button onClick={() => Toast.show('hi')} type="primary">
+              hi there
+            </Button>
+          </div>
+        </Ripple>
       </DemoBlock>
     </PageWrap>
   );

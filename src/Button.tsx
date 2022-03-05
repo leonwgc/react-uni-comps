@@ -226,10 +226,14 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
         className
       )}
     >
-      <Space>
-        {icon}
-        {children}
-      </Space>
+      {icon && children ? (
+        <Space>
+          {icon}
+          {children}
+        </Space>
+      ) : (
+        children || icon
+      )}
     </StyledButton>
   );
 });

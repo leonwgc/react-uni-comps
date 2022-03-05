@@ -2326,7 +2326,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       anchor: rest.as === 'a',
       outlined: outlined || active
     }, className)
-  }), /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children));
+  }), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : children || icon);
 });
 Button.displayName = 'UC-Button';
 
@@ -9824,24 +9824,22 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 RollingNumber.displayName = 'UC-RollingNumber';
 
-var _excluded$Y = ["className", "color", "onClick", "duration", "startScale", "children"];
+var _excluded$Y = ["className", "color", "duration", "startScale", "children", "block"];
 
 var _templateObject$U;
-var StyledWrap$6 = styled__default['default'].div(_templateObject$U || (_templateObject$U = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-flex;\n  cursor: pointer;\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n  }\n"])));
+var StyledWrap$6 = styled__default['default'].div(_templateObject$U || (_templateObject$U = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n  display: inline-block;\n  cursor: pointer;\n  &.block {\n    display: block;\n  }\n  .ripple-el {\n    position: absolute;\n    z-index: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    border-radius: 50%;\n  }\n\n  > * {\n    position: relative;\n    z-index: 1;\n  }\n"])));
 /** 波纹效果,给子元素添加点击波纹效果 */
 
 var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _triggerProps;
-
   var className = props.className,
       _props$color = props.color,
       color = _props$color === void 0 ? '#ccc' : _props$color,
-      onClick = props.onClick,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 300 : _props$duration,
       _props$startScale = props.startScale,
-      startScale = _props$startScale === void 0 ? 0.2 : _props$startScale,
+      startScale = _props$startScale === void 0 ? 0.3 : _props$startScale,
       children = props.children,
+      block = props.block,
       rest = _objectWithoutProperties(props, _excluded$Y);
 
   var elRef = React.useRef(null);
@@ -9912,18 +9910,23 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       scale: 1
     });
   }, [api, startScale]);
-  var triggerProps = (_triggerProps = {}, _defineProperty(_triggerProps, isTouch ? 'onTouchStart' : 'onMouseDown', function (e) {
-    start(e);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
+    onClick: function onClick(e) {
+      var _props$onClick;
 
-    if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
-      var _children$props$onCli, _children$props;
+      start(e);
+      (_props$onClick = props.onClick) === null || _props$onClick === void 0 ? void 0 : _props$onClick.call(props, e);
 
-      (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props, e);
-    }
-  }), _defineProperty(_triggerProps, "onClick", onClick), _triggerProps);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, triggerProps, {
+      if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
+        var _children$props$onCli, _children$props;
+
+        (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props, e);
+      }
+    },
     ref: elRef,
-    className: clsx__default['default']('uc-ripple', className)
+    className: clsx__default['default']('uc-ripple', className, {
+      block: block
+    })
   }), children, /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     className: "ripple-el",
     style: _objectSpread2(_objectSpread2({}, styles), {}, {
