@@ -77,9 +77,7 @@ var SearchBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _onFocus === null || _onFocus === void 0 ? void 0 : _onFocus(e);
     },
     onChange: onChange,
-    onEnter: function onEnter(e) {
-      onSearch === null || onSearch === void 0 ? void 0 : onSearch(e.target.value);
-    }
+    onPressEnter: onSearch
   }, inputProps)), focused && cancelText && /*#__PURE__*/React.createElement("div", {
     className: "cancel-text",
     style: {

@@ -25,7 +25,12 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="无取消">
-        <SearchBar placeholder="请输入搜索内容" clearable cancelText="" />
+        <SearchBar
+          placeholder="请输入搜索内容"
+          clearable
+          cancelText=""
+          onSearch={(v) => Toast.show(v)}
+        />
       </DemoBlock>
     </PageWrap>
   );

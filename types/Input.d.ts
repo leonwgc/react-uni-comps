@@ -32,7 +32,7 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     /** 点击清除按钮后触发 */
     onClear?: () => void;
     /** Enter回调 */
-    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onPressEnter?: (v: string) => void;
 };
 declare type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
 /** 单行/多行输入框 input/textarea */
@@ -68,6 +68,6 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     /** 点击清除按钮后触发 */
     onClear?: () => void;
     /** Enter回调 */
-    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onPressEnter?: (v: string) => void;
 } & React.RefAttributes<RefType>>;
 export default Input;

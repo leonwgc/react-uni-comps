@@ -4823,7 +4823,7 @@ var SwipeAction = function SwipeAction(props) {
 
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onEnter"];
+var _excluded$y = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear"];
 
 var _templateObject$y;
 //#region  style
@@ -4846,7 +4846,6 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       ime = props.ime,
       clearable = props.clearable,
       onClear = props.onClear,
-      onEnter = props.onEnter,
       rest = _objectWithoutProperties(props, _excluded$y);
 
   var inputRef = React.useRef();
@@ -4906,8 +4905,8 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     onKeyDown: function onKeyDown(e) {
       var _props$onKeyDown;
 
-      if (typeof props.onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        props.onEnter(e);
+      if (typeof props.onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        props.onPressEnter(e.target.value);
       }
 
       (_props$onKeyDown = props.onKeyDown) === null || _props$onKeyDown === void 0 ? void 0 : _props$onKeyDown.call(props, e);
@@ -10744,9 +10743,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _onFocus === null || _onFocus === void 0 ? void 0 : _onFocus(e);
     },
     onChange: onChange,
-    onEnter: function onEnter(e) {
-      onSearch === null || onSearch === void 0 ? void 0 : onSearch(e.target.value);
-    }
+    onPressEnter: onSearch
   }, inputProps)), focused && cancelText && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "cancel-text",
     style: {

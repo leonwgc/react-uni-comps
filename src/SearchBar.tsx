@@ -83,9 +83,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           onFocus?.(e);
         }}
         onChange={onChange}
-        onEnter={(e: any) => {
-          onSearch?.(e.target.value);
-        }}
+        onPressEnter={onSearch}
         {...(inputProps as Props)}
       />
       {focused && cancelText && (
