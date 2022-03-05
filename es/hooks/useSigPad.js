@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import SignaturePad from '../sigpad';
+import SignaturePad from 'signature_pad';
 export function _dataURLToBlob(dataURL) {
   var parts = dataURL.split(';base64,');
   var contentType = parts[0].split(':')[1];

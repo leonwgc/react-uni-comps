@@ -12448,6 +12448,11 @@ signale@1.4.0:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
+signature_pad@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-4.0.2.tgz#282cfca71cad8e5b20f0dbdead4ed321292c6cdc"
+  integrity sha512-4jHtgCVvihLLPr0H4F0hB4eE9YOMcr/V9rFWwhPqzJ5qsBYhj7sg/B0yvcyM4HB+eWTKVoIep8Xh7gM/gKq+sA==
+
 simple-redux-store@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/simple-redux-store/-/simple-redux-store-1.0.2.tgz#dc66ac46ef3af094673aa74c649b9a497486128c"

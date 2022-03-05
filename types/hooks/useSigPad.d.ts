@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import SignaturePad from '../sigpad';
+import SignaturePad from 'signature_pad';
 export declare function _dataURLToBlob(dataURL: string): Blob;
 declare type ReturnType = {
     /** 下载签名图片 */

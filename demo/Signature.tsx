@@ -2,10 +2,9 @@ import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Signature, Button, Space } from 'react-uni-comps';
-import type { SigPadRef } from 'react-uni-comps/es/Signature';
 
 export default function App() {
-  const ref = useRef<SigPadRef>();
+  const ref = useRef<any>();
   const imgRef = useRef<HTMLImageElement>();
 
   return (

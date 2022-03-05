@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Signature/Landscape
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SignatureLandscape')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Signature
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Signature')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Ripple
           </Space>
         }
@@ -474,24 +492,6 @@ export default function All() {
         }
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Rate')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Signature/Landscape
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SignatureLandscape')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Signature
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Signature')}
       ></Cell>
 
       <Cell
