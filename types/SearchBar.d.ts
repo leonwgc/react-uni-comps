@@ -18,10 +18,12 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
-    /** Enter回调 */
-    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     /** 取消按钮的文案,默认 取消  */
     cancelText?: React.ReactNode;
+    /** 点击取消按钮时触发  */
+    onCancel?: () => void;
+    /** Enter回调 */
+    onSearch?: (v: string) => void;
 };
 /** 搜索框 */
 declare const SearchBar: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
@@ -42,9 +44,11 @@ declare const SearchBar: React.ForwardRefExoticComponent<Omit<React.InputHTMLAtt
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
-    /** Enter回调 */
-    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     /** 取消按钮的文案,默认 取消  */
     cancelText?: React.ReactNode;
+    /** 点击取消按钮时触发  */
+    onCancel?: () => void;
+    /** Enter回调 */
+    onSearch?: (v: string) => void;
 } & React.RefAttributes<HTMLDivElement>>;
 export default SearchBar;

@@ -10707,19 +10707,23 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$13 = ["className", "style", "cancelText"];
+var _excluded$13 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 
 var _templateObject$$;
 //#region  style
-var StyledWrap$b = styled__default['default'].div(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding-left: 14px;\n\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    font-size: 15px;\n    line-height: 18px;\n  }\n"]))); //#endregion
+var StyledWrap$b = styled__default['default'].div(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    &.mobile {\n      padding: 4px 12px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n  }\n"]))); //#endregion
 
 /** 搜索框 */
 
 var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       style = props.style,
+      onChange = props.onChange,
       _props$cancelText = props.cancelText,
       cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
+      _onFocus = props.onFocus,
+      onCancel = props.onCancel,
+      onSearch = props.onSearch,
       inputProps = _objectWithoutProperties(props, _excluded$13);
 
   var _useState = React.useState(false),
@@ -10734,14 +10738,24 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, /*#__PURE__*/React__default['default'].createElement(Input, _extends({
     prefix: /*#__PURE__*/React__default['default'].createElement(Icon, {
       type: "uc-icon-sousuo"
-    })
-  }, inputProps)), focused && /*#__PURE__*/React__default['default'].createElement("div", {
+    }),
+    onFocus: function onFocus(e) {
+      setFocused(true);
+      _onFocus === null || _onFocus === void 0 ? void 0 : _onFocus(e);
+    },
+    onChange: onChange,
+    onEnter: function onEnter(e) {
+      onSearch === null || onSearch === void 0 ? void 0 : onSearch(e.target.value);
+    }
+  }, inputProps)), focused && cancelText && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "cancel-text",
     style: {
       marginLeft: 12
     },
     onClick: function onClick() {
       setFocused(false);
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
+      onChange === null || onChange === void 0 ? void 0 : onChange('');
     }
   }, cancelText));
 });

@@ -127,6 +127,7 @@ yarn add react-uni-comps
 - Calendar (移动端日历)
 - IndexList (索引列表)
 - Stepper (步进器)
+- SearchBar (搜索框)
 
 ### 数据展示
 
