@@ -18,7 +18,7 @@ export { default as RadioGroup } from './RadioGroup';
 export { default as Radio } from './Radio';
 export { default as Button } from './Button';
 export { default as Switch } from './Switch';
-export { default as ErrorBoundary } from './ErrorBoudary';
+export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Divider } from './Divider';
 export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
