@@ -24,6 +24,8 @@ export type Props = {
   max?: number;
   /** 每次改变步数，可以为小数 */
   step?: number;
+  /** 小数位数，默认0 */
+  digits?: number;
 };
 
 //#region  style
@@ -67,7 +69,7 @@ const StyledWrap = styled.div`
 
 //#endregion
 
-const limit = (val: number, min, max) => {
+const limit = (val: number, min, max, digits = 0) => {
   let v = val;
   if (typeof max === 'number') {
     v = Math.min(v, max);
@@ -76,7 +78,7 @@ const limit = (val: number, min, max) => {
     v = Math.max(min, v);
   }
 
-  return v;
+  return Number(v.toFixed(digits));
 };
 
 /** 步进器 */
@@ -91,6 +93,7 @@ const Stepper: React.FC<Props> = (props) => {
     max,
     disabled,
     onChange,
+    digits,
     ...rest
   } = props;
 
@@ -99,16 +102,16 @@ const Stepper: React.FC<Props> = (props) => {
   const onAdd = useCallback(() => {
     setVal((v) => {
       const n = Number(v) + step;
-      return limit(n, min, max);
+      return limit(n, min, max, digits);
     });
-  }, [step, min, max]);
+  }, [step, min, max, digits]);
 
   const onMinus = useCallback(() => {
     setVal((v) => {
       const n = Number(v) - step;
-      return limit(n, min, max);
+      return limit(n, min, max, digits);
     });
-  }, [step, min, max]);
+  }, [step, min, max, digits]);
 
   useUpdateEffect(() => {
     onChange?.(Number(val));
@@ -130,11 +133,11 @@ const Stepper: React.FC<Props> = (props) => {
         onChange={(v) => {
           const num = Number(v);
           if (num === num) {
-            setVal(v); // v maybe ''
+            setVal(v);
           }
         }}
         onBlur={() => {
-          setVal(limit(Number(val), min, max));
+          setVal(limit(Number(val), min, max, digits));
         }}
       />
       <Button icon={<Icon type="uc-icon-jia2" />} onClick={onAdd} disabled={disabled}></Button>

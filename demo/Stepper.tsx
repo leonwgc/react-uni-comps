@@ -11,18 +11,22 @@ export default function App() {
         <Stepper onChange={console.log} />
       </Block>
 
+      <Block title="一位小数">
+        <Stepper step={0.1} digits={1} onChange={console.log} />
+      </Block>
+
+      <Block title="禁用">
+        <Stepper disabled />
+      </Block>
       <Block title="默认值">
         <Stepper defaultValue={10} onChange={console.log} />
       </Block>
-
       <Block title="指定步长">
         <Stepper step={2} onChange={console.log} />
       </Block>
-
-      <Block title="最大最小值">
+      <Block title="最大最小值 2-16">
         <Stepper step={2} defaultValue={10} min={2} max={16} onChange={console.log} />
       </Block>
-
       <Block title="受控">
         <Space>
           <Stepper value={v} onChange={setV} /> {v}

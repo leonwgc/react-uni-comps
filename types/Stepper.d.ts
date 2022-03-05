@@ -16,6 +16,8 @@ export declare type Props = {
     max?: number;
     /** 每次改变步数，可以为小数 */
     step?: number;
+    /** 小数位数，默认0 */
+    digits?: number;
 };
 /** 步进器 */
 declare const Stepper: React.FC<Props>;
