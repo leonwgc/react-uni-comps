@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle } from 'react';
-import { Placement } from './popovers/types';
+import type { Placement } from './Popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import PopMenu, { PopMenuRefType } from './PopMenu';
@@ -74,7 +74,7 @@ export type Props = {
   /** 点击外部区域是否关闭*/
   closeOnClickOutside?: boolean;
   /** 展开动画, 默认true */
-  animated?: boolean;
+  animate?: boolean;
   style?: React.CSSProperties;
 };
 

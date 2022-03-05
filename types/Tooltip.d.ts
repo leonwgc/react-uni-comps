@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placement } from './popovers/types';
+import type { Placement } from './Popover';
 declare type Offset = {
     x?: number;
     y?: number;
@@ -21,7 +21,7 @@ export declare type Props = {
     /** visible状态变化回调 */
     onVisibleChange?: (visible: boolean) => void;
     /** 展开动画, 默认true */
-    animated?: boolean;
+    animate?: boolean;
 };
 /** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {

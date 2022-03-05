@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placement } from './popovers/types';
+import type { Placement } from './Popover';
 import { PopMenuRefType } from './PopMenu';
 declare type Offset = {
     x?: number;
@@ -39,7 +39,7 @@ export declare type Props = {
     /** 点击外部区域是否关闭*/
     closeOnClickOutside?: boolean;
     /** 展开动画, 默认true */
-    animated?: boolean;
+    animate?: boolean;
     style?: React.CSSProperties;
 };
 /**

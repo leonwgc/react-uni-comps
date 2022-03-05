@@ -68,7 +68,7 @@ export default function App() {
           arrow={true}
           onVisibleChange={setV}
           placement={placement}
-          animated={animated}
+          animate={animated}
           trigger="hover"
           content={
             <div className="list">

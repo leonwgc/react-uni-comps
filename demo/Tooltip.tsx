@@ -16,17 +16,17 @@ const StyledToolTip = styled(Tooltip)`
 `;
 
 export default function App() {
-  const [animated, setAnimated] = useState(true);
+  const [animate, setAnimate] = useState(true);
   return (
     <PageWrap>
       <Cell
         title="动画效果"
-        content={<Switch checked={animated} onChange={(a) => setAnimated(a)}></Switch>}
+        content={<Switch checked={animate} onChange={(a) => setAnimate(a)}></Switch>}
       ></Cell>
       <DemoBlock title="不同位置">
         <Space size={16}>
           <Tooltip
-            animated={animated}
+            animate={animate}
             offset={{ x: -10, y: 15 }}
             arrow={false}
             placement="right"
@@ -35,12 +35,12 @@ export default function App() {
             <Button>右侧</Button>
           </Tooltip>
 
-          <Tooltip title="默认上侧" animated={animated}>
+          <Tooltip title="默认上侧" animate={animate}>
             <Button>默认</Button>
           </Tooltip>
 
           <StyledToolTip
-            animated={animated}
+            animate={animate}
             placement="bottom-right"
             title="自定义样式"
             onVisibleChange={(v) => {

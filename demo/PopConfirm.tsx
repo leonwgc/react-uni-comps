@@ -5,18 +5,18 @@ import { Button, Toast, Icon, PopConfirm, Cell, Switch } from 'react-uni-comps';
 
 export default function App() {
   const ref = useRef();
-  const [animated, setAnimated] = useState(true);
+  const [animate, setAnimate] = useState(true);
 
   return (
     <PageWrap>
       <Cell
         title="动画效果"
-        content={<Switch checked={animated} onChange={(c) => setAnimated(c)}></Switch>}
+        content={<Switch checked={animate} onChange={(c) => setAnimate(c)}></Switch>}
       ></Cell>
       <DemoBlock title="默认">
         <PopConfirm
           placement="bottom-left"
-          animated={animated}
+          animate={animate}
           title="确定发布此页面?"
           style={{ width: 300 }}
           onOk={() => {
@@ -29,7 +29,7 @@ export default function App() {
 
       <DemoBlock title="自定义样式">
         <PopConfirm
-          animated={animated}
+          animate={animate}
           ref={ref}
           placement="right"
           icon={<Icon type="uc-icon-yiwen" />}

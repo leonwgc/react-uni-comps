@@ -20,6 +20,42 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> PopConfirm
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PopConfirm')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Tooltip
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Tooltip')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> PopMenu
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PopMenu')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Popover
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Popover')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Signature/Landscape
           </Space>
         }
@@ -188,7 +224,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PickerView')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -216,7 +251,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SwipeAction')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -271,7 +305,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PullupDom')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -326,7 +359,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('QRCode')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -336,24 +368,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('WaitLoading')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> PopConfirm
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PopConfirm')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> PopMenu
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PopMenu')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
@@ -372,7 +387,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Drawer')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -409,7 +423,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Notify')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -446,7 +459,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('CheckboxGroup')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -465,7 +477,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ProgressCircle')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -493,7 +504,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Rate')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -503,7 +513,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Steps')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -513,7 +522,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('HairLineBox')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -523,7 +531,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('NumberKeyboard')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -533,7 +540,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('TransitionElement')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -543,7 +549,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('AnimationElement')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -553,7 +558,6 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('LazyLoadElement')}
       ></Cell>
-
       <Cell
         label={
           <Space>
@@ -629,15 +633,6 @@ export default function All() {
       <Cell
         label={
           <Space>
-            <IconComponent /> Popover
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Popover')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
             <IconComponent /> Drag
           </Space>
         }
@@ -661,15 +656,6 @@ export default function All() {
         }
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Text')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Tooltip
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Tooltip')}
       ></Cell>
       <Cell
         label={
