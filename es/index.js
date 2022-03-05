@@ -18,7 +18,7 @@ export { default as RadioGroup } from './RadioGroup';
 export { default as Radio } from './Radio';
 export { default as Button } from './Button';
 export { default as Switch } from './Switch';
-export { default as ErrorBoundary } from './ErrorBoudary';
+export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Divider } from './Divider';
 export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
@@ -76,6 +76,7 @@ export { default as Empty } from './Empty';
 export { default as SideBar } from './SideBar';
 export { default as SortableList } from './SortableList';
 export { default as Stepper } from './Stepper';
+export { default as SearchBar } from './SearchBar';
 /** only has static method */
 
 export { default as Loading } from './Loading';

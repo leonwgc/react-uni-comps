@@ -42,7 +42,7 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt
     /** 点击清除按钮后触发 */
     onClear?: () => void;
     /** Enter回调 */
-    onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onPressEnter?: (v: string) => void;
   };
 
 //#region  style
@@ -147,7 +147,6 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     ime,
     clearable,
     onClear,
-    onEnter,
     ...rest
   } = props;
 
@@ -197,9 +196,9 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     ref: inputRef,
     readOnly,
     disabled,
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (typeof props.onEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        props.onEnter(e);
+    onKeyDown: (e) => {
+      if (typeof props.onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        props.onPressEnter(e.target.value);
       }
       props.onKeyDown?.(e);
     },

@@ -234,6 +234,10 @@ module.exports = [
         name: 'Stepper',
         title: 'Stepper 步进器',
       },
+      {
+        name: 'SearchBar',
+        title: 'SearchBar 搜索框',
+      },
     ],
   },
 
