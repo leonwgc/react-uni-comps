@@ -8119,7 +8119,7 @@ var _excluded$12 = ["className", "style", "onChange", "cancelText", "onFocus", "
 
 var _templateObject$_;
 //#region  style
-var StyledWrap$b = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    &.mobile {\n      padding: 4px 12px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n  }\n"]))); //#endregion
+var StyledWrap$b = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    &.mobile {\n      padding: 4px 12px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n  }\n"]))); //#endregion
 
 /** 搜索框 */
 
