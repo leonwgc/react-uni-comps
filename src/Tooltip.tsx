@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import Popover from './Popover';
-import type { Placement } from './Popover';
+import Popover from 'w-popover';
+import type { Placement } from 'w-popover';
 import clsx from 'clsx';
 
 const StylePopover = styled(Popover)`

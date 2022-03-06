@@ -24,7 +24,6 @@ export { default as FileInputTrigger } from './FileInputTrigger';
 export { default as Waypoint } from './Waypoint';
 export { default as IndexList } from './IndexList';
 export { default as ScrollToTop } from './ScrollToTop';
-export { default as Popover } from './Popover';
 export { default as Tooltip } from './Tooltip';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as Drag } from './Drag';
@@ -107,6 +106,7 @@ export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
 export { nanoid } from 'nanoid';
 export { useSpring, animated, easings } from '@react-spring/web';
+export { default as Popover } from 'w-popover';
 
 /** form */
 export { default as Form } from './Form';

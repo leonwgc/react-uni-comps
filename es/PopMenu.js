@@ -40,7 +40,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
-import Popover from './Popover';
+import Popover from 'w-popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { boxShadow } from './vars';

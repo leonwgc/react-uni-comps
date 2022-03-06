@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Placement } from './Popover';
+import type { Placement } from 'w-popover';
 import { PopMenuRefType } from './PopMenu';
 declare type Offset = {
     x?: number;

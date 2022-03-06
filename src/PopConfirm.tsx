@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle } from 'react';
-import type { Placement } from './Popover';
+import type { Placement } from 'w-popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import PopMenu, { PopMenuRefType } from './PopMenu';

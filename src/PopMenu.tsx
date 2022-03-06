@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, SyntheticEvent, useImperativeHandle } from 'react';
-import Popover from './Popover';
-import type { Placement } from './Popover';
+import Popover from 'w-popover';
+import type { Placement } from 'w-popover';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { boxShadow } from './vars';

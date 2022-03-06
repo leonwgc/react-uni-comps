@@ -41,7 +41,7 @@ var __rest = this && this.__rest || function (s, e) {
 
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import Popover from './Popover';
+import Popover from 'w-popover';
 import clsx from 'clsx';
 var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"], ["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"])));
 /** 文字提示气泡框, 基于Popover */
