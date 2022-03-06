@@ -55,6 +55,7 @@ const StyledWrap = styled.div`
     flex: none;
     display: inline-block;
     margin-left: 12px;
+    cursor: pointer;
   }
 `;
 //#endregion
