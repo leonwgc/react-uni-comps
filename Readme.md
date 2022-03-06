@@ -1,4 +1,4 @@
-桌面和移动端 react 组件库
+桌面和移动端react库
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
@@ -9,58 +9,15 @@ yarn add react-uni-comps
 
 ### 特点
 
-1. 体积小,组件按需加载
-2. 同时支持桌面和移动端，同一套组件，一致的开发体验
-3. 完全使用 hooks 实现, 拥抱 react 未来
-4. 样式采用 css-in-js 方案 (styled-components)
-5. 只提供最基础的框架样式,方便二次开发/定制自己的组件风格
-6. 使用 TypeScript 编写，内置 TypeScript 类型定义文件，良好的智能提示
-7. 可以和桌面端组件库如 antd，移动端 antd-mobile/zarm 搭配使用，按需加载用到什么才加载什么，无需配置
-8. 重新导出了依赖库供开发者使用，比如 clsx,react-transition-group,styled-components 等
-9. 导出了组件库内部实现的一些工具函数/hooks 函数等，比如 debounce, throttle,usePrevious, useInViewport
-
-### 适用场景
-
-1. 需要支持 pc/h5 动态切换主题色，pc 组件库如 antd 不支持 js 动态切换主题，本库采用 styled-components 定义样式，可以使用导出的 ThemeProvider 动态设置主题色
-
-```js
-<ThemeProvider color="#409eff">
-  <App />
-</ThemeProvider>
-```
-
-2. 需要完全定制组件样式。本库只提供最基础的样式，组件最终的样子需要自己实现，例如 modal 弹窗组件
-
-```js
-<Modal
-  visible={visible}
-  closable
-  style={{ width: 600, height: 300 }}
-  onClose={onClose}
-  header={<h3>头部</h3>} //不定义则没有
-  footer={
-    //不定义则没有
-    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Space>
-        <Button type="primary" onClick={onClose}>
-          保存
-        </Button>
-        <Button onClick={onClose}>取消</Button>
-      </Space>
-    </div>
-  }
->
-  <div>body 区域</div>
-</Modal>
-```
-
-3. 不想使用 css/less/sass，偏向 css-in-js 技术的开发者
-
-4. pc 和 h5 同一套组件库，同一套技术方案，一致的开发体验
-
-5. 当前使用的组件库不包含某些组件或者某些组件很难使用，本库包含的/易用的，
-
-### 注意点
+1. 组件丰富，体积小，自动按需加载
+2. 同时支持桌面和移动端，一套组件，一致的开发体验
+3. 纯react-hooks实现, 拥抱react未来
+4. 样式采用css-in-js方案
+5. 只提供基础样式,方便二次开发/组件定制、扩展
+6. 使用ts编写，内置类型定义，良好的开发智能提示
+7. 可以和antd,antd-mobile, zarm 等搭配、替换使用
+8. 除了组件，同时导出了依赖组件/库/自定义hooks等，方便基于同一套技术栈开发/扩展组件
+9. 多个pc/h5生产项目正在使用
 
 ## 组件列表
 
