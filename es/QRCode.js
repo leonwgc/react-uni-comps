@@ -30,7 +30,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
-import QRCodeMaker from './tp/QRCode';
+import WQRCode from 'w-qrcode';
 /** 二维码 */
 
 var QRCode = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -51,13 +51,13 @@ var QRCode = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return domRef.current;
   });
   useLayoutEffect(function () {
-    qrRef.current = new QRCodeMaker(domRef.current, {
+    qrRef.current = new WQRCode(domRef.current, {
       text: text,
       width: size,
       height: size,
       colorDark: colorDark,
       colorLight: colorLight,
-      correctLevel: QRCodeMaker.CorrectLevel.H
+      correctLevel: WQRCode.CorrectLevel.H
     }); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useUpdateLayoutEffect(function () {
