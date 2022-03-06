@@ -100,6 +100,7 @@
     "sortablejs": "^1.14.0",
     "styled-components": "^5.3.3",
     "w-popover": "1.0.1",
+    "w-qrcode": "1.0.0",
     "w-touch": "1.0.2"
   },
   "sideEffects": [

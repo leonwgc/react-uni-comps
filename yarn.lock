@@ -14008,6 +14008,11 @@ w-popover@1.0.1:
   resolved "https://registry.yarnpkg.com/w-popover/-/w-popover-1.0.1.tgz#3e8fe2af79633c9939764c223d2e24cf32e72691"
   integrity sha512-9kfkyPZ0hAy6ZlPXW2+ZQGZOXRsDjPhath87z2l60uNVABfHruJaeu66HGhX1Xk/GBffqr1LbK+U7ws0bUOXOQ==
 
+w-qrcode@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/w-qrcode/-/w-qrcode-1.0.0.tgz#5e5fa9990d36400dc547e74994e4d29c7f4127f1"
+  integrity sha512-G9y9meJzcAbFfqO8XSj24FBrquq/ngpBbHtVHDVr9cxVdLV/J9nLdcwQzt5gTAtXvfWxEBqS1pz2WDGdF0wUGg==
+
 w-touch@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/w-touch/-/w-touch-1.0.2.tgz#f9f15c6bf56918647ecab69aa64b902a46360bd8"

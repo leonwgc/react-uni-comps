@@ -1,7 +1,7 @@
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
-import QRCodeMaker from './tp/QRCode';
+import WQRCode from 'w-qrcode';
 
 type Props = {
   /** 生成二维码文本 */
@@ -39,13 +39,13 @@ const QRCode = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useImperativeHandle(ref, () => domRef.current);
 
   useLayoutEffect(() => {
-    qrRef.current = new QRCodeMaker(domRef.current, {
+    qrRef.current = new WQRCode(domRef.current, {
       text: text,
       width: size,
       height: size,
       colorDark: colorDark,
       colorLight: colorLight,
-      correctLevel: QRCodeMaker.CorrectLevel.H,
+      correctLevel: WQRCode.CorrectLevel.H,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
