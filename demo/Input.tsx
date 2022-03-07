@@ -77,7 +77,7 @@ export default function App() {
           </Cell>
 
           <Cell label="按下Enter">
-            <Input onEnter={(e) => console.log(e.target.value)} />
+            <Input onPressEnter={console.log} />
           </Cell>
 
           <Cell label="只读">

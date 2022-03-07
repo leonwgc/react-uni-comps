@@ -67,7 +67,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ime = props.ime,
       clearable = props.clearable,
       onClear = props.onClear,
-      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear"]);
+      onPressEnter = props.onPressEnter,
+      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onPressEnter"]);
 
   var inputRef = useRef();
   var isImeModeRef = useRef(false);
@@ -124,8 +125,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onKeyDown: function onKeyDown(e) {
       var _a;
 
-      if (typeof props.onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        props.onPressEnter(e.target.value);
+      if (typeof onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        onPressEnter === null || onPressEnter === void 0 ? void 0 : onPressEnter(e.target.value);
       }
 
       (_a = props.onKeyDown) === null || _a === void 0 ? void 0 : _a.call(props, e);

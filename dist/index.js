@@ -4325,7 +4325,7 @@ var SwipeAction = function SwipeAction(props) {
 
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$x = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear"];
+var _excluded$x = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onPressEnter"];
 
 var _templateObject$x;
 //#region  style
@@ -4348,6 +4348,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       ime = props.ime,
       clearable = props.clearable,
       onClear = props.onClear,
+      onPressEnter = props.onPressEnter,
       rest = _objectWithoutProperties(props, _excluded$x);
 
   var inputRef = React.useRef();
@@ -4407,8 +4408,8 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     onKeyDown: function onKeyDown(e) {
       var _props$onKeyDown;
 
-      if (typeof props.onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        props.onPressEnter(e.target.value);
+      if (typeof onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        onPressEnter === null || onPressEnter === void 0 ? void 0 : onPressEnter(e.target.value);
       }
 
       (_props$onKeyDown = props.onKeyDown) === null || _props$onKeyDown === void 0 ? void 0 : _props$onKeyDown.call(props, e);

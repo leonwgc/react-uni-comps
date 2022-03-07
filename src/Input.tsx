@@ -147,6 +147,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     ime,
     clearable,
     onClear,
+    onPressEnter,
     ...rest
   } = props;
 
@@ -197,8 +198,8 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     readOnly,
     disabled,
     onKeyDown: (e) => {
-      if (typeof props.onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
-        props.onPressEnter(e.target.value);
+      if (typeof onPressEnter === 'function' && (e.code === 'Enter' || e.which === 13)) {
+        onPressEnter?.(e.target.value);
       }
       props.onKeyDown?.(e);
     },
