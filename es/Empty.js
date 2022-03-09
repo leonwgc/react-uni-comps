@@ -42,7 +42,7 @@ var __rest = this && this.__rest || function (s, e) {
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
 var img = /*#__PURE__*/React.createElement("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 64 41"

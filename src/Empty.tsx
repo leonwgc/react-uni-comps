@@ -20,6 +20,10 @@ const StyledWrap = styled.div`
 
   .img {
     width: 64px;
+
+    img {
+      max-width: 100%;
+    }
   }
   .desc {
     color: #ccc;

@@ -7819,7 +7819,7 @@ Pagination.displayName = 'UC-Pagination';
 var _excluded$_ = ["image", "description", "className"];
 
 var _templateObject$W;
-var StyledWrap$9 = styled__default['default'].div(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
+var StyledWrap$9 = styled__default['default'].div(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
 var img = /*#__PURE__*/React__default['default'].createElement("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 64 41"
