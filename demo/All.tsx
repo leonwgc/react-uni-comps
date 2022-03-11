@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> InputNumber
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('InputNumber')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> PopConfirm
           </Space>
         }
