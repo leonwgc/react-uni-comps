@@ -8168,7 +8168,71 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 SearchBar.displayName = 'UC-SearchBar';
 
-var _excluded$13 = ["content"];
+var _excluded$13 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
+
+//#region  style
+//#endregion
+var limit$1 = function limit(val, min, max) {
+  var digits = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  var v = val;
+
+  if (typeof max === 'number') {
+    v = Math.min(v, max);
+  }
+
+  if (typeof min === 'number') {
+    v = Math.max(min, v);
+  }
+
+  return v.toFixed(digits);
+};
+/** 数字输入框 */
+
+
+var InputNumber = function InputNumber(props) {
+  var className = props.className,
+      _props$defaultValue = props.defaultValue,
+      defaultValue = _props$defaultValue === void 0 ? '' : _props$defaultValue,
+      value = props.value,
+      min = props.min,
+      max = props.max,
+      onChange = props.onChange,
+      digits = props.digits,
+      rest = _objectWithoutProperties(props, _excluded$13);
+
+  var _useState = React.useState(value || defaultValue),
+      _useState2 = _slicedToArray(_useState, 2),
+      val = _useState2[0],
+      setVal = _useState2[1];
+
+  useUpdateEffect(function () {
+    onChange === null || onChange === void 0 ? void 0 : onChange(val);
+  }, [val]);
+  useUpdateEffect(function () {
+    if (value != val) {
+      setVal(value);
+    }
+  }, [value]);
+  return /*#__PURE__*/React__default['default'].createElement(Input, _extends({
+    className: clsx__default['default']('uc-input-number', className)
+  }, rest, {
+    value: String(val),
+    onChange: function onChange(v) {
+      var num = Number(v);
+
+      if (num === num) {
+        setVal(v);
+      }
+    },
+    onBlur: function onBlur() {
+      setVal(limit$1(Number(val), min, max, digits));
+    }
+  }));
+};
+
+InputNumber.displayName = 'UC-InputNumber';
+
+var _excluded$14 = ["content"];
 
 var _templateObject$$;
 var StyledLoading = styled__default['default'](Toast)(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
@@ -8176,7 +8240,7 @@ var StyledLoading = styled__default['default'](Toast)(_templateObject$$ || (_tem
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$13);
+      restProps = _objectWithoutProperties(_ref, _excluded$14);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -8296,7 +8360,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$14 = ["children", "label", "name"],
+var _excluded$15 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8307,7 +8371,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$14);
+      fieldProps = _objectWithoutProperties(props, _excluded$15);
 
   var required = false;
 
@@ -8490,6 +8554,7 @@ exports.IconArrow = IconArrow;
 exports.ImageViewer = ImageViewer;
 exports.IndexList = IndexList;
 exports.Input = Input;
+exports.InputNumber = InputNumber;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Loading = Loading;
