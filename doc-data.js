@@ -238,6 +238,10 @@ module.exports = [
         name: 'SearchBar',
         title: 'SearchBar 搜索框',
       },
+      {
+        name: 'InputNumber',
+        title: 'InputNumber 数字输入框',
+      },
     ],
   },
 

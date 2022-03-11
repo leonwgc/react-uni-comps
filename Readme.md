@@ -84,6 +84,7 @@ yarn add react-uni-comps
 - IndexList (索引列表)
 - Stepper (步进器)
 - SearchBar (搜索框)
+- InputNumber (数字输入框)
 
 ### 数据展示
 
