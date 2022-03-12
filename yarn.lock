@@ -9414,10 +9414,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packx@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/packx/-/packx-1.1.3.tgz#cb58b2f0255453145cd0c794a226fb3417c645c1"
-  integrity sha512-cIsaRxIIi8iBS695JOA6B9ud9F384i95/LJ67IhqxUIiu+82cw+RwBtjIV5XXHwOs04FGOmPBPVteCtWHqi3Pw==
+packw@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/packw/-/packw-1.0.1.tgz#4468582fade91a323b0855c3c1de43b71cec53c7"
+  integrity sha512-8lyuxjfJukwL16ArnHbQLzIynTj/43kMZZKurla3lcO3dz+pHWgUkVgcQnrDT4IAv0HShqwPoBRpYbtRFmAZ2w==
   dependencies:
     "@babel/cli" "^7.17.6"
     "@babel/core" "^7.17.5"

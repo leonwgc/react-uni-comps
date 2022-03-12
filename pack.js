@@ -1,4 +1,4 @@
-const { default: pack } = require('packx');
+const { default: pack } = require('packw');
 const path = require('path');
 
 pack(true, {
