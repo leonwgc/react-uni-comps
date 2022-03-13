@@ -779,7 +779,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
   }), /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-    "in": visible,
+    in: visible,
     timeout: duration,
     unmountOnExit: unmountOnExit
   }, function (status) {
@@ -1045,7 +1045,7 @@ var unobserve = function unobserve(el) {
     var _intersectionObserver3, _intersectionObserver4;
 
     (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
-    handlers["delete"](el);
+    handlers.delete(el);
   }
 };
 
@@ -1123,7 +1123,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-      "in": isInViewport,
+      in: isInViewport,
       timeout: duration
     }, function (state) {
       var _children$props, _children$props2;
@@ -1523,7 +1523,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
-      })["catch"](function () {
+      }).catch(function () {
         setLoading(false);
       });
     }
@@ -2650,12 +2650,10 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
     }
 
     _this = _super.call.apply(_super, [this].concat(args));
-
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _this.state = {
       hasError: false,
       error: null
-    });
-
+    };
     return _this;
   }
 
@@ -4558,7 +4556,7 @@ var Wheel = function Wheel(props) {
   var _useSpring = web.useSpring(function () {
     return {
       y: 105,
-      config: web.config["default"]
+      config: web.config.default
     };
   }),
       _useSpring2 = _slicedToArray(_useSpring, 2),
@@ -5261,8 +5259,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       readonly = props.readonly,
       _props$count = props.count,
       count = _props$count === void 0 ? 5 : _props$count,
-      _props$char = props["char"],
-      _char = _props$char === void 0 ? defaultChar : _props$char,
+      _props$char = props.char,
+      char = _props$char === void 0 ? defaultChar : _props$char,
       onChange = props.onChange,
       className = props.className,
       _props$allowClear = props.allowClear,
@@ -5302,8 +5300,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
           setVal(v);
         }
       }
-    }, _char);
-  }, [allowClear, _char, readonly]);
+    }, char);
+  }, [allowClear, char, readonly]);
   return /*#__PURE__*/React__default['default'].createElement(StyledRate, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className)
