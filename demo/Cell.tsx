@@ -45,9 +45,8 @@ export default function App() {
         <Cell label="Cell label" content="Content"></Cell>
         <Cell
           label="Cell label"
-          lineColor="transparent"
-          description="Description"
-          content="Content"
+          lineColor="red"
+          description="最终正式稳定版会在macOS 11.0发布后才会发布，到时候会加入对Intel的支持。另外，甚至在苹果手机里也能运行！！不过苹果手机速度只能达到N年前的显卡的水平"
         ></Cell>
       </DemoBlock>
 

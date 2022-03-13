@@ -54,7 +54,6 @@ const StyledCell = styled.div`
 
     .cell-label {
       box-sizing: border-box;
-      margin-right: 12px;
       text-align: left;
       flex: 1;
 
@@ -119,6 +118,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const hasInput = !!children;
   const hasLabel = label || title;
+  const hasContent = content || children;
 
   return (
     <StyledCell
@@ -137,10 +137,12 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               {description && <div className="description">{description}</div>}
             </div>
           )}
-          <div className={clsx('cell-content', { input: hasInput })}>
-            {content}
-            {children}
-          </div>
+          {hasContent && (
+            <div className={clsx('cell-content', { input: hasInput })}>
+              {content}
+              {children}
+            </div>
+          )}
         </div>
       </HairLineBox>
     </StyledCell>
