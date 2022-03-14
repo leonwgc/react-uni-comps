@@ -71,13 +71,22 @@ const InputNumber: React.FC<Props> = (props) => {
       {...rest}
       value={String(val)}
       onChange={(v) => {
-        const num = Number(v);
-        if (num === num) {
-          setVal(v);
+        const tv = v.trim();
+        const num = Number(tv);
+        if (num === num || tv === '-') {
+          setVal(tv);
         }
       }}
       onBlur={() => {
-        setVal(limit(Number(val), min, max, digits));
+        const tv = String(val).trim();
+        if (tv.length > 0) {
+          const num = Number(tv);
+          if (num === num) {
+            setVal(limit(Number(val), min, max, digits));
+          } else {
+            setVal('');
+          }
+        }
       }}
     />
   );
