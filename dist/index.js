@@ -8217,14 +8217,25 @@ var InputNumber = function InputNumber(props) {
   }, rest, {
     value: String(val),
     onChange: function onChange(v) {
-      var num = Number(v);
+      var tv = v.trim();
+      var num = Number(tv);
 
-      if (num === num) {
-        setVal(v);
+      if (num === num || tv === '-') {
+        setVal(tv);
       }
     },
     onBlur: function onBlur() {
-      setVal(limit$1(Number(val), min, max, digits));
+      var tv = String(val).trim();
+
+      if (tv.length > 0) {
+        var num = Number(tv);
+
+        if (num === num) {
+          setVal(limit$1(Number(val), min, max, digits));
+        } else {
+          setVal('');
+        }
+      }
     }
   }));
 };
