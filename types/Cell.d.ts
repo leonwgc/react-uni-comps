@@ -5,8 +5,6 @@ export declare type Props = {
     title?: React.ReactNode;
     /** 标题 */
     label?: React.ReactNode;
-    /** 标题宽度*/
-    labelWidth?: number;
     /** 标题下方描述 */
     description?: React.ReactNode;
     /** 右侧内容 */
@@ -16,7 +14,7 @@ export declare type Props = {
     className?: string;
     style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
-    children?: React.ReactNode | React.ReactNode[];
+    children?: React.ReactNode;
 } & HTMLAttributes<HTMLDivElement>;
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<{
@@ -25,8 +23,6 @@ declare const Cell: React.ForwardRefExoticComponent<{
     title?: React.ReactNode;
     /** 标题 */
     label?: React.ReactNode;
-    /** 标题宽度*/
-    labelWidth?: number;
     /** 标题下方描述 */
     description?: React.ReactNode;
     /** 右侧内容 */
@@ -36,6 +32,6 @@ declare const Cell: React.ForwardRefExoticComponent<{
     className?: string;
     style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
-    children?: React.ReactNode | React.ReactNode[];
+    children?: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

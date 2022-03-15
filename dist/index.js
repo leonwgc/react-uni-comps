@@ -2097,7 +2097,7 @@ var Tabs$1 = attachPropertiesToComponent(Tabs, {
   Tab: Tab
 });
 
-var _excluded$8 = ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"];
+var _excluded$8 = ["title", "required", "label", "description", "className", "content", "lineColor", "children"];
 
 var _templateObject$9;
 var StyledCell = styled__default['default'].div(_templateObject$9 || (_templateObject$9 = _taggedTemplateLiteral(["\n  background-color: #fff;\n\n  &.clickable {\n    &:active {\n      background-color: ", ";\n    }\n  }\n\n  &.has-label {\n    padding-left: 12px;\n  }\n\n  .cell-inner {\n    position: relative;\n    display: flex;\n    box-sizing: border-box;\n    width: 100%;\n    padding: 10px 12px 10px 0;\n    overflow: hidden;\n    font-size: 14px;\n    line-height: 24px;\n\n    &.pc {\n      align-items: center;\n    }\n\n    .cell-label {\n      box-sizing: border-box;\n      text-align: left;\n      flex: 1;\n\n      .label {\n        color: #333;\n\n        &.required::before {\n          content: '*';\n          margin-right: 2px;\n          color: ", ";\n          vertical-align: middle;\n        }\n      }\n\n      .description {\n        color: #999;\n        margin-top: 4px;\n        line-height: 18px;\n        font-size: 12px;\n      }\n\n      &.input {\n        word-wrap: break-word;\n        width: 6.2em;\n        flex: none;\n      }\n    }\n    .cell-content {\n      flex: 1;\n      position: relative;\n      overflow: visible;\n      color: #999;\n      text-align: right;\n      vertical-align: middle;\n      word-wrap: break-word;\n\n      &.input {\n        display: flex;\n        align-items: center;\n      }\n    }\n  }\n"])), activeBg, danger);
@@ -2107,7 +2107,6 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var title = props.title,
       required = props.required,
       label = props.label,
-      labelWidth = props.labelWidth,
       description = props.description,
       className = props.className,
       content = props.content,
@@ -2140,10 +2139,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   }, hasLabel && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('cell-label', {
       input: hasInput
-    }),
-    style: {
-      width: labelWidth
-    }
+    })
   }, /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('label', {
       required: required

@@ -52,14 +52,13 @@ var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var title = props.title,
       required = props.required,
       label = props.label,
-      labelWidth = props.labelWidth,
       description = props.description,
       className = props.className,
       content = props.content,
       _a = props.lineColor,
       lineColor = _a === void 0 ? vars.border : _a,
       children = props.children,
-      rest = __rest(props, ["title", "required", "label", "labelWidth", "description", "className", "content", "lineColor", "children"]);
+      rest = __rest(props, ["title", "required", "label", "description", "className", "content", "lineColor", "children"]);
 
   if (content && children) {
     throw new Error("Cell: \u4E0D\u80FD\u540C\u65F6\u8BBE\u7F6Econtent\u548C\u5B50\u5143\u7D20");
@@ -85,10 +84,7 @@ var Cell = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, hasLabel && /*#__PURE__*/React.createElement("div", {
     className: clsx('cell-label', {
       input: hasInput
-    }),
-    style: {
-      width: labelWidth
-    }
+    })
   }, /*#__PURE__*/React.createElement("span", {
     className: clsx('label', {
       required: required

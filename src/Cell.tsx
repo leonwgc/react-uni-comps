@@ -11,8 +11,6 @@ export type Props = {
   title?: React.ReactNode;
   /** 标题 */
   label?: React.ReactNode;
-  /** 标题宽度*/
-  labelWidth?: number;
   /** 标题下方描述 */
   description?: React.ReactNode;
   /** 右侧内容 */
@@ -22,7 +20,7 @@ export type Props = {
   className?: string;
   style?: React.CSSProperties;
   /** 通常放input/textarea等输入控件 */
-  children?: React.ReactNode | React.ReactNode[];
+  children?: React.ReactNode;
 } & HTMLAttributes<HTMLDivElement>;
 
 const StyledCell = styled.div`
@@ -104,7 +102,6 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     title,
     required,
     label,
-    labelWidth,
     description,
     className,
     content,
@@ -132,7 +129,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       <HairLineBox color={lineColor} className="cell-line">
         <div className={clsx('cell-inner', { mobile: isMobile, pc: !isMobile })}>
           {hasLabel && (
-            <div className={clsx('cell-label', { input: hasInput })} style={{ width: labelWidth }}>
+            <div className={clsx('cell-label', { input: hasInput })}>
               <span className={clsx('label', { required: required })}>{label || title}</span>
               {description && <div className="description">{description}</div>}
             </div>
