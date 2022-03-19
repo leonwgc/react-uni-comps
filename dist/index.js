@@ -2976,10 +2976,10 @@ var ScrollToTop = function ScrollToTop(props) {
 
 ScrollToTop.displayName = 'UC-ScrollToTop';
 
-var _excluded$l = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
+var _excluded$l = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
 
 var _templateObject$l;
-var StylePopover = styled__default['default'](Popover__default['default'])(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  color: #fff;\n  background-color: rgb(0, 0, 0, 0.85);\n  padding: 12px;\n"])));
+var StylePopover = styled__default['default'](Popover__default['default'])(_templateObject$l || (_templateObject$l = _taggedTemplateLiteral(["\n  color: #fff;\n  padding: 12px;\n"])));
 
 /** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
@@ -2994,6 +2994,7 @@ var Tooltip = function Tooltip(props) {
       arrow = _props$arrow === void 0 ? true : _props$arrow,
       offset = props.offset,
       className = props.className,
+      style = props.style,
       children = props.children,
       popoverRest = _objectWithoutProperties(props, _excluded$l); // 鼠标移到popover内容区，不关闭popover
 
@@ -3034,6 +3035,9 @@ var Tooltip = function Tooltip(props) {
   };
   return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({}, popoverRest, {
     className: clsx__default['default']('uc-tooltip', className),
+    style: _objectSpread2({
+      backgroundColor: 'rgb(0, 0, 0, 0.85)'
+    }, style),
     visible: visible,
     placement: placement,
     content: title,

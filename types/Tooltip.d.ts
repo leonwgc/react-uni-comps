@@ -22,6 +22,7 @@ export declare type Props = {
     onVisibleChange?: (visible: boolean) => void;
     /** 展开动画, 默认true */
     animate?: boolean;
+    style?: React.CSSProperties;
 };
 /** 文字提示气泡框, 基于Popover */
 declare const Tooltip: {
