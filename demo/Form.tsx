@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Input, Form, Button, useCountdown } from 'react-uni-comps';
+import { Input, InputNumber, Form, Button, useCountdown } from 'react-uni-comps';
 import type { FormInstance } from 'react-uni-comps/es/Form';
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
               },
             ]}
           >
-            <Input placeholder="请输入手机号码" clearable />
+            <InputNumber placeholder="请输入手机号码" clearable maxLength={11} />
           </Form.Item>
 
           <Form.Item name="code">

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Props as InputProps } from './Input';
 import type { StringOrNumber } from './types';
 export declare type Props = {
     /** 禁用 */
@@ -27,7 +28,7 @@ export declare type Props = {
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-};
+} & Partial<InputProps>;
 /** 数字输入框 */
 declare const InputNumber: React.FC<Props>;
 export default InputNumber;

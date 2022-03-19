@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import Input from './Input';
+import type { Props as InputProps } from './Input';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import type { StringOrNumber } from './types';
 
@@ -31,7 +32,7 @@ export type Props = {
   onClear?: () => void;
   /** Enter回调 */
   onPressEnter?: (v: string) => void;
-};
+} & Partial<InputProps>;
 
 //#region  style
 

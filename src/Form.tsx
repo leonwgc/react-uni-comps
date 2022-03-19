@@ -11,7 +11,7 @@ export type { FormInstance } from 'rc-field-form';
 import { attachPropertiesToComponent } from './util';
 
 const FormItem: React.FC<FormItemProps> = (props) => {
-  const { labelWidth, requiredMark } = useContext(FormContext);
+  const { requiredMark } = useContext(FormContext);
   const { children, label, name, ...fieldProps } = props;
 
   let required = false;
@@ -28,12 +28,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
   }
 
   return (
-    <Cell
-      labelWidth={labelWidth}
-      label={label}
-      data-name={name}
-      required={requiredMark && required}
-    >
+    <Cell label={label} data-name={name} required={requiredMark && required}>
       <Field name={name} {...fieldProps}>
         {children}
       </Field>
@@ -45,8 +40,6 @@ const FormItem: React.FC<FormItemProps> = (props) => {
 type FormLayout = 'vertical' | 'horizontal';
 
 type FormContextType = {
-  /** 标题宽度,默认80*/
-  labelWidth?: number;
   /** 是否显示星号，当rules包含required时，默认true */
   requiredMark?: boolean;
 };
@@ -76,7 +69,6 @@ const Form = React.forwardRef<FormInstance, FormProps>((props, ref) => {
   const {
     children,
     gap = 16,
-    labelWidth = 80,
     requiredMark = true,
     layout = 'vertical',
     className,
@@ -106,7 +98,6 @@ const Form = React.forwardRef<FormInstance, FormProps>((props, ref) => {
     >
       <FormContext.Provider
         value={{
-          labelWidth,
           requiredMark,
         }}
       >

@@ -8,7 +8,7 @@ export default function App() {
   return (
     <PageWrap>
       <Block title="默认">
-        <InputNumber onChange={console.log} />
+        <InputNumber onChange={console.log} placeholder="请输入" />
       </Block>
 
       <Block title="一位小数">

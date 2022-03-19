@@ -5,8 +5,6 @@ export type { FormInstance } from 'rc-field-form';
 /** 排列方式 */
 declare type FormLayout = 'vertical' | 'horizontal';
 declare type FormContextType = {
-    /** 标题宽度,默认80*/
-    labelWidth?: number;
     /** 是否显示星号，当rules包含required时，默认true */
     requiredMark?: boolean;
 };
