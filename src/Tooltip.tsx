@@ -6,7 +6,6 @@ import clsx from 'clsx';
 
 const StylePopover = styled(Popover)`
   color: #fff;
-  background-color: rgb(0, 0, 0, 0.85);
   padding: 12px;
 `;
 
@@ -30,6 +29,7 @@ export type Props = {
   onVisibleChange?: (visible: boolean) => void;
   /** 展开动画, 默认true */
   animate?: boolean;
+  style?: React.CSSProperties;
 };
 
 /** 文字提示气泡框, 基于Popover */
@@ -41,6 +41,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     arrow = true,
     offset,
     className,
+    style,
     children,
     ...popoverRest
   } = props;
@@ -79,6 +80,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     <StylePopover
       {...popoverRest}
       className={clsx('uc-tooltip', className)}
+      style={{ backgroundColor: 'rgb(0, 0, 0, 0.85)', ...style }}
       visible={visible}
       placement={placement}
       content={title}
