@@ -49,6 +49,7 @@ yarn add react-uni-comps
 - WaitLoading （延迟渲染子元素）
 - Loading （弹框加载中）
 - Empty (空状态)
+- Result (结果)
 
 #### 导航和布局
 - AutoCenter (自动居中)
