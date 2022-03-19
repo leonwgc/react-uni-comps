@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { ActionSheet, Button } from 'react-uni-comps';
+import { ActionSheet, Button, Cell, Switch, Toast } from 'react-uni-comps';
 
 export default function App() {
   const actions = [
-    { text: '复制', onClick: () => alert('复制') },
+    { text: '复制', onClick: () => Toast.show('复制') },
     { text: '修改', disabled: true },
     {
       text: '删除',
@@ -15,8 +15,24 @@ export default function App() {
   ];
 
   const [visible, setVisible] = useState(false);
+
+  const [cancelText, setCancelText] = useState('取消');
+  const [borderRadius, setBorderRadius] = useState(8);
+
   return (
     <PageWrap>
+      <Cell
+        title="显示取消"
+        content={
+          <Switch checked={!!cancelText} onChange={(c) => setCancelText(c ? '取消' : '')}></Switch>
+        }
+      />
+      <Cell
+        title="显示圆角"
+        content={
+          <Switch checked={borderRadius > 0} onChange={(c) => setBorderRadius(c ? 8 : 0)}></Switch>
+        }
+      />
       <DemoBlock title="动作面板">
         <Button active onClick={() => setVisible(true)}>
           打开动作面板
@@ -24,8 +40,9 @@ export default function App() {
       </DemoBlock>
 
       <ActionSheet
+        style={{ borderTopLeftRadius: borderRadius, borderTopRightRadius: borderRadius }}
         extra={'ActionSheet 动作面板'}
-        cancelText="取消"
+        cancelText={cancelText}
         visible={visible}
         actions={actions}
         onClose={() => setVisible(false)}
