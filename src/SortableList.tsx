@@ -67,7 +67,7 @@ const SortableList: React.FC<Props> = (props) => {
             const newList = ref.current.list.sort(
               (a, b) => ar.indexOf(a._key) - ar.indexOf(b._key)
             );
-            ref.current.onSort?.(newList);
+            ref.current.onSort?.([...newList]);
           },
         },
       } as any);

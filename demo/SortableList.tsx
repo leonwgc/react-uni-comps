@@ -31,13 +31,11 @@ export default function App() {
           style={{ display: 'flex', flexWrap: 'wrap' }}
           dataList={dataList}
           dataRender={(data) => (
-            <Button type="primary" style={{ width: 120, height: 60, margin: 10, fontSize: 32 }}>
+            <Button type="primary" style={{ width: 80, height: 80, margin: 10, fontSize: 32 }}>
               {data.title}
             </Button>
           )}
-          onSort={(list) => {
-            setDataList([...list]);
-          }}
+          onSort={setDataList}
         ></SortableList>
       </Block>
     </PageWrap>
