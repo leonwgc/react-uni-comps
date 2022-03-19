@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { TouchElement, Toast, useMount, AutoCenter } from 'react-uni-comps';
+import { TouchElement, Toast, useMount, AutoCenter, getThemeColor } from 'react-uni-comps';
 
 type Position = {
   x: number;
@@ -80,7 +80,7 @@ export default function App() {
               style={{
                 width: 120,
                 height: 120,
-                border: '1px solid red',
+                border: `1px solid ${getThemeColor()}`,
                 position: 'relative',
               }}
             />

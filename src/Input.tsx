@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
-import { getThemeColorCss, getRootCssVarColor } from './themeHelper';
+import { getThemeColorCss, getThemeColor } from './themeHelper';
 import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
@@ -70,7 +70,7 @@ const StyledInput = styled.div`
     &.focused:not(.disabled, .read-only) {
       ${getThemeColorCss('border-color')}
       box-shadow: 0 0 2px 2px ${(props) =>
-        color(getRootCssVarColor() || props.theme.color || vars.primary).fade(0.85)};
+        color(getThemeColor() || props.theme.color || vars.primary).fade(0.85)};
     }
   }
   &.mobile {

@@ -11,4 +11,4 @@ export declare const getThemeColorCss: (prop: string, leftValue?: string) => any
  *
  * @return {*}
  */
-export declare const getRootCssVarColor: () => string;
+export declare const getThemeColor: () => string;

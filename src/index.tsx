@@ -86,7 +86,7 @@ export { default as Loading } from './Loading';
 export { debounce, throttle, uniqArray, flatArray, flatSimpleArray, deepClone } from './helper';
 export { isBrowser, isMobile, isTouch, loadResource } from './dom';
 export { observe, unobserve } from './defaultIntersectionObserver';
-export { getThemeColorCss } from './themeHelper';
+export { getThemeColorCss, getThemeColor } from './themeHelper';
 export { default as copy } from './copy';
 export { default as Touch } from 'w-touch';
 

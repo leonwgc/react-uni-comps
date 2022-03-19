@@ -36,7 +36,7 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
  * @return {*}
  */
 
-export var getRootCssVarColor = function getRootCssVarColor() {
+export var getThemeColor = function getThemeColor() {
   return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };
 var templateObject_1;

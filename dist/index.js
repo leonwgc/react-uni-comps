@@ -1632,7 +1632,7 @@ var getThemeColorCss = function getThemeColorCss(prop) {
  * @return {*}
  */
 
-var getRootCssVarColor = function getRootCssVarColor() {
+var getThemeColor = function getThemeColor() {
   return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };
 
@@ -4325,7 +4325,7 @@ var _excluded$x = ["className", "style", "prefix", "value", "onChange", "suffix"
 var _templateObject$x;
 //#region  style
 var StyledInput = styled__default['default'].div(_templateObject$x || (_templateObject$x = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n  color: #333;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover:not(.disabled, .read-only) {\n      ", "\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  &.disabled {\n    color: #666;\n  }\n\n  &.read-only {\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n    color: #999;\n  }\n\n  .clear {\n    color: #bcbcbc;\n    cursor: pointer;\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
-  return color__default['default'](getRootCssVarColor() || props.theme.color || primary).fade(0.85);
+  return color__default['default'](getThemeColor() || props.theme.color || primary).fade(0.85);
 }); //#endregion
 
 /** 单行/多行输入框 input/textarea */
@@ -8367,11 +8367,10 @@ var useCountdown = function useCountdown() {
 };
 
 var _excluded$15 = ["children", "label", "name"],
-    _excluded2$4 = ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
+    _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
   var _useContext = React.useContext(FormContext),
-      labelWidth = _useContext.labelWidth,
       requiredMark = _useContext.requiredMark;
 
   var children = props.children,
@@ -8396,7 +8395,6 @@ var FormItem = function FormItem(props) {
   }
 
   return /*#__PURE__*/React__default['default'].createElement(Cell, {
-    labelWidth: labelWidth,
     label: label,
     "data-name": name,
     required: requiredMark && required
@@ -8414,8 +8412,6 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var children = props.children,
       _props$gap = props.gap,
       gap = _props$gap === void 0 ? 16 : _props$gap,
-      _props$labelWidth = props.labelWidth,
-      labelWidth = _props$labelWidth === void 0 ? 80 : _props$labelWidth,
       _props$requiredMark = props.requiredMark,
       requiredMark = _props$requiredMark === void 0 ? true : _props$requiredMark,
       _props$layout = props.layout,
@@ -8452,7 +8448,6 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     }
   }), /*#__PURE__*/React__default['default'].createElement(FormContext.Provider, {
     value: {
-      labelWidth: labelWidth,
       requiredMark: requiredMark
     }
   }, /*#__PURE__*/React__default['default'].createElement(Space, {
@@ -8617,6 +8612,7 @@ exports.debounce = debounce;
 exports.deepClone = deepClone;
 exports.flatArray = flatArray;
 exports.flatSimpleArray = flatSimpleArray;
+exports.getThemeColor = getThemeColor;
 exports.getThemeColorCss = getThemeColorCss;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;

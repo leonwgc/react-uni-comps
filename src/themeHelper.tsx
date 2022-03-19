@@ -21,6 +21,6 @@ export const getThemeColorCss = (prop: string, leftValue = ''): any => {
  *
  * @return {*}
  */
-export const getRootCssVarColor = () => {
+export const getThemeColor = () => {
   return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };

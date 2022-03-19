@@ -39,9 +39,7 @@ import { isMobile } from './dom';
 import { attachPropertiesToComponent } from './util';
 
 var FormItem = function FormItem(props) {
-  var _a = useContext(FormContext),
-      labelWidth = _a.labelWidth,
-      requiredMark = _a.requiredMark;
+  var requiredMark = useContext(FormContext).requiredMark;
 
   var children = props.children,
       label = props.label,
@@ -65,7 +63,6 @@ var FormItem = function FormItem(props) {
   }
 
   return /*#__PURE__*/React.createElement(Cell, {
-    labelWidth: labelWidth,
     label: label,
     "data-name": name,
     required: requiredMark && required
@@ -81,19 +78,17 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var children = props.children,
       _a = props.gap,
       gap = _a === void 0 ? 16 : _a,
-      _b = props.labelWidth,
-      labelWidth = _b === void 0 ? 80 : _b,
-      _c = props.requiredMark,
-      requiredMark = _c === void 0 ? true : _c,
-      _d = props.layout,
-      layout = _d === void 0 ? 'vertical' : _d,
+      _b = props.requiredMark,
+      requiredMark = _b === void 0 ? true : _b,
+      _c = props.layout,
+      layout = _c === void 0 ? 'vertical' : _c,
       className = props.className,
       _onFinishFailed = props.onFinishFailed,
-      _e = props.toastError,
-      toastError = _e === void 0 ? isMobile : _e,
-      _f = props.scrollIntoErrorField,
-      scrollIntoErrorField = _f === void 0 ? isMobile : _f,
-      rest = __rest(props, ["children", "gap", "labelWidth", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"]);
+      _d = props.toastError,
+      toastError = _d === void 0 ? isMobile : _d,
+      _e = props.scrollIntoErrorField,
+      scrollIntoErrorField = _e === void 0 ? isMobile : _e,
+      rest = __rest(props, ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"]);
 
   return /*#__PURE__*/React.createElement(RcForm, __assign({}, rest, {
     ref: ref,
@@ -119,7 +114,6 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }), /*#__PURE__*/React.createElement(FormContext.Provider, {
     value: {
-      labelWidth: labelWidth,
       requiredMark: requiredMark
     }
   }, /*#__PURE__*/React.createElement(Space, {
