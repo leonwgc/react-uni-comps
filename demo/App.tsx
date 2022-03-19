@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { ThemeProvider, styled, PopMenu, Button } from 'react-uni-comps';
+import { ThemeProvider, styled, PopMenu, Button, useMount } from 'react-uni-comps';
 import { useSelector, useUpdateStore } from 'simple-redux-store';
 import routes from './RouteConfig';
+import flex from './common/flex';
 
 const StyledBall = styled(Button)`
   position: fixed;
@@ -29,6 +30,9 @@ const StyledPopMenu = styled(PopMenu)`
 const Routes = () => {
   const { theme } = useSelector((s: any) => s.app);
   const updateStore = useUpdateStore();
+
+  useMount(() => flex());
+
   return (
     <div>
       <ThemeProvider color={theme}>
