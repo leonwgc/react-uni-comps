@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Result',
+    component: lazy(() => import('./Result')),
+  },
+  {
     path: '/InputNumber',
     component: lazy(() => import('./InputNumber')),
   },

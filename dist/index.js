@@ -7811,11 +7811,41 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 Pagination.displayName = 'UC-Pagination';
 
-var _excluded$_ = ["image", "description", "className"];
+var _excluded$_ = ["image", "desc", "className", "extra"];
 
 var _templateObject$W;
-var StyledWrap$9 = styled__default['default'].div(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 24px 0;\n\n  .img {\n    width: 64px;\n\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n    font-size: 14px;\n  }\n"])));
-var img = /*#__PURE__*/React__default['default'].createElement("svg", {
+var StyledWrap$9 = styled__default['default'].div(_templateObject$W || (_templateObject$W = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n\n  .image {\n    line-height: 1;\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n  }\n  .extra {\n  }\n"])));
+/** 结果 */
+
+var Result = function Result(props) {
+  var image = props.image,
+      desc = props.desc,
+      className = props.className,
+      extra = props.extra,
+      rest = _objectWithoutProperties(props, _excluded$_);
+
+  var imgNode = typeof image === 'string' ? /*#__PURE__*/React__default['default'].createElement("img", {
+    src: image,
+    alt: ""
+  }) : image;
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$9, _extends({}, rest, {
+    className: clsx__default['default']('uc-result', className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "image"
+  }, imgNode), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "desc"
+  }, desc), extra && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "extra"
+  }, extra));
+};
+
+Result.displayName = 'UC-Result';
+
+var _excluded$$ = ["image", "desc", "className"];
+
+var _templateObject$X;
+var StyledResult = styled__default['default'](Result)(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  .image {\n    width: 64px;\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n  }\n"])));
+var EmptySvg = /*#__PURE__*/React__default['default'].createElement("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 64 41"
 }, /*#__PURE__*/React__default['default'].createElement("g", {
@@ -7840,27 +7870,25 @@ var img = /*#__PURE__*/React__default['default'].createElement("svg", {
 
 var Empty = function Empty(props) {
   var _props$image = props.image,
-      image = _props$image === void 0 ? img : _props$image,
-      _props$description = props.description,
-      description = _props$description === void 0 ? '暂无数据' : _props$description,
+      image = _props$image === void 0 ? EmptySvg : _props$image,
+      _props$desc = props.desc,
+      desc = _props$desc === void 0 ? '暂无数据' : _props$desc,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$_);
+      rest = _objectWithoutProperties(props, _excluded$$);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$9, _extends({}, rest, {
-    className: clsx__default['default']('uc-empty', className)
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "img"
-  }, image), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "desc"
-  }, description));
+  return /*#__PURE__*/React__default['default'].createElement(StyledResult, _extends({}, rest, {
+    className: clsx__default['default']('uc-empty', className),
+    image: image,
+    desc: desc
+  }));
 };
 
 Empty.displayName = 'UC-Empty';
 
-var _excluded$$ = ["items", "index", "defaultIndex", "onChange", "className"];
+var _excluded$10 = ["items", "index", "defaultIndex", "onChange", "className"];
 
-var _templateObject$X;
-var StyledWrapper$3 = styled__default['default'].div(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  overflow-y: scroll;\n  box-sizing: border-box;\n  position: relative;\n  font-size: 14px;\n  background-color: #fff;\n  user-select: none;\n  display: inline-flex;\n  flex-direction: column;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  .uc-sidebar-item {\n    box-sizing: border-box;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 14px 12px;\n    background-color: #f5f5f5;\n\n    &.active {\n      ", "\n      background-color: #fff;\n      border-radius: 0;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n    &.prev {\n      border-radius: 0 0 8px 0;\n    }\n    &.next {\n      border-radius: 0 8px 0 0;\n    }\n  }\n"])), getThemeColorCss('color'), disabledText); //#endregion
+var _templateObject$Y;
+var StyledWrapper$3 = styled__default['default'].div(_templateObject$Y || (_templateObject$Y = _taggedTemplateLiteral(["\n  -webkit-tap-highlight-color: transparent;\n  overflow-y: scroll;\n  box-sizing: border-box;\n  position: relative;\n  font-size: 14px;\n  background-color: #fff;\n  user-select: none;\n  display: inline-flex;\n  flex-direction: column;\n\n  &::-webkit-scrollbar {\n    display: none;\n  }\n\n  .uc-sidebar-item {\n    box-sizing: border-box;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 14px 12px;\n    background-color: #f5f5f5;\n\n    &.active {\n      ", "\n      background-color: #fff;\n      border-radius: 0;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n    &.prev {\n      border-radius: 0 0 8px 0;\n    }\n    &.next {\n      border-radius: 0 8px 0 0;\n    }\n  }\n"])), getThemeColorCss('color'), disabledText); //#endregion
 
 /**
  * 侧边导航
@@ -7874,7 +7902,7 @@ var SideBar = function SideBar(_ref) {
       defaultIndex = _ref$defaultIndex === void 0 ? 0 : _ref$defaultIndex,
       onChange = _ref.onChange,
       className = _ref.className,
-      rest = _objectWithoutProperties(_ref, _excluded$$);
+      rest = _objectWithoutProperties(_ref, _excluded$10);
 
   var _useState = React.useState(typeof index === 'undefined' ? defaultIndex : index),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7925,10 +7953,10 @@ var SideBar = function SideBar(_ref) {
   }));
 };
 
-var _excluded$10 = ["dataList", "dataRender", "onSort", "config", "className"];
+var _excluded$11 = ["dataList", "dataRender", "onSort", "config", "className"];
 
-var _templateObject$Y;
-var StyledWrapper$4 = styled__default['default'].div(_templateObject$Y || (_templateObject$Y = _taggedTemplateLiteral([""]))); //#endregion
+var _templateObject$Z;
+var StyledWrapper$4 = styled__default['default'].div(_templateObject$Z || (_templateObject$Z = _taggedTemplateLiteral([""]))); //#endregion
 
 var addKeyToList = function addKeyToList(list) {
   var _iterator = _createForOfIteratorHelper(list),
@@ -7962,7 +7990,7 @@ var SortableList = function SortableList(props) {
       onSort = props.onSort,
       config = props.config,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$10);
+      rest = _objectWithoutProperties(props, _excluded$11);
 
   var wrapElRef = React.useRef();
   var keyedList = addKeyToList(dataList);
@@ -8015,11 +8043,11 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$11 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
+var _excluded$12 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 
-var _templateObject$Z;
+var _templateObject$_;
 //#region  style
-var StyledWrap$a = styled__default['default'].div(_templateObject$Z || (_templateObject$Z = _taggedTemplateLiteral(["\n  width: 110px;\n  display: inline-flex;\n  .uc-button {\n    flex: none;\n    width: 28px;\n    height: 28px;\n    padding: 0;\n    background-color: #f5f5f5;\n    border: none;\n    font-weight: normal;\n    ", "\n  }\n\n  .uc-input {\n    flex: 1;\n    background-color: #f5f5f5;\n    border: none;\n    padding: 0;\n    height: 28px;\n    margin: 0 2px;\n\n    input {\n      text-align: center;\n    }\n\n    &:hover:not(.disabled, .read-only) {\n      border: none;\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      border: none;\n      box-shadow: none;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+var StyledWrap$a = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  width: 110px;\n  display: inline-flex;\n  .uc-button {\n    flex: none;\n    width: 28px;\n    height: 28px;\n    padding: 0;\n    background-color: #f5f5f5;\n    border: none;\n    font-weight: normal;\n    ", "\n  }\n\n  .uc-input {\n    flex: 1;\n    background-color: #f5f5f5;\n    border: none;\n    padding: 0;\n    height: 28px;\n    margin: 0 2px;\n\n    input {\n      text-align: center;\n    }\n\n    &:hover:not(.disabled, .read-only) {\n      border: none;\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      border: none;\n      box-shadow: none;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 var limit = function limit(val, min, max) {
   var digits = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
@@ -8051,7 +8079,7 @@ var Stepper = function Stepper(props) {
       disabled = props.disabled,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$11);
+      rest = _objectWithoutProperties(props, _excluded$12);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8111,11 +8139,11 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$12 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
+var _excluded$13 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 
-var _templateObject$_;
+var _templateObject$$;
 //#region  style
-var StyledWrap$b = styled__default['default'].div(_templateObject$_ || (_templateObject$_ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    &.mobile {\n      padding: 4px 12px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n  }\n"]))); //#endregion
+var StyledWrap$b = styled__default['default'].div(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    &.mobile {\n      padding: 4px 12px;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n  }\n"]))); //#endregion
 
 /** 搜索框 */
 
@@ -8128,7 +8156,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _onFocus = props.onFocus,
       onCancel = props.onCancel,
       onSearch = props.onSearch,
-      inputProps = _objectWithoutProperties(props, _excluded$12);
+      inputProps = _objectWithoutProperties(props, _excluded$13);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8163,7 +8191,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 SearchBar.displayName = 'UC-SearchBar';
 
-var _excluded$13 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
+var _excluded$14 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
 
 //#region  style
 //#endregion
@@ -8193,7 +8221,7 @@ var InputNumber = function InputNumber(props) {
       max = props.max,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$13);
+      rest = _objectWithoutProperties(props, _excluded$14);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8238,15 +8266,15 @@ var InputNumber = function InputNumber(props) {
 
 InputNumber.displayName = 'UC-InputNumber';
 
-var _excluded$14 = ["content"];
+var _excluded$15 = ["content"];
 
-var _templateObject$$;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$$ || (_templateObject$$ = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+var _templateObject$10;
+var StyledLoading = styled__default['default'](Toast)(_templateObject$10 || (_templateObject$10 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
 
 /** 加载Loading */
 var Loading = function Loading(_ref) {
   var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$14);
+      restProps = _objectWithoutProperties(_ref, _excluded$15);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
     visible: true
@@ -8366,7 +8394,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$15 = ["children", "label", "name"],
+var _excluded$16 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8376,7 +8404,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$15);
+      fieldProps = _objectWithoutProperties(props, _excluded$16);
 
   var required = false;
 
@@ -8581,6 +8609,7 @@ exports.QRCode = QRCode;
 exports.Radio = Radio;
 exports.RadioGroup = RadioGroup;
 exports.Rate = Rate;
+exports.Result = Result;
 exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;

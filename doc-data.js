@@ -106,6 +106,10 @@ module.exports = [
         name: 'Empty',
         title: 'Empty 空状态',
       },
+      {
+        name: 'Result',
+        title: 'Result 结果',
+      },
     ],
   },
   {

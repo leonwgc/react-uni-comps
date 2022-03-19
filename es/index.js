@@ -78,6 +78,7 @@ export { default as SortableList } from './SortableList';
 export { default as Stepper } from './Stepper';
 export { default as SearchBar } from './SearchBar';
 export { default as InputNumber } from './InputNumber';
+export { default as Result } from './Result';
 /** only has static method */
 
 export { default as Loading } from './Loading';
