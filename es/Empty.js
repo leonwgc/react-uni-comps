@@ -43,7 +43,7 @@ import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import Result from './Result';
-var StyledResult = styled(Result)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .image {\n    width: 64px;\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n  }\n"], ["\n  .image {\n    width: 64px;\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n  }\n"])));
+var StyledResult = styled(Result)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .image {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n  }\n"], ["\n  .image {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n  }\n"])));
 var EmptySvg = /*#__PURE__*/React.createElement("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 64 41"

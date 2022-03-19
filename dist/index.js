@@ -7844,7 +7844,7 @@ Result.displayName = 'UC-Result';
 var _excluded$$ = ["image", "desc", "className"];
 
 var _templateObject$X;
-var StyledResult = styled__default['default'](Result)(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  .image {\n    width: 64px;\n    img {\n      max-width: 100%;\n    }\n  }\n  .desc {\n    color: #ccc;\n  }\n"])));
+var StyledResult = styled__default['default'](Result)(_templateObject$X || (_templateObject$X = _taggedTemplateLiteral(["\n  .image {\n    width: 64px;\n  }\n  .desc {\n    color: #ccc;\n  }\n"])));
 var EmptySvg = /*#__PURE__*/React__default['default'].createElement("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 64 41"

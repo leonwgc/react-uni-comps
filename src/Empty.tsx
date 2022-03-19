@@ -7,9 +7,6 @@ import type { ResultProps } from './Result';
 const StyledResult = styled(Result)`
   .image {
     width: 64px;
-    img {
-      max-width: 100%;
-    }
   }
   .desc {
     color: #ccc;
