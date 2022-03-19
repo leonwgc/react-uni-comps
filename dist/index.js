@@ -8023,7 +8023,7 @@ var SortableList = function SortableList(props) {
             var newList = ref.current.list.sort(function (a, b) {
               return ar.indexOf(a._key) - ar.indexOf(b._key);
             });
-            (_ref$current$onSort = (_ref$current = ref.current).onSort) === null || _ref$current$onSort === void 0 ? void 0 : _ref$current$onSort.call(_ref$current, newList);
+            (_ref$current$onSort = (_ref$current = ref.current).onSort) === null || _ref$current$onSort === void 0 ? void 0 : _ref$current$onSort.call(_ref$current, _toConsumableArray(newList));
           }
         }
       }));

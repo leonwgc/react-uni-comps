@@ -40,6 +40,16 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
+var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
@@ -99,7 +109,7 @@ var SortableList = function SortableList(props) {
             var newList = ref.current.list.sort(function (a, b) {
               return ar.indexOf(a._key) - ar.indexOf(b._key);
             });
-            (_b = (_a = ref.current).onSort) === null || _b === void 0 ? void 0 : _b.call(_a, newList);
+            (_b = (_a = ref.current).onSort) === null || _b === void 0 ? void 0 : _b.call(_a, __spreadArray([], newList, true));
           }
         }
       }));
