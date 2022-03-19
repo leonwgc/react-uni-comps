@@ -1627,7 +1627,7 @@ var getThemeColorCss = function getThemeColorCss(prop) {
   }, prop, leftValue, primary);
 };
 /**
- *  get theme color from root el
+ *  get theme color from root css var
  *
  * @return {*}
  */

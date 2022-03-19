@@ -7,7 +7,7 @@
  */
 export declare const getThemeColorCss: (prop: string, leftValue?: string) => any;
 /**
- *  get theme color from root el
+ *  get theme color from root css var
  *
  * @return {*}
  */

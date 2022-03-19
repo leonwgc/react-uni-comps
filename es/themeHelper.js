@@ -31,7 +31,7 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
   }, prop, leftValue, vars.primary);
 };
 /**
- *  get theme color from root el
+ *  get theme color from root css var
  *
  * @return {*}
  */
