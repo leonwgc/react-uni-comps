@@ -72,7 +72,7 @@ module.exports = [
       },
       {
         name: 'Popover',
-        title: 'Popover 带箭头的浮层',
+        title: 'Popover 气泡框',
         mobile: false,
       },
       {

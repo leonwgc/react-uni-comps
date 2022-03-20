@@ -41,7 +41,7 @@ yarn add react-uni-comps
 - Toast (轻提示)
 - PopConfirm（气泡确认框）
 - Notify （顶部消息通知）
-- Popover （带箭头的浮层）
+- Popover (气泡框)
 - Drag （拖拽）
 - ActionSheet （动作面板）
 - Skeleton （骨架屏）
