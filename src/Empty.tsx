@@ -5,6 +5,7 @@ import Result from './Result';
 import type { ResultProps } from './Result';
 
 const StyledResult = styled(Result)`
+  padding: 24px 0;
   .image {
     width: 64px;
   }
