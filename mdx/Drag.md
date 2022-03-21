@@ -1,11 +1,11 @@
 ---
 title: Drag 拖拽
-order: 9
+order: 1
 mobile: false
 group:
-  title: 反馈
-  order: 1
-  path: feedback
+  title: 手势
+  order: 6
+  path: guesture
 ---
 
 <code src="../demo/Drag.tsx"></code>

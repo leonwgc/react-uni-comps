@@ -1,6 +1,6 @@
 ---
 title: SortableList 可排序列表
-order: 1
+order: 2
 mobile: true
 group:
   title: 手势

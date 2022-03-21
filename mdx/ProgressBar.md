@@ -1,6 +1,6 @@
 ---
 title: ProgressBar 进度条
-order: 6
+order: 7
 mobile: true
 group:
   title: 数据展示

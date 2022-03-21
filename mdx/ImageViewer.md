@@ -1,6 +1,6 @@
 ---
 title: ImageViewer 图片查看
-order: 4
+order: 5
 mobile: true
 group:
   title: 数据展示

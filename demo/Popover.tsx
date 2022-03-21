@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <PageWrap>
-      <DemoBlock title="气泡式卡片浮层" padding={40}>
+      <DemoBlock title="普通" padding={40}>
         <AutoCenter>
           <Popover
             placement={placements[ref.current] as any}
@@ -55,7 +55,7 @@ export default function App() {
         </AutoCenter>
       </DemoBlock>
 
-      <DemoBlock title="静态方法">
+      <DemoBlock title="静态调用">
         <Button
           type="primary"
           onClick={() => {
@@ -65,7 +65,6 @@ export default function App() {
               anchor: elRef,
               content: p,
               placement: p,
-              closable: true,
             });
 
             if (ref.current > 11) {
@@ -73,11 +72,11 @@ export default function App() {
             }
           }}
         >
-          静态调用（点我试试）
+          静态调用
         </Button>
 
-        <AutoCenter>
-          <Avatar size={80} ref={elRef} onClick={() => console.log('hi')}>
+        <AutoCenter style={{ marginTop: 30 }}>
+          <Avatar size={60} ref={elRef}>
             锚
           </Avatar>
         </AutoCenter>

@@ -12,10 +12,6 @@ module.exports = [
         title: 'Space 间距',
       },
       {
-        name: 'Avatar',
-        title: 'Avatar 头像',
-      },
-      {
         name: 'Icon',
         title: 'Icon 图标',
       },
@@ -26,6 +22,14 @@ module.exports = [
       {
         name: 'HairLineBox',
         title: 'HairLineBox 一像素边框容器',
+      },
+      {
+        name: 'Mask',
+        title: 'Mask 遮罩',
+      },
+      {
+        name: 'Popover',
+        title: 'Popover 气泡框',
       },
     ],
   },
@@ -69,16 +73,6 @@ module.exports = [
       {
         name: 'Notify',
         title: 'Notify 顶部消息通知',
-      },
-      {
-        name: 'Popover',
-        title: 'Popover 气泡框',
-        mobile: false,
-      },
-      {
-        name: 'Drag',
-        title: 'Drag 拖拽',
-        mobile: false,
       },
 
       {
@@ -262,6 +256,10 @@ module.exports = [
         title: 'Badge 徽标',
       },
       {
+        name: 'Avatar',
+        title: 'Avatar 头像',
+      },
+      {
         name: 'WaterMark',
         title: 'WaterMark 水印',
       },
@@ -336,6 +334,12 @@ module.exports = [
         name: 'TouchElement',
         title: 'TouchElement 手势',
       },
+      {
+        name: 'Drag',
+        title: 'Drag 拖拽',
+        mobile: false,
+      },
+
       {
         name: 'SortableList',
         title: 'SortableList 可排序列表',

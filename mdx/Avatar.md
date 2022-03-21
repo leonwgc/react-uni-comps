@@ -3,9 +3,9 @@ title: Avatar 头像
 order: 2
 mobile: true
 group:
-  title: 基础组件
-  order: 0
-  path: base
+  title: 数据展示
+  order: 4
+  path: display
 ---
 
 <code src="../demo/Avatar.tsx"></code>

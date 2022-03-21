@@ -18,12 +18,18 @@ const StyledMask = styled(animated.div)`
 `;
 
 type Props = {
-  /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
+  /**
+   * 显示遮罩时，设置body.style.overflow为hidden
+   * @default true
+   */
   hideOverflow?: boolean;
   style?: React.CSSProperties;
   /** 是否可见 */
   visible?: boolean;
-  /** 动画时间,默认220 */
+  /**
+   * 动画时间
+   * @default 280
+   */
   duration?: number;
   className?: string;
   children?: ReactElement;
@@ -35,7 +41,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     children,
     className,
     visible,
-    duration = vars.animationNormal,
+    duration = vars.animationSlow,
     style,
     hideOverflow = true,
     ...rest

@@ -1,6 +1,6 @@
 ---
 title: Slide 轮播/幻灯片
-order: 8
+order: 9
 mobile: true
 group:
   title: 数据展示

@@ -1,6 +1,6 @@
 ---
 title: Skeleton 骨架屏
-order: 11
+order: 10
 mobile: true
 group:
   title: 反馈

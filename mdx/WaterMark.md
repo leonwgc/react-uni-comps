@@ -1,6 +1,6 @@
 ---
 title: WaterMark 水印
-order: 2
+order: 3
 mobile: true
 group:
   title: 数据展示

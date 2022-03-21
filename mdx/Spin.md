@@ -1,6 +1,6 @@
 ---
 title: Spin 加载中
-order: 4
+order: 3
 mobile: true
 group:
   title: 基础组件

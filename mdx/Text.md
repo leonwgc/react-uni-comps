@@ -1,6 +1,6 @@
 ---
 title: Text 文本省略
-order: 3
+order: 4
 mobile: true
 group:
   title: 数据展示
