@@ -1,10 +1,10 @@
 ---
 title: Tooltip 提示
-order: 2
+order: 3
 mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

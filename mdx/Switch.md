@@ -1,10 +1,10 @@
 ---
 title: Switch 开关
-order: 6
+order: 4
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

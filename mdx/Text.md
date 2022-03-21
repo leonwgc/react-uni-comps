@@ -1,11 +1,11 @@
 ---
 title: Text 文本省略
-order: 4
+order: 3
 mobile: true
 group:
-  title: 数据展示
-  order: 4
-  path: display
+  title: 其他
+  order: 7
+  path: other
 ---
 
 <code src="../demo/Text.tsx"></code>

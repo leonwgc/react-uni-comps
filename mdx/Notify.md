@@ -1,10 +1,10 @@
 ---
 title: Notify 顶部消息通知
-order: 7
+order: 9
 mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

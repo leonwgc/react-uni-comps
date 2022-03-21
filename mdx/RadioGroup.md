@@ -1,10 +1,10 @@
 ---
 title: RadioGroup 单选框列表
-order: 4
+order: 9
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

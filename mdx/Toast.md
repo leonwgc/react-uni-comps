@@ -1,10 +1,10 @@
 ---
 title: Toast 轻提示
-order: 5
+order: 7
 mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

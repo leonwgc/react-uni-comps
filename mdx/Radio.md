@@ -1,10 +1,10 @@
 ---
 title: Radio 单选框
-order: 3
+order: 8
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

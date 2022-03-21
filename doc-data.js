@@ -34,15 +34,162 @@ module.exports = [
     ],
   },
   {
+    title: '数据展示',
+    path: 'display',
+    comps: [
+      {
+        name: 'Avatar',
+        title: 'Avatar 头像',
+      },
+      {
+        name: 'Badge',
+        title: 'Badge 徽标',
+      },
+      {
+        name: 'WaterMark',
+        title: 'WaterMark 水印',
+      },
+      {
+        name: 'QRCode',
+        title: 'QRCode 二维码',
+      },
+      {
+        name: 'Cell',
+        title: 'Cell 列表项',
+      },
+
+      {
+        name: 'ImageViewer',
+        title: 'ImageViewer 图片查看',
+      },
+      {
+        name: 'ProgressBar',
+        title: 'ProgressBar 进度条',
+      },
+      {
+        name: 'ProgressCircle',
+        title: 'ProgressCircle 环形进度条',
+      },
+      {
+        name: 'Slide',
+        title: 'Slide 轮播',
+      },
+      {
+        name: 'NoticeBar',
+        title: 'NoticeBar 水平通知栏',
+      },
+      {
+        name: 'NoticeList',
+        title: 'NoticeList 垂直通知栏',
+      },
+      {
+        name: 'RollingNumber',
+        title: 'RollingNumber 滚动数字',
+      },
+      {
+        name: 'Steps',
+        title: 'Steps 步骤条',
+      },
+    ],
+  },
+  {
+    title: '数据录入',
+    path: 'data',
+    comps: [
+      {
+        name: 'Form',
+        title: 'Form 表单',
+      },
+      {
+        name: 'Input',
+        title: 'Input 输入框',
+      },
+      {
+        name: 'InputNumber',
+        title: 'InputNumber 数字输入框',
+      },
+      {
+        name: 'FileInputTrigger',
+        title: 'FileInputTrigger 图片文件上传',
+      },
+      {
+        name: 'Switch',
+        title: 'Switch 开关',
+      },
+      {
+        name: 'Signature',
+        title: 'Signature 手写签名',
+      },
+      {
+        name: 'Checkbox',
+        title: 'Checkbox 复选框',
+      },
+      {
+        name: 'CheckboxGroup',
+        title: 'CheckboxGroup 复选框列表',
+      },
+      {
+        name: 'Radio',
+        title: 'Radio 单选框',
+      },
+      {
+        name: 'RadioGroup',
+        title: 'RadioGroup 单选框列表',
+      },
+
+      {
+        name: 'PasswordInput',
+        title: 'PasswordInput 自定义密码输入框',
+      },
+      {
+        name: 'NumberKeyboard',
+        title: 'NumberKeyboard 数字键盘',
+      },
+      {
+        name: 'Picker',
+        title: 'Picker 选择器',
+      },
+      {
+        name: 'PickerView',
+        title: 'PickerView 平铺选择器',
+      },
+      {
+        name: 'Rate',
+        title: 'Rate 评分',
+      },
+
+      {
+        name: 'DatePicker',
+        title: 'DatePicker 移动端日期选择',
+      },
+      {
+        name: 'Calendar',
+        title: 'Calendar 移动端日历',
+      },
+      {
+        name: 'Stepper',
+        title: 'Stepper 步进器',
+      },
+      {
+        name: 'SearchBar',
+        title: 'SearchBar 搜索框',
+      },
+    ],
+  },
+
+  {
     title: '反馈',
     path: 'feedback',
     comps: [
       {
         name: 'Modal',
         title: 'Modal 弹框',
+      },
+      {
+        name: 'Drawer',
+        title: 'Drawer 抽屉',
         mobile: false,
       },
-
       {
         name: 'AlertDialog',
         title: 'AlertDialog alert/confirm弹框',
@@ -51,6 +198,11 @@ module.exports = [
       {
         name: 'Tooltip',
         title: 'Tooltip 提示',
+      },
+      {
+        name: 'PopMenu',
+        title: 'PopMenu 弹出菜单',
+        mobile: false,
       },
       {
         name: 'Pullup',
@@ -107,7 +259,7 @@ module.exports = [
     ],
   },
   {
-    title: '导航和布局',
+    title: '导航布局',
     path: 'navlayout',
     comps: [
       {
@@ -127,11 +279,6 @@ module.exports = [
         title: 'IndexList 索引列表',
       },
       {
-        name: 'Drawer',
-        title: 'Drawer 抽屉',
-        mobile: false,
-      },
-      {
         name: 'SafeArea',
         title: 'SafeArea 安全区',
       },
@@ -143,12 +290,6 @@ module.exports = [
         name: 'Affix',
         title: 'Affix 固钉',
       },
-
-      {
-        name: 'PopMenu',
-        title: 'PopMenu 弹出菜单',
-        mobile: false,
-      },
       {
         name: 'Pagination',
         title: 'Pagination 分页',
@@ -159,157 +300,9 @@ module.exports = [
       },
     ],
   },
-  {
-    title: '数据录入',
-    path: 'data',
-    comps: [
-      {
-        name: 'Form',
-        title: 'Form 表单',
-      },
-      {
-        name: 'Checkbox',
-        title: 'Checkbox 复选框',
-      },
-      {
-        name: 'CheckboxGroup',
-        title: 'CheckboxGroup 复选框列表',
-      },
-      {
-        name: 'Radio',
-        title: 'Radio 单选框',
-      },
-      {
-        name: 'RadioGroup',
-        title: 'RadioGroup 单选框列表',
-      },
-      {
-        name: 'Input',
-        title: 'Input 输入框',
-      },
-      {
-        name: 'Switch',
-        title: 'Switch 开关',
-      },
-      {
-        name: 'PasswordInput',
-        title: 'PasswordInput 自定义密码输入框',
-      },
-      {
-        name: 'NumberKeyboard',
-        title: 'NumberKeyboard 数字键盘',
-      },
-      {
-        name: 'Picker',
-        title: 'Picker 选择器',
-      },
-      {
-        name: 'PickerView',
-        title: 'PickerView 平铺选择器',
-      },
-      {
-        name: 'Rate',
-        title: 'Rate 评分',
-      },
-
-      {
-        name: 'FileInputTrigger',
-        title: 'FileInputTrigger 图片文件上传',
-      },
-      {
-        name: 'Signature',
-        title: 'Signature 手写签名',
-      },
-      {
-        name: 'DatePicker',
-        title: 'DatePicker 移动端日期选择',
-      },
-      {
-        name: 'Calendar',
-        title: 'Calendar 移动端日历',
-      },
-      {
-        name: 'Stepper',
-        title: 'Stepper 步进器',
-      },
-      {
-        name: 'SearchBar',
-        title: 'SearchBar 搜索框',
-      },
-      {
-        name: 'InputNumber',
-        title: 'InputNumber 数字输入框',
-      },
-    ],
-  },
 
   {
-    title: '数据展示',
-    path: 'display',
-    comps: [
-      {
-        name: 'Cell',
-        title: 'Cell 列表项',
-      },
-      {
-        name: 'Badge',
-        title: 'Badge 徽标',
-      },
-      {
-        name: 'Avatar',
-        title: 'Avatar 头像',
-      },
-      {
-        name: 'WaterMark',
-        title: 'WaterMark 水印',
-      },
-      {
-        name: 'Text',
-        title: 'Text 文本省略',
-      },
-      {
-        name: 'ImageViewer',
-        title: 'ImageViewer 图片查看',
-      },
-
-      {
-        name: 'QRCode',
-        title: 'QRCode 二维码',
-      },
-      {
-        name: 'ProgressBar',
-        title: 'ProgressBar 进度条',
-      },
-      {
-        name: 'ProgressCircle',
-        title: 'ProgressCircle 环形进度条',
-      },
-
-      {
-        name: 'Slide',
-        title: 'Slide 轮播/幻灯片',
-      },
-
-      {
-        name: 'NoticeBar',
-        title: 'NoticeBar 水平通知栏',
-      },
-      {
-        name: 'NoticeList',
-        title: 'NoticeList 垂直通知栏',
-      },
-      {
-        name: 'RollingNumber',
-        title: 'RollingNumber 滚动数字',
-      },
-      {
-        name: 'Steps',
-        title: 'Steps 步骤条',
-      },
-    ],
-  },
-  {
-    title: '动画 / 效果',
+    title: '动画效果',
     path: 'animation',
     comps: [
       {
@@ -327,7 +320,7 @@ module.exports = [
     ],
   },
   {
-    title: '手势',
+    title: '手势操作',
     path: 'guesture',
     comps: [
       {
@@ -361,6 +354,10 @@ module.exports = [
       {
         name: 'ErrorBoundary',
         title: 'ErrorBoundary 错误边界',
+      },
+      {
+        name: 'Text',
+        title: 'Text 文本省略',
       },
     ],
   },

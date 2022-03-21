@@ -4,7 +4,7 @@ order: 0
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

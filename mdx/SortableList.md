@@ -3,7 +3,7 @@ title: SortableList 可排序列表
 order: 2
 mobile: true
 group:
-  title: 手势
+  title: 手势操作
   order: 6
   path: guesture
 ---

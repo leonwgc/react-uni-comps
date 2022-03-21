@@ -3,8 +3,8 @@ title: IndexList 索引列表
 order: 3
 mobile: true
 group:
-  title: 导航和布局
-  order: 2
+  title: 导航布局
+  order: 4
   path: navlayout
 ---
 

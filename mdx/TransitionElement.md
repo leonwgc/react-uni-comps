@@ -3,7 +3,7 @@ title: Transition动画
 order: 0
 mobile: true
 group:
-  title: 动画 / 效果
+  title: 动画效果
   order: 5
   path: animation
 ---

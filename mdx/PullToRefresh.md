@@ -1,10 +1,10 @@
 ---
 title: PullToRefresh 下拉刷新
-order: 4
+order: 6
 mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

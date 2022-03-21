@@ -1,10 +1,10 @@
 ---
 title: Input 输入框
-order: 5
+order: 1
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

@@ -1,10 +1,10 @@
 ---
 title: Rate 评分
-order: 11
+order: 14
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

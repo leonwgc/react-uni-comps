@@ -1,11 +1,11 @@
 ---
 title: Popover 气泡框
-order: 8
-mobile: false
+order: 6
+mobile: true
 group:
-  title: 反馈
-  order: 1
-  path: feedback
+  title: 基础组件
+  order: 0
+  path: base
 ---
 
 <code src="../demo/Popover.tsx"></code>

@@ -3,7 +3,7 @@ title: Drag 拖拽
 order: 1
 mobile: false
 group:
-  title: 手势
+  title: 手势操作
   order: 6
   path: guesture
 ---

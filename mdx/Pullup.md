@@ -1,10 +1,10 @@
 ---
 title: Pullup 上拉加载
-order: 3
+order: 5
 mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

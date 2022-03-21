@@ -1,10 +1,10 @@
 ---
 title: PasswordInput 自定义密码输入框
-order: 7
+order: 10
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

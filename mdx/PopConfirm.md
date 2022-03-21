@@ -1,10 +1,10 @@
 ---
 title: PopConfirm 气泡确认框
-order: 6
+order: 8
 mobile: false
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

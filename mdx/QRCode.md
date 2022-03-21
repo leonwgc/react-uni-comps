@@ -1,10 +1,10 @@
 ---
 title: QRCode 二维码
-order: 6
+order: 3
 mobile: true
 group:
   title: 数据展示
-  order: 4
+  order: 1
   path: display
 ---
 

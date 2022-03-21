@@ -1,10 +1,10 @@
 ---
 title: DatePicker 移动端日期选择
-order: 14
+order: 15
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

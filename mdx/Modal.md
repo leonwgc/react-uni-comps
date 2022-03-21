@@ -1,10 +1,10 @@
 ---
 title: Modal 弹框
 order: 0
-mobile: false
+mobile: true
 group:
   title: 反馈
-  order: 1
+  order: 3
   path: feedback
 ---
 

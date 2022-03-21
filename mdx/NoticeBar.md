@@ -1,10 +1,10 @@
 ---
 title: NoticeBar 水平通知栏
-order: 10
+order: 9
 mobile: true
 group:
   title: 数据展示
-  order: 4
+  order: 1
   path: display
 ---
 

@@ -1,10 +1,10 @@
 ---
 title: Stepper 步进器
-order: 16
+order: 17
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

@@ -1,10 +1,10 @@
 ---
 title: CheckboxGroup 复选框列表
-order: 2
+order: 7
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 

@@ -1,10 +1,10 @@
 ---
 title: NoticeList 垂直通知栏
-order: 11
+order: 10
 mobile: true
 group:
   title: 数据展示
-  order: 4
+  order: 1
   path: display
 ---
 

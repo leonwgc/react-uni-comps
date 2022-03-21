@@ -1,10 +1,10 @@
 ---
 title: Picker 选择器
-order: 9
+order: 12
 mobile: true
 group:
   title: 数据录入
-  order: 3
+  order: 2
   path: data
 ---
 
