@@ -32,7 +32,7 @@ export type Props = {
   onClear?: () => void;
   /** Enter回调 */
   onPressEnter?: (v: string) => void;
-} & Partial<InputProps>;
+} & Omit<Partial<InputProps>, 'defaultValue' | 'value' | 'onChange'>;
 
 //#region  style
 

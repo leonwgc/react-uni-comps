@@ -4,7 +4,7 @@ import Block from './common/DemoBlock';
 import { InputNumber, Button, Space, Icon } from 'react-uni-comps';
 
 export default function App() {
-  const [v, setV] = useState(8);
+  const [v, setV] = useState<string | number>(8);
   return (
     <PageWrap>
       <Block title="默认">

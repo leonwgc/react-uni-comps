@@ -28,7 +28,7 @@ export declare type Props = {
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-} & Partial<InputProps>;
+} & Omit<Partial<InputProps>, 'defaultValue' | 'value' | 'onChange'>;
 /** 数字输入框 */
 declare const InputNumber: React.FC<Props>;
 export default InputNumber;

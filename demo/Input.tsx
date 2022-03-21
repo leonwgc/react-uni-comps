@@ -94,6 +94,10 @@ export default function App() {
         </Space>
       </DemoBlock>
 
+      <DemoBlock title="前后缀">
+        <Input prefix={<Icon type="uc-icon-gouwuche" />} suffix={'美刀'} defaultValue={'10'} />
+      </DemoBlock>
+
       <DemoBlock title="多行">
         <Space direction="vertical" size={24} style={{ width: '100%' }}>
           <Input rows={2} />
