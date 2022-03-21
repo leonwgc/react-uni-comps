@@ -471,7 +471,7 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       className = props.className,
       visible = props.visible,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? animationNormal : _props$duration,
+      duration = _props$duration === void 0 ? animationSlow : _props$duration,
       style = props.style,
       _props$hideOverflow = props.hideOverflow,
       hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
