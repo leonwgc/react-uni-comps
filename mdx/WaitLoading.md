@@ -1,11 +1,11 @@
 ---
 title: WaitLoading 延迟渲染子元素
-order: 13
+order: 4
 mobile: true
 group:
-  title: 反馈
-  order: 3
-  path: feedback
+  title: 其他
+  order: 7
+  path: other
 ---
 
 <code src="../demo/WaitLoading.tsx"></code>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Divider, Waypoint } from 'react-uni-comps';
+import { Divider, Waypoint, Toast } from 'react-uni-comps';
 
 export default function App() {
   const [index, setIndex] = useState(0);
@@ -19,8 +19,12 @@ export default function App() {
               >
                 <Waypoint
                   onVisible={() => {
-                    console.log(idx);
                     setIndex(idx);
+                    Toast.show({
+                      duration: 300,
+                      modal: false,
+                      content: `当前索引:${idx}`,
+                    });
                   }}
                 />
                 段落 {idx}

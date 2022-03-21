@@ -1,6 +1,6 @@
 ---
-title: Loading 加载中 toast
-order: 14
+title: Loading 加载中Toast
+order: 13
 mobile: true
 group:
   title: 反馈

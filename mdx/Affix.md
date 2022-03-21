@@ -1,6 +1,6 @@
 ---
 title: Affix 固钉
-order: 6
+order: 5
 mobile: true
 group:
   title: 导航布局

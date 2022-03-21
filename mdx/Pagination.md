@@ -1,6 +1,6 @@
 ---
 title: Pagination 分页
-order: 7
+order: 6
 mobile: true
 group:
   title: 导航布局

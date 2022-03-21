@@ -20,16 +20,16 @@ module.exports = [
         title: 'Spin 加载中',
       },
       {
-        name: 'HairLineBox',
-        title: 'HairLineBox 一像素边框容器',
-      },
-      {
         name: 'Mask',
         title: 'Mask 遮罩',
       },
       {
         name: 'Popover',
         title: 'Popover 气泡框',
+      },
+      {
+        name: 'HairLineBox',
+        title: 'HairLineBox 一像素边框容器',
       },
     ],
   },
@@ -57,7 +57,6 @@ module.exports = [
         name: 'Cell',
         title: 'Cell 列表项',
       },
-
       {
         name: 'ImageViewer',
         title: 'ImageViewer 图片查看',
@@ -240,13 +239,10 @@ module.exports = [
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',
       },
-      {
-        name: 'WaitLoading',
-        title: 'WaitLoading 延迟渲染子元素',
-      },
+
       {
         name: 'Loading',
-        title: 'Loading 加载中 toast',
+        title: 'Loading 加载中Toast',
       },
       {
         name: 'Empty',
@@ -275,10 +271,6 @@ module.exports = [
         title: 'Divider 分割线',
       },
       {
-        name: 'IndexList',
-        title: 'IndexList 索引列表',
-      },
-      {
         name: 'SafeArea',
         title: 'SafeArea 安全区',
       },
@@ -296,7 +288,7 @@ module.exports = [
       },
       {
         name: 'SideBar',
-        title: 'SideBar 侧边导航',
+        title: 'SideBar 侧边选项卡',
       },
     ],
   },
@@ -358,6 +350,14 @@ module.exports = [
       {
         name: 'Text',
         title: 'Text 文本省略',
+      },
+      {
+        name: 'WaitLoading',
+        title: 'WaitLoading 延迟渲染子元素',
+      },
+      {
+        name: 'Waypoint',
+        title: 'Waypoint 路标',
       },
     ],
   },
