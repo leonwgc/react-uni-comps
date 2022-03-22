@@ -13532,6 +13532,11 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
+typer-js@^5.5.3:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/typer-js/-/typer-js-5.5.3.tgz#38335fd0bc5c3122e3ae5aa8a1edcf4f2b7e4932"
+  integrity sha512-r+bWjynXirPw6ju5oSEoMlbJBRgVdqOAPWABJ+r8lEWc27wgDXinrCOeFGiwiVWLAt3dhmk0YBSc0bmtkHGiMw==
+
 typescript@^4.0.5, typescript@^4.4.3, typescript@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.2.tgz#fe12d2727b708f4eef40f51598b3398baa9611d4"
