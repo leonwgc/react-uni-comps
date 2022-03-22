@@ -1,1 +1,3 @@
-<code src="../demo/Home.tsx"></code>
+<!-- index.md -->
+
+<code src="../demo/Home.tsx" inline></code>
