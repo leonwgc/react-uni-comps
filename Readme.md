@@ -1,4 +1,4 @@
-桌面和移动端react库 [在线体验](https://leonwgc.github.io/react-uni-comps/)
+桌面和移动端react库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
@@ -18,7 +18,7 @@ yarn add react-uni-comps
 7. 可以和 antd / antd-mobile / zarm 等组件库搭配 / 替换使用
 8. 重新导出了依赖组件/库/自定义hooks等，方便基于同一套技术栈开发 / 扩展
 
-[组件在线文档](https://leonwgc.github.io/react-uni-comps/)
+[在线文档](https://leonwgc.github.io/react-uni-comps/base)
 
 ### 工具函数
 
