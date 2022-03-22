@@ -11,7 +11,7 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-import { animationFast } from './vars';
+import { animationSlow } from './vars';
 import { useSpring, animated, easings } from '@react-spring/web';
 
 const StyledWrapper = styled(animated.div)`
@@ -131,7 +131,7 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskStyle,
     maskClass,
     position = 'bottom',
-    duration = animationFast,
+    duration = animationSlow,
     flip = true,
     mountContainer,
     animated = true,
@@ -258,7 +258,7 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     isAlive && (
       <>
         <Mask
-          visible={mask}
+          visible={mask && visible}
           ref={maskRef}
           className={maskClass}
           duration={duration}
