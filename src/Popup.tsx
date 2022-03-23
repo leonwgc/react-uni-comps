@@ -18,6 +18,7 @@ const StyledWrapper = styled.div`
   z-index: 200;
   transition-property: all;
   transition-timing-function: ease-in-out;
+  background-color: #fff;
   // bottom
   &.bottom {
     left: 0;

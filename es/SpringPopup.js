@@ -26,30 +26,15 @@ var __assign = this && this.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-import React, { useRef, forwardRef, useImperativeHandle, useCallback, useLayoutEffect, useState } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Mask from './Mask';
 import styled from 'styled-components';
-import { isMobile, isBrowser } from './dom';
+import { isMobile } from './dom';
 import clsx from 'clsx';
-import { animationSlow } from './vars';
-import { useSpring, animated, easings } from '@react-spring/web';
-var StyledWrapper = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"])));
-var mousePosition = null;
-
-if (isBrowser) {
-  var getClickPosition = function getClickPosition(e) {
-    mousePosition = {
-      x: e.clientX,
-      y: e.clientY
-    };
-    setTimeout(function () {
-      mousePosition = null;
-    }, 100);
-  };
-
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
+import { useSpring, animated } from '@react-spring/web';
+import useUnmount from './hooks/useUnmount';
+var StyledWrapper = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: #fff;\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"], ["\n  background-color: #fff;\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"])));
 /**
  *
  * Spring动画弹层，从上，下，左，右，中间弹出
@@ -59,7 +44,6 @@ if (isBrowser) {
  *  上下左右滑出请使用 Drawer
  *
  */
-
 
 var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
   var children = props.children,
@@ -73,80 +57,41 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
       maskClass = props.maskClass,
       _c = props.position,
       position = _c === void 0 ? 'bottom' : _c,
-      _d = props.duration,
-      duration = _d === void 0 ? animationSlow : _d,
-      _e = props.flip,
-      flip = _e === void 0 ? true : _e,
       mountContainer = props.mountContainer,
-      _f = props.animated,
-      animated = _f === void 0 ? true : _f,
+      _d = props.animated,
+      animated = _d === void 0 ? true : _d,
       style = props.style,
       className = props.className;
   var popElRef = useRef();
   var maskRef = useRef();
+  var unmoutRef = useRef(false);
   var isCenter = position === 'center';
   useImperativeHandle(ref, function () {
     return popElRef.current;
+  });
+  useUnmount(function () {
+    unmoutRef.current = true;
   }); // const lastMousePositionRef = useRef<MousePosition>();
 
   var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
 
-  var _g = useState(visible),
-      active = _g[0],
-      setActive = _g[1];
+  var _e = useState(visible),
+      active = _e[0],
+      setActive = _e[1];
 
   var styles = useSpring({
     opacity: visible ? 1 : 0,
     v: visible ? 0 : 1,
-    scale: visible ? 1 : isMobile ? 0.8 : 0.4,
+    scale: visible ? 1 : 0,
     immediate: !animated,
     onStart: function onStart() {
       setActive(true);
-
-      if (popElRef.current) {
-        popElRef.current.style.visibility = '';
-      }
     },
     onRest: function onRest() {
       setActive(visible);
-
-      if (popElRef.current && !visible) {
-        popElRef.current.style.visibility = 'hidden';
-      }
-    },
-    config: {
-      duration: duration,
-      easing: easings.easeInOutQuart
     }
   });
-  var setTransformOrigin = useCallback(function (mousePosition) {
-    var popEl = popElRef.current;
-
-    if (mousePosition && mousePosition.x >= 0 && mousePosition.y >= 0 && popEl && popEl.getBoundingClientRect) {
-      var _a = popEl.getBoundingClientRect(),
-          x = _a.left,
-          y = _a.top;
-
-      var origin = "".concat(mousePosition.x - x, "px ").concat(mousePosition.y - y, "px 0");
-      popEl.style.transformOrigin = origin;
-    } else {
-      setTimeout(function () {
-        if (popEl) {
-          popEl.style.transformOrigin = 'unset';
-        }
-      }, duration);
-    }
-  }, [duration]);
-  useLayoutEffect(function () {
-    if (!isMobile && position === 'center' && flip) {
-      if (visible) {
-        setTransformOrigin(mousePosition);
-      } else {
-        setTransformOrigin(null);
-      }
-    }
-  }, [visible, position, setTransformOrigin, flip]);
   useLayoutEffect(function () {
     if (mask && visible && maskRef.current) {
       var wrapZIndex = window.getComputedStyle(popElRef.current, null).getPropertyValue('z-index');
@@ -180,7 +125,7 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
         }
 
       default:
-        return '';
+        return 'none';
     }
   };
 
@@ -203,7 +148,6 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
     visible: mask && visible,
     ref: maskRef,
     className: maskClass,
-    duration: duration,
     style: __assign({
       position: showPosition
     }, maskStyle),
@@ -219,6 +163,6 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
     })
   }, children)), mountNode);
 });
-SpringPopup.displayName = 'UC-SpringPopup';
+SpringPopup.displayName = 'UC-Popup';
 export default SpringPopup;
 var templateObject_1;

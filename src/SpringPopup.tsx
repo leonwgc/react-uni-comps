@@ -1,20 +1,14 @@
-import React, {
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-  useCallback,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Mask from './Mask';
 import styled from 'styled-components';
-import { isMobile, isBrowser } from './dom';
+import { isMobile } from './dom';
 import clsx from 'clsx';
-import { animationSlow } from './vars';
-import { useSpring, animated, easings } from '@react-spring/web';
+import { useSpring, animated } from '@react-spring/web';
+import useUnmount from './hooks/useUnmount';
 
 const StyledWrapper = styled(animated.div)`
+  background-color: #fff;
   position: fixed;
   z-index: 200;
 
@@ -73,8 +67,6 @@ export type Props = {
   maskClass?: string;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
   position: 'top' | 'bottom' | 'left' | 'center' | 'right';
-  /** 弹出动画时间，默认160ms */
-  duration?: number;
   /** 弹框mount位置，默认为document.body */
   mountContainer?: () => HTMLElement;
   /** 弹框里面的内容 */
@@ -85,32 +77,9 @@ export type Props = {
   className?: string;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
-  /** pc端从点击元素飞出动画效果，默认true */
-  flip?: boolean;
   /** 展开动画, 默认true */
   animated?: boolean;
 };
-
-type MousePosition = {
-  x: number;
-  y: number;
-};
-
-let mousePosition: MousePosition = null;
-
-if (isBrowser) {
-  const getClickPosition = (e: MouseEvent) => {
-    mousePosition = {
-      x: e.clientX,
-      y: e.clientY,
-    };
-    setTimeout(() => {
-      mousePosition = null;
-    }, 100);
-  };
-
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
 
 /**
  *
@@ -131,8 +100,6 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskStyle,
     maskClass,
     position = 'bottom',
-    duration = animationSlow,
-    flip = true,
     mountContainer,
     animated = true,
     style,
@@ -140,10 +107,15 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
   } = props;
   const popElRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
+  const unmoutRef = useRef(false);
 
   const isCenter = position === 'center';
 
   useImperativeHandle(ref, () => popElRef.current);
+
+  useUnmount(() => {
+    unmoutRef.current = true;
+  });
 
   // const lastMousePositionRef = useRef<MousePosition>();
   const mountNode = mountContainer?.() || document.body;
@@ -154,59 +126,15 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const styles = useSpring({
     opacity: visible ? 1 : 0,
     v: visible ? 0 : 1,
-    scale: visible ? 1 : isMobile ? 0.8 : 0.4, // center
+    scale: visible ? 1 : 0, // center
     immediate: !animated,
     onStart: () => {
       setActive(true);
-      if (popElRef.current) {
-        popElRef.current.style.visibility = '';
-      }
     },
     onRest: () => {
       setActive(visible);
-
-      if (popElRef.current && !visible) {
-        popElRef.current.style.visibility = 'hidden';
-      }
-    },
-    config: {
-      duration,
-      easing: easings.easeInOutQuart,
     },
   });
-
-  const setTransformOrigin = useCallback(
-    (mousePosition) => {
-      const popEl = popElRef.current;
-      if (
-        mousePosition &&
-        mousePosition.x >= 0 &&
-        mousePosition.y >= 0 &&
-        popEl &&
-        popEl.getBoundingClientRect
-      ) {
-        const { left: x, top: y } = popEl.getBoundingClientRect();
-        const origin = `${mousePosition.x - x}px ${mousePosition.y - y}px 0`;
-        popEl.style.transformOrigin = origin;
-      } else {
-        setTimeout(() => {
-          if (popEl) {
-            popEl.style.transformOrigin = 'unset';
-          }
-        }, duration);
-      }
-    },
-    [duration]
-  );
-  useLayoutEffect(() => {
-    if (!isMobile && position === 'center' && flip) {
-      if (visible) {
-        setTransformOrigin(mousePosition);
-      } else {
-        setTransformOrigin(null);
-      }
-    }
-  }, [visible, position, setTransformOrigin, flip]);
 
   useLayoutEffect(() => {
     if (mask && visible && maskRef.current) {
@@ -234,7 +162,7 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
         return `translate3d(0, ${100 * v}%,0)`;
       }
       default:
-        return '';
+        return 'none';
     }
   };
 
@@ -261,7 +189,6 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
           visible={mask && visible}
           ref={maskRef}
           className={maskClass}
-          duration={duration}
           style={{ position: showPosition, ...maskStyle }}
           onClick={() => closeOnMaskClick && onClose?.()}
         />
@@ -281,6 +208,6 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-SpringPopup.displayName = 'UC-SpringPopup';
+SpringPopup.displayName = 'UC-Popup';
 
 export default SpringPopup;

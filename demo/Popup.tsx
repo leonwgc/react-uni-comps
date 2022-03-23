@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import PageWrap from './common/PageWrap';
+import DemoBlock from './common/DemoBlock';
 import { Space, Popup, Button, styled } from 'react-uni-comps';
 
 const StyleedPopupBottom = styled(Popup)`
@@ -14,71 +16,72 @@ const StyleedPopupBottom = styled(Popup)`
 `;
 
 export default function App() {
-  const [b, setB] = useState(false);
-  const [c, setC] = useState(false);
-  const [l, setL] = useState(false);
-  const [t, setT] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+  const [visible3, setVisible3] = useState(false);
+  const [visible4, setVisible4] = useState(false);
+  const [visible5, setVisible5] = useState(false);
 
   const [x, setX] = useState(false);
   const ref = useRef();
 
   return (
-    <div>
-      <Space wrap style={{ margin: 50 }}>
-        <Button onClick={() => setB(true)}>show bottom</Button>
-        <Button onClick={() => setC(true)}>show center</Button>
-        <Button onClick={() => setL(true)}>show left</Button>
-        <Button onClick={() => setT(true)}>show top</Button>
-      </Space>
+    <PageWrap>
+      <DemoBlock>
+        <Space direction="vertical" size={24}>
+          <Button onClick={() => setVisible1(true)}>底部弹出</Button>
+          <Button onClick={() => setVisible2(true)}>左侧弹出</Button>
+          <Button onClick={() => setVisible3(true)}>右侧弹出</Button>
+          <Button onClick={() => setVisible4(true)}>上边弹出</Button>
+          <Button onClick={() => setVisible5(true)}>中间弹出</Button>
+          <Button onClick={() => setX((v) => !v)}>底部容器左侧滑出</Button>
+        </Space>
+      </DemoBlock>
 
-      <StyleedPopupBottom position="bottom" visible={b} onClose={() => setB(false)}>
+      <StyleedPopupBottom position="bottom" visible={visible1} onClose={() => setVisible1(false)}>
         <div className="content">
-          <Button type="primary" onClick={() => setB(false)}>
+          <Button type="primary" onClick={() => setVisible1(false)}>
             close
           </Button>
         </div>
       </StyleedPopupBottom>
-      <Popup
-        position="center"
-        style={{ width: 300, height: 150, backgroundColor: '#fff' }}
-        visible={c}
-        onClose={() => setC(false)}
-      >
-        <div
-          style={{
-            display: 'flex',
-            height: '100%',
-            padding: '16px',
-          }}
-        >
-          <Button onClick={() => setC(false)}>click to close</Button>
-        </div>
-      </Popup>
+
       <Popup
         position="left"
-        style={{ width: '50vw', padding: 16, backgroundColor: '#fff' }}
-        visible={l}
-        onClose={() => setL(false)}
+        style={{ width: 200, padding: 16 }}
+        visible={visible2}
+        onClose={() => setVisible2(false)}
       >
-        <div>
-          <Button onClick={() => setL(false)}>click to close</Button>
-        </div>
+        left
       </Popup>
-      <Popup position="top" visible={t} onClose={() => setT(false)}>
-        <div
-          style={{
-            display: 'flex',
-            margin: '16px',
-            padding: 16,
-            borderRadius: 8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#fff',
-          }}
-        >
-          hello, world
-        </div>
+
+      <Popup
+        position="right"
+        style={{ width: 200, padding: 16 }}
+        visible={visible3}
+        onClose={() => setVisible3(false)}
+      >
+        right
       </Popup>
+
+      <Popup
+        position="top"
+        style={{ height: 90, padding: 16 }}
+        visible={visible4}
+        onClose={() => setVisible4(false)}
+      >
+        top
+      </Popup>
+
+      <Popup
+        position="center"
+        style={{ width: 300, height: 150 }}
+        visible={visible5}
+        onClose={() => setVisible5(false)}
+      >
+        center
+      </Popup>
+
       <div
         ref={ref}
         style={{
@@ -90,12 +93,13 @@ export default function App() {
           border: '1px solid #eee',
         }}
       ></div>
+
       <Popup
         position="left"
         mountContainer={() => ref.current}
         visible={x}
         onClose={() => setX(false)}
-        style={{ backgroundColor: '#fff' }}
+        style={{}}
       >
         <div
           style={{
@@ -109,7 +113,6 @@ export default function App() {
           </Button>
         </div>
       </Popup>
-      <Button onClick={() => setX((v) => !v)}>底部容器左侧滑出</Button>
-    </div>
+    </PageWrap>
   );
 }

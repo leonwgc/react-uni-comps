@@ -12,8 +12,6 @@ export declare type Props = {
     maskClass?: string;
     /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
     position: 'top' | 'bottom' | 'left' | 'center' | 'right';
-    /** 弹出动画时间，默认160ms */
-    duration?: number;
     /** 弹框mount位置，默认为document.body */
     mountContainer?: () => HTMLElement;
     /** 弹框里面的内容 */
@@ -24,8 +22,6 @@ export declare type Props = {
     className?: string;
     /** 点击遮罩是否关闭,默认true*/
     closeOnMaskClick?: boolean;
-    /** pc端从点击元素飞出动画效果，默认true */
-    flip?: boolean;
     /** 展开动画, 默认true */
     animated?: boolean;
 };
