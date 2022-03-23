@@ -32,7 +32,7 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-import { animationFast } from './vars';
+import { animationSlow } from './vars';
 import { useSpring, animated, easings } from '@react-spring/web';
 var StyledWrapper = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"])));
 var mousePosition = null;
@@ -74,7 +74,7 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
       _c = props.position,
       position = _c === void 0 ? 'bottom' : _c,
       _d = props.duration,
-      duration = _d === void 0 ? animationFast : _d,
+      duration = _d === void 0 ? animationSlow : _d,
       _e = props.flip,
       flip = _e === void 0 ? true : _e,
       mountContainer = props.mountContainer,
@@ -200,7 +200,7 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
   }
 
   return /*#__PURE__*/ReactDOM.createPortal(isAlive && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Mask, {
-    visible: mask,
+    visible: mask && visible,
     ref: maskRef,
     className: maskClass,
     duration: duration,

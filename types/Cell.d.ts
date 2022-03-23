@@ -15,6 +15,11 @@ export declare type Props = {
     style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
+    /**
+     * label左边是否加12px的padding
+     * @default true
+     */
+    withPaddingLeft?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<{
@@ -33,5 +38,10 @@ declare const Cell: React.ForwardRefExoticComponent<{
     style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
+    /**
+     * label左边是否加12px的padding
+     * @default true
+     */
+    withPaddingLeft?: boolean;
 } & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

@@ -21,6 +21,11 @@ export type Props = {
   style?: React.CSSProperties;
   /** 通常放input/textarea等输入控件 */
   children?: React.ReactNode;
+  /**
+   * label左边是否加12px的padding
+   * @default true
+   */
+  withPaddingLeft?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 const StyledCell = styled.div`
@@ -32,7 +37,7 @@ const StyledCell = styled.div`
     }
   }
 
-  &.has-label {
+  &.label-padding {
     padding-left: 12px;
   }
 
@@ -107,6 +112,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     content,
     lineColor = vars.border,
     children,
+    withPaddingLeft = true,
     ...rest
   } = props;
   if (content && children) {
@@ -123,7 +129,7 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ref={ref}
       className={clsx('uc-cell', className, {
         'clickable': typeof rest.onClick === 'function',
-        'has-label': hasLabel,
+        'label-padding': hasLabel && withPaddingLeft,
       })}
     >
       <HairLineBox color={lineColor} className="cell-line">

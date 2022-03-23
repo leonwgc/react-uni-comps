@@ -10,6 +10,7 @@ import {
   isMobile,
   Cell,
   Tooltip,
+  Form,
 } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
@@ -119,12 +120,14 @@ export default function App() {
             defaultValue={'10'}
           />
 
-          <Input
-            value={val}
-            onChange={setVal}
-            maxLength={12}
-            suffix={<Space size={2}>{val.length} / 12</Space>}
-          />
+          <Form.Item label="显示数量">
+            <Input
+              value={val}
+              onChange={setVal}
+              maxLength={12}
+              suffix={<Space size={2}>{val.length} / 12</Space>}
+            />
+          </Form.Item>
         </Space>
       </DemoBlock>
 

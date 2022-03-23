@@ -11,7 +11,7 @@ export type { FormInstance } from 'rc-field-form';
 import { attachPropertiesToComponent } from './util';
 
 const FormItem: React.FC<FormItemProps> = (props) => {
-  const { requiredMark } = useContext(FormContext);
+  const { requiredMark } = useContext(FormContext) || {};
   const { children, label, name, ...fieldProps } = props;
 
   let required = false;
@@ -28,7 +28,12 @@ const FormItem: React.FC<FormItemProps> = (props) => {
   }
 
   return (
-    <Cell label={label} data-name={name} required={requiredMark && required}>
+    <Cell
+      withPaddingLeft={false}
+      label={label}
+      data-name={name}
+      required={requiredMark && required}
+    >
       <Field name={name} {...fieldProps}>
         {children}
       </Field>

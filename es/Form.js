@@ -39,7 +39,7 @@ import { isMobile } from './dom';
 import { attachPropertiesToComponent } from './util';
 
 var FormItem = function FormItem(props) {
-  var requiredMark = useContext(FormContext).requiredMark;
+  var requiredMark = (useContext(FormContext) || {}).requiredMark;
 
   var children = props.children,
       label = props.label,
@@ -63,6 +63,7 @@ var FormItem = function FormItem(props) {
   }
 
   return /*#__PURE__*/React.createElement(Cell, {
+    withPaddingLeft: false,
     label: label,
     "data-name": name,
     required: requiredMark && required
