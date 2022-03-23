@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Input, Icon, Button, styled, clsx, Space, Toast, isMobile, Cell } from 'react-uni-comps';
+import {
+  Input,
+  Icon,
+  Button,
+  styled,
+  clsx,
+  Space,
+  Toast,
+  isMobile,
+  Cell,
+  Tooltip,
+} from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 
@@ -95,7 +106,26 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="前后缀">
-        <Input prefix={<Icon type="uc-icon-gouwuche" />} suffix={'美刀'} defaultValue={'10'} />
+        <Space direction="vertical">
+          <Input prefix={<Icon type="uc-icon-gouwuche" />} suffix={'美刀'} defaultValue={'10'} />
+
+          <Input
+            prefix={<Icon type="uc-icon-gouwuche" />}
+            suffix={
+              <Tooltip title="hello,world">
+                <Icon type="uc-icon-xinxi" />
+              </Tooltip>
+            }
+            defaultValue={'10'}
+          />
+
+          <Input
+            value={val}
+            onChange={setVal}
+            maxLength={12}
+            suffix={<Space size={2}>{val.length} / 12</Space>}
+          />
+        </Space>
       </DemoBlock>
 
       <DemoBlock title="多行">
