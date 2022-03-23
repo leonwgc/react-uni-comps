@@ -456,9 +456,6 @@ var animationSlow = 280;
 /** 中速动画时间, 单位:ms */
 
 var animationNormal = 220;
-/** 快速动画时间, 单位:ms  */
-
-var animationFast = 160;
 
 var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow"];
 
@@ -670,6 +667,39 @@ var getScrollTop = function getScrollTop(ele) {
 };
 var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
 
+/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ *  组件加载执行回调
+ *
+ * @param {() => void} fn 加载执行的回调
+ */
+
+var useMount = function useMount(fn) {
+  var isMounted = React.useRef(false);
+  React.useLayoutEffect(function () {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      fn === null || fn === void 0 ? void 0 : fn();
+    }
+  }, []);
+};
+
+/**
+ * 强制render组件
+ *
+ * @return {*}
+ */
+
+var useForceUpdate = function useForceUpdate() {
+  var _useReducer = React.useReducer(function (x) {
+    return x + 1;
+  }, 0),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
+      forceUpdate = _useReducer2[1];
+
+  return forceUpdate;
+};
+
 var _templateObject$1;
 var StyledWrapper = styled__default['default'].div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 200;\n  transition-property: all;\n  transition-timing-function: ease-in-out;\n  background-color: #fff;\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n  }\n\n  &.entering,\n  &.entered {\n    transition-timing-function: ease-out;\n    transform: none;\n    visibility: visible;\n  }\n\n  &.exiting {\n    transition-timing-function: ease-in;\n  }\n\n  &.exited {\n    visibility: hidden;\n  }\n\n  &.bottom-exited,\n  &.bottom-exiting {\n    transform: translate(0, 100%);\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.left-exited,\n  &.left-exiting {\n    transform: translate(-100%, 0);\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  &.right-exited,\n  &.right-exiting {\n    transform: translate(100%, 0);\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  &.top-exited,\n  &.top-exiting {\n    transform: translate(0, -100%);\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 200px;\n      transform: translate(-50%, 0);\n    }\n  }\n\n  &.center-entering,\n  &.center-entered {\n    transform: translate(-50%, -50%) scale(1);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(1);\n    }\n    opacity: 1;\n  }\n\n  &.center-exited,\n  &.center-exiting {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale(0.4);\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0) scale(0.4);\n    }\n  }\n"])));
 var mousePosition = null;
@@ -711,10 +741,11 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? animationFast : _props$duration,
+      duration = _props$duration === void 0 ? animationNormal : _props$duration,
       _props$flip = props.flip,
       flip = _props$flip === void 0 ? true : _props$flip,
-      mountContainer = props.mountContainer,
+      _props$mountContainer = props.mountContainer,
+      mountContainer = _props$mountContainer === void 0 ? document.body : _props$mountContainer,
       _props$unmountOnExit = props.unmountOnExit,
       unmountOnExit = _props$unmountOnExit === void 0 ? true : _props$unmountOnExit,
       style = props.style,
@@ -723,10 +754,23 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var maskRef = React.useRef();
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
-  }); // const lastMousePositionRef = useRef<MousePosition>();
+  });
+  var forceUpdate = useForceUpdate();
+  var mountNode;
 
-  var mountNode = (mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer()) || document.body;
+  if (mountContainer instanceof HTMLElement) {
+    mountNode = mountContainer;
+  } else {
+    mountNode = mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer();
+  }
+
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+  useMount(function () {
+    // fix container render at the same time / but not ready
+    if (!mountNode) {
+      forceUpdate();
+    }
+  });
   var setTransformOrigin = React.useCallback(function (mousePosition) {
     var dialogEl = wrapRef.current;
 
@@ -767,11 +811,10 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", null, /*#__PURE__*/React__default['default'].createElement(Mask, {
+  return mountNode ? /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React__default['default'].createElement("div", null, /*#__PURE__*/React__default['default'].createElement(Mask, {
     visible: visible && mask,
     ref: maskRef,
     className: maskClass,
-    duration: duration,
     style: _objectSpread2({
       position: showPosition
     }, maskStyle),
@@ -794,7 +837,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
         pc: !isMobile
       })
     }, children);
-  })), mountNode);
+  })), mountNode) : null;
 });
 Popup.displayName = 'UC-Popup';
 
@@ -1864,23 +1907,6 @@ function useCallbackRef(value) {
   }, [value]);
   return ref;
 }
-
-/* eslint-disable react-hooks/exhaustive-deps */
-/**
- *  组件加载执行回调
- *
- * @param {() => void} fn 加载执行的回调
- */
-
-var useMount = function useMount(fn) {
-  var isMounted = React.useRef(false);
-  React.useLayoutEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      fn === null || fn === void 0 ? void 0 : fn();
-    }
-  }, []);
-};
 
 var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
 
@@ -4680,22 +4706,6 @@ var Wheel = function Wheel(props) {
 };
 
 Wheel.displayName = 'UC-Wheel';
-
-/**
- * 强制render组件
- *
- * @return {*}
- */
-
-var useForceUpdate = function useForceUpdate() {
-  var _useReducer = React.useReducer(function (x) {
-    return x + 1;
-  }, 0),
-      _useReducer2 = _slicedToArray(_useReducer, 2),
-      forceUpdate = _useReducer2[1];
-
-  return forceUpdate;
-};
 
 var _excluded$A = ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"];
 

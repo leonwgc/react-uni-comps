@@ -4,7 +4,10 @@ export declare type Props = {
     visible?: boolean;
     /**  关闭回调 */
     onClose?: () => void;
-    /** 是否显示遮罩，默认显示 */
+    /**
+     * 是否显示遮罩
+     * @default true
+     */
     mask?: boolean;
     /** 遮罩样式 */
     maskStyle?: React.CSSProperties;
@@ -12,21 +15,36 @@ export declare type Props = {
     maskClass?: string;
     /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
     position?: 'top' | 'bottom' | 'left' | 'center' | 'right';
-    /** 弹出动画时间，默认160ms */
+    /**
+     * 动画时间
+     * @default 220
+     */
     duration?: number;
-    /** 弹框mount位置，默认为document.body */
-    mountContainer?: () => HTMLElement;
+    /**
+     * 弹框挂载节点
+     * @default document.body
+     */
+    mountContainer?: () => HTMLElement | HTMLElement;
     /** 弹框里面的内容 */
     children?: React.ReactNode;
-    /** 弹框style */
+    /** 弹框样式 */
     style?: React.CSSProperties;
-    /** 弹框className */
+    /** 弹框类 */
     className?: string;
-    /** 点击遮罩是否关闭,默认true*/
+    /**
+     * 点击遮罩是否关闭
+     * @default true
+     * */
     closeOnMaskClick?: boolean;
-    /** pc端从点击元素飞出动画效果，默认true */
+    /**
+     * pc端从点击元素飞出动画效果
+     * @default true
+     */
     flip?: boolean;
-    /** 关闭后卸载组件,默认true*/
+    /**
+     * 关闭后卸载组件
+     * @default true
+     */
     unmountOnExit?: boolean;
 };
 /**

@@ -11,7 +11,9 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-import { animationFast } from './vars';
+import { animationNormal } from './vars';
+import useMount from './hooks/useMount';
+import useForceUpdate from './hooks/useForceUpdate';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -120,7 +122,10 @@ export type Props = {
   visible?: boolean;
   /**  关闭回调 */
   onClose?: () => void;
-  /** 是否显示遮罩，默认显示 */
+  /**
+   * 是否显示遮罩
+   * @default true
+   */
   mask?: boolean;
   /** 遮罩样式 */
   maskStyle?: React.CSSProperties;
@@ -128,21 +133,36 @@ export type Props = {
   maskClass?: string;
   /** 弹框弹出位置，从上，下，左，右，中间 弹出 */
   position?: 'top' | 'bottom' | 'left' | 'center' | 'right';
-  /** 弹出动画时间，默认160ms */
+  /**
+   * 动画时间
+   * @default 220
+   */
   duration?: number;
-  /** 弹框mount位置，默认为document.body */
-  mountContainer?: () => HTMLElement;
+  /**
+   * 弹框挂载节点
+   * @default document.body
+   */
+  mountContainer?: () => HTMLElement | HTMLElement;
   /** 弹框里面的内容 */
   children?: React.ReactNode;
-  /** 弹框style */
+  /** 弹框样式 */
   style?: React.CSSProperties;
-  /** 弹框className */
+  /** 弹框类 */
   className?: string;
-  /** 点击遮罩是否关闭,默认true*/
+  /**
+   * 点击遮罩是否关闭
+   * @default true
+   * */
   closeOnMaskClick?: boolean;
-  /** pc端从点击元素飞出动画效果，默认true */
+  /**
+   * pc端从点击元素飞出动画效果
+   * @default true
+   */
   flip?: boolean;
-  /** 关闭后卸载组件,默认true*/
+  /**
+   * 关闭后卸载组件
+   * @default true
+   */
   unmountOnExit?: boolean;
 };
 
@@ -186,9 +206,9 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskStyle,
     maskClass,
     position = 'bottom',
-    duration = animationFast,
+    duration = animationNormal,
     flip = true,
-    mountContainer,
+    mountContainer = document.body,
     unmountOnExit = true,
     style,
     className,
@@ -198,9 +218,22 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => wrapRef.current);
 
-  // const lastMousePositionRef = useRef<MousePosition>();
-  const mountNode = mountContainer?.() || document.body;
+  const forceUpdate = useForceUpdate();
+
+  let mountNode;
+  if (mountContainer instanceof HTMLElement) {
+    mountNode = mountContainer;
+  } else {
+    mountNode = mountContainer?.();
+  }
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
+
+  useMount(() => {
+    // fix container render at the same time / but not ready
+    if (!mountNode) {
+      forceUpdate();
+    }
+  });
 
   const setTransformOrigin = useCallback(
     (mousePosition) => {
@@ -250,33 +283,34 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [mask, visible]);
 
-  return ReactDOM.createPortal(
-    <div>
-      <Mask
-        visible={visible && mask}
-        ref={maskRef}
-        className={maskClass}
-        duration={duration}
-        style={{ position: showPosition, ...maskStyle }}
-        onClick={() => closeOnMaskClick && onClose?.()}
-      />
-      <Transition in={visible} timeout={duration} unmountOnExit={unmountOnExit}>
-        {(status) => (
-          <StyledWrapper
-            ref={wrapRef}
-            style={{ ...style, position: showPosition, transitionDuration: duration + 'ms' }}
-            className={clsx('uc-popup', className, position, status, position + '-' + status, {
-              mobile: isMobile,
-              pc: !isMobile,
-            })}
-          >
-            {children}
-          </StyledWrapper>
-        )}
-      </Transition>
-    </div>,
-    mountNode
-  );
+  return mountNode
+    ? ReactDOM.createPortal(
+        <div>
+          <Mask
+            visible={visible && mask}
+            ref={maskRef}
+            className={maskClass}
+            style={{ position: showPosition, ...maskStyle }}
+            onClick={() => closeOnMaskClick && onClose?.()}
+          />
+          <Transition in={visible} timeout={duration} unmountOnExit={unmountOnExit}>
+            {(status) => (
+              <StyledWrapper
+                ref={wrapRef}
+                style={{ ...style, position: showPosition, transitionDuration: duration + 'ms' }}
+                className={clsx('uc-popup', className, position, status, position + '-' + status, {
+                  mobile: isMobile,
+                  pc: !isMobile,
+                })}
+              >
+                {children}
+              </StyledWrapper>
+            )}
+          </Transition>
+        </div>,
+        mountNode
+      )
+    : null;
 });
 
 Popup.displayName = 'UC-Popup';
