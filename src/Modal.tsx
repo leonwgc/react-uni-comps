@@ -5,19 +5,13 @@ import Icon from './Icon';
 import Popup, { Props as PopupProps } from './Popup';
 import { boxShadow } from './vars';
 
-type Props = PopupProps & {
+type Props = Omit<PopupProps, 'position'> & {
   /** 头部 */
   header?: React.ReactNode;
   /** 尾部 */
   footer?: React.ReactNode;
-  /** 内容 */
-  children?: React.ReactNode;
   /** 是否显示右上角关闭 */
   closable?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 关闭后卸载组件,默认true*/
-  unmountOnExit?: boolean;
 };
 
 const StyledModal = styled(Popup)`
@@ -25,7 +19,7 @@ const StyledModal = styled(Popup)`
   flex-direction: column;
   min-width: 30px;
   background-color: #fff;
-  padding: 32px 32px 24px;
+  padding: 20px;
   position: relative;
   border-radius: 8px;
   box-shadow: ${boxShadow};
@@ -47,6 +41,12 @@ const StyledModal = styled(Popup)`
 
   .body {
     flex: 1;
+    padding: 16px 0;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 
