@@ -38,10 +38,38 @@ export default defineConfig({
     #root .__dumi-default-mobile-demo-layout{
       padding:0;
     }
+
+    #root .__dumi-default-mobile-content{
+      display:flex;
+    }
+
+    #root .__dumi-default-menu-inner .__dumi-default-menu-mobile-area{
+      display:none;
+    }
+
+    #root .__dumi-default-menu-header{
+      padding-top: 10px;
+    }
+
+    #root .__dumi-default-menu-logo{
+      display:none;
+    }
+
+    .__dumi-default-device[data-device-type="none"] {
+      display: none;
+    }
+
+      .__dumi-default-device {
+        width: 310px !important;
+        min-width: 375px;
+        height: 624px;
+        box-shadow: 0 0 0 12.6px #090a0d, 0 0 0 14.4px #9fa3a8, 0 4px 20px 14.4px rgba(0, 0, 0, 0.1);
+      }
+    
     `,
   ],
   themeConfig: {
-    carrier: '中国移动',
+    carrier: 'ruc',
     hd: {
       // 禁用高清方案
       rules: [],
