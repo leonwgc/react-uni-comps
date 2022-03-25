@@ -42,7 +42,7 @@ export default function App() {
       <Block title="例3">
         <AutoCenter>
           <StyledEmpty2
-            image="https://t7.baidu.com/it/u=2898108424,4111626737&fm=193&f=GIF"
+            image="https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF"
             desc="no data"
             extra={<Button type="primary">go back</Button>}
           />

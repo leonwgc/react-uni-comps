@@ -89,20 +89,13 @@ export default function App() {
           onClick={() =>
             AlertDialog.show({
               title: '提示',
-              content: (
-                <Space style={{ textAlign: 'center', color: 'red', fontSize: 18 }}>
-                  <Icon type="uc-icon-jinggao" />
-                  确定要这么做吗
-                </Space>
-              ),
-              confirmText: '决定了',
+              content: '自定义样式内容',
+              confirmText: 'ok',
               onConfirm: (close) => {
                 Toast.show('你点击了确定');
-                setTimeout(() => {
-                  close();
-                }, 1000);
+                close();
               },
-              wrapStyle: { width: 300, height: 180, background: '#00bc8d' },
+              wrapStyle: { width: 260, border: '1px solid red' },
             })
           }
         >

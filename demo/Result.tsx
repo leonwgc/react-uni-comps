@@ -33,7 +33,7 @@ export default function App() {
 
       <Block title="例2">
         <StyledResult
-          image="https://t7.baidu.com/it/u=1440354408,1578911780&fm=193&f=GIF"
+          image="https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF"
           desc="提交成功"
           extra={<Button type="primary">返回</Button>}
         />
