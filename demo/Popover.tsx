@@ -87,7 +87,7 @@ export default function App() {
 
         <AutoCenter style={{ marginTop: 30 }}>
           <Avatar size={60} ref={elRef}>
-            锚
+            W
           </Avatar>
         </AutoCenter>
       </DemoBlock>
