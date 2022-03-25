@@ -150,6 +150,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
     visible: visible && mask,
     ref: maskRef,
     className: maskClass,
+    duration: duration,
     style: __assign({
       position: showPosition
     }, maskStyle),

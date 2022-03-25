@@ -290,6 +290,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
             visible={visible && mask}
             ref={maskRef}
             className={maskClass}
+            duration={duration}
             style={{ position: showPosition, ...maskStyle }}
             onClick={() => closeOnMaskClick && onClose?.()}
           />

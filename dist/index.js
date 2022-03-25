@@ -815,6 +815,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     visible: visible && mask,
     ref: maskRef,
     className: maskClass,
+    duration: duration,
     style: _objectSpread2({
       position: showPosition
     }, maskStyle),

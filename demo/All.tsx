@@ -20,6 +20,33 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> AlertDialog
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('AlertDialog')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Modal
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Modal')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Drawer
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Drawer')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Mask
           </Space>
         }
@@ -400,24 +427,6 @@ export default function All() {
       <Cell
         label={
           <Space>
-            <IconComponent /> Modal
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Modal')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Drawer
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Drawer')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
             <IconComponent /> Avatar
           </Space>
         }
@@ -433,15 +442,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Badge')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> AlertDialog
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('AlertDialog')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
