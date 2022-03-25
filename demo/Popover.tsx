@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Popover, Button, Avatar, AutoCenter, useForceUpdate } from 'react-uni-comps';
+import { Popover, Button, Avatar, AutoCenter, useForceUpdate, Space } from 'react-uni-comps';
 
 const placements = [
   'top',
@@ -56,24 +56,34 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="静态调用">
-        <Button
-          type="primary"
-          onClick={() => {
-            const p = placements[ref.current++] as any;
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => {
+              const p = placements[ref.current++] as any;
 
-            Popover.show({
-              anchor: elRef,
-              content: p,
-              placement: p,
-            });
+              Popover.show({
+                anchor: elRef,
+                content: p,
+                placement: p,
+              });
 
-            if (ref.current > 11) {
-              ref.current = 0;
-            }
-          }}
-        >
-          静态调用
-        </Button>
+              if (ref.current > 11) {
+                ref.current = 0;
+              }
+            }}
+          >
+            静态调用
+          </Button>
+
+          <Button
+            onClick={() => {
+              Popover.hide();
+            }}
+          >
+            关闭
+          </Button>
+        </Space>
 
         <AutoCenter style={{ marginTop: 30 }}>
           <Avatar size={60} ref={elRef}>
