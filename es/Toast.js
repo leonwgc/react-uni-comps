@@ -69,6 +69,7 @@ var Toast = function Toast(props) {
 };
 
 var transitionDuration = 240;
+var _hide = null;
 
 Toast.show = function (props) {
   var toastProps = {};
@@ -107,7 +108,12 @@ Toast.show = function (props) {
   window.setTimeout(function () {
     hide();
   }, _duration);
+  _hide = hide;
   return hide;
+};
+
+Toast.hide = function () {
+  _hide === null || _hide === void 0 ? void 0 : _hide();
 };
 
 Toast.displayName = 'UC-Toast';

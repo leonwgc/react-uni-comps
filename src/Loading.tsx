@@ -1,54 +1,39 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import styled from 'styled-components';
-import Toast, { Props } from './Toast';
+import Toast from './Toast';
 import Spin from './Spin';
 import { attachPropertiesToComponent } from './util';
-import { Dispose, renderElement } from './dom';
 
-const StyledLoading = styled(Toast)`
+const StyledLoading = styled.div`
   display: inline-flex;
   padding: 20px;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  line-height: 1.15;
   border-radius: 4px;
-  min-width: 80px;
-  min-height: 80px;
-  font-size: 16px;
+
+  .uc-spin {
+    font-size: 42px;
+  }
 `;
 
-type StaticProps = {
-  /** 显示loading */ show: (content?: React.ReactNode) => void;
-  /** 隐藏loading */ hide: () => void;
-};
-
-/** 加载Loading */
-const Loading: React.FC<Props> & Partial<StaticProps> = ({ content, ...restProps }) => {
-  return (
-    <StyledLoading
-      visible
-      {...restProps}
-      content={content ? content : <Spin style={{ fontSize: 36 }} />}
-    ></StyledLoading>
-  );
-};
-
-let _hide = null;
+/**
+ * 加载中, 只有静态调用
+ *
+ * @return {*}
+ */
+function Loading() {}
 
 const show = (content?: React.ReactNode) => {
-  const container = document.createElement('div');
-
-  const dispose: Dispose = renderElement(
-    <Loading className="uc-loading" content={content}></Loading>,
-    container
-  );
-
-  _hide?.();
-  _hide = dispose;
+  Toast.show({
+    content: <StyledLoading>{content ? content : <Spin />}</StyledLoading>,
+    duration: 24 * 60 * 60 * 1000,
+  });
 };
 
-const hide = () => _hide?.();
+const hide = () => {
+  Toast.hide();
+};
 
 attachPropertiesToComponent(Loading, {
   show,

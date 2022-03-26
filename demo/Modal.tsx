@@ -21,13 +21,11 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Button onClick={() => setV(true)}>默认样式</Button>
+        <Button onClick={() => setV(true)}>默认</Button>
       </DemoBlock>
 
-      <DemoBlock title="自定义样式">
-        <Button type="primary" onClick={() => setVisible(true)}>
-          自定义
-        </Button>
+      <DemoBlock title="自定义">
+        <Button onClick={() => setVisible(true)}>自定义</Button>
       </DemoBlock>
 
       <StyledModal
@@ -35,21 +33,14 @@ export default function App() {
         closable
         style={{ width: 280 }}
         onClose={onClose}
-        header={'确定取消'}
+        header={'自定义'}
         footer={
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Space size={16}>
-              <Button onClick={onClose}>取消</Button>
-              <Button type="primary" onClick={onClose}>
-                确定
-              </Button>
-            </Space>
-          </div>
+          <Space size={16}>
+            <Button onClick={onClose}>取消</Button>
+            <Button type="primary" onClick={onClose}>
+              确定
+            </Button>
+          </Space>
         }
       >
         <div>body 区域</div>

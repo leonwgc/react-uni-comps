@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Toast
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Toast')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Loading
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Loading')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> AlertDialog
           </Space>
         }
@@ -188,15 +206,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Input')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Toast
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Toast')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
@@ -225,15 +235,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Pagination')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Loading
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Loading')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

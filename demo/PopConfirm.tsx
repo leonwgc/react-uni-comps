@@ -23,11 +23,11 @@ export default function App() {
             Toast.show('发布中..');
           }}
         >
-          <Button active>默认</Button>
+          <Button>默认</Button>
         </PopConfirm>
       </DemoBlock>
 
-      <DemoBlock title="自定义样式">
+      <DemoBlock title="自定义">
         <PopConfirm
           animate={animate}
           ref={ref}
@@ -52,7 +52,7 @@ export default function App() {
           style={{ width: 260 }}
           onCancel={() => Toast.show('you cancelled')}
         >
-          <Button active>自定义样式</Button>
+          <Button>自定义</Button>
         </PopConfirm>
       </DemoBlock>
     </PageWrap>

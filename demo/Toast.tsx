@@ -8,17 +8,14 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="默认">
         <Space>
-          <Button outlined onClick={() => Toast.show('hello,world')}>
-            默认
-          </Button>
+          <Button onClick={() => Toast.show('默认')}>默认</Button>
 
           <Button
-            outlined
             onClick={() =>
               Toast.show({
-                content: '隐藏后的回调',
+                content: '关闭回调',
                 afterClose: () => {
-                  Toast.show('afterClose triggered');
+                  console.log('关闭回调');
                 },
               })
             }
@@ -28,10 +25,9 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="自定义样式">
+      <DemoBlock title="自定义">
         <Space wrap size={16}>
           <Button
-            outlined
             onClick={() =>
               Toast.show({
                 content: (
@@ -46,10 +42,9 @@ export default function App() {
               })
             }
           >
-            自定义样式
+            自定义mask
           </Button>
           <Button
-            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -63,7 +58,6 @@ export default function App() {
           </Button>
 
           <Button
-            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -79,7 +73,6 @@ export default function App() {
           </Button>
 
           <Button
-            outlined
             onClick={() =>
               Toast.show({
                 content: 'hello,world',
@@ -99,7 +92,6 @@ export default function App() {
 
       <DemoBlock title="自定义内容">
         <Button
-          outlined
           onClick={() =>
             Toast.show({
               content: (
@@ -120,9 +112,19 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="非模态">
-        <Button outlined onClick={() => Toast.show({ content: '非模态', modal: false })}>
-          非模态
-        </Button>
+        <Space>
+          <Button onClick={() => Toast.show({ content: '非模态', modal: false, duration: 300000 })}>
+            非模态
+          </Button>
+
+          <Button
+            onClick={() => {
+              Toast.hide();
+            }}
+          >
+            关闭
+          </Button>
+        </Space>
       </DemoBlock>
     </PageWrap>
   );

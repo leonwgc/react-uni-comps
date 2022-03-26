@@ -2,36 +2,15 @@ import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import color from 'color';
 import DemoBlock from './common/DemoBlock';
-import { Menu } from 'antd';
-import {
-  Button,
-  PopMenu,
-  styled,
-  useUpdateLayoutEffect,
-  Toast,
-  Cell,
-  Switch,
-} from 'react-uni-comps';
+import { Button, PopMenu, styled, Cell, Switch, AutoCenter } from 'react-uni-comps';
 
 const StyledPopMenu = styled(PopMenu)`
-  width: 240px;
+  width: 120px;
   border-radius: 4px;
 
-  .list {
-    height: 195px;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    .uc-btn {
-      border: none;
-      transition-property: none;
-      &:hover {
-        background-color: #005cff;
-        color: #fff;
-      }
-    }
+  .uc-btn {
+    height: 40px;
+    border: none;
   }
 `;
 
@@ -44,19 +23,12 @@ const StyledBtn = styled(Button)`
 `;
 
 export default function App() {
-  const arr = Array.from(new Array(10), (e, i) => i);
+  const arr = Array.from(new Array(5), (e, i) => i);
   const ref = useRef(0);
 
-  const [placement, setPlacement] = useState('right-top');
   const [v, setV] = useState(false);
   const [animated, setAnimated] = useState(true);
 
-  useUpdateLayoutEffect(() => {
-    if (v) {
-      ref.current++;
-      setPlacement(ref.current % 2 == 0 ? 'right-top' : 'bottom-left');
-    }
-  }, [v]);
   return (
     <PageWrap>
       <Cell
@@ -64,47 +36,27 @@ export default function App() {
         content={<Switch checked={animated} onChange={(c) => setAnimated(c)}></Switch>}
       ></Cell>
       <DemoBlock title="自定义菜单">
-        <StyledPopMenu
-          arrow={true}
-          onVisibleChange={setV}
-          placement={placement}
-          animate={animated}
-          trigger="hover"
-          content={
-            <div className="list">
-              {arr.map((i) => (
-                <Button block key={i}>
-                  item
-                  {i}
-                </Button>
-              ))}
-            </div>
-          }
-        >
-          <StyledBtn active>鼠标移入移出试试 </StyledBtn>
-        </StyledPopMenu>
-      </DemoBlock>
-
-      <DemoBlock title="使用antd Menu">
-        <PopMenu
-          trigger="click"
-          animated={animated}
-          content={
-            <Menu style={{ width: 120, textAlign: 'center' }}>
-              <Menu.Item key="0">
-                <a onClick={() => Toast.show('菜单1 clicked')}>菜单1</a>
-              </Menu.Item>
-
-              <Menu.Item key="1">
-                <a>菜单2</a>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item key="3">菜单3</Menu.Item>
-            </Menu>
-          }
-        >
-          <StyledBtn active>使用antd Menu </StyledBtn>
-        </PopMenu>
+        <AutoCenter>
+          <StyledPopMenu
+            arrow={true}
+            onVisibleChange={setV}
+            placement="bottom"
+            animate={animated}
+            trigger="click"
+            content={
+              <div>
+                {arr.map((i) => (
+                  <Button block key={i}>
+                    item
+                    {i}
+                  </Button>
+                ))}
+              </div>
+            }
+          >
+            <StyledBtn>点击弹出菜单</StyledBtn>
+          </StyledPopMenu>
+        </AutoCenter>
       </DemoBlock>
     </PageWrap>
   );

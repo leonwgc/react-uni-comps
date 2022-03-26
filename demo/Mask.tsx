@@ -14,12 +14,12 @@ export default function App() {
   return (
     <PageWrap>
       <Block title="例1">
-        <Button onClick={() => setV(true)}>显示</Button>
+        <Button onClick={() => setV(true)}>默认</Button>
         <Mask visible={v} onClick={() => setV(false)} />
       </Block>
 
       <Block title="例2">
-        <Button onClick={() => setV1(true)}>自定义样式</Button>
+        <Button onClick={() => setV1(true)}>自定义</Button>
         <StyledMask visible={v1} onClick={() => setV1(false)} />
       </Block>
     </PageWrap>

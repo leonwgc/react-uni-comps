@@ -1,14 +1,17 @@
 import React from 'react';
 export declare type Props = {
+    /** 内容 */
     content?: React.ReactNode;
-    /** 模态, 默认true */
+    /**
+     * 模态
+     * @default true
+     */
     modal?: boolean;
     visible?: boolean;
     /** toast style */
     style?: React.CSSProperties;
-    /** modal mask 样式 */
+    /** mask 样式 */
     maskStyle?: React.CSSProperties;
-    /** className */
     className?: string;
 };
 declare type StaticToastProps = React.ReactNode | {
@@ -30,5 +33,6 @@ declare type StaticToastProps = React.ReactNode | {
 /** 轻提示 */
 declare const Toast: React.FC<Props> & {
     /** 轻提示静态调用 */ show: (props: StaticToastProps) => void;
+    /** 轻提示静态关闭 */ hide: () => void;
 };
 export default Toast;

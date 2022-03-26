@@ -14,7 +14,7 @@ export default function App() {
 
               setTimeout(() => {
                 Loading.hide();
-              }, 3000);
+              }, 1000);
             }}
           >
             默认
@@ -22,7 +22,7 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="自定义内容">
+      <DemoBlock title="自定义">
         <Space>
           <Button
             onClick={() => {
@@ -35,7 +35,7 @@ export default function App() {
 
               setTimeout(() => {
                 Loading.hide();
-              }, 3000);
+              }, 1000);
             }}
           >
             自定义内容

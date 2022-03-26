@@ -11,6 +11,7 @@ import {
   Radio,
   Toast,
   useCountdown,
+  Space,
   Icon,
 } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
@@ -74,15 +75,25 @@ export default function App() {
             placeholder="请输入身份证"
           />
         </Cell>
-        <Cell label="antd输入框" description="antd">
-          <Input placeholder="输入框" suffix={<Icon type="uc-icon-yiwen" />} />
+        <Cell label="输入框">
+          <Input
+            placeholder="输入框"
+            value={v}
+            onChange={setV}
+            suffix={
+              <Space>
+                <span>{v.length}/60</span>
+                <Icon type="uc-icon-yiwen" />
+              </Space>
+            }
+          />
         </Cell>
         <Cell label="邮箱地址">
           <Input placeholder="邮箱地址" suffix={'@126.com'} />
         </Cell>
         <Cell label="多行文本">
           <Input
-            textarea
+            rows={2}
             placeholder="多行文本"
             maxLength={60}
             autoHeight={false}
@@ -93,7 +104,7 @@ export default function App() {
         </Cell>
         <Cell label="多行文本auto-height">
           <Input
-            textarea
+            rows={2}
             autoHeight
             placeholder="多行文本"
             maxLength={60}

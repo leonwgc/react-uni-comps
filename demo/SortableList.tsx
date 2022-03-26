@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { SortableList, Button, Space } from 'react-uni-comps';
+import { SortableList, Button, Space, AutoCenter } from 'react-uni-comps';
 
 const list = [
   { title: '1' },
@@ -19,19 +19,21 @@ export default function App() {
 
   return (
     <PageWrap>
-      <Block title="拖动方块排序">
-        <Space>
-          当前排列
-          {dataList.map((item) => (
-            <span>{item.title}</span>
-          ))}
-        </Space>
+      <Block title="拖动方块排序" border="0">
+        <AutoCenter>
+          <Space>
+            当前排列
+            {dataList.map((item) => (
+              <span>{item.title}</span>
+            ))}
+          </Space>
+        </AutoCenter>
 
         <SortableList
-          style={{ display: 'flex', flexWrap: 'wrap' }}
+          style={{ display: 'flex', flexWrap: 'wrap', marginTop: 24 }}
           dataList={dataList}
           dataRender={(data) => (
-            <Button type="primary" style={{ width: 80, height: 80, margin: 10, fontSize: 32 }}>
+            <Button style={{ width: 90, height: 90, margin: 10, fontSize: 32 }}>
               {data.title}
             </Button>
           )}

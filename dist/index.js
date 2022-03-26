@@ -3395,6 +3395,7 @@ var Toast = function Toast(props) {
 };
 
 var transitionDuration = 240;
+var _hide = null;
 
 Toast.show = function (props) {
   var toastProps = {};
@@ -3433,7 +3434,14 @@ Toast.show = function (props) {
   window.setTimeout(function () {
     hide();
   }, _duration);
+  _hide = hide;
   return hide;
+};
+
+Toast.hide = function () {
+  var _hide2;
+
+  (_hide2 = _hide) === null || _hide2 === void 0 ? void 0 : _hide2();
 };
 
 Toast.displayName = 'UC-Toast';
@@ -8283,45 +8291,25 @@ var InputNumber = function InputNumber(props) {
 
 InputNumber.displayName = 'UC-InputNumber';
 
-var _excluded$15 = ["content"];
-
 var _templateObject$10;
-var StyledLoading = styled__default['default'](Toast)(_templateObject$10 || (_templateObject$10 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  font-size: 32px;\n  line-height: 1.15;\n  border-radius: 4px;\n  min-width: 80px;\n  min-height: 80px;\n  font-size: 16px;\n"])));
+var StyledLoading = styled__default['default'].div(_templateObject$10 || (_templateObject$10 = _taggedTemplateLiteral(["\n  display: inline-flex;\n  padding: 20px;\n  align-items: center;\n  justify-content: center;\n  border-radius: 4px;\n\n  .uc-spin {\n    font-size: 42px;\n  }\n"])));
+/**
+ * 加载中, 只有静态调用
+ *
+ * @return {*}
+ */
 
-/** 加载Loading */
-var Loading = function Loading(_ref) {
-  var content = _ref.content,
-      restProps = _objectWithoutProperties(_ref, _excluded$15);
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledLoading, _extends({
-    visible: true
-  }, restProps, {
-    content: content ? content : /*#__PURE__*/React__default['default'].createElement(Spin, {
-      style: {
-        fontSize: 36
-      }
-    })
-  }));
-};
-
-var _hide = null;
+function Loading() {}
 
 var show = function show(content) {
-  var _hide2;
-
-  var container = document.createElement('div');
-  var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(Loading, {
-    className: "uc-loading",
-    content: content
-  }), container);
-  (_hide2 = _hide) === null || _hide2 === void 0 ? void 0 : _hide2();
-  _hide = dispose;
+  Toast.show({
+    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, content ? content : /*#__PURE__*/React__default['default'].createElement(Spin, null)),
+    duration: 24 * 60 * 60 * 1000
+  });
 };
 
 var hide = function hide() {
-  var _hide3;
-
-  return (_hide3 = _hide) === null || _hide3 === void 0 ? void 0 : _hide3();
+  Toast.hide();
 };
 
 attachPropertiesToComponent(Loading, {
@@ -8411,7 +8399,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$16 = ["children", "label", "name"],
+var _excluded$15 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8421,7 +8409,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$16);
+      fieldProps = _objectWithoutProperties(props, _excluded$15);
 
   var required = false;
 

@@ -20,15 +20,18 @@ const StyledToast = styled.div`
 `;
 
 export type Props = {
+  /** 内容 */
   content?: React.ReactNode;
-  /** 模态, 默认true */
+  /**
+   * 模态
+   * @default true
+   */
   modal?: boolean;
   visible?: boolean;
   /** toast style */
   style?: React.CSSProperties;
-  /** modal mask 样式 */
+  /** mask 样式 */
   maskStyle?: React.CSSProperties;
-  /** className */
   className?: string;
 };
 
@@ -54,6 +57,7 @@ type StaticToastProps =
 /** 轻提示 */
 const Toast: React.FC<Props> & {
   /** 轻提示静态调用 */ show: (props: StaticToastProps) => void;
+  /** 轻提示静态关闭 */ hide: () => void;
 } = (props) => {
   const { content, visible, modal = true, maskStyle, className, ...rest } = props;
 
@@ -68,6 +72,8 @@ const Toast: React.FC<Props> & {
 };
 
 const transitionDuration = 240;
+
+let _hide = null;
 
 Toast.show = (props: StaticToastProps) => {
   let toastProps = {};
@@ -101,7 +107,13 @@ Toast.show = (props: StaticToastProps) => {
     hide();
   }, _duration);
 
+  _hide = hide;
+
   return hide;
+};
+
+Toast.hide = () => {
+  _hide?.();
 };
 
 Toast.displayName = 'UC-Toast';
