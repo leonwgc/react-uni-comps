@@ -887,9 +887,7 @@ var _excluded$1 = ["size", "align", "className", "children", "direction", "split
 var _templateObject$2;
 
 function SpaceItem(_ref) {
-  var _ref$className = _ref.className,
-      className = _ref$className === void 0 ? 'uc-space-item' : _ref$className,
-      direction = _ref.direction,
+  var direction = _ref.direction,
       index = _ref.index,
       marginDirection = _ref.marginDirection,
       children = _ref.children,
@@ -923,10 +921,8 @@ function SpaceItem(_ref) {
   }
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: className,
     style: style
   }, children), index < latestIndex && split && /*#__PURE__*/React.createElement("span", {
-    className: "".concat(className, "-split"),
     style: style
   }, split));
 }
@@ -986,7 +982,6 @@ var Space = function Space(props) {
 
 
     return /*#__PURE__*/React.createElement(SpaceItem, {
-      className: className,
       key: i,
       direction: direction,
       index: i,
@@ -5439,7 +5434,7 @@ NoticeList.displayName = 'UC-NoticeList';
 var _excluded$G = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
 
 var _templateObject$G;
-var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
+var StyledSlide = styled__default['default'].div(_templateObject$G || (_templateObject$G = _taggedTemplateLiteral(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      border-radius: 2px;\n      background-color: #fff;\n      opacity: 0.4;\n      transition: opacity ease-in-out ", "ms;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"])), animationSlow);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -5609,6 +5604,9 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       className: clsx__default['default']('pager', {
         vertical: direction === 'vertical'
       })
+    }, /*#__PURE__*/React__default['default'].createElement(Space, {
+      size: 6,
+      direction: direction
     }, React__default['default'].Children.map(children, function (c, idx) {
       return /*#__PURE__*/React__default['default'].createElement("span", {
         key: idx,
@@ -5619,7 +5617,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
           return slideToPageIndex(idx);
         }
       });
-    }));
+    })));
   };
 
   var evtProps = {};
@@ -6036,7 +6034,7 @@ Avatar.displayName = 'UC-Avatar';
 var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange"];
 
 var _templateObject$M;
-var StyledImageViewer = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 300;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  background-color: #000;\n\n  .navs {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #fff;\n    font-size: 18px;\n  }\n  .close {\n    position: fixed;\n    right: 24px;\n    top: 24px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 32px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    max-height: 70vh;\n    object-fit: contain;\n    flex-basis: 100vw;\n  }\n"])));
+var StyledImageViewer = styled__default['default'].div(_templateObject$M || (_templateObject$M = _taggedTemplateLiteral(["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  touch-action: none;\n  user-select: none;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -6077,7 +6075,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         alignItems: 'center'
       },
       direction: "horizontal",
-      height: '100vh',
+      height: '70vh',
       onPageChange: function onPageChange(index) {
         var _onIndexChangeRef$cur;
 
@@ -6092,51 +6090,29 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       });
     }));
   }, [urls, onIndexChangeRef, slideRef]);
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
+    visible: visible
+  }), visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({
+    onClick: function onClick(e) {
+      if (e.target.nodeName === 'IMG') {
+        return;
+      }
 
-  var navRender = function navRender() {
-    if (urls.length > 1) {
-      return /*#__PURE__*/React__default['default'].createElement("div", {
-        className: clsx__default['default']('navs')
-      }, /*#__PURE__*/React__default['default'].createElement(Space, null, /*#__PURE__*/React__default['default'].createElement(Button, {
-        style: {
-          border: 'none'
-        },
-        ghost: true,
-        onClick: function onClick(e) {
-          var _slideRef$current;
-
-          e.stopPropagation();
-          (_slideRef$current = slideRef.current) === null || _slideRef$current === void 0 ? void 0 : _slideRef$current.prev();
-        },
-        icon: /*#__PURE__*/React__default['default'].createElement(IconArrow, {
-          direction: "left"
-        })
-      }), /*#__PURE__*/React__default['default'].createElement("span", null, index + 1, " / ", urls.length), /*#__PURE__*/React__default['default'].createElement(Button, {
-        ghost: true,
-        style: {
-          border: 'none'
-        },
-        onClick: function onClick(e) {
-          var _slideRef$current2;
-
-          e.stopPropagation();
-          (_slideRef$current2 = slideRef.current) === null || _slideRef$current2 === void 0 ? void 0 : _slideRef$current2.next();
-        },
-        icon: /*#__PURE__*/React__default['default'].createElement(IconArrow, {
-          direction: "right"
-        })
-      })));
+      onClose === null || onClose === void 0 ? void 0 : onClose();
     }
-  };
-
-  return visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({}, rest, {
+  }, rest, {
     ref: ref,
     className: clsx__default['default']('uc-image-viewer', className)
-  }), slides, /*#__PURE__*/React__default['default'].createElement(Icon, {
-    type: "uc-icon-clear",
+  }), slides, urls.length > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('page')
+  }, /*#__PURE__*/React__default['default'].createElement(Space, {
+    size: 4
+  }, index + 1, " / ", urls.length)), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "close",
     onClick: onClose
-  }), navRender());
+  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+    type: "uc-icon-guanbi"
+  }))));
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
@@ -8299,7 +8275,9 @@ var StyledLoading = styled__default['default'].div(_templateObject$10 || (_templ
  * @return {*}
  */
 
-function Loading() {}
+var Loading = function Loading() {
+  return null;
+};
 
 var show = function show(content) {
   Toast.show({
@@ -8312,7 +8290,7 @@ var hide = function hide() {
   Toast.hide();
 };
 
-attachPropertiesToComponent(Loading, {
+var Loading$1 = attachPropertiesToComponent(Loading, {
   show: show,
   hide: hide
 });
@@ -8592,7 +8570,7 @@ exports.Input = Input;
 exports.InputNumber = InputNumber;
 exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
-exports.Loading = Loading;
+exports.Loading = Loading$1;
 exports.Mask = Mask;
 exports.Modal = Modal;
 exports.NoticeBar = NoticeBar;

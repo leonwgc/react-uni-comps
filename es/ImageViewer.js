@@ -45,11 +45,10 @@ import clsx from 'clsx';
 import Slide from './Slide';
 import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
-import IconArrow from './IconArrow';
-import Button from './Button';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
-var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 300;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  background-color: #000;\n\n  .navs {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #fff;\n    font-size: 18px;\n  }\n  .close {\n    position: fixed;\n    right: 24px;\n    top: 24px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 32px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    max-height: 70vh;\n    object-fit: contain;\n    flex-basis: 100vw;\n  }\n"], ["\n  position: fixed;\n  z-index: 300;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  background-color: #000;\n\n  .navs {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #fff;\n    font-size: 18px;\n  }\n  .close {\n    position: fixed;\n    right: 24px;\n    top: 24px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 32px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    max-height: 70vh;\n    object-fit: contain;\n    flex-basis: 100vw;\n  }\n"])));
+import Mask from './Mask';
+var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  touch-action: none;\n  user-select: none;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"], ["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  touch-action: none;\n  user-select: none;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -88,7 +87,7 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
         alignItems: 'center'
       },
       direction: "horizontal",
-      height: '100vh',
+      height: '70vh',
       onPageChange: function onPageChange(index) {
         var _a;
 
@@ -103,51 +102,29 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
       });
     }));
   }, [urls, onIndexChangeRef, slideRef]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Mask, {
+    visible: visible
+  }), visible && /*#__PURE__*/React.createElement(StyledImageViewer, __assign({
+    onClick: function onClick(e) {
+      if (e.target.nodeName === 'IMG') {
+        return;
+      }
 
-  var navRender = function navRender() {
-    if (urls.length > 1) {
-      return /*#__PURE__*/React.createElement("div", {
-        className: clsx('navs')
-      }, /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Button, {
-        style: {
-          border: 'none'
-        },
-        ghost: true,
-        onClick: function onClick(e) {
-          var _a;
-
-          e.stopPropagation();
-          (_a = slideRef.current) === null || _a === void 0 ? void 0 : _a.prev();
-        },
-        icon: /*#__PURE__*/React.createElement(IconArrow, {
-          direction: "left"
-        })
-      }), /*#__PURE__*/React.createElement("span", null, index + 1, " / ", urls.length), /*#__PURE__*/React.createElement(Button, {
-        ghost: true,
-        style: {
-          border: 'none'
-        },
-        onClick: function onClick(e) {
-          var _a;
-
-          e.stopPropagation();
-          (_a = slideRef.current) === null || _a === void 0 ? void 0 : _a.next();
-        },
-        icon: /*#__PURE__*/React.createElement(IconArrow, {
-          direction: "right"
-        })
-      })));
+      onClose === null || onClose === void 0 ? void 0 : onClose();
     }
-  };
-
-  return visible && /*#__PURE__*/React.createElement(StyledImageViewer, __assign({}, rest, {
+  }, rest, {
     ref: ref,
     className: clsx('uc-image-viewer', className)
-  }), slides, /*#__PURE__*/React.createElement(Icon, {
-    type: "uc-icon-clear",
+  }), slides, urls.length > 1 && /*#__PURE__*/React.createElement("div", {
+    className: clsx('page')
+  }, /*#__PURE__*/React.createElement(Space, {
+    size: 4
+  }, index + 1, " / ", urls.length)), /*#__PURE__*/React.createElement("div", {
     className: "close",
     onClick: onClose
-  }), navRender());
+  }, /*#__PURE__*/React.createElement(Icon, {
+    type: "uc-icon-guanbi"
+  }))));
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 export default ImageViewer;

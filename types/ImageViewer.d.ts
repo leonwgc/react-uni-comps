@@ -1,5 +1,7 @@
 import React from 'react';
-declare type Props = {
+import type { BaseProps } from './types';
+/** 图片查看器 */
+declare const ImageViewer: React.ForwardRefExoticComponent<BaseProps & {
     /** 是否可见 */
     visible?: boolean;
     /**  关闭回调 */
@@ -8,9 +10,5 @@ declare type Props = {
     images?: string[] | string;
     /** 切换图片时触发 */
     onIndexChange?: (index: number) => void;
-    className?: string;
-    style?: React.CSSProperties;
-};
-/** 图片查看器 */
-declare const ImageViewer: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;

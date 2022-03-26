@@ -48,20 +48,18 @@ import clsx from 'clsx';
 function SpaceItem(_a) {
   var _b;
 
-  var _c = _a.className,
-      className = _c === void 0 ? 'uc-space-item' : _c,
-      direction = _a.direction,
+  var direction = _a.direction,
       index = _a.index,
       marginDirection = _a.marginDirection,
       children = _a.children,
       split = _a.split,
       wrap = _a.wrap;
 
-  var _d = React.useContext(SpaceContext),
-      horizontalSize = _d.horizontalSize,
-      verticalSize = _d.verticalSize,
-      latestIndex = _d.latestIndex,
-      supportFlexGap = _d.supportFlexGap;
+  var _c = React.useContext(SpaceContext),
+      horizontalSize = _c.horizontalSize,
+      verticalSize = _c.verticalSize,
+      latestIndex = _c.latestIndex,
+      supportFlexGap = _c.supportFlexGap;
 
   var style = {};
 
@@ -84,10 +82,8 @@ function SpaceItem(_a) {
   }
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: className,
     style: style
   }, children), index < latestIndex && split && /*#__PURE__*/React.createElement("span", {
-    className: "".concat(className, "-split"),
     style: style
   }, split));
 }
@@ -146,7 +142,6 @@ var Space = function Space(props) {
 
 
     return /*#__PURE__*/React.createElement(SpaceItem, {
-      className: className,
       key: i,
       direction: direction,
       index: i,

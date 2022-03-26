@@ -24,7 +24,9 @@ var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTem
  * @return {*}
  */
 
-function Loading() {}
+var Loading = function Loading() {
+  return null;
+};
 
 var show = function show(content) {
   Toast.show({
@@ -37,9 +39,8 @@ var hide = function hide() {
   Toast.hide();
 };
 
-attachPropertiesToComponent(Loading, {
+export default attachPropertiesToComponent(Loading, {
   show: show,
   hide: hide
 });
-export default Loading;
 var templateObject_1;

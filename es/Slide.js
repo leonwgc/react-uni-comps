@@ -44,10 +44,11 @@ import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isMobile, isTouch } from './dom';
-import { animationNormal } from './vars';
+import { animationSlow } from './vars';
 import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 19px;\n      height: 4px;\n      background: rgba(255, 255, 255, 0.6);\n      transition: all ease-in-out ", "ms;\n\n      &:not(:last-child) {\n        margin-right: 4px;\n      }\n\n      &.active {\n        background: #fff;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 19px;\n        &:not(:last-child) {\n          margin-bottom: 4px;\n        }\n      }\n    }\n  }\n"])), animationNormal);
+import Space from './Space';
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      border-radius: 2px;\n      background-color: #fff;\n      opacity: 0.4;\n      transition: opacity ease-in-out ", "ms;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      border-radius: 2px;\n      background-color: #fff;\n      opacity: 0.4;\n      transition: opacity ease-in-out ", "ms;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"])), animationSlow);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -218,6 +219,9 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className: clsx('pager', {
         vertical: direction === 'vertical'
       })
+    }, /*#__PURE__*/React.createElement(Space, {
+      size: 6,
+      direction: direction
     }, React.Children.map(children, function (c, idx) {
       return /*#__PURE__*/React.createElement("span", {
         key: idx,
@@ -228,7 +232,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
           return slideToPageIndex(idx);
         }
       });
-    }));
+    })));
   };
 
   var evtProps = {};
