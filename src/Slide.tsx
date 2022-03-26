@@ -13,6 +13,7 @@ import { isMobile, isTouch } from './dom';
 import { animationSlow } from './vars';
 import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
+import Space from './Space';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -51,10 +52,6 @@ const StyledSlide = styled.div`
       opacity: 0.4;
       transition: opacity ease-in-out ${animationSlow}ms;
 
-      &:not(:last-child) {
-        margin-right: 4px;
-      }
-
       &.active {
         opacity: 1;
       }
@@ -71,10 +68,6 @@ const StyledSlide = styled.div`
         display: block;
         width: 4px;
         height: 8px;
-        border-radius: 2px;
-        &:not(:last-child) {
-          margin-bottom: 4px;
-        }
       }
     }
   }
@@ -274,13 +267,15 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
     return (
       <div className={clsx('pager', { vertical: direction === 'vertical' })}>
-        {React.Children.map(children, (c, idx) => (
-          <span
-            key={idx}
-            className={clsx('item', { active: pageIndex === idx })}
-            onClick={() => slideToPageIndex(idx)}
-          ></span>
-        ))}
+        <Space size={6} direction={direction}>
+          {React.Children.map(children, (c, idx) => (
+            <span
+              key={idx}
+              className={clsx('item', { active: pageIndex === idx })}
+              onClick={() => slideToPageIndex(idx)}
+            ></span>
+          ))}
+        </Space>
       </div>
     );
   };

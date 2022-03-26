@@ -7,7 +7,6 @@ import clsx from 'clsx';
 type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 
 type ItemProps = {
-  className: string;
   children: React.ReactNode;
   index: number;
   direction?: 'horizontal' | 'vertical';
@@ -16,15 +15,7 @@ type ItemProps = {
   wrap?: boolean;
 };
 
-function SpaceItem({
-  className = 'uc-space-item',
-  direction,
-  index,
-  marginDirection,
-  children,
-  split,
-  wrap,
-}: ItemProps) {
+function SpaceItem({ direction, index, marginDirection, children, split, wrap }: ItemProps) {
   const { horizontalSize, verticalSize, latestIndex, supportFlexGap } =
     React.useContext(SpaceContext);
 
@@ -49,14 +40,8 @@ function SpaceItem({
 
   return (
     <>
-      <div className={className} style={style}>
-        {children}
-      </div>
-      {index < latestIndex && split && (
-        <span className={`${className}-split`} style={style}>
-          {split}
-        </span>
-      )}
+      <div style={style}>{children}</div>
+      {index < latestIndex && split && <span style={style}>{split}</span>}
     </>
   );
 }
@@ -132,7 +117,6 @@ const Space: React.FC<SpaceProps> = (props) => {
     /* eslint-disable react/no-array-index-key */
     return (
       <SpaceItem
-        className={className}
         key={i}
         direction={direction}
         index={i}
