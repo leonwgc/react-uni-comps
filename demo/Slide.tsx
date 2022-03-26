@@ -18,6 +18,22 @@ export default function App() {
 
   return (
     <PageWrap style={{ padding: 0 }}>
+      <DemoBlock title="水平">
+        <Slide autoPlay direction="horizontal">
+          {images.map((item) => (
+            <img src={item} key={item} />
+          ))}
+        </Slide>
+      </DemoBlock>
+
+      <DemoBlock title="垂直">
+        <Slide interval={1000} autoPlay direction="vertical">
+          {images.map((item) => (
+            <img src={item} key={item} />
+          ))}
+        </Slide>
+      </DemoBlock>
+
       <DemoBlock title="自定义">
         <Cell
           label="自动轮播"
@@ -52,14 +68,6 @@ export default function App() {
           <Button onClick={() => ref.current.prev()}>上一页</Button>
           <Button onClick={() => ref.current.next()}>下一页</Button>
         </div>
-      </DemoBlock>
-
-      <DemoBlock title="垂直">
-        <Slide style={{ marginTop: 30 }} interval={1000} autoPlay direction="vertical">
-          {images.map((item) => (
-            <img src={item} key={item} />
-          ))}
-        </Slide>
       </DemoBlock>
     </PageWrap>
   );

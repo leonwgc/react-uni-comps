@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import { isMobile, isTouch } from './dom';
-import { animationNormal } from './vars';
+import { animationSlow } from './vars';
 import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 
@@ -44,17 +44,19 @@ const StyledSlide = styled.div`
     .item {
       cursor: pointer;
       display: inline-block;
-      width: 19px;
+      width: 8px;
       height: 4px;
-      background: rgba(255, 255, 255, 0.6);
-      transition: all ease-in-out ${animationNormal}ms;
+      border-radius: 2px;
+      background-color: #fff;
+      opacity: 0.4;
+      transition: opacity ease-in-out ${animationSlow}ms;
 
       &:not(:last-child) {
         margin-right: 4px;
       }
 
       &.active {
-        background: #fff;
+        opacity: 1;
       }
     }
 
@@ -68,7 +70,8 @@ const StyledSlide = styled.div`
       .item {
         display: block;
         width: 4px;
-        height: 19px;
+        height: 8px;
+        border-radius: 2px;
         &:not(:last-child) {
           margin-bottom: 4px;
         }

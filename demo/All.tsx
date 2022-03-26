@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Slide FullPage
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SlideFullPage')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Slide
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Slide')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Toast
           </Space>
         }
@@ -245,15 +263,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ImageViewer')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> FingerGestureElement
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('FingerGestureElement')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
@@ -308,24 +318,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('SwipeAction')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Slide FullPage
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SlideFullPage')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Slide
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Slide')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

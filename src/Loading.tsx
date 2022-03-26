@@ -22,7 +22,9 @@ const StyledLoading = styled.div`
  *
  * @return {*}
  */
-function Loading() {}
+const Loading: React.FC = () => {
+  return null;
+};
 
 const show = (content?: React.ReactNode) => {
   Toast.show({
@@ -35,9 +37,7 @@ const hide = () => {
   Toast.hide();
 };
 
-attachPropertiesToComponent(Loading, {
+export default attachPropertiesToComponent(Loading, {
   show,
   hide,
 });
-
-export default Loading;
