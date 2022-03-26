@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useMemo, useRef, SyntheticEvent } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Slide, { SlideRefType } from './Slide';
 import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
-import IconArrow from './IconArrow';
-import Button from './Button';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
+import type { BaseProps } from './types';
+import Mask from './Mask';
 
-type Props = {
+type Props = BaseProps & {
   /** 是否可见 */
   visible?: boolean;
   /**  关闭回调 */
@@ -18,13 +18,11 @@ type Props = {
   images?: string[] | string;
   /** 切换图片时触发 */
   onIndexChange?: (index: number) => void;
-  className?: string;
-  style?: React.CSSProperties;
 };
 
 const StyledImageViewer = styled.div`
   position: fixed;
-  z-index: 300;
+  z-index: 1200;
   left: 0;
   right: 0;
   bottom: 0;
@@ -33,23 +31,33 @@ const StyledImageViewer = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  background-color: #000;
+  touch-action: none;
+  user-select: none;
 
-  .navs {
+  .page {
     position: absolute;
     left: 50%;
     top: 16px;
     transform: translate3d(-50%, 0, 0);
-    color: #fff;
-    font-size: 18px;
+    color: #e6e6e6;
+    font-size: 14px;
   }
+
+  .close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    color: #e6e6e6;
+    font-size: 24px;
+  }
+
   .close {
     position: fixed;
-    right: 24px;
-    top: 24px;
+    right: 16px;
+    top: 16px;
     cursor: pointer;
     color: #fff;
-    font-size: 32px;
+    font-size: 16px;
   }
 
   .uc-icon-arrow {
@@ -58,9 +66,7 @@ const StyledImageViewer = styled.div`
 
   img {
     width: 100%;
-    max-height: 70vh;
-    object-fit: contain;
-    flex-basis: 100vw;
+    object-fit: scale-down;
   }
 `;
 
@@ -91,7 +97,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         showPageIndicator={false}
         style={{ width: '100%', display: 'flex', alignItems: 'center' }}
         direction="horizontal"
-        height={'100vh'}
+        height={'70vh'}
         onPageChange={(index) => {
           setIndex(index);
           onIndexChangeRef.current?.(index);
@@ -105,46 +111,35 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     );
   }, [urls, onIndexChangeRef, slideRef]);
 
-  const navRender = () => {
-    if (urls.length > 1) {
-      return (
-        <div className={clsx('navs')}>
-          <Space>
-            <Button
-              style={{ border: 'none' }}
-              ghost
-              onClick={(e: SyntheticEvent) => {
-                e.stopPropagation();
-                slideRef.current?.prev();
-              }}
-              icon={<IconArrow direction="left" />}
-            />
-            <span>
-              {index + 1} / {urls.length}
-            </span>
-            <Button
-              ghost
-              style={{ border: 'none' }}
-              onClick={(e: SyntheticEvent) => {
-                e.stopPropagation();
-                slideRef.current?.next();
-              }}
-              icon={<IconArrow direction="right" />}
-            ></Button>
-          </Space>
-        </div>
-      );
-    }
-  };
-
   return (
-    visible && (
-      <StyledImageViewer {...rest} ref={ref} className={clsx('uc-image-viewer', className)}>
-        {slides}
-        <Icon type="uc-icon-clear" className="close" onClick={onClose} />
-        {navRender()}
-      </StyledImageViewer>
-    )
+    <>
+      <Mask visible={visible} />
+      {visible && (
+        <StyledImageViewer
+          onClick={(e: any) => {
+            if (e.target.nodeName === 'IMG') {
+              return;
+            }
+            onClose?.();
+          }}
+          {...rest}
+          ref={ref}
+          className={clsx('uc-image-viewer', className)}
+        >
+          {slides}
+          {urls.length > 1 && (
+            <div className={clsx('page')}>
+              <Space size={4}>
+                {index + 1} / {urls.length}
+              </Space>
+            </div>
+          )}
+          <div className="close" onClick={onClose}>
+            <Icon type="uc-icon-guanbi" />
+          </div>
+        </StyledImageViewer>
+      )}
+    </>
   );
 });
 

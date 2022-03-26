@@ -14,6 +14,7 @@ import { animationSlow } from './vars';
 import Touch from 'w-touch';
 import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
+import type { BaseProps } from './types';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -41,6 +42,7 @@ const StyledSlide = styled.div`
     bottom: 8px;
     left: 50%;
     transform: translate3d(-50%, 0, 0);
+    line-height: 4px;
 
     .item {
       cursor: pointer;
@@ -73,27 +75,50 @@ const StyledSlide = styled.div`
   }
 `;
 
-export type Props = {
-  /** 自动播放,默认false */
+export type Props = BaseProps & {
+  /**
+   * 是否自动播放
+   * @default false
+   */
   autoPlay?: boolean;
-  // /** 水平还是垂直播放 */
+  /**
+   * 水平还是垂直
+   * @default horizontal
+   */
   direction?: 'horizontal' | 'vertical';
-  /** 距离下一次播放的间隔毫秒, 默认 3000 */
+  /**
+   * 距离下一次播放的间隔毫秒
+   * @default 3000
+   */
   interval?: number;
   children: React.ReactElement[];
-  /** 容器高度，默认160px */
+  /**
+   * 容器高度
+   * @default 160
+   */
   height?: number | string;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 循环播放,默认true */
+
+  /**
+   * 是否循环
+   * true
+   */
   loop?: boolean;
   /** 页面切换后回调 */
   onPageChange?: (pageIndex: number) => void;
-  /** 是否显示分页器,默认true */
+  /**
+   * 是否显示分页器
+   * @default true
+   */
   showPageIndicator?: boolean;
-  /** 滑动比例多少切换，默认0.1 */
+  /**
+   * 滑动比例多少切换
+   * @default 0.1
+   */
   ratio?: number;
-  /** 动画时间，默认280 */
+  /**
+   * 动画时间
+   * @default 280
+   */
   duration?: number;
 };
 
