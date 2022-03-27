@@ -119,15 +119,17 @@ export default function App() {
             }
             defaultValue={'10'}
           />
-
-          <Form.Item label="显示数量">
-            <Input
-              value={val}
-              onChange={setVal}
-              maxLength={12}
-              suffix={<Space size={2}>{val.length} / 12</Space>}
-            />
-          </Form.Item>
+          <Form>
+            <Form.Item label="显示数量" name="count">
+              <Input
+                value={val}
+                onChange={setVal}
+                onPressEnter={Toast.show}
+                maxLength={12}
+                suffix={<Space size={2}>{val.length} / 12</Space>}
+              />
+            </Form.Item>
+          </Form>
         </Space>
       </DemoBlock>
 
