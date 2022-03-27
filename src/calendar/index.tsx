@@ -124,10 +124,6 @@ const StyledWrap = styled.div`
       .day.firstday-6 {
         margin-left: 85.71426%;
       }
-      /* .day--today .day__content {
-        background-color: ${(props) => color(props.theme.color).fade(0.72)};
-        ${getThemeColorCss('color')}
-      } */
 
       .day--selected {
         .day__content {

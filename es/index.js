@@ -104,7 +104,7 @@ export { default as useUnmount } from './hooks/useUnmount';
 export { default as useForceUpdate } from './hooks/useForceUpdate';
 /** third-party libs */
 
-export { default as styled } from 'styled-components';
+export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
 export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
 export { nanoid } from 'nanoid';

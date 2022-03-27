@@ -10,3 +10,14 @@
 //     ['@babel/plugin-proposal-class-properties', { loose: false }],
 //   ],
 // };
+
+module.exports = {
+  plugins: [
+    [
+      'babel-plugin-styled-components',
+      {
+        pure: true,
+      },
+    ],
+  ],
+};
