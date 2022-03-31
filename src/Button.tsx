@@ -51,7 +51,6 @@ const StyledButton = styled.button`
   position: relative;
   align-items: center;
   user-select: none;
-  vertical-align: middle;
   justify-content: center;
   text-decoration: none;
   background-color: transparent;
@@ -64,7 +63,6 @@ const StyledButton = styled.button`
   transition: all 0.3s ease;
   user-select: none;
   touch-action: manipulation;
-  padding: 4px 16px;
   font-size: 14px;
   border-radius: 2px;
   border: 1px solid transparent;
