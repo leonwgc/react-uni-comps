@@ -8293,7 +8293,7 @@ var limit$1 = function limit(val, min, max) {
 /** 数字输入框 */
 
 
-var InputNumber = function InputNumber(props) {
+var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       _props$defaultValue = props.defaultValue,
       defaultValue = _props$defaultValue === void 0 ? '' : _props$defaultValue,
@@ -8318,6 +8318,7 @@ var InputNumber = function InputNumber(props) {
     }
   }, [value]);
   return /*#__PURE__*/React__default['default'].createElement(Input, _extends({
+    ref: ref,
     className: clsx__default['default']('uc-input-number', className)
   }, rest, {
     value: String(val),
@@ -8343,8 +8344,7 @@ var InputNumber = function InputNumber(props) {
       }
     }
   }));
-};
-
+});
 InputNumber.displayName = 'UC-InputNumber';
 
 /* eslint-disable @typescript-eslint/no-empty-function */

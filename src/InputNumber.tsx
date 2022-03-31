@@ -51,7 +51,7 @@ const limit = (val: number, min, max, digits = 0) => {
 };
 
 /** 数字输入框 */
-const InputNumber: React.FC<Props> = (props) => {
+const InputNumber = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { className, defaultValue = '', value, min, max, onChange, digits, ...rest } = props;
 
   const [val, setVal] = useState(value || defaultValue);
@@ -68,6 +68,7 @@ const InputNumber: React.FC<Props> = (props) => {
 
   return (
     <Input
+      ref={ref}
       className={clsx('uc-input-number', className)}
       {...rest}
       value={String(val)}
@@ -91,7 +92,7 @@ const InputNumber: React.FC<Props> = (props) => {
       }}
     />
   );
-};
+});
 
 InputNumber.displayName = 'UC-InputNumber';
 

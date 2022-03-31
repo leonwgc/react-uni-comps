@@ -129,7 +129,7 @@ const StyledInput = styled.div`
   }
 `;
 //#endregion
-type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
+type RefType = HTMLInputElement | HTMLTextAreaElement;
 
 /** 单行/多行输入框 input/textarea */
 const Input = React.forwardRef<RefType, Props>((props, ref) => {

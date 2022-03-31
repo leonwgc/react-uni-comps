@@ -34,7 +34,7 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
 };
-declare type RefType = HTMLInputElement | HTMLTextAreaElement | HTMLAnchorElement;
+declare type RefType = HTMLInputElement | HTMLTextAreaElement;
 /** 单行/多行输入框 input/textarea */
 declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
     /** 只读 */

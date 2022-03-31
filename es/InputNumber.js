@@ -53,7 +53,7 @@ var limit = function limit(val, min, max, digits) {
 /** 数字输入框 */
 
 
-var InputNumber = function InputNumber(props) {
+var InputNumber = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       _a = props.defaultValue,
       defaultValue = _a === void 0 ? '' : _a,
@@ -77,6 +77,7 @@ var InputNumber = function InputNumber(props) {
     }
   }, [value]);
   return /*#__PURE__*/React.createElement(Input, __assign({
+    ref: ref,
     className: clsx('uc-input-number', className)
   }, rest, {
     value: String(val),
@@ -102,7 +103,6 @@ var InputNumber = function InputNumber(props) {
       }
     }
   }));
-};
-
+});
 InputNumber.displayName = 'UC-InputNumber';
 export default InputNumber;

@@ -81,7 +81,7 @@ export default function App() {
       <DemoBlock title="默认" padding={0}>
         <Space direction="vertical" size={4} style={{ width: '100%' }}>
           <Cell label="默认">
-            <Input value={val} onChange={setVal} />
+            <Input value={val} onChange={setVal} autoFocus />
           </Cell>
 
           <Cell label="非受控">
