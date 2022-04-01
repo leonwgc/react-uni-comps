@@ -12,6 +12,11 @@ type Props = {
   onChange?: (affixed: boolean) => void;
   /**设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
   target?: () => HTMLElement | Window;
+  /**
+   * 固钉定位层级
+   * @default 100
+   */
+  zIndex?: number;
 } & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
 
 type StateInfo = {
@@ -27,7 +32,7 @@ type OffsetInfo = {
 
 /** 将页面元素钉在可视范围*/
 const Affix: React.FC<Props> = (props) => {
-  const { children, offsetTop, offsetBottom, target, onChange, ...rest } = props;
+  const { children, offsetTop, offsetBottom, zIndex = 100, target, onChange, ...rest } = props;
 
   const [data, setData] = useState<StateInfo>({
     affixed: false,
@@ -79,7 +84,7 @@ const Affix: React.FC<Props> = (props) => {
         bottom: offsetBottom,
         width,
         height,
-        zIndex: 100,
+        zIndex: zIndex,
       };
     }
 
@@ -89,12 +94,12 @@ const Affix: React.FC<Props> = (props) => {
         top: targetRect.top + offsetTop,
         width,
         height,
-        zIndex: 100,
+        zIndex: zIndex,
       };
     }
 
     return {};
-  }, [getAffixed, data]);
+  }, [getAffixed, data, zIndex]);
 
   useEffect(() => {
     const t = targetRef.current?.() || window;

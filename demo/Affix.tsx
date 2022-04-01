@@ -15,7 +15,11 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="监听window滚动" style={{ marginTop: 100 }}>
-        <Affix offsetTop={60} onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}>
+        <Affix
+          offsetTop={60}
+          zIndex={200}
+          onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}
+        >
           <Button active>距离窗口顶部60px固定</Button>
         </Affix>
       </DemoBlock>

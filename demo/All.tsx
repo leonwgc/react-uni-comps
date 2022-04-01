@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Affix
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Affix')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Button
           </Space>
         }
@@ -710,15 +719,6 @@ export default function All() {
         onClick={() => gotoPage('Icon')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Affix
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Affix')}
-      ></Cell>
       <Cell
         label={
           <Space>
