@@ -14,6 +14,9 @@ export default function App() {
           <Button danger onClick={() => Toast.show('danger')}>
             Danger
           </Button>
+          <Button style={{ height: 50, width: 120, borderStyle: 'dashed', fontSize: 20 }}>
+            custom
+          </Button>
         </Space>
       </DemoBlock>
 

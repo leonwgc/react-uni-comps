@@ -20,6 +20,42 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Button
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Button')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Input
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Input')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> SearchBar
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SearchBar')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> InputNumber
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('InputNumber')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> ImageViewer
           </Space>
         }
@@ -116,15 +152,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Empty')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> InputNumber
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('InputNumber')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
@@ -188,15 +216,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Ripple')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> SearchBar
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SearchBar')}
-      ></Cell>
+
       <Cell
         label={
           <Space>
@@ -223,15 +243,6 @@ export default function All() {
         }
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('PasswordInput')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Input
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Input')}
       ></Cell>
 
       <Cell
@@ -698,15 +709,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('Icon')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Button
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Button')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

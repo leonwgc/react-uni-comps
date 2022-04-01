@@ -50,6 +50,9 @@ const StyledWrap = styled.div`
     &.mobile {
       padding: 4px 12px;
     }
+    .prefix {
+      line-height: 1;
+    }
   }
   .cancel-text {
     flex: none;
