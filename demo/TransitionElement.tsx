@@ -15,7 +15,7 @@ const StyledUCButton = styled(Button)`
   transition: all 240ms ease-in-out;
 
   &.to {
-    width: 300px !important;
+    width: 260px !important;
   }
 `;
 
@@ -26,7 +26,7 @@ const StyledButton = styled.div`
   height: 40px;
   display: inline-block;
   cursor: pointer;
-  background: #39a0ff;
+  background: #005cff;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
