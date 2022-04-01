@@ -3402,7 +3402,7 @@ var _excluded$o = ["content", "visible", "modal", "maskStyle", "className"],
 var StyledToast = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Toast__StyledToast",
   componentId: "sc-1evhb0v-0"
-})(["z-index:1000;padding:12px 16px;display:inline-block;margin:0 auto;background-color:rgba(0,0,0,0.7);color:#fff;border-radius:4px;text-align:center;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);"]);
+})(["z-index:2000;padding:12px 16px;display:inline-block;margin:0 auto;background-color:rgba(0,0,0,0.7);color:#fff;border-radius:4px;text-align:center;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);"]);
 
 /** 轻提示 */
 var Toast = function Toast(props) {
@@ -3426,8 +3426,15 @@ var Toast = function Toast(props) {
 
 var transitionDuration = 240;
 var _hide = null;
+var num = 0;
 
 Toast.show = function (props) {
+  if (num > 0) {
+    // skip
+    return;
+  }
+
+  num++;
   var toastProps = {};
   var _duration = 1500;
   var isToastProps = _typeof(props) === 'object' && 'content' in props;
@@ -3452,6 +3459,7 @@ Toast.show = function (props) {
   })), container);
 
   var hide = function hide() {
+    num--;
     dispose(beforeDispose);
 
     if (isToastProps) {
