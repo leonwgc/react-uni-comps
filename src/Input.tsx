@@ -97,6 +97,7 @@ const StyledInput = styled.div`
   .clear {
     color: #bcbcbc;
     cursor: pointer;
+    line-height: 1;
   }
 
   input,
