@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { beforeDisposeGen, Dispose, renderElement } from './dom';
 
 const StyledToast = styled.div`
-  z-index: 1000;
+  z-index: 2000;
   padding: 12px 16px;
   display: inline-block;
   margin: 0 auto;
@@ -75,7 +75,14 @@ const transitionDuration = 240;
 
 let _hide = null;
 
+let num = 0;
+
 Toast.show = (props: StaticToastProps) => {
+  if (num > 0) {
+    // skip
+    return;
+  }
+  num++;
   let toastProps = {};
   let _duration = 1500;
 
@@ -98,6 +105,7 @@ Toast.show = (props: StaticToastProps) => {
   const dispose: Dispose = renderElement(<Toast {...toastProps} visible />, container);
 
   const hide = () => {
+    num--;
     dispose(beforeDispose);
     if (isToastProps) {
       props.afterClose?.();
