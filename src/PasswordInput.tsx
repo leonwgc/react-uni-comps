@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 值 */
@@ -11,19 +12,23 @@ type Props = {
   onFinish?: (v: string) => void;
   /** 输入回调 */
   onChange: (v: string) => void;
-  /** 获取焦点回调,virtualKeyboard为false才生效 */
+  /** 获取焦点回调 */
   onFocus?: () => void;
-  /** 输入长度 */
+  /** 
+   * 输入长度
+   * @default 6
+   *  */
   length?: number;
-  /** 不显示原文 */
+  /**
+   * 不显示原文
+   * @default true
+   *  */
   mask?: boolean;
   /** 使用模拟输入框，键盘无法输入*/
   userVirtualInput?: boolean;
-  style?: React.CSSProperties;
-  className?: string;
   /** 自动获取焦点 */
   autoFocus?: boolean;
-};
+} & BaseProps;
 
 const StyledPasswordInput = styled.div`
   user-select: none;

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import type { NoOnChangeHtmlElement } from './types';
+import type { BaseProps } from './types';
 
-const StyledRate = styled.div`
+const StyledRate = styled.div<{ $color: string }>`
   display: inline-flex;
   .box {
     position: relative;
@@ -27,7 +27,7 @@ const StyledRate = styled.div`
       top: 0;
     }
     &.active {
-      color: #ffd21e;
+      color: ${(props) => props.$color};
     }
     &.readonly {
       cursor: unset;
@@ -36,24 +36,35 @@ const StyledRate = styled.div`
 `;
 
 type Props = {
-  /** 是否允许再次点击后清除*/
+  /** 
+   * 是否允许再次点击后清除
+   * @default true
+  */
   allowClear?: boolean;
   /**是否允许半选 */
   allowHalf?: boolean;
   /** 自定义字符 */
   char?: React.ReactNode;
-  /** star 总数   */
+  /**
+   * star总数
+   * @default 5
+   *    */
   count?: number;
-  /**默认数，非受控 */
+  /** 默认数，非受控 */
   defaultValue?: number;
   /**只读 */
   readonly?: boolean;
-  /**当前数，受控 */
+  /** 当前数，受控 */
   value?: number;
-  /**选择回调 */
+  /** 评分回调 */
   onChange?: (value: number) => void;
-  className?: string;
-} & NoOnChangeHtmlElement;
+
+  /**
+   * 评分颜色
+   * @default #ffd21e
+   *   */
+  color?: string;
+} & BaseProps;
 
 const defaultChar = (
   <svg viewBox="64 64 896 896" data-icon="star" width="1em" height="1em" fill="currentColor">
@@ -72,6 +83,7 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     char = defaultChar,
     onChange,
     className,
+    color = '#ffd21e',
     allowClear = true,
     ...rest
   } = props;
@@ -116,7 +128,7 @@ const Rate = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     [allowClear, char, readonly]
   );
   return (
-    <StyledRate {...rest} ref={ref} className={clsx(className)}>
+    <StyledRate {...rest} ref={ref} className={clsx(className)} $color={color}>
       {starList.map((_, i) => (
         <div key={i} className={clsx(`box`)}>
           {allowHalf && renderChar(i + 0.5, val, true)}

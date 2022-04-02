@@ -17,20 +17,23 @@ type ObjectDatas = DataItem[] | DataItem[][];
 
 export type DataType = ObjectDatas | SimpleDatas;
 
-type Props = BaseProps & {
+export type Props = {
   /** 数据 */
   data?: DataType;
   /** 值 */
   value?: Array<StringOrNumber>;
   /** 值改变回调 */
   onChange?: (value: Array<StringOrNumber>) => void;
-  /** 元素高度，默认 35 */
+  /**
+   * 元素高度
+   * @default 35
+   *  */
   itemHeight?: number;
   /** 滚动变化回调 */
   onWheelChange?: (index: number, wheelIndex: number) => void;
   /** 自定义label */
   labelRender?: (item: DataItem) => React.ReactNode;
-};
+} & BaseProps;
 
 const StyledWrap = styled.div<{ itemHeight: number }>`
   display: flex;

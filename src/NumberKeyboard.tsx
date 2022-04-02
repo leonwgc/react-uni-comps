@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import NumberKeyboardBase from './NumberKeyboardBase';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 是否弹出 */
@@ -14,18 +15,24 @@ type Props = {
   onOk?: (str: string) => void;
   /** 关闭 */
   onClose: () => void;
-  className?: string;
+
   /** 自定义按钮 ./X */
   customKey?: '.' | 'X' | '';
   /** 按键回调,返回输入的字符串 */
   onChange: (str: string) => void;
-  /** 确定按钮文字,默认：确定 */
+  /**
+   * 确定按钮文字
+   * @default 确定
+   */
   okText?: React.ReactNode;
-  /** 点击遮罩是否关闭,默认true*/
+  /**
+   * 点击遮罩是否关闭
+   * @default true
+   * */
   closeOnMaskClick?: boolean;
-};
+} & BaseProps;
 
-const StyledNumberKeyboard = styled(Popup)`
+const StyledPopup = styled(Popup)`
   width: 100%;
   height: 300px;
 `;
@@ -51,7 +58,7 @@ const NumberKeyboard: React.FC<Props> = (props) => {
   }, [value]);
 
   return (
-    <StyledNumberKeyboard
+    <StyledPopup
       {...rest}
       closeOnMaskClick={closeOnMaskClick}
       visible={visible}
@@ -81,7 +88,7 @@ const NumberKeyboard: React.FC<Props> = (props) => {
           }
         }}
       />
-    </StyledNumberKeyboard>
+    </StyledPopup>
   );
 };
 

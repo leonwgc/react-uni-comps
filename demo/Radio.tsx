@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { Radio, Space } from 'react-uni-comps';
 
 export default function App() {
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   return (
     <PageWrap>
@@ -16,10 +16,8 @@ export default function App() {
 
       <DemoBlock title="非受控">
         <Space>
-          <Radio defaultChecked onChange={(c) => console.log(c)}>
-            非受控
-          </Radio>
           <Radio onChange={(c) => console.log(c)}>非受控</Radio>
+          <Radio defaultChecked>非受控</Radio>
         </Space>
       </DemoBlock>
     </PageWrap>

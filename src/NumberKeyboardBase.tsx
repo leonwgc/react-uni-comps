@@ -2,15 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Button from './Button';
+import type { BaseProps } from './types';
 
 type Props = {
-  className?: string;
-  /** 确定按钮文字,默认：确定 */
+  /** 
+   * 确定按钮文字
+   * @default 确定
+   *  */
   okText?: React.ReactNode;
-  /** 自定义按钮 ./X */
+  /** 自定义按钮 */
   customKey?: '.' | 'X' | '';
   onClick: (key: string) => void;
-};
+} & BaseProps;
 
 const StyledNumberKeyboardBase = styled.div`
   position: fixed;

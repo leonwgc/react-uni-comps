@@ -4,24 +4,17 @@ import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView from './PickerView';
-import type { PickerViewRefType, DataType } from './Pickerview';
-import type { DataItem } from './Wheel';
 import useCallbackRef from './hooks/useCallbackRef';
 import type { StringOrNumber } from './types';
+import type { Props as PickerviewProps, PickerViewRefType } from './PickerView';
 
 //#region def
 
-type Props = {
-  /** 数据 */
-  data?: DataType;
-  /** 值 */
-  value?: Array<StringOrNumber>;
+type Props = PickerviewProps & {
   /** 关闭回调 */
   onClose?: () => void;
   /** 点击确定回调 */
   onOk?: (value: Array<StringOrNumber>) => void;
-  /** 值改变回调 */
-  onChange?: (value: Array<StringOrNumber>) => void;
   /** 是否显示 */
   visible?: boolean;
   /** 确定文本 */
@@ -30,14 +23,6 @@ type Props = {
   title?: React.ReactNode;
   /** 取消文本 */
   cancelText?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 元素高度，默认 35 */
-  itemHeight?: number;
-  /** 滚动变化回调 */
-  onWheelChange?: (index: number, wheelIndex: number) => void;
-  /** 自定义label */
-  labelRender?: (item: DataItem) => React.ReactNode;
 };
 
 const StyledDrawer = styled(Drawer)`
