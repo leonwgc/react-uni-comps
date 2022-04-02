@@ -9,7 +9,7 @@ import Icon from './Icon';
 import type { BaseProps } from './types';
 import Mask from './Mask';
 
-type Props = BaseProps & {
+type Props = {
   /** 是否可见 */
   visible?: boolean;
   /**  关闭回调 */
@@ -18,7 +18,7 @@ type Props = BaseProps & {
   images?: string[] | string;
   /** 切换图片时触发 */
   onIndexChange?: (index: number) => void;
-};
+} & BaseProps;
 
 const StyledImageViewer = styled.div`
   position: fixed;

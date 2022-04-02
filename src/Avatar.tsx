@@ -2,17 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Icon from './Icon';
+import type { BaseProps } from './types';
 
 type Props = {
-  /** 尺寸，默认40 */
+  /**
+   * 尺寸
+   * @default 40
+   *  */
   size?: number;
-  /** 形状，默认circle */
+  /**
+   * 形状
+   * @default circle
+   *  */
   shape?: 'circle' | 'square';
-  className?: string;
-  style?: React.CSSProperties;
   /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 const StyledAvatar = styled.div`
   box-sizing: border-box;

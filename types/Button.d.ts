@@ -1,18 +1,16 @@
 import React from 'react';
+import type { BaseProps } from './types';
 /** 按钮 */
-declare const Button: React.ForwardRefExoticComponent<{
+declare const Button: React.ForwardRefExoticComponent<BaseProps & {
     /** default 线框，primary 实色框 */
     type?: 'primary' | 'default';
-    active?: boolean;
     /** 主题色线框风格 */
     outlined?: boolean;
     /** 禁用 */
     disabled?: boolean;
-    style?: React.CSSProperties;
     /** 块级按钮 */
     block?: boolean;
     children?: React.ReactNode;
-    className?: string;
     /** 圆形按钮 */
     circle?: boolean;
     /** 虚线边 */

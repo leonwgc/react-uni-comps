@@ -3,6 +3,7 @@ import { toArray } from './util';
 import styled from 'styled-components';
 import { detectFlexGapSupported } from './dom';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 
@@ -58,9 +59,7 @@ const flexDirectionMap = {
   vertical: 'column',
 };
 
-type SpaceProps = {
-  className?: string;
-  style?: React.CSSProperties;
+type SpaceProps = BaseProps & {
   /** 间距大小 */
   size?: number | [number, number];
   /** 间距方向 */

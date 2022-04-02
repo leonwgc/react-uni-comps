@@ -2,22 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 /** 显示1px的边 */
 type Position = 'top' | 'right' | 'bottom' | 'left' | 'all';
 
 type Props = {
-  /** 显示1px的边，默认为 bottom 底部,为all则显示4条边 */
+  /**
+   * 显示1px的边
+   * @default bottom
+   */
   position?: Position;
-  /** 边的颜色,默认 #dcdcdc */
+  /**
+   * 边的颜色
+   * @default #dcdcdc
+   */
   color?: string;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 圆角,默认0*/
+  /**
+   * 圆角
+   * @default 0
+   * */
   borderRadius?: number;
-  /** 只在移动端显示,默认true */
+  /**
+   * 只在移动端显示
+   * @default true
+   *  */
   mobile?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: number }>`
   position: relative;

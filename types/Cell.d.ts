@@ -1,7 +1,12 @@
 import React, { HTMLAttributes } from 'react';
+import type { BaseProps } from './types';
 export declare type Props = {
     /** 是否显示红色*标记 */
     required?: boolean;
+    /**
+     * 老代码label
+     * @deprecated
+     */
     title?: React.ReactNode;
     /** 标题 */
     label?: React.ReactNode;
@@ -9,10 +14,11 @@ export declare type Props = {
     description?: React.ReactNode;
     /** 右侧内容 */
     content?: React.ReactNode;
-    /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */
+    /**
+     * 底部线条颜色,不要线条，设置为透明
+     * @default #eee
+     *  */
     lineColor?: string;
-    className?: string;
-    style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
     /**
@@ -20,11 +26,15 @@ export declare type Props = {
      * @default true
      */
     withPaddingLeft?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+} & BaseProps & HTMLAttributes<HTMLDivElement>;
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<{
     /** 是否显示红色*标记 */
     required?: boolean;
+    /**
+     * 老代码label
+     * @deprecated
+     */
     title?: React.ReactNode;
     /** 标题 */
     label?: React.ReactNode;
@@ -32,10 +42,11 @@ declare const Cell: React.ForwardRefExoticComponent<{
     description?: React.ReactNode;
     /** 右侧内容 */
     content?: React.ReactNode;
-    /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */
+    /**
+     * 底部线条颜色,不要线条，设置为透明
+     * @default #eee
+     *  */
     lineColor?: string;
-    className?: string;
-    style?: React.CSSProperties;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
     /**
@@ -43,5 +54,5 @@ declare const Cell: React.ForwardRefExoticComponent<{
      * @default true
      */
     withPaddingLeft?: boolean;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

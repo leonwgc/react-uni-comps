@@ -2,18 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 内容,没有内容则显示圆点 */
   content?: React.ReactNode;
   /** 徽标背景色 */
   color?: string;
-  className?: string;
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
   /** 自定义徽标样式 */
   badgeStyle?: React.CSSProperties;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 const StyledBadge = styled.div`
   display: inline-block;

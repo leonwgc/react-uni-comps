@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 图片查看器 */
-declare const ImageViewer: React.ForwardRefExoticComponent<BaseProps & {
+declare const ImageViewer: React.ForwardRefExoticComponent<{
     /** 是否可见 */
     visible?: boolean;
     /**  关闭回调 */
@@ -10,5 +10,5 @@ declare const ImageViewer: React.ForwardRefExoticComponent<BaseProps & {
     images?: string[] | string;
     /** 切换图片时触发 */
     onIndexChange?: (index: number) => void;
-} & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;

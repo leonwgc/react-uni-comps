@@ -1,4 +1,5 @@
 import React from 'react';
+import type { BaseProps } from './types';
 export declare type DataItem = {
     /** 数据显示 */
     label: React.ReactNode;
@@ -7,9 +8,7 @@ export declare type DataItem = {
     /** 级联数据用children */
     children?: DataItem[];
 };
-declare type Props = {
-    className?: string;
-    style?: React.CSSProperties;
+declare type Props = BaseProps & {
     /** 数据列表 */
     data?: Array<DataItem>;
     /** 当前滚动值的索引 */

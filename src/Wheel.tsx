@@ -8,6 +8,7 @@ import useDebounce from './hooks/useDebounce';
 import { useSpring, animated, config } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
+import type { BaseProps } from './types';
 
 export type DataItem = {
   /** 数据显示 */
@@ -18,9 +19,7 @@ export type DataItem = {
   children?: DataItem[];
 };
 
-type Props = {
-  className?: string;
-  style?: React.CSSProperties;
+type Props = BaseProps & {
   /** 数据列表 */
   data?: Array<DataItem>;
   /** 当前滚动值的索引 */

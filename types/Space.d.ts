@@ -1,8 +1,7 @@
 import * as React from 'react';
+import type { BaseProps } from './types';
 declare type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
-declare type SpaceProps = {
-    className?: string;
-    style?: React.CSSProperties;
+declare type SpaceProps = BaseProps & {
     /** 间距大小 */
     size?: number | [number, number];
     /** 间距方向 */

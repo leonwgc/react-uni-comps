@@ -1,29 +1,34 @@
 import React from 'react';
+import type { BaseProps } from './types';
 declare type Props = {
-    className?: string;
-    style?: React.CSSProperties;
     /**
-     * 水印之间的水平间距,d=24
+     * 水印之间的水平间距
+     * @default 24
      */
     gapX?: number;
     /**
-     * 水印之间的垂直间距,d=48
+     * 水印之间的垂直间距
+     * @default 48
      */
     gapY?: number;
     /**
-     * 水印元素的z-index, d=2000
+     * 水印元素的z-index
+     * @default 2000
      */
     zIndex?: number;
     /**
-     * 水印的宽度,d=120
+     * 水印的宽度
+     * @default 120
      */
     width?: number;
     /**
-     * 水印的高度,d=64
+     * 水印的高度
+     * @default 64
      */
     height?: number;
     /**
-     * 水印绘制时，旋转的角度，d=-22
+     * 水印绘制时，旋转的角度
+     * @default -22
      */
     rotate?: number;
     /**
@@ -31,11 +36,13 @@ declare type Props = {
      */
     image?: string;
     /**
-     * 图片宽度,d=120
+     * 图片宽度
+     * @default 120
      */
     imageWidth?: number;
     /**
-     * 图片高度,d=64
+     * 图片高度
+     * @default 64
      */
     imageHeight?: number;
     /**
@@ -43,11 +50,13 @@ declare type Props = {
      */
     content?: string;
     /**
-     * 文字颜色,d=rgba(0,0,0,.15)
+     * 文字颜色
+     * @default rgba(0,0,0,.15)
      */
     fontColor?: string;
     /**
-     * 文字样式,d=normal
+     * 文字样式
+     * @default normal
      */
     fontStyle?: 'none' | 'normal' | 'italic' | 'oblique';
     /**
@@ -55,14 +64,16 @@ declare type Props = {
      */
     fontFamily?: string;
     /**
-     * 文字粗细,d=normal
+     * 文字粗细
+     * @default normal
      */
     fontWeight?: 'normal' | 'light' | 'weight' | number;
     /**
-     * 文字大小,d=14
+     * 文字大小
+     * @default 14
      */
     fontSize?: number | string;
-};
+} & BaseProps;
 /** 图片/文字水印 */
 declare const WaterMark: React.FC<Props>;
 export default WaterMark;

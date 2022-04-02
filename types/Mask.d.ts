@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import type { BaseProps } from './types';
 /** 遮罩层 */
 declare const Mask: React.ForwardRefExoticComponent<{
     /**
@@ -6,7 +7,6 @@ declare const Mask: React.ForwardRefExoticComponent<{
      * @default true
      */
     hideOverflow?: boolean;
-    style?: React.CSSProperties;
     /** 是否可见 */
     visible?: boolean;
     /**
@@ -14,7 +14,6 @@ declare const Mask: React.ForwardRefExoticComponent<{
      * @default 280
      */
     duration?: number;
-    className?: string;
     children?: ReactElement;
-} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Mask;

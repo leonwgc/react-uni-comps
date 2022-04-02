@@ -2,19 +2,28 @@ import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 生成二维码文本 */
   text: string;
-  /** 二维码颜色,默认#000 */
+  /**
+   * 二维码颜色
+   * @default #000
+   *  */
   colorDark?: string;
-  /** 二维码背景颜色,默认#fff */
+  /**
+   *  二维码背景颜色
+   * @default #fff
+   */
   colorLight?: string;
-  /** 二维码宽高,默认128px */
+  /**
+   *  二维码宽高
+   * @default 128
+   */
   size?: number;
-  className?: string;
-  style?: React.CSSProperties;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 type QRProps = {
   makeCode: (text: string) => void;

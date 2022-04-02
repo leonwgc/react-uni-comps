@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useForceUpdate from './hooks/useForceUpdate';
 import { isObject } from './helper';
-import type { StringOrNumber } from './types';
+import type { StringOrNumber, BaseProps } from './types';
 
 //#region def
 
@@ -17,15 +17,13 @@ type ObjectDatas = DataItem[] | DataItem[][];
 
 export type DataType = ObjectDatas | SimpleDatas;
 
-type Props = {
+type Props = BaseProps & {
   /** 数据 */
   data?: DataType;
   /** 值 */
   value?: Array<StringOrNumber>;
   /** 值改变回调 */
   onChange?: (value: Array<StringOrNumber>) => void;
-  className?: string;
-  style?: React.CSSProperties;
   /** 元素高度，默认 35 */
   itemHeight?: number;
   /** 滚动变化回调 */

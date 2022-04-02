@@ -6,20 +6,18 @@ import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import Spin from './Spin';
 import Space from './Space';
+import type { BaseProps } from './types';
 
-type Props = {
+type Props = BaseProps & {
   /** default 线框，primary 实色框 */
   type?: 'primary' | 'default';
-  active?: boolean;
   /** 主题色线框风格 */
   outlined?: boolean;
   /** 禁用 */
   disabled?: boolean;
-  style?: React.CSSProperties;
   /** 块级按钮 */
   block?: boolean;
   children?: React.ReactNode;
-  className?: string;
   /** 圆形按钮 */
   circle?: boolean;
   /** 虚线边 */
@@ -162,7 +160,6 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
     type = 'default',
     disabled,
-    active,
     outlined,
     block,
     className,
@@ -220,7 +217,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
           mobile: isMobile,
           pc: !isMobile,
           anchor: rest.as === 'a',
-          outlined: outlined || active,
+          outlined: outlined,
         },
         className
       )}

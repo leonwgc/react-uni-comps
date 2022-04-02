@@ -4,10 +4,15 @@ import * as vars from './vars';
 import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 export type Props = {
   /** 是否显示红色*标记 */
   required?: boolean;
+  /**
+   * 老代码label
+   * @deprecated
+   */
   title?: React.ReactNode;
   /** 标题 */
   label?: React.ReactNode;
@@ -15,10 +20,11 @@ export type Props = {
   description?: React.ReactNode;
   /** 右侧内容 */
   content?: React.ReactNode;
-  /** 底部线条颜色,默认#eee,不想要线条，设置为透明 */
+  /**
+   * 底部线条颜色,不要线条，设置为透明
+   * @default #eee
+   *  */
   lineColor?: string;
-  className?: string;
-  style?: React.CSSProperties;
   /** 通常放input/textarea等输入控件 */
   children?: React.ReactNode;
   /**
@@ -26,7 +32,8 @@ export type Props = {
    * @default true
    */
   withPaddingLeft?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+} & BaseProps &
+  HTMLAttributes<HTMLDivElement>;
 
 const StyledCell = styled.div`
   background-color: #fff;
