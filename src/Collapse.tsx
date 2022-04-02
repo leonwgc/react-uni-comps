@@ -8,7 +8,7 @@ import useMount from './hooks/useMount';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { animationNormal } from './vars';
 import { attachPropertiesToComponent } from './util';
-import type { StringOrNumber } from './types';
+import type { StringOrNumber, BaseProps } from './types';
 
 type KeysType = Array<StringOrNumber> | StringOrNumber;
 
@@ -42,11 +42,9 @@ type CollapseProps = {
   keys?: KeysType;
   /** 切换面板的回调 */
   onChange?: (keys: KeysType) => void;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 展开动画, 默认false */
+  /** 展开动画*/
   animated?: boolean;
-};
+} & BaseProps;
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

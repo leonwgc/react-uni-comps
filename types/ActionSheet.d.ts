@@ -1,4 +1,5 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
+import type { BaseProps } from './types';
 declare type Action = {
     /** 标题  */
     text?: React.ReactNode;
@@ -16,7 +17,6 @@ declare type Props = {
     visible: boolean;
     /** 面板选项列表   */
     actions: Action[];
-    className?: string;
     /** 顶部的额外区域   */
     extra?: React.ReactNode;
     /** 取消按钮文字，如果设置为空则不显示取消按钮   */
@@ -25,7 +25,7 @@ declare type Props = {
     onClose?: () => void;
     /** 点击遮罩是否关闭,默认true*/
     closeOnMaskClick?: boolean;
-} & HTMLAttributes<HTMLElement>;
+} & BaseProps;
 /** 动作面板 */
 declare const ActionSheet: React.FC<Props>;
 export default ActionSheet;

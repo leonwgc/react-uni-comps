@@ -5,6 +5,7 @@ import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 const StyledWrap = styled.div`
   user-select: none;
@@ -52,10 +53,6 @@ type Props = {
   finishedText?: React.ReactNode;
   /** 加载中提示 */
   loadingText?: React.ReactNode;
-  /** 容器 style */
-  style?: React.CSSProperties;
-  /** 容器 class */
-  className?: string;
   /** 是否使用window滚动,默认true,如果为false Pullup将作为滚动容器(需要设置height)  */
   useWindowScroll?: boolean;
   /** 容器高度,useWindowScroll为false时必须设置 */
@@ -63,7 +60,7 @@ type Props = {
   /** 自定义footer */
   footer?: (loading: boolean, finished: boolean) => React.ReactNode;
   children?: React.ReactNode;
-};
+} & BaseProps;
 
 const DefaultLoadingText = (
   <Space>

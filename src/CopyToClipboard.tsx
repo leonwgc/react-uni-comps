@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import copy from './copy';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 要复制的文本 */
@@ -9,10 +10,8 @@ type Props = {
   /** 复制成功的回调 */
   onCopy?: () => void;
   children?: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
   onClick?: () => void;
-};
+} & BaseProps;
 
 const StyledWrap = styled.div`
   display: inline-flex;

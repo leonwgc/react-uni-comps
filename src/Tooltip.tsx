@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Popover from './Popover';
 import type { Placement } from './Popover';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 const StylePopover = styled(Popover)`
   color: #fff;
@@ -12,25 +13,29 @@ const StylePopover = styled(Popover)`
 type Offset = { x?: number; y?: number };
 
 export type Props = {
-  className?: string;
   /** tooltip显示的内容 */
   title?: React.ReactNode;
   /** 显示箭头,默认显示 */
   arrow?: boolean;
-  /** 显示位置,参考popover */
+  /** 显示位置 */
   placement?: Placement;
   /** 需要tooltip的子元素 */
   children: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
-  /** hover触发显示，关闭的timeout时间，默认100 (ms) */
+  /** 
+   * hover触发显示，关闭的timeout时间
+   * @default 100
+   *  */
   hoverDelay?: number;
   /** visible状态变化回调 */
   onVisibleChange?: (visible: boolean) => void;
-  /** 展开动画, 默认true */
+  /**
+   * 展开动画
+   * @default true
+   *  */
   animate?: boolean;
-  style?: React.CSSProperties;
-};
+} & BaseProps;
 
 /** 文字提示气泡框, 基于Popover */
 const Tooltip = (props: Props): React.ReactElement => {

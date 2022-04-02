@@ -6,6 +6,7 @@ import { renderElement, isMobile, Dispose, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
 import { boxShadow, animationNormal } from './vars';
 import Mask from './Mask';
+import type { BaseProps } from './types';
 
 const transitionDuration = animationNormal;
 
@@ -59,11 +60,7 @@ const StyledNotify = styled.div`
 type Props = {
   /** 内容 */
   content?: React.ReactNode;
-  /** 内容样式 */
-  style?: React.CSSProperties;
-  /** wrap class */
-  className?: string;
-};
+} & BaseProps;
 
 type StaticProps =
   | ReactNode

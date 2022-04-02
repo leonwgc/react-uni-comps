@@ -4,6 +4,7 @@ import Popup from './Popup';
 import Button from './Button';
 import * as vars from './vars';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Action = {
   /** 标题  */
@@ -23,7 +24,6 @@ type Props = {
   visible: boolean;
   /** 面板选项列表   */
   actions: Action[];
-  className?: string;
   /** 顶部的额外区域   */
   extra?: React.ReactNode;
   /** 取消按钮文字，如果设置为空则不显示取消按钮   */
@@ -32,7 +32,7 @@ type Props = {
   onClose?: () => void;
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
-} & HTMLAttributes<HTMLElement>;
+} & BaseProps;
 
 const StyledActionSheet = styled(Popup)`
   border-top-left-radius: 8px;

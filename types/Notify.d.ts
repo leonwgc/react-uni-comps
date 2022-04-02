@@ -1,12 +1,9 @@
 import React, { ReactNode } from 'react';
+import type { BaseProps } from './types';
 declare type Props = {
     /** 内容 */
     content?: React.ReactNode;
-    /** 内容样式 */
-    style?: React.CSSProperties;
-    /** wrap class */
-    className?: string;
-};
+} & BaseProps;
 declare type StaticProps = ReactNode | {
     /** 内容 */
     content: React.ReactNode;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Mask from './Mask';
 import clsx from 'clsx';
 import { beforeDisposeGen, Dispose, renderElement } from './dom';
+import type { BaseProps } from './types';
 
 const StyledToast = styled.div`
   z-index: 2000;
@@ -23,17 +24,14 @@ export type Props = {
   /** 内容 */
   content?: React.ReactNode;
   /**
-   * 模态
+   * 是否模态
    * @default true
    */
   modal?: boolean;
   visible?: boolean;
-  /** toast style */
-  style?: React.CSSProperties;
   /** mask 样式 */
   maskStyle?: React.CSSProperties;
-  className?: string;
-};
+} & BaseProps;
 
 type StaticToastProps =
   | React.ReactNode

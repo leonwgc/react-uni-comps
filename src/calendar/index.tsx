@@ -9,6 +9,7 @@ import { getThemeColorCss } from '../themeHelper';
 import { boxShadow } from '../vars';
 import color from 'color';
 import SafeArea from '../SafeArea';
+import type { BaseProps } from '../types';
 
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 
@@ -31,9 +32,7 @@ type Props = {
   disabledDate?: (date?: Date) => boolean;
   /** 语言,默认中文 */
   locale?: 'zh' | 'en';
-  className?: string;
-  style?: React.CSSProperties;
-};
+} & BaseProps;
 
 //#region styled
 

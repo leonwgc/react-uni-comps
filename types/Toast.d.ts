@@ -1,19 +1,17 @@
 import React from 'react';
+import type { BaseProps } from './types';
 export declare type Props = {
     /** 内容 */
     content?: React.ReactNode;
     /**
-     * 模态
+     * 是否模态
      * @default true
      */
     modal?: boolean;
     visible?: boolean;
-    /** toast style */
-    style?: React.CSSProperties;
     /** mask 样式 */
     maskStyle?: React.CSSProperties;
-    className?: string;
-};
+} & BaseProps;
 declare type StaticToastProps = React.ReactNode | {
     /** 内容 */
     content: React.ReactNode;

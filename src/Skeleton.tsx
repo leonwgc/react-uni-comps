@@ -2,25 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import SkeletonBase from './SkeletonBase';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Props = {
   /** loading结束渲染的元素 */
   children?: React.ReactElement;
-  /** 是否显示动画效果，默认显示 */
+  /** 
+   * 是否显示动画效果
+   * @default true
+   * */
   animated?: boolean;
-  /** 几行，默认4行, 最小1行 */
+  /** 
+   * 几行，默认4行, 最小1行
+   * @default 4
+   *  */
   row?: number;
   /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */
   rowWidth?: string | string[];
-  /** 矩形条高度,默认16px*/
+  /** 矩形条高度 */
   rowHeight?: number;
-  /** 是否显示头像，默认不显示 */
+  /**
+   * 是否显示头像
+   * @default false
+   * */
   avatar?: boolean;
-  /** 头像大小，默认32px */
+  /** 
+   * 头像大小
+   * @default 32
+   *  */
   avatarSize?: number;
   /** loading为true显示骨架，false则显示子元素*/
   loading?: boolean;
-} & React.HTMLAttributes<HTMLElement>;
+} & BaseProps;
 
 const StyledSkeleton = styled.div`
   .uc-skeleton {

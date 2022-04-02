@@ -61,20 +61,7 @@ const App = () => {
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="下拉执行onRefresh">
-        <PullToRefresh
-          onRefresh={() =>
-            Toast.show({
-              style: {
-                top: '60px',
-              },
-              content: (
-                <Space>
-                  <Spin /> 刷新
-                </Space>
-              ),
-            })
-          }
-        >
+        <PullToRefresh>
           <Ripple
             style={{
               height: '20vh',

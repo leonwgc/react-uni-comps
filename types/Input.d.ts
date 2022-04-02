@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 declare type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
-export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
+export declare type Props = {
     /** 只读 */
     readOnly?: boolean;
     /** 禁用 */
@@ -32,10 +32,10 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-} & BaseProps;
+} & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt>;
 declare type RefType = HTMLInputElement | HTMLTextAreaElement;
 /** 单行/多行输入框 input/textarea */
-declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
+declare const Input: React.ForwardRefExoticComponent<{
     /** 只读 */
     readOnly?: boolean;
     /** 禁用 */
@@ -66,5 +66,5 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-} & BaseProps & React.RefAttributes<RefType>>;
+} & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & React.RefAttributes<RefType>>;
 export default Input;

@@ -1,8 +1,10 @@
 import React from 'react';
 import type { DateOrString } from './utils';
+import type { BaseProps } from '../types';
 /** refer : zarm calendar (https://zarm.gitee.io/)  */
 export declare type ValueType = Date | Date[] | DateOrString | DateOrString[];
-declare type Props = {
+/** 移动端日历  */
+declare const Calendar: React.ForwardRefExoticComponent<{
     /**  最小可选日期,默认当前日期*/
     min?: DateOrString;
     /**  最大可选日期,默认min+1年*/
@@ -19,9 +21,5 @@ declare type Props = {
     disabledDate?: (date?: Date) => boolean;
     /** 语言,默认中文 */
     locale?: 'zh' | 'en';
-    className?: string;
-    style?: React.CSSProperties;
-};
-/** 移动端日历  */
-declare const Calendar: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Calendar;

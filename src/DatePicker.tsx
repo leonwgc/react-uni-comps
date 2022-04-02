@@ -5,6 +5,7 @@ import Picker from './Picker';
 import { PickerViewRefType } from './PickerView';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { DataItem } from './Wheel';
+import type { BaseProps } from './types';
 
 //#region def
 
@@ -19,21 +20,37 @@ type Props = {
   onChange?: (value: Date) => void;
   /** 是否显示 */
   visible?: boolean;
-  /** 确定文本 */
+  /**
+   * 确定文本
+   * @default 确定
+   *  */
   okText?: React.ReactNode;
-  /** 中间标题 */
+  /**
+   * 中间标题
+   * @default 请选择
+   *  */
   title?: React.ReactNode;
-  /** 最小年份, 默认1980 */
+  /**
+   * 最小年份
+   * @default 1980
+   *  */
   minYear?: number;
-  /** 最大年份, 默认2030 */
+  /**
+   * 最大年份
+   * @default 2030
+   *  */
   maxYear?: number;
-  /** 取消文本 */
+  /**
+   * 取消文本
+   * @default 取消
+   *  */
   cancelText?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 语言,默认中文 */
+  /**
+   * 语言
+   * @default zh
+   * */
   locale?: 'zh' | 'en';
-};
+} & BaseProps;
 
 const locales = {
   zh: { year: '年', month: '月', day: '日' },
