@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useCallbackRef from './hooks/useCallbackRef';
 import { throttle } from './helper';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */
@@ -17,7 +18,7 @@ type Props = {
    * @default 100
    */
   zIndex?: number;
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
+} & BaseProps;
 
 type StateInfo = {
   affixed: boolean;

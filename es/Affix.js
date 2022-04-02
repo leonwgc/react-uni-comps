@@ -37,17 +37,19 @@ var Affix = function Affix(props) {
   var children = props.children,
       offsetTop = props.offsetTop,
       offsetBottom = props.offsetBottom,
+      _a = props.zIndex,
+      zIndex = _a === void 0 ? 100 : _a,
       target = props.target,
       onChange = props.onChange,
-      rest = __rest(props, ["children", "offsetTop", "offsetBottom", "target", "onChange"]);
+      rest = __rest(props, ["children", "offsetTop", "offsetBottom", "zIndex", "target", "onChange"]);
 
-  var _a = useState({
+  var _b = useState({
     affixed: false,
     width: 0,
     height: 0
   }),
-      data = _a[0],
-      setData = _a[1];
+      data = _b[0],
+      setData = _b[1];
 
   var onChangeRef = useCallbackRef(onChange);
   var targetRef = useRef(target);
@@ -94,7 +96,7 @@ var Affix = function Affix(props) {
         bottom: offsetBottom,
         width: width,
         height: height,
-        zIndex: 100
+        zIndex: zIndex
       };
     }
 
@@ -104,12 +106,12 @@ var Affix = function Affix(props) {
         top: targetRect.top + offsetTop,
         width: width,
         height: height,
-        zIndex: 100
+        zIndex: zIndex
       };
     }
 
     return {};
-  }, [getAffixed, data]);
+  }, [getAffixed, data, zIndex]);
   useEffect(function () {
     var _a;
 

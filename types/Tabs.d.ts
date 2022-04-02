@@ -1,5 +1,5 @@
 import React from 'react';
-import type { NoOnChangeHtmlElement } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 declare type ItemProp = {
     /** 禁用 */
     disabled?: boolean;
@@ -9,8 +9,8 @@ declare type ItemProp = {
     children?: React.ReactNode;
 };
 declare type TabsProp = {
-    /** 下划线宽度,默认50%,可以使用百分比/px/true/false */
-    underline?: string | boolean;
+    /** 下划线宽度,可以使用百分比/px/true/false */
+    underline?: StringOrNumber | boolean;
     /** Tabs.Tab子元素*/
     children: React.ReactElement<ItemProp>[];
     /** 选择的tab index,非受控模式使用*/
@@ -25,7 +25,7 @@ declare type TabsProp = {
     extra?: React.ReactNode;
     /** 是否显示border,默认显示 */
     border?: boolean;
-} & NoOnChangeHtmlElement;
+} & BaseProps;
 declare const _default: React.FC<TabsProp> & {
     Tab: React.FC<ItemProp>;
 };

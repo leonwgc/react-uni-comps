@@ -1,17 +1,16 @@
 import React, { ReactNode } from 'react';
 import type { ObjectType } from './types';
+import type { BaseProps } from './types';
 declare type Props = {
     /** 数据列表 */
     dataList?: Array<ObjectType>;
     /** 数据项渲染 */
     dataRender?: (data: ObjectType) => ReactNode;
-    style?: React.CSSProperties;
-    className?: string;
     /** 顺序改变回调 */
     onSort?: (list: Array<ObjectType>) => void;
     /** sortablejs 配置 */
     config?: ObjectType;
-};
+} & BaseProps;
 /**
  * 拖拽排序列表
  */

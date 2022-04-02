@@ -1,15 +1,16 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
-const StyledMultiLines = styled.div<{ lines?: number }>`
+const StyledMultiLines = styled.div<{ $lines?: number }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: ${(props) => props.lines};
+  -webkit-line-clamp: ${(props) => props.$lines};
   overflow: hidden;
 `;
 
-const StyledLine = styled.div`
+const StyledLine = styled.div<{ $lines?: number }>`
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -21,12 +22,10 @@ type Props = {
   lines?: number;
   /** 包裹的内容 */
   children?: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
-} & HTMLAttributes<HTMLDivElement>;
+} & BaseProps;
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
-const Text = React.forwardRef<HTMLSpanElement, Props>((props: Props, ref) => {
+const Text = React.forwardRef<any, Props>((props: Props, ref) => {
   const { lines = 1, children, className, ...rest } = props;
 
   return React.createElement(
@@ -35,7 +34,7 @@ const Text = React.forwardRef<HTMLSpanElement, Props>((props: Props, ref) => {
       ...rest,
       className: clsx('uc-text', className),
       ref,
-      lines,
+      $lines: lines,
     },
     children
   );

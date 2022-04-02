@@ -32,8 +32,8 @@ function _download(dataURL, filename) {
 export default function App(cavansRef, options) {
   if (options === void 0) {
     options = {
-      backgroundColor: 'rgb(255, 255, 255,0)',
-      penColor: 'black',
+      backgroundColor: '#fff',
+      penColor: '#000',
       useLandscape: true
     };
   }

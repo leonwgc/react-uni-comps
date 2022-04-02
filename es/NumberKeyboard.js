@@ -45,7 +45,7 @@ import clsx from 'clsx';
 import NumberKeyboardBase from './NumberKeyboardBase';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
-var StyledNumberKeyboard = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  height: 300px;\n"], ["\n  width: 100%;\n  height: 300px;\n"])));
+var StyledPopup = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  height: 300px;\n"], ["\n  width: 100%;\n  height: 300px;\n"])));
 /** 数字键盘 */
 
 var NumberKeyboard = function NumberKeyboard(props) {
@@ -69,7 +69,7 @@ var NumberKeyboard = function NumberKeyboard(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
-  return /*#__PURE__*/React.createElement(StyledNumberKeyboard, __assign({}, rest, {
+  return /*#__PURE__*/React.createElement(StyledPopup, __assign({}, rest, {
     closeOnMaskClick: closeOnMaskClick,
     visible: visible,
     onClose: onClose,

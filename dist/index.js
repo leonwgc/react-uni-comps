@@ -1606,8 +1606,6 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 Pullup.displayName = 'UC-Pullup';
 
 var _excluded$6 = ["position", "borderRadius", "color", "className", "mobile", "children"];
-/** 显示1px的边 */
-
 var StyledDiv = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "HairLineBox__StyledDiv",
   componentId: "sc-1jb427w-0"
@@ -2209,10 +2207,8 @@ var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       shape = _props$shape === void 0 ? 'rect' : _props$shape,
       other = _objectWithoutProperties(props, _excluded$9);
 
-  var _other$style = other.style,
-      style = _other$style === void 0 ? {} : _other$style,
-      _other$className = other.className,
-      className = _other$className === void 0 ? '' : _other$className,
+  var style = other.style,
+      className = other.className,
       rest = _objectWithoutProperties(other, _excluded2);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({}, rest, {
@@ -2309,7 +2305,7 @@ var Skeleton = function Skeleton(props) {
   })) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, children);
 };
 
-var _excluded$b = ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
+var _excluded$b = ["type", "disabled", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
 var StyledButton = /*#__PURE__*/styled__default['default'].button.withConfig({
   displayName: "Button__StyledButton",
   componentId: "sc-15o16bj-0"
@@ -2320,7 +2316,6 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var _props$type = props.type,
       type = _props$type === void 0 ? 'default' : _props$type,
       disabled = props.disabled,
-      active = props.active,
       outlined = props.outlined,
       block = props.block,
       className = props.className,
@@ -2367,7 +2362,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       mobile: isMobile,
       pc: !isMobile,
       anchor: rest.as === 'a',
-      outlined: outlined || active
+      outlined: outlined
     }, className)
   }), icon && children ? /*#__PURE__*/React__default['default'].createElement(Space, null, icon, children) : children || icon);
 });
@@ -3374,7 +3369,7 @@ var StyledMultiLines = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Text__StyledMultiLines",
   componentId: "sc-1lf0pma-0"
 })(["display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:", ";overflow:hidden;"], function (props) {
-  return props.lines;
+  return props.$lines;
 });
 var StyledLine = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Text__StyledLine",
@@ -3392,7 +3387,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledMultiLines : StyledLine, _objectSpread2(_objectSpread2({}, rest), {}, {
     className: clsx__default['default']('uc-text', className),
     ref: ref,
-    lines: lines
+    $lines: lines
   }), children);
 });
 Text.displayName = 'UC-Text';
@@ -3610,13 +3605,15 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 NoticeBar.displayName = 'UC-NoticeBar';
 
-var _excluded$r = ["children", "offsetTop", "offsetBottom", "target", "onChange"];
+var _excluded$r = ["children", "offsetTop", "offsetBottom", "zIndex", "target", "onChange"];
 
 /** 将页面元素钉在可视范围*/
 var Affix = function Affix(props) {
   var children = props.children,
       offsetTop = props.offsetTop,
       offsetBottom = props.offsetBottom,
+      _props$zIndex = props.zIndex,
+      zIndex = _props$zIndex === void 0 ? 100 : _props$zIndex,
       target = props.target,
       onChange = props.onChange,
       rest = _objectWithoutProperties(props, _excluded$r);
@@ -3675,7 +3672,7 @@ var Affix = function Affix(props) {
         bottom: offsetBottom,
         width: width,
         height: height,
-        zIndex: 100
+        zIndex: zIndex
       };
     }
 
@@ -3685,12 +3682,12 @@ var Affix = function Affix(props) {
         top: targetRect.top + offsetTop,
         width: width,
         height: height,
-        zIndex: 100
+        zIndex: zIndex
       };
     }
 
     return {};
-  }, [getAffixed, data]);
+  }, [getAffixed, data, zIndex]);
   React.useEffect(function () {
     var _targetRef$current;
 
@@ -4183,8 +4180,8 @@ var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(funct
 NumberKeyboardBase.displayName = 'UC-NumberKeyboardBase';
 
 var _excluded$w = ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"];
-var StyledNumberKeyboard = /*#__PURE__*/styled__default['default'](Popup).withConfig({
-  displayName: "NumberKeyboard__StyledNumberKeyboard",
+var StyledPopup = /*#__PURE__*/styled__default['default'](Popup).withConfig({
+  displayName: "NumberKeyboard__StyledPopup",
   componentId: "sc-z3xmg5-0"
 })(["width:100%;height:300px;"]);
 /** 数字键盘 */
@@ -4211,7 +4208,7 @@ var NumberKeyboard = function NumberKeyboard(props) {
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
   }, [value]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboard, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledPopup, _extends({}, rest, {
     closeOnMaskClick: closeOnMaskClick,
     visible: visible,
     onClose: onClose,
@@ -5191,8 +5188,8 @@ function _download(dataURL, filename) {
 
 function App(cavansRef) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
-    backgroundColor: 'rgb(255, 255, 255,0)',
-    penColor: 'black',
+    backgroundColor: '#fff',
+    penColor: '#000',
     useLandscape: true
   };
   var padRef = React.useRef();
@@ -5317,11 +5314,13 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Signature.displayName = 'UC-Signature';
 
-var _excluded$E = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"];
+var _excluded$E = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "color", "allowClear"];
 var StyledRate = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Rate__StyledRate",
   componentId: "sc-784nos-0"
-})(["display:inline-flex;.box{position:relative;}.char{padding:calc(24px / 8);line-height:24px;font-size:24px;color:#ccc;text-align:center;overflow:hidden;cursor:pointer;&.half{padding-right:0;width:50%;position:absolute;left:0;top:0;}&.active{color:#ffd21e;}&.readonly{cursor:unset;}}"]);
+})(["display:inline-flex;.box{position:relative;}.char{padding:calc(24px / 8);line-height:24px;font-size:24px;color:#ccc;text-align:center;overflow:hidden;cursor:pointer;&.half{padding-right:0;width:50%;position:absolute;left:0;top:0;}&.active{color:", ";}&.readonly{cursor:unset;}}"], function (props) {
+  return props.$color;
+});
 var defaultChar = /*#__PURE__*/React__default['default'].createElement("svg", {
   viewBox: "64 64 896 896",
   "data-icon": "star",
@@ -5346,6 +5345,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       char = _props$char === void 0 ? defaultChar : _props$char,
       onChange = props.onChange,
       className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? '#ffd21e' : _props$color,
       _props$allowClear = props.allowClear,
       allowClear = _props$allowClear === void 0 ? true : _props$allowClear,
       rest = _objectWithoutProperties(props, _excluded$E);
@@ -5387,7 +5388,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   }, [allowClear, char, readonly]);
   return /*#__PURE__*/React__default['default'].createElement(StyledRate, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](className)
+    className: clsx__default['default'](className),
+    $color: color
   }), starList.map(function (_, i) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: i,
@@ -6727,8 +6729,6 @@ var SafeArea = function SafeArea(props) {
 SafeArea.displayName = 'UC-SafeArea';
 
 var _excluded$Q = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
-/** refer : zarm calendar (https://zarm.gitee.io/)  */
-
 //#region styled
 var StyledWrap$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "calendar__StyledWrap",

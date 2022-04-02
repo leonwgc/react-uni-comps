@@ -55,10 +55,8 @@ var SkeletonBase = /*#__PURE__*/React.forwardRef(function (props, ref) {
       shape = _c === void 0 ? 'rect' : _c,
       other = __rest(props, ["animated", "width", "height", "shape"]);
 
-  var _d = other.style,
-      style = _d === void 0 ? {} : _d,
-      _e = other.className,
-      className = _e === void 0 ? '' : _e,
+  var style = other.style,
+      className = other.className,
       rest = __rest(other, ["style", "className"]);
 
   return /*#__PURE__*/React.createElement(StyledSkeletonBase, __assign({}, rest, {

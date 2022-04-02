@@ -44,7 +44,9 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-var StyledRate = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"], ["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: #ffd21e;\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])));
+var StyledRate = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: ", ";\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"], ["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: ", ";\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])), function (props) {
+  return props.$color;
+});
 var defaultChar = /*#__PURE__*/React.createElement("svg", {
   viewBox: "64 64 896 896",
   "data-icon": "star",
@@ -69,13 +71,15 @@ var Rate = /*#__PURE__*/React.forwardRef(function (props, ref) {
       char = _d === void 0 ? defaultChar : _d,
       onChange = props.onChange,
       className = props.className,
-      _e = props.allowClear,
-      allowClear = _e === void 0 ? true : _e,
-      rest = __rest(props, ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "allowClear"]);
+      _e = props.color,
+      color = _e === void 0 ? '#ffd21e' : _e,
+      _f = props.allowClear,
+      allowClear = _f === void 0 ? true : _f,
+      rest = __rest(props, ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "color", "allowClear"]);
 
-  var _f = useState(typeof value === 'number' ? value : defaultValue),
-      val = _f[0],
-      setVal = _f[1];
+  var _g = useState(typeof value === 'number' ? value : defaultValue),
+      val = _g[0],
+      setVal = _g[1];
 
   var starList = Array(count).fill(null);
   var onChangeRef = useCallbackRef(onChange);
@@ -109,7 +113,8 @@ var Rate = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, [allowClear, char, readonly]);
   return /*#__PURE__*/React.createElement(StyledRate, __assign({}, rest, {
     ref: ref,
-    className: clsx(className)
+    className: clsx(className),
+    "$color": color
   }), starList.map(function (_, i) {
     return /*#__PURE__*/React.createElement("div", {
       key: i,

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { StringOrNumber, NoOnChangeHtmlElement } from './types';
+import type { StringOrNumber, BaseProps } from './types';
 declare type Item = {
     /** 禁用 */
     disabled?: boolean;
@@ -8,7 +8,7 @@ declare type Item = {
     /** 配置项key */
     key?: StringOrNumber;
 };
-declare type SideBarProps = NoOnChangeHtmlElement & {
+declare type SideBarProps = {
     /** 选择的index,非受控模式使用*/
     defaultIndex?: number;
     /** 选择的index, 默认 0 */
@@ -17,9 +17,7 @@ declare type SideBarProps = NoOnChangeHtmlElement & {
     onChange?: (index: number) => void;
     /** 配置项列表 */
     items: Array<Item>;
-    style?: React.CSSProperties;
-    className?: string;
-};
+} & BaseProps;
 /**
  * 侧边导航
  */

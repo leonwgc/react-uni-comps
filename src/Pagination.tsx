@@ -5,6 +5,7 @@ import Button from './Button';
 import Space from './Space';
 import IconArrow from './IconArrow';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 可视按钮数量 */
@@ -17,15 +18,13 @@ type Props = {
   showIfOnePage?: boolean;
   /** 是否显示首页尾页, false */
   showFirstLastText?: boolean;
-  style?: React.CSSProperties;
-  className?: string;
   /** 总页数 */
   pageCount?: number;
   /** 当前页,1~n */
   currentPage?: number;
   /** 当前页改变回调 */
   onPageChange?: (page: number) => void;
-};
+} & BaseProps;
 
 /**
  * get pages arr

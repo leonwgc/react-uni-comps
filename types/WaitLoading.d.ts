@@ -1,6 +1,9 @@
 import React from 'react';
 declare type Props = {
-    /** 渲染子元素等待时间，单位ms,默认700 */
+    /**
+     * 渲染子元素等待时间
+     * @default 700
+     * */
     wait?: number;
     /** 是否显示子元素 */
     visible: boolean;

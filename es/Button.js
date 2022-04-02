@@ -54,7 +54,6 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.type,
       type = _a === void 0 ? 'default' : _a,
       disabled = props.disabled,
-      active = props.active,
       outlined = props.outlined,
       block = props.block,
       className = props.className,
@@ -67,7 +66,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ghost = props.ghost,
       _onClick = props.onClick,
       wait = props.wait,
-      rest = __rest(props, ["type", "disabled", "active", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"]);
+      rest = __rest(props, ["type", "disabled", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"]);
 
   var _b = useState(false),
       waiting = _b[0],
@@ -100,7 +99,7 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
       mobile: isMobile,
       pc: !isMobile,
       anchor: rest.as === 'a',
-      outlined: outlined || active
+      outlined: outlined
     }, className)
   }), icon && children ? /*#__PURE__*/React.createElement(Space, null, icon, children) : children || icon);
 });

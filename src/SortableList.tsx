@@ -6,19 +6,18 @@ import clsx from 'clsx';
 import type { ObjectType } from './types';
 import Sortable from 'sortablejs';
 import { nanoid } from 'nanoid';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 数据列表 */
   dataList?: Array<ObjectType>;
   /** 数据项渲染 */
   dataRender?: (data: ObjectType) => ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
   /** 顺序改变回调 */
   onSort?: (list: Array<ObjectType>) => void;
   /** sortablejs 配置 */
   config?: ObjectType;
-};
+} & BaseProps;
 
 const StyledWrapper = styled.div``;
 

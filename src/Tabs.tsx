@@ -12,7 +12,7 @@ import useCallbackRef from './hooks/useCallbackRef';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
 import useMount from './hooks/useMount';
-import type { NoOnChangeHtmlElement } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 
 type ItemProp = {
   /** 禁用 */
@@ -24,8 +24,8 @@ type ItemProp = {
 };
 
 type TabsProp = {
-  /** 下划线宽度,默认50%,可以使用百分比/px/true/false */
-  underline?: string | boolean;
+  /** 下划线宽度,可以使用百分比/px/true/false */
+  underline?: StringOrNumber | boolean;
   /** Tabs.Tab子元素*/
   children: React.ReactElement<ItemProp>[];
   /** 选择的tab index,非受控模式使用*/
@@ -40,7 +40,7 @@ type TabsProp = {
   extra?: React.ReactNode;
   /** 是否显示border,默认显示 */
   border?: boolean;
-} & NoOnChangeHtmlElement;
+} & BaseProps;
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

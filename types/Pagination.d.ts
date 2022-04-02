@@ -1,5 +1,7 @@
 import React from 'react';
-declare type Props = {
+import type { BaseProps } from './types';
+/** 分页 */
+declare const Pagination: React.ForwardRefExoticComponent<{
     /** 可视按钮数量 */
     visiblePageCount?: number;
     /** 首页文本 */
@@ -10,15 +12,11 @@ declare type Props = {
     showIfOnePage?: boolean;
     /** 是否显示首页尾页, false */
     showFirstLastText?: boolean;
-    style?: React.CSSProperties;
-    className?: string;
     /** 总页数 */
     pageCount?: number;
     /** 当前页,1~n */
     currentPage?: number;
     /** 当前页改变回调 */
     onPageChange?: (page: number) => void;
-};
-/** 分页 */
-declare const Pagination: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Pagination;

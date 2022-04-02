@@ -1,5 +1,5 @@
 import React from 'react';
-import type { StringOrNumber } from './types';
+import type { StringOrNumber, BaseProps } from './types';
 declare type KeysType = Array<StringOrNumber> | StringOrNumber;
 declare type ItemProps = {
     /** 不可交互状态 */
@@ -20,11 +20,9 @@ declare type CollapseProps = {
     keys?: KeysType;
     /** 切换面板的回调 */
     onChange?: (keys: KeysType) => void;
-    className?: string;
-    style?: React.CSSProperties;
-    /** 展开动画, 默认false */
+    /** 展开动画*/
     animated?: boolean;
-};
+} & BaseProps;
 declare const _default: React.FC<CollapseProps> & {
     Item: React.FC<ItemProps>;
 };
