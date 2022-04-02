@@ -27,8 +27,8 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "build": "father-build && tsc",
-    "doc": "dumi dev",
-    "doc:build": "dumi build"
+    "doc:dev": "dumi dev",
+    "doc": "dumi build"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
