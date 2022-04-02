@@ -14,8 +14,6 @@ export type Props = {
   defaultValue?: StringOrNumber;
   /** 值变化时触发的回调函数 */
   onChange?: (value: StringOrNumber) => void;
-  className?: string;
-  style?: React.CSSProperties;
   /** 最小值 */
   min?: number;
   /** 最大值 */

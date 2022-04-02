@@ -1,11 +1,16 @@
 import React, { ReactNode } from 'react';
 import type { StringOrNumber } from './types';
+import type { BaseProps } from './types';
 declare type LabelValue = {
     label?: React.ReactNode;
     value: StringOrNumber;
 };
-declare type Props = {
-    /** 按钮风格，默认false */
+/** 一组单选框 */
+declare const RadioGroup: React.ForwardRefExoticComponent<{
+    /**
+     * 按钮风格
+     * @default false
+     */
     button?: boolean | 'fill' | 'outline';
     /** 受控模式下的默认值 */
     value?: StringOrNumber;
@@ -15,9 +20,5 @@ declare type Props = {
     options?: LabelValue[] | ReactNode[];
     /** 选项checked改变时回调 */
     onChange?: (val: StringOrNumber) => void;
-    className?: string;
-    style?: React.CSSProperties;
-};
-/** 一组单选框 */
-declare const RadioGroup: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default RadioGroup;

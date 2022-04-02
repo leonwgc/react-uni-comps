@@ -1,4 +1,5 @@
 import React, { RefAttributes } from 'react';
+import type { BaseProps } from './types';
 export declare type SigPadRef = {
     /** 获取图片dataURL字符串 */
     getData: () => string;
@@ -8,13 +9,17 @@ export declare type SigPadRef = {
     download: (fileName: string) => void;
 };
 declare type Props = {
-    /** 画布背景色 */
+    /**
+     * 画布背景色
+     * @default #fff
+     *  */
     padColor?: string;
-    /** 画笔颜色 */
+    /**
+     * 画笔颜色
+     * @default #000
+     *  */
     penColor?: string;
-    className?: string;
-    style?: React.CSSProperties;
-} & RefAttributes<SigPadRef>;
+} & BaseProps & RefAttributes<SigPadRef>;
 /** 签名 */
-declare const Signature: React.ForwardRefExoticComponent<Pick<Props, "className" | "style" | "key" | "penColor" | "padColor"> & React.RefAttributes<SigPadRef>>;
+declare const Signature: React.ForwardRefExoticComponent<Pick<Props, "key" | keyof BaseProps | "penColor" | "padColor"> & React.RefAttributes<SigPadRef>>;
 export default Signature;

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { BaseProps } from './types';
 export declare type Step = {
     /** 标题 */
     title?: React.ReactNode;
@@ -7,18 +8,24 @@ export declare type Step = {
     /** 步骤图标的类型 */
     icon?: React.ReactNode;
 };
-declare type Props = {
+/** 步骤条 */
+declare const Steps: React.ForwardRefExoticComponent<{
     /** 步骤数据 */
     steps: Step[];
-    /** 指定当前步骤，从 0 开始记数 */
+    /**
+     * 指定当前步骤
+     * @default 0
+     */
     current?: number;
-    className?: string;
-    style?: React.CSSProperties;
-    /** 指定步骤条方向 */
+    /**
+     * 指定步骤条方向
+     * @default horizontal
+     *  */
     direction?: 'horizontal' | 'vertical';
-    /** 实心圈风格 */
+    /**
+     * 实心圈风格
+     * @default false
+     *  */
     dotStyle?: boolean;
-};
-/** 步骤条 */
-declare const Steps: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Steps;

@@ -1,6 +1,7 @@
 import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 允许上传的文件格式 */
@@ -13,9 +14,8 @@ type Props = {
   multiple?: boolean;
   /** 捕获图像或视频数据的源 */
   capture?: 'user' | 'environment';
-  style?: React.CSSProperties;
-  className?: string;
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
+} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> &
+  BaseProps;
 
 const StyledFileInputTrigger = styled.div`
   position: relative;

@@ -75,7 +75,7 @@ const StyledSlide = styled.div`
   }
 `;
 
-export type Props = BaseProps & {
+export type Props = {
   /**
    * 是否自动播放
    * @default false
@@ -120,7 +120,7 @@ export type Props = BaseProps & {
    * @default 280
    */
   duration?: number;
-};
+} & BaseProps;
 
 export type SlideRefType = {
   prev: () => void;

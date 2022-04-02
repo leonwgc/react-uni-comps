@@ -1,32 +1,15 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Space, Checkbox, styled } from 'react-uni-comps';
-
-const StyledContent = styled.div`
-  .uc-checkbox {
-    margin: 16px;
-
-    &.checked {
-      .checkbox {
-        &.styled {
-          background-color: blue;
-          border: 1px solid blue;
-        }
-      }
-    }
-  }
-`;
+import { Checkbox, Space } from 'react-uni-comps';
 
 export default function App() {
   const [checked, setChecked] = useState(true);
 
   return (
     <PageWrap>
-      <StyledContent>
-        <DemoBlock title="默认">
-          <Checkbox />
-
+      <DemoBlock title="默认">
+        <Space wrap>
           <Checkbox checked={checked} onChange={setChecked}>
             默认
           </Checkbox>
@@ -40,14 +23,14 @@ export default function App() {
           <Checkbox checked disabled>
             checked
           </Checkbox>
-        </DemoBlock>
+        </Space>
+      </DemoBlock>
 
-        <DemoBlock title="非受控">
-          <Checkbox defaultChecked onChange={(c) => console.log(c)}>
-            非受控
-          </Checkbox>
-        </DemoBlock>
-      </StyledContent>
+      <DemoBlock title="非受控">
+        <Checkbox defaultChecked onChange={(c) => console.log(c)}>
+          非受控
+        </Checkbox>
+      </DemoBlock>
     </PageWrap>
   );
 }

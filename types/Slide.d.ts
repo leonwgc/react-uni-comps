@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-export declare type Props = BaseProps & {
+export declare type Props = {
     /**
      * 是否自动播放
      * @default false
@@ -44,7 +44,7 @@ export declare type Props = BaseProps & {
      * @default 280
      */
     duration?: number;
-};
+} & BaseProps;
 export declare type SlideRefType = {
     prev: () => void;
     next: () => void;
@@ -59,7 +59,7 @@ export declare type SlideRefType = {
  *
  *
  */
-declare const Slide: React.ForwardRefExoticComponent<BaseProps & {
+declare const Slide: React.ForwardRefExoticComponent<{
     /**
      * 是否自动播放
      * @default false
@@ -103,5 +103,5 @@ declare const Slide: React.ForwardRefExoticComponent<BaseProps & {
      * @default 280
      */
     duration?: number;
-} & React.RefAttributes<SlideRefType>>;
+} & BaseProps & React.RefAttributes<SlideRefType>>;
 export default Slide;

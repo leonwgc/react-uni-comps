@@ -46,8 +46,8 @@ type ReturnType = {
 export default function App(
   cavansRef: RefObject<HTMLCanvasElement>,
   options = {
-    backgroundColor: 'rgb(255, 255, 255,0)',
-    penColor: 'black',
+    backgroundColor: '#fff',
+    penColor: '#000',
     useLandscape: true,
   }
 ): ReturnType {

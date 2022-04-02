@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import { throttle } from './helper';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 export type Step = {
   /** 标题 */
@@ -16,15 +17,22 @@ export type Step = {
 type Props = {
   /** 步骤数据 */
   steps: Step[];
-  /** 指定当前步骤，从 0 开始记数 */
+  /**
+   * 指定当前步骤
+   * @default 0
+   */
   current?: number;
-  className?: string;
-  style?: React.CSSProperties;
-  /** 指定步骤条方向 */
+  /**
+   * 指定步骤条方向
+   * @default horizontal
+   *  */
   direction?: 'horizontal' | 'vertical';
-  /** 实心圈风格 */
+  /**
+   * 实心圈风格
+   * @default false
+   *  */
   dotStyle?: boolean;
-};
+} & BaseProps;
 
 const StyledSteps = styled.div<{ space: number }>`
   .step {

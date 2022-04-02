@@ -7,11 +7,15 @@ import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Button from './Button';
 import Icon from './Icon';
+import type { BaseProps } from './types';
 
-type Props = {
+export type Props = {
   /** 按钮风格，默认false */
   button?: boolean | 'fill' | 'outline';
-  /** box宽高，默认16 */
+  /**
+   * 宽高
+   * @default 16
+   */
   size?: number;
   /** checked状态改变回调 */
   onChange?: (checked: boolean) => void;
@@ -23,17 +27,16 @@ type Props = {
   disabled?: boolean;
   /** 右侧内容 */
   children?: React.ReactNode;
-  /** box class */
-  className?: string;
-  /** box style */
-  style?: React.CSSProperties;
-  /** 展示为checkbox/radio,默认checkbox */
+  /**
+   * 展示为checkbox/radio
+   * checkbox
+   *  */
   mode?: 'checkbox' | 'radio';
   /** 根据 value 进行比较，判断是否选中, 用于list */
   value?: string | number;
   /** 设置 indeterminate 状态，中间横线代替勾勾 */
   indeterminate?: boolean;
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>;
+} & BaseProps;
 
 const StyledButton = styled(Button)`
   &.fill {

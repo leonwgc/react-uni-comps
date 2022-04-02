@@ -6,6 +6,7 @@ import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
+import type { BaseProps } from './types';
 
 type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
 
@@ -25,8 +26,6 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
     /** focus事件回调 */
@@ -43,7 +42,7 @@ export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-  };
+  } & BaseProps;
 
 //#region  style
 

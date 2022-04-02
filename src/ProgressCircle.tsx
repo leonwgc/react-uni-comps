@@ -2,23 +2,34 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
+import type { BaseProps } from './types';
 
 type Props = {
   /** 进度条颜色,默认读主题色 */
   color?: string;
-  /** 进度百分比（范围：0 ～ 100）, 默认0 */
+  /**
+   * 进度百分比（范围：0 ～ 100)
+   * @default 0
+   */
   percent?: number;
-  /** 圆弧的宽度，默认 10 */
+  /**
+   * 圆弧的宽度
+   * @default  10
+   */
   strokeWidth?: number;
-  /** 圆弧末尾使用的形状,默认 round */
+  /**
+   * 圆弧末尾使用的形状
+   * @default round
+   */
   strokeLinecap?: 'butt' | 'round';
   /** 环中间的内容，比如显示文本等 */
   children?: React.ReactNode;
-  /** 环的直径,默认120 */
+  /**
+   * 环的直径
+   * @default 120
+   *  */
   size?: number;
-  className?: string;
-  style?: React.CSSProperties;
-};
+} & BaseProps;
 
 const StyledProgressCircle = styled.div`
   position: relative;

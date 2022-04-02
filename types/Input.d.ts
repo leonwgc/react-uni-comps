@@ -1,4 +1,5 @@
 import React from 'react';
+import type { BaseProps } from './types';
 declare type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
 export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
     /** 只读 */
@@ -15,8 +16,6 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
     /** focus事件回调 */
@@ -33,7 +32,7 @@ export declare type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, ig
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-};
+} & BaseProps;
 declare type RefType = HTMLInputElement | HTMLTextAreaElement;
 /** 单行/多行输入框 input/textarea */
 declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & {
@@ -51,8 +50,6 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     prefix?: React.ReactNode;
     /** input右边内容 */
     suffix?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
     /** 值变化时触发的回调函数 */
     onChange?: (value: string) => void;
     /** focus事件回调 */
@@ -69,5 +66,5 @@ declare const Input: React.ForwardRefExoticComponent<Omit<React.InputHTMLAttribu
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-} & React.RefAttributes<RefType>>;
+} & BaseProps & React.RefAttributes<RefType>>;
 export default Input;

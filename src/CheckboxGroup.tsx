@@ -6,6 +6,7 @@ import Checkbox from './Checkbox';
 import { isObject } from './helper';
 import type { StringOrNumber } from './types';
 import Space from './Space';
+import type { BaseProps } from './types';
 
 type LabelValue = {
   label?: React.ReactNode;
@@ -13,7 +14,10 @@ type LabelValue = {
 };
 
 type Props = {
-  /** 按钮风格，默认false */
+  /** 
+   * 按钮风格
+   * @default false
+  */
   button?: boolean | 'fill' | 'outline';
   /** 受控模式下的默认值 */
   value?: Array<StringOrNumber>;
@@ -23,9 +27,7 @@ type Props = {
   options?: LabelValue[] | ReactNode[];
   /** 选项checked改变时回调 */
   onChange?: (val: Array<StringOrNumber>) => void;
-  className?: string;
-  style?: React.CSSProperties;
-};
+} & BaseProps;
 
 const StyledCheckboxGroup = styled.div``;
 
