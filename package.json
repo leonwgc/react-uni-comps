@@ -1,7 +1,7 @@
 {
   "name": "react-uni-comps",
   "version": "1.5.9-beta4",
-  "description": "react库, desktop & mobile react components via hooks",
+  "description": "react组件库, desktop & mobile react components via hooks",
   "homepage": "https://leonwgc.github.io/react-uni-comps/",
   "keywords": [
     "react",
