@@ -457,7 +457,7 @@ var animationSlow = 280;
 
 var animationNormal = 220;
 
-var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow"];
+var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow", "opacity"];
 var StyledMask = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Mask__StyledMask",
   componentId: "sc-1t93aio-0"
@@ -473,6 +473,8 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       style = props.style,
       _props$hideOverflow = props.hideOverflow,
       hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
+      _props$opacity = props.opacity,
+      opacity = _props$opacity === void 0 ? 0.45 : _props$opacity,
       rest = _objectWithoutProperties(props, _excluded); // animation effect
 
 
@@ -482,7 +484,8 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       setActive = _useState2[1];
 
   var styles = web.useSpring({
-    opacity: visible ? 0.45 : 0,
+    opacity: visible ? opacity : 0,
+    immediate: duration === 0,
     onStart: function onStart() {
       setActive(true);
     },
@@ -6107,7 +6110,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange"];
+var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange", "maskStyle"];
 var StyledImageViewer = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ImageViewer__StyledImageViewer",
   componentId: "sc-oqxxes-0"
@@ -6120,6 +6123,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
+      maskStyle = props.maskStyle,
       rest = _objectWithoutProperties(props, _excluded$L);
 
   var _useState = React.useState(Array.isArray(images) ? images : [images]),
@@ -6168,7 +6172,9 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     }));
   }, [urls, onIndexChangeRef, slideRef]);
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
-    visible: visible
+    visible: visible,
+    style: maskStyle,
+    duration: 0
   }), visible && /*#__PURE__*/React__default['default'].createElement(StyledImageViewer, _extends({
     onClick: function onClick(e) {
       if (e.target.nodeName === 'IMG') {

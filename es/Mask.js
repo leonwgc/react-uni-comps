@@ -57,15 +57,18 @@ var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style = props.style,
       _b = props.hideOverflow,
       hideOverflow = _b === void 0 ? true : _b,
-      rest = __rest(props, ["children", "className", "visible", "duration", "style", "hideOverflow"]); // animation effect
+      _c = props.opacity,
+      opacity = _c === void 0 ? 0.45 : _c,
+      rest = __rest(props, ["children", "className", "visible", "duration", "style", "hideOverflow", "opacity"]); // animation effect
 
 
-  var _c = useState(visible),
-      active = _c[0],
-      setActive = _c[1];
+  var _d = useState(visible),
+      active = _d[0],
+      setActive = _d[1];
 
   var styles = useSpring({
-    opacity: visible ? 0.45 : 0,
+    opacity: visible ? opacity : 0,
+    immediate: duration === 0,
     onStart: function onStart() {
       setActive(true);
     },

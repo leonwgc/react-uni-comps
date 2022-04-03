@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Space, Button, Icon, Toast } from 'react-uni-comps';
+import { Space, Button, Icon } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -11,10 +11,8 @@ export default function App() {
           <Button>Default</Button>
           <Button outlined>Outlined</Button>
           <Button type="primary">Primary</Button>
-          <Button danger onClick={() => Toast.show('danger')}>
-            Danger
-          </Button>
-          <Button style={{ height: 50, width: 120, borderStyle: 'dashed', fontSize: 20 }}>
+          <Button danger>Danger</Button>
+          <Button style={{ height: 50, width: 80, borderStyle: 'dashed', fontSize: 18 }}>
             custom
           </Button>
         </Space>

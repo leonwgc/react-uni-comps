@@ -59,7 +59,7 @@ const flexDirectionMap = {
   vertical: 'column',
 };
 
-type SpaceProps = BaseProps & {
+type SpaceProps = {
   /** 间距大小 */
   size?: number | [number, number];
   /** 间距方向 */
@@ -70,7 +70,8 @@ type SpaceProps = BaseProps & {
   split?: React.ReactNode;
   /** 是否自动换行，仅在 horizontal 时有效 */
   wrap?: boolean;
-} & React.HTMLAttributes<HTMLElement>;
+  onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps;
 
 const StyledSpace = styled.div<{
   align: 'center' | 'flex-start' | 'flex-end' | 'baseline';

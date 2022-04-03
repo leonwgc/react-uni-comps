@@ -57,7 +57,8 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
-      rest = __rest(props, ["className", "visible", "onClose", "images", "onIndexChange"]);
+      maskStyle = props.maskStyle,
+      rest = __rest(props, ["className", "visible", "onClose", "images", "onIndexChange", "maskStyle"]);
 
   var _a = useState(Array.isArray(images) ? images : [images]),
       urls = _a[0],
@@ -103,7 +104,9 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }));
   }, [urls, onIndexChangeRef, slideRef]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Mask, {
-    visible: visible
+    visible: visible,
+    style: maskStyle,
+    duration: 0
   }), visible && /*#__PURE__*/React.createElement(StyledImageViewer, __assign({
     onClick: function onClick(e) {
       if (e.target.nodeName === 'IMG') {
