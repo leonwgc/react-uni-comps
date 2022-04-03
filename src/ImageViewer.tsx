@@ -18,6 +18,8 @@ type Props = {
   images?: string[] | string;
   /** 切换图片时触发 */
   onIndexChange?: (index: number) => void;
+  /** 遮罩样式 */
+  maskStyle?: React.CSSProperties;
 } & BaseProps;
 
 const StyledImageViewer = styled.div`
@@ -72,7 +74,7 @@ const StyledImageViewer = styled.div`
 
 /** 图片查看器 */
 const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, visible, onClose, images, onIndexChange, ...rest } = props;
+  const { className, visible, onClose, images, onIndexChange, maskStyle, ...rest } = props;
 
   const [urls, setUrls] = useState(Array.isArray(images) ? images : [images]);
   const [index, setIndex] = useState<number>(0);
@@ -113,7 +115,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <>
-      <Mask visible={visible} />
+      <Mask visible={visible} style={maskStyle} duration={0} />
       {visible && (
         <StyledImageViewer
           onClick={(e: any) => {

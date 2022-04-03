@@ -10,6 +10,7 @@ const StyledMask = styled(Mask)`
 export default function App() {
   const [v, setV] = useState(false);
   const [v1, setV1] = useState(false);
+  const [v2, setV2] = useState(false);
 
   return (
     <PageWrap>
@@ -18,9 +19,14 @@ export default function App() {
         <Mask visible={v} onClick={() => setV(false)} />
       </Block>
 
-      <Block title="例2">
-        <Button onClick={() => setV1(true)}>自定义</Button>
+      <Block title="背景色">
+        <Button onClick={() => setV1(true)}>背景色</Button>
         <StyledMask visible={v1} onClick={() => setV1(false)} />
+      </Block>
+
+      <Block title="透明度和过度效果">
+        <Button onClick={() => setV2(true)}>透明度和过度效果</Button>
+        <Mask opacity={0.7} duration={0} visible={v2} onClick={() => setV2(false)} />
       </Block>
     </PageWrap>
   );

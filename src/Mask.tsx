@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
@@ -31,9 +31,14 @@ type Props = {
    * @default 280
    */
   duration?: number;
-  children?: ReactElement;
-} & BaseProps &
-  HTMLAttributes<HTMLDivElement>;
+  children?: React.ReactElement;
+  /**
+   * 透明度
+   * @default 0.45
+   */
+  opacity?: number;
+  onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps;
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
@@ -44,6 +49,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     duration = vars.animationSlow,
     style,
     hideOverflow = true,
+    opacity = 0.45,
     ...rest
   } = props;
 
@@ -51,7 +57,8 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const [active, setActive] = useState(visible);
 
   const styles = useSpring({
-    opacity: visible ? 0.45 : 0,
+    opacity: visible ? opacity : 0,
+    immediate: duration === 0,
     onStart: () => {
       setActive(true);
     },

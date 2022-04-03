@@ -10,5 +10,7 @@ declare const ImageViewer: React.ForwardRefExoticComponent<{
     images?: string[] | string;
     /** 切换图片时触发 */
     onIndexChange?: (index: number) => void;
+    /** 遮罩样式 */
+    maskStyle?: React.CSSProperties;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;

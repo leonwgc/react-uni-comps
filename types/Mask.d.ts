@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import type { BaseProps } from './types';
 /** 遮罩层 */
 declare const Mask: React.ForwardRefExoticComponent<{
@@ -14,6 +14,12 @@ declare const Mask: React.ForwardRefExoticComponent<{
      * @default 280
      */
     duration?: number;
-    children?: ReactElement;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+    children?: React.ReactElement;
+    /**
+     * 透明度
+     * @default 0.45
+     */
+    opacity?: number;
+    onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Mask;
