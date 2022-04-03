@@ -209,3 +209,23 @@ export var deepClone = function deepClone(src) {
 
   return dest;
 };
+/**
+ *
+ *
+ * @param {MountContainerType} container
+ * @return {*}  {HTMLElement}
+ */
+
+export var getMountContainer = function getMountContainer(container) {
+  var mountNode;
+
+  if (container instanceof HTMLElement) {
+    mountNode = container;
+  } else if (isObject(container) && 'current' in container) {
+    mountNode = container.current;
+  } else if (typeof container === 'function') {
+    mountNode = container === null || container === void 0 ? void 0 : container();
+  }
+
+  return mountNode;
+};

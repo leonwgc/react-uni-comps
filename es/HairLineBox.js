@@ -50,8 +50,8 @@ var StyledDiv = styled.div(templateObject_1 || (templateObject_1 = __makeTemplat
   var position = _a.position;
   return "border".concat(position === 'all' ? '' : '-' + position);
 }, function (_a) {
-  var color = _a.color;
-  return color;
+  var $color = _a.$color;
+  return $color;
 }, function (_a) {
   var borderRadius = _a.borderRadius;
   return borderRadius;
@@ -59,8 +59,8 @@ var StyledDiv = styled.div(templateObject_1 || (templateObject_1 = __makeTemplat
   var position = _a.position;
   return "border".concat(position === 'all' ? '' : '-' + position);
 }, function (_a) {
-  var color = _a.color;
-  return color;
+  var $color = _a.$color;
+  return $color;
 });
 /** 移动端1像素边框容器 */
 
@@ -84,7 +84,7 @@ var HairLineBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
       pc: !isMobile && !mobile
     }),
     position: position,
-    color: color,
+    "$color": color,
     borderRadius: borderRadius
   }), children);
 });

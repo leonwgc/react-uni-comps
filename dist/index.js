@@ -704,6 +704,218 @@ var useForceUpdate = function useForceUpdate() {
   return forceUpdate;
 };
 
+/**
+ * 防抖
+ *
+ * @param {F} fn
+ * @param {number} [timeout=100]
+ * @return {*}  {F}
+ */
+var debounce = function debounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+  var timer = 0;
+  return function a() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var that = this;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+    }, timeout);
+  };
+};
+/**
+ * 节流
+ *
+ * @param {F} fn
+ * @param {number} [timeout=200]
+ * @param {boolean} [last=true] 最后一个timeout是否执行
+ * @return {*}  {F}
+ */
+
+var throttle = function throttle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var start = 0;
+  var timer = 0;
+
+  var ensureExecute = function ensureExecute(now, args, that) {
+    if (!last) return;
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+
+    timer = window.setTimeout(function () {
+      fn.apply(that, args);
+      start = now;
+    }, timeout);
+  };
+
+  return function () {
+    var that = this;
+    var now = Date.now();
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    if (!start) {
+      start = now;
+      ensureExecute(now, args, that);
+      return;
+    }
+
+    if (now - start >= timeout) {
+      ensureExecute(now, args, that);
+      fn.apply(that, args);
+      start = now;
+    }
+  };
+};
+
+var defaultEqualFn = function defaultEqualFn(a, b) {
+  return a === b;
+};
+/**
+ * 数组去重
+ *
+ * @template T
+ * @param {T[]} arr 待去重数组
+ * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
+ * @return {*}  {T[]}
+ */
+
+
+var uniqArray = function uniqArray(arr) {
+  var equalFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultEqualFn;
+  var rt = [];
+
+  if (Array.isArray(arr)) {
+    arr.map(function (item) {
+      if (!rt.find(function (d) {
+        return equalFn(item, d);
+      })) {
+        rt.push(item);
+      }
+    });
+  }
+
+  return rt;
+};
+var isObject = function isObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+};
+/**
+ * 扁平化对象数组
+ *
+ * @template T
+ * @param {T[]} arr 待处理数组
+ * @param {string} [childrenProp='children'] 子数组属性, 默认 children
+ * @return {*}  {T[]}
+ */
+
+var flatArray = function flatArray(arr) {
+  var childrenProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'children';
+
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      if (Array.isArray(v)) {
+        a = a.concat(flatArray(v, childrenProp));
+      } else if (isObject(v)) {
+        a = a.concat(v);
+
+        if (Array.isArray(v[childrenProp])) {
+          a = a.concat(flatArray(v[childrenProp], childrenProp));
+        }
+      }
+
+      return a;
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ * 扁平化简单数组
+ *
+ * @template T
+ * @param {T[]} arr 待处理数组
+ * @return {*}  {T[]}
+ */
+
+var flatSimpleArray = function flatSimpleArray(arr) {
+  if (Array.isArray(arr)) {
+    return arr.reduce(function (a, v) {
+      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
+    }, []);
+  }
+
+  return arr;
+};
+/**
+ *  sleep 一段时间
+ *
+ * @param {number} time
+ */
+
+var sleep = function sleep(time) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, time);
+  });
+};
+/**
+ * 深复制
+ *
+ * @template T
+ * @param {T} src
+ * @return {*}  {T}
+ */
+
+var deepClone = function deepClone(src) {
+  if (!src || _typeof(src) !== 'object') return src;
+  var dest = Array.isArray(src) ? [] : {};
+
+  for (var _i = 0, _Object$keys = Object.keys(src); _i < _Object$keys.length; _i++) {
+    var key = _Object$keys[_i];
+
+    if (!dest.hasOwnProperty(key)) {
+      var val = src[key];
+      dest[key] = deepClone(val);
+    }
+  }
+
+  return dest;
+};
+/**
+ *
+ *
+ * @param {MountContainerType} container
+ * @return {*}  {HTMLElement}
+ */
+
+var getMountContainer = function getMountContainer(container) {
+  var mountNode;
+
+  if (container instanceof HTMLElement) {
+    mountNode = container;
+  } else if (isObject(container) && 'current' in container) {
+    mountNode = container.current;
+  } else if (typeof container === 'function') {
+    mountNode = container === null || container === void 0 ? void 0 : container();
+  }
+
+  return mountNode;
+};
+
 var StyledWrapper = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Popup__StyledWrapper",
   componentId: "sc-yrsb3w-0"
@@ -762,14 +974,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return wrapRef.current;
   });
   var forceUpdate = useForceUpdate();
-  var mountNode;
-
-  if (mountContainer instanceof HTMLElement) {
-    mountNode = mountContainer;
-  } else {
-    mountNode = mountContainer === null || mountContainer === void 0 ? void 0 : mountContainer();
-  }
-
+  var mountNode = getMountContainer(mountContainer);
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
   useMount(function () {
     // fix container render at the same time / but not ready
@@ -1619,8 +1824,8 @@ var StyledDiv = /*#__PURE__*/styled__default['default'].div.withConfig({
   var position = _ref2.position;
   return "border".concat(position === 'all' ? '' : '-' + position);
 }, function (_ref3) {
-  var color = _ref3.color;
-  return color;
+  var $color = _ref3.$color;
+  return $color;
 }, function (_ref4) {
   var borderRadius = _ref4.borderRadius;
   return borderRadius;
@@ -1628,8 +1833,8 @@ var StyledDiv = /*#__PURE__*/styled__default['default'].div.withConfig({
   var position = _ref5.position;
   return "border".concat(position === 'all' ? '' : '-' + position);
 }, function (_ref6) {
-  var color = _ref6.color;
-  return color;
+  var $color = _ref6.$color;
+  return $color;
 });
 /** 移动端1像素边框容器 */
 
@@ -1653,7 +1858,7 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       pc: !isMobile && !mobile
     }),
     position: position,
-    color: color,
+    $color: color,
     borderRadius: borderRadius
   }), children);
 });
@@ -1702,198 +1907,6 @@ var useUpdateEffect = function useUpdateEffect(effect) {
       return effect();
     }
   }, deps);
-};
-
-/**
- * 防抖
- *
- * @param {F} fn
- * @param {number} [timeout=100]
- * @return {*}  {F}
- */
-var debounce = function debounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-  var timer = 0;
-  return function a() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var that = this;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-    }, timeout);
-  };
-};
-/**
- * 节流
- *
- * @param {F} fn
- * @param {number} [timeout=200]
- * @param {boolean} [last=true] 最后一个timeout是否执行
- * @return {*}  {F}
- */
-
-var throttle = function throttle(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
-  var last = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var start = 0;
-  var timer = 0;
-
-  var ensureExecute = function ensureExecute(now, args, that) {
-    if (!last) return;
-
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
-    }
-
-    timer = window.setTimeout(function () {
-      fn.apply(that, args);
-      start = now;
-    }, timeout);
-  };
-
-  return function () {
-    var that = this;
-    var now = Date.now();
-
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    if (!start) {
-      start = now;
-      ensureExecute(now, args, that);
-      return;
-    }
-
-    if (now - start >= timeout) {
-      ensureExecute(now, args, that);
-      fn.apply(that, args);
-      start = now;
-    }
-  };
-};
-
-var defaultEqualFn = function defaultEqualFn(a, b) {
-  return a === b;
-};
-/**
- * 数组去重
- *
- * @template T
- * @param {T[]} arr 待去重数组
- * @param {(a: T, b: T) => boolean} equalFn 判断函数,数组重复条件, 默认(a,b)=>a===b
- * @return {*}  {T[]}
- */
-
-
-var uniqArray = function uniqArray(arr) {
-  var equalFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultEqualFn;
-  var rt = [];
-
-  if (Array.isArray(arr)) {
-    arr.map(function (item) {
-      if (!rt.find(function (d) {
-        return equalFn(item, d);
-      })) {
-        rt.push(item);
-      }
-    });
-  }
-
-  return rt;
-};
-var isObject = function isObject(obj) {
-  return Object.prototype.toString.call(obj) === '[object Object]';
-};
-/**
- * 扁平化对象数组
- *
- * @template T
- * @param {T[]} arr 待处理数组
- * @param {string} [childrenProp='children'] 子数组属性, 默认 children
- * @return {*}  {T[]}
- */
-
-var flatArray = function flatArray(arr) {
-  var childrenProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'children';
-
-  if (Array.isArray(arr)) {
-    return arr.reduce(function (a, v) {
-      if (Array.isArray(v)) {
-        a = a.concat(flatArray(v, childrenProp));
-      } else if (isObject(v)) {
-        a = a.concat(v);
-
-        if (Array.isArray(v[childrenProp])) {
-          a = a.concat(flatArray(v[childrenProp], childrenProp));
-        }
-      }
-
-      return a;
-    }, []);
-  }
-
-  return arr;
-};
-/**
- * 扁平化简单数组
- *
- * @template T
- * @param {T[]} arr 待处理数组
- * @return {*}  {T[]}
- */
-
-var flatSimpleArray = function flatSimpleArray(arr) {
-  if (Array.isArray(arr)) {
-    return arr.reduce(function (a, v) {
-      return a.concat(Array.isArray(v) ? flatSimpleArray(v) : v);
-    }, []);
-  }
-
-  return arr;
-};
-/**
- *  sleep 一段时间
- *
- * @param {number} time
- */
-
-var sleep = function sleep(time) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, time);
-  });
-};
-/**
- * 深复制
- *
- * @template T
- * @param {T} src
- * @return {*}  {T}
- */
-
-var deepClone = function deepClone(src) {
-  if (!src || _typeof(src) !== 'object') return src;
-  var dest = Array.isArray(src) ? [] : {};
-
-  for (var _i = 0, _Object$keys = Object.keys(src); _i < _Object$keys.length; _i++) {
-    var key = _Object$keys[_i];
-
-    if (!dest.hasOwnProperty(key)) {
-      var val = src[key];
-      dest[key] = deepClone(val);
-    }
-  }
-
-  return dest;
 };
 
 /**
