@@ -19,5 +19,5 @@ declare const QRCode: React.ForwardRefExoticComponent<{
      * @default 128
      */
     size?: number;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default QRCode;

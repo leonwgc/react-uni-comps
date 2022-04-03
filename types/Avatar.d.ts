@@ -14,5 +14,6 @@ declare const Avatar: React.ForwardRefExoticComponent<{
     shape?: 'circle' | 'square';
     /** 文字/icon/img 不设置，则为默认头像icon */
     children?: React.ReactNode;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+    onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Avatar;

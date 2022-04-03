@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import React, { HTMLAttributes, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
 import Text from './Text';
+import type { BaseProps } from './types';
 
 const StyledNoticeList = styled.div`
   font-size: 14px;
@@ -50,7 +51,7 @@ const StyledNoticeList = styled.div`
 
 export type Notice = {
   /** 公告内容 */
-  text: React.ReactNode;
+  text?: React.ReactNode;
   /** 链接 */
   link?: string;
 };
@@ -58,17 +59,20 @@ export type Notice = {
 type Props = {
   /** 公告内容 */
   list: Notice[];
-  /** 一条公告展示时间，默认3000ms */
+  /**
+   * 一条公告展示时间，单位ms
+   * @default 3000
+   *  */
   stayTime?: number;
-  /** 广播图标, 可以使用 SoundOutlined @ant-design/icons */
+  /** 图标 */
   icon?: React.ReactNode;
-  /** 是否可关闭 ，默认false*/
+  /** 是否可关闭*/
   closeable?: boolean;
   /**额外操作区域，显示在关闭按钮左侧 */
   extra?: React.ReactNode;
   /** 关闭时的回调 */
   onClose?: () => void;
-} & HTMLAttributes<HTMLDivElement>;
+} & BaseProps;
 
 /** 多条信息垂直滚动通知栏  */
 const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {

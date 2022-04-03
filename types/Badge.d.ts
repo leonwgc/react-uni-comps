@@ -7,7 +7,7 @@ declare type Props = {
     color?: string;
     /** 自定义徽标样式 */
     badgeStyle?: React.CSSProperties;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps;
 /** 徽标:右上角添加标记 */
 declare const Badge: React.FC<Props>;
 export default Badge;

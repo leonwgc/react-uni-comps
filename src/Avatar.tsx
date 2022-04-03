@@ -17,8 +17,8 @@ type Props = {
   shape?: 'circle' | 'square';
   /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
-} & BaseProps &
-  React.HTMLAttributes<HTMLDivElement>;
+  onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps;
 
 const StyledAvatar = styled.div`
   box-sizing: border-box;

@@ -11,8 +11,7 @@ type Props = {
   color?: string;
   /** 自定义徽标样式 */
   badgeStyle?: React.CSSProperties;
-} & BaseProps &
-  React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps;
 
 const StyledBadge = styled.div`
   display: inline-block;

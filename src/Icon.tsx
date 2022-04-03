@@ -8,7 +8,6 @@ type Props = {
   /** 图标类型 */
   type: string;
   onClick?: (e: React.SyntheticEvent) => void;
-  [p: string]: any;
 } & BaseProps;
 
 const StyledIcon = styled.span`
@@ -33,7 +32,7 @@ const SVGProps = {
 /** 图标 */
 const Icon: React.ForwardRefExoticComponent<Props> & {
   /**
-   * 加载在 iconfont.cn 上自行管理的图标
+   * 加载iconfont.cn图标
    *
    * @param {string} scriptUrl
    */
