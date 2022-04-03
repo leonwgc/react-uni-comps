@@ -142,7 +142,7 @@ export type Props = {
    * 弹框挂载节点
    * @default document.body
    */
-  mountContainer?: () => HTMLElement | HTMLElement;
+  mountContainer?: HTMLElement | (() => HTMLElement);
   /** 弹框里面的内容 */
   children?: React.ReactNode;
   /** 弹框样式 */

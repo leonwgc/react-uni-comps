@@ -1,6 +1,7 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
+import type { BaseProps } from './types';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -11,16 +12,14 @@ const StyledWrap = styled.div`
 `;
 
 /** 自动居中 */
-const AutoCenter = React.forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  (props, ref) => {
-    const { children, ...rest } = props;
-    return (
-      <StyledWrap {...rest} ref={ref} className={clsx('uc-auto-center')}>
-        <div className="content">{children}</div>
-      </StyledWrap>
-    );
-  }
-);
+const AutoCenter = React.forwardRef<HTMLDivElement, BaseProps>((props, ref) => {
+  const { children, ...rest } = props;
+  return (
+    <StyledWrap {...rest} ref={ref} className={clsx('uc-auto-center')}>
+      <div className="content">{children}</div>
+    </StyledWrap>
+  );
+});
 
 AutoCenter.displayName = 'UC-AutoCenter';
 

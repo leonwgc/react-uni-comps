@@ -19,6 +19,7 @@ export default defineConfig({
       output: './.mfsu-dev',
     },
   },
+  locales: [['zh-CN', '中文']],
   hash: true,
   webpack5: {},
   fastRefresh: {},
@@ -68,6 +69,7 @@ export default defineConfig({
     
     `,
   ],
+
   themeConfig: {
     carrier: 'ruc',
     hd: {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Waypoint from './Waypoint';
 import { getThemeColorCss } from './themeHelper';
+import type { BaseProps } from './types';
 
 type Item = {
   label?: React.ReactNode;
@@ -11,13 +12,11 @@ type Item = {
 };
 
 type Props = {
-  className?: string;
-  style?: React.CSSProperties;
   /** 数据 */
   data?: Item[];
   /** 点击数据项回调 */
   onItemClick?: (item: Omit<Item, 'subItems'>) => void;
-};
+} & BaseProps;
 
 const StyledContainer = styled.div`
   .uc-indexlist-side {
