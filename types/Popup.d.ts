@@ -1,4 +1,5 @@
 import React from 'react';
+import type { MountContainerType } from './types';
 export declare type Props = {
     /** 是否可见 */
     visible?: boolean;
@@ -24,7 +25,7 @@ export declare type Props = {
      * 弹框挂载节点
      * @default document.body
      */
-    mountContainer?: HTMLElement | (() => HTMLElement);
+    mountContainer?: MountContainerType;
     /** 弹框里面的内容 */
     children?: React.ReactNode;
     /** 弹框样式 */

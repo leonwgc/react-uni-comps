@@ -14,6 +14,8 @@ import clsx from 'clsx';
 import { animationNormal } from './vars';
 import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
+import { getMountContainer } from './helper';
+import type { MountContainerType } from './types';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -142,7 +144,7 @@ export type Props = {
    * 弹框挂载节点
    * @default document.body
    */
-  mountContainer?: HTMLElement | (() => HTMLElement);
+  mountContainer?: MountContainerType;
   /** 弹框里面的内容 */
   children?: React.ReactNode;
   /** 弹框样式 */
@@ -220,12 +222,8 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const forceUpdate = useForceUpdate();
 
-  let mountNode;
-  if (mountContainer instanceof HTMLElement) {
-    mountNode = mountContainer;
-  } else {
-    mountNode = mountContainer?.();
-  }
+  const mountNode = getMountContainer(mountContainer);
+
   const showPosition = mountNode === document.body ? 'fixed' : 'absolute';
 
   useMount(() => {

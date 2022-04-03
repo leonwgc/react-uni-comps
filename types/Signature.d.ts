@@ -21,5 +21,5 @@ declare type Props = {
     penColor?: string;
 } & BaseProps & RefAttributes<SigPadRef>;
 /** 签名 */
-declare const Signature: React.ForwardRefExoticComponent<Pick<Props, "key" | keyof BaseProps | "padColor" | "penColor"> & React.RefAttributes<SigPadRef>>;
+declare const Signature: React.ForwardRefExoticComponent<Pick<Props, keyof BaseProps | "key" | "padColor" | "penColor"> & React.RefAttributes<SigPadRef>>;
 export default Signature;

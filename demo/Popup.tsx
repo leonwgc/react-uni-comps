@@ -96,7 +96,7 @@ export default function App() {
 
       <Popup
         position="left"
-        mountContainer={() => ref.current}
+        mountContainer={ref}
         visible={x}
         onClose={() => setX(false)}
         style={{}}

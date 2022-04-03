@@ -1,3 +1,4 @@
+import type { MountContainerType } from './types';
 export declare type F = (...args: any[]) => void;
 /**
  * 防抖
@@ -57,3 +58,10 @@ export declare const sleep: (time: number) => Promise<unknown>;
  * @return {*}  {T}
  */
 export declare const deepClone: <T>(src: T) => T;
+/**
+ *
+ *
+ * @param {MountContainerType} container
+ * @return {*}  {HTMLElement}
+ */
+export declare const getMountContainer: (container: MountContainerType) => HTMLElement;

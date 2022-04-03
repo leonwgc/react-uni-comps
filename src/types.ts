@@ -12,3 +12,5 @@ export type BaseProps = {
   /** 样式类名设置 */
   className?: string;
 };
+
+export type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;

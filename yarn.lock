@@ -14008,10 +14008,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-w-popover@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/w-popover/-/w-popover-1.1.2.tgz#2c29a355280513ed90751238c97561a184fc868e"
-  integrity sha512-gyiEeKbcDtb3bEUE0FiKtR/+f9Dn1lFb6ZudHAU+6vENcP80B6LuXd8JyhKCFoJEhwonm+2f9Xd0OLQe3aVwGQ==
+w-popover@1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/w-popover/-/w-popover-1.1.8.tgz#e0e0532ee65d9fbe9a3a036002b22b3468146dc2"
+  integrity sha512-38ukt3RcY32Bj/wMd00XB3zdGA07Dkx/dSiYgQ4QUe22EW3RtnKB742ro7/q574Wqi/d8KKppDvDuVS0kjMiJw==
 
 w-qrcode@1.0.0:
   version "1.0.0"

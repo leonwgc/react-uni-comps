@@ -1,3 +1,5 @@
+import type { MountContainerType } from './types';
+
 export type F = (...args) => void;
 /**
  * 防抖
@@ -154,4 +156,23 @@ export const deepClone = <T>(src: T): T => {
     }
   }
   return dest as T;
+};
+/**
+ *
+ *
+ * @param {MountContainerType} container
+ * @return {*}  {HTMLElement}
+ */
+export const getMountContainer = (container: MountContainerType): HTMLElement => {
+  let mountNode;
+
+  if (container instanceof HTMLElement) {
+    mountNode = container;
+  } else if (isObject(container) && 'current' in container) {
+    mountNode = container.current;
+  } else if (typeof container === 'function') {
+    mountNode = container?.();
+  }
+
+  return mountNode;
 };
