@@ -28,10 +28,11 @@ type Props = {
    * @default true
    *  */
   mobile?: boolean;
-} & BaseProps &
-  React.HTMLAttributes<HTMLDivElement>;
+  onClick?: (e: React.SyntheticEvent) => void;
+  children?: React.ReactNode;
+} & BaseProps;
 
-const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: number }>`
+const StyledDiv = styled.div<{ position?: Position; $color: string; borderRadius?: number }>`
   position: relative;
 
   &.mobile {
@@ -45,8 +46,8 @@ const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: 
       top: 0;
       border-radius: ${({ borderRadius }) => borderRadius}px;
       ${({ position }) => `border${position === 'all' ? '' : '-' + position}`}: 1px solid ${({
-        color,
-      }) => color};
+        $color,
+      }) => $color};
 
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
         width: 200%;
@@ -60,8 +61,8 @@ const StyledDiv = styled.div<{ position: Position; color: string; borderRadius: 
   &.pc {
     border-radius: ${({ borderRadius }) => borderRadius}px;
     ${({ position }) => `border${position === 'all' ? '' : '-' + position}`}: 1px solid ${({
-      color,
-    }) => color};
+      $color,
+    }) => $color};
   }
 `;
 
@@ -86,7 +87,7 @@ const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         pc: !isMobile && !mobile,
       })}
       position={position}
-      color={color}
+      $color={color}
       borderRadius={borderRadius}
     >
       {children}

@@ -24,5 +24,7 @@ declare const HairLineBox: React.ForwardRefExoticComponent<{
      * @default true
      *  */
     mobile?: boolean;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+    onClick?: (e: React.SyntheticEvent) => void;
+    children?: React.ReactNode;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default HairLineBox;

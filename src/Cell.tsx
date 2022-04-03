@@ -32,8 +32,8 @@ export type Props = {
    * @default true
    */
   withPaddingLeft?: boolean;
-} & BaseProps &
-  HTMLAttributes<HTMLDivElement>;
+  onClick?: (e: React.SyntheticEvent) => void;
+} & BaseProps;
 
 const StyledCell = styled.div`
   background-color: #fff;

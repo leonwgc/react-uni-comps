@@ -2,7 +2,10 @@ import React from 'react';
 import type { BaseProps } from './types';
 /** 按钮 */
 declare const Button: React.ForwardRefExoticComponent<BaseProps & {
-    /** default 线框，primary 实色框 */
+    /**
+     * 类型
+     * @default default
+     *  */
     type?: 'primary' | 'default';
     /** 主题色线框风格 */
     outlined?: boolean;

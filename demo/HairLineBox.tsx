@@ -4,12 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { HairLineBox, Space, styled } from 'react-uni-comps';
 
 const StyledHairline = styled(HairLineBox)`
-  width: 220px;
-  height: 120px;
-`;
-
-const StyledHairlineEdge = styled(HairLineBox)`
-  width: 60px;
+  width: 90px;
   height: 60px;
 `;
 
@@ -17,11 +12,18 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认下边">
-        <HairLineBox mobile={false}>默认下边</HairLineBox>
+        <HairLineBox mobile={false} style={{ padding: '10px 0' }}>
+          默认下边
+        </HairLineBox>
       </DemoBlock>
 
       <DemoBlock title="四条边">
-        <HairLineBox mobile={false} position="all" style={{ width: 120, height: 80 }} />
+        <HairLineBox
+          mobile={false}
+          color="#005cff"
+          position="all"
+          style={{ width: 120, height: 80 }}
+        />
       </DemoBlock>
 
       <DemoBlock title="圆角和颜色">
@@ -29,19 +31,22 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="不同边">
-        <Space>
-          <StyledHairlineEdge mobile={false} position="left">
+        <Space size={20} wrap>
+          <StyledHairline mobile={false} position="left">
             left
-          </StyledHairlineEdge>
-          <StyledHairlineEdge mobile={false} position="right">
+          </StyledHairline>
+
+          <StyledHairline mobile={false} position="right">
             right
-          </StyledHairlineEdge>
-          <StyledHairlineEdge mobile={false} position="bottom">
+          </StyledHairline>
+
+          <StyledHairline mobile={false} position="bottom">
             bottom
-          </StyledHairlineEdge>
-          <StyledHairlineEdge mobile={false} position="top">
+          </StyledHairline>
+
+          <StyledHairline mobile={false} position="top">
             top
-          </StyledHairlineEdge>
+          </StyledHairline>
         </Space>
       </DemoBlock>
     </PageWrap>
