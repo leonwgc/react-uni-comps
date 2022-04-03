@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
@@ -7,8 +7,9 @@ import type { BaseProps } from './types';
 type Props = {
   /** 图标类型 */
   type: string;
-} & BaseProps &
-  HTMLAttributes<HTMLSpanElement>;
+  onClick?: (e: React.SyntheticEvent) => void;
+  [p: string]: any;
+} & BaseProps;
 
 const StyledIcon = styled.span`
   display: inline-block;

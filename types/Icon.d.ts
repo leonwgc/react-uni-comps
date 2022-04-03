@@ -1,9 +1,11 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import type { BaseProps } from './types';
 declare type Props = {
     /** 图标类型 */
     type: string;
-} & BaseProps & HTMLAttributes<HTMLSpanElement>;
+    onClick?: (e: React.SyntheticEvent) => void;
+    [p: string]: any;
+} & BaseProps;
 /** 图标 */
 declare const Icon: React.ForwardRefExoticComponent<Props> & {
     /**

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
@@ -9,7 +9,10 @@ import Space from './Space';
 import type { BaseProps } from './types';
 
 type Props = BaseProps & {
-  /** default 线框，primary 实色框 */
+  /** 
+   * 类型
+   * @default default
+   *  */
   type?: 'primary' | 'default';
   /** 主题色线框风格 */
   outlined?: boolean;
@@ -37,7 +40,7 @@ type Props = BaseProps & {
   onClick?: (e: React.SyntheticEvent) => void;
   /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
   wait?: number | boolean;
-} & HTMLAttributes<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
+} & BaseProps;
 
 const StyledButton = styled.button`
   color: inherit;
