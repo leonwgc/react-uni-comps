@@ -1,4 +1,4 @@
-桌面和移动端react库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
+桌面和移动端 react 库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
@@ -11,47 +11,14 @@ yarn add react-uni-comps
 
 1. 组件丰富，体积小，自动按需加载
 2. 同时支持桌面和移动端，同一套组件，一致的开发体验
-3. 纯react-hooks实现, 拥抱react未来
-4. 样式采用css-in-js方案
+3. 纯 react-hooks 实现, 拥抱 react 未来
+4. 样式采用 css-in-js 方案
 5. 只提供基础样式,方便二次开发 / 定制 / 扩展
-6. 使用ts编写，内置类型定义，开发智能提示
+6. 使用 ts 编写，内置类型定义，开发智能提示
 7. 可以和 antd / antd-mobile / zarm 等组件库搭配 / 替换使用
-8. 重新导出了依赖组件/库/自定义hooks等，方便基于同一套技术栈开发 / 扩展
+8. 重新导出了依赖组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展
 
 [在线文档](https://leonwgc.github.io/react-uni-comps/base)
-
-### 工具函数
-
-- debounce (防抖)
-- throttle (节流)
-- loadResource(动态加载 js/css 文件)
-- observe (使用 IntersectionObserver 监视 dom 元素在文档视口的可见性)
-- unobserve (取消 observe 监控)
-- uniqArray (数组去重)
-- flatSimpleArray (扁平化简单数组)
-- flatArray (扁平化对象数组)
-- copy (复制文本)
-- nanoid (生成随机字符串)
-
-### 常量
-
-- isBrowser(是否是浏览器)
-- isMobile (是否是移动端)
-
-### react-hooks
-
-- useUpdateEffect (执行异步更新 effect)
-- useUpdateLayoutEffect (执行同步更新 effect)
-- usePrevious (使用前一个值)
-- useDebounce （返回 memorized 防抖函数）
-- useThrottle （返回 memorized 节流函数）
-- useInViewport (监听元素是否在视口内)
-- useVisibleObserve (监视元素在文档视口的可见性，可见性变化时触发回调)
-- useCallbackRef (保存最新的值在 ref 中)
-- useCountdown (倒计时，常用于获取验证码)
-- useMount (组件加载执行回调)
-- useUnmount (组件卸载执行回调)
-- useForceUpdate (强制render组件)
 
 ### 按需加载
 

@@ -28,7 +28,7 @@
     "lint-staged": "lint-staged",
     "build": "father-build && tsc",
     "doc:dev": "dumi dev",
-    "doc": "dumi build"
+    "doc:build": "dumi build"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

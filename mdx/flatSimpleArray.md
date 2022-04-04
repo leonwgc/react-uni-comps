@@ -1,0 +1,19 @@
+---
+title: flatSimpleArray
+order: 3
+group:
+  title: 工具函数
+  order: 9
+  path: utils
+---
+
+
+```jsx
+
+
+
+// 扁平化简单数组
+
+
+
+```
