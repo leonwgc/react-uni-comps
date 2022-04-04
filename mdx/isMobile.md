@@ -1,5 +1,5 @@
 ---
-title: isMobile
+title: isMobile 是否移动端
 order: 1
 group:
   title: 常量
@@ -12,7 +12,7 @@ group:
 
 
 
-// 是否是移动端
+// 是否移动端
 
 
 

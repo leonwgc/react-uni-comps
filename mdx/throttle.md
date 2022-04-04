@@ -1,5 +1,5 @@
 ---
-title: throttle
+title: throttle 节流
 order: 1
 group:
   title: 工具函数

@@ -1,8 +1,8 @@
 ---
-title: useThrottle
+title: useThrottle 节流
 order: 4
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---

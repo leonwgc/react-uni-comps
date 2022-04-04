@@ -20,7 +20,7 @@ group:
 
 const tpl1 =
   `---
-title: <%= name %>
+title: <%= title %>
 order: <%= order %>
 group:
   title: <%= groupTitle %>
@@ -33,7 +33,7 @@ group:
 
 
 
-// <%= title %>
+// <%= desc %>
 
 
 

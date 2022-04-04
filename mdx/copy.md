@@ -1,5 +1,5 @@
 ---
-title: copy
+title: copy 复制文本
 order: 5
 group:
   title: 工具函数

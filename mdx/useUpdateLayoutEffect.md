@@ -1,8 +1,8 @@
 ---
-title: useUpdateLayoutEffect
+title: useUpdateLayoutEffect 更新同步执行
 order: 1
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---

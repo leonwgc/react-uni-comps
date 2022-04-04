@@ -1,5 +1,5 @@
 ---
-title: nanoid
+title: nanoid 随机串
 order: 6
 group:
   title: 工具函数

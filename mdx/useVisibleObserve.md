@@ -1,8 +1,8 @@
 ---
-title: useVisibleObserve
+title: useVisibleObserve 监视可见性
 order: 6
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---

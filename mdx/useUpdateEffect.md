@@ -1,8 +1,8 @@
 ---
-title: useUpdateEffect
+title: useUpdateEffect 更新执行
 order: 0
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---

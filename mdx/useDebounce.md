@@ -1,8 +1,8 @@
 ---
-title: useDebounce
+title: useDebounce 防抖
 order: 3
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---

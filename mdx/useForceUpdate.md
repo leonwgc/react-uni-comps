@@ -1,8 +1,8 @@
 ---
-title: useForceUpdate
+title: useForceUpdate 强制更新
 order: 11
 group:
-  title: React-Hooks
+  title: Hooks
   order: 8
   path: hooks
 ---
