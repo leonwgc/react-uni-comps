@@ -14,8 +14,7 @@ type Props = {
   multiple?: boolean;
   /** 捕获图像或视频数据的源 */
   capture?: 'user' | 'environment';
-} & Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> &
-  BaseProps;
+} & BaseProps;
 
 const StyledFileInputTrigger = styled.div`
   position: relative;
