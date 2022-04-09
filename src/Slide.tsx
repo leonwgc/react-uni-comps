@@ -9,12 +9,10 @@ import React, {
 import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
-import { isMobile, isTouch } from './dom';
-import { animationSlow } from './vars';
 import Touch from 'w-touch';
-import useCallbackRef from './hooks/useCallbackRef';
 import Space from './Space';
 import type { BaseProps } from './types';
+import useMount from './hooks/useMount';
 
 const StyledSlide = styled.div`
   overflow: hidden;
@@ -26,6 +24,8 @@ const StyledSlide = styled.div`
     flex-wrap: nowrap;
     touch-action: none;
     width: 100%;
+    transform-style: preserve-3d;
+    transition-property: transform;
 
     &.vertical {
       flex-direction: column;
@@ -52,7 +52,6 @@ const StyledSlide = styled.div`
       border-radius: 2px;
       background-color: #fff;
       opacity: 0.4;
-      transition: opacity ease-in-out ${animationSlow}ms;
 
       &.active {
         opacity: 1;
@@ -75,6 +74,8 @@ const StyledSlide = styled.div`
   }
 `;
 
+type Direction = 'horizontal' | 'vertical';
+
 export type Props = {
   /**
    * 是否自动播放
@@ -85,7 +86,7 @@ export type Props = {
    * 水平还是垂直
    * @default horizontal
    */
-  direction?: 'horizontal' | 'vertical';
+  direction?: Direction;
   /**
    * 距离下一次播放的间隔毫秒
    * @default 3000
@@ -182,7 +183,29 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const count = items.length;
   const len = React.Children.count(children);
 
-  const thisRef = useRef({
+  const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
+  const exp = count > len; // expanded
+
+  const min = exp ? -1 : 0;
+  const max = exp ? len : len - 1;
+
+  const thisRef = useRef<{
+    x: number;
+    y: number;
+    lastX: number;
+    lastY: number;
+    wrapHeight: number;
+    wrapWidth: number;
+    isMoving: boolean;
+    pageIndex: number;
+    min: number;
+    max: number;
+    exp: boolean;
+    len: number;
+    ratio: number;
+    direction?: Direction;
+    timer?: number;
+  }>({
     x: 0,
     y: 0,
     lastX: 0,
@@ -190,54 +213,47 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     wrapHeight: 0,
     wrapWidth: 0,
     isMoving: false,
-  });
-  const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
-  const exp = count > len; // expanded
-
-  const min = exp ? -1 : 0;
-  const max = exp ? len : len - 1;
-
-  const autoRef = useCallbackRef<{
-    pageIndex: number;
-    min: number;
-    max: number;
-    exp: boolean;
-  }>({
     pageIndex,
     min,
     max,
     exp,
+    len,
+    ratio,
+    direction,
   });
+
+  thisRef.current = { ...thisRef.current, pageIndex, min, max, exp, len, ratio, direction };
 
   const slideToPageIndex = useCallback(
     (newPageIndex: number, transition = true) => {
-      const s = thisRef.current;
+      const $this = thisRef.current;
+      const { wrapWidth, wrapHeight, direction, exp } = thisRef.current;
       const el = wrapElRef.current;
 
       if (el) {
         el.style.transitionProperty = transition ? 'transform' : 'none';
         if (direction === 'horizontal') {
-          const x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
+          const x = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapWidth;
           el.style.transform = `translate3d(${x}px, 0, 0)`;
-          s.x = x;
+          $this.x = x;
         } else {
-          const y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
+          const y = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapHeight;
           el.style.transform = `translate3d(0, ${y}px, 0)`;
-          s.y = y;
+          $this.y = y;
         }
 
         setPageIndex(newPageIndex);
       }
     },
-    [thisRef, direction, exp]
+    [thisRef]
   );
 
   useImperativeHandle(ref, () => ({
     prev: () => {
-      slideToPageIndex(Math.max(autoRef.current.min, pageIndex - 1));
+      slideToPageIndex(Math.max(thisRef.current.min, pageIndex - 1));
     },
     next: () => {
-      slideToPageIndex(Math.min(autoRef.current.max, pageIndex + 1));
+      slideToPageIndex(Math.min(thisRef.current.max, pageIndex + 1));
     },
   }));
 
@@ -260,18 +276,19 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     }
   }, [pageIndex]);
 
-  useLayoutEffect(() => {
-    const s = thisRef.current;
+  useMount(() => {
+    const $this = thisRef.current;
     const container = containerRef.current;
-    s.wrapWidth = container.offsetWidth;
-    s.wrapHeight = container.offsetHeight;
+
+    $this.wrapWidth = container.offsetWidth;
+    $this.wrapHeight = container.offsetHeight;
 
     slideToPageIndex(0, false);
-  }, [slideToPageIndex]);
+  });
 
   useEffect(() => {
     if (autoPlay && len > 1) {
-      const timer = window.setInterval(
+      thisRef.current.timer = window.setInterval(
         (p) => {
           if (!thisRef.current.isMoving) {
             slideToPageIndex(p + 1);
@@ -282,10 +299,10 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       );
 
       return () => {
-        window.clearInterval(timer);
+        window.clearInterval(thisRef.current.timer);
       };
     }
-  }, [slideToPageIndex, autoPlay, interval, len, exp, pageIndex]);
+  }, [slideToPageIndex, autoPlay, interval, len, pageIndex]);
 
   const pagerRender = (): React.ReactNode => {
     if (!showPageIndicator || len <= 1) return null;
@@ -305,76 +322,69 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     );
   };
 
-  const evtProps: any = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = (e) => {
-    !isMobile && e.preventDefault();
-
-    const s = thisRef.current;
-    s.isMoving = true;
-    wrapElRef.current.style.transitionProperty = 'none';
-    s.lastX = s.x;
-    s.lastY = s.y;
-  };
-
-  evtProps[isTouch ? 'onTouchEnd' : 'onMouseUp'] = () => {
-    const s = thisRef.current;
-    if (!s.isMoving) {
-      return;
-    }
-
-    const instance = autoRef.current;
-
-    if (
-      instance.exp &&
-      (instance.max === instance.pageIndex || instance.min === instance.pageIndex)
-    ) {
-      slideToPageIndex(instance.pageIndex === max ? 0 : len - 1, false);
-      return;
-    }
-    s.isMoving = false;
-
-    if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-      slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
-    } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-      slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
-    } else {
-      // reset
-      slideToPageIndex(pageIndex);
-    }
-  };
-
   useLayoutEffect(() => {
     const wrapEl = wrapElRef.current;
     const fg = new Touch(wrapEl, {
-      onPressMove: (e) => {
-        const s = thisRef.current;
-        const instance = autoRef.current;
+      onTouchStart: (e) => {
+        e.preventDefault();
+        const $this = thisRef.current;
+        $this.isMoving = true;
+        wrapEl.style.transitionProperty = 'none';
+        $this.lastX = $this.x;
+        $this.lastY = $this.y;
+      },
+      onTouchEnd: () => {
+        const $this = thisRef.current;
+        if (!$this.isMoving) {
+          return;
+        }
+        $this.isMoving = false;
+        const { ratio, pageIndex, max, len } = $this;
+
+        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
+          slideToPageIndex($this.pageIndex === max ? 0 : len - 1, false);
+          return;
+        }
 
         if (
-          instance.exp &&
-          (instance.max === instance.pageIndex || instance.min === instance.pageIndex)
+          direction === 'horizontal' &&
+          Math.abs($this.x - $this.lastX) > $this.wrapWidth * ratio
         ) {
+          slideToPageIndex(pageIndex + ($this.x < $this.lastX ? 1 : -1));
+        } else if (
+          direction === 'vertical' &&
+          Math.abs($this.y - $this.lastY) > $this.wrapHeight * ratio
+        ) {
+          slideToPageIndex(pageIndex + ($this.y < $this.lastY ? 1 : -1));
+        } else {
+          // reset
+          slideToPageIndex(pageIndex);
+        }
+      },
+      onPressMove: (e) => {
+        const $this = thisRef.current;
+
+        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
           return;
         }
 
         if (direction === 'horizontal') {
-          if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+          if ($this.x > 0 || $this.x < -1 * (count - 1) * $this.wrapWidth) {
             return;
           }
-          s.x += e.deltaX;
-          wrapElRef.current.style.transform = `translate3d(${s.x}px, 0, 0)`;
+          $this.x += e.deltaX;
+          wrapElRef.current.style.transform = `translate3d(${$this.x}px, 0, 0)`;
         } else {
-          if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+          if ($this.y > 0 || $this.y < -1 * (count - 1) * $this.wrapHeight) {
             return;
           }
-          s.y += e.deltaY;
-          wrapElRef.current.style.transform = `translate3d(0, ${s.y}px, 0)`;
+          $this.y += e.deltaY;
+          wrapElRef.current.style.transform = `translate3d(0, ${$this.y}px, 0)`;
         }
       },
     });
     return () => fg.destroy();
-  }, [count, direction, autoRef]);
+  }, [count, direction, thisRef, slideToPageIndex]);
 
   return (
     <StyledSlide
@@ -389,8 +399,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         onTransitionEnd={() => {
           ensurePageIndex();
         }}
-        {...evtProps}
-        style={{ transition: `transform ${duration}ms ease-in-out` }}
+        style={{ transitionDuration: `${duration}ms` }}
       >
         {items}
       </div>
