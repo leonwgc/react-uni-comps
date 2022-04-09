@@ -8,7 +8,7 @@ export declare type DataItem = {
     /** 级联数据用children */
     children?: DataItem[];
 };
-declare type Props = BaseProps & {
+declare type Props = {
     /** 数据列表 */
     data?: Array<DataItem>;
     /** 当前滚动值的索引 */
@@ -19,9 +19,6 @@ declare type Props = BaseProps & {
     onIndexChange?: (newIndex: number) => void;
     /** 自定义label */
     labelRender?: (item: DataItem) => React.ReactNode;
-};
-declare const Wheel: {
-    (props: Props): React.ReactElement;
-    displayName: string;
-};
+} & BaseProps;
+declare const Wheel: React.FC<Props>;
 export default Wheel;

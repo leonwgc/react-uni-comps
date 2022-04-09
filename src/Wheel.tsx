@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import { isTouch } from './dom';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import useDebounce from './hooks/useDebounce';
-import { useSpring, animated, config } from '@react-spring/web';
+import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
 import type { BaseProps } from './types';
@@ -19,7 +17,7 @@ export type DataItem = {
   children?: DataItem[];
 };
 
-type Props = BaseProps & {
+type Props = {
   /** 数据列表 */
   data?: Array<DataItem>;
   /** 当前滚动值的索引 */
@@ -30,7 +28,7 @@ type Props = BaseProps & {
   onIndexChange?: (newIndex: number) => void;
   /** 自定义label */
   labelRender?: (item: DataItem) => React.ReactNode;
-};
+} & BaseProps;
 
 const StyledWrap = styled(animated.div)`
   transform: translate3d(0px, 105px, 0px);
@@ -53,7 +51,7 @@ const MOMENTUM_LIMIT_DISTANCE = 15;
 
 const defaultLabelRender = (item: DataItem) => item.label;
 
-const Wheel = (props: Props): React.ReactElement => {
+const Wheel: React.FC<Props> = (props) => {
   const {
     onIndexChange,
     itemHeight = 35,
@@ -66,7 +64,7 @@ const Wheel = (props: Props): React.ReactElement => {
   } = props;
   const firstItemY = itemHeight * 3;
 
-  const elRef = useRef<HTMLElement>();
+  const elRef = useRef<HTMLDivElement>();
   const onIndexChangeRef = useCallbackRef(onIndexChange);
   const yRef = useRef(firstItemY);
   const [_index, _setIndex] = useState(index);
@@ -76,15 +74,20 @@ const Wheel = (props: Props): React.ReactElement => {
     touchStartTime: 0,
   });
 
-  const [styles, api] = useSpring(() => ({ y: 105, config: config.default }));
+  const thisRef = useRef({
+    data,
+  });
 
-  const scrollToIndex = useDebounce(
+  thisRef.current = { ...thisRef.current, data };
+
+  const [styles, api] = useSpring(() => ({ y: itemHeight * 3 }));
+
+  const scrollToIndex = useCallback(
     (index: number, effect = true) => {
       yRef.current = firstItemY - itemHeight * index;
       api.start({ y: yRef.current, immediate: !effect });
     },
-    100,
-    [api, yRef]
+    [api, yRef, firstItemY, itemHeight]
   );
 
   const getIndexByY = useCallback(() => {
@@ -118,56 +121,46 @@ const Wheel = (props: Props): React.ReactElement => {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
-  const touchEnd = useCallback(() => {
-    if (!isMovingRef.current) {
-      return;
-    }
-    isMovingRef.current = false;
-    const min = -1 * (data.length - 1) * itemHeight + firstItemY;
-    const max = firstItemY;
-
-    let newIndex;
-    if (yRef.current >= max - itemHeight / 2) {
-      newIndex = 0;
-    } else if (yRef.current <= min) {
-      newIndex = Math.max(data.length - 1, 0);
-    } else {
-      newIndex = getIndexByY();
-    }
-
-    scrollToIndex(newIndex);
-    setTimeout(() => {
-      _setIndex(newIndex);
-    }, 300);
-  }, [scrollToIndex, itemHeight, firstItemY, getIndexByY, data]);
-
-  const evtProps: any = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = () => {
-    isMovingRef.current = true;
-    momentumRef.current.touchStartTime = Date.now();
-  };
-
-  useLayoutEffect(() => {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-
-    return () => {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
-
   useLayoutEffect(() => {
     const el = elRef.current;
+
     const fg = new Touch(el, {
+      onTouchStart: () => {
+        isMovingRef.current = true;
+        momentumRef.current.touchStartTime = Date.now();
+      },
+      onTouchEnd: () => {
+        if (!isMovingRef.current) {
+          return;
+        }
+        const { data } = thisRef.current;
+        isMovingRef.current = false;
+        const min = -1 * (data.length - 1) * itemHeight + firstItemY;
+        const max = firstItemY;
+
+        let newIndex;
+        if (yRef.current >= max - itemHeight / 2) {
+          newIndex = 0;
+        } else if (yRef.current <= min) {
+          newIndex = Math.max(data.length - 1, 0);
+        } else {
+          newIndex = getIndexByY();
+        }
+
+        scrollToIndex(newIndex);
+        setTimeout(() => {
+          _setIndex(newIndex);
+        }, 300);
+      },
       onPressMove: (e) => {
         yRef.current += e.deltaY;
 
         const distance = e.deltaY;
         const duration = Date.now() - momentumRef.current.touchStartTime;
-        api.start({ y: yRef.current });
+        api.start({ y: yRef.current, immediate: true });
 
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
-          // momentum effect
+          // momentum
           const speed = Math.abs(distance / duration);
           yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
@@ -175,13 +168,12 @@ const Wheel = (props: Props): React.ReactElement => {
       },
     });
     return () => fg.destroy();
-  }, [api, getIndexByY, scrollToIndex]);
+  }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
 
   return (
     <StyledWrap
       ref={elRef}
       {...rest}
-      {...evtProps}
       className={clsx('uc-wheel', className)}
       style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
     >

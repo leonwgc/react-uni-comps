@@ -20,6 +20,33 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> DatePicker
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('DatePicker')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Picker
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Picker')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> PickerView
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PickerView')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Slide FullPage
           </Space>
         }
@@ -284,33 +311,6 @@ export default function All() {
         onClick={() => gotoPage('Pagination')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> DatePicker
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('DatePicker')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Picker
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Picker')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> PickerView
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PickerView')}
-      ></Cell>
       <Cell
         label={
           <Space>

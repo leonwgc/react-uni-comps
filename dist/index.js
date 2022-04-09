@@ -1158,7 +1158,7 @@ var StyledSpace = /*#__PURE__*/styled__default['default'].div.withConfig({
 });
 /** 间距 */
 
-var Space = function Space(props) {
+var Space = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _props$size = props.size,
       size = _props$size === void 0 ? 8 : _props$size,
       align = props.align,
@@ -1232,6 +1232,7 @@ var Space = function Space(props) {
   }
 
   return /*#__PURE__*/React.createElement(StyledSpace, _extends({
+    ref: ref,
     direction: direction,
     align: mergedAlign,
     className: clsx__default['default'](className, 'uc-space'),
@@ -1239,8 +1240,7 @@ var Space = function Space(props) {
   }, otherProps), /*#__PURE__*/React.createElement(SpaceContext.Provider, {
     value: spaceContext
   }, nodes));
-};
-
+});
 Space.displayName = 'UC-Space';
 
 var intersectionObserver;
@@ -4600,24 +4600,6 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-/**
- * 返回防抖函数
- *
- * @param {F} fn fn改变debounce fn不会变
- * @param {number} [timeout=180]
- * @param {Array<unknown>} [fnDeps=[]]
- * @return {*}  {F}
- */
-var useDebounce = function useDebounce(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
-  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  return (// eslint-disable-next-line react-hooks/exhaustive-deps
-    React.useMemo(function () {
-      return debounce(fn, timeout);
-    }, fnDeps)
-  );
-};
-
 var _excluded$z = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
 var StyledWrap$2 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Wheel__StyledWrap",
@@ -4659,25 +4641,30 @@ var Wheel = function Wheel(props) {
   var momentumRef = React.useRef({
     touchStartTime: 0
   });
+  var thisRef = React.useRef({
+    data: data
+  });
+  thisRef.current = _objectSpread2(_objectSpread2({}, thisRef.current), {}, {
+    data: data
+  });
 
   var _useSpring = web.useSpring(function () {
     return {
-      y: 105,
-      config: web.config.default
+      y: itemHeight * 3
     };
   }),
       _useSpring2 = _slicedToArray(_useSpring, 2),
       styles = _useSpring2[0],
       api = _useSpring2[1];
 
-  var scrollToIndex = useDebounce(function (index) {
+  var scrollToIndex = React.useCallback(function (index) {
     var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     yRef.current = firstItemY - itemHeight * index;
     api.start({
       y: yRef.current,
       immediate: !effect
     });
-  }, 100, [api, yRef]);
+  }, [api, yRef, firstItemY, itemHeight]);
   var getIndexByY = React.useCallback(function () {
     var y = yRef.current;
     var d = Math.round((firstItemY - y) / itemHeight);
@@ -4704,55 +4691,48 @@ var Wheel = function Wheel(props) {
   React.useEffect(function () {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
-  var touchEnd = React.useCallback(function () {
-    if (!isMovingRef.current) {
-      return;
-    }
-
-    isMovingRef.current = false;
-    var min = -1 * (data.length - 1) * itemHeight + firstItemY;
-    var max = firstItemY;
-    var newIndex;
-
-    if (yRef.current >= max - itemHeight / 2) {
-      newIndex = 0;
-    } else if (yRef.current <= min) {
-      newIndex = Math.max(data.length - 1, 0);
-    } else {
-      newIndex = getIndexByY();
-    }
-
-    scrollToIndex(newIndex);
-    setTimeout(function () {
-      _setIndex(newIndex);
-    }, 300);
-  }, [scrollToIndex, itemHeight, firstItemY, getIndexByY, data]);
-  var evtProps = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function () {
-    isMovingRef.current = true;
-    momentumRef.current.touchStartTime = Date.now();
-  };
-
-  React.useLayoutEffect(function () {
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    return function () {
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-    };
-  }, [touchEnd]);
   React.useLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch__default['default'](el, {
+      onTouchStart: function onTouchStart() {
+        isMovingRef.current = true;
+        momentumRef.current.touchStartTime = Date.now();
+      },
+      onTouchEnd: function onTouchEnd() {
+        if (!isMovingRef.current) {
+          return;
+        }
+
+        var data = thisRef.current.data;
+        isMovingRef.current = false;
+        var min = -1 * (data.length - 1) * itemHeight + firstItemY;
+        var max = firstItemY;
+        var newIndex;
+
+        if (yRef.current >= max - itemHeight / 2) {
+          newIndex = 0;
+        } else if (yRef.current <= min) {
+          newIndex = Math.max(data.length - 1, 0);
+        } else {
+          newIndex = getIndexByY();
+        }
+
+        scrollToIndex(newIndex);
+        setTimeout(function () {
+          _setIndex(newIndex);
+        }, 300);
+      },
       onPressMove: function onPressMove(e) {
         yRef.current += e.deltaY;
         var distance = e.deltaY;
         var duration = Date.now() - momentumRef.current.touchStartTime;
         api.start({
-          y: yRef.current
+          y: yRef.current,
+          immediate: true
         });
 
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
-          // momentum effect
+          // momentum
           var speed = Math.abs(distance / duration);
           yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
@@ -4762,10 +4742,10 @@ var Wheel = function Wheel(props) {
     return function () {
       return fg.destroy();
     };
-  }, [api, getIndexByY, scrollToIndex]);
+  }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({
     ref: elRef
-  }, rest, evtProps, {
+  }, rest, {
     className: clsx__default['default']('uc-wheel', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       transform: styles.y.to(function (v) {
@@ -5520,7 +5500,7 @@ var _excluded$G = ["autoPlay", "loop", "onPageChange", "direction", "interval", 
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.wrap{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;&.vertical{flex-direction:column;}.uc-slide-page{width:100%;flex-shrink:0;}}.pager{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.item{cursor:pointer;display:inline-block;width:8px;height:4px;border-radius:2px;background-color:#fff;opacity:0.4;transition:opacity ease-in-out ", "ms;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;transform:translate3d(0,-50%,0);.item{display:block;width:4px;height:8px;}}}"], animationSlow);
+})(["overflow:hidden;position:relative;.wrap{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}.uc-slide-page{width:100%;flex-shrink:0;}}.pager{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.item{cursor:pointer;display:inline-block;width:8px;height:4px;border-radius:2px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;transform:translate3d(0,-50%,0);.item{display:block;width:4px;height:8px;}}}"]);
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -5581,6 +5561,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var containerRef = React.useRef(null);
   var wrapElRef = React.useRef();
+  var pageWrapElRef = React.useRef();
 
   var _useState = React.useState(function () {
     return getItems(children, loop, height);
@@ -5591,15 +5572,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var count = items.length;
   var len = React__default['default'].Children.count(children);
-  var thisRef = React.useRef({
-    x: 0,
-    y: 0,
-    lastX: 0,
-    lastY: 0,
-    wrapHeight: 0,
-    wrapWidth: 0,
-    isMoving: false
-  });
 
   var _useState3 = React.useState(0),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -5611,40 +5583,64 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var min = exp ? -1 : 0;
   var max = exp ? len : len - 1;
-  var autoRef = useCallbackRef({
+  var thisRef = React.useRef({
+    x: 0,
+    y: 0,
+    lastX: 0,
+    lastY: 0,
+    wrapHeight: 0,
+    wrapWidth: 0,
+    isMoving: false,
     pageIndex: pageIndex,
     min: min,
     max: max,
-    exp: exp
+    exp: exp,
+    len: len,
+    ratio: ratio,
+    direction: direction
+  });
+  thisRef.current = _objectSpread2(_objectSpread2({}, thisRef.current), {}, {
+    pageIndex: pageIndex,
+    min: min,
+    max: max,
+    exp: exp,
+    len: len,
+    ratio: ratio,
+    direction: direction
   });
   var slideToPageIndex = React.useCallback(function (newPageIndex) {
     var transition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var s = thisRef.current;
+    var $this = thisRef.current;
+    var _thisRef$current = thisRef.current,
+        wrapWidth = _thisRef$current.wrapWidth,
+        wrapHeight = _thisRef$current.wrapHeight,
+        direction = _thisRef$current.direction,
+        exp = _thisRef$current.exp;
     var el = wrapElRef.current;
 
     if (el) {
       el.style.transitionProperty = transition ? 'transform' : 'none';
 
       if (direction === 'horizontal') {
-        var x = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapWidth;
+        var x = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapWidth;
         el.style.transform = "translate3d(".concat(x, "px, 0, 0)");
-        s.x = x;
+        $this.x = x;
       } else {
-        var y = (newPageIndex + (exp ? 1 : 0)) * -1 * s.wrapHeight;
+        var y = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapHeight;
         el.style.transform = "translate3d(0, ".concat(y, "px, 0)");
-        s.y = y;
+        $this.y = y;
       }
 
       setPageIndex(newPageIndex);
     }
-  }, [thisRef, direction, exp]);
+  }, [thisRef]);
   React.useImperativeHandle(ref, function () {
     return {
       prev: function prev() {
-        slideToPageIndex(Math.max(autoRef.current.min, pageIndex - 1));
+        slideToPageIndex(Math.max(thisRef.current.min, pageIndex - 1));
       },
       next: function next() {
-        slideToPageIndex(Math.min(autoRef.current.max, pageIndex + 1));
+        slideToPageIndex(Math.min(thisRef.current.max, pageIndex + 1));
       }
     };
   });
@@ -5664,117 +5660,101 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
     }
   }, [pageIndex]);
-  React.useLayoutEffect(function () {
-    var s = thisRef.current;
+  useMount(function () {
+    var $this = thisRef.current;
     var container = containerRef.current;
-    s.wrapWidth = container.offsetWidth;
-    s.wrapHeight = container.offsetHeight;
+    $this.wrapWidth = container.offsetWidth;
+    $this.wrapHeight = container.offsetHeight;
     slideToPageIndex(0, false);
-  }, [slideToPageIndex]);
+  });
+  React.useLayoutEffect(function () {
+    if (showPageIndicator) {
+      var pageWrapEl = pageWrapElRef.current;
+
+      if (pageWrapEl) {
+        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
+        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
+      }
+    }
+  }, [showPageIndicator, direction]);
   React.useEffect(function () {
     if (autoPlay && len > 1) {
-      var timer = window.setInterval(function (p) {
+      thisRef.current.timer = window.setInterval(function (p) {
         if (!thisRef.current.isMoving) {
           slideToPageIndex(p + 1);
         }
       }, interval, pageIndex);
       return function () {
-        window.clearInterval(timer);
+        window.clearInterval(thisRef.current.timer);
       };
     }
-  }, [slideToPageIndex, autoPlay, interval, len, exp, pageIndex]);
-
-  var pagerRender = function pagerRender() {
-    if (!showPageIndicator || len <= 1) return null;
-    return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('pager', {
-        vertical: direction === 'vertical'
-      })
-    }, /*#__PURE__*/React__default['default'].createElement(Space, {
-      size: 6,
-      direction: direction
-    }, React__default['default'].Children.map(children, function (c, idx) {
-      return /*#__PURE__*/React__default['default'].createElement("span", {
-        key: idx,
-        className: clsx__default['default']('item', {
-          active: pageIndex === idx
-        }),
-        onClick: function onClick() {
-          return slideToPageIndex(idx);
-        }
-      });
-    })));
-  };
-
-  var evtProps = {};
-
-  evtProps[isTouch ? 'onTouchStart' : 'onMouseDown'] = function (e) {
-    !isMobile && e.preventDefault();
-    var s = thisRef.current;
-    s.isMoving = true;
-    wrapElRef.current.style.transitionProperty = 'none';
-    s.lastX = s.x;
-    s.lastY = s.y;
-  };
-
-  evtProps[isTouch ? 'onTouchEnd' : 'onMouseUp'] = function () {
-    var s = thisRef.current;
-
-    if (!s.isMoving) {
-      return;
-    }
-
-    var instance = autoRef.current;
-
-    if (instance.exp && (instance.max === instance.pageIndex || instance.min === instance.pageIndex)) {
-      slideToPageIndex(instance.pageIndex === max ? 0 : len - 1, false);
-      return;
-    }
-
-    s.isMoving = false;
-
-    if (direction === 'horizontal' && Math.abs(s.x - s.lastX) > s.wrapWidth * ratio) {
-      slideToPageIndex(pageIndex + (s.x < s.lastX ? 1 : -1));
-    } else if (direction === 'vertical' && Math.abs(s.y - s.lastY) > s.wrapHeight * ratio) {
-      slideToPageIndex(pageIndex + (s.y < s.lastY ? 1 : -1));
-    } else {
-      // reset
-      slideToPageIndex(pageIndex);
-    }
-  };
-
+  }, [slideToPageIndex, autoPlay, interval, len, pageIndex]);
   React.useLayoutEffect(function () {
     var wrapEl = wrapElRef.current;
     var fg = new Touch__default['default'](wrapEl, {
-      onPressMove: function onPressMove(e) {
-        var s = thisRef.current;
-        var instance = autoRef.current;
+      onTouchStart: function onTouchStart(e) {
+        e.preventDefault();
+        var $this = thisRef.current;
+        $this.isMoving = true;
+        wrapEl.style.transitionProperty = 'none';
+        $this.lastX = $this.x;
+        $this.lastY = $this.y;
+      },
+      onTouchEnd: function onTouchEnd() {
+        var $this = thisRef.current;
 
-        if (instance.exp && (instance.max === instance.pageIndex || instance.min === instance.pageIndex)) {
+        if (!$this.isMoving) {
+          return;
+        }
+
+        $this.isMoving = false;
+        var ratio = $this.ratio,
+            pageIndex = $this.pageIndex,
+            max = $this.max,
+            len = $this.len;
+
+        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
+          slideToPageIndex($this.pageIndex === max ? 0 : len - 1, false);
+          return;
+        }
+
+        if (direction === 'horizontal' && Math.abs($this.x - $this.lastX) > $this.wrapWidth * ratio) {
+          slideToPageIndex(pageIndex + ($this.x < $this.lastX ? 1 : -1));
+        } else if (direction === 'vertical' && Math.abs($this.y - $this.lastY) > $this.wrapHeight * ratio) {
+          slideToPageIndex(pageIndex + ($this.y < $this.lastY ? 1 : -1));
+        } else {
+          // reset
+          slideToPageIndex(pageIndex);
+        }
+      },
+      onPressMove: function onPressMove(e) {
+        var $this = thisRef.current;
+
+        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
           return;
         }
 
         if (direction === 'horizontal') {
-          if (s.x > 0 || s.x < -1 * (count - 1) * s.wrapWidth) {
+          if ($this.x > 0 || $this.x < -1 * (count - 1) * $this.wrapWidth) {
             return;
           }
 
-          s.x += e.deltaX;
-          wrapElRef.current.style.transform = "translate3d(".concat(s.x, "px, 0, 0)");
+          $this.x += e.deltaX;
+          wrapElRef.current.style.transform = "translate3d(".concat($this.x, "px, 0, 0)");
         } else {
-          if (s.y > 0 || s.y < -1 * (count - 1) * s.wrapHeight) {
+          if ($this.y > 0 || $this.y < -1 * (count - 1) * $this.wrapHeight) {
             return;
           }
 
-          s.y += e.deltaY;
-          wrapElRef.current.style.transform = "translate3d(0, ".concat(s.y, "px, 0)");
+          $this.y += e.deltaY;
+          wrapElRef.current.style.transform = "translate3d(0, ".concat($this.y, "px, 0)");
         }
       }
     });
     return function () {
       return fg.destroy();
     };
-  }, [count, direction, autoRef]);
+  }, [count, direction, thisRef, slideToPageIndex]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
@@ -5782,19 +5762,36 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
-  }), /*#__PURE__*/React__default['default'].createElement("div", _extends({
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
     className: clsx__default['default']('wrap', {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
       ensurePageIndex();
-    }
-  }, evtProps, {
+    },
     style: {
-      transition: "transform ".concat(duration, "ms ease-in-out")
+      transitionDuration: "".concat(duration, "ms")
     }
-  }), items), pagerRender());
+  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: clsx__default['default']('pager', {
+      vertical: direction === 'vertical'
+    })
+  }, /*#__PURE__*/React__default['default'].createElement(Space, {
+    size: 6,
+    direction: direction,
+    ref: pageWrapElRef
+  }, React__default['default'].Children.map(children, function (c, idx) {
+    return /*#__PURE__*/React__default['default'].createElement("span", {
+      key: idx,
+      className: clsx__default['default']('item', {
+        active: pageIndex === idx
+      }),
+      onClick: function onClick() {
+        return slideToPageIndex(idx);
+      }
+    });
+  }))));
 });
 Slide.displayName = 'UC-Slide';
 
@@ -8404,6 +8401,24 @@ var Loading$1 = attachPropertiesToComponent(Loading, {
   show: show,
   hide: hide
 });
+
+/**
+ * 返回防抖函数
+ *
+ * @param {F} fn fn改变debounce fn不会变
+ * @param {number} [timeout=180]
+ * @param {Array<unknown>} [fnDeps=[]]
+ * @return {*}  {F}
+ */
+var useDebounce = function useDebounce(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
+  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  return (// eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useMemo(function () {
+      return debounce(fn, timeout);
+    }, fnDeps)
+  );
+};
 
 /**
  * 返回节流函数

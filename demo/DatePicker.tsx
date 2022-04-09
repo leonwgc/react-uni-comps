@@ -4,23 +4,9 @@ import DemoBlock from './common/DemoBlock';
 import dayjs from 'dayjs';
 import { Toast, Button, DatePicker, styled } from 'react-uni-comps';
 
-const StyledPicker = styled(DatePicker)`
-  .header {
-    .cancel-text {
-      color: red;
-    }
-    .title {
-      color: green;
-    }
-    .ok-text {
-      color: blue;
-    }
-  }
-`;
-
 export default function App() {
   const [v, setV] = useState<boolean>();
-  const [val, setVal] = useState(new Date());
+  const [val, setVal] = useState<string | Date>('1990-12-20');
   return (
     <PageWrap>
       <DemoBlock title="默认">
@@ -29,8 +15,7 @@ export default function App() {
         </Button>
       </DemoBlock>
 
-      <StyledPicker
-        // value="2021/11/19" // 2021-11-19
+      <DatePicker
         value={val}
         visible={v}
         onClose={() => setV(false)}
@@ -38,7 +23,6 @@ export default function App() {
           Toast.show(dayjs(value).format('YYYY-MM-DD'));
           setVal(value);
         }}
-        onChange={console.log}
       />
     </PageWrap>
   );

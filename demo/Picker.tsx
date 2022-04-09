@@ -2,23 +2,9 @@ import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import areas from './area';
-import { Toast, Button, Picker, Space, styled } from 'react-uni-comps';
+import { Toast, Button, Picker, Space } from 'react-uni-comps';
 
 //#region  data
-
-const StyledPicker = styled(Picker)`
-  .header {
-    .cancel-text {
-      color: red;
-    }
-    .title {
-      color: green;
-    }
-    .ok-text {
-      color: blue;
-    }
-  }
-`;
 
 var city = {
   11: '北京',
@@ -116,12 +102,9 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="示例">
         <Space wrap>
-          <Button active onClick={() => setVisible(1)}>
-            单个
-          </Button>
+          <Button onClick={() => setVisible(1)}>单个</Button>
 
           <Button
-            active
             onClick={() => {
               setVisible(2);
             }}
@@ -129,7 +112,6 @@ export default function App() {
             级联2列
           </Button>
           <Button
-            active
             onClick={() => {
               setVisible(3);
             }}
@@ -138,7 +120,6 @@ export default function App() {
           </Button>
 
           <Button
-            active
             onClick={() => {
               setVisible(4);
             }}
@@ -146,7 +127,7 @@ export default function App() {
             非级联2列
           </Button>
 
-          <StyledPicker
+          <Picker
             visible={visible === 1}
             onClose={() => setVisible(false)}
             onOk={(v) => {

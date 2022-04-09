@@ -4,6 +4,8 @@ import DemoBlock from './common/DemoBlock';
 import areas from './area';
 import { PickerView, Button, Affix } from 'react-uni-comps';
 
+type StringOrNumber = string | number;
+
 //#region  data
 
 var city = {
@@ -127,13 +129,13 @@ const UnlinkedFour = [
 //#endregion
 
 export default function App() {
-  const [value, setValue] = useState(['湖北']);
-  const [value1, setValue1] = useState(['北京', '北京2']);
-  const [value2, setValue2] = useState(['北京', '北京1', '北京12']);
-  const [value3, setValue3] = useState(['选项二', '选项B']);
+  const [value, setValue] = useState<Array<StringOrNumber>>(['湖北']);
+  const [value1, setValue1] = useState<Array<StringOrNumber>>(['北京', '北京2']);
+  const [value2, setValue2] = useState<Array<StringOrNumber>>(['北京', '北京1', '北京12']);
+  const [value3, setValue3] = useState<Array<StringOrNumber>>(['选项二', '选项B']);
 
   const [data, setData] = useState([]);
-  const [v, setV] = useState();
+  const [v, setV] = useState<Array<StringOrNumber>>();
 
   return (
     <PageWrap>

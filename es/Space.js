@@ -107,7 +107,7 @@ var StyledSpace = styled.div(templateObject_1 || (templateObject_1 = __makeTempl
 });
 /** 间距 */
 
-var Space = function Space(props) {
+var Space = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.size,
       size = _a === void 0 ? 8 : _a,
       align = props.align,
@@ -180,6 +180,7 @@ var Space = function Space(props) {
   }
 
   return /*#__PURE__*/React.createElement(StyledSpace, __assign({
+    ref: ref,
     direction: direction,
     align: mergedAlign,
     className: clsx(className, 'uc-space'),
@@ -187,8 +188,7 @@ var Space = function Space(props) {
   }, otherProps), /*#__PURE__*/React.createElement(SpaceContext.Provider, {
     value: spaceContext
   }, nodes));
-};
-
+});
 Space.displayName = 'UC-Space';
 export default Space;
 var templateObject_1;
