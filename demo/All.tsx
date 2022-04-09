@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Slide FullPage
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SlideFullPage')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Slide
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Slide')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Affix
           </Space>
         }
@@ -71,24 +89,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ImageViewer')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Slide FullPage
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SlideFullPage')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Slide
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Slide')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

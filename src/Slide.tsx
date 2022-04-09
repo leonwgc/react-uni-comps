@@ -177,6 +177,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const wrapElRef = useRef<HTMLDivElement>();
+  const pageWrapElRef = useRef<HTMLDivElement>();
 
   const [items, setItems] = useState(() => getItems(children, loop, height));
 
@@ -286,6 +287,16 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     slideToPageIndex(0, false);
   });
 
+  useLayoutEffect(() => {
+    if (showPageIndicator) {
+      const pageWrapEl = pageWrapElRef.current;
+      if (pageWrapEl) {
+        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
+        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
+      }
+    }
+  }, [showPageIndicator, direction]);
+
   useEffect(() => {
     if (autoPlay && len > 1) {
       thisRef.current.timer = window.setInterval(
@@ -303,24 +314,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       };
     }
   }, [slideToPageIndex, autoPlay, interval, len, pageIndex]);
-
-  const pagerRender = (): React.ReactNode => {
-    if (!showPageIndicator || len <= 1) return null;
-
-    return (
-      <div className={clsx('pager', { vertical: direction === 'vertical' })}>
-        <Space size={6} direction={direction}>
-          {React.Children.map(children, (c, idx) => (
-            <span
-              key={idx}
-              className={clsx('item', { active: pageIndex === idx })}
-              onClick={() => slideToPageIndex(idx)}
-            ></span>
-          ))}
-        </Space>
-      </div>
-    );
-  };
 
   useLayoutEffect(() => {
     const wrapEl = wrapElRef.current;
@@ -404,7 +397,19 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
         {items}
       </div>
 
-      {pagerRender()}
+      {showPageIndicator && len > 1 && (
+        <div className={clsx('pager', { vertical: direction === 'vertical' })}>
+          <Space size={6} direction={direction} ref={pageWrapElRef}>
+            {React.Children.map(children, (c, idx) => (
+              <span
+                key={idx}
+                className={clsx('item', { active: pageIndex === idx })}
+                onClick={() => slideToPageIndex(idx)}
+              ></span>
+            ))}
+          </Space>
+        </div>
+      )}
     </StyledSlide>
   );
 });

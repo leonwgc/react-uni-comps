@@ -1,5 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
+declare type Direction = 'horizontal' | 'vertical';
 export declare type Props = {
     /**
      * 是否自动播放
@@ -10,7 +11,7 @@ export declare type Props = {
      * 水平还是垂直
      * @default horizontal
      */
-    direction?: 'horizontal' | 'vertical';
+    direction?: Direction;
     /**
      * 距离下一次播放的间隔毫秒
      * @default 3000
@@ -69,7 +70,7 @@ declare const Slide: React.ForwardRefExoticComponent<{
      * 水平还是垂直
      * @default horizontal
      */
-    direction?: 'horizontal' | 'vertical';
+    direction?: Direction;
     /**
      * 距离下一次播放的间隔毫秒
      * @default 3000

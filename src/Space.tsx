@@ -71,11 +71,12 @@ type SpaceProps = {
   /** 是否自动换行，仅在 horizontal 时有效 */
   wrap?: boolean;
   onClick?: (e: React.SyntheticEvent) => void;
+  children?: React.ReactNode;
 } & BaseProps;
 
 const StyledSpace = styled.div<{
-  align: 'center' | 'flex-start' | 'flex-end' | 'baseline';
-  direction: 'horizontal' | 'vertical';
+  align?: 'center' | 'flex-start' | 'flex-end' | 'baseline';
+  direction?: 'horizontal' | 'vertical';
 }>`
   display: inline-flex;
   flex-direction: ${({ direction }) => flexDirectionMap[direction]};
@@ -83,7 +84,7 @@ const StyledSpace = styled.div<{
 `;
 
 /** 间距 */
-const Space: React.FC<SpaceProps> = (props) => {
+const Space = React.forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
   const {
     size = 8,
     align,
@@ -156,6 +157,7 @@ const Space: React.FC<SpaceProps> = (props) => {
 
   return (
     <StyledSpace
+      ref={ref}
       direction={direction}
       align={mergedAlign}
       className={clsx(className, 'uc-space')}
@@ -168,7 +170,7 @@ const Space: React.FC<SpaceProps> = (props) => {
       <SpaceContext.Provider value={spaceContext}>{nodes}</SpaceContext.Provider>
     </StyledSpace>
   );
-};
+});
 
 Space.displayName = 'UC-Space';
 
