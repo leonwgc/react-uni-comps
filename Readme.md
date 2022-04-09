@@ -1,4 +1,4 @@
-桌面和移动端 react 库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
+桌面和移动端 react 组件库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
 
 安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
 
