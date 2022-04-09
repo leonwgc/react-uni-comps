@@ -18,8 +18,6 @@ yarn add react-uni-comps
 7. 可以和 antd / antd-mobile / zarm 等组件库搭配 / 替换使用
 8. 重新导出了依赖组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展
 
-[在线文档](https://leonwgc.github.io/react-uni-comps/base)
-
 ### 按需加载
 
 支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
