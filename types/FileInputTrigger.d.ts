@@ -12,5 +12,6 @@ declare const FileInputTrigger: React.ForwardRefExoticComponent<{
     multiple?: boolean;
     /** 捕获图像或视频数据的源 */
     capture?: 'user' | 'environment';
+    children?: React.ReactNode;
 } & BaseProps & React.RefAttributes<HTMLInputElement>>;
 export default FileInputTrigger;

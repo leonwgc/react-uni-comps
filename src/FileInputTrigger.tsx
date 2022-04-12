@@ -14,6 +14,7 @@ type Props = {
   multiple?: boolean;
   /** 捕获图像或视频数据的源 */
   capture?: 'user' | 'environment';
+  children?: React.ReactNode;
 } & BaseProps;
 
 const StyledFileInputTrigger = styled.div`
