@@ -95,7 +95,7 @@ export default function App() {
               )}
               {tabTitles.length < maxCount && (
                 <Button
-                  active
+                  outlined
                   circle
                   icon={<Icon type="uc-icon-jia2" />}
                   onClick={() => {

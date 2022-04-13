@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { Button, Toast, Icon, PopConfirm, Cell, Switch } from 'react-uni-comps';
 
 export default function App() {
-  const ref = useRef();
+  const ref = useRef<any>();
   const [animate, setAnimate] = useState(true);
 
   return (

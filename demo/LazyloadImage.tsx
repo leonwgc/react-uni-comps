@@ -8,7 +8,7 @@ const LazyloadImage = () => {
 
   return (
     <PageWrap>
-      <DemoBlock title="图片懒加载" textAlign="center">
+      <DemoBlock title="图片懒加载">
         <Space direction="vertical">
           {arr.map((item, k) => (
             <LazyLoadImage

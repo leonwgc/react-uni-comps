@@ -32,7 +32,6 @@ export default function App() {
           </Button>
           <Button
             circle
-            active
             onClick={() =>
               setV((v) => {
                 return v + 10 <= 100 ? v + 10 : 100;

@@ -16,11 +16,11 @@ const options1 = [
 ];
 
 export default function App() {
-  const [value, setValue] = useState();
-  const [options, setOptions] = useState(['item1', 'item2', 'item3']);
-  const [v, setV] = useState([1]);
+  const [value, setValue] = useState<any>();
+  const [options, setOptions] = useState<any>(['item1', 'item2', 'item3']);
+  const [v, setV] = useState<any>([1]);
 
-  const [v1, setV1] = useState([]);
+  const [v1, setV1] = useState<any>([]);
 
   return (
     <PageWrap>

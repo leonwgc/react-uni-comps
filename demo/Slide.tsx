@@ -8,12 +8,12 @@ export default function App() {
   const [loop, setLoop] = useState(true);
   const [dot, setDot] = useState(true);
   const [isH, setisH] = useState(true);
-  const ref = useRef();
+  const ref = useRef<any>();
   const images = [
-    'https://t7.baidu.com/it/u=1811223786,2017754440&fm=193&f=GIF',
-    'https://t7.baidu.com/it/u=2783075563,3362558456&fm=193&f=GIF',
-    'https://t7.baidu.com/it/u=2466425392,342874463&fm=193&f=GIF',
-    'https://t7.baidu.com/it/u=2488490742,1686455852&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+    'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
   ];
 
   return (

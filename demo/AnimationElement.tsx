@@ -3,13 +3,12 @@ import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { AnimationElement, styled, Space, Button } from 'react-uni-comps';
 import 'animate.css';
-import bird from './images/bird.png';
 
 const StyledButton = styled(Button)`
-  height: 100px;
-  width: 100px;
+  height: 40px;
+  width: 40px;
   margin-top: 10px;
-  font-size: 32px;
+  font-size: 20px;
 
   @keyframes move {
     0% {
@@ -31,42 +30,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledBird = styled.span`
-  background: url(${bird});
-  background-size: 100% 100%;
-  width: 143px;
-  height: 132px;
-  display: inline-block;
-  @keyframes fly {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-
-    25% {
-      transform: translate3d(0, -20px, 0);
-    }
-
-    50% {
-      transform: translate3d(0, 0, 0);
-    }
-
-    75% {
-      transform: translate3d(0, 20px, 0);
-    }
-
-    to {
-      transform: translate3d(0, 0, 0);
-    }
-  }
-`;
-
 const Animation = () => {
   let arr = Array.from(new Array(20), (v, k) => k + 1);
 
   return (
     <PageWrap>
       <DemoBlock title="例子">
-        <Space size={64} wrap>
+        <Space size={20} wrap>
           {arr.map((item, k) => (
             <AnimationElement
               key={k}
@@ -87,9 +57,6 @@ const Animation = () => {
           >
             <Button type="primary">hello,world</Button>
           </AnimationElement>
-          <AnimationElement duration="2s" iterationCount="infinite" timingFunc="linear" name="fly">
-            <StyledBird></StyledBird>
-          </AnimationElement>
 
           <AnimationElement
             name="fadeInLeft"
@@ -109,14 +76,6 @@ const Animation = () => {
             >
               hello
             </div>
-          </AnimationElement>
-
-          <AnimationElement
-            name="fadeInRight"
-            duration="1s"
-            timingFunc="cubic-bezier(.68,-.55,.265,1.55)"
-          >
-            <StyledBird />
           </AnimationElement>
         </Space>
       </DemoBlock>

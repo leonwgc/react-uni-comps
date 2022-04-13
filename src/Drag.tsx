@@ -37,7 +37,7 @@ const Drag = React.forwardRef<HTMLElement, Props>((props: Props, ref) => {
 
   return React.cloneElement(children, {
     ref: elRef,
-    style: { ...children.props.style, ...{ position: 'absolute' } },
+    style: { ...children.props.style, ...{ position: 'absolute', cursor: 'move' } },
   });
 });
 

@@ -24,9 +24,7 @@ export default function App() {
 
       <DemoBlock title="子元素带点击事件">
         <CopyToClipboard text="i love china click">
-          <Button active onClick={() => Toast.show('hi,there')}>
-            子元素带点击事件
-          </Button>
+          <Button onClick={() => Toast.show('hi,there')}>子元素带点击事件</Button>
         </CopyToClipboard>
       </DemoBlock>
 

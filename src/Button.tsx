@@ -8,8 +8,8 @@ import Spin from './Spin';
 import Space from './Space';
 import type { BaseProps } from './types';
 
-type Props = BaseProps & {
-  /** 
+type Props = {
+  /**
    * 类型
    * @default default
    *  */

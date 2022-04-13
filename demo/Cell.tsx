@@ -25,14 +25,14 @@ const options2 = [
 ];
 
 export default function App() {
-  const [v, setV] = useState('');
-  const [visible, setVisible] = useState(false);
-  const [visible1, setVisible1] = useState(false);
-  const [options, setOptions] = useState(['item1', 'item2', 'item3']);
-  const [data, setData] = useState({});
+  const [v, setV] = useState<any>('');
+  const [visible, setVisible] = useState<any>(false);
+  const [visible1, setVisible1] = useState<any>(false);
+  const [options, setOptions] = useState<any>(['item1', 'item2', 'item3']);
+  const [data, setData] = useState<any>({});
 
-  const [v1, setV1] = useState('item2');
-  const [v2, setV2] = useState([2]);
+  const [v1, setV1] = useState<any>('item2');
+  const [v2, setV2] = useState<any>([2]);
 
   const { countdown, isRunning, start, isReStarted } = useCountdown(5);
 
@@ -57,7 +57,7 @@ export default function App() {
         </Cell>
         <Cell label="手机号" required>
           <Input
-            onFocus={(e) => {
+            onFocus={(e: any) => {
               e.target.blur();
               setVisible(true);
             }}
@@ -67,7 +67,7 @@ export default function App() {
         </Cell>
         <Cell label="身份证" required>
           <Input
-            onFocus={(e) => {
+            onFocus={(e: any) => {
               e.target.blur();
               setVisible1(true);
             }}

@@ -18,9 +18,9 @@ type Props = {
   /** 右边actions */
   right?: Action[];
   /** 显示回调 */
-  onOpen: () => void;
+  onOpen?: () => void;
   /** 关闭回调 */
-  onClose: () => void;
+  onClose?: () => void;
   /** 点击按钮后是否自动关闭,默认true */
   autoClose?: boolean;
   /** 点击外部区域关闭,默认true*/

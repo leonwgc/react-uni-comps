@@ -20,7 +20,7 @@ export default function App() {
           zIndex={200}
           onChange={(a) => console.log(a ? 'affixed' : 'no affixed')}
         >
-          <Button active>距离窗口顶部60px固定</Button>
+          <Button>距离窗口顶部60px固定</Button>
         </Affix>
       </DemoBlock>
 
@@ -39,7 +39,7 @@ export default function App() {
             <Button style={{ height: 100 }}>hello</Button>
 
             <Affix offsetTop={20} target={() => ref.current}>
-              <Button active>距离容器顶部20px固定</Button>
+              <Button>距离容器顶部20px固定</Button>
             </Affix>
           </div>
         </div>

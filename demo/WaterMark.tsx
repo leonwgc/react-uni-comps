@@ -18,7 +18,7 @@ const imageProps = {
 };
 
 export default function App() {
-  const [props, setProps] = useState(textProps);
+  const [props, setProps] = useState<any>(textProps);
 
   return (
     <PageWrap>

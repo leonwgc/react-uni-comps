@@ -8,7 +8,7 @@ const App = () => {
 
   return (
     <PageWrap>
-      <DemoBlock title="组件懒加载" textAlign="center">
+      <DemoBlock title="组件懒加载">
         <Space direction="vertical">
           {arr.map((item, k) => (
             <LazyLoadElement key={k} width={300} height={200}>

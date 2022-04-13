@@ -66,7 +66,7 @@ const StyledImageUpload = styled.div`
 `;
 
 export default function App() {
-  const [files, setFiles] = useState<FileList>([]);
+  const [files, setFiles] = useState<any>([]);
   const [url, setUrl] = useState('');
   const [v, setV] = useState(false);
 

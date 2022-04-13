@@ -34,7 +34,7 @@ export default function App() {
         }
       />
       <DemoBlock title="动作面板">
-        <Button active onClick={() => setVisible(true)}>
+        <Button outlined onClick={() => setVisible(true)}>
           打开动作面板
         </Button>
       </DemoBlock>

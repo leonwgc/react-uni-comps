@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 按钮 */
-declare const Button: React.ForwardRefExoticComponent<BaseProps & {
+declare const Button: React.ForwardRefExoticComponent<{
     /**
      * 类型
      * @default default
@@ -33,5 +33,5 @@ declare const Button: React.ForwardRefExoticComponent<BaseProps & {
     onClick?: (e: React.SyntheticEvent) => void;
     /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
     wait?: number | boolean;
-} & React.RefAttributes<HTMLButtonElement>>;
+} & BaseProps & React.RefAttributes<HTMLButtonElement>>;
 export default Button;

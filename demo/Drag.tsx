@@ -17,17 +17,17 @@ const StyledDiv = styled.div`
 `;
 
 export default function App() {
-  const [pos, setPos] = useState();
+  const [pos, setPos] = useState<any>();
   const boundRef = useRef();
   const elNoBoundRef = useRef();
   return (
     <PageWrap>
       <DemoBlock title="任意拖动" height={200}>
         <Drag
-          onDragStart={(e) => {
+          onDragStart={(e: any) => {
             e.target.style.borderColor = 'blue';
           }}
-          onDragEnd={(e) => {
+          onDragEnd={(e: any) => {
             e.target.style.borderColor = 'green';
           }}
         >

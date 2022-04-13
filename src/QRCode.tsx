@@ -22,7 +22,8 @@ type Props = {
    * @default 128
    */
   size?: number;
-} & BaseProps;
+} & BaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 type QRProps = {
   makeCode: (text: string) => void;

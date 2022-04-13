@@ -160,7 +160,9 @@ export default function App() {
             itemHeight={40}
             onChange={console.log}
             labelRender={(item) =>
-              item.label.length > 6 ? item.label.slice(0, 6) + '..' : item.label
+              (item.label as string).length > 6
+                ? (item.label as string).slice(0, 6) + '..'
+                : item.label
             }
             onOk={(v) => {
               setValue2(v);
