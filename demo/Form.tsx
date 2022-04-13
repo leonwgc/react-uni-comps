@@ -2,14 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Input, InputNumber, Form, Button, useCountdown } from 'react-uni-comps';
-import type { FormInstance } from 'react-uni-comps/es/Form';
 
 export default function App() {
   const { countdown, isRunning, start, isReStarted } = useCountdown(60);
 
   const [result, setResult] = useState(null);
 
-  const ref = useRef<FormInstance>();
+  const ref = useRef<any>();
 
   useEffect(() => {
     console.log(ref.current);
