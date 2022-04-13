@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Guide
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Guide')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> DatePicker
           </Space>
         }

@@ -11,6 +11,10 @@ export type BaseProps = {
   style?: React.CSSProperties;
   /** 样式类名设置 */
   className?: string;
+  children?: React.ReactNode;
 };
 
-export type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+export type MountContainerType =
+  | HTMLElement
+  | (() => HTMLElement)
+  | React.MutableRefObject<HTMLElement>;
