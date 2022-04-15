@@ -62,17 +62,19 @@ const App = () => {
 
       <BackTop>
         <Button
-          type="primary"
           circle
           style={{
-            width: 40,
-            height: 40,
+            width: 60,
+            height: 60,
             position: 'fixed',
             bottom: 60,
             right: 20,
+            fontSize: 20,
+            color: '#8c8c8c',
+            boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.1)',
           }}
         >
-          top
+          Top
         </Button>
       </BackTop>
     </PageWrap>
