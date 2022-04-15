@@ -359,6 +359,10 @@ module.exports = [
         name: 'Waypoint',
         title: 'Waypoint 路标',
       },
+      {
+        name: 'BackTop',
+        title: 'BackTop 回到顶部',
+      },
     ],
   },
   {
