@@ -43,9 +43,10 @@ var Drag = /*#__PURE__*/React.forwardRef(function (props, ref) {
   });
   return /*#__PURE__*/React.cloneElement(children, {
     ref: elRef,
-    style: __assign(__assign({}, children.props.style), {
-      position: 'absolute'
-    })
+    style: __assign({
+      position: 'absolute',
+      cursor: 'move'
+    }, children.props.style)
   });
 });
 Drag.displayName = 'UC-Drag';

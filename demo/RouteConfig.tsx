@@ -63,8 +63,8 @@ const routes = [
     component: lazy(() => import('./TouchElement')),
   },
   {
-    path: '/ScrollToTop',
-    component: lazy(() => import('./ScrollToTop')),
+    path: '/BackTop',
+    component: lazy(() => import('./BackTop')),
   },
   {
     path: '/PullToRefresh',

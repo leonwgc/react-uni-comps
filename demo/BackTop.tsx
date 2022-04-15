@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Button, Pullup, ScrollToTop, Cell, PullToRefresh } from 'react-uni-comps';
+import { Button, Pullup, BackTop, Cell, PullToRefresh } from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -60,7 +60,7 @@ const App = () => {
         </PullToRefresh>
       </DemoBlock>
 
-      <ScrollToTop visibilityHeight={100}>
+      <BackTop>
         <Button
           type="primary"
           circle
@@ -74,7 +74,7 @@ const App = () => {
         >
           top
         </Button>
-      </ScrollToTop>
+      </BackTop>
     </PageWrap>
   );
 };

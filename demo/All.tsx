@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> BackTop
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('BackTop')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Guide
           </Space>
         }
@@ -348,15 +357,6 @@ export default function All() {
         onClick={() => gotoPage('SwipeAction')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> ScrollToTop
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('ScrollToTop')}
-      ></Cell>
       <Cell
         label={
           <Space>

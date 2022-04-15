@@ -5,6 +5,7 @@ type Props = {
   /**
    * 滚动高度>visibilityHeight才显示子元素
    * @type {number}
+   * @default 100
    */
   visibilityHeight?: number;
   children?: React.ReactElement;

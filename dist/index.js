@@ -3295,9 +3295,10 @@ var Drag = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   });
   return /*#__PURE__*/React__default['default'].cloneElement(children, {
     ref: elRef,
-    style: _objectSpread2(_objectSpread2({}, children.props.style), {
-      position: 'absolute'
-    })
+    style: _objectSpread2({
+      position: 'absolute',
+      cursor: 'move'
+    }, children.props.style)
   });
 });
 Drag.displayName = 'UC-Drag';
@@ -8694,6 +8695,7 @@ exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
 exports.AutoCenter = AutoCenter;
 exports.Avatar = Avatar;
+exports.BackTop = ScrollToTop;
 exports.Badge = Badge;
 exports.Button = Button;
 exports.Calendar = Calendar;
@@ -8746,7 +8748,6 @@ exports.Result = Result;
 exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
-exports.ScrollToTop = ScrollToTop;
 exports.SearchBar = SearchBar;
 exports.SideBar = SideBar;
 exports.Signature = Signature;

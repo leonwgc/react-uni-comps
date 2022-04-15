@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import {
   Button,
   Pullup,
-  ScrollToTop,
+  BackTop,
   Cell,
   PullToRefresh,
   Ripple,
@@ -142,7 +142,7 @@ const App = () => {
         </PullToRefresh>
       </DemoBlock>
 
-      <ScrollToTop visibilityHeight={100}>
+      <BackTop visibilityHeight={100}>
         <Button
           type="primary"
           circle
@@ -156,7 +156,7 @@ const App = () => {
         >
           top
         </Button>
-      </ScrollToTop>
+      </BackTop>
     </PageWrap>
   );
 };
