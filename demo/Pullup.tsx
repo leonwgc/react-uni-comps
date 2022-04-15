@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Button, Pullup, BackTop, Cell, PullToRefresh } from 'react-uni-comps';
+import { Pullup, Cell, PullToRefresh } from 'react-uni-comps';
 
 const pageSize = 30;
 
@@ -56,22 +56,6 @@ const App = () => {
           dataRender={(data) => <Cell title={`item${data}`} />}
         />
       </PullToRefresh>
-
-      <BackTop visibilityHeight={100}>
-        <Button
-          type="primary"
-          circle
-          style={{
-            width: 40,
-            height: 40,
-            position: 'fixed',
-            bottom: 60,
-            right: 20,
-          }}
-        >
-          top
-        </Button>
-      </BackTop>
     </PageWrap>
   );
 };

@@ -1,18 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import {
-  Button,
-  Pullup,
-  BackTop,
-  Cell,
-  PullToRefresh,
-  Ripple,
-  Spin,
-  Space,
-  Toast,
-  Icon,
-} from 'react-uni-comps';
+import { Pullup, Cell, PullToRefresh, Ripple, Spin, Space, Icon } from 'react-uni-comps';
 
 const pageSize = 10;
 
@@ -141,22 +130,6 @@ const App = () => {
           </Ripple>
         </PullToRefresh>
       </DemoBlock>
-
-      <BackTop visibilityHeight={100}>
-        <Button
-          type="primary"
-          circle
-          style={{
-            width: 40,
-            height: 40,
-            position: 'fixed',
-            bottom: 60,
-            right: 20,
-          }}
-        >
-          top
-        </Button>
-      </BackTop>
     </PageWrap>
   );
 };
