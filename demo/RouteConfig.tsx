@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Masonry',
+    component: lazy(() => import('./Masonry')),
+  },
+  {
     path: '/guide',
     component: lazy(() => import('./Guide')),
   },

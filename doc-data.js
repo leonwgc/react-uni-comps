@@ -290,6 +290,10 @@ module.exports = [
         name: 'SideBar',
         title: 'SideBar 侧边选项卡',
       },
+      {
+        name: 'Masonry',
+        title: 'Masonry 瀑布流布局',
+      },
     ],
   },
 
