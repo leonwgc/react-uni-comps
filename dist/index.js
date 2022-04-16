@@ -8372,6 +8372,90 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 InputNumber.displayName = 'UC-InputNumber';
 
+var _excluded$15 = ["className", "children", "columnGap", "rowGap", "columnCount"];
+var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "Masonry__StyledWrap",
+  componentId: "sc-dzi4mt-0"
+})(["display:flex;width:100%;overflow:hidden;.uc-masonry-col{display:flex;flex-direction:column;}"]);
+
+/** 瀑布流布局 */
+var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      children = props.children,
+      _props$columnGap = props.columnGap,
+      columnGap = _props$columnGap === void 0 ? 10 : _props$columnGap,
+      _props$rowGap = props.rowGap,
+      rowGap = _props$rowGap === void 0 ? 10 : _props$rowGap,
+      _props$columnCount = props.columnCount,
+      columnCount = _props$columnCount === void 0 ? 2 : _props$columnCount,
+      rest = _objectWithoutProperties(props, _excluded$15);
+
+  var wrapElRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return wrapElRef.current;
+  });
+  var forceUpdate = useForceUpdate();
+  var colRef = React.useRef({
+    colWidth: 'auto'
+  });
+  React.useLayoutEffect(function () {
+    var getColWidth = function getColWidth() {
+      var wrapEl = wrapElRef.current;
+
+      if (wrapEl) {
+        colRef.current.colWidth = (wrapEl.offsetWidth - (columnCount - 1) * columnGap) / columnCount;
+        forceUpdate();
+      }
+    };
+
+    getColWidth();
+    var tGetColWidth = throttle(getColWidth);
+    window.addEventListener('resize', tGetColWidth);
+    return function () {
+      window.removeEventListener('resize', tGetColWidth);
+    };
+  }, [columnCount, columnGap, forceUpdate]);
+  var columnCountArr = new Array(columnCount);
+  var items = React__default['default'].Children.toArray(children);
+
+  for (var i = 0; i < items.length; i++) {
+    var colIndex = i % columnCount;
+
+    if (!columnCountArr[colIndex]) {
+      columnCountArr[colIndex] = [];
+    }
+
+    columnCountArr[colIndex].push(items[i]);
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$c, _extends({
+    ref: wrapElRef
+  }, rest, {
+    className: clsx__default['default'](className, 'uc-masonry')
+  }), /*#__PURE__*/React__default['default'].createElement(Space, {
+    align: "flex-start",
+    className: "uc-masonry-col-wrap",
+    size: columnGap
+  }, columnCountArr.map(function (items, i) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "uc-masonry-col",
+      key: i,
+      style: {
+        width: colRef.current.colWidth
+      }
+    }, items.map(function (item) {
+      return /*#__PURE__*/React__default['default'].createElement("div", {
+        key: item.key || nanoid.nanoid(),
+        className: clsx__default['default']('uc-masonry-item'),
+        style: {
+          marginBottom: rowGap
+        }
+      }, item);
+    }));
+  })));
+});
+Masonry.displayName = 'UC-Masonry';
+
 /* eslint-disable @typescript-eslint/no-empty-function */
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
@@ -8503,7 +8587,7 @@ var useCountdown = function useCountdown() {
   };
 };
 
-var _excluded$15 = ["children", "label", "name"],
+var _excluded$16 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8513,7 +8597,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$15);
+      fieldProps = _objectWithoutProperties(props, _excluded$16);
 
   var required = false;
 
@@ -8723,6 +8807,7 @@ exports.LazyLoadElement = LazyLoadElement;
 exports.LazyLoadImage = LazyLoadImage;
 exports.Loading = Loading$1;
 exports.Mask = Mask;
+exports.Masonry = Masonry;
 exports.Modal = Modal;
 exports.NoticeBar = NoticeBar;
 exports.NoticeList = NoticeList;

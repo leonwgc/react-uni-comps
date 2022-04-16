@@ -79,6 +79,7 @@ export { default as Stepper } from './Stepper';
 export { default as SearchBar } from './SearchBar';
 export { default as InputNumber } from './InputNumber';
 export { default as Result } from './Result';
+export { default as Masonry } from './Masonry';
 /** only has static method */
 
 export { default as Loading } from './Loading';
