@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Masonry
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Masonry')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> BackTop
           </Space>
         }
