@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { AlertDialog, Button, Toast, Icon, Space } from 'react-uni-comps';
+import { AlertDialog, Button, Toast } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -20,6 +20,22 @@ export default function App() {
           }
         >
           模拟window.alert
+        </Button>
+
+        <Button
+          onClick={() =>
+            AlertDialog.show({
+              title: '提示',
+              content: '确定要这么做吗',
+              confirmText: null,
+              cancelText: '决定了',
+              onCancel: (close) => {
+                close();
+              },
+            })
+          }
+        >
+          取消
         </Button>
       </DemoBlock>
 

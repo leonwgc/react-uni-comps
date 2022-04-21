@@ -268,20 +268,23 @@ const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, r
                 {cancelText}
               </Button>
             ) : null}
-            <Button
-              type="primary"
-              wait={wait}
-              className={clsx('confirm')}
-              onClick={() => {
-                onConfirm?.(onClose);
 
-                if (typeof onConfirm !== 'function') {
-                  onClose?.();
-                }
-              }}
-            >
-              {confirmText}
-            </Button>
+            {confirmText && (
+              <Button
+                type="primary"
+                wait={wait}
+                className={clsx('confirm')}
+                onClick={() => {
+                  onConfirm?.(onClose);
+
+                  if (typeof onConfirm !== 'function') {
+                    onClose?.();
+                  }
+                }}
+              >
+                {confirmText}
+              </Button>
+            )}
           </Space>
         ) : (
           <>
