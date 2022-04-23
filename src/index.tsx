@@ -103,6 +103,7 @@ export { default as useCountdown } from './hooks/useCountdown';
 export { default as useMount } from './hooks/useMount';
 export { default as useUnmount } from './hooks/useUnmount';
 export { default as useForceUpdate } from './hooks/useForceUpdate';
+export { default as usePrevious } from './hooks/usePrevious';
 
 /** third-party libs */
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
