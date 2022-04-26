@@ -46,7 +46,7 @@ export default function App() {
             />
           }
         />
-        <StyledMasonry columnCount={columnCount} columnGap={0} rowGap={0}>
+        <StyledMasonry columnCount={columnCount} columnGap={8} rowGap={8}>
           {images.map((i, key) => (
             <img src={i} key={key} />
           ))}
