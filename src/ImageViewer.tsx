@@ -8,6 +8,8 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
 import type { BaseProps } from './types';
 import Mask from './Mask';
+import Button from './Button';
+import IconArrow from './IconArrow';
 
 type Props = {
   /** 是否可见 */
@@ -20,6 +22,21 @@ type Props = {
   onIndexChange?: (index: number) => void;
   /** 遮罩样式 */
   maskStyle?: React.CSSProperties;
+  /**
+   * 是否显示导航按钮
+   * @default false
+   */
+  showPrevNextButton?: boolean;
+  /**
+   * 上一张文本
+   *
+   */
+  prev?: React.ReactNode;
+  /**
+   * 下一张文本
+   *
+   */
+  next?: React.ReactNode;
 } & BaseProps;
 
 const StyledImageViewer = styled.div`
@@ -32,9 +49,10 @@ const StyledImageViewer = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-  align-items: center;
+  justify-content: center;
   touch-action: none;
   user-select: none;
+  flex-direction: column;
 
   .page {
     position: absolute;
@@ -74,7 +92,18 @@ const StyledImageViewer = styled.div`
 
 /** 图片查看器 */
 const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, visible, onClose, images, onIndexChange, maskStyle, ...rest } = props;
+  const {
+    className,
+    visible,
+    onClose,
+    images,
+    onIndexChange,
+    prev = <IconArrow direction="left" />,
+    next = <IconArrow direction="right" />,
+    showPrevNextButton = false,
+    maskStyle,
+    ...rest
+  } = props;
 
   const [urls, setUrls] = useState(Array.isArray(images) ? images : [images]);
   const [index, setIndex] = useState<number>(0);
@@ -129,6 +158,38 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           className={clsx('uc-image-viewer', className)}
         >
           {slides}
+
+          {urls.length > 1 && showPrevNextButton && (
+            <Space
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                color: '#fff',
+                fontSize: 20,
+                marginTop: 24,
+              }}
+            >
+              <Button
+                ghost
+                onClick={(e) => {
+                  e.stopPropagation();
+                  slideRef.current.prev();
+                }}
+              >
+                {prev}
+              </Button>
+              <Button
+                ghost
+                onClick={(e) => {
+                  e.stopPropagation();
+                  slideRef.current.next();
+                }}
+              >
+                {next}
+              </Button>
+            </Space>
+          )}
+
           {urls.length > 1 && (
             <div className={clsx('page')}>
               <Space size={4}>

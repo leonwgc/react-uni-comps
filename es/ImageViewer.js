@@ -48,7 +48,9 @@ import Space from './Space';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
 import Mask from './Mask';
-var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  touch-action: none;\n  user-select: none;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"], ["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  touch-action: none;\n  user-select: none;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"])));
+import Button from './Button';
+import IconArrow from './IconArrow';
+var StyledImageViewer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  touch-action: none;\n  user-select: none;\n  flex-direction: column;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"], ["\n  position: fixed;\n  z-index: 1200;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  touch-action: none;\n  user-select: none;\n  flex-direction: column;\n\n  .page {\n    position: absolute;\n    left: 50%;\n    top: 16px;\n    transform: translate3d(-50%, 0, 0);\n    color: #e6e6e6;\n    font-size: 14px;\n  }\n\n  .close {\n    position: absolute;\n    right: 32px;\n    top: 32px;\n    color: #e6e6e6;\n    font-size: 24px;\n  }\n\n  .close {\n    position: fixed;\n    right: 16px;\n    top: 16px;\n    cursor: pointer;\n    color: #fff;\n    font-size: 16px;\n  }\n\n  .uc-icon-arrow {\n    cursor: pointer;\n  }\n\n  img {\n    width: 100%;\n    object-fit: scale-down;\n  }\n"])));
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -57,16 +59,26 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
+      _a = props.prev,
+      prev = _a === void 0 ? /*#__PURE__*/React.createElement(IconArrow, {
+    direction: "left"
+  }) : _a,
+      _b = props.next,
+      next = _b === void 0 ? /*#__PURE__*/React.createElement(IconArrow, {
+    direction: "right"
+  }) : _b,
+      _c = props.showPrevNextButton,
+      showPrevNextButton = _c === void 0 ? false : _c,
       maskStyle = props.maskStyle,
-      rest = __rest(props, ["className", "visible", "onClose", "images", "onIndexChange", "maskStyle"]);
+      rest = __rest(props, ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"]);
 
-  var _a = useState(Array.isArray(images) ? images : [images]),
-      urls = _a[0],
-      setUrls = _a[1];
+  var _d = useState(Array.isArray(images) ? images : [images]),
+      urls = _d[0],
+      setUrls = _d[1];
 
-  var _b = useState(0),
-      index = _b[0],
-      setIndex = _b[1];
+  var _e = useState(0),
+      index = _e[0],
+      setIndex = _e[1];
 
   var onIndexChangeRef = useCallbackRef(onIndexChange);
   var slideRef = useRef();
@@ -118,7 +130,27 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, rest, {
     ref: ref,
     className: clsx('uc-image-viewer', className)
-  }), slides, urls.length > 1 && /*#__PURE__*/React.createElement("div", {
+  }), slides, urls.length > 1 && showPrevNextButton && /*#__PURE__*/React.createElement(Space, {
+    style: {
+      display: 'flex',
+      justifyContent: 'center',
+      color: '#fff',
+      fontSize: 20,
+      marginTop: 24
+    }
+  }, /*#__PURE__*/React.createElement(Button, {
+    ghost: true,
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      slideRef.current.prev();
+    }
+  }, prev), /*#__PURE__*/React.createElement(Button, {
+    ghost: true,
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      slideRef.current.next();
+    }
+  }, next)), urls.length > 1 && /*#__PURE__*/React.createElement("div", {
     className: clsx('page')
   }, /*#__PURE__*/React.createElement(Space, {
     size: 4

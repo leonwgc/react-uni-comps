@@ -12,5 +12,20 @@ declare const ImageViewer: React.ForwardRefExoticComponent<{
     onIndexChange?: (index: number) => void;
     /** 遮罩样式 */
     maskStyle?: React.CSSProperties;
+    /**
+     * 是否显示导航按钮
+     * @default false
+     */
+    showPrevNextButton?: boolean;
+    /**
+     * 上一张文本
+     *
+     */
+    prev?: React.ReactNode;
+    /**
+     * 下一张文本
+     *
+     */
+    next?: React.ReactNode;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;

@@ -3914,7 +3914,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     },
     className: clsx__default['default']('cancel')
-  }, cancelText) : null, /*#__PURE__*/React__default['default'].createElement(Button, {
+  }, cancelText) : null, confirmText && /*#__PURE__*/React__default['default'].createElement(Button, {
     type: "primary",
     wait: wait,
     className: clsx__default['default']('confirm'),
@@ -6121,11 +6121,11 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange", "maskStyle"];
+var _excluded$L = ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"];
 var StyledImageViewer = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ImageViewer__StyledImageViewer",
   componentId: "sc-oqxxes-0"
-})(["position:fixed;z-index:1200;left:0;right:0;bottom:0;top:0;width:100vw;height:100vh;display:flex;align-items:center;touch-action:none;user-select:none;.page{position:absolute;left:50%;top:16px;transform:translate3d(-50%,0,0);color:#e6e6e6;font-size:14px;}.close{position:absolute;right:32px;top:32px;color:#e6e6e6;font-size:24px;}.close{position:fixed;right:16px;top:16px;cursor:pointer;color:#fff;font-size:16px;}.uc-icon-arrow{cursor:pointer;}img{width:100%;object-fit:scale-down;}"]);
+})(["position:fixed;z-index:1200;left:0;right:0;bottom:0;top:0;width:100vw;height:100vh;display:flex;justify-content:center;touch-action:none;user-select:none;flex-direction:column;.page{position:absolute;left:50%;top:16px;transform:translate3d(-50%,0,0);color:#e6e6e6;font-size:14px;}.close{position:absolute;right:32px;top:32px;color:#e6e6e6;font-size:24px;}.close{position:fixed;right:16px;top:16px;cursor:pointer;color:#fff;font-size:16px;}.uc-icon-arrow{cursor:pointer;}img{width:100%;object-fit:scale-down;}"]);
 /** 图片查看器 */
 
 var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -6134,6 +6134,16 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       onClose = props.onClose,
       images = props.images,
       onIndexChange = props.onIndexChange,
+      _props$prev = props.prev,
+      prev = _props$prev === void 0 ? /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+    direction: "left"
+  }) : _props$prev,
+      _props$next = props.next,
+      next = _props$next === void 0 ? /*#__PURE__*/React__default['default'].createElement(IconArrow, {
+    direction: "right"
+  }) : _props$next,
+      _props$showPrevNextBu = props.showPrevNextButton,
+      showPrevNextButton = _props$showPrevNextBu === void 0 ? false : _props$showPrevNextBu,
       maskStyle = props.maskStyle,
       rest = _objectWithoutProperties(props, _excluded$L);
 
@@ -6197,7 +6207,27 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, rest, {
     ref: ref,
     className: clsx__default['default']('uc-image-viewer', className)
-  }), slides, urls.length > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
+  }), slides, urls.length > 1 && showPrevNextButton && /*#__PURE__*/React__default['default'].createElement(Space, {
+    style: {
+      display: 'flex',
+      justifyContent: 'center',
+      color: '#fff',
+      fontSize: 20,
+      marginTop: 24
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(Button, {
+    ghost: true,
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      slideRef.current.prev();
+    }
+  }, prev), /*#__PURE__*/React__default['default'].createElement(Button, {
+    ghost: true,
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      slideRef.current.next();
+    }
+  }, next)), urls.length > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('page')
   }, /*#__PURE__*/React__default['default'].createElement(Space, {
     size: 4
@@ -8249,7 +8279,7 @@ var _excluded$13 = ["className", "style", "onChange", "cancelText", "onFocus", "
 var StyledWrap$b = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SearchBar__StyledWrap",
   componentId: "sc-192vbqd-0"
-})(["display:flex;align-items:center;.uc-input{flex:1;background:#f7f7f7;border-radius:16px;padding:4px 12px;.uc-icon{color:#999;font-size:15px;}&.mobile{padding:4px 12px;}.prefix{line-height:1;}}.cancel-text{flex:none;display:inline-block;margin-left:12px;cursor:pointer;}"]); //#endregion
+})(["display:flex;align-items:center;.uc-input{flex:1;background:#f7f7f7;border-radius:16px;padding:4px 12px;line-height:24px;.uc-icon{color:#999;font-size:15px;}.prefix{line-height:1;}}.cancel-text{flex:none;display:inline-block;margin-left:12px;cursor:pointer;}"]); //#endregion
 
 /** 搜索框 */
 
@@ -8876,6 +8906,7 @@ exports.useDebounce = useDebounce;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useMount = useMount;
+exports.usePrevious = usePrevious;
 exports.useThrottle = useThrottle;
 exports.useUnmount = useUnmount;
 exports.useUpdateEffect = useUpdateEffect;

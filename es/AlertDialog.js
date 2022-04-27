@@ -114,7 +114,7 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
       }
     },
     className: clsx('cancel')
-  }, cancelText) : null, /*#__PURE__*/React.createElement(Button, {
+  }, cancelText) : null, confirmText && /*#__PURE__*/React.createElement(Button, {
     type: "primary",
     wait: wait,
     className: clsx('confirm'),
