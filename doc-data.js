@@ -326,7 +326,6 @@ module.exports = [
       {
         name: 'Drag',
         title: 'Drag 拖拽',
-        mobile: false,
       },
 
       {

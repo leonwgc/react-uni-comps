@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { styled, Drag } from 'react-uni-comps';
@@ -6,9 +6,8 @@ import { styled, Drag } from 'react-uni-comps';
 const StyledDiv = styled.div`
   width: 120px;
   height: 120px;
-  border: 1px solid #00bd8c;
+  border: 1px solid #005cff;
   font-size: 12px;
-  color: #333;
   position: relative;
   display: flex;
   justify-content: center;
@@ -17,21 +16,13 @@ const StyledDiv = styled.div`
 `;
 
 export default function App() {
-  const [pos, setPos] = useState<any>();
   const boundRef = useRef();
-  const elNoBoundRef = useRef();
+
   return (
     <PageWrap>
-      <DemoBlock title="任意拖动" height={200}>
-        <Drag
-          onDragStart={(e: any) => {
-            e.target.style.borderColor = 'blue';
-          }}
-          onDragEnd={(e: any) => {
-            e.target.style.borderColor = 'green';
-          }}
-        >
-          <StyledDiv ref={elNoBoundRef}>任意拖动</StyledDiv>
+      <DemoBlock title="任意拖动" height={128}>
+        <Drag>
+          <StyledDiv>任意拖动</StyledDiv>
         </Drag>
       </DemoBlock>
 
@@ -40,12 +31,12 @@ export default function App() {
           ref={boundRef}
           style={{
             position: 'relative',
-            border: '1px solid red',
-            width: 300,
-            height: 300,
+            border: '1px dashed #ccc',
+            width: 260,
+            height: 260,
           }}
         >
-          <Drag onDragEnd={(e, p) => setPos(p)} boundRef={boundRef}>
+          <Drag boundRef={boundRef}>
             <StyledDiv>框内拖动</StyledDiv>
           </Drag>
         </div>

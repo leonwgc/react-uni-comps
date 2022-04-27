@@ -1,7 +1,7 @@
 ---
 title: Drag 拖拽
 order: 1
-mobile: false
+mobile: true
 group:
   title: 手势操作
   order: 6
