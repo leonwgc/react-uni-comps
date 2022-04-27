@@ -85,7 +85,7 @@ export default function App() {
           </Button>
         </Space>
 
-        <AutoCenter style={{ marginTop: 30 }}>
+        <AutoCenter style={{ marginTop: 100 }}>
           <Avatar size={60} ref={elRef}>
             W
           </Avatar>
