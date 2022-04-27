@@ -27,12 +27,10 @@ const StyledWrap = styled.div`
     background: #f7f7f7;
     border-radius: 16px;
     padding: 4px 12px;
+    line-height: 24px;
     .uc-icon {
       color: #999;
       font-size: 15px;
-    }
-    &.mobile {
-      padding: 4px 12px;
     }
     .prefix {
       line-height: 1;
