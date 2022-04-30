@@ -43,27 +43,27 @@ var useList = function useList(arr) {
     return r;
   }),
       keys = _b[0],
-      setKeys = _b[1]; // add a new item
-
+      setKeys = _b[1];
 
   var add = function add(value) {
     setList(__spreadArray(__spreadArray([], list, true), [value], false));
     setKeys(__spreadArray(__spreadArray([], keys, true), [gid()], false));
-  }; // remove item at index
-
+  };
 
   var remove = function remove(index) {
-    list.splice(index, 1);
-    keys.splice(index, 1);
-    setList(__spreadArray([], list, true));
-    setKeys(__spreadArray([], keys, true));
+    if (index >= 0 && index < list.length) {
+      list.splice(index, 1);
+      keys.splice(index, 1);
+      setList(__spreadArray([], list, true));
+      setKeys(__spreadArray([], keys, true));
+    }
   };
 
   var update = function update(index, value) {
-    var _arr = list.slice();
-
-    _arr[index] = value;
-    setList(__spreadArray([], _arr, true));
+    if (index >= 0 && index < list.length) {
+      list[index] = value;
+      setList(__spreadArray([], list, true));
+    }
   };
 
   var moveUp = function moveUp(index) {

@@ -67,9 +67,9 @@ var FormItem = function FormItem(props) {
     label: label,
     "data-name": name,
     required: requiredMark && required
-  }, /*#__PURE__*/React.createElement(Field, __assign({
+  }, name ? /*#__PURE__*/React.createElement(Field, __assign({
     name: name
-  }, fieldProps), children));
+  }, fieldProps), children) : /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, fieldProps) : children);
 };
 
 export var FormContext = /*#__PURE__*/React.createContext(null);
@@ -119,6 +119,7 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, /*#__PURE__*/React.createElement(Space, {
     direction: layout,
+    wrap: true,
     size: gap,
     style: {
       width: '100%'

@@ -8649,27 +8649,27 @@ var useList = function useList() {
   }),
       _useState4 = _slicedToArray(_useState3, 2),
       keys = _useState4[0],
-      setKeys = _useState4[1]; // add a new item
-
+      setKeys = _useState4[1];
 
   var add = function add(value) {
     setList([].concat(_toConsumableArray(list), [value]));
     setKeys([].concat(_toConsumableArray(keys), [gid()]));
-  }; // remove item at index
-
+  };
 
   var remove = function remove(index) {
-    list.splice(index, 1);
-    keys.splice(index, 1);
-    setList(_toConsumableArray(list));
-    setKeys(_toConsumableArray(keys));
+    if (index >= 0 && index < list.length) {
+      list.splice(index, 1);
+      keys.splice(index, 1);
+      setList(_toConsumableArray(list));
+      setKeys(_toConsumableArray(keys));
+    }
   };
 
   var update = function update(index, value) {
-    var _arr = list.slice();
-
-    _arr[index] = value;
-    setList(_toConsumableArray(_arr));
+    if (index >= 0 && index < list.length) {
+      list[index] = value;
+      setList(_toConsumableArray(list));
+    }
   };
 
   var moveUp = function moveUp(index) {
@@ -8734,9 +8734,9 @@ var FormItem = function FormItem(props) {
     label: label,
     "data-name": name,
     required: requiredMark && required
-  }, /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
+  }, name ? /*#__PURE__*/React__default['default'].createElement(RcForm.Field, _extends({
     name: name
-  }, fieldProps), children));
+  }, fieldProps), children) : /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, fieldProps) : children);
 };
 /** 排列方式 */
 
@@ -8788,6 +8788,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
     }
   }, /*#__PURE__*/React__default['default'].createElement(Space, {
     direction: layout,
+    wrap: true,
     size: gap,
     style: {
       width: '100%'
