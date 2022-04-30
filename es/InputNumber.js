@@ -57,16 +57,17 @@ var InputNumber = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       _a = props.defaultValue,
       defaultValue = _a === void 0 ? '' : _a,
-      value = props.value,
+      _b = props.value,
+      value = _b === void 0 ? '' : _b,
       min = props.min,
       max = props.max,
       onChange = props.onChange,
       digits = props.digits,
       rest = __rest(props, ["className", "defaultValue", "value", "min", "max", "onChange", "digits"]);
 
-  var _b = useState(value || defaultValue),
-      val = _b[0],
-      setVal = _b[1];
+  var _c = useState(value || defaultValue),
+      val = _c[0],
+      setVal = _c[1];
 
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(val);

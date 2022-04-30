@@ -8352,7 +8352,8 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   var className = props.className,
       _props$defaultValue = props.defaultValue,
       defaultValue = _props$defaultValue === void 0 ? '' : _props$defaultValue,
-      value = props.value,
+      _props$value = props.value,
+      value = _props$value === void 0 ? '' : _props$value,
       min = props.min,
       max = props.max,
       onChange = props.onChange,
@@ -8614,6 +8615,90 @@ var useCountdown = function useCountdown() {
     start: start,
     reset: reset,
     isReStarted: isReStarted
+  };
+};
+
+function gid() {
+  return nanoid.nanoid(12);
+}
+
+/**
+ * 数据列表
+ *
+ * @template T
+ * @param {Array<T>} [arr=[]]
+ * @return {*}  {List<T>}
+ */
+var useList = function useList() {
+  var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+  var _useState = React.useState(arr),
+      _useState2 = _slicedToArray(_useState, 2),
+      list = _useState2[0],
+      setList = _useState2[1];
+
+  var _useState3 = React.useState(function () {
+    var len = arr.length;
+    var r = [];
+
+    for (var i = 0; i < len; i++) {
+      r[i] = gid();
+    }
+
+    return r;
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      keys = _useState4[0],
+      setKeys = _useState4[1]; // add a new item
+
+
+  var add = function add(value) {
+    setList([].concat(_toConsumableArray(list), [value]));
+    setKeys([].concat(_toConsumableArray(keys), [gid()]));
+  }; // remove item at index
+
+
+  var remove = function remove(index) {
+    list.splice(index, 1);
+    keys.splice(index, 1);
+    setList(_toConsumableArray(list));
+    setKeys(_toConsumableArray(keys));
+  }; // set value at index
+
+
+  var set = function set(index, value) {
+    var _arr = list.slice();
+
+    _arr[index] = value;
+    setList(_toConsumableArray(_arr));
+  };
+
+  var moveUp = function moveUp(index) {
+    if (index > 0) {
+      var t = list[index - 1];
+      list[index - 1] = list[index];
+      list[index] = t;
+      setList(_toConsumableArray(list));
+    }
+  };
+
+  var moveDown = function moveDown(index) {
+    if (index < list.length - 1) {
+      var t = list[index + 1];
+      list[index + 1] = list[index];
+      list[index] = t;
+      setList(_toConsumableArray(list));
+    }
+  };
+
+  return {
+    list: list,
+    add: add,
+    remove: remove,
+    keys: keys,
+    set: set,
+    moveUp: moveUp,
+    moveDown: moveDown
   };
 };
 
@@ -8905,6 +8990,7 @@ exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
+exports.useList = useList;
 exports.useMount = useMount;
 exports.usePrevious = usePrevious;
 exports.useThrottle = useThrottle;
