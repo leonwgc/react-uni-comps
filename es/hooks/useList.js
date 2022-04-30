@@ -15,7 +15,7 @@ function gid() {
   return nanoid(12);
 }
 /**
- * 数据列表
+ * 数据列表,包含增删改排序
  *
  * @template T
  * @param {Array<T>} [arr=[]]

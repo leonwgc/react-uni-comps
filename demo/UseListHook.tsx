@@ -9,7 +9,7 @@ const App = () => {
   return (
     <PageWrap>
       <DemoBlock>
-        <Form>
+        <Form gap={8}>
           {list.map((item, idx) => {
             return (
               <div key={keys[idx]}>
