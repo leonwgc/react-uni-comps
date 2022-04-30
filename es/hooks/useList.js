@@ -57,10 +57,9 @@ var useList = function useList(arr) {
     keys.splice(index, 1);
     setList(__spreadArray([], list, true));
     setKeys(__spreadArray([], keys, true));
-  }; // set value at index
+  };
 
-
-  var set = function set(index, value) {
+  var update = function update(index, value) {
     var _arr = list.slice();
 
     _arr[index] = value;
@@ -90,7 +89,7 @@ var useList = function useList(arr) {
     add: add,
     remove: remove,
     keys: keys,
-    set: set,
+    update: update,
     moveUp: moveUp,
     moveDown: moveDown
   };

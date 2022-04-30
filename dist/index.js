@@ -8663,10 +8663,9 @@ var useList = function useList() {
     keys.splice(index, 1);
     setList(_toConsumableArray(list));
     setKeys(_toConsumableArray(keys));
-  }; // set value at index
+  };
 
-
-  var set = function set(index, value) {
+  var update = function update(index, value) {
     var _arr = list.slice();
 
     _arr[index] = value;
@@ -8696,7 +8695,7 @@ var useList = function useList() {
     add: add,
     remove: remove,
     keys: keys,
-    set: set,
+    update: update,
     moveUp: moveUp,
     moveDown: moveDown
   };
