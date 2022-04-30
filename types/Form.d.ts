@@ -15,7 +15,10 @@ export declare type FormProps = Partial<RcFormProps> & {
     toastError?: boolean;
     /** 是否平滑滚动到错误字段，移动端默认true */
     scrollIntoErrorField?: boolean;
-    /** 排列方式 */
+    /** 排列方式
+     *
+     * @default vertical
+     */
     layout?: FormLayout;
     className?: string;
     style?: React.CSSProperties;
@@ -32,7 +35,10 @@ declare const _default: React.ForwardRefExoticComponent<Partial<RcFormProps<any>
     toastError?: boolean;
     /** 是否平滑滚动到错误字段，移动端默认true */
     scrollIntoErrorField?: boolean;
-    /** 排列方式 */
+    /** 排列方式
+     *
+     * @default vertical
+     */
     layout?: FormLayout;
     className?: string;
     style?: React.CSSProperties;

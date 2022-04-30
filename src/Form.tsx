@@ -34,9 +34,15 @@ const FormItem: React.FC<FormItemProps> = (props) => {
       data-name={name}
       required={requiredMark && required}
     >
-      <Field name={name} {...fieldProps}>
-        {children}
-      </Field>
+      {name ? (
+        <Field name={name} {...fieldProps}>
+          {children}
+        </Field>
+      ) : React.isValidElement(children) ? (
+        React.cloneElement(children, fieldProps)
+      ) : (
+        children
+      )}
     </Cell>
   );
 };
@@ -56,7 +62,10 @@ export type FormProps = Partial<RcFormProps> & {
   toastError?: boolean;
   /** 是否平滑滚动到错误字段，移动端默认true */
   scrollIntoErrorField?: boolean;
-  /** 排列方式 */
+  /** 排列方式
+   *
+   * @default vertical
+   */
   layout?: FormLayout;
   className?: string;
   style?: React.CSSProperties;
@@ -106,7 +115,7 @@ const Form = React.forwardRef<FormInstance, FormProps>((props, ref) => {
           requiredMark,
         }}
       >
-        <Space direction={layout} size={gap} style={{ width: '100%' }}>
+        <Space direction={layout} wrap size={gap} style={{ width: '100%' }}>
           {children}
         </Space>
       </FormContext.Provider>

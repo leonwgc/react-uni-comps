@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     margin:0;
     font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', STHeiti,
     'Microsoft Yahei', Tahoma, Simsun, sans-serif;
+    line-height: 1.5715;
   }
 `;
 

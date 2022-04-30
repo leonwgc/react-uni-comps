@@ -42,24 +42,25 @@ const useList = <T,>(arr: Array<T> = []): List<T> => {
     return r;
   });
 
-  // add a new item
   const add = (value: T): void => {
     setList([...list, value]);
     setKeys([...keys, gid()]);
   };
 
-  // remove item at index
   const remove = (index: number): void => {
-    list.splice(index, 1);
-    keys.splice(index, 1);
-    setList([...list]);
-    setKeys([...keys]);
+    if (index >= 0 && index < list.length) {
+      list.splice(index, 1);
+      keys.splice(index, 1);
+      setList([...list]);
+      setKeys([...keys]);
+    }
   };
 
   const update = (index: number, value: T): void => {
-    const _arr = list.slice();
-    _arr[index] = value;
-    setList([..._arr]);
+    if (index >= 0 && index < list.length) {
+      list[index] = value;
+      setList([...list]);
+    }
   };
 
   const moveUp = (index: number): void => {
