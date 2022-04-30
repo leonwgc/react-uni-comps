@@ -50,7 +50,7 @@ const limit = (val: number, min, max, digits = 0) => {
 
 /** 数字输入框 */
 const InputNumber = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { className, defaultValue = '', value = '', min, max, onChange, digits, ...rest } = props;
+  const { className, defaultValue = '', value, min, max, onChange, digits, ...rest } = props;
 
   const [val, setVal] = useState(value || defaultValue);
 
