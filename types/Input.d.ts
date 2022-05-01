@@ -6,7 +6,9 @@ export declare type Props = {
     readOnly?: boolean;
     /** 禁用 */
     disabled?: boolean;
-    /** 多行文本的显示行数,如果设置则组件显示为textarea */
+    /**
+     * 多行文本的显示行数,显示为textarea
+     */
     rows?: number;
     /** 值 */
     value?: string;
@@ -22,16 +24,24 @@ export declare type Props = {
     onFocus?: (e: FocusEvent) => void;
     /** blur事件回调 */
     onBlur?: (e: FocusEvent) => void;
-    /** textarea 是否高度自适应,受控模式生效,默认false */
+    /**
+     * textarea 是否高度自适应,受控模式生效
+     * @default false
+     */
     autoHeight?: boolean;
-    /** 处理IME输入法,默认 false */
+    /**
+     * 处理IME输入法, 受控模式生效
+     * @default false
+     */
     ime?: boolean;
-    /** 是否显示清除按钮,默认false*/
+    /** 是否显示清除按钮
+     * @default false
+     */
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
     /** Enter回调 */
-    onPressEnter?: (v: string) => void;
+    onPressEnter?: (value: string) => void;
 } & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt>;
 declare type RefType = HTMLInputElement | HTMLTextAreaElement;
 /** 单行/多行输入框 input/textarea */
@@ -40,7 +50,9 @@ declare const Input: React.ForwardRefExoticComponent<{
     readOnly?: boolean;
     /** 禁用 */
     disabled?: boolean;
-    /** 多行文本的显示行数,如果设置则组件显示为textarea */
+    /**
+     * 多行文本的显示行数,显示为textarea
+     */
     rows?: number;
     /** 值 */
     value?: string;
@@ -56,15 +68,23 @@ declare const Input: React.ForwardRefExoticComponent<{
     onFocus?: (e: FocusEvent) => void;
     /** blur事件回调 */
     onBlur?: (e: FocusEvent) => void;
-    /** textarea 是否高度自适应,受控模式生效,默认false */
+    /**
+     * textarea 是否高度自适应,受控模式生效
+     * @default false
+     */
     autoHeight?: boolean;
-    /** 处理IME输入法,默认 false */
+    /**
+     * 处理IME输入法, 受控模式生效
+     * @default false
+     */
     ime?: boolean;
-    /** 是否显示清除按钮,默认false*/
+    /** 是否显示清除按钮
+     * @default false
+     */
     clearable?: boolean;
     /** 点击清除按钮后触发 */
     onClear?: () => void;
     /** Enter回调 */
-    onPressEnter?: (v: string) => void;
+    onPressEnter?: (value: string) => void;
 } & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & React.RefAttributes<RefType>>;
 export default Input;

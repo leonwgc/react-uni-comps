@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Input,
-  Icon,
-  styled,
-  Space,
-  Toast,
-  isMobile,
-  Cell,
-  Tooltip,
-  Form,
-} from 'react-uni-comps';
+import { Input, Icon, styled, Space, Toast, isMobile, Cell, Tooltip, Form } from 'react-uni-comps';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 
@@ -68,7 +58,7 @@ export default function App() {
   const { account = '', pwd = '', eyeOn } = data;
 
   const [val, setVal] = useState('');
-  const [val1, setVal1] = useState('高度自适应');
+  const [val1, setVal1] = useState('');
 
   const onFieldChange = (name) => (value) => {
     setData({ ...data, [name]: value });
@@ -76,36 +66,40 @@ export default function App() {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <DemoBlock title="默认" padding={0}>
-        <Space direction="vertical" size={4} style={{ width: '100%' }}>
-          <Cell label="默认">
-            <Input value={val} onChange={setVal} autoFocus />
-          </Cell>
+      <DemoBlock title="默认">
+        <Space direction="vertical" size={8} style={{ width: '100%' }}>
+          <Input value={val} onChange={setVal} placeholder="受控" />
 
-          <Cell label="非受控">
-            <Input />
-          </Cell>
+          <Input placeholder="非受控" />
 
-          <Cell label="按下Enter">
-            <Input onPressEnter={console.log} />
-          </Cell>
+          <Input onPressEnter={(value) => Toast.show(value)} placeholder="按下enter" />
 
-          <Cell label="只读">
-            <Input defaultValue="只读" readOnly />
-          </Cell>
+          <Input defaultValue="只读" readOnly />
 
-          <Cell label="禁用">
-            <Input defaultValue="禁用" disabled />
-          </Cell>
+          <Input defaultValue="禁用" disabled />
 
-          <Cell label="可清除">
-            <Input value={val} onChange={setVal} clearable onClear={() => Toast.show('已清空')} />
-          </Cell>
+          <Input
+            value={val}
+            onChange={setVal}
+            clearable
+            onClear={() => Toast.show('已清空')}
+            placeholder="可清除"
+          />
+
+          <Input
+            ime
+            onChange={(value) => {
+              setVal(value);
+              console.log(value);
+            }}
+            value={val}
+            placeholder="IME中文输入处理"
+          />
         </Space>
       </DemoBlock>
 
       <DemoBlock title="前后缀">
-        <Space direction="vertical">
+        <Space direction="vertical" size={8} style={{ width: '100%' }}>
           <Input prefix={<Icon type="uc-icon-gouwuche" />} suffix={'美刀'} defaultValue={'10'} />
 
           <Input
@@ -117,25 +111,22 @@ export default function App() {
             }
             defaultValue={'10'}
           />
-          <Form>
-            <Form.Item label="显示数量" name="count">
-              <Input
-                value={val}
-                onChange={setVal}
-                onPressEnter={Toast.show}
-                maxLength={12}
-                suffix={<Space size={2}>{val.length} / 12</Space>}
-              />
-            </Form.Item>
-          </Form>
+
+          <Input
+            value={val}
+            onChange={setVal}
+            maxLength={12}
+            suffix={<Space size={2}>{val.length} / 12</Space>}
+            placeholder="显示输入长度"
+          />
         </Space>
       </DemoBlock>
 
       <DemoBlock title="多行">
-        <Space direction="vertical" size={24} style={{ width: '100%' }}>
+        <Space direction="vertical" size={8} style={{ width: '100%' }}>
           <Input rows={2} />
 
-          <Input rows={1} autoHeight value={val1} onChange={setVal1} />
+          <Input rows={1} autoHeight value={val1} onChange={setVal1} placeholder="高度自适应" />
         </Space>
       </DemoBlock>
 
