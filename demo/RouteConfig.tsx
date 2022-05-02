@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/I18n',
+    component: lazy(() => import('./I18n')),
+  },
+  {
     path: '/UseListHook',
     component: lazy(() => import('./UseListHook')),
   },

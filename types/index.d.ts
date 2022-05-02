@@ -108,5 +108,7 @@ export { default as clsx } from 'clsx';
 export * from 'react-transition-group';
 export { nanoid } from 'nanoid';
 export { useSpring, animated, easings } from '@react-spring/web';
+export { default as initI18n } from './i18n/index';
+export { useTranslation } from 'react-i18next';
 /** form */
 export { default as Form } from './Form';
