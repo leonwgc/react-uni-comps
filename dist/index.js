@@ -17,6 +17,8 @@ var SignaturePad = require('signature_pad');
 var WQRCode = require('w-qrcode');
 var Sortable = require('sortablejs');
 var nanoid = require('nanoid');
+var i18n = require('i18next');
+var reactI18next = require('react-i18next');
 var RcForm = require('rc-field-form');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -31,6 +33,7 @@ var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
 var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 var WQRCode__default = /*#__PURE__*/_interopDefaultLegacy(WQRCode);
 var Sortable__default = /*#__PURE__*/_interopDefaultLegacy(Sortable);
+var i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
 var RcForm__default = /*#__PURE__*/_interopDefaultLegacy(RcForm);
 
 function ownKeys(object, enumerableOnly) {
@@ -8701,6 +8704,41 @@ var useList = function useList() {
   };
 };
 
+/**
+ * 初始化i18n
+ *
+ * @param {Record<string, any>} resources  翻译对象
+ * @param {string} [lang='zh'] 默认语言
+ */
+
+var initI18n = function initI18n(resources) {
+  var lang = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'zh';
+  i18n__default['default'].use(reactI18next.initReactI18next) // bind react-i18next to the instance
+  .init({
+    lng: lang,
+    fallbackLng: lang,
+    resources: resources,
+    interpolation: {
+      escapeValue: false // not needed for react!!
+
+    } // react i18next special options (optional)
+    // override if needed - omit if ok with defaults
+
+    /*
+    react: {
+    bindI18n: 'languageChanged',
+    bindI18nStore: '',
+    transEmptyNodeValue: '',
+    transSupportBasicHtmlNodes: true,
+    transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
+    useSuspense: true,
+    }
+    */
+
+  });
+  return i18n__default['default'];
+};
+
 var _excluded$16 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
@@ -8888,6 +8926,12 @@ Object.defineProperty(exports, 'nanoid', {
     return nanoid.nanoid;
   }
 });
+Object.defineProperty(exports, 'useTranslation', {
+  enumerable: true,
+  get: function () {
+    return reactI18next.useTranslation;
+  }
+});
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
@@ -8977,6 +9021,7 @@ exports.flatArray = flatArray;
 exports.flatSimpleArray = flatSimpleArray;
 exports.getThemeColor = getThemeColor;
 exports.getThemeColorCss = getThemeColorCss;
+exports.initI18n = initI18n;
 exports.isBrowser = isBrowser;
 exports.isMobile = isMobile;
 exports.isTouch = isTouch;

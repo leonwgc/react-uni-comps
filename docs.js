@@ -18,8 +18,7 @@ group:
 <API src="../src/<%= name %>.tsx"></API>
 `;
 
-const tpl1 =
-  `---
+const tpl1 = `---
 title: <%= title %>
 order: <%= order %>
 group:
@@ -49,6 +48,9 @@ function handle(group, idx, listProp = 'comps') {
   const isComps = listProp === 'comps';
   if (Array.isArray(list))
     list.map((item, subIdx) => {
+      if (item.ignore) {
+        return;
+      }
       item.order = subIdx;
       item.groupOrder = idx;
       item.groupPath = group.path;

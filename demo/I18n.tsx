@@ -7,9 +7,9 @@ import {
   Form,
   Button,
   useCountdown,
-  initI18n,
   Cell,
   RadioGroup,
+  initI18n,
   useTranslation,
 } from 'react-uni-comps';
 import * as langs from './langs';
