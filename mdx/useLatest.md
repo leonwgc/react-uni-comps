@@ -1,5 +1,5 @@
 ---
-title: useCallbackRef 获得最新值
+title: useLatest 获得最新值
 order: 7
 group:
   title: Hooks
@@ -12,7 +12,7 @@ group:
 
 
 
-// 保存最新的值在 ref中
+// 保存最新的值在ref中
 
 
 

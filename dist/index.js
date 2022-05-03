@@ -1915,6 +1915,8 @@ var useUpdateEffect = function useUpdateEffect(effect) {
 /**
  *  保存最新的值在ref中
  *
+ * @deprecated
+ *
  * @export
  * @template T
  * @param {T} value
@@ -8705,6 +8707,21 @@ var useList = function useList() {
 };
 
 /**
+ * 保存最新的值在ref中
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useLatest(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
+/**
  * 初始化i18n
  *
  * @param {Record<string, any>} resources  翻译对象
@@ -9035,6 +9052,7 @@ exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
+exports.useLatest = useLatest;
 exports.useList = useList;
 exports.useMount = useMount;
 exports.usePrevious = usePrevious;

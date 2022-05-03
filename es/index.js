@@ -105,6 +105,7 @@ export { default as useUnmount } from './hooks/useUnmount';
 export { default as useForceUpdate } from './hooks/useForceUpdate';
 export { default as usePrevious } from './hooks/usePrevious';
 export { default as useList } from './hooks/useList';
+export { default as useLatest } from './hooks/useLatest';
 /** third-party libs */
 
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';

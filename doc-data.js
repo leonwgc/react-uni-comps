@@ -408,9 +408,9 @@ module.exports = [
         desc: '监视元素在文档视口的可见性，可见性变化时触发回调',
       },
       {
-        name: 'useCallbackRef',
-        title: 'useCallbackRef 获得最新值',
-        desc: '保存最新的值在 ref中',
+        name: 'useLatest',
+        title: 'useLatest 获得最新值',
+        desc: '保存最新的值在ref中',
       },
       {
         name: 'useCountdown',
