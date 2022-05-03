@@ -22,6 +22,18 @@ export default defineConfig({
   locales: [['zh-CN', '中文']],
   hash: true,
   webpack5: {},
+  chainWebpack(memo, { env, webpack, createCSSRule }) {
+    // memo.module
+    //   .rule('compile')
+    //   .test(/\.(t|j)sx?$/)
+    //   .exclude.add(/(node_modules)/)
+    //   .end()
+    //   .use('swc')
+    //   .loader('swc-loader')
+    //   .options({
+    //     parseMap: true,
+    //   });
+  },
   fastRefresh: {},
   // Because of using GitHub Pages
   base: `/${repo}/`,
