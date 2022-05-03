@@ -509,7 +509,6 @@ module.exports = [
         name: 'i18n',
         title: 'i18n 多语言',
         desc: '多语言',
-        ignore: true,
       },
     ],
   },

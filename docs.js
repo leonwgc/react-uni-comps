@@ -48,9 +48,6 @@ function handle(group, idx, listProp = 'comps') {
   const isComps = listProp === 'comps';
   if (Array.isArray(list))
     list.map((item, subIdx) => {
-      if (item.ignore) {
-        return;
-      }
       item.order = subIdx;
       item.groupOrder = idx;
       item.groupPath = group.path;
@@ -60,7 +57,11 @@ function handle(group, idx, listProp = 'comps') {
       const fileName = path.resolve(__dirname, `./mdx/${item.name}.md`);
 
       if (fs.existsSync(fileName)) {
-        fs.unlinkSync(fileName);
+        if (isComps) {
+          fs.unlinkSync(fileName);
+        } else {
+          return;
+        }
       }
 
       fs.writeFileSync(
