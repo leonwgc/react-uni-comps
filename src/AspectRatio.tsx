@@ -26,6 +26,7 @@ const StyledWrap = styled.div<{ ratio: number }>`
   }
 
   * {
+    box-sizing: border-box;
     overflow: hidden;
     position: absolute;
     inset: 0px;
