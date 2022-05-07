@@ -1,5 +1,5 @@
 ---
-title: HairLineBox 一像素边框容器
+title: HairLineBox 一像素边框
 order: 6
 mobile: true
 group:

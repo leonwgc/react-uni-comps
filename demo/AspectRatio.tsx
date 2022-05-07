@@ -12,12 +12,6 @@ export default function App() {
         </AspectRatio>
       </DemoBlock>
 
-      <DemoBlock title="1/1">
-        <AspectRatio style={{ width: 200 }} ratio={1 / 1}>
-          <img src="https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF" />
-        </AspectRatio>
-      </DemoBlock>
-
       <DemoBlock title="15/9">
         <AspectRatio style={{ width: 200 }} ratio={15 / 9}>
           <img src="https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF" />

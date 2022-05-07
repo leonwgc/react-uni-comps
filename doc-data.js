@@ -29,7 +29,11 @@ module.exports = [
       },
       {
         name: 'HairLineBox',
-        title: 'HairLineBox 一像素边框容器',
+        title: 'HairLineBox 一像素边框',
+      },
+      {
+        name: 'AspectRatio',
+        title: 'AspectRatio 宽高比',
       },
     ],
   },
