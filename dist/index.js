@@ -1939,7 +1939,7 @@ var StyledWrapper$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
 var StyledTabHeadItem = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Tabs__StyledTabHeadItem",
   componentId: "sc-1ouhc8q-1"
-})(["white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#000000d9;font-size:14px;flex:none;width:56px;user-select:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}&.uc-tabs-header-item{height:100%;box-sizing:border-box;cursor:pointer;&.uc-tabs-header-line{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;transform:translate3d(", ",0,0);.line{position:absolute;bottom:0;height:2px;", "}}}"], getThemeColorCss('color'), disabledText, function (props) {
+})(["white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;user-select:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}&.uc-tabs-header-item{height:100%;box-sizing:border-box;cursor:pointer;&.uc-tabs-header-line{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;transform:translate3d(", ",0,0);.line{position:absolute;bottom:0;height:2px;", "}}}"], getThemeColorCss('color'), disabledText, function (props) {
   return props.value * 100 + '%';
 }, getThemeColorCss('background-color'));
 /**
@@ -8496,7 +8496,7 @@ var _excluded$16 = ["children", "className", "ratio"];
 var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AspectRatio__StyledWrap",
   componentId: "sc-1dp29mr-0"
-})(["position:relative;&::before{height:0;content:'';display:block;padding-bottom:", ";}img{max-width:100%;object-fit:contain;}*{overflow:hidden;position:absolute;inset:0px;display:flex;align-items:center;width:100%;height:100%;}"], function (props) {
+})(["position:relative;&::before{height:0;content:'';display:block;padding-bottom:", ";}img{max-width:100%;object-fit:cover;}*{box-sizing:border-box;overflow:hidden;position:absolute;inset:0px;display:flex;align-items:center;width:100%;height:100%;}"], function (props) {
   return 1 * 100 / props.ratio + '%';
 });
 /** 宽高比 */
