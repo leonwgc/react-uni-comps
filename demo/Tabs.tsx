@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Tabs, Button, Space, styled, Icon } from 'react-uni-comps';
+import { Tabs, Button, Space, styled, Icon, Badge } from 'react-uni-comps';
 
 const StyledTabs = styled(Tabs)`
   .uc-tabs-header-item {
@@ -22,9 +22,10 @@ const StyledScroll = styled(Tabs)`
 
 const StyledTabBar = styled(Tabs)`
   .uc-tabs-header-wrap {
-    height: 90px;
+    height: 52px;
+    overflow-x: unset;
     .uc-tabs-header-item {
-      width: 90px;
+      width: 33%;
 
       .uc-icon {
         font-size: 28px;
@@ -35,27 +36,29 @@ const StyledTabBar = styled(Tabs)`
 
 const StyledContent = styled.div`
   padding: 10px;
-  background-color: #eee;
+  background-color: #fafafa;
 `;
 
-const scrollTabs = Array.from(new Array(20), (v, i) => ({ title: 'title' + (i + 1) }));
+const scrollTabs = Array.from(new Array(20), (v, i) => ({ title: '标题' + (i + 1) }));
 
 export default function App() {
-  const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([{ title: 'tab' }]);
-  const maxCount = 3;
+  const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([
+    { title: '标题' },
+  ]);
+  const maxCount = 4;
   const [value, setValue] = useState(0);
 
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="默认">
         <Tabs value={value} onChange={setValue}>
-          <Tabs.Tab title="title1">
+          <Tabs.Tab title="标题1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
-          <Tabs.Tab title="title2">
+          <Tabs.Tab title="标题2">
             <StyledContent>content2</StyledContent>
           </Tabs.Tab>
-          <Tabs.Tab title="title3">
+          <Tabs.Tab title="标题3">
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
         </Tabs>
@@ -63,15 +66,15 @@ export default function App() {
 
       <DemoBlock title="自定义下划线">
         <Tabs underline="10px">
-          <Tabs.Tab title="title1"></Tabs.Tab>
-          <Tabs.Tab title="title2"></Tabs.Tab>
-          <Tabs.Tab title="title3"></Tabs.Tab>
+          <Tabs.Tab title="标题1"></Tabs.Tab>
+          <Tabs.Tab title="标题2"></Tabs.Tab>
+          <Tabs.Tab title="标题3"></Tabs.Tab>
         </Tabs>
 
         <Tabs underline={false} style={{ marginTop: 20 }}>
-          <Tabs.Tab title="title1"></Tabs.Tab>
-          <Tabs.Tab title="title2"></Tabs.Tab>
-          <Tabs.Tab title="title3"></Tabs.Tab>
+          <Tabs.Tab title="标题1"></Tabs.Tab>
+          <Tabs.Tab title="标题2"></Tabs.Tab>
+          <Tabs.Tab title="标题3"></Tabs.Tab>
         </Tabs>
       </DemoBlock>
 
@@ -80,11 +83,11 @@ export default function App() {
           value={value}
           onChange={setValue}
           extra={
-            <Space>
+            <Space align="center">
               {tabTitles.length > 1 && (
                 <Button
                   danger
-                  circle
+                  as="a"
                   icon={<Icon type="uc-icon-jian2" />}
                   onClick={() => {
                     tabTitles.pop();
@@ -95,11 +98,10 @@ export default function App() {
               )}
               {tabTitles.length < maxCount && (
                 <Button
-                  outlined
-                  circle
+                  as="a"
                   icon={<Icon type="uc-icon-jia2" />}
                   onClick={() => {
-                    setTabTitles((t) => [...t, { title: tabTitles.length }]);
+                    setTabTitles((t) => [...t, { title: '标题' + tabTitles.length }]);
                     setValue(tabTitles.length);
                   }}
                 ></Button>
@@ -108,26 +110,26 @@ export default function App() {
           }
         >
           {tabTitles.map((item, idx) => {
-            return <Tabs.Tab title={item.title || 'tab' + idx} key={idx} />;
+            return <Tabs.Tab title={item.title || '标题' + idx} key={idx} />;
           })}
         </Tabs>
       </DemoBlock>
 
-      <DemoBlock title="可滑动">
+      <DemoBlock title="滑动内容">
         <Tabs swipe>
-          <Tabs.Tab title="title1">
+          <Tabs.Tab title="标题1">
             <StyledContent>content1</StyledContent>
           </Tabs.Tab>
-          <Tabs.Tab title="title2">
+          <Tabs.Tab title="标题2">
             <StyledContent>content2</StyledContent>
           </Tabs.Tab>
-          <Tabs.Tab title="title3">
+          <Tabs.Tab title="标题3">
             <StyledContent>content3</StyledContent>
           </Tabs.Tab>
         </Tabs>
       </DemoBlock>
 
-      <DemoBlock title="滚动">
+      <DemoBlock title="水平滚动">
         <StyledScroll defaultValue={8}>
           {scrollTabs.map((item, index) => (
             <Tabs.Tab title={item.title} key={index}></Tabs.Tab>
@@ -135,24 +137,34 @@ export default function App() {
         </StyledScroll>
       </DemoBlock>
 
-      <DemoBlock title="TabBar" padding={0}>
-        <StyledTabBar defaultValue={3}>
-          {['Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5', 'Tab6', 'Tab7'].map((item, index) => (
-            <Tabs.Tab
-              title={
-                <Space
-                  className="tab-title"
-                  size={6}
-                  direction="vertical"
-                  onClick={() => console.log(item)}
-                >
-                  <Icon type="uc-icon-biaoqianlan_wode" />
-                  <div className="name">{item}</div>
+      <DemoBlock title="标签栏">
+        <StyledTabBar underline={false} border={false}>
+          <Tabs.Tab
+            title={
+              <Space className="tab-title" size={2} direction="vertical">
+                <Icon type="uc-icon-shouye" />
+                <div className="name">首页</div>
+              </Space>
+            }
+          />
+          <Tabs.Tab
+            title={
+              <Space className="tab-title" size={2} direction="vertical">
+                <Icon type="uc-icon-avatar" />
+                <div className="name">我的</div>
+              </Space>
+            }
+          />
+          <Tabs.Tab
+            title={
+              <Badge content="666">
+                <Space className="tab-title" size={2} direction="vertical">
+                  <Icon type="uc-icon-shezhi" />
+                  <div className="name">设置</div>
                 </Space>
-              }
-              key={index}
-            ></Tabs.Tab>
-          ))}
+              </Badge>
+            }
+          />
         </StyledTabBar>
       </DemoBlock>
 

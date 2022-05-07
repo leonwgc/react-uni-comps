@@ -12,7 +12,7 @@ declare type TabsProp = {
     /** 下划线宽度,可以使用百分比/px/true/false */
     underline?: StringOrNumber | boolean;
     /** Tabs.Tab子元素*/
-    children: React.ReactElement<ItemProp>[];
+    children: React.ReactNode;
     /** 选择的tab index,非受控模式使用*/
     defaultValue?: number;
     /** 选择的tab index, 默认 0 */
@@ -23,7 +23,10 @@ declare type TabsProp = {
     onChange?: (index: number) => void;
     /** 头部右侧区域内容 */
     extra?: React.ReactNode;
-    /** 是否显示border,默认显示 */
+    /**
+     * 是否显示border
+     * @default true
+     *  */
     border?: boolean;
 } & BaseProps;
 declare const _default: React.FC<TabsProp> & {
