@@ -8492,6 +8492,30 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 Masonry.displayName = 'UC-Masonry';
 
+var _excluded$16 = ["children", "className", "ratio"];
+var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "AspectRatio__StyledWrap",
+  componentId: "sc-1dp29mr-0"
+})(["position:relative;&::before{height:0;content:'';display:block;padding-bottom:", ";}img{max-width:100%;object-fit:contain;}*{overflow:hidden;position:absolute;inset:0px;display:flex;align-items:center;width:100%;height:100%;}"], function (props) {
+  return 1 * 100 / props.ratio + '%';
+});
+/** 宽高比 */
+
+var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var children = props.children,
+      className = props.className,
+      _props$ratio = props.ratio,
+      ratio = _props$ratio === void 0 ? 4 / 3 : _props$ratio,
+      rest = _objectWithoutProperties(props, _excluded$16);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$d, _extends({}, rest, {
+    ref: ref,
+    ratio: ratio,
+    className: clsx__default['default']('ruc-aspect-ratio', className)
+  }), children);
+});
+AspectRatio.displayName = 'UC-AutoCenter';
+
 /* eslint-disable @typescript-eslint/no-empty-function */
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
@@ -8756,7 +8780,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$16 = ["children", "label", "name"],
+var _excluded$17 = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8766,7 +8790,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$16);
+      fieldProps = _objectWithoutProperties(props, _excluded$17);
 
   var required = false;
 
@@ -8953,6 +8977,7 @@ exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
 exports.AlertDialog = AlertDialog;
 exports.AnimationElement = AnimationElement;
+exports.AspectRatio = AspectRatio;
 exports.AutoCenter = AutoCenter;
 exports.Avatar = Avatar;
 exports.BackTop = ScrollToTop;
