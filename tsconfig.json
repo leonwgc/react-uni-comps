@@ -17,6 +17,7 @@
     "target": "es5",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "importHelpers": true,
     "allowJs": true,
     "strictNullChecks": false,
     "removeComments": false,

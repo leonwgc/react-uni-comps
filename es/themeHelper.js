@@ -1,15 +1,4 @@
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
-  }
-
-  return cooked;
-};
-
+import { __makeTemplateObject } from "tslib";
 import { css } from 'styled-components';
 import { isBrowser } from './dom';
 import * as vars from './vars';

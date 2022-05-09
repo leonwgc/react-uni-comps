@@ -1,16 +1,5 @@
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
-  }
-
-  return cooked;
-};
+import { __makeTemplateObject } from "tslib";
 /* eslint-disable @typescript-eslint/no-empty-function */
-
 
 import React from 'react';
 import styled from 'styled-components';
