@@ -6,7 +6,7 @@ import { getThemeColorCss } from './themeHelper';
 import Button from './Button';
 import { throttle } from './helper';
 var clxPrefix = 'uc-index-list';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n      &.active {\n        ", "\n      }\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n      &.active {\n        ", "\n      }\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"])), clxPrefix, clxPrefix, clxPrefix, getThemeColorCss('color'), clxPrefix, clxPrefix, clxPrefix, getThemeColorCss('color'));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"])), clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, getThemeColorCss('color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -18,7 +18,6 @@ var IndexList = function IndexList(props) {
       scrollBehavior = _b === void 0 ? 'smooth' : _b,
       rest = __rest(props, ["data", "onItemClick", "className", "scrollBehavior"]);
 
-  var ref = useRef();
   var bodyRef = useRef();
 
   var _c = useState(0),
@@ -48,8 +47,7 @@ var IndexList = function IndexList(props) {
     }
   }, []);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
-    className: clsx('uc-index-list', className),
-    ref: ref
+    className: clsx('uc-index-list', className)
   }), /*#__PURE__*/React.createElement("div", {
     className: clsx(clxPrefix + '-body'),
     ref: bodyRef
@@ -59,9 +57,7 @@ var IndexList = function IndexList(props) {
       "data-index": index,
       className: clsx(clxPrefix + '-anchor')
     }, /*#__PURE__*/React.createElement("div", {
-      className: clsx(clxPrefix + '-title', {
-        active: activeIndex === index
-      })
+      className: clsx(clxPrefix + '-title')
     }, dataItem.title), dataItem.children.map(function (item, idx) {
       return /*#__PURE__*/React.createElement("dd", {
         className: clsx(clxPrefix + '-item'),
