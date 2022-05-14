@@ -72,7 +72,7 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    carrier: 'ruc',
+    carrier: '中国移动',
     hd: {
       // 禁用高清方案
       rules: [],

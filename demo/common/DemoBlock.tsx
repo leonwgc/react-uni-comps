@@ -15,6 +15,10 @@ const StyledBlock = styled.div`
     border-right: none;
     border-left: none;
   }
+
+  img {
+    max-width: 100%;
+  }
 `;
 
 type Props = {
