@@ -3,7 +3,7 @@ title: useThrottle 节流
 order: 4
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 

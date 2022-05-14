@@ -3,7 +3,7 @@ title: useVisibleObserve 监视可见性
 order: 6
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 

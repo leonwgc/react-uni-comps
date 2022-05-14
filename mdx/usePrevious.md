@@ -3,7 +3,7 @@ title: usePrevious 使用前值
 order: 2
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 

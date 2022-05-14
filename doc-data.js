@@ -298,6 +298,10 @@ module.exports = [
         name: 'Masonry',
         title: 'Masonry 瀑布流布局',
       },
+      {
+        name: 'IndexList',
+        title: 'IndexList 索引列表',
+      },
     ],
   },
 
@@ -369,6 +373,17 @@ module.exports = [
       {
         name: 'BackTop',
         title: 'BackTop 回到顶部',
+      },
+    ],
+  },
+  {
+    title: '多语言',
+    path: 'i18n',
+    list: [
+      {
+        name: 'i18n',
+        title: 'i18n 多语言',
+        desc: '多语言',
       },
     ],
   },
@@ -502,17 +517,6 @@ module.exports = [
         name: 'isMobile',
         title: 'isMobile 是否移动端',
         desc: '是否移动端',
-      },
-    ],
-  },
-  {
-    title: '多语言',
-    path: 'i18n',
-    list: [
-      {
-        name: 'i18n',
-        title: 'i18n 多语言',
-        desc: '多语言',
       },
     ],
   },

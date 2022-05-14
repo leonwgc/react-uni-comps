@@ -4,9 +4,9 @@ import { IndexList, Toast } from 'react-uni-comps';
 
 const data: any = [
   {
-    label: 'A',
-    subItems: [
-      { label: <span style={{ color: 'red', fontSize: 16 }}>Apple</span>, value: 'Apple' },
+    title: 'A',
+    children: [
+      { label: 'Apple', value: 'Apple' },
       { label: 'Ant', value: 'Ant' },
       { label: 'Altimeter', value: 'Altimeter' },
       { label: 'Apple1', value: 'Apple1' },
@@ -18,8 +18,8 @@ const data: any = [
     ],
   },
   {
-    label: 'B',
-    subItems: [
+    title: 'B',
+    children: [
       { label: 'Bpple', value: 'Bpple' },
       { label: 'Bnt', value: 'Ant' },
       { label: 'Bltimeter', value: 'Altimeter' },
@@ -32,8 +32,8 @@ const data: any = [
     ],
   },
   {
-    label: 'C',
-    subItems: [
+    title: 'C',
+    children: [
       { label: 'cpple', value: 'Bpple' },
       { label: 'cBnt', value: 'Ant' },
       { label: 'cBltimeter', value: 'Altimeter' },
@@ -46,8 +46,8 @@ const data: any = [
     ],
   },
   {
-    label: 'D',
-    subItems: [
+    title: 'D',
+    children: [
       { label: 'dBpple', value: 'Bpple' },
       { label: 'dBnt', value: 'Ant' },
       { label: 'dBdltimeter', value: 'Altimeter' },
@@ -65,6 +65,7 @@ export default function App() {
   return (
     <PageWrap>
       <IndexList
+        style={{ height: '100vh' }}
         data={data}
         onItemClick={(item) => Toast.show({ content: item.value, duration: 1000 })}
       />

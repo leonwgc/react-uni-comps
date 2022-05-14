@@ -3,7 +3,7 @@ title: useLatest 获得最新值
 order: 7
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 

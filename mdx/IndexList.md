@@ -1,6 +1,6 @@
 ---
 title: IndexList 索引列表
-order: 3
+order: 9
 mobile: true
 group:
   title: 导航布局

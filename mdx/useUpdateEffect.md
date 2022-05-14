@@ -3,7 +3,7 @@ title: useUpdateEffect 更新执行
 order: 0
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 

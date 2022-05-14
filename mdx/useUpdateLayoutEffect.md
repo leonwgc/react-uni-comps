@@ -3,7 +3,7 @@ title: useUpdateLayoutEffect 更新同步执行
 order: 1
 group:
   title: Hooks
-  order: 8
+  order: 9
   path: hooks
 ---
 
