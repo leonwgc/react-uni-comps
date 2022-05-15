@@ -34,14 +34,12 @@ export default function App() {
         }
       />
       <DemoBlock title="动作面板">
-        <Button outlined onClick={() => setVisible(true)}>
-          打开动作面板
-        </Button>
+        <Button onClick={() => setVisible(true)}>打开动作面板</Button>
       </DemoBlock>
 
       <ActionSheet
         style={{ borderTopLeftRadius: borderRadius, borderTopRightRadius: borderRadius }}
-        extra={'ActionSheet 动作面板'}
+        extra={'动作面板'}
         cancelText={cancelText}
         visible={visible}
         actions={actions}
