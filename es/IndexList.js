@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
 import Button from './Button';
-import { throttle } from './helper';
-var clxPrefix = 'uc-index-list';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", "-body {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    .", "-anchor {\n    }\n\n    .", "-title {\n      position: sticky;\n      top: 0;\n      left: 0;\n      box-sizing: border-box;\n      color: #333;\n      font-size: 14px;\n      padding: 8px 16px;\n      background-color: #f5f5f5;\n    }\n\n    .", "-item {\n      color: #666;\n      display: flex;\n      align-items: center;\n      box-sizing: border-box;\n      padding: 10px 16px;\n      font-size: 14px;\n      background-color: #fff;\n      margin: 0;\n    }\n  }\n\n  .", "-side {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", "-side-item {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"])), clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, getThemeColorCss('color'));
+import { throttle, prefixClassName } from './helper';
+var getClassName = prefixClassName('uc-index-list');
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", " {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", " {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"])), getClassName('body'), getClassName('anchor'), getClassName('title'), getClassName('item'), getClassName('side'), getClassName('side-item'), getThemeColorCss('color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -47,20 +47,20 @@ var IndexList = function IndexList(props) {
     }
   }, []);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
-    className: clsx('uc-index-list', className)
+    className: clsx(getClassName(), className)
   }), /*#__PURE__*/React.createElement("div", {
-    className: clsx(clxPrefix + '-body'),
+    className: getClassName('body'),
     ref: bodyRef
   }, data.map(function (dataItem, index) {
     return /*#__PURE__*/React.createElement("div", {
       key: index,
       "data-index": index,
-      className: clsx(clxPrefix + '-anchor')
+      className: getClassName('anchor')
     }, /*#__PURE__*/React.createElement("div", {
-      className: clsx(clxPrefix + '-title')
+      className: getClassName('title')
     }, dataItem.title), dataItem.children.map(function (item, idx) {
       return /*#__PURE__*/React.createElement("dd", {
-        className: clsx(clxPrefix + '-item'),
+        className: getClassName('item'),
         onClick: function onClick() {
           onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
         },
@@ -69,11 +69,11 @@ var IndexList = function IndexList(props) {
       }, item.label);
     }));
   })), /*#__PURE__*/React.createElement("div", {
-    className: clsx(clxPrefix + '-side')
+    className: getClassName('side')
   }, data.map(function (item, idx) {
     return /*#__PURE__*/React.createElement(Button, {
       as: "a",
-      className: clsx(clxPrefix + '-side-item', {
+      className: clsx(getClassName('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,

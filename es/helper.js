@@ -229,3 +229,19 @@ export var getMountContainer = function getMountContainer(container) {
 
   return mountNode;
 };
+/**
+ * className with prefix gen
+ *
+ * @param {string} prefix
+ */
+
+export var prefixClassName = function prefixClassName(prefix) {
+  return function (className) {
+    if (className === void 0) {
+      className = '';
+    }
+
+    className = className.trim();
+    return className ? prefix + '-' + className : prefix;
+  };
+};

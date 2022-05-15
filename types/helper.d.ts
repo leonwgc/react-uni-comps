@@ -65,3 +65,9 @@ export declare const deepClone: <T>(src: T) => T;
  * @return {*}  {HTMLElement}
  */
 export declare const getMountContainer: (container: MountContainerType) => HTMLElement;
+/**
+ * className with prefix gen
+ *
+ * @param {string} prefix
+ */
+export declare const prefixClassName: (prefix: string) => (className?: string) => string;

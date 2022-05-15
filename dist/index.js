@@ -918,6 +918,19 @@ var getMountContainer = function getMountContainer(container) {
 
   return mountNode;
 };
+/**
+ * className with prefix gen
+ *
+ * @param {string} prefix
+ */
+
+var prefixClassName = function prefixClassName(prefix) {
+  return function () {
+    var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    className = className.trim();
+    return className ? prefix + '-' + className : prefix;
+  };
+};
 
 var StyledWrapper = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Popup__StyledWrapper",
@@ -2887,11 +2900,11 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 Waypoint.displayName = 'UC-Waypoint';
 
 var _excluded$l = ["data", "onItemClick", "className", "scrollBehavior"];
-var clxPrefix = 'uc-index-list';
+var getClassName$1 = prefixClassName('uc-index-list');
 var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
   componentId: "sc-6nas4t-0"
-})(["height:100%;position:relative;overflow:hidden;.", "-body{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}.", "-anchor{}.", "-title{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "-item{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}}.", "-side{position:absolute;top:50%;right:0;z-index:300;display:flex;flex-direction:column;transform:translateY(-50%);padding:0 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;.", "-side-item{color:#999;&.active{", "}}}"], clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, clxPrefix, getThemeColorCss('color'));
+})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:0;z-index:300;display:flex;flex-direction:column;transform:translateY(-50%);padding:0 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;.", "{color:#999;&.active{", "}}}"], getClassName$1('body'), getClassName$1('anchor'), getClassName$1('title'), getClassName$1('item'), getClassName$1('side'), getClassName$1('side-item'), getThemeColorCss('color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -2933,20 +2946,20 @@ var IndexList = function IndexList(props) {
     }
   }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
-    className: clsx__default['default']('uc-index-list', className)
+    className: clsx__default['default'](getClassName$1(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](clxPrefix + '-body'),
+    className: getClassName$1('body'),
     ref: bodyRef
   }, data.map(function (dataItem, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
       "data-index": index,
-      className: clsx__default['default'](clxPrefix + '-anchor')
+      className: getClassName$1('anchor')
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default'](clxPrefix + '-title')
+      className: getClassName$1('title')
     }, dataItem.title), dataItem.children.map(function (item, idx) {
       return /*#__PURE__*/React__default['default'].createElement("dd", {
-        className: clsx__default['default'](clxPrefix + '-item'),
+        className: getClassName$1('item'),
         onClick: function onClick() {
           onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
         },
@@ -2955,11 +2968,11 @@ var IndexList = function IndexList(props) {
       }, item.label);
     }));
   })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](clxPrefix + '-side')
+    className: getClassName$1('side')
   }, data.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement(Button, {
       as: "a",
-      className: clsx__default['default'](clxPrefix + '-side-item', {
+      className: clsx__default['default'](getClassName$1('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,
