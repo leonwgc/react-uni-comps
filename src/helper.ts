@@ -176,3 +176,15 @@ export const getMountContainer = (container: MountContainerType): HTMLElement =>
 
   return mountNode;
 };
+
+/**
+ * className with prefix gen
+ *
+ * @param {string} prefix
+ */
+export const prefixClassName =
+  (prefix: string) =>
+  (className = '') => {
+    className = className.trim();
+    return className ? prefix + '-' + className : prefix;
+  };

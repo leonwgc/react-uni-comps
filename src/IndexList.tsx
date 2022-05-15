@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
 import type { BaseProps, StringOrNumber } from './types';
 import Button from './Button';
-import { throttle } from './helper';
+import { throttle, prefixClassName } from './helper';
 
 type Item = {
   label: React.ReactNode;
@@ -28,48 +28,48 @@ type Props = {
   scrollBehavior?: 'smooth' | 'auto';
 } & BaseProps;
 
-const clxPrefix = 'uc-index-list';
+const getClassName = prefixClassName('uc-index-list');
 
 const StyledWrap = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
 
-  .${clxPrefix}-body {
+  .${getClassName('body')} {
     overflow: scroll;
     height: 100%;
     width: 100%;
     &::-webkit-scrollbar {
       display: none;
     }
-
-    .${clxPrefix}-anchor {
-    }
-
-    .${clxPrefix}-title {
-      position: sticky;
-      top: 0;
-      left: 0;
-      box-sizing: border-box;
-      color: #333;
-      font-size: 14px;
-      padding: 8px 16px;
-      background-color: #f5f5f5;
-    }
-
-    .${clxPrefix}-item {
-      color: #666;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-      padding: 10px 16px;
-      font-size: 14px;
-      background-color: #fff;
-      margin: 0;
-    }
   }
 
-  .${clxPrefix}-side {
+  .${getClassName('anchor')} {
+  }
+
+  .${getClassName('title')} {
+    position: sticky;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    color: #333;
+    font-size: 14px;
+    padding: 8px 16px;
+    background-color: #f5f5f5;
+  }
+
+  .${getClassName('item')} {
+    color: #666;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    font-size: 14px;
+    background-color: #fff;
+    margin: 0;
+  }
+
+  .${getClassName('side')} {
     position: absolute;
     top: 50%;
     right: 0;
@@ -82,7 +82,7 @@ const StyledWrap = styled.div`
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 
-    .${clxPrefix}-side-item {
+    .${getClassName('side-item')} {
       color: #999;
 
       &.active {
@@ -120,14 +120,14 @@ const IndexList: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <StyledWrap {...rest} className={clsx('uc-index-list', className)}>
-      <div className={clsx(clxPrefix + '-body')} ref={bodyRef}>
+    <StyledWrap {...rest} className={clsx(getClassName(), className)}>
+      <div className={getClassName('body')} ref={bodyRef}>
         {data.map((dataItem, index) => (
-          <div key={index} data-index={index} className={clsx(clxPrefix + '-anchor')}>
-            <div className={clsx(clxPrefix + '-title')}>{dataItem.title}</div>
+          <div key={index} data-index={index} className={getClassName('anchor')}>
+            <div className={getClassName('title')}>{dataItem.title}</div>
             {dataItem.children.map((item, idx) => (
               <dd
-                className={clsx(clxPrefix + '-item')}
+                className={getClassName('item')}
                 onClick={() => {
                   onItemClick?.(item);
                 }}
@@ -141,11 +141,11 @@ const IndexList: React.FC<Props> = (props) => {
         ))}
       </div>
 
-      <div className={clsx(clxPrefix + '-side')}>
+      <div className={getClassName('side')}>
         {data.map((item, idx) => (
           <Button
             as="a"
-            className={clsx(clxPrefix + '-side-item', { active: idx === activeIndex })}
+            className={clsx(getClassName('side-item'), { active: idx === activeIndex })}
             key={idx}
             onClick={() => {
               const anchors = bodyRef.current.children;
