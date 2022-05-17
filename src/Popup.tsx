@@ -11,7 +11,7 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-import { animationNormal } from './vars';
+import { animationFast } from './vars';
 import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
 import { getMountContainer } from './helper';
@@ -137,7 +137,7 @@ export type Props = {
   position?: 'top' | 'bottom' | 'left' | 'center' | 'right';
   /**
    * 动画时间
-   * @default 220
+   * @default 160ms
    */
   duration?: number;
   /**
@@ -208,7 +208,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     maskStyle,
     maskClass,
     position = 'bottom',
-    duration = animationNormal,
+    duration = animationFast,
     flip = true,
     mountContainer = document.body,
     unmountOnExit = true,
