@@ -13,11 +13,6 @@ declare type Props = {
     data?: DataItem[];
     /** 点击数据项回调 */
     onItemClick?: (item: Item) => void;
-    /**
-     * 滚动行为
-     * @default smooth
-     */
-    scrollBehavior?: 'smooth' | 'auto';
 } & BaseProps;
 /** 索引列表 */
 declare const IndexList: React.FC<Props>;

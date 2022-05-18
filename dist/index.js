@@ -459,6 +459,9 @@ var animationSlow = 280;
 /** 中速动画时间, 单位:ms */
 
 var animationNormal = 220;
+/** 快速动画时间, 单位:ms  */
+
+var animationFast = 160;
 
 var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow", "opacity"];
 var StyledMask = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
@@ -975,7 +978,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
       _props$duration = props.duration,
-      duration = _props$duration === void 0 ? animationNormal : _props$duration,
+      duration = _props$duration === void 0 ? animationFast : _props$duration,
       _props$flip = props.flip,
       flip = _props$flip === void 0 ? true : _props$flip,
       _props$mountContainer = props.mountContainer,
@@ -2904,7 +2907,7 @@ var getClassName$1 = prefixClassName('uc-index-list');
 var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
   componentId: "sc-6nas4t-0"
-})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:0;z-index:300;display:flex;flex-direction:column;transform:translateY(-50%);padding:0 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;.", "{color:#999;&.active{", "}}}"], getClassName$1('body'), getClassName$1('anchor'), getClassName$1('title'), getClassName$1('item'), getClassName$1('side'), getClassName$1('side-item'), getThemeColorCss('color'));
+})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$1('body'), getClassName$1('anchor'), getClassName$1('title'), getClassName$1('item'), getClassName$1('side'), getClassName$1('side-item'), getThemeColorCss('background-color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -2913,7 +2916,6 @@ var IndexList = function IndexList(props) {
       onItemClick = props.onItemClick,
       className = props.className,
       _props$scrollBehavior = props.scrollBehavior,
-      scrollBehavior = _props$scrollBehavior === void 0 ? 'smooth' : _props$scrollBehavior,
       rest = _objectWithoutProperties(props, _excluded$l);
 
   var bodyRef = React.useRef();
@@ -2967,24 +2969,24 @@ var IndexList = function IndexList(props) {
         "data-value": item.value
       }, item.label);
     }));
-  })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$1('side')
+  })), /*#__PURE__*/React__default['default'].createElement(Space, {
+    className: getClassName$1('side'),
+    direction: "vertical",
+    size: 2
   }, data.map(function (item, idx) {
-    return /*#__PURE__*/React__default['default'].createElement(Button, {
-      as: "a",
+    return /*#__PURE__*/React__default['default'].createElement("a", {
       className: clsx__default['default'](getClassName$1('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,
       onClick: function onClick() {
+        setActiveIndex(idx);
         var anchors = bodyRef.current.children;
         var anchor = anchors[idx];
         bodyRef.current.scrollTo({
           top: anchor.offsetTop,
-          left: 0,
-          behavior: scrollBehavior
+          left: 0
         });
-        setActiveIndex(idx);
       }
     }, item.title);
   })));

@@ -18,7 +18,7 @@ export declare type Props = {
     position?: 'top' | 'bottom' | 'left' | 'center' | 'right';
     /**
      * 动画时间
-     * @default 220
+     * @default 160ms
      */
     duration?: number;
     /**

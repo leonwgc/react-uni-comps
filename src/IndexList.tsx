@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
 import type { BaseProps, StringOrNumber } from './types';
-import Button from './Button';
 import { throttle, prefixClassName } from './helper';
+import Space from './Space';
 
 type Item = {
   label: React.ReactNode;
@@ -21,11 +21,6 @@ type Props = {
   data?: DataItem[];
   /** 点击数据项回调 */
   onItemClick?: (item: Item) => void;
-  /**
-   * 滚动行为
-   * @default smooth
-   */
-  scrollBehavior?: 'smooth' | 'auto';
 } & BaseProps;
 
 const getClassName = prefixClassName('uc-index-list');
@@ -72,21 +67,23 @@ const StyledWrap = styled.div`
   .${getClassName('side')} {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 12px;
     z-index: 300;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(-50%);
-    padding: 0 12px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
 
     .${getClassName('side-item')} {
+      cursor: pointer;
       color: #999;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
 
       &.active {
-        ${getThemeColorCss('color')}
+        ${getThemeColorCss('background-color')};
+        color: #fff;
+        border-radius: 50%;
       }
     }
   }
@@ -94,7 +91,7 @@ const StyledWrap = styled.div`
 
 /** 索引列表 */
 const IndexList: React.FC<Props> = (props) => {
-  const { data = [], onItemClick, className, scrollBehavior = 'smooth', ...rest } = props;
+  const { data = [], onItemClick, className, ...rest } = props;
   const bodyRef = useRef<HTMLDivElement>();
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -141,27 +138,25 @@ const IndexList: React.FC<Props> = (props) => {
         ))}
       </div>
 
-      <div className={getClassName('side')}>
+      <Space className={getClassName('side')} direction="vertical" size={2}>
         {data.map((item, idx) => (
-          <Button
-            as="a"
+          <a
             className={clsx(getClassName('side-item'), { active: idx === activeIndex })}
             key={idx}
             onClick={() => {
+              setActiveIndex(idx);
               const anchors = bodyRef.current.children;
               const anchor = anchors[idx] as HTMLElement;
               bodyRef.current.scrollTo({
                 top: anchor.offsetTop,
                 left: 0,
-                behavior: scrollBehavior,
               });
-              setActiveIndex(idx);
             }}
           >
             {item.title}
-          </Button>
+          </a>
         ))}
-      </div>
+      </Space>
     </StyledWrap>
   );
 };

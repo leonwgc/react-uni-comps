@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
-import Button from './Button';
 import { throttle, prefixClassName } from './helper';
+import Space from './Space';
 var getClassName = prefixClassName('uc-index-list');
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", " {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: column;\n    transform: translateY(-50%);\n    padding: 0 12px;\n    cursor: pointer;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n\n    .", " {\n      color: #999;\n\n      &.active {\n        ", "\n      }\n    }\n  }\n"])), getClassName('body'), getClassName('anchor'), getClassName('title'), getClassName('item'), getClassName('side'), getClassName('side-item'), getThemeColorCss('color'));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 12px;\n    z-index: 300;\n\n    .", " {\n      cursor: pointer;\n      color: #999;\n      width: 16px;\n      height: 16px;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      font-size: 12px;\n\n      &.active {\n        ", ";\n        color: #fff;\n        border-radius: 50%;\n      }\n    }\n  }\n"], ["\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n\n  .", " {\n    overflow: scroll;\n    height: 100%;\n    width: 100%;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n  }\n\n  .", " {\n  }\n\n  .", " {\n    position: sticky;\n    top: 0;\n    left: 0;\n    box-sizing: border-box;\n    color: #333;\n    font-size: 14px;\n    padding: 8px 16px;\n    background-color: #f5f5f5;\n  }\n\n  .", " {\n    color: #666;\n    display: flex;\n    align-items: center;\n    box-sizing: border-box;\n    padding: 10px 16px;\n    font-size: 14px;\n    background-color: #fff;\n    margin: 0;\n  }\n\n  .", " {\n    position: absolute;\n    top: 50%;\n    right: 12px;\n    z-index: 300;\n\n    .", " {\n      cursor: pointer;\n      color: #999;\n      width: 16px;\n      height: 16px;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      font-size: 12px;\n\n      &.active {\n        ", ";\n        color: #fff;\n        border-radius: 50%;\n      }\n    }\n  }\n"])), getClassName('body'), getClassName('anchor'), getClassName('title'), getClassName('item'), getClassName('side'), getClassName('side-item'), getThemeColorCss('background-color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -68,24 +68,24 @@ var IndexList = function IndexList(props) {
         "data-value": item.value
       }, item.label);
     }));
-  })), /*#__PURE__*/React.createElement("div", {
-    className: getClassName('side')
+  })), /*#__PURE__*/React.createElement(Space, {
+    className: getClassName('side'),
+    direction: "vertical",
+    size: 2
   }, data.map(function (item, idx) {
-    return /*#__PURE__*/React.createElement(Button, {
-      as: "a",
+    return /*#__PURE__*/React.createElement("a", {
       className: clsx(getClassName('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,
       onClick: function onClick() {
+        setActiveIndex(idx);
         var anchors = bodyRef.current.children;
         var anchor = anchors[idx];
         bodyRef.current.scrollTo({
           top: anchor.offsetTop,
-          left: 0,
-          behavior: scrollBehavior
+          left: 0
         });
-        setActiveIndex(idx);
       }
     }, item.title);
   })));

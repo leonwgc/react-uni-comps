@@ -6,7 +6,7 @@ import Mask from './Mask';
 import styled from 'styled-components';
 import { isMobile, isBrowser } from './dom';
 import clsx from 'clsx';
-import { animationNormal } from './vars';
+import { animationFast } from './vars';
 import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
 import { getMountContainer } from './helper';
@@ -50,7 +50,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       _c = props.position,
       position = _c === void 0 ? 'bottom' : _c,
       _d = props.duration,
-      duration = _d === void 0 ? animationNormal : _d,
+      duration = _d === void 0 ? animationFast : _d,
       _e = props.flip,
       flip = _e === void 0 ? true : _e,
       _f = props.mountContainer,

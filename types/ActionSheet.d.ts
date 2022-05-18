@@ -23,7 +23,10 @@ declare type Props = {
     cancelText?: string;
     /** 关闭时触发   */
     onClose?: () => void;
-    /** 点击遮罩是否关闭,默认true*/
+    /**
+     * 点击遮罩是否关闭
+     * @default true
+     * */
     closeOnMaskClick?: boolean;
 } & BaseProps;
 /** 动作面板 */
