@@ -7,6 +7,8 @@ group:
   path: hooks
 ---
 
+# hooks 钩子函数
+
 - useUpdateEffect
 
 `执行异步更新,组件mount后rerender, dom更新绘制后执行`
