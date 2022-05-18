@@ -14,15 +14,13 @@ var IndexList = function IndexList(props) {
       data = _a === void 0 ? [] : _a,
       onItemClick = props.onItemClick,
       className = props.className,
-      _b = props.scrollBehavior,
-      scrollBehavior = _b === void 0 ? 'smooth' : _b,
-      rest = __rest(props, ["data", "onItemClick", "className", "scrollBehavior"]);
+      rest = __rest(props, ["data", "onItemClick", "className"]);
 
   var bodyRef = useRef();
 
-  var _c = useState(0),
-      activeIndex = _c[0],
-      setActiveIndex = _c[1];
+  var _b = useState(0),
+      activeIndex = _b[0],
+      setActiveIndex = _b[1];
 
   useEffect(function () {
     var bodyEl = bodyRef.current;

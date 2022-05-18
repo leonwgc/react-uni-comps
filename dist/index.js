@@ -2902,7 +2902,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Waypoint.displayName = 'UC-Waypoint';
 
-var _excluded$l = ["data", "onItemClick", "className", "scrollBehavior"];
+var _excluded$l = ["data", "onItemClick", "className"];
 var getClassName$1 = prefixClassName('uc-index-list');
 var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
@@ -2915,7 +2915,6 @@ var IndexList = function IndexList(props) {
       data = _props$data === void 0 ? [] : _props$data,
       onItemClick = props.onItemClick,
       className = props.className,
-      _props$scrollBehavior = props.scrollBehavior,
       rest = _objectWithoutProperties(props, _excluded$l);
 
   var bodyRef = React.useRef();
