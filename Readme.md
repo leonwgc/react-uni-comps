@@ -12,7 +12,7 @@ yarn add react-uni-comps
 1. 组件丰富，体积小，自动按需加载
 2. 同时支持桌面和移动端，同一套组件，一致的开发体验
 3. 纯 react-hooks 实现, 拥抱 react 未来
-4. 样式采用 css-in-js 方案
+4. 样式采用 css-in-js
 5. 只提供基础样式,方便二次开发 / 定制 / 扩展
 6. 使用 ts 编写，内置类型定义，开发智能提示
 7. 可以和 antd / antd-mobile / zarm 等组件库搭配 / 替换使用
@@ -20,9 +20,11 @@ yarn add react-uni-comps
 
 ### 按需加载
 
-支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking, 对于不支持 Tree Shaking 的构建工具(e.g. webpack4 以下)，可以采用下列方式按需加载
+支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking。
 
-1. 搭配 babel-plugin-import (不推荐,建议升级到 webpack4+/rollup/vite)
+对于webpack4以下使用如下方式按需加载(不推荐)
+
+1. babel-plugin-import
 
 ```js
   plugins: [
@@ -44,31 +46,31 @@ yarn add react-uni-comps
 import Button from 'react-uni-comps/es/Button';
 ```
 
-### 设置主题色
-
-使用 ThemeProvider 设置
+### 主题色
 
 ```js
-<ThemeProvider color="#409eff">...</ThemeProvider>
+<ThemeProvider color="#409eff">
+  {children}
+</ThemeProvider>
 ```
 
 ### 自定义样式
-
 ```js
 import { Button, styled } from 'react-uni-comps';
 
+// 类似面向对象概念的继承
 const StyledButton = styled(Button)`
   width: 80px;
   height: 32px;
   border-radius: 4px;
 `;
 
-<StyledButton type="primary" loading>
-  waiting
+<StyledButton>
+  自定义按钮
 </StyledButton>;
 ```
 
-### 引用内部三方库
+### 引用重新导出的第三方库
 
 ```js
 // styled-components
@@ -96,5 +98,3 @@ import { useSpring, animated, easings } from 'react-uni-comps';
 - [NutUI](https://nutui.jd.com/3x/#/)
 - [Blueprint](https://blueprintjs.com/)
 - [Bootstrap](https://getbootstrap.com/)
-
-持续更新优化中...
