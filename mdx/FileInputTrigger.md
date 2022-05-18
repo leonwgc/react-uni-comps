@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# FileInputTrigger 图片文件上传
+
 <code src="../demo/FileInputTrigger.tsx"></code>
 <API src="../src/FileInputTrigger.tsx"></API>

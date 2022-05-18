@@ -8,5 +8,7 @@ group:
   path: other
 ---
 
+# Text 文本省略
+
 <code src="../demo/Text.tsx"></code>
 <API src="../src/Text.tsx"></API>

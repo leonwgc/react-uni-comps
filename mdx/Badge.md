@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# Badge 徽标
+
 <code src="../demo/Badge.tsx"></code>
 <API src="../src/Badge.tsx"></API>

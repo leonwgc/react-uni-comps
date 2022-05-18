@@ -8,5 +8,7 @@ group:
   path: base
 ---
 
+# Spin 加载中
+
 <code src="../demo/Spin.tsx"></code>
 <API src="../src/Spin.tsx"></API>

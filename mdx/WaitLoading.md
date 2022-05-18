@@ -8,5 +8,7 @@ group:
   path: other
 ---
 
+# WaitLoading 延迟渲染子元素
+
 <code src="../demo/WaitLoading.tsx"></code>
 <API src="../src/WaitLoading.tsx"></API>

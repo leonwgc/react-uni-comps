@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# NoticeList 垂直通知栏
+
 <code src="../demo/NoticeList.tsx"></code>
 <API src="../src/NoticeList.tsx"></API>

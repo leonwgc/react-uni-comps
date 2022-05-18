@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# ProgressBar 进度条
+
 <code src="../demo/ProgressBar.tsx"></code>
 <API src="../src/ProgressBar.tsx"></API>

@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# PickerView 平铺选择器
+
 <code src="../demo/PickerView.tsx"></code>
 <API src="../src/PickerView.tsx"></API>

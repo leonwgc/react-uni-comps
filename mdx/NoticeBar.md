@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# NoticeBar 水平通知栏
+
 <code src="../demo/NoticeBar.tsx"></code>
 <API src="../src/NoticeBar.tsx"></API>

@@ -8,5 +8,7 @@ group:
   path: navlayout
 ---
 
+# AutoCenter 自动居中
+
 <code src="../demo/AutoCenter.tsx"></code>
 <API src="../src/AutoCenter.tsx"></API>

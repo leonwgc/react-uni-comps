@@ -14,6 +14,8 @@ group:
   path: <%= groupPath %>
 ---
 
+# <%= title %>
+
 <code src="../demo/<%= name %>.tsx"></code>
 <API src="../src/<%= name %>.tsx"></API>
 `;
@@ -26,7 +28,6 @@ group:
   order: <%= groupOrder %>
   path: <%= groupPath %>
 ---
-
 
 \`\`\`jsx
 

@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# Rate 评分
+
 <code src="../demo/Rate.tsx"></code>
 <API src="../src/Rate.tsx"></API>

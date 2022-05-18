@@ -8,5 +8,7 @@ group:
   path: navlayout
 ---
 
+# Collapse 折叠面板
+
 <code src="../demo/Collapse.tsx"></code>
 <API src="../src/Collapse.tsx"></API>

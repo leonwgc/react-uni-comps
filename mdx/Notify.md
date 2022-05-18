@@ -8,5 +8,7 @@ group:
   path: feedback
 ---
 
+# Notify 顶部消息通知
+
 <code src="../demo/Notify.tsx"></code>
 <API src="../src/Notify.tsx"></API>

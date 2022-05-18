@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# InputNumber 数字输入框
+
 <code src="../demo/InputNumber.tsx"></code>
 <API src="../src/InputNumber.tsx"></API>

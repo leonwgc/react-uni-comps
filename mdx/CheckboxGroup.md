@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# CheckboxGroup 复选框列表
+
 <code src="../demo/CheckboxGroup.tsx"></code>
 <API src="../src/CheckboxGroup.tsx"></API>

@@ -8,5 +8,7 @@ group:
   path: navlayout
 ---
 
+# Pagination 分页
+
 <code src="../demo/Pagination.tsx"></code>
 <API src="../src/Pagination.tsx"></API>

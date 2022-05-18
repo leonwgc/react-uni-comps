@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# ImageViewer 图片查看
+
 <code src="../demo/ImageViewer.tsx"></code>
 <API src="../src/ImageViewer.tsx"></API>

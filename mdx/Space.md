@@ -8,5 +8,7 @@ group:
   path: base
 ---
 
+# Space 间距
+
 <code src="../demo/Space.tsx"></code>
 <API src="../src/Space.tsx"></API>

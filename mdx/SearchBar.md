@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# SearchBar 搜索框
+
 <code src="../demo/SearchBar.tsx"></code>
 <API src="../src/SearchBar.tsx"></API>

@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# Avatar 头像
+
 <code src="../demo/Avatar.tsx"></code>
 <API src="../src/Avatar.tsx"></API>

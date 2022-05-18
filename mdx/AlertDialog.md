@@ -8,5 +8,7 @@ group:
   path: feedback
 ---
 
+# AlertDialog alert/confirm弹框
+
 <code src="../demo/AlertDialog.tsx"></code>
 <API src="../src/AlertDialog.tsx"></API>

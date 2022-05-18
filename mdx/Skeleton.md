@@ -8,5 +8,7 @@ group:
   path: feedback
 ---
 
+# Skeleton 骨架屏
+
 <code src="../demo/Skeleton.tsx"></code>
 <API src="../src/Skeleton.tsx"></API>

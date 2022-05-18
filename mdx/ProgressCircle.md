@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# ProgressCircle 环形进度条
+
 <code src="../demo/ProgressCircle.tsx"></code>
 <API src="../src/ProgressCircle.tsx"></API>

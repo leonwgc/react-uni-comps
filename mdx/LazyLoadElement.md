@@ -8,5 +8,7 @@ group:
   path: other
 ---
 
+# LazyLoadElement 组件懒加载
+
 <code src="../demo/LazyLoadElement.tsx"></code>
 <API src="../src/LazyLoadElement.tsx"></API>

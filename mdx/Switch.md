@@ -8,5 +8,7 @@ group:
   path: data
 ---
 
+# Switch 开关
+
 <code src="../demo/Switch.tsx"></code>
 <API src="../src/Switch.tsx"></API>

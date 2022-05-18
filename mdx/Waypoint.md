@@ -8,5 +8,7 @@ group:
   path: other
 ---
 
+# Waypoint 路标
+
 <code src="../demo/Waypoint.tsx"></code>
 <API src="../src/Waypoint.tsx"></API>

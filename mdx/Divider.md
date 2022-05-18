@@ -8,5 +8,7 @@ group:
   path: navlayout
 ---
 
+# Divider 分割线
+
 <code src="../demo/Divider.tsx"></code>
 <API src="../src/Divider.tsx"></API>

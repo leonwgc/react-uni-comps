@@ -8,5 +8,7 @@ group:
   path: feedback
 ---
 
+# Result 结果
+
 <code src="../demo/Result.tsx"></code>
 <API src="../src/Result.tsx"></API>

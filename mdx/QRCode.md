@@ -8,5 +8,7 @@ group:
   path: display
 ---
 
+# QRCode 二维码
+
 <code src="../demo/QRCode.tsx"></code>
 <API src="../src/QRCode.tsx"></API>
