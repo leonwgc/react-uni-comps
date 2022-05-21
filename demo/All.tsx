@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> Tabs
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Tabs')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Masonry
           </Space>
         }
@@ -319,15 +328,6 @@ export default function All() {
         onClick={() => gotoPage('SideBar')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Tabs
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Tabs')}
-      ></Cell>
       <Cell
         label={
           <Space>

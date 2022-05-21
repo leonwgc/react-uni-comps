@@ -10,8 +10,8 @@ var clsx = require('clsx');
 var web = require('@react-spring/web');
 var reactIs = require('react-is');
 require('intersection-observer');
-var Touch = require('w-touch');
 var Popover = require('w-popover');
+var Touch = require('w-touch');
 var color = require('color');
 var SignaturePad = require('signature_pad');
 var WQRCode = require('w-qrcode');
@@ -27,8 +27,8 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 var clsx__default = /*#__PURE__*/_interopDefaultLegacy(clsx);
-var Touch__default = /*#__PURE__*/_interopDefaultLegacy(Touch);
 var Popover__default = /*#__PURE__*/_interopDefaultLegacy(Popover);
+var Touch__default = /*#__PURE__*/_interopDefaultLegacy(Touch);
 var color__default = /*#__PURE__*/_interopDefaultLegacy(color);
 var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 var WQRCode__default = /*#__PURE__*/_interopDefaultLegacy(WQRCode);
@@ -1928,36 +1928,12 @@ var useUpdateEffect = function useUpdateEffect(effect) {
   }, deps);
 };
 
-/**
- *  保存最新的值在ref中
- *
- * @deprecated
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useCallbackRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
-
-var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"];
+var _excluded$7 = ["children", "underline", "value", "defaultValue", "border", "onChange", "tabWidth", "extra", "className"];
+var getClassName$1 = prefixClassName('uc-tabs');
 var StyledWrapper$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Tabs__StyledWrapper",
   componentId: "sc-1ouhc8q-0"
-})(["-webkit-tap-highlight-color:transparent;.uc-tabs-content-wrap{overflow:hidden;}.uc-tabs-header-wrap{display:flex;height:44px;box-sizing:border-box;position:relative;margin:0;padding:0;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}.uc-tabs-extra{margin-left:16px;}}"], border);
-var StyledTabHeadItem = /*#__PURE__*/styled__default['default'].div.withConfig({
-  displayName: "Tabs__StyledTabHeadItem",
-  componentId: "sc-1ouhc8q-1"
-})(["white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;user-select:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}&.uc-tabs-header-item{height:100%;box-sizing:border-box;cursor:pointer;&.uc-tabs-header-line{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;transform:translate3d(", ",0,0);.line{position:absolute;bottom:0;height:2px;", "}}}"], getThemeColorCss('color'), disabledText, function (props) {
-  return props.value * 100 + '%';
-}, getThemeColorCss('background-color'));
+})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;box-sizing:border-box;position:relative;margin:0;padding:0;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{margin-left:16px;}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;padding:0 12px;user-select:none;height:100%;box-sizing:border-box;cursor:pointer;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -1985,12 +1961,11 @@ var Tabs = function Tabs(_ref2) {
       _ref2$border = _ref2.border,
       border = _ref2$border === void 0 ? true : _ref2$border,
       onChange = _ref2.onChange,
+      tabWidth = _ref2.tabWidth,
       extra = _ref2.extra,
-      swipe = _ref2.swipe,
       className = _ref2.className,
       rest = _objectWithoutProperties(_ref2, _excluded$7);
 
-  var count = React__default['default'].Children.count(children);
   var underlineElRef = React.useRef();
   var contentWrapElRef = React.useRef();
   var headerWrapElRef = React.useRef();
@@ -2000,46 +1975,6 @@ var Tabs = function Tabs(_ref2) {
       _v = _useState2[0],
       _setV = _useState2[1];
 
-  var valRef = useCallbackRef(_v);
-  var onChangeRef = useCallbackRef(onChange);
-  React.useLayoutEffect(function () {
-    var fg;
-
-    if (swipe && contentWrapElRef.current) {
-      var el = contentWrapElRef.current;
-      fg = new Touch__default['default'](el, {
-        onSwipe: function onSwipe(e) {
-          if (e.direction === 'right' && valRef.current > 0) {
-            var _onChangeRef$current;
-
-            // go to left tab
-            var prevIndex = valRef.current - 1;
-
-            _setV(prevIndex);
-
-            (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, prevIndex);
-          } else if (e.direction === 'left' && valRef.current < count - 1) {
-            var _onChangeRef$current2;
-
-            // go to right tab
-            var nextIndex = valRef.current + 1;
-
-            _setV(nextIndex);
-
-            (_onChangeRef$current2 = onChangeRef.current) === null || _onChangeRef$current2 === void 0 ? void 0 : _onChangeRef$current2.call(onChangeRef, nextIndex);
-          }
-        }
-      });
-    }
-
-    return function () {
-      if (swipe && fg) {
-        var _fg;
-
-        (_fg = fg) === null || _fg === void 0 ? void 0 : _fg.destroy();
-      }
-    };
-  }, [swipe, valRef, count, onChangeRef]);
   useUpdateEffect(function () {
     if (value !== _v) {
       _setV(value);
@@ -2074,7 +2009,7 @@ var Tabs = function Tabs(_ref2) {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
+      var itemEl = headerWrapEl.querySelector(".".concat(getClassName$1('header-item')));
 
       if (itemEl) {
         if (_v > prevVal) {
@@ -2110,17 +2045,18 @@ var Tabs = function Tabs(_ref2) {
     }
   });
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$1, _extends({}, rest, {
-    className: clsx__default['default']('uc-tabs', className)
+    className: clsx__default['default'](getClassName$1(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('uc-tabs-header-wrap', {
+    className: clsx__default['default'](getClassName$1('header-wrap'), {
       'no-border': !border
     }),
     ref: headerWrapElRef
-  }, underline && /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
+  }, !!underline && /*#__PURE__*/React__default['default'].createElement("div", {
     ref: underlineElRef,
-    className: clsx__default['default']('uc-tabs-header-item', 'uc-tabs-header-line'),
-    count: count,
-    value: _v
+    className: clsx__default['default'](getClassName$1('header-item'), getClassName$1('header-line')),
+    style: {
+      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)")
+    }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "line",
     style: {
@@ -2132,12 +2068,15 @@ var Tabs = function Tabs(_ref2) {
           _ref3$title = _ref3.title,
           title = _ref3$title === void 0 ? '' : _ref3$title,
           disabled = _ref3.disabled;
-      return /*#__PURE__*/React__default['default'].createElement(StyledTabHeadItem, {
+      return /*#__PURE__*/React__default['default'].createElement("div", {
         key: index,
-        className: clsx__default['default']('uc-tabs-header-item', {
+        className: clsx__default['default'](getClassName$1('header-item'), {
           active: index === _v,
           disabled: disabled
         }),
+        style: {
+          width: tabWidth
+        },
         onClick: function onClick() {
           if (!disabled && index !== _v) {
             onChange === null || onChange === void 0 ? void 0 : onChange(index);
@@ -2148,11 +2087,9 @@ var Tabs = function Tabs(_ref2) {
       }, title);
     }
   }), extra && /*#__PURE__*/React__default['default'].createElement("span", {
-    className: clsx__default['default']('uc-tabs-extra', {
-      underline: underline
-    })
+    className: clsx__default['default'](getClassName$1('extra'))
   }, extra)), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-tabs-content-wrap",
+    className: getClassName$1('content-wrap'),
     ref: contentWrapElRef
   }, React__default['default'].Children.map(children, function (child, index) {
     if (_v === index && /*#__PURE__*/React__default['default'].isValidElement(child)) {
@@ -2533,6 +2470,25 @@ var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Checkbox.displayName = 'UC-Checkbox';
 
+/**
+ *  保存最新的值在ref中
+ *
+ * @deprecated
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useCallbackRef(value) {
+  var ref = React.useRef(value);
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
 var _excluded$e = ["className", "button", "onChange", "options", "value", "disabled"];
 var StyledCheckboxGroup = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CheckboxGroup__StyledCheckboxGroup",
@@ -2903,11 +2859,11 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 Waypoint.displayName = 'UC-Waypoint';
 
 var _excluded$l = ["data", "onItemClick", "className"];
-var getClassName$1 = prefixClassName('uc-index-list');
+var getClassName$2 = prefixClassName('uc-index-list');
 var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
   componentId: "sc-6nas4t-0"
-})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$1('body'), getClassName$1('anchor'), getClassName$1('title'), getClassName$1('item'), getClassName$1('side'), getClassName$1('side-item'), getThemeColorCss('background-color'));
+})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$2('body'), getClassName$2('anchor'), getClassName$2('title'), getClassName$2('item'), getClassName$2('side'), getClassName$2('side-item'), getThemeColorCss('background-color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -2947,20 +2903,20 @@ var IndexList = function IndexList(props) {
     }
   }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$1(), className)
+    className: clsx__default['default'](getClassName$2(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$1('body'),
+    className: getClassName$2('body'),
     ref: bodyRef
   }, data.map(function (dataItem, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
       "data-index": index,
-      className: getClassName$1('anchor')
+      className: getClassName$2('anchor')
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$1('title')
+      className: getClassName$2('title')
     }, dataItem.title), dataItem.children.map(function (item, idx) {
       return /*#__PURE__*/React__default['default'].createElement("dd", {
-        className: getClassName$1('item'),
+        className: getClassName$2('item'),
         onClick: function onClick() {
           onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
         },
@@ -2969,12 +2925,12 @@ var IndexList = function IndexList(props) {
       }, item.label);
     }));
   })), /*#__PURE__*/React__default['default'].createElement(Space, {
-    className: getClassName$1('side'),
+    className: getClassName$2('side'),
     direction: "vertical",
     size: 2
   }, data.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement("a", {
-      className: clsx__default['default'](getClassName$1('side-item'), {
+      className: clsx__default['default'](getClassName$2('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,
@@ -8950,6 +8906,12 @@ Object.defineProperty(exports, 'useSpring', {
     return web.useSpring;
   }
 });
+Object.defineProperty(exports, 'Popover', {
+  enumerable: true,
+  get: function () {
+    return Popover__default['default'];
+  }
+});
 Object.defineProperty(exports, 'Touch', {
   enumerable: true,
   get: function () {
@@ -8960,12 +8922,6 @@ Object.defineProperty(exports, 'TouchElement', {
   enumerable: true,
   get: function () {
     return Touch.TouchElement;
-  }
-});
-Object.defineProperty(exports, 'Popover', {
-  enumerable: true,
-  get: function () {
-    return Popover__default['default'];
   }
 });
 Object.defineProperty(exports, 'nanoid', {

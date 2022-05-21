@@ -6,13 +6,13 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { throttle } from './helper';
-import Touch from 'w-touch';
-import useCallbackRef from './hooks/useCallbackRef';
+import { throttle, prefixClassName } from './helper';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
 import useMount from './hooks/useMount';
 import type { BaseProps, StringOrNumber } from './types';
+
+const getClassName = prefixClassName('uc-tabs');
 
 type ItemProp = {
   /** 禁用 */
@@ -32,8 +32,6 @@ type TabsProp = {
   defaultValue?: number;
   /** 选择的tab index, 默认 0 */
   value?: number;
-  /** 是否支持滑动切换*/
-  swipe?: boolean;
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;
   /** 头部右侧区域内容 */
@@ -43,14 +41,16 @@ type TabsProp = {
    * @default true
    *  */
   border?: boolean;
+  /**
+   * tab标题宽度
+   */
+  tabWidth?: StringOrNumber;
 } & BaseProps;
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
-  .uc-tabs-content-wrap {
-    overflow: hidden;
-  }
-  .uc-tabs-header-wrap {
+
+  .${getClassName('header-wrap')} {
     display: flex;
     height: 44px;
     box-sizing: border-box;
@@ -67,55 +67,54 @@ const StyledWrapper = styled.div`
     &.no-border {
       border-bottom: none;
     }
-
-    .uc-tabs-extra {
-      margin-left: 16px;
-    }
-  }
-`;
-
-const StyledTabHeadItem = styled.div<{
-  value?: number;
-  count?: number;
-}>`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex: none;
-  width: 56px;
-  user-select: none;
-
-  &.active {
-    ${getThemeColorCss('color')}
-    font-weight: 500;
-  }
-  &.disabled {
-    cursor: not-allowed;
-    color: ${vars.disabledText};
   }
 
-  &.uc-tabs-header-item {
+  .${getClassName('content-wrap')} {
+    overflow: hidden;
+  }
+
+  .${getClassName('extra')} {
+    margin-left: 16px;
+  }
+
+  .${getClassName('header-item')} {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex: none;
+    width: 56px;
+    padding: 0 12px;
+    user-select: none;
     height: 100%;
     box-sizing: border-box;
     cursor: pointer;
-    &.uc-tabs-header-line {
-      position: absolute;
-      left: 0;
-      top: 0;
-      pointer-events: none;
-      transition: transform 0.3s ease;
-      transform: translate3d(${(props) => props.value * 100 + '%'}, 0, 0);
 
-      .line {
-        position: absolute;
-        bottom: 0;
-        height: 2px;
-        ${getThemeColorCss('background-color')}
-      }
+    &.active {
+      ${getThemeColorCss('color')}
+      font-weight: 500;
+    }
+    &.disabled {
+      cursor: not-allowed;
+      color: ${vars.disabledText};
+    }
+  }
+
+  .${getClassName('header-line')} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+
+    .line {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      ${getThemeColorCss('background-color')}
     }
   }
 `;
@@ -142,47 +141,16 @@ const Tabs: React.FC<TabsProp> = ({
   defaultValue = 0,
   border = true,
   onChange,
+  tabWidth,
   extra,
-  swipe,
   className,
   ...rest
 }) => {
-  const count = React.Children.count(children);
   const underlineElRef = useRef<HTMLDivElement>();
   const contentWrapElRef = useRef<HTMLDivElement>();
   const headerWrapElRef = useRef<HTMLDivElement>();
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
-
-  const valRef = useCallbackRef<number>(_v);
-  const onChangeRef = useCallbackRef(onChange);
-
-  useLayoutEffect(() => {
-    let fg;
-    if (swipe && contentWrapElRef.current) {
-      const el = contentWrapElRef.current;
-      fg = new Touch(el, {
-        onSwipe: (e) => {
-          if (e.direction === 'right' && valRef.current > 0) {
-            // go to left tab
-            const prevIndex = valRef.current - 1;
-            _setV(prevIndex);
-            onChangeRef.current?.(prevIndex);
-          } else if (e.direction === 'left' && valRef.current < count - 1) {
-            // go to right tab
-            const nextIndex = valRef.current + 1;
-            _setV(nextIndex);
-            onChangeRef.current?.(nextIndex);
-          }
-        },
-      });
-    }
-    return () => {
-      if (swipe && fg) {
-        fg?.destroy();
-      }
-    };
-  }, [swipe, valRef, count, onChangeRef]);
 
   useUpdateEffect(() => {
     if (value !== _v) {
@@ -219,7 +187,9 @@ const Tabs: React.FC<TabsProp> = ({
   useEffect(() => {
     const headerWrapEl = headerWrapElRef.current;
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
+      const itemEl = headerWrapEl.querySelector(
+        `.${getClassName('header-item')}`
+      ) as HTMLDivElement;
 
       if (itemEl) {
         if (_v > prevVal) {
@@ -260,31 +230,34 @@ const Tabs: React.FC<TabsProp> = ({
   });
 
   return (
-    <StyledWrapper {...rest} className={clsx('uc-tabs', className)}>
-      <div className={clsx('uc-tabs-header-wrap', { 'no-border': !border })} ref={headerWrapElRef}>
-        {underline && (
-          <StyledTabHeadItem
+    <StyledWrapper {...rest} className={clsx(getClassName(), className)}>
+      <div
+        className={clsx(getClassName('header-wrap'), { 'no-border': !border })}
+        ref={headerWrapElRef}
+      >
+        {!!underline && (
+          <div
             ref={underlineElRef}
-            className={clsx('uc-tabs-header-item', 'uc-tabs-header-line')}
-            count={count}
-            value={_v}
+            className={clsx(getClassName('header-item'), getClassName('header-line'))}
+            style={{ transform: `translate3d(${_v * 100 + '%'}, 0, 0)` }}
           >
             <div
               className="line"
               style={{ width: typeof underline === 'boolean' ? '100%' : underline }}
             ></div>
-          </StyledTabHeadItem>
+          </div>
         )}
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (React.isValidElement(child)) {
             const { title = '', disabled } = child.props as ItemProp;
             return (
-              <StyledTabHeadItem
+              <div
                 key={index}
-                className={clsx('uc-tabs-header-item', {
+                className={clsx(getClassName('header-item'), {
                   active: index === _v,
                   disabled: disabled,
                 })}
+                style={{ width: tabWidth }}
                 onClick={() => {
                   if (!disabled && index !== _v) {
                     onChange?.(index);
@@ -293,13 +266,13 @@ const Tabs: React.FC<TabsProp> = ({
                 }}
               >
                 {title}
-              </StyledTabHeadItem>
+              </div>
             );
           }
         })}
-        {extra && <span className={clsx('uc-tabs-extra', { underline: underline })}>{extra}</span>}
+        {extra && <span className={clsx(getClassName('extra'))}>{extra}</span>}
       </div>
-      <div className={`uc-tabs-content-wrap`} ref={contentWrapElRef}>
+      <div className={getClassName('content-wrap')} ref={contentWrapElRef}>
         {React.Children.map(children, (child: React.ReactElement, index) => {
           if (_v === index && React.isValidElement(child)) {
             return child;

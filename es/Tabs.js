@@ -6,16 +6,12 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { throttle } from './helper';
-import Touch from 'w-touch';
-import useCallbackRef from './hooks/useCallbackRef';
+import { throttle, prefixClassName } from './helper';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
 import useMount from './hooks/useMount';
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n  .uc-tabs-content-wrap {\n    overflow: hidden;\n  }\n  .uc-tabs-header-wrap {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n\n    .uc-tabs-extra {\n      margin-left: 16px;\n    }\n  }\n"])), vars.border);
-var StyledTabHeadItem = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 14px;\n  flex: none;\n  width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"], ["\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 14px;\n  flex: none;\n  width: 56px;\n  user-select: none;\n\n  &.active {\n    ", "\n    font-weight: 500;\n  }\n  &.disabled {\n    cursor: not-allowed;\n    color: ", ";\n  }\n\n  &.uc-tabs-header-item {\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n    &.uc-tabs-header-line {\n      position: absolute;\n      left: 0;\n      top: 0;\n      pointer-events: none;\n      transition: transform 0.3s ease;\n      transform: translate3d(", ", 0, 0);\n\n      .line {\n        position: absolute;\n        bottom: 0;\n        height: 2px;\n        ", "\n      }\n    }\n  }\n"])), getThemeColorCss('color'), vars.disabledText, function (props) {
-  return props.value * 100 + '%';
-}, getThemeColorCss('background-color'));
+var getClassName = prefixClassName('uc-tabs');
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n    margin-left: 16px;\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 14px;\n    flex: none;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n    margin-left: 16px;\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 14px;\n    flex: none;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"])), getClassName('header-wrap'), vars.border, getClassName('content-wrap'), getClassName('extra'), getClassName('header-item'), getThemeColorCss('color'), vars.disabledText, getClassName('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -43,12 +39,11 @@ var Tabs = function Tabs(_a) {
       _d = _a.border,
       border = _d === void 0 ? true : _d,
       onChange = _a.onChange,
+      tabWidth = _a.tabWidth,
       extra = _a.extra,
-      swipe = _a.swipe,
       className = _a.className,
-      rest = __rest(_a, ["children", "underline", "value", "defaultValue", "border", "onChange", "extra", "swipe", "className"]);
+      rest = __rest(_a, ["children", "underline", "value", "defaultValue", "border", "onChange", "tabWidth", "extra", "className"]);
 
-  var count = React.Children.count(children);
   var underlineElRef = useRef();
   var contentWrapElRef = useRef();
   var headerWrapElRef = useRef();
@@ -57,42 +52,6 @@ var Tabs = function Tabs(_a) {
       _v = _e[0],
       _setV = _e[1];
 
-  var valRef = useCallbackRef(_v);
-  var onChangeRef = useCallbackRef(onChange);
-  useLayoutEffect(function () {
-    var fg;
-
-    if (swipe && contentWrapElRef.current) {
-      var el = contentWrapElRef.current;
-      fg = new Touch(el, {
-        onSwipe: function onSwipe(e) {
-          var _a, _b;
-
-          if (e.direction === 'right' && valRef.current > 0) {
-            // go to left tab
-            var prevIndex = valRef.current - 1;
-
-            _setV(prevIndex);
-
-            (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, prevIndex);
-          } else if (e.direction === 'left' && valRef.current < count - 1) {
-            // go to right tab
-            var nextIndex = valRef.current + 1;
-
-            _setV(nextIndex);
-
-            (_b = onChangeRef.current) === null || _b === void 0 ? void 0 : _b.call(onChangeRef, nextIndex);
-          }
-        }
-      });
-    }
-
-    return function () {
-      if (swipe && fg) {
-        fg === null || fg === void 0 ? void 0 : fg.destroy();
-      }
-    };
-  }, [swipe, valRef, count, onChangeRef]);
   useUpdateEffect(function () {
     if (value !== _v) {
       _setV(value);
@@ -127,7 +86,7 @@ var Tabs = function Tabs(_a) {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item');
+      var itemEl = headerWrapEl.querySelector(".".concat(getClassName('header-item')));
 
       if (itemEl) {
         if (_v > prevVal) {
@@ -163,17 +122,18 @@ var Tabs = function Tabs(_a) {
     }
   });
   return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
-    className: clsx('uc-tabs', className)
+    className: clsx(getClassName(), className)
   }), /*#__PURE__*/React.createElement("div", {
-    className: clsx('uc-tabs-header-wrap', {
+    className: clsx(getClassName('header-wrap'), {
       'no-border': !border
     }),
     ref: headerWrapElRef
-  }, underline && /*#__PURE__*/React.createElement(StyledTabHeadItem, {
+  }, !!underline && /*#__PURE__*/React.createElement("div", {
     ref: underlineElRef,
-    className: clsx('uc-tabs-header-item', 'uc-tabs-header-line'),
-    count: count,
-    value: _v
+    className: clsx(getClassName('header-item'), getClassName('header-line')),
+    style: {
+      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)")
+    }
   }, /*#__PURE__*/React.createElement("div", {
     className: "line",
     style: {
@@ -185,12 +145,15 @@ var Tabs = function Tabs(_a) {
           _b = _a.title,
           title = _b === void 0 ? '' : _b,
           disabled_1 = _a.disabled;
-      return /*#__PURE__*/React.createElement(StyledTabHeadItem, {
+      return /*#__PURE__*/React.createElement("div", {
         key: index,
-        className: clsx('uc-tabs-header-item', {
+        className: clsx(getClassName('header-item'), {
           active: index === _v,
           disabled: disabled_1
         }),
+        style: {
+          width: tabWidth
+        },
         onClick: function onClick() {
           if (!disabled_1 && index !== _v) {
             onChange === null || onChange === void 0 ? void 0 : onChange(index);
@@ -201,11 +164,9 @@ var Tabs = function Tabs(_a) {
       }, title);
     }
   }), extra && /*#__PURE__*/React.createElement("span", {
-    className: clsx('uc-tabs-extra', {
-      underline: underline
-    })
+    className: clsx(getClassName('extra'))
   }, extra)), /*#__PURE__*/React.createElement("div", {
-    className: "uc-tabs-content-wrap",
+    className: getClassName('content-wrap'),
     ref: contentWrapElRef
   }, React.Children.map(children, function (child, index) {
     if (_v === index && /*#__PURE__*/React.isValidElement(child)) {
@@ -218,4 +179,4 @@ export default attachPropertiesToComponent(Tabs, {
   /** 子项 */
   Tab: Tab
 });
-var templateObject_1, templateObject_2;
+var templateObject_1;
