@@ -74,7 +74,6 @@ const StyledWrapper = styled.div`
   }
 
   .${getClassName('extra')} {
-    margin-left: 16px;
   }
 
   .${getClassName('header-item')} {
@@ -109,6 +108,9 @@ const StyledWrapper = styled.div`
     top: 0;
     pointer-events: none;
     transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 
     .line {
       position: absolute;
@@ -238,7 +240,7 @@ const Tabs: React.FC<TabsProp> = ({
         {!!underline && (
           <div
             ref={underlineElRef}
-            className={clsx(getClassName('header-item'), getClassName('header-line'))}
+            className={clsx(getClassName('header-line'))}
             style={{ transform: `translate3d(${_v * 100 + '%'}, 0, 0)` }}
           >
             <div

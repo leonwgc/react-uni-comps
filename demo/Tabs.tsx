@@ -19,6 +19,11 @@ const StyledTabBar = styled(Tabs)`
     height: 52px;
     overflow-x: unset;
   }
+  .tab-title {
+    font-size: 11px;
+    font-weight: normal;
+    text-align: center;
+  }
 `;
 
 const StyledContent = styled.div`
@@ -78,30 +83,17 @@ export default function App() {
           value={value}
           onChange={setValue}
           extra={
-            <Space align="center">
-              {tabTitles.length > 1 && (
-                <Button
-                  danger
-                  as="a"
-                  icon={<Icon type="uc-icon-jian2" />}
-                  onClick={() => {
-                    tabTitles.pop();
-                    setTabTitles([...tabTitles]);
-                    setValue(tabTitles.length - 1);
-                  }}
-                ></Button>
-              )}
-              {tabTitles.length < maxCount && (
-                <Button
-                  as="a"
-                  icon={<Icon type="uc-icon-jia2" />}
-                  onClick={() => {
-                    setTabTitles((t) => [...t, { title: '标题' + tabTitles.length }]);
-                    setValue(tabTitles.length);
-                  }}
-                ></Button>
-              )}
-            </Space>
+            <Button
+              outlined
+              style={{ fontSize: 20, fontWeight: 200, padding: '0 10px' }}
+              as="a"
+              onClick={() => {
+                setTabTitles((t) => [...t, { title: '标题' + tabTitles.length }]);
+                setValue(tabTitles.length);
+              }}
+            >
+              +
+            </Button>
           }
         >
           {tabTitles.map((item, idx) => {
@@ -122,27 +114,27 @@ export default function App() {
         <StyledTabBar underline={false} border={false} tabWidth="33.3%">
           <Tabs.Tab
             title={
-              <Space className="tab-title" size={2} direction="vertical">
-                <Icon type="uc-icon-shouye" style={{ fontSize: 28 }} />
-                <div className="name">首页</div>
-              </Space>
+              <div className="tab-title">
+                <Icon type="uc-icon-shouye" style={{ fontSize: 20 }} />
+                <div>首页</div>
+              </div>
             }
           />
           <Tabs.Tab
             title={
-              <Space className="tab-title" size={2} direction="vertical">
-                <Icon type="uc-icon-avatar" style={{ fontSize: 28 }} />
-                <div className="name">我的</div>
-              </Space>
+              <div className="tab-title">
+                <Icon type="uc-icon-avatar" style={{ fontSize: 20 }} />
+                <div>我的</div>
+              </div>
             }
           />
           <Tabs.Tab
             title={
-              <Badge content="666">
-                <Space className="tab-title" size={2} direction="vertical">
-                  <Icon type="uc-icon-shezhi" style={{ fontSize: 28 }} />
-                  <div className="name">设置</div>
-                </Space>
+              <Badge content="10">
+                <div className="tab-title">
+                  <Icon type="uc-icon-shezhi" style={{ fontSize: 20 }} />
+                  <div>设置</div>
+                </div>
               </Badge>
             }
           />

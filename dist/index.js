@@ -1933,7 +1933,7 @@ var getClassName$1 = prefixClassName('uc-tabs');
 var StyledWrapper$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Tabs__StyledWrapper",
   componentId: "sc-1ouhc8q-0"
-})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;box-sizing:border-box;position:relative;margin:0;padding:0;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{margin-left:16px;}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;padding:0 12px;user-select:none;height:100%;box-sizing:border-box;cursor:pointer;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
+})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;box-sizing:border-box;position:relative;margin:0;padding:0;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;padding:0 12px;user-select:none;height:100%;box-sizing:border-box;cursor:pointer;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;height:100%;display:flex;justify-content:center;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -2053,7 +2053,7 @@ var Tabs = function Tabs(_ref2) {
     ref: headerWrapElRef
   }, !!underline && /*#__PURE__*/React__default['default'].createElement("div", {
     ref: underlineElRef,
-    className: clsx__default['default'](getClassName$1('header-item'), getClassName$1('header-line')),
+    className: clsx__default['default'](getClassName$1('header-line')),
     style: {
       transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)")
     }
