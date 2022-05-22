@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 分割线水平还是垂直
    * @default horizontal
@@ -15,7 +15,6 @@ type Props = {
    * @default center
    *  */
   textPosition?: 'left' | 'right' | 'center';
-  children?: React.ReactNode;
   /** 是否虚线 */
   dashed?: boolean;
   /**

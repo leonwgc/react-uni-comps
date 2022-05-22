@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 分割线水平还是垂直
      * @default horizontal
@@ -11,7 +11,6 @@ declare type Props = {
      * @default center
      *  */
     textPosition?: 'left' | 'right' | 'center';
-    children?: React.ReactNode;
     /** 是否虚线 */
     dashed?: boolean;
     /**

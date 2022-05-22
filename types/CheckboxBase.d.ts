@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-export declare type Props = {
+export declare type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
     /** 按钮风格，默认false */
     button?: boolean | 'fill' | 'outline';
     /**
@@ -29,7 +29,7 @@ export declare type Props = {
     indeterminate?: boolean;
 } & BaseProps;
 /** Checkbox/Radiobox 的基础 */
-declare const CheckboxBase: React.ForwardRefExoticComponent<{
+declare const CheckboxBase: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
     /** 按钮风格，默认false */
     button?: boolean | 'fill' | 'outline';
     /**

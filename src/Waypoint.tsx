@@ -1,10 +1,10 @@
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
-import useCallbackRef from './hooks/useCallbackRef';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
+import useLatest from './hooks/useLatest';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 可见回调 */
   onVisible?: (el: HTMLElement) => void;
   /** 不可见回调 */
@@ -12,12 +12,12 @@ type Props = {
 } & BaseProps;
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
-const Waypoint = React.forwardRef<HTMLElement, Props>((props, ref) => {
-  const elRef = useRef<HTMLElement>();
+const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
+  const elRef = useRef<HTMLSpanElement>();
   const { onVisible, onInVisible, style, className, ...rest } = props;
 
-  const vv = useCallbackRef(onVisible);
-  const vi = useCallbackRef(onInVisible);
+  const vv = useLatest(onVisible);
+  const vi = useLatest(onInVisible);
 
   useLayoutEffect(() => {
     observe(elRef.current, (visible) => {

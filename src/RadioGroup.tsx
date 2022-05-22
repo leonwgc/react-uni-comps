@@ -13,8 +13,8 @@ type LabelValue = {
   value: StringOrNumber;
 };
 
-type Props = {
-  /** 
+type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /**
    * 按钮风格
    * @default false
    */

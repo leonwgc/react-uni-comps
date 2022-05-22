@@ -8,7 +8,7 @@ declare type DataItem = {
     title: React.ReactNode;
     children: Item[];
 };
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 数据 */
     data?: DataItem[];
     /** 点击数据项回调 */

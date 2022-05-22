@@ -2,10 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-type Props = {
-  /** 
+type Props = React.HTMLAttributes<HTMLDivElement> & {
+  /**
    * 安全区的位置
-   * @default bottom 
+   * @default bottom
    * */
   position?: 'top' | 'bottom' | 'right' | 'left';
 } & BaseProps;

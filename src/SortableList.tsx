@@ -8,7 +8,7 @@ import Sortable from 'sortablejs';
 import { nanoid } from 'nanoid';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 数据列表 */
   dataList?: Array<ObjectType>;
   /** 数据项渲染 */

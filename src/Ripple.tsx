@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { useSpring, animated, easings } from '@react-spring/web';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 波纹效果背景色
    * @default #ccc
    * */
   color?: string;
-  children?: React.ReactNode;
+
   /**
    * 波纹起始缩放大小
    * @default 0.3
@@ -23,7 +23,6 @@ type Props = {
   duration?: number;
   /** 100% 宽度 */
   block?: boolean;
-  onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps;
 
 const StyledWrap = styled.div`

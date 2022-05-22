@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 安全区的位置
      * @default bottom

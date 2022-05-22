@@ -23,14 +23,14 @@ type ItemProp = {
   children?: React.ReactNode;
 };
 
-type TabsProp = {
+type TabsProp = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> & {
   /** 下划线宽度,可以使用百分比/px/true/false */
   underline?: StringOrNumber | boolean;
   /** Tabs.Tab子元素*/
   children: React.ReactNode;
   /** 选择的tab index,非受控模式使用*/
   defaultValue?: number;
-  /** 选择的tab index, 默认 0 */
+  /** 选择的tab index */
   value?: number;
   /** index变化时触发的回调函数 */
   onChange?: (index: number) => void;

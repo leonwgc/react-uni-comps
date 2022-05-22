@@ -16,7 +16,7 @@ type DataItem = {
   children: Item[];
 };
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 数据 */
   data?: DataItem[];
   /** 点击数据项回调 */

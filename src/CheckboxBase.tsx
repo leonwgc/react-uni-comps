@@ -9,7 +9,7 @@ import Button from './Button';
 import Icon from './Icon';
 import type { BaseProps } from './types';
 
-export type Props = {
+export type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   /** 按钮风格，默认false */
   button?: boolean | 'fill' | 'outline';
   /**

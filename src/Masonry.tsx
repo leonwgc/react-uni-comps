@@ -18,7 +18,7 @@ const StyledWrap = styled.div`
   }
 `;
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 数据列之间的间隔
    *

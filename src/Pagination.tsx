@@ -7,7 +7,7 @@ import IconArrow from './IconArrow';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 可视按钮数量 */
   visiblePageCount?: number;
   /** 首页文本 */

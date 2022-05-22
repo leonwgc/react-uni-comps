@@ -6,11 +6,11 @@ declare type LabelValue = {
     value: StringOrNumber;
 };
 /** 一组复选框 */
-declare const CheckboxGroup: React.ForwardRefExoticComponent<{
+declare const CheckboxGroup: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
     /**
      * 按钮风格
      * @default false
-    */
+     */
     button?: boolean | 'fill' | 'outline';
     /** 受控模式下的默认值 */
     value?: Array<StringOrNumber>;

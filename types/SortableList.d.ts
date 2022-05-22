@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import type { ObjectType } from './types';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 数据列表 */
     dataList?: Array<ObjectType>;
     /** 数据项渲染 */

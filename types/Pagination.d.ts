@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 分页 */
-declare const Pagination: React.ForwardRefExoticComponent<{
+declare const Pagination: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 可视按钮数量 */
     visiblePageCount?: number;
     /** 首页文本 */

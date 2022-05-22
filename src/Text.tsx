@@ -18,10 +18,11 @@ const StyledLine = styled.div<{ $lines?: number }>`
 `;
 
 type Props = {
-  /** 显示几行，超过显示省略号, 默认1 */
+  /**
+   * 超过几行显示省略号
+   * @default 1
+   */
   lines?: number;
-  /** 包裹的内容 */
-  children?: React.ReactNode;
 } & BaseProps;
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */

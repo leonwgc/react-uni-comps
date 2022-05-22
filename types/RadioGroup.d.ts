@@ -6,7 +6,7 @@ declare type LabelValue = {
     value: StringOrNumber;
 };
 /** 一组单选框 */
-declare const RadioGroup: React.ForwardRefExoticComponent<{
+declare const RadioGroup: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
     /**
      * 按钮风格
      * @default false
