@@ -666,16 +666,42 @@ var loadResource = function loadResource(url) {
 /** 是否支持触屏 */
 
 var isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
-/** get el scrollTop */
+var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
+var overflowScrollReg = /scroll|auto|overlay/i;
+var ELEMENT_NODE_TYPE = 1;
 
-var getScrollTop = function getScrollTop(ele) {
-  if (ele === window) {
+function isElement(node) {
+  return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
+}
+
+function getScrollParent(el) {
+  var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
+  var node = el;
+
+  while (node && node !== root && isElement(node)) {
+    var _window$getComputedSt = window.getComputedStyle(node),
+        overflowY = _window$getComputedSt.overflowY;
+
+    if (overflowScrollReg.test(overflowY)) {
+      return node;
+    }
+
+    node = node.parentNode;
+  }
+
+  return root;
+}
+/** get scrollTop */
+
+var getScrollTop = function getScrollTop(el) {
+  var scrollParent = getScrollParent(el);
+
+  if (scrollParent === window) {
     return window.pageYOffset;
   }
 
-  return ele.scrollTop;
+  return scrollParent.scrollTop;
 };
-var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
 
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
@@ -7448,7 +7474,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Ripple.displayName = 'UC-Ripple';
 
-var _excluded$Z = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
+var _excluded$Z = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
 var StyledWrap$8 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "PullToRefresh__StyledWrap",
   componentId: "sc-159qm0m-0"
@@ -7466,7 +7492,6 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       completeText = _props$completeText === void 0 ? '刷新成功' : _props$completeText,
       _props$completeDelay = props.completeDelay,
       completeDelay = _props$completeDelay === void 0 ? 500 : _props$completeDelay,
-      useWindowScroll = props.useWindowScroll,
       onRefresh = props.onRefresh,
       _props$headHeight = props.headHeight,
       headHeight = _props$headHeight === void 0 ? 40 : _props$headHeight,
@@ -7694,7 +7719,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     };
 
     var _touchMove = function _touchMove(e) {
-      var scrollTop = getScrollTop(useWindowScroll ? window : el);
+      var scrollTop = getScrollTop(el);
       var y1 = e.touches[0].pageY;
 
       if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
@@ -7723,7 +7748,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [useWindowScroll, touchEnd]);
+  }, [touchEnd]);
   var statusText = /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     style: springStyles,
     className: "head"
@@ -7757,10 +7782,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$8, _extends({
     ref: wrapRef
   }, rest, {
-    className: clsx__default['default']('uc-pull-to-refresh', className, {
-      'use-dom-scroll': !useWindowScroll,
-      'use-window-scroll': useWindowScroll
-    }),
+    className: clsx__default['default']('uc-pull-to-refresh', className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       touchAction: 'pan-y'
     })

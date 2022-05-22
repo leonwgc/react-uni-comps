@@ -23,7 +23,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       completeText = _d === void 0 ? '刷新成功' : _d,
       _e = props.completeDelay,
       completeDelay = _e === void 0 ? 500 : _e,
-      useWindowScroll = props.useWindowScroll,
       onRefresh = props.onRefresh,
       _f = props.headHeight,
       headHeight = _f === void 0 ? 40 : _f,
@@ -33,7 +32,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       renderText = props.renderText,
       children = props.children,
       style = props.style,
-      rest = __rest(props, ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "useWindowScroll", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"]);
+      rest = __rest(props, ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"]);
 
   var _h = useState('init'),
       status = _h[0],
@@ -256,7 +255,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     };
 
     var _touchMove = function _touchMove(e) {
-      var scrollTop = getScrollTop(useWindowScroll ? window : el);
+      var scrollTop = getScrollTop(el);
       var y1 = e.touches[0].pageY;
 
       if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
@@ -285,7 +284,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [useWindowScroll, touchEnd]);
+  }, [touchEnd]);
   var statusText = /*#__PURE__*/React.createElement(animated.div, {
     style: springStyles,
     className: "head"
@@ -319,10 +318,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({
     ref: wrapRef
   }, rest, {
-    className: clsx('uc-pull-to-refresh', className, {
-      'use-dom-scroll': !useWindowScroll,
-      'use-window-scroll': useWindowScroll
-    }),
+    className: clsx('uc-pull-to-refresh', className),
     style: __assign(__assign({}, style), {
       touchAction: 'pan-y'
     })

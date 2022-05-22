@@ -30,11 +30,6 @@ declare const PullToRefresh: React.ForwardRefExoticComponent<{
     threshold?: number;
     /** 根据下拉状态，自定义下拉提示文案 */
     renderText?: (status: PullStatus) => ReactNode;
-    /**
-     * 检查window滚动还是子元素滚动
-     * @default false
-     *   */
-    useWindowScroll?: boolean;
     /** 触发下拉刷新的元素,比如Pull */
     children?: React.ReactElement;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;

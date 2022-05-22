@@ -203,13 +203,41 @@ export var loadResource = function loadResource(url, attrs) {
 /** 是否支持触屏 */
 
 export var isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
-/** get el scrollTop */
+export var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
+var overflowScrollReg = /scroll|auto|overlay/i;
+var ELEMENT_NODE_TYPE = 1;
 
-export var getScrollTop = function getScrollTop(ele) {
-  if (ele === window) {
+function isElement(node) {
+  return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
+}
+
+export function getScrollParent(el, root) {
+  if (root === void 0) {
+    root = window;
+  }
+
+  var node = el;
+
+  while (node && node !== root && isElement(node)) {
+    var overflowY = window.getComputedStyle(node).overflowY;
+
+    if (overflowScrollReg.test(overflowY)) {
+      return node;
+    }
+
+    node = node.parentNode;
+  }
+
+  return root;
+}
+/** get scrollTop */
+
+export var getScrollTop = function getScrollTop(el) {
+  var scrollParent = getScrollParent(el);
+
+  if (scrollParent === window) {
     return window.pageYOffset;
   }
 
-  return ele.scrollTop;
+  return scrollParent.scrollTop;
 };
-export var isCssVarSupported = isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');

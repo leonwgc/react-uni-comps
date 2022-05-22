@@ -64,6 +64,9 @@ export declare const renderElement: (element: ReactElement, container?: HTMLElem
 export declare const loadResource: (url: string, attrs?: {}) => Promise<void>;
 /** 是否支持触屏 */
 export declare const isTouch: boolean;
-/** get el scrollTop */
-export declare const getScrollTop: (ele: HTMLElement | Window) => number;
 export declare const isCssVarSupported: boolean;
+declare type ScrollElement = Element | Window;
+export declare function getScrollParent(el: Element, root?: ScrollElement | null | undefined): ScrollElement;
+/** get scrollTop */
+export declare const getScrollTop: (el: Element) => number;
+export {};
