@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = React.HtmlHTMLAttributes<HTMLSpanElement> & {
+declare type Props = React.HTMLAttributes<HTMLSpanElement> & {
     /** 图标类型 */
     type: string;
 } & BaseProps;

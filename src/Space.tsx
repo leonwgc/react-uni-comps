@@ -59,7 +59,7 @@ const flexDirectionMap = {
   vertical: 'column',
 };
 
-type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 间距大小
    * @default 8

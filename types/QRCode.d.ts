@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 二维码 */
-declare const QRCode: React.ForwardRefExoticComponent<{
+declare const QRCode: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 生成二维码文本 */
     text: string;
     /**
@@ -19,5 +19,5 @@ declare const QRCode: React.ForwardRefExoticComponent<{
      * @default 128
      */
     size?: number;
-} & BaseProps & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+} & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default QRCode;

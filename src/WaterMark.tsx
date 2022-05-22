@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styled from 'styled-components';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 水印之间的水平间距
    * @default 24

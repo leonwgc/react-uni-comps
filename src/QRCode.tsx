@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 生成二维码文本 */
   text: string;
   /**
@@ -22,8 +22,7 @@ type Props = {
    * @default 128
    */
   size?: number;
-} & BaseProps &
-  React.HTMLAttributes<HTMLDivElement>;
+} & BaseProps;
 
 type QRProps = {
   makeCode: (text: string) => void;

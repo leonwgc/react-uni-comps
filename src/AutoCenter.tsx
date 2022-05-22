@@ -11,7 +11,7 @@ const StyledWrap = styled.div`
 `;
 
 /** 自动居中 */
-const AutoCenter = React.forwardRef<HTMLDivElement, React.HtmlHTMLAttributes<HTMLDivElement>>(
+const AutoCenter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   (props, ref) => {
     const { children, ...rest } = props;
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 头像 */
-declare const Avatar: React.ForwardRefExoticComponent<{
+declare const Avatar: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 尺寸
      * @default 40
@@ -14,6 +14,5 @@ declare const Avatar: React.ForwardRefExoticComponent<{
     shape?: 'circle' | 'square';
     /** 文字/icon/img 不设置，则为默认头像icon */
     children?: React.ReactNode;
-    onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Avatar;

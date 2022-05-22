@@ -6,7 +6,7 @@ import type { BaseProps } from './types';
 
 type Pos = 'top' | 'right' | 'bottom' | 'left' | 'all';
 
-type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 显示1px的边
    * @default bottom

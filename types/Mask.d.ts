@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 遮罩层 */
-declare const Mask: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLDivElement> & {
+declare const Mask: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 显示遮罩时，设置body.style.overflow为hidden
      * @default true

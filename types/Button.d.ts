@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 按钮 */
-declare const Button: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
+declare const Button: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
     /**
      * 类型
      * @default default

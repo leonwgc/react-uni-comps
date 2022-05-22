@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 移动端1像素边框容器 */
-declare const HairLineBox: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLDivElement> & {
+declare const HairLineBox: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 显示1px的边
      * @default bottom

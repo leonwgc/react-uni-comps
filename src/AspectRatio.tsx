@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 宽高比
    * @default 4/3

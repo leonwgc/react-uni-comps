@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 水印之间的水平间距
      * @default 24

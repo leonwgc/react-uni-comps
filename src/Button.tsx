@@ -8,7 +8,7 @@ import Spin from './Spin';
 import Space from './Space';
 import type { BaseProps } from './types';
 
-type Props = React.HtmlHTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
+type Props = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
   /**
    * 类型
    * @default default

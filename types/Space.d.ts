@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { BaseProps } from './types';
 declare type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 /** 间距 */
-declare const Space: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLDivElement> & {
+declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 间距大小
      * @default 8

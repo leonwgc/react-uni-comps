@@ -1,4 +1,4 @@
 import React from 'react';
 /** 自动居中 */
-declare const AutoCenter: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+declare const AutoCenter: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default AutoCenter;

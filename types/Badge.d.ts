@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 内容,没有内容则显示圆点 */
     content?: React.ReactNode;
     /** 徽标背景色 */

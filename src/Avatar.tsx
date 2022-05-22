@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Icon from './Icon';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 尺寸
    * @default 40
@@ -17,7 +17,6 @@ type Props = {
   shape?: 'circle' | 'square';
   /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
-  onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps;
 
 const StyledAvatar = styled.div`

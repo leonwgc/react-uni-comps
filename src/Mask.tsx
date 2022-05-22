@@ -18,7 +18,7 @@ const StyledMask = styled(animated.div)`
   touch-action: none;
 `;
 
-type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 显示遮罩时，设置body.style.overflow为hidden
    * @default true

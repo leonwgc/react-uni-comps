@@ -4,7 +4,7 @@ import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-type Props = React.HtmlHTMLAttributes<HTMLSpanElement> & {
+type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 图标类型 */
   type: string;
 } & BaseProps;
