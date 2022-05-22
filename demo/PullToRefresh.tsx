@@ -69,7 +69,7 @@ const App = () => {
       </DemoBlock> */}
 
       <DemoBlock title="下拉刷新">
-        <PullToRefresh>
+        <PullToRefresh onRefresh={onRefresh}>
           <Pullup
             dataList={list}
             useWindowScroll={false}
