@@ -30,7 +30,7 @@ var HairLineBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _b = props.borderRadius,
       borderRadius = _b === void 0 ? 0 : _b,
       _c = props.color,
-      color = _c === void 0 ? '#dcdcdc' : _c,
+      color = _c === void 0 ? '#eee' : _c,
       className = props.className,
       _d = props.mobile,
       mobile = _d === void 0 ? true : _d,

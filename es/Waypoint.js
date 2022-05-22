@@ -1,8 +1,8 @@
 import { __assign, __rest } from "tslib";
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
-import useCallbackRef from './hooks/useCallbackRef';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
+import useLatest from './hooks/useLatest';
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -14,8 +14,8 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = props.className,
       rest = __rest(props, ["onVisible", "onInVisible", "style", "className"]);
 
-  var vv = useCallbackRef(onVisible);
-  var vi = useCallbackRef(onInVisible);
+  var vv = useLatest(onVisible);
+  var vi = useLatest(onInVisible);
   useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       var _a, _b;

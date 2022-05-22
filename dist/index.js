@@ -1863,7 +1863,7 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       _props$borderRadius = props.borderRadius,
       borderRadius = _props$borderRadius === void 0 ? 0 : _props$borderRadius,
       _props$color = props.color,
-      color = _props$color === void 0 ? '#dcdcdc' : _props$color,
+      color = _props$color === void 0 ? '#eee' : _props$color,
       className = props.className,
       _props$mobile = props.mobile,
       mobile = _props$mobile === void 0 ? true : _props$mobile,
@@ -2811,6 +2811,21 @@ var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(functio
 });
 FileInputTrigger.displayName = 'UC-FileInputTrigger';
 
+/**
+ * 保存最新的值在ref中
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useLatest(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
 var _excluded$k = ["onVisible", "onInVisible", "style", "className"];
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
@@ -2823,8 +2838,8 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$k);
 
-  var vv = useCallbackRef(onVisible);
-  var vi = useCallbackRef(onInVisible);
+  var vv = useLatest(onVisible);
+  var vi = useLatest(onInVisible);
   React.useLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
@@ -7306,7 +7321,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
     from: {
       number: 0
     },
-    number: number,
+    number: Number(number),
     delay: delay,
     config: web.config.molasses
   });
@@ -8692,21 +8707,6 @@ var useList = function useList() {
     moveDown: moveDown
   };
 };
-
-/**
- * 保存最新的值在ref中
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useLatest(value) {
-  var ref = React.useRef(value);
-  ref.current = value;
-  return ref;
-}
 
 /**
  * 初始化i18n

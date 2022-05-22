@@ -15,7 +15,7 @@ var RollingNumber = /*#__PURE__*/React.forwardRef(function (props, ref) {
     from: {
       number: 0
     },
-    number: number,
+    number: Number(number),
     delay: delay,
     config: config.molasses
   });
