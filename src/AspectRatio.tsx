@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 
-type Props = {
+type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
   /**
    * 宽高比
    * @default 4/3
    *  */
   ratio?: number;
-} & React.HtmlHTMLAttributes<HTMLDivElement>;
+};
 
 const StyledWrap = styled.div<{ ratio: number }>`
   position: relative;

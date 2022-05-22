@@ -1,17 +1,15 @@
 import React from 'react';
 import type { BaseProps } from './types';
-/** 显示1px的边 */
-declare type Position = 'top' | 'right' | 'bottom' | 'left' | 'all';
 /** 移动端1像素边框容器 */
-declare const HairLineBox: React.ForwardRefExoticComponent<{
+declare const HairLineBox: React.ForwardRefExoticComponent<React.HtmlHTMLAttributes<HTMLDivElement> & {
     /**
      * 显示1px的边
      * @default bottom
      */
-    position?: Position;
+    position?: 'top' | 'right' | 'bottom' | 'left' | 'all';
     /**
      * 边的颜色
-     * @default #dcdcdc
+     * @default #eee
      */
     color?: string;
     /**
@@ -24,7 +22,5 @@ declare const HairLineBox: React.ForwardRefExoticComponent<{
      * @default true
      *  */
     mobile?: boolean;
-    onClick?: (e: React.SyntheticEvent) => void;
-    children?: React.ReactNode;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default HairLineBox;

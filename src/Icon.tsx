@@ -4,10 +4,9 @@ import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HtmlHTMLAttributes<HTMLSpanElement> & {
   /** 图标类型 */
   type: string;
-  onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps;
 
 const StyledIcon = styled.span`

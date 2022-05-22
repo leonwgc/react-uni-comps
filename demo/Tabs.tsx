@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Tabs, Button, Space, styled, Icon, Badge } from 'react-uni-comps';
+import { Tabs, Button, styled, Icon, Badge } from 'react-uni-comps';
 
 // 自定义
 const StyledTabs = styled(Tabs)`

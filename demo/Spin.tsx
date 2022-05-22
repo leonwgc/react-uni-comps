@@ -11,7 +11,7 @@ export default function App() {
       <DemoBlock title="默认">
         <Spin />
       </DemoBlock>
-      
+
       <DemoBlock title="大小和颜色">
         <Space>
           <Spin style={{ fontSize: 24 }}></Spin>

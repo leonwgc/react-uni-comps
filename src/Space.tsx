@@ -59,10 +59,16 @@ const flexDirectionMap = {
   vertical: 'column',
 };
 
-type SpaceProps = {
-  /** 间距大小 */
+type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
+  /**
+   * 间距大小
+   * @default 8
+   */
   size?: number | [number, number];
-  /** 间距方向 */
+  /**
+   * 排列方向
+   * @default horizontal
+   *  */
   direction?: 'horizontal' | 'vertical';
   /** 对齐方式 */
   align?: Align;
@@ -70,8 +76,6 @@ type SpaceProps = {
   split?: React.ReactNode;
   /** 是否自动换行，仅在 horizontal 时有效 */
   wrap?: boolean;
-  onClick?: (e: React.SyntheticEvent) => void;
-  children?: React.ReactNode;
 } & BaseProps;
 
 const StyledSpace = styled.div<{
@@ -84,7 +88,7 @@ const StyledSpace = styled.div<{
 `;
 
 /** 间距 */
-const Space = React.forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
+const Space = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     size = 8,
     align,

@@ -4,18 +4,17 @@ import { isMobile } from './dom';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-/** 显示1px的边 */
-type Position = 'top' | 'right' | 'bottom' | 'left' | 'all';
+type Pos = 'top' | 'right' | 'bottom' | 'left' | 'all';
 
-type Props = {
+type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
   /**
    * 显示1px的边
    * @default bottom
    */
-  position?: Position;
+  position?: 'top' | 'right' | 'bottom' | 'left' | 'all';
   /**
    * 边的颜色
-   * @default #dcdcdc
+   * @default #eee
    */
   color?: string;
   /**
@@ -28,11 +27,9 @@ type Props = {
    * @default true
    *  */
   mobile?: boolean;
-  onClick?: (e: React.SyntheticEvent) => void;
-  children?: React.ReactNode;
 } & BaseProps;
 
-const StyledDiv = styled.div<{ position?: Position; $color: string; borderRadius?: number }>`
+const StyledDiv = styled.div<{ position?: Pos; $color: string; borderRadius?: number }>`
   position: relative;
 
   &.mobile {
@@ -71,7 +68,7 @@ const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     position = 'bottom',
     borderRadius = 0,
-    color = '#dcdcdc',
+    color = '#eee',
     className,
     mobile = true,
     children,
