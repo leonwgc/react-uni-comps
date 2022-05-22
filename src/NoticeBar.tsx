@@ -47,7 +47,7 @@ const StyledNoticeBar = styled.div`
   }
 `;
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 公告内容 */
   content: string;
   /**

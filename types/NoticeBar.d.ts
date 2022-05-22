@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 通告栏  */
-declare const NoticeBar: React.ForwardRefExoticComponent<{
+declare const NoticeBar: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 公告内容 */
     content: string;
     /**

@@ -14,7 +14,7 @@ export type Step = {
   icon?: React.ReactNode;
 };
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 步骤数据 */
   steps: Step[];
   /**

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps } from './types';
-export declare type Props = {
+export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
     required?: boolean;
     /**
@@ -26,10 +26,9 @@ export declare type Props = {
      * @default true
      */
     withPaddingLeft?: boolean;
-    onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps;
 /** 列表项，通常用于移动端 */
-declare const Cell: React.ForwardRefExoticComponent<{
+declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
     required?: boolean;
     /**
@@ -55,6 +54,5 @@ declare const Cell: React.ForwardRefExoticComponent<{
      * @default true
      */
     withPaddingLeft?: boolean;
-    onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

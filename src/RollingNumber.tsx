@@ -1,11 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useSpring, animated, config } from '@react-spring/web';
-import type { BaseProps } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 滚动数字 */
-  number: number;
+  number: StringOrNumber;
   /** 延迟开始时间
    *
    * @default 200
@@ -19,7 +19,7 @@ const RollingNumber = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
 
   const spring = useSpring({
     from: { number: 0 },
-    number,
+    number: Number(number),
     delay,
     config: config.molasses,
   });

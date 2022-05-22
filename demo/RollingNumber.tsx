@@ -8,7 +8,7 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="默认">
         <AutoCenter>
-          <RollingNumber number={100}></RollingNumber>
+          <RollingNumber number={'100'}></RollingNumber>
         </AutoCenter>
       </DemoBlock>
 

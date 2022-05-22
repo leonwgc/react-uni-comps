@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 进度条颜色,默认读主题色 */
   color?: string;
   /**

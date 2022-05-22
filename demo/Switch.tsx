@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { Space, Switch } from 'react-uni-comps';
 
 export default function App() {
-  const [c, setC] = useState(false);
+  const [c, setC] = useState<boolean>(false);
 
   return (
     <PageWrap>

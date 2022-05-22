@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BaseProps } from './types';
 /** 进度条 */
-declare const ProgressBar: React.ForwardRefExoticComponent<{
+declare const ProgressBar: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      *
      * 进度百分比（范围：0 ～ 100）

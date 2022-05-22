@@ -1,7 +1,6 @@
 import React from 'react';
-import type { BaseProps } from './types';
-declare type Direction = 'horizontal' | 'vertical';
-export declare type Props = {
+import type { BaseProps, StringOrNumber } from './types';
+export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否自动播放
      * @default false
@@ -11,21 +10,20 @@ export declare type Props = {
      * 水平还是垂直
      * @default horizontal
      */
-    direction?: Direction;
+    direction?: 'horizontal' | 'vertical';
     /**
      * 距离下一次播放的间隔毫秒
      * @default 3000
      */
     interval?: number;
-    children: React.ReactElement[];
     /**
      * 容器高度
      * @default 160
      */
-    height?: number | string;
+    height?: StringOrNumber;
     /**
      * 是否循环
-     * true
+     * @default true
      */
     loop?: boolean;
     /** 页面切换后回调 */
@@ -60,7 +58,7 @@ export declare type SlideRefType = {
  *
  *
  */
-declare const Slide: React.ForwardRefExoticComponent<{
+declare const Slide: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否自动播放
      * @default false
@@ -70,21 +68,20 @@ declare const Slide: React.ForwardRefExoticComponent<{
      * 水平还是垂直
      * @default horizontal
      */
-    direction?: Direction;
+    direction?: 'horizontal' | 'vertical';
     /**
      * 距离下一次播放的间隔毫秒
      * @default 3000
      */
     interval?: number;
-    children: React.ReactElement[];
     /**
      * 容器高度
      * @default 160
      */
-    height?: number | string;
+    height?: StringOrNumber;
     /**
      * 是否循环
-     * true
+     * @default true
      */
     loop?: boolean;
     /** 页面切换后回调 */

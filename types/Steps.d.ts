@@ -9,7 +9,7 @@ export declare type Step = {
     icon?: React.ReactNode;
 };
 /** 步骤条 */
-declare const Steps: React.ForwardRefExoticComponent<{
+declare const Steps: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 步骤数据 */
     steps: Step[];
     /**

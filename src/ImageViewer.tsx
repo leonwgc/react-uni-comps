@@ -11,7 +11,7 @@ import Mask from './Mask';
 import Button from './Button';
 import IconArrow from './IconArrow';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 是否可见 */
   visible?: boolean;
   /**  关闭回调 */

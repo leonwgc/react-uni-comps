@@ -6,7 +6,7 @@ import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-export type Props = {
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 是否显示红色*标记 */
   required?: boolean;
   /**
@@ -32,7 +32,6 @@ export type Props = {
    * @default true
    */
   withPaddingLeft?: boolean;
-  onClick?: (e: React.SyntheticEvent) => void;
 } & BaseProps;
 
 const StyledCell = styled.div`

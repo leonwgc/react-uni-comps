@@ -11,7 +11,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import Touch from 'w-touch';
 import Space from './Space';
-import type { BaseProps } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 import useMount from './hooks/useMount';
 
 const StyledSlide = styled.div`
@@ -76,7 +76,7 @@ const StyledSlide = styled.div`
 
 type Direction = 'horizontal' | 'vertical';
 
-export type Props = {
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 是否自动播放
    * @default false
@@ -86,22 +86,21 @@ export type Props = {
    * 水平还是垂直
    * @default horizontal
    */
-  direction?: Direction;
+  direction?: 'horizontal' | 'vertical';
   /**
    * 距离下一次播放的间隔毫秒
    * @default 3000
    */
   interval?: number;
-  children: React.ReactElement[];
   /**
    * 容器高度
    * @default 160
    */
-  height?: number | string;
+  height?: StringOrNumber;
 
   /**
    * 是否循环
-   * true
+   * @default true
    */
   loop?: boolean;
   /** 页面切换后回调 */

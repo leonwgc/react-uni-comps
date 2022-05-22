@@ -4,12 +4,15 @@ import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /** 禁用 */
   disabled?: boolean;
+  /** 指定当前是否选中 */
   checked?: boolean;
+  /** 初始是否选中 */
   defaultChecked?: boolean;
+  /** 变化时回调函数 */
   onChange?: (checked: boolean) => void;
-  children?: React.ReactNode;
 } & BaseProps;
 
 const StyledSwitch = styled.div`

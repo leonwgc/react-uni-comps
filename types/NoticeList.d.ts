@@ -7,7 +7,7 @@ export declare type Notice = {
     link?: string;
 };
 /** 多条信息垂直滚动通知栏  */
-declare const NoticeList: React.ForwardRefExoticComponent<{
+declare const NoticeList: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 公告内容 */
     list: Notice[];
     /**
