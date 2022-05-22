@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      <PullToRefresh onRefresh={onRefresh} useWindowScroll>
+      <PullToRefresh onRefresh={onRefresh}>
         <Pullup
           dataList={list}
           fetchData={fetchData}

@@ -64,11 +64,6 @@ type Props = {
   threshold?: number;
   /** 根据下拉状态，自定义下拉提示文案 */
   renderText?: (status: PullStatus) => ReactNode;
-  /**
-   * 检查window滚动还是子元素滚动
-   * @default false
-   *   */
-  useWindowScroll?: boolean;
   /** 触发下拉刷新的元素,比如Pull */
   children?: React.ReactElement;
 } & BaseProps;
@@ -86,7 +81,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ),
     completeText = '刷新成功',
     completeDelay = 500,
-    useWindowScroll,
     onRefresh,
     headHeight = 40,
     threshold = 60,
@@ -180,7 +174,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
 
     const _touchMove = (e) => {
-      const scrollTop = getScrollTop(useWindowScroll ? window : el);
+      const scrollTop = getScrollTop(el);
       const y1 = e.touches[0].pageY;
       if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
         e.preventDefault();
@@ -205,7 +199,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [useWindowScroll, touchEnd]);
+  }, [touchEnd]);
 
   const statusText = (
     <animated.div style={springStyles} className={`head`}>
@@ -245,10 +239,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledWrap
       ref={wrapRef}
       {...rest}
-      className={clsx('uc-pull-to-refresh', className, {
-        'use-dom-scroll': !useWindowScroll,
-        'use-window-scroll': useWindowScroll,
-      })}
+      className={clsx('uc-pull-to-refresh', className)}
       style={{ ...style, touchAction: 'pan-y' }}
     >
       {statusText}
