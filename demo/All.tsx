@@ -20,6 +20,33 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> PullToRefresh
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PullToRefresh')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Pullup
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Pullup')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> PullupDom
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('PullupDom')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Tabs
           </Space>
         }
@@ -366,33 +393,6 @@ export default function All() {
         onClick={() => gotoPage('SwipeAction')}
       ></Cell>
 
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> PullToRefresh
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PullToRefresh')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Pullup
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Pullup')}
-      ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> PullupDom
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('PullupDom')}
-      ></Cell>
       <Cell
         label={
           <Space>

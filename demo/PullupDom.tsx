@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { Pullup, PullToRefresh, Cell, Toast } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
-const pageSize = 25;
+const pageSize = 10;
 
 const PullupDom = () => {
   const [list, setList] = useState([]);
@@ -50,15 +50,15 @@ const PullupDom = () => {
   };
 
   return (
-    <PageWrap style={{ height: '100vh' }}>
-      <DemoBlock title="搭配pullup">
-        <PullToRefresh onRefresh={onRefresh} style={{ marginTop: 100 }}>
+    <PageWrap>
+      <DemoBlock title="搭配pullup" padding={'100px 0 0'}>
+        <PullToRefresh onRefresh={onRefresh}>
           <Pullup
             dataList={list}
             fetchData={fetchData}
             useWindowScroll={false}
             height="50vh"
-            style={{ background: '#fff' }}
+            style={{ border: '1px solid #eee', padding: 12 }}
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>

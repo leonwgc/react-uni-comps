@@ -206,13 +206,37 @@ export const loadResource = (url: string, attrs = {}): Promise<void> => {
 /** 是否支持触屏 */
 export const isTouch = typeof window !== 'undefined' && window.ontouchstart !== undefined;
 
-/** get el scrollTop */
-export const getScrollTop = (ele: HTMLElement | Window): number => {
-  if (ele === window) {
-    return window.pageYOffset;
-  }
-  return (ele as HTMLElement).scrollTop;
-};
-
 export const isCssVarSupported =
   isBrowser && window.CSS && window.CSS.supports && window.CSS.supports('--a', '0');
+
+type ScrollElement = Element | Window;
+
+const overflowScrollReg = /scroll|auto|overlay/i;
+const ELEMENT_NODE_TYPE = 1;
+
+function isElement(node: Element) {
+  return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
+}
+export function getScrollParent(el: Element, root: ScrollElement | null | undefined = window) {
+  let node = el;
+
+  while (node && node !== root && isElement(node)) {
+    const { overflowY } = window.getComputedStyle(node);
+    if (overflowScrollReg.test(overflowY)) {
+      return node;
+    }
+    node = node.parentNode as Element;
+  }
+
+  return root;
+}
+
+/** get scrollTop */
+export const getScrollTop = (el: Element): number => {
+  const scrollParent = getScrollParent(el);
+
+  if (scrollParent === window) {
+    return window.pageYOffset;
+  }
+  return (scrollParent as Element).scrollTop;
+};
