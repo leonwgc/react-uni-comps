@@ -5,6 +5,12 @@ import { Pullup, Cell, PullToRefresh, Ripple, Spin, Space, Icon } from 'react-un
 
 const pageSize = 10;
 
+const CompleteText = (
+  <Space style={{ color: 'rgb(0, 188, 112)' }}>
+    <Icon type="uc-icon-chenggong" /> 刷新成功
+  </Space>
+);
+
 const App = () => {
   const [list, setList] = useState([]);
   const [finished, setFinished] = useState(false);
@@ -48,12 +54,12 @@ const App = () => {
   }, []);
 
   return (
-    <PageWrap style={{ padding: 0 }}>
-      <DemoBlock title="下拉执行onRefresh">
-        <PullToRefresh>
+    <PageWrap>
+      <DemoBlock title="下拉刷新" padding={0}>
+        <PullToRefresh completeText={CompleteText}>
           <div
             style={{
-              height: '20vh',
+              height: 90,
               width: '100%',
               writingMode: 'vertical-lr',
               display: 'flex',
@@ -68,56 +74,52 @@ const App = () => {
         </PullToRefresh>
       </DemoBlock>
 
-      <DemoBlock title="下拉刷新">
-        <PullToRefresh onRefresh={onRefresh}>
+      <DemoBlock title="搭配Pullup">
+        <PullToRefresh onRefresh={onRefresh} completeText={CompleteText}>
           <Pullup
             dataList={list}
             useWindowScroll={false}
             fetchData={fetchData}
-            height={300}
+            height={200}
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>
         </PullToRefresh>
+      </DemoBlock>
 
-        <DemoBlock title="搭配Pullup自定义状态文本">
-          <PullToRefresh
-            onRefresh={onRefresh}
-            pullingText={
-              <Space>
-                <Spin />
-                下拉刷新
-              </Space>
-            }
-            canReleaseText={
-              <Space>
-                <Spin />
-                释放立即刷新
-              </Space>
-            }
-            refreshingText={
-              <Space>
-                <Spin />
-                加载中...
-              </Space>
-            }
-            completeText={
-              <Space style={{ color: 'rgb(0, 188, 112)' }}>
-                <Icon type="uc-icon-chenggong" /> 刷新成功
-              </Space>
-            }
-            completeDelay={1000}
-          >
-            <Pullup
-              dataList={list}
-              useWindowScroll={false}
-              fetchData={fetchData}
-              height={300}
-              finished={finished}
-              dataRender={(data) => <Cell>{data}</Cell>}
-            ></Pullup>
-          </PullToRefresh>
-        </DemoBlock>
+      <DemoBlock title="搭配Pullup,自定义状态文本">
+        <PullToRefresh
+          onRefresh={onRefresh}
+          pullingText={
+            <Space>
+              <Spin />
+              下拉刷新
+            </Space>
+          }
+          canReleaseText={
+            <Space>
+              <Spin />
+              释放立即刷新
+            </Space>
+          }
+          refreshingText={
+            <Space>
+              <Spin />
+              加载中...
+            </Space>
+          }
+          completeText={CompleteText}
+          completeDelay={1000}
+        >
+          <Pullup
+            dataList={list}
+            useWindowScroll={false}
+            fetchData={fetchData}
+            height={200}
+            finished={finished}
+            dataRender={(data) => <Cell>{data}</Cell>}
+          ></Pullup>
+        </PullToRefresh>
       </DemoBlock>
     </PageWrap>
   );
