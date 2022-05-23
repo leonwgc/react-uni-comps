@@ -14,8 +14,8 @@ import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
-import useCallbackRef from './hooks/useCallbackRef';
 import type { BaseProps } from './types';
+import useLatest from './hooks/useLatest';
 
 const StyledWrap = styled(animated.div)`
   color: #999;
@@ -92,7 +92,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   } = props;
 
   const [status, setStatus] = useState<PullStatus>('init');
-  const statusRef = useCallbackRef(status);
+  const statusRef = useLatest(status);
   const dRef = useRef(0);
 
   const [springStyles, api] = useSpring(() => ({
@@ -163,6 +163,8 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api, status]);
 
+  const touchEndRef = useLatest(touchEnd);
+
   useLayoutEffect(() => {
     let y = 0;
     const el = wrapRef.current;
@@ -170,7 +172,8 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const _touchStart = (e) => (y = e.touches[0].pageY);
     const _touchEnd = () => {
       y = 0;
-      touchEnd();
+      // touchEnd();
+      touchEndRef.current?.();
     };
 
     const _touchMove = (e) => {
@@ -199,7 +202,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [touchEnd]);
+  }, [touchEndRef]);
 
   const statusText = (
     <animated.div style={springStyles} className={`head`}>

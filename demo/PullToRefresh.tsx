@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <PageWrap style={{ padding: 0 }}>
-      {/* <DemoBlock title="下拉执行onRefresh">
+      <DemoBlock title="下拉执行onRefresh">
         <PullToRefresh>
           <div
             style={{
@@ -66,7 +66,7 @@ const App = () => {
             下拉刷新
           </div>
         </PullToRefresh>
-      </DemoBlock> */}
+      </DemoBlock>
 
       <DemoBlock title="下拉刷新">
         <PullToRefresh onRefresh={onRefresh}>
