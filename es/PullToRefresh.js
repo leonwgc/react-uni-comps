@@ -8,7 +8,7 @@ import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
@@ -38,7 +38,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       status = _h[0],
       setStatus = _h[1];
 
-  var statusRef = useCallbackRef(status);
+  var statusRef = useLatest(status);
   var dRef = useRef(0);
 
   var _j = useSpring(function () {
@@ -241,6 +241,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       });
     });
   }, [api, status]);
+  var touchEndRef = useLatest(touchEnd);
   useLayoutEffect(function () {
     var y = 0;
     var el = wrapRef.current;
@@ -250,8 +251,11 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     };
 
     var _touchEnd = function _touchEnd() {
-      y = 0;
-      touchEnd();
+      var _a;
+
+      y = 0; // touchEnd();
+
+      (_a = touchEndRef.current) === null || _a === void 0 ? void 0 : _a.call(touchEndRef);
     };
 
     var _touchMove = function _touchMove(e) {
@@ -284,7 +288,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [touchEnd]);
+  }, [touchEndRef]);
   var statusText = /*#__PURE__*/React.createElement(animated.div, {
     style: springStyles,
     className: "head"
@@ -322,9 +326,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: __assign(__assign({}, style), {
       touchAction: 'pan-y'
     })
-  }), statusText, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, {
-    ref: wrapRef
-  }) : children);
+  }), statusText, children);
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 export default PullToRefresh;

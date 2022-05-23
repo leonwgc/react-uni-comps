@@ -59,7 +59,7 @@ const App = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              fontSize: 20,
+              fontSize: 14,
               overflowY: 'scroll',
             }}
           >

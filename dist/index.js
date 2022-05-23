@@ -7508,7 +7508,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       status = _useState2[0],
       setStatus = _useState2[1];
 
-  var statusRef = useCallbackRef(status);
+  var statusRef = useLatest(status);
   var dRef = React.useRef(0);
 
   var _useSpring = web.useSpring(function () {
@@ -7705,6 +7705,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       }
     }, _callee, null, [[6,, 9, 11]]);
   })), [api, status]);
+  var touchEndRef = useLatest(touchEnd);
   React.useLayoutEffect(function () {
     var y = 0;
     var el = wrapRef.current;
@@ -7714,8 +7715,11 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     };
 
     var _touchEnd = function _touchEnd() {
-      y = 0;
-      touchEnd();
+      var _touchEndRef$current;
+
+      y = 0; // touchEnd();
+
+      (_touchEndRef$current = touchEndRef.current) === null || _touchEndRef$current === void 0 ? void 0 : _touchEndRef$current.call(touchEndRef);
     };
 
     var _touchMove = function _touchMove(e) {
@@ -7748,7 +7752,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
         el.removeEventListener('touchend', _touchEnd);
       }
     };
-  }, [touchEnd]);
+  }, [touchEndRef]);
   var statusText = /*#__PURE__*/React__default['default'].createElement(web.animated.div, {
     style: springStyles,
     className: "head"
@@ -7786,9 +7790,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       touchAction: 'pan-y'
     })
-  }), statusText, /*#__PURE__*/React__default['default'].isValidElement(children) ? /*#__PURE__*/React__default['default'].cloneElement(children, {
-    ref: wrapRef
-  }) : children);
+  }), statusText, children);
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
