@@ -246,7 +246,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       style={{ ...style, touchAction: 'pan-y' }}
     >
       {statusText}
-      {React.isValidElement(children) ? React.cloneElement(children, { ref: wrapRef }) : children}
+      {children}
     </StyledWrap>
   );
 });
