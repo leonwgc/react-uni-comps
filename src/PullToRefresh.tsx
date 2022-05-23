@@ -96,7 +96,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const [status, setStatus] = useState<PullStatus>('init');
   const statusRef = useLatest(status);
-  const dRef = useRef(0);
 
   const [springStyles, api] = useSpring(() => ({
     from: { height: 0 },
@@ -146,7 +145,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   const touchEnd = useCallback(async () => {
-    dRef.current = 0;
     if (!isPullingRef.current) {
       return;
     }
@@ -170,44 +168,6 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const touchEndRef = useLatest(touchEnd);
 
-  useLayoutEffect(() => {
-    let y = 0;
-    const el = elRef.current;
-
-    const _touchStart = (e) => (y = e.touches[0].pageY);
-    const _touchEnd = () => {
-      y = 0;
-      touchEndRef.current?.();
-    };
-
-    const _touchMove = (e) => {
-      const scrollTop = getScrollTop(el);
-      const y1 = e.touches[0].pageY;
-      if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
-        e.preventDefault();
-        isPullingRef.current = true;
-        setStatus('pulling');
-      }
-    };
-
-    const options: any = { passive: false };
-    if (el) {
-      el.addEventListener('touchstart', (e) => {
-        y = e.touches[0].pageY;
-      });
-      el.addEventListener('touchmove', _touchMove, options);
-      el.addEventListener('touchend', _touchEnd);
-    }
-
-    return () => {
-      if (el) {
-        el.removeEventListener('touchstart', _touchStart);
-        el.removeEventListener('touchmove', _touchMove, options);
-        el.removeEventListener('touchend', _touchEnd);
-      }
-    };
-  }, [touchEndRef]);
-
   const statusText = (
     <animated.div style={springStyles} className={`head`}>
       <div className={`status-text`} style={{ height: headHeight }}>
@@ -216,13 +176,46 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     </animated.div>
   );
 
-  if (children && !React.isValidElement(children)) {
-    throw Error('children must be a valid ReactElement');
-  }
-
   useLayoutEffect(() => {
-    const el = wrapRef.current;
-    const fg = new Touch(el, {
+    const wrapEl = wrapRef.current;
+    const el = elRef.current;
+    let y = 0;
+    let d = 0;
+
+    // touch cacl in children
+    const childrenElFg = new Touch(el, {
+      onTouchStart: (e: any) => {
+        d = 0;
+        if (e.touches) {
+          y = e.touches[0].pageY;
+        } else {
+          y = e.pageY;
+        }
+      },
+      onTouchMove: (e: any) => {
+        let y1;
+        if (e.touches) {
+          y1 = e.touches[0].pageY;
+        } else {
+          y1 = e.pageY;
+        }
+        const scrollTop = getScrollTop(el);
+
+        if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
+          e.preventDefault();
+          isPullingRef.current = true;
+          setStatus('pulling');
+        }
+      },
+      onTouchEnd: () => {
+        y = 0;
+        d = 0;
+        touchEndRef.current?.();
+      },
+    });
+
+    // press move in wrap
+    const fg = new Touch(wrapEl, {
       onPressMove: (e) => {
         if (
           !isPullingRef.current ||
@@ -230,17 +223,22 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           statusRef.current === 'complete'
         )
           return;
-        dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
-        api.start({ height: dRef.current });
+        d = Math.min(threshold + 30, d + e.deltaY);
+        api.start({ height: d });
 
-        setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
+        setStatus(d > threshold ? 'canRelease' : 'pulling');
       },
     });
 
     return () => {
       fg?.destroy();
+      childrenElFg?.destroy();
     };
-  }, [api, threshold, statusRef]);
+  }, [api, threshold, statusRef, touchEndRef]);
+
+  if (children && !React.isValidElement(children)) {
+    throw Error('children must be ReactElement');
+  }
 
   return (
     <StyledWrap
