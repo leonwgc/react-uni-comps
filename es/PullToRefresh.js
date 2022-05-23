@@ -39,7 +39,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setStatus = _h[1];
 
   var statusRef = useLatest(status);
-  var dRef = useRef(0);
 
   var _j = useSpring(function () {
     return {
@@ -51,8 +50,8 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       springStyles = _j[0],
       api = _j[1];
 
-  var wrapRef = useRef(null); // could be wrapper / children El instance
-
+  var wrapRef = useRef(null);
+  var elRef = useRef(null);
   var isPullingRef = useRef(false);
   useImperativeHandle(ref, function () {
     return wrapRef.current;
@@ -183,8 +182,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            dRef.current = 0;
-
             if (!isPullingRef.current) {
               return [2
               /*return*/
@@ -242,53 +239,6 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   }, [api, status]);
   var touchEndRef = useLatest(touchEnd);
-  useLayoutEffect(function () {
-    var y = 0;
-    var el = wrapRef.current;
-
-    var _touchStart = function _touchStart(e) {
-      return y = e.touches[0].pageY;
-    };
-
-    var _touchEnd = function _touchEnd() {
-      var _a;
-
-      y = 0; // touchEnd();
-
-      (_a = touchEndRef.current) === null || _a === void 0 ? void 0 : _a.call(touchEndRef);
-    };
-
-    var _touchMove = function _touchMove(e) {
-      var scrollTop = getScrollTop(el);
-      var y1 = e.touches[0].pageY;
-
-      if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
-        e.preventDefault();
-        isPullingRef.current = true;
-        setStatus('pulling');
-      }
-    };
-
-    var options = {
-      passive: false
-    };
-
-    if (el) {
-      el.addEventListener('touchstart', function (e) {
-        y = e.touches[0].pageY;
-      });
-      el.addEventListener('touchmove', _touchMove, options);
-      el.addEventListener('touchend', _touchEnd);
-    }
-
-    return function () {
-      if (el) {
-        el.removeEventListener('touchstart', _touchStart);
-        el.removeEventListener('touchmove', _touchMove, options);
-        el.removeEventListener('touchend', _touchEnd);
-      }
-    };
-  }, [touchEndRef]);
   var statusText = /*#__PURE__*/React.createElement(animated.div, {
     style: springStyles,
     className: "head"
@@ -298,27 +248,68 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       height: headHeight
     }
   }, renderStatusText()));
-
-  if (children && ! /*#__PURE__*/React.isValidElement(children)) {
-    throw Error('children must be a valid ReactElement');
-  }
-
   useLayoutEffect(function () {
-    var el = wrapRef.current;
-    var fg = new Touch(el, {
+    var wrapEl = wrapRef.current;
+    var el = elRef.current;
+    var y = 0;
+    var d = 0; // touch cacl in children
+
+    var childrenElFg = new Touch(el, {
+      onTouchStart: function onTouchStart(e) {
+        d = 0;
+
+        if (e.touches) {
+          y = e.touches[0].pageY;
+        } else {
+          y = e.pageY;
+        }
+      },
+      onTouchMove: function onTouchMove(e) {
+        var y1;
+
+        if (e.touches) {
+          y1 = e.touches[0].pageY;
+        } else {
+          y1 = e.pageY;
+        }
+
+        var scrollTop = getScrollTop(el);
+
+        if (y1 - y > 0 && scrollTop === 0 && e.cancelable) {
+          e.preventDefault();
+          isPullingRef.current = true;
+          setStatus('pulling');
+        }
+      },
+      onTouchEnd: function onTouchEnd() {
+        var _a;
+
+        y = 0;
+        d = 0;
+        (_a = touchEndRef.current) === null || _a === void 0 ? void 0 : _a.call(touchEndRef);
+      }
+    }); // press move in wrap
+
+    var fg = new Touch(wrapEl, {
       onPressMove: function onPressMove(e) {
         if (!isPullingRef.current || statusRef.current === 'refreshing' || statusRef.current === 'complete') return;
-        dRef.current = Math.min(threshold + 30, dRef.current + e.deltaY);
+        d = Math.min(threshold + 30, d + e.deltaY);
         api.start({
-          height: dRef.current
+          height: d
         });
-        setStatus(dRef.current > threshold ? 'canRelease' : 'pulling');
+        setStatus(d > threshold ? 'canRelease' : 'pulling');
       }
     });
     return function () {
       fg === null || fg === void 0 ? void 0 : fg.destroy();
+      childrenElFg === null || childrenElFg === void 0 ? void 0 : childrenElFg.destroy();
     };
-  }, [api, threshold, statusRef]);
+  }, [api, threshold, statusRef, touchEndRef]);
+
+  if (children && ! /*#__PURE__*/React.isValidElement(children)) {
+    throw Error('children must be ReactElement');
+  }
+
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({
     ref: wrapRef
   }, rest, {
@@ -326,7 +317,9 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: __assign(__assign({}, style), {
       touchAction: 'pan-y'
     })
-  }), statusText, children);
+  }), statusText, /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, {
+    ref: elRef
+  }) : null);
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 export default PullToRefresh;
