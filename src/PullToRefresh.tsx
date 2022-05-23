@@ -64,7 +64,10 @@ type Props = {
   threshold?: number;
   /** 根据下拉状态，自定义下拉提示文案 */
   renderText?: (status: PullStatus) => ReactNode;
-  /** 触发下拉刷新的元素,比如Pull */
+  /**
+   * 触发下拉刷新的元素
+   * 作为组件，请使用React.forwardRef 将ref引到dom
+   *  */
   children?: React.ReactElement;
 } & BaseProps;
 
@@ -99,7 +102,9 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     from: { height: 0 },
   }));
 
-  const wrapRef = useRef<HTMLDivElement>(null); // could be wrapper / children El instance
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const elRef = useRef(null);
+
   const isPullingRef = useRef(false);
   useImperativeHandle(ref, () => wrapRef.current);
 
@@ -167,12 +172,11 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useLayoutEffect(() => {
     let y = 0;
-    const el = wrapRef.current;
+    const el = elRef.current;
 
     const _touchStart = (e) => (y = e.touches[0].pageY);
     const _touchEnd = () => {
       y = 0;
-      // touchEnd();
       touchEndRef.current?.();
     };
 
@@ -246,7 +250,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       style={{ ...style, touchAction: 'pan-y' }}
     >
       {statusText}
-      {children}
+      {React.isValidElement(children) ? React.cloneElement(children, { ref: elRef }) : null}
     </StyledWrap>
   );
 });
