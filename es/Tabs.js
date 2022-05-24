@@ -130,9 +130,10 @@ var Tabs = function Tabs(_a) {
     ref: headerWrapElRef
   }, !!underline && /*#__PURE__*/React.createElement("div", {
     ref: underlineElRef,
-    className: clsx(getClassName('header-line')),
+    className: clsx(getClassName('header-line'), getClassName('header-item')),
     style: {
-      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)")
+      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)"),
+      width: tabWidth
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "line",

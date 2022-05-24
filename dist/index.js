@@ -2079,9 +2079,10 @@ var Tabs = function Tabs(_ref2) {
     ref: headerWrapElRef
   }, !!underline && /*#__PURE__*/React__default['default'].createElement("div", {
     ref: underlineElRef,
-    className: clsx__default['default'](getClassName$1('header-line')),
+    className: clsx__default['default'](getClassName$1('header-line'), getClassName$1('header-item')),
     style: {
-      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)")
+      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)"),
+      width: tabWidth
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: "line",
