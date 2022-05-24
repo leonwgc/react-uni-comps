@@ -240,8 +240,8 @@ const Tabs: React.FC<TabsProp> = ({
         {!!underline && (
           <div
             ref={underlineElRef}
-            className={clsx(getClassName('header-line'))}
-            style={{ transform: `translate3d(${_v * 100 + '%'}, 0, 0)` }}
+            className={clsx(getClassName('header-line'), getClassName('header-item'))}
+            style={{ transform: `translate3d(${_v * 100 + '%'}, 0, 0)`, width: tabWidth }}
           >
             <div
               className="line"
