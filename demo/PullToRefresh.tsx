@@ -87,18 +87,7 @@ const App = () => {
       <DemoBlock title="自定义状态文本">
         <PullToRefresh
           onRefresh={onRefresh}
-          pullingText={
-            <Space>
-              <Spin />
-              下拉刷新
-            </Space>
-          }
-          canReleaseText={
-            <Space>
-              <Spin />
-              释放立即刷新
-            </Space>
-          }
+          pullingText={'下拉刷新'}
           refreshingText={
             <Space>
               <Spin />
