@@ -5,13 +5,14 @@ import { SortableList, Button, Space, AutoCenter } from 'react-uni-comps';
 
 const list = [
   { title: '1' },
-  {
-    title: '2',
-  },
+  { title: '2' },
   { title: '3' },
   { title: '4' },
   { title: '5' },
   { title: '6' },
+  { title: '7' },
+  { title: '8' },
+  { title: '9' },
 ];
 
 export default function App() {
@@ -19,8 +20,8 @@ export default function App() {
 
   return (
     <PageWrap>
-      <Block title="拖动方块排序" border="0">
-        <AutoCenter>
+      <Block title="拖动排序" border="0">
+        <AutoCenter style={{ marginBottom: 24 }}>
           <Space>
             当前排列
             {dataList.map((item) => (
@@ -30,10 +31,10 @@ export default function App() {
         </AutoCenter>
 
         <SortableList
-          style={{ display: 'flex', flexWrap: 'wrap', marginTop: 24 }}
+          style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}
           dataList={dataList}
           dataRender={(data) => (
-            <Button style={{ width: 90, height: 90, margin: 10, fontSize: 32 }}>
+            <Button style={{ width: 60, height: 60, fontSize: 18, borderRadius: '50%' }}>
               {data.title}
             </Button>
           )}
