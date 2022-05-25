@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Pullup, Cell, PullToRefresh, Ripple, Spin, Space, Icon } from 'react-uni-comps';
+import { Pullup, Cell, PullToRefresh, styled, Spin, Space, Icon } from 'react-uni-comps';
 
 const pageSize = 10;
 
@@ -10,6 +10,16 @@ const CompleteText = (
     <Icon type="uc-icon-chenggong" /> 刷新成功
   </Space>
 );
+
+const StyledWrap = styled.div`
+  height: 160px;
+  width: 100%;
+  writing-mode: vertical-lr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+`;
 
 const App = () => {
   const [list, setList] = useState([]);
@@ -57,20 +67,7 @@ const App = () => {
     <PageWrap>
       <DemoBlock title="下拉刷新" padding={0}>
         <PullToRefresh completeText={CompleteText}>
-          <div
-            style={{
-              height: 90,
-              width: '100%',
-              writingMode: 'vertical-lr',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: 14,
-              overflowY: 'scroll',
-            }}
-          >
-            下拉刷新
-          </div>
+          <StyledWrap>下拉刷新</StyledWrap>
         </PullToRefresh>
       </DemoBlock>
 
@@ -87,7 +84,7 @@ const App = () => {
         </PullToRefresh>
       </DemoBlock>
 
-      <DemoBlock title="搭配Pullup,自定义状态文本">
+      <DemoBlock title="自定义状态文本">
         <PullToRefresh
           onRefresh={onRefresh}
           pullingText={
@@ -111,14 +108,7 @@ const App = () => {
           completeText={CompleteText}
           completeDelay={1000}
         >
-          <Pullup
-            dataList={list}
-            useWindowScroll={false}
-            fetchData={fetchData}
-            height={200}
-            finished={finished}
-            dataRender={(data) => <Cell>{data}</Cell>}
-          ></Pullup>
+          <StyledWrap>下拉刷新</StyledWrap>
         </PullToRefresh>
       </DemoBlock>
     </PageWrap>
