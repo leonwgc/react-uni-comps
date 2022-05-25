@@ -517,39 +517,22 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Mask.displayName = 'UC-Mask';
 
-var flexGapSupported;
-/**
- * 检查浏览器支持gap
- *
- * @return {*}  {boolean}
- */
-
-var detectFlexGapSupported = function detectFlexGapSupported() {
-  if (flexGapSupported !== undefined) {
-    return flexGapSupported;
-  }
-
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  var flex = document.createElement('div');
-  flex.style.display = 'flex';
-  flex.style.flexDirection = 'column';
-  flex.style.rowGap = '1px';
-  flex.appendChild(document.createElement('div'));
-  flex.appendChild(document.createElement('div'));
-  document.body.appendChild(flex);
-  flexGapSupported = flex.scrollHeight === 1;
-  document.body.removeChild(flex);
-  return flexGapSupported;
-};
 /** 是否是浏览器 */
 
 var isBrowser = !!(typeof window !== 'undefined' && window);
 /** 是否是移动端 */
 
 var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
+/**
+ *
+ * 是否支持某个css属性
+ * @param {string} prop
+ * @return {*}  {boolean}
+ */
+
+var isCssPropExist = function isCssPropExist(prop) {
+  return isBrowser && prop && prop in document.documentElement.style;
+};
 var _passiveIfSupported = false;
 
 try {
@@ -673,6 +656,15 @@ var ELEMENT_NODE_TYPE = 1;
 function isElement(node) {
   return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
 }
+/**
+ * get scroll parent of el, return root(default as window) if not found
+ *
+ * @export
+ * @param {Element} el
+ * @param {(ScrollElement | null | undefined)} [root=window]
+ * @return {*}
+ */
+
 
 function getScrollParent(el) {
   var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
@@ -691,7 +683,12 @@ function getScrollParent(el) {
 
   return root;
 }
-/** get scrollTop */
+/**
+ * get scroll parent's scrollTop
+ *
+ * @param {Element} el
+ * @return {*}  {number}
+ */
 
 var getScrollTop = function getScrollTop(el) {
   var scrollParent = getScrollParent(el);
@@ -1217,7 +1214,7 @@ var Space = /*#__PURE__*/React.forwardRef(function (props, ref) {
       wrap = _props$wrap === void 0 ? false : _props$wrap,
       otherProps = _objectWithoutProperties(props, _excluded$1);
 
-  var supportFlexGap = detectFlexGapSupported();
+  var supportFlexGap = isCssPropExist('gap');
 
   var _React$useMemo = React.useMemo(function () {
     return Array.isArray(size) ? size : [size, size];

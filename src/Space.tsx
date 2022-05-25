@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { toArray } from './util';
 import styled from 'styled-components';
-import { detectFlexGapSupported } from './dom';
+import { isCssPropExist } from './dom';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
@@ -101,7 +101,7 @@ const Space = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...otherProps
   } = props;
 
-  const supportFlexGap = detectFlexGapSupported();
+  const supportFlexGap = isCssPropExist('gap');
 
   const [horizontalSize, verticalSize] = React.useMemo(
     () => (Array.isArray(size) ? size : [size, size]),

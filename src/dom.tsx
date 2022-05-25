@@ -1,53 +1,6 @@
 import { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 
-let flexGapSupported: boolean;
-
-/**
- * 检查浏览器支持gap
- *
- * @return {*}  {boolean}
- */
-export const detectFlexGapSupported = (): boolean => {
-  if (flexGapSupported !== undefined) {
-    return flexGapSupported;
-  }
-
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  const flex = document.createElement('div');
-  flex.style.display = 'flex';
-  flex.style.flexDirection = 'column';
-  flex.style.rowGap = '1px';
-
-  flex.appendChild(document.createElement('div'));
-  flex.appendChild(document.createElement('div'));
-
-  document.body.appendChild(flex);
-  flexGapSupported = flex.scrollHeight === 1;
-  document.body.removeChild(flex);
-
-  return flexGapSupported;
-};
-/**
- * 取得元素偏移值
- *
- * @param {(HTMLElement | null)} el
- * @return {*}  {{ top: number; left: number }}
- */
-export const offset = (el: HTMLElement | null): { top: number; left: number } => {
-  let top = 0;
-  let left = 0;
-  while (el) {
-    top += el.offsetTop;
-    left += el.offsetLeft;
-    el = el.offsetParent as HTMLElement;
-  }
-
-  return { top, left };
-};
 /** 是否是浏览器 */
 export const isBrowser = !!(typeof window !== 'undefined' && window);
 
@@ -56,22 +9,23 @@ export const isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navi
 
 /**
  *
- * 判断是否支持某个css属性
+ * 是否支持某个css属性
  * @param {string} prop
  * @return {*}  {boolean}
  */
-export const isSupportStyleProp = (prop: string): boolean => {
-  return prop && prop in document.documentElement.style;
+export const isCssPropExist = (prop: string): boolean => {
+  return isBrowser && prop && prop in document.documentElement.style;
 };
+
 /**
- * 判断是否支持某个css属性的值，比如position: sticky
+ * 是否支持某个css属性的值，比如position: sticky
  *
  * @param {*} prop
  * @param {*} value
  * @return {*}
  */
-export const isSupportStyleValue = (prop: string, value: string): boolean => {
-  if (isSupportStyleProp(prop)) {
+export const isCssValueExist = (prop: string, value: string): boolean => {
+  if (isCssPropExist(prop)) {
     const d = document.createElement('div');
     d.style[prop] = value;
 
@@ -97,7 +51,7 @@ try {
 } catch (err) {}
 
 /** 是否支持passive事件选项 */
-export const passiveIfSupported = _passiveIfSupported;
+export const isPassiveSupported = isBrowser && _passiveIfSupported;
 
 export type Dispose = (beforeDispose?: () => Promise<void>) => void;
 
@@ -217,6 +171,15 @@ const ELEMENT_NODE_TYPE = 1;
 function isElement(node: Element) {
   return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
 }
+
+/**
+ * get scroll parent of el, return root(default as window) if not found
+ *
+ * @export
+ * @param {Element} el
+ * @param {(ScrollElement | null | undefined)} [root=window]
+ * @return {*}
+ */
 export function getScrollParent(el: Element, root: ScrollElement | null | undefined = window) {
   let node = el;
 
@@ -231,7 +194,12 @@ export function getScrollParent(el: Element, root: ScrollElement | null | undefi
   return root;
 }
 
-/** get scrollTop */
+/**
+ * get scroll parent's scrollTop
+ *
+ * @param {Element} el
+ * @return {*}  {number}
+ */
 export const getScrollTop = (el: Element): number => {
   const scrollParent = getScrollParent(el);
 

@@ -1,53 +1,4 @@
 import ReactDOM from 'react-dom';
-var flexGapSupported;
-/**
- * 检查浏览器支持gap
- *
- * @return {*}  {boolean}
- */
-
-export var detectFlexGapSupported = function detectFlexGapSupported() {
-  if (flexGapSupported !== undefined) {
-    return flexGapSupported;
-  }
-
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  var flex = document.createElement('div');
-  flex.style.display = 'flex';
-  flex.style.flexDirection = 'column';
-  flex.style.rowGap = '1px';
-  flex.appendChild(document.createElement('div'));
-  flex.appendChild(document.createElement('div'));
-  document.body.appendChild(flex);
-  flexGapSupported = flex.scrollHeight === 1;
-  document.body.removeChild(flex);
-  return flexGapSupported;
-};
-/**
- * 取得元素偏移值
- *
- * @param {(HTMLElement | null)} el
- * @return {*}  {{ top: number; left: number }}
- */
-
-export var offset = function offset(el) {
-  var top = 0;
-  var left = 0;
-
-  while (el) {
-    top += el.offsetTop;
-    left += el.offsetLeft;
-    el = el.offsetParent;
-  }
-
-  return {
-    top: top,
-    left: left
-  };
-};
 /** 是否是浏览器 */
 
 export var isBrowser = !!(typeof window !== 'undefined' && window);
@@ -56,24 +7,24 @@ export var isBrowser = !!(typeof window !== 'undefined' && window);
 export var isMobile = isBrowser && /(iPhone|iPad|iPod|iOS|android)/i.test(navigator.userAgent);
 /**
  *
- * 判断是否支持某个css属性
+ * 是否支持某个css属性
  * @param {string} prop
  * @return {*}  {boolean}
  */
 
-export var isSupportStyleProp = function isSupportStyleProp(prop) {
-  return prop && prop in document.documentElement.style;
+export var isCssPropExist = function isCssPropExist(prop) {
+  return isBrowser && prop && prop in document.documentElement.style;
 };
 /**
- * 判断是否支持某个css属性的值，比如position: sticky
+ * 是否支持某个css属性的值，比如position: sticky
  *
  * @param {*} prop
  * @param {*} value
  * @return {*}
  */
 
-export var isSupportStyleValue = function isSupportStyleValue(prop, value) {
-  if (isSupportStyleProp(prop)) {
+export var isCssValueExist = function isCssValueExist(prop, value) {
+  if (isCssPropExist(prop)) {
     var d = document.createElement('div');
     d.style[prop] = value;
     return !!d.style[prop];
@@ -95,7 +46,7 @@ try {
 /** 是否支持passive事件选项 */
 
 
-export var passiveIfSupported = _passiveIfSupported;
+export var isPassiveSupported = isBrowser && _passiveIfSupported;
 /**
  *  container内部元素卸载前执行过渡动画, 配合renderElement使用(Notify,Toast,AlertDialog)
  *
@@ -210,6 +161,15 @@ var ELEMENT_NODE_TYPE = 1;
 function isElement(node) {
   return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
 }
+/**
+ * get scroll parent of el, return root(default as window) if not found
+ *
+ * @export
+ * @param {Element} el
+ * @param {(ScrollElement | null | undefined)} [root=window]
+ * @return {*}
+ */
+
 
 export function getScrollParent(el, root) {
   if (root === void 0) {
@@ -230,7 +190,12 @@ export function getScrollParent(el, root) {
 
   return root;
 }
-/** get scrollTop */
+/**
+ * get scroll parent's scrollTop
+ *
+ * @param {Element} el
+ * @return {*}  {number}
+ */
 
 export var getScrollTop = function getScrollTop(el) {
   var scrollParent = getScrollParent(el);

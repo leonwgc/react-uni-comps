@@ -2,7 +2,7 @@ import { __assign, __makeTemplateObject, __rest } from "tslib";
 import * as React from 'react';
 import { toArray } from './util';
 import styled from 'styled-components';
-import { detectFlexGapSupported } from './dom';
+import { isCssPropExist } from './dom';
 import clsx from 'clsx';
 
 function SpaceItem(_a) {
@@ -81,7 +81,7 @@ var Space = /*#__PURE__*/React.forwardRef(function (props, ref) {
       wrap = _c === void 0 ? false : _c,
       otherProps = __rest(props, ["size", "align", "className", "children", "direction", "split", "style", "wrap"]);
 
-  var supportFlexGap = detectFlexGapSupported();
+  var supportFlexGap = isCssPropExist('gap');
 
   var _d = React.useMemo(function () {
     return Array.isArray(size) ? size : [size, size];
