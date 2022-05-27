@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen } from '../test/test-utils';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Button from './Button';
+import Button from '../src/Button';
 
 describe('button test groups', () => {
   test('render as button', () => {
