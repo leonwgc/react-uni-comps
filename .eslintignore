@@ -7,3 +7,4 @@ es
 pack.js
 dev.js
 test 
+**/*.test.tsx
