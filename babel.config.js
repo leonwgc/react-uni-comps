@@ -12,6 +12,11 @@
 // };
 
 module.exports = {
+  presets: [
+    ['@babel/preset-env', { targets: { node: 'current' } }],
+    require.resolve('@babel/preset-react'),
+    '@babel/preset-typescript',
+  ],
   plugins: [
     [
       'babel-plugin-styled-components',
