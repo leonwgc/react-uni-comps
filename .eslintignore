@@ -7,4 +7,5 @@ es
 pack.js
 dev.js
 test 
+config
 **/*.test.tsx
