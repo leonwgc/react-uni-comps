@@ -23,7 +23,7 @@
     "doc:dev": "dumi dev",
     "doc:build": "dumi build",
     "test": "jest",
-    "debug:test": "jest --watch & jest-preview"
+    "debug:test": "jest-preview & jest --watch"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
