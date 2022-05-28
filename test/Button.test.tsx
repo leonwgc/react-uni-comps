@@ -39,7 +39,6 @@ describe('button test groups', () => {
     );
     const btn = screen.getByRole('button');
     expect(btn).toHaveClass('outlined');
-    debug();
   });
 
   test('disabled', () => {
