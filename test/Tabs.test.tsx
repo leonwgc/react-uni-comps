@@ -216,4 +216,26 @@ describe('Tabs test groups', () => {
     userEvent.click(screen.getByText('tab1'));
     expect(onChangeFn).toHaveBeenCalledTimes(0);
   });
+
+  test('controlled value', () => {
+    const onChangeFn = jest.fn();
+
+    const { rerender } = render(
+      <Tabs title={title} value={0} onChange={onChangeFn}>
+        <Tabs.Tab title="tab1"></Tabs.Tab>
+        <Tabs.Tab title="tab2" disabled></Tabs.Tab>
+      </Tabs>
+    );
+
+    expect(screen.getByText('tab1')).toHaveClass('active');
+
+    rerender(
+      <Tabs title={title} value={1} onChange={onChangeFn}>
+        <Tabs.Tab title="tab1"></Tabs.Tab>
+        <Tabs.Tab title="tab2" disabled></Tabs.Tab>
+      </Tabs>
+    );
+
+    expect(screen.getByText('tab2')).toHaveClass('active');
+  });
 });
