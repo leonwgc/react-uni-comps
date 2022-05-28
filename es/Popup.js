@@ -1,4 +1,4 @@
-import { __assign, __makeTemplateObject } from "tslib";
+import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useRef, forwardRef, useImperativeHandle, useCallback, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
@@ -58,7 +58,9 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       _g = props.unmountOnExit,
       unmountOnExit = _g === void 0 ? true : _g,
       style = props.style,
-      className = props.className;
+      className = props.className,
+      rest = __rest(props, ["children", "visible", "onClose", "closeOnMaskClick", "mask", "maskStyle", "maskClass", "position", "duration", "flip", "mountContainer", "unmountOnExit", "style", "className"]);
+
   var wrapRef = useRef();
   var maskRef = useRef();
   useImperativeHandle(ref, function () {
@@ -113,7 +115,7 @@ var Popup = /*#__PURE__*/forwardRef(function (props, ref) {
       }
     }
   }, [mask, visible]);
-  return mountNode ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Mask, {
+  return mountNode ? /*#__PURE__*/ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", __assign({}, rest), /*#__PURE__*/React.createElement(Mask, {
     visible: visible && mask,
     ref: maskRef,
     className: maskClass,

@@ -121,6 +121,11 @@ var Tabs = function Tabs(_a) {
       });
     }
   });
+
+  if (React.Children.count(children) === 0) {
+    return null;
+  }
+
   return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
     className: clsx(getClassName(), className)
   }), /*#__PURE__*/React.createElement("div", {
