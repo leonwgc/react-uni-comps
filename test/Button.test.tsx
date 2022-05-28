@@ -53,12 +53,15 @@ describe('button test groups', () => {
     expect(btn).toHaveTextContent('link');
   });
 
-  test('wait', () => {
+  test('wait', async () => {
     render(<Button wait>button</Button>);
     const btn = screen.getByText('button');
-    userEvent.click(btn);
-    expect(btn).toHaveClass('disabled');
-    jest.advanceTimersByTime(1000);
+    await (async () => {
+      userEvent.click(btn);
+      expect(btn).toHaveClass('disabled');
+    });
+
+    // jest.advanceTimersByTime(1000);
     expect(btn).not.toHaveClass('disabled');
   });
 
