@@ -26,8 +26,6 @@ type ItemProp = {
 type TabsProp = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> & {
   /** 下划线宽度,可以使用百分比/px/true/false */
   underline?: StringOrNumber | boolean;
-  /** Tabs.Tab子元素*/
-  children: React.ReactNode;
   /** 选择的tab index,非受控模式使用*/
   defaultValue?: number;
   /** 选择的tab index */
@@ -230,6 +228,10 @@ const Tabs: React.FC<TabsProp> = ({
       });
     }
   });
+
+  if (React.Children.count(children) === 0) {
+    return null;
+  }
 
   return (
     <StyledWrapper {...rest} className={clsx(getClassName(), className)}>
