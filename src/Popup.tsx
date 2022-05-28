@@ -119,7 +119,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export type Props = {
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 是否可见 */
   visible?: boolean;
   /**  关闭回调 */
@@ -214,6 +214,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     unmountOnExit = true,
     style,
     className,
+    ...rest
   } = props;
   const wrapRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
@@ -283,7 +284,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return mountNode
     ? ReactDOM.createPortal(
-        <div>
+        <div {...rest}>
           <Mask
             visible={visible && mask}
             ref={maskRef}
