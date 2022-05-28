@@ -1612,68 +1612,21 @@ var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 LazyLoadImage.displayName = 'UC-LazyLoadImage';
 
-/** 延迟渲染子元素, 一般用于防止loading闪烁等问题 */
-var WaitLoading = function WaitLoading(props) {
-  var _props$wait = props.wait,
-      wait = _props$wait === void 0 ? 700 : _props$wait,
-      _props$visible = props.visible,
-      visible = _props$visible === void 0 ? false : _props$visible,
-      children = props.children;
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      show = _useState2[0],
-      setShow = _useState2[1];
-
-  var ref = React.useRef();
-  React.useEffect(function () {
-    if (visible) {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      ref.current = window.setTimeout(function () {
-        setShow(true);
-      }, wait);
-    } else {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      setShow(false);
-    }
-
-    return function () {
-      setShow(false);
-      clearTimeout(ref.current);
-    };
-  }, [visible, wait]);
-  return show ? children : null;
-};
-
-var _excluded$4 = ["wait", "loading", "className"];
+var _excluded$4 = ["className"];
 var StyledSpin = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Spin__StyledSpin",
   componentId: "sc-g3ipak-0"
 })(["@-webkit-keyframes loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg);}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg);}}@keyframes loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg);}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg);}}display:inline-flex;position:relative;width:1em;height:1em;vertical-align:middle;animation:loading 1s steps(60,end) infinite;:before,:after{content:'';display:block;width:0.5em;height:1em;box-sizing:border-box;border:0.125em solid;border-color:currentColor;}:before{border-right-width:0;border-top-left-radius:1em;border-bottom-left-radius:1em;mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);}:after{border-left-width:0;border-top-right-radius:1em;border-bottom-right-radius:1em;mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);}"]);
-/** 加载中指示器,继承父容器颜色和字体大小 */
+/** 加载中 */
 
 var Spin = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
-  var wait = _ref.wait,
-      _ref$loading = _ref.loading,
-      loading = _ref$loading === void 0 ? true : _ref$loading,
-      className = _ref.className,
+  var className = _ref.className,
       rest = _objectWithoutProperties(_ref, _excluded$4);
 
-  var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 700 : 0;
-  var el = /*#__PURE__*/React__default['default'].createElement(StyledSpin, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledSpin, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className, 'uc-spin')
   }));
-  return waitTime > 0 ? /*#__PURE__*/React__default['default'].createElement(WaitLoading, {
-    visible: loading,
-    wait: waitTime
-  }, el) : el;
 });
 Spin.displayName = 'UC-Spin';
 
@@ -1905,6 +1858,45 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }), children);
 });
 HairLineBox.displayName = 'UC-HairLineBox';
+
+/** 延迟渲染子元素, 一般用于防止loading闪烁等问题 */
+var WaitLoading = function WaitLoading(props) {
+  var _props$wait = props.wait,
+      wait = _props$wait === void 0 ? 700 : _props$wait,
+      _props$visible = props.visible,
+      visible = _props$visible === void 0 ? false : _props$visible,
+      children = props.children;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      show = _useState2[0],
+      setShow = _useState2[1];
+
+  var ref = React.useRef();
+  React.useEffect(function () {
+    if (visible) {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      ref.current = window.setTimeout(function () {
+        setShow(true);
+      }, wait);
+    } else {
+      if (ref.current) {
+        clearTimeout(ref.current);
+      }
+
+      setShow(false);
+    }
+
+    return function () {
+      setShow(false);
+      clearTimeout(ref.current);
+    };
+  }, [visible, wait]);
+  return show ? children : null;
+};
 
 var _templateObject;
 /**
