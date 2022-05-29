@@ -1926,6 +1926,21 @@ var getThemeColor = function getThemeColor() {
   return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
 };
 
+/**
+ * 保存最新的值在ref中
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useLatest(value) {
+  var ref = React.useRef(value);
+  ref.current = value;
+  return ref;
+}
+
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
  *  执行异步更新effect
@@ -1937,11 +1952,14 @@ var getThemeColor = function getThemeColor() {
 var useUpdateEffect = function useUpdateEffect(effect) {
   var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var isMounted = React.useRef(false);
+  var latestFn = useLatest(effect);
   React.useEffect(function () {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {
-      return effect();
+      var _latestFn$current;
+
+      return (_latestFn$current = latestFn.current) === null || _latestFn$current === void 0 ? void 0 : _latestFn$current.call(latestFn);
     }
   }, deps);
 };
@@ -2834,21 +2852,6 @@ var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(functio
   }), children);
 });
 FileInputTrigger.displayName = 'UC-FileInputTrigger';
-
-/**
- * 保存最新的值在ref中
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useLatest(value) {
-  var ref = React.useRef(value);
-  ref.current = value;
-  return ref;
-}
 
 var _excluded$l = ["onVisible", "onInVisible", "style", "className"];
 
@@ -8577,7 +8580,7 @@ var useThrottle = function useThrottle(fn) {
 };
 
 /**
- * 倒计时，常用于获取验证码
+ * 获取验证码倒计时
  *
  * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
  * @param {boolean} [defaultStarted=false] 默认开始否
@@ -8608,18 +8611,24 @@ var useCountdown = function useCountdown() {
       isReStarted = _useState6[0],
       setIsReStarted = _useState6[1];
 
+  var unmountRef = React.useRef(false);
   var start = React.useCallback(function () {
     setStarted(true);
   }, []);
   var reset = React.useCallback(function () {
     setStarted(false);
   }, []);
+  useUnmount(function () {
+    unmountRef.current = true;
+  });
   React.useEffect(function () {
     if (countdown > 0 && started) {
       setTimeout(function () {
-        setCountdown(function (cd) {
-          return --cd;
-        });
+        if (!unmountRef.current) {
+          setCountdown(function (cd) {
+            return --cd;
+          });
+        }
       }, 1000);
 
       if (countdown === 1) {

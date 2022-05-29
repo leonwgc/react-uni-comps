@@ -11,7 +11,7 @@ declare type CountdownHooksReturn = {
     reset: () => void;
 };
 /**
- * 倒计时，常用于获取验证码
+ * 获取验证码倒计时
  *
  * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
  * @param {boolean} [defaultStarted=false] 默认开始否

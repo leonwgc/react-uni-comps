@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import useUnmount from './useUnmount';
 /**
- * 倒计时，常用于获取验证码
+ * 获取验证码倒计时
  *
  * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
  * @param {boolean} [defaultStarted=false] 默认开始否
@@ -34,18 +35,24 @@ var useCountdown = function useCountdown(defaultCountdown, defaultStarted) {
       isReStarted = _c[0],
       setIsReStarted = _c[1];
 
+  var unmountRef = useRef(false);
   var start = useCallback(function () {
     setStarted(true);
   }, []);
   var reset = useCallback(function () {
     setStarted(false);
   }, []);
+  useUnmount(function () {
+    unmountRef.current = true;
+  });
   useEffect(function () {
     if (countdown > 0 && started) {
       setTimeout(function () {
-        setCountdown(function (cd) {
-          return --cd;
-        });
+        if (!unmountRef.current) {
+          setCountdown(function (cd) {
+            return --cd;
+          });
+        }
       }, 1000);
 
       if (countdown === 1) {
