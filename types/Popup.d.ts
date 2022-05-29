@@ -1,5 +1,5 @@
 import React from 'react';
-import type { PropsElementType } from './types';
+import type { TargetElementType } from './types';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 是否可见 */
     visible?: boolean;
@@ -25,7 +25,7 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * 弹框挂载节点
      * @default document.body
      */
-    mountContainer?: PropsElementType;
+    mountContainer?: TargetElementType;
     /** 弹框里面的内容 */
     children?: React.ReactNode;
     /** 弹框样式 */
@@ -82,7 +82,7 @@ declare const Popup: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      * 弹框挂载节点
      * @default document.body
      */
-    mountContainer?: PropsElementType;
+    mountContainer?: TargetElementType;
     /** 弹框里面的内容 */
     children?: React.ReactNode;
     /** 弹框样式 */

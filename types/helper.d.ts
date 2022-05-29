@@ -1,4 +1,4 @@
-import type { PropsElementType } from './types';
+import type { TargetElementType } from './types';
 export declare type F = (...args: any[]) => void;
 /**
  * 防抖
@@ -59,12 +59,12 @@ export declare const sleep: (time: number) => Promise<unknown>;
  */
 export declare const deepClone: <T>(src: T) => T;
 /**
- * get element from props  fn/ref/el
+ * get element from fn/ref/el target
  *
- * @param {PropsElementType} container
+ * @param {TargetElementType} target
  * @return {*}  {HTMLElement}
  */
-export declare const getPropsElement: (container: PropsElementType) => HTMLElement;
+export declare const getTargetElement: (target: TargetElementType) => HTMLElement;
 /**
  * className with prefix gen
  *

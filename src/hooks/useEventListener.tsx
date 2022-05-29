@@ -17,9 +17,9 @@ export default function useEventListener(
    * @default window
    *  */
   target: TargetElementType,
-  handler?: (e) => void,
   /** 监听事件类型 */
   eventName = 'click',
+  handler?: (e) => void,
   // eslint-disable-next-line no-undef
   options: boolean | AddEventListenerOptions | undefined = undefined
 ) {

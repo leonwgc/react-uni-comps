@@ -1,41 +1,41 @@
-import React, { HTMLAttributes, useLayoutEffect, useState } from 'react';
-import { throttle } from './helper';
+import React, { HTMLAttributes, ReactElement, useState } from 'react';
+import { getTargetElement } from './helper';
+import useEventListener from './hooks/useEventListener';
+import useThrottle from './hooks/useThrottle';
+import type { TargetElementType } from './types';
 
 type Props = {
+  target?: TargetElementType;
   /**
    * 滚动高度>visibilityHeight才显示子元素
    * @type {number}
    * @default 100
    */
   visibilityHeight?: number;
-  children?: React.ReactElement;
 } & HTMLAttributes<HTMLSpanElement>;
 
 /**
  * 回到页面顶部
  *
- * @param {Props} props
- * @return {*}  {React.ReactElement}
  */
-const ScrollToTop = (props: Props): React.ReactElement => {
-  const { children, visibilityHeight = 100 } = props;
+const BackTop = (props: Props) => {
+  const { children, target, visibilityHeight = 100 } = props;
   const [visible, setVisible] = useState(false);
   const top = 0;
 
-  useLayoutEffect(() => {
-    const onScroll = throttle(() => {
-      if (window.pageYOffset >= visibilityHeight) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-    });
-    window.addEventListener('scroll', onScroll);
+  const onScroll = useThrottle(() => {
+    const targetEl = getTargetElement(target) || window;
+    if (
+      (targetEl === window && window.pageYOffset >= visibilityHeight) ||
+      (targetEl as Element).scrollTop >= visibilityHeight
+    ) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  });
 
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [visibilityHeight]);
+  useEventListener(target, 'scroll', onScroll);
 
   if (process.env.NODE_ENV !== 'production') {
     if (!React.isValidElement(children)) {
@@ -44,17 +44,25 @@ const ScrollToTop = (props: Props): React.ReactElement => {
   }
 
   return visible
-    ? React.cloneElement(children, {
+    ? React.cloneElement(children as React.ReactElement, {
         onClick: () => {
-          children.props.onClick?.();
+          (children as ReactElement).props.onClick?.();
           const step = Math.abs(window.pageYOffset - top) / 20;
+          const targetEl = getTargetElement(target) || window;
           const cb = () => {
-            if (window.pageYOffset > top) {
-              window.scrollTo(
-                0,
-                window.pageYOffset - step >= top ? window.pageYOffset - step : top
-              );
-              requestAnimationFrame(cb);
+            if (targetEl === window) {
+              if (window.pageYOffset > top) {
+                window.scrollTo(
+                  0,
+                  window.pageYOffset - step >= top ? window.pageYOffset - step : top
+                );
+                requestAnimationFrame(cb);
+              }
+            } else {
+              targetEl.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
             }
           };
           requestAnimationFrame(cb);
@@ -62,6 +70,6 @@ const ScrollToTop = (props: Props): React.ReactElement => {
       })
     : null;
 };
-ScrollToTop.displayName = 'UC-ScrollToTop';
+BackTop.displayName = 'UC-BackTop';
 
-export default ScrollToTop;
+export default BackTop;

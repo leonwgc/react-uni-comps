@@ -50,7 +50,7 @@ const App = () => {
   return (
     <PageWrap style={{ padding: 0 }}>
       <DemoBlock title="下滑100px显示">
-        <PullToRefresh onRefresh={onRefresh} useWindowScroll>
+        <PullToRefresh onRefresh={onRefresh}>
           <Pullup
             dataList={list}
             fetchData={fetchData}
