@@ -14,7 +14,7 @@ export type BaseProps = {
   children?: React.ReactNode;
 };
 
-export type PropsElementType =
+export type TargetElementType =
   | HTMLElement
   | (() => HTMLElement)
   | React.MutableRefObject<HTMLElement>;

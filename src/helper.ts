@@ -1,4 +1,4 @@
-import type { PropsElementType } from './types';
+import type { TargetElementType } from './types';
 
 export type F = (...args) => void;
 /**
@@ -159,23 +159,23 @@ export const deepClone = <T>(src: T): T => {
 };
 
 /**
- * get element from props  fn/ref/el
+ * get element from fn/ref/el target
  *
- * @param {PropsElementType} container
+ * @param {TargetElementType} target
  * @return {*}  {HTMLElement}
  */
-export const getPropsElement = (container: PropsElementType): HTMLElement => {
-  let mountNode;
+export const getTargetElement = (target: TargetElementType): HTMLElement => {
+  let node;
 
-  if (container instanceof HTMLElement) {
-    mountNode = container;
-  } else if (isObject(container) && 'current' in container) {
-    mountNode = container.current;
-  } else if (typeof container === 'function') {
-    mountNode = container?.();
+  if (target instanceof HTMLElement) {
+    node = target;
+  } else if (isObject(target) && 'current' in target) {
+    node = target.current;
+  } else if (typeof target === 'function') {
+    node = target?.();
   }
 
-  return mountNode;
+  return node;
 };
 
 /**
