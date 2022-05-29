@@ -2948,11 +2948,19 @@ function useEventListener(target) {
 var useThrottle = function useThrottle(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
   var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  return (// eslint-disable-next-line react-hooks/exhaustive-deps
-    React.useMemo(function () {
-      return throttle(fn, timeout);
-    }, fnDeps)
-  );
+  var fnRef = useLatest(fn); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  return React.useMemo(function () {
+    return throttle(function () {
+      var _fnRef$current;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_fnRef$current = fnRef.current) === null || _fnRef$current === void 0 ? void 0 : _fnRef$current.call.apply(_fnRef$current, [fnRef].concat(args));
+    }, timeout);
+  }, fnDeps);
 };
 
 var _excluded$m = ["data", "onItemClick", "className"];
@@ -8630,11 +8638,19 @@ var Loading$1 = attachPropertiesToComponent(Loading, {
 var useDebounce = function useDebounce(fn) {
   var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
   var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  return (// eslint-disable-next-line react-hooks/exhaustive-deps
-    React.useMemo(function () {
-      return debounce(fn, timeout);
-    }, fnDeps)
-  );
+  var fnRef = useLatest(fn); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  return React.useMemo(function () {
+    return debounce(function () {
+      var _fnRef$current;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_fnRef$current = fnRef.current) === null || _fnRef$current === void 0 ? void 0 : _fnRef$current.call.apply(_fnRef$current, [fnRef].concat(args));
+    }, timeout);
+  }, fnDeps);
 };
 
 /**
