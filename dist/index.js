@@ -9121,6 +9121,7 @@ exports.useCallbackRef = useCallbackRef;
 exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
+exports.useEventListener = useEventListener;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useLatest = useLatest;
