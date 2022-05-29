@@ -14,7 +14,7 @@ export type BaseProps = {
   children?: React.ReactNode;
 };
 
-export type MountContainerType =
+export type PropsElementType =
   | HTMLElement
   | (() => HTMLElement)
   | React.MutableRefObject<HTMLElement>;

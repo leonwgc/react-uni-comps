@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
-import { isTouch } from './dom';
 import Touch from 'w-touch';
+import useClickAway from './hooks/useClickAway';
 
 type Action = {
   text: string;
@@ -123,26 +123,12 @@ const SwipeAction: React.FC<Props> = (props) => {
     v.el.style.transform = `${transformStr}`;
   }, []);
 
-  useEffect(() => {
-    const v = thisRef.current;
+  useClickAway(elRef, () => {
     if (closeOnClickOutside) {
-      const closeHandler = (e) => {
-        if (!isOpen) {
-          return;
-        }
-
-        if (!v.el.contains(e.target)) {
-          startTransform('translate3d(0,0,0)', 0);
-          setIsOpen(false);
-        }
-      };
-      window.addEventListener('click', closeHandler);
-
-      return () => {
-        window.removeEventListener('click', closeHandler);
-      };
+      startTransform('translate3d(0,0,0)', 0);
+      setIsOpen(false);
     }
-  }, [closeOnClickOutside, startTransform, isOpen]);
+  });
 
   useLayoutEffect(() => {
     thisRef.current.el = elRef.current;
@@ -163,41 +149,6 @@ const SwipeAction: React.FC<Props> = (props) => {
     );
   }, []);
 
-  const touchStart = useCallback(() => {
-    thisRef.current.el.style.transitionProperty = 'none';
-  }, []);
-
-  const touchEnd = useCallback(() => {
-    const v = thisRef.current;
-
-    if (v.x < 0) {
-      // open right
-      if (Math.abs(v.x) < v.rightWidth / 2) {
-        // no more than half way
-        startTransform('translate3d(0,0,0)', 0);
-        setIsOpen(false);
-      } else {
-        startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
-        setIsOpen(true);
-      }
-    } else if (v.x > 0) {
-      if (Math.abs(v.x) < v.leftWidth / 2) {
-        // no more than half way
-        startTransform('translate3d(0,0,0)', 0);
-        v.x = 0;
-        setIsOpen(false);
-      } else {
-        startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
-        setIsOpen(true);
-      }
-    }
-  }, [startTransform]);
-
-  useEffect(() => {
-    elRef.current.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-  }, [touchEnd, touchStart]);
-
   useLayoutEffect(() => {
     const el = elRef.current;
     const fg = new Touch(el, {
@@ -211,12 +162,40 @@ const SwipeAction: React.FC<Props> = (props) => {
           v.el.style.transform = `translate3d(${v.x}px,0,0)`;
         }
       },
+      onTouchStart: () => {
+        thisRef.current.el.style.transitionProperty = 'none';
+      },
+      onTouchEnd: () => {
+        const v = thisRef.current;
+
+        if (v.x < 0) {
+          // open right
+          if (Math.abs(v.x) < v.rightWidth / 2) {
+            // no more than half way
+            startTransform('translate3d(0,0,0)', 0);
+            setIsOpen(false);
+          } else {
+            startTransform(`translate3d(-${v.rightWidth}px,0,0)`, -1 * v.rightWidth);
+            setIsOpen(true);
+          }
+        } else if (v.x > 0) {
+          if (Math.abs(v.x) < v.leftWidth / 2) {
+            // no more than half way
+            startTransform('translate3d(0,0,0)', 0);
+            v.x = 0;
+            setIsOpen(false);
+          } else {
+            startTransform(`translate3d(${v.leftWidth}px,0,0)`, v.leftWidth);
+            setIsOpen(true);
+          }
+        }
+      },
     });
 
     return () => {
       fg?.destroy();
     };
-  }, []);
+  }, [startTransform]);
 
   return (
     <StyledSwipeAction className={clsx('uc-swipe-action')}>

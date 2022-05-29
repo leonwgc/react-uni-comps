@@ -1,4 +1,4 @@
-import type { MountContainerType } from './types';
+import type { PropsElementType } from './types';
 
 export type F = (...args) => void;
 /**
@@ -157,13 +157,14 @@ export const deepClone = <T>(src: T): T => {
   }
   return dest as T;
 };
+
 /**
+ * get element from props  fn/ref/el
  *
- *
- * @param {MountContainerType} container
+ * @param {PropsElementType} container
  * @return {*}  {HTMLElement}
  */
-export const getMountContainer = (container: MountContainerType): HTMLElement => {
+export const getPropsElement = (container: PropsElementType): HTMLElement => {
   let mountNode;
 
   if (container instanceof HTMLElement) {
