@@ -2900,97 +2900,6 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Waypoint.displayName = 'UC-Waypoint';
 
-var _excluded$m = ["data", "onItemClick", "className"];
-var getClassName$2 = prefixClassName('uc-index-list');
-var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
-  displayName: "IndexList__StyledWrap",
-  componentId: "sc-6nas4t-0"
-})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$2('body'), getClassName$2('anchor'), getClassName$2('title'), getClassName$2('item'), getClassName$2('side'), getClassName$2('side-item'), getThemeColorCss('background-color'));
-/** 索引列表 */
-
-var IndexList = function IndexList(props) {
-  var _props$data = props.data,
-      data = _props$data === void 0 ? [] : _props$data,
-      onItemClick = props.onItemClick,
-      className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$m);
-
-  var bodyRef = React.useRef();
-
-  var _useState = React.useState(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      activeIndex = _useState2[0],
-      setActiveIndex = _useState2[1];
-
-  React.useEffect(function () {
-    var bodyEl = bodyRef.current;
-
-    if (bodyEl) {
-      var scrollSpy = throttle(function () {
-        var children = bodyEl.children;
-
-        for (var i = 0; i < children.length; i++) {
-          var el = children[i];
-
-          if (el.offsetTop + el.offsetHeight > bodyEl.scrollTop) {
-            setActiveIndex(i);
-            return;
-          }
-        }
-      });
-      bodyEl.addEventListener('scroll', scrollSpy);
-      return function () {
-        bodyEl.removeEventListener('scroll', scrollSpy);
-      };
-    }
-  }, []);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$2(), className)
-  }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$2('body'),
-    ref: bodyRef
-  }, data.map(function (dataItem, index) {
-    return /*#__PURE__*/React__default['default'].createElement("div", {
-      key: index,
-      "data-index": index,
-      className: getClassName$2('anchor')
-    }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$2('title')
-    }, dataItem.title), dataItem.children.map(function (item, idx) {
-      return /*#__PURE__*/React__default['default'].createElement("dd", {
-        className: getClassName$2('item'),
-        onClick: function onClick() {
-          onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
-        },
-        key: idx,
-        "data-value": item.value
-      }, item.label);
-    }));
-  })), /*#__PURE__*/React__default['default'].createElement(Space, {
-    className: getClassName$2('side'),
-    direction: "vertical",
-    size: 2
-  }, data.map(function (item, idx) {
-    return /*#__PURE__*/React__default['default'].createElement("a", {
-      className: clsx__default['default'](getClassName$2('side-item'), {
-        active: idx === activeIndex
-      }),
-      key: idx,
-      onClick: function onClick() {
-        setActiveIndex(idx);
-        var anchors = bodyRef.current.children;
-        var anchor = anchors[idx];
-        bodyRef.current.scrollTo({
-          top: anchor.offsetTop,
-          left: 0
-        });
-      }
-    }, item.title);
-  })));
-};
-
-IndexList.displayName = 'uc-index-list';
-
 /**
  * 事件监听
  *
@@ -3049,6 +2958,89 @@ var useThrottle = function useThrottle(fn) {
     }, fnDeps)
   );
 };
+
+var _excluded$m = ["data", "onItemClick", "className"];
+var getClassName$2 = prefixClassName('uc-index-list');
+var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "IndexList__StyledWrap",
+  componentId: "sc-6nas4t-0"
+})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$2('body'), getClassName$2('anchor'), getClassName$2('title'), getClassName$2('item'), getClassName$2('side'), getClassName$2('side-item'), getThemeColorCss('background-color'));
+/** 索引列表 */
+
+var IndexList = function IndexList(props) {
+  var _props$data = props.data,
+      data = _props$data === void 0 ? [] : _props$data,
+      onItemClick = props.onItemClick,
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$m);
+
+  var bodyRef = React.useRef();
+
+  var _useState = React.useState(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      activeIndex = _useState2[0],
+      setActiveIndex = _useState2[1];
+
+  var onScrollSpy = useThrottle(function () {
+    var bodyEl = bodyRef.current;
+    var children = bodyEl.children;
+
+    for (var i = 0; i < children.length; i++) {
+      var el = children[i];
+
+      if (el.offsetTop + el.offsetHeight > bodyEl.scrollTop) {
+        setActiveIndex(i);
+        return;
+      }
+    }
+  });
+  useEventListener(bodyRef, 'scroll', onScrollSpy);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
+    className: clsx__default['default'](getClassName$2(), className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: getClassName$2('body'),
+    ref: bodyRef
+  }, data.map(function (dataItem, index) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: index,
+      "data-index": index,
+      className: getClassName$2('anchor')
+    }, /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$2('title')
+    }, dataItem.title), dataItem.children.map(function (item, idx) {
+      return /*#__PURE__*/React__default['default'].createElement("dd", {
+        className: getClassName$2('item'),
+        onClick: function onClick() {
+          onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
+        },
+        key: idx,
+        "data-value": item.value
+      }, item.label);
+    }));
+  })), /*#__PURE__*/React__default['default'].createElement(Space, {
+    className: getClassName$2('side'),
+    direction: "vertical",
+    size: 2
+  }, data.map(function (item, idx) {
+    return /*#__PURE__*/React__default['default'].createElement("a", {
+      className: clsx__default['default'](getClassName$2('side-item'), {
+        active: idx === activeIndex
+      }),
+      key: idx,
+      onClick: function onClick() {
+        setActiveIndex(idx);
+        var anchors = bodyRef.current.children;
+        var anchor = anchors[idx];
+        bodyRef.current.scrollTo({
+          top: anchor.offsetTop,
+          left: 0
+        });
+      }
+    }, item.title);
+  })));
+};
+
+IndexList.displayName = 'uc-index-list';
 
 /**
  * 回到页面顶部
