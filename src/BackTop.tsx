@@ -5,6 +5,9 @@ import useThrottle from './hooks/useThrottle';
 import type { TargetElementType } from './types';
 
 type Props = {
+  /** 监听滚动目标
+   * @default window
+   */
   target?: TargetElementType;
   /**
    * 滚动高度>visibilityHeight才显示子元素

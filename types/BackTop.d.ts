@@ -1,6 +1,9 @@
 import React, { HTMLAttributes } from 'react';
 import type { TargetElementType } from './types';
 declare type Props = {
+    /** 监听滚动目标
+     * @default window
+     */
     target?: TargetElementType;
     /**
      * 滚动高度>visibilityHeight才显示子元素
