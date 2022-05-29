@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
 import type { BaseProps, StringOrNumber } from './types';
-import { throttle, prefixClassName } from './helper';
+import { prefixClassName } from './helper';
 import Space from './Space';
+import useEventListener from './hooks/useEventListener';
+import useThrottle from './hooks/useThrottle';
 
 type Item = {
   label: React.ReactNode;
@@ -78,6 +80,7 @@ const StyledWrap = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      -webkit-tap-highlight-color: transparent;
       font-size: 12px;
 
       &.active {
@@ -95,26 +98,19 @@ const IndexList: React.FC<Props> = (props) => {
   const bodyRef = useRef<HTMLDivElement>();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
+  const onScrollSpy = useThrottle(() => {
     const bodyEl = bodyRef.current;
-    if (bodyEl) {
-      const scrollSpy = throttle(() => {
-        const children = bodyEl.children;
-        for (let i = 0; i < children.length; i++) {
-          const el = children[i] as HTMLElement;
-          if (el.offsetTop + el.offsetHeight > bodyEl.scrollTop) {
-            setActiveIndex(i);
-            return;
-          }
-        }
-      });
-      bodyEl.addEventListener('scroll', scrollSpy);
-
-      return () => {
-        bodyEl.removeEventListener('scroll', scrollSpy);
-      };
+    const children = bodyEl.children;
+    for (let i = 0; i < children.length; i++) {
+      const el = children[i] as HTMLElement;
+      if (el.offsetTop + el.offsetHeight > bodyEl.scrollTop) {
+        setActiveIndex(i);
+        return;
+      }
     }
-  }, []);
+  });
+
+  useEventListener(bodyRef, 'scroll', onScrollSpy);
 
   return (
     <StyledWrap {...rest} className={clsx(getClassName(), className)}>
