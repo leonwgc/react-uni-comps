@@ -210,24 +210,24 @@ export var deepClone = function deepClone(src) {
   return dest;
 };
 /**
- * get element from props  fn/ref/el
+ * get element from fn/ref/el target
  *
- * @param {PropsElementType} container
+ * @param {TargetElementType} target
  * @return {*}  {HTMLElement}
  */
 
-export var getPropsElement = function getPropsElement(container) {
-  var mountNode;
+export var getTargetElement = function getTargetElement(target) {
+  var node;
 
-  if (container instanceof HTMLElement) {
-    mountNode = container;
-  } else if (isObject(container) && 'current' in container) {
-    mountNode = container.current;
-  } else if (typeof container === 'function') {
-    mountNode = container === null || container === void 0 ? void 0 : container();
+  if (target instanceof HTMLElement) {
+    node = target;
+  } else if (isObject(target) && 'current' in target) {
+    node = target.current;
+  } else if (typeof target === 'function') {
+    node = target === null || target === void 0 ? void 0 : target();
   }
 
-  return mountNode;
+  return node;
 };
 /**
  * className with prefix gen

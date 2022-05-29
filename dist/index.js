@@ -925,24 +925,24 @@ var deepClone = function deepClone(src) {
   return dest;
 };
 /**
- * get element from props  fn/ref/el
+ * get element from fn/ref/el target
  *
- * @param {PropsElementType} container
+ * @param {TargetElementType} target
  * @return {*}  {HTMLElement}
  */
 
-var getPropsElement = function getPropsElement(container) {
-  var mountNode;
+var getTargetElement = function getTargetElement(target) {
+  var node;
 
-  if (container instanceof HTMLElement) {
-    mountNode = container;
-  } else if (isObject(container) && 'current' in container) {
-    mountNode = container.current;
-  } else if (typeof container === 'function') {
-    mountNode = container === null || container === void 0 ? void 0 : container();
+  if (target instanceof HTMLElement) {
+    node = target;
+  } else if (isObject(target) && 'current' in target) {
+    node = target.current;
+  } else if (typeof target === 'function') {
+    node = target === null || target === void 0 ? void 0 : target();
   }
 
-  return mountNode;
+  return node;
 };
 /**
  * className with prefix gen
@@ -1019,7 +1019,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return wrapRef.current;
   });
   var forceUpdate = useForceUpdate();
-  var mountNode = getPropsElement(mountContainer);
+  var mountNode = getTargetElement(mountContainer);
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
   useMount(function () {
     // fix container render at the same time / but not ready
@@ -2992,13 +2992,71 @@ var IndexList = function IndexList(props) {
 IndexList.displayName = 'uc-index-list';
 
 /**
+ * 事件监听
+ *
+ * @export
+ * @param {TargetElementType} target 监听对象
+ * @param {(e) => void} [handler] 处理函数
+ * @param {string} [eventName='click'] 事件类型
+ */
+function useEventListener(
+/**
+ * 监听对象
+ * @default window
+ *  */
+target) {
+  var eventName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'click';
+  var handler = arguments.length > 2 ? arguments[2] : undefined;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+  var handlerRef = useLatest(handler);
+  var eventNameRef = useLatest(eventName);
+  var targetRef = useLatest(target);
+  var optionsRef = useLatest(options);
+  React.useEffect(function () {
+    var targetElement = getTargetElement(targetRef.current) || window;
+
+    if (!(targetElement === null || targetElement === void 0 ? void 0 : targetElement.addEventListener)) {
+      return;
+    }
+
+    var eventListener = function eventListener(e) {
+      return handlerRef.current(e);
+    };
+
+    var type = eventNameRef.current;
+    var options = optionsRef.current;
+    targetElement.addEventListener(type, eventListener, options);
+    return function () {
+      targetElement.removeEventListener(type, eventListener, options);
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
+/**
+ * 返回节流函数
+ *
+ * @param {F} fn fn改变throttle fn不会变
+ * @param {number} [timeout=180]
+ * @param {Array<unknown>} [fnDeps=[]]
+ * @return {*}  {F}
+ */
+var useThrottle = function useThrottle(fn) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
+  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  return (// eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useMemo(function () {
+      return throttle(fn, timeout);
+    }, fnDeps)
+  );
+};
+
+/**
  * 回到页面顶部
  *
- * @param {Props} props
- * @return {*}  {React.ReactElement}
  */
-var ScrollToTop = function ScrollToTop(props) {
+var BackTop = function BackTop(props) {
   var children = props.children,
+      target = props.target,
       _props$visibilityHeig = props.visibilityHeight,
       visibilityHeight = _props$visibilityHeig === void 0 ? 100 : _props$visibilityHeig;
 
@@ -3008,19 +3066,16 @@ var ScrollToTop = function ScrollToTop(props) {
       setVisible = _useState2[1];
 
   var top = 0;
-  React.useLayoutEffect(function () {
-    var onScroll = throttle(function () {
-      if (window.pageYOffset >= visibilityHeight) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-    });
-    window.addEventListener('scroll', onScroll);
-    return function () {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [visibilityHeight]);
+  var onScroll = useThrottle(function () {
+    var targetEl = getTargetElement(target) || window;
+
+    if (targetEl === window && window.pageYOffset >= visibilityHeight || targetEl.scrollTop >= visibilityHeight) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  });
+  useEventListener(target, 'scroll', onScroll);
 
   if (process.env.NODE_ENV !== 'production') {
     if (! /*#__PURE__*/React__default['default'].isValidElement(children)) {
@@ -3030,15 +3085,23 @@ var ScrollToTop = function ScrollToTop(props) {
 
   return visible ? /*#__PURE__*/React__default['default'].cloneElement(children, {
     onClick: function onClick() {
-      var _children$props$onCli, _children$props;
+      var _props$onClick, _props;
 
-      (_children$props$onCli = (_children$props = children.props).onClick) === null || _children$props$onCli === void 0 ? void 0 : _children$props$onCli.call(_children$props);
+      (_props$onClick = (_props = children.props).onClick) === null || _props$onClick === void 0 ? void 0 : _props$onClick.call(_props);
       var step = Math.abs(window.pageYOffset - top) / 20;
+      var targetEl = getTargetElement(target) || window;
 
       var cb = function cb() {
-        if (window.pageYOffset > top) {
-          window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
-          requestAnimationFrame(cb);
+        if (targetEl === window) {
+          if (window.pageYOffset > top) {
+            window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
+            requestAnimationFrame(cb);
+          }
+        } else {
+          targetEl.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
         }
       };
 
@@ -3047,7 +3110,7 @@ var ScrollToTop = function ScrollToTop(props) {
   }) : null;
 };
 
-ScrollToTop.displayName = 'UC-ScrollToTop';
+BackTop.displayName = 'UC-BackTop';
 
 var _excluded$n = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
 var StylePopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
@@ -4272,7 +4335,7 @@ NumberKeyboard.displayName = 'UC-NumberKeyboard';
  * 监听点击元素外部事件
  *
  * @export
- * @param {(PropsElementType | PropsElementType[])} target 监听dom对象
+ * @param {(TargetElementType | TargetElementType[])} target 监听dom对象
  * @param {(e) => void} [onClickAway] 点击外部事件触发回调
  * @param {string} [eventName='click'] 监听事件类型
  */
@@ -4296,7 +4359,7 @@ onClickAway) {
       if (targets.some(function (targetItem) {
         var _targetElement$contai;
 
-        var targetElement = getPropsElement(targetItem);
+        var targetElement = getTargetElement(targetItem);
         return !targetElement || ((_targetElement$contai = targetElement.contains) === null || _targetElement$contai === void 0 ? void 0 : _targetElement$contai.call(targetElement, e.target));
       })) {
         return;
@@ -8587,24 +8650,6 @@ var useDebounce = function useDebounce(fn) {
 };
 
 /**
- * 返回节流函数
- *
- * @param {F} fn fn改变throttle fn不会变
- * @param {number} [timeout=180]
- * @param {Array<unknown>} [fnDeps=[]]
- * @return {*}  {F}
- */
-var useThrottle = function useThrottle(fn) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 180;
-  var fnDeps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  return (// eslint-disable-next-line react-hooks/exhaustive-deps
-    React.useMemo(function () {
-      return throttle(fn, timeout);
-    }, fnDeps)
-  );
-};
-
-/**
  * 获取验证码倒计时
  *
  * @param {number} [defaultCountdown=60] 默认从60秒开始倒计时
@@ -8992,7 +9037,7 @@ exports.AnimationElement = AnimationElement;
 exports.AspectRatio = AspectRatio;
 exports.AutoCenter = AutoCenter;
 exports.Avatar = Avatar;
-exports.BackTop = ScrollToTop;
+exports.BackTop = BackTop;
 exports.Badge = Badge;
 exports.Button = Button;
 exports.Calendar = Calendar;

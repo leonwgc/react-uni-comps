@@ -1,14 +1,15 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { throttle } from './helper';
+import React, { useState } from 'react';
+import { getTargetElement } from './helper';
+import useEventListener from './hooks/useEventListener';
+import useThrottle from './hooks/useThrottle';
 /**
  * 回到页面顶部
  *
- * @param {Props} props
- * @return {*}  {React.ReactElement}
  */
 
-var ScrollToTop = function ScrollToTop(props) {
+var BackTop = function BackTop(props) {
   var children = props.children,
+      target = props.target,
       _a = props.visibilityHeight,
       visibilityHeight = _a === void 0 ? 100 : _a;
 
@@ -17,19 +18,16 @@ var ScrollToTop = function ScrollToTop(props) {
       setVisible = _b[1];
 
   var top = 0;
-  useLayoutEffect(function () {
-    var onScroll = throttle(function () {
-      if (window.pageYOffset >= visibilityHeight) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-    });
-    window.addEventListener('scroll', onScroll);
-    return function () {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [visibilityHeight]);
+  var onScroll = useThrottle(function () {
+    var targetEl = getTargetElement(target) || window;
+
+    if (targetEl === window && window.pageYOffset >= visibilityHeight || targetEl.scrollTop >= visibilityHeight) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  });
+  useEventListener(target, 'scroll', onScroll);
 
   if (process.env.NODE_ENV !== 'production') {
     if (! /*#__PURE__*/React.isValidElement(children)) {
@@ -43,11 +41,19 @@ var ScrollToTop = function ScrollToTop(props) {
 
       (_b = (_a = children.props).onClick) === null || _b === void 0 ? void 0 : _b.call(_a);
       var step = Math.abs(window.pageYOffset - top) / 20;
+      var targetEl = getTargetElement(target) || window;
 
       var cb = function cb() {
-        if (window.pageYOffset > top) {
-          window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
-          requestAnimationFrame(cb);
+        if (targetEl === window) {
+          if (window.pageYOffset > top) {
+            window.scrollTo(0, window.pageYOffset - step >= top ? window.pageYOffset - step : top);
+            requestAnimationFrame(cb);
+          }
+        } else {
+          targetEl.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
         }
       };
 
@@ -56,5 +62,5 @@ var ScrollToTop = function ScrollToTop(props) {
   }) : null;
 };
 
-ScrollToTop.displayName = 'UC-ScrollToTop';
-export default ScrollToTop;
+BackTop.displayName = 'UC-BackTop';
+export default BackTop;
