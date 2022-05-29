@@ -925,13 +925,13 @@ var deepClone = function deepClone(src) {
   return dest;
 };
 /**
+ * get element from props  fn/ref/el
  *
- *
- * @param {MountContainerType} container
+ * @param {PropsElementType} container
  * @return {*}  {HTMLElement}
  */
 
-var getMountContainer = function getMountContainer(container) {
+var getPropsElement = function getPropsElement(container) {
   var mountNode;
 
   if (container instanceof HTMLElement) {
@@ -1019,7 +1019,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
     return wrapRef.current;
   });
   var forceUpdate = useForceUpdate();
-  var mountNode = getMountContainer(mountContainer);
+  var mountNode = getPropsElement(mountContainer);
   var showPosition = mountNode === document.body ? 'fixed' : 'absolute';
   useMount(function () {
     // fix container render at the same time / but not ready
@@ -4268,6 +4268,50 @@ var NumberKeyboard = function NumberKeyboard(props) {
 
 NumberKeyboard.displayName = 'UC-NumberKeyboard';
 
+/**
+ * 监听点击元素外部事件
+ *
+ * @export
+ * @param {(PropsElementType | PropsElementType[])} target 监听dom对象
+ * @param {(e) => void} [onClickAway] 点击外部事件触发回调
+ * @param {string} [eventName='click'] 监听事件类型
+ */
+function useClickAway(
+/** 监听dom对象 */
+target,
+/** 点击外部事件触发回调 */
+onClickAway) {
+  var eventName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'click';
+  var onClickAwayRef = useLatest(onClickAway);
+  var eventNameRef = useLatest(eventName);
+  var targetRef = useLatest(target);
+  React.useEffect(function () {
+    var eventName = eventNameRef.current;
+
+    var handler = function handler(e) {
+      var _onClickAwayRef$curre;
+
+      var targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+
+      if (targets.some(function (targetItem) {
+        var _targetElement$contai;
+
+        var targetElement = getPropsElement(targetItem);
+        return !targetElement || ((_targetElement$contai = targetElement.contains) === null || _targetElement$contai === void 0 ? void 0 : _targetElement$contai.call(targetElement, e.target));
+      })) {
+        return;
+      }
+
+      (_onClickAwayRef$curre = onClickAwayRef.current) === null || _onClickAwayRef$curre === void 0 ? void 0 : _onClickAwayRef$curre.call(onClickAwayRef, e);
+    };
+
+    document.addEventListener(eventName, handler);
+    return function () {
+      document.removeEventListener(eventName, handler);
+    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
 var StyledSwipeAction = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SwipeAction__StyledSwipeAction",
   componentId: "sc-k9tztb-0"
@@ -4318,27 +4362,12 @@ var SwipeAction = function SwipeAction(props) {
     v.el.style.transitionProperty = 'transform';
     v.el.style.transform = "".concat(transformStr);
   }, []);
-  React.useEffect(function () {
-    var v = thisRef.current;
-
+  useClickAway(elRef, function () {
     if (closeOnClickOutside) {
-      var closeHandler = function closeHandler(e) {
-        if (!isOpen) {
-          return;
-        }
-
-        if (!v.el.contains(e.target)) {
-          startTransform('translate3d(0,0,0)', 0);
-          setIsOpen(false);
-        }
-      };
-
-      window.addEventListener('click', closeHandler);
-      return function () {
-        window.removeEventListener('click', closeHandler);
-      };
+      startTransform('translate3d(0,0,0)', 0);
+      setIsOpen(false);
     }
-  }, [closeOnClickOutside, startTransform, isOpen]);
+  });
   React.useLayoutEffect(function () {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
@@ -4354,38 +4383,6 @@ var SwipeAction = function SwipeAction(props) {
       }
     }, item.text);
   }, []);
-  var touchStart = React.useCallback(function () {
-    thisRef.current.el.style.transitionProperty = 'none';
-  }, []);
-  var touchEnd = React.useCallback(function () {
-    var v = thisRef.current;
-
-    if (v.x < 0) {
-      // open right
-      if (Math.abs(v.x) < v.rightWidth / 2) {
-        // no more than half way
-        startTransform('translate3d(0,0,0)', 0);
-        setIsOpen(false);
-      } else {
-        startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
-        setIsOpen(true);
-      }
-    } else if (v.x > 0) {
-      if (Math.abs(v.x) < v.leftWidth / 2) {
-        // no more than half way
-        startTransform('translate3d(0,0,0)', 0);
-        v.x = 0;
-        setIsOpen(false);
-      } else {
-        startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
-        setIsOpen(true);
-      }
-    }
-  }, [startTransform]);
-  React.useEffect(function () {
-    elRef.current.addEventListener(isTouch ? 'touchstart' : 'mousedown', touchStart);
-    elRef.current.addEventListener(isTouch ? 'touchend' : 'mouseup', touchEnd);
-  }, [touchEnd, touchStart]);
   React.useLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch__default['default'](el, {
@@ -4398,12 +4395,40 @@ var SwipeAction = function SwipeAction(props) {
         } else if (v.x > 0 && Math.abs(v.x) < v.leftWidth) {
           v.el.style.transform = "translate3d(".concat(v.x, "px,0,0)");
         }
+      },
+      onTouchStart: function onTouchStart() {
+        thisRef.current.el.style.transitionProperty = 'none';
+      },
+      onTouchEnd: function onTouchEnd() {
+        var v = thisRef.current;
+
+        if (v.x < 0) {
+          // open right
+          if (Math.abs(v.x) < v.rightWidth / 2) {
+            // no more than half way
+            startTransform('translate3d(0,0,0)', 0);
+            setIsOpen(false);
+          } else {
+            startTransform("translate3d(-".concat(v.rightWidth, "px,0,0)"), -1 * v.rightWidth);
+            setIsOpen(true);
+          }
+        } else if (v.x > 0) {
+          if (Math.abs(v.x) < v.leftWidth / 2) {
+            // no more than half way
+            startTransform('translate3d(0,0,0)', 0);
+            v.x = 0;
+            setIsOpen(false);
+          } else {
+            startTransform("translate3d(".concat(v.leftWidth, "px,0,0)"), v.leftWidth);
+            setIsOpen(true);
+          }
+        }
       }
     });
     return function () {
       fg === null || fg === void 0 ? void 0 : fg.destroy();
     };
-  }, []);
+  }, [startTransform]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, {
     className: clsx__default['default']('uc-swipe-action')
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -9060,6 +9085,7 @@ exports.throttle = throttle;
 exports.uniqArray = uniqArray;
 exports.unobserve = unobserve;
 exports.useCallbackRef = useCallbackRef;
+exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
 exports.useForceUpdate = useForceUpdate;

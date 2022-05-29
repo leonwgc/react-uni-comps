@@ -210,13 +210,13 @@ export var deepClone = function deepClone(src) {
   return dest;
 };
 /**
+ * get element from props  fn/ref/el
  *
- *
- * @param {MountContainerType} container
+ * @param {PropsElementType} container
  * @return {*}  {HTMLElement}
  */
 
-export var getMountContainer = function getMountContainer(container) {
+export var getPropsElement = function getPropsElement(container) {
   var mountNode;
 
   if (container instanceof HTMLElement) {

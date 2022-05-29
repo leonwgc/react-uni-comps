@@ -104,6 +104,7 @@ export { default as useForceUpdate } from './hooks/useForceUpdate';
 export { default as usePrevious } from './hooks/usePrevious';
 export { default as useList } from './hooks/useList';
 export { default as useLatest } from './hooks/useLatest';
+export { default as useClickAway } from './hooks/useClickAway';
 /** third-party libs */
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
 export { default as clsx } from 'clsx';

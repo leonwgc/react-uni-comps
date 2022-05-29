@@ -1,4 +1,4 @@
-import type { MountContainerType } from './types';
+import type { PropsElementType } from './types';
 export declare type F = (...args: any[]) => void;
 /**
  * 防抖
@@ -59,12 +59,12 @@ export declare const sleep: (time: number) => Promise<unknown>;
  */
 export declare const deepClone: <T>(src: T) => T;
 /**
+ * get element from props  fn/ref/el
  *
- *
- * @param {MountContainerType} container
+ * @param {PropsElementType} container
  * @return {*}  {HTMLElement}
  */
-export declare const getMountContainer: (container: MountContainerType) => HTMLElement;
+export declare const getPropsElement: (container: PropsElementType) => HTMLElement;
 /**
  * className with prefix gen
  *

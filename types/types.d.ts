@@ -9,4 +9,4 @@ export declare type BaseProps = {
     className?: string;
     children?: React.ReactNode;
 };
-export declare type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+export declare type PropsElementType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
