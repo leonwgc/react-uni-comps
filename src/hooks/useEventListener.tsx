@@ -7,19 +7,15 @@ import type { TargetElementType } from '../types';
  * 事件监听
  *
  * @export
- * @param {TargetElementType} target 监听对象
- * @param {(e) => void} [handler] 处理函数
+ * @param {TargetElementType} target 绑定事件对象
  * @param {string} [eventName='click'] 事件类型
+ * @param {(e:Event) => void} [handler] 事件处理
+ * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
 export default function useEventListener(
-  /**
-   * 监听对象
-   * @default window
-   *  */
   target: TargetElementType,
-  /** 监听事件类型 */
   eventName = 'click',
-  handler?: (e) => void,
+  handler?: (e: Event) => void,
   // eslint-disable-next-line no-undef
   options: boolean | AddEventListenerOptions | undefined = undefined
 ) {
