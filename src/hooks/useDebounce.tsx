@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { debounce } from '../helper';
+import useLatest from './useLatest';
 
 type F = (...args: unknown[]) => void;
 /**
@@ -10,8 +11,10 @@ type F = (...args: unknown[]) => void;
  * @param {Array<unknown>} [fnDeps=[]]
  * @return {*}  {F}
  */
-const useDebounce = (fn: F, timeout = 180, fnDeps: Array<unknown> = []): F =>
+const useDebounce = (fn: F, timeout = 180, fnDeps: Array<unknown> = []): F => {
+  const fnRef = useLatest(fn);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useMemo(() => debounce(fn, timeout), fnDeps);
+  return useMemo(() => debounce((...args) => fnRef.current?.(...args), timeout), fnDeps);
+};
 
 export default useDebounce;

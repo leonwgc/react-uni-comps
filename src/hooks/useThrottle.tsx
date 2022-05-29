@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { throttle } from '../helper';
+import useLatest from './useLatest';
 
 type F = (...args: unknown[]) => void;
 
@@ -11,8 +12,10 @@ type F = (...args: unknown[]) => void;
  * @param {Array<unknown>} [fnDeps=[]]
  * @return {*}  {F}
  */
-const useThrottle = (fn: F, timeout = 180, fnDeps: Array<unknown> = []): F =>
+const useThrottle = (fn: F, timeout = 180, fnDeps: Array<unknown> = []): F => {
+  const fnRef = useLatest(fn);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useMemo(() => throttle(fn, timeout), fnDeps);
+  return useMemo(() => throttle((...args) => fnRef.current?.(...args), timeout), fnDeps);
+};
 
 export default useThrottle;
