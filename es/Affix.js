@@ -1,8 +1,10 @@
 import { __assign, __rest } from "tslib";
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useLatest from './hooks/useLatest';
-import { throttle } from './helper';
 import clsx from 'clsx';
+import useEventListener from './hooks/useEventListener';
+import useThrottle from './hooks/useThrottle';
+import { getTargetElement } from './helper';
 /** 将页面元素钉在可视范围*/
 
 var Affix = function Affix(props) {
@@ -85,9 +87,7 @@ var Affix = function Affix(props) {
     return {};
   }, [getAffixed, data, zIndex]);
   useEffect(function () {
-    var _a;
-
-    var t = ((_a = targetRef.current) === null || _a === void 0 ? void 0 : _a.call(targetRef)) || window;
+    var t = getTargetElement(targetRef.current) || window;
     targetRectRef.current = t !== window ? t.getBoundingClientRect() : {
       top: 0,
       bottom: t.innerHeight,
@@ -120,19 +120,8 @@ var Affix = function Affix(props) {
     } // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, [getAffixed, data]);
-  useEffect(function () {
-    var _a;
-
-    var onScroll = throttle(onScrollUpdate, 16, false);
-    var t = ((_a = targetRef.current) === null || _a === void 0 ? void 0 : _a.call(targetRef)) || window;
-    t.addEventListener('scroll', onScroll);
-    onScroll();
-    return function () {
-      if (t) {
-        t.removeEventListener('scroll', onScroll);
-      }
-    };
-  }, [offsetRef, onScrollUpdate]);
+  var onScroll = useThrottle(onScrollUpdate, 16);
+  useEventListener(target, 'scroll', onScroll);
   var affixed = data.affixed;
 
   if (!affixed) {

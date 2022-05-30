@@ -2886,7 +2886,7 @@ Waypoint.displayName = 'UC-Waypoint';
  * 事件监听
  *
  * @export
- * @param {TargetElementType} target 绑定事件对象
+ * @param {TargetType} target 绑定事件对象, 找不到则用window
  * @param {string} [eventName='click'] 事件类型
  * @param {(e:Event) => void} [handler] 事件处理
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
@@ -3757,9 +3757,7 @@ var Affix = function Affix(props) {
     return {};
   }, [getAffixed, data, zIndex]);
   React.useEffect(function () {
-    var _targetRef$current;
-
-    var t = ((_targetRef$current = targetRef.current) === null || _targetRef$current === void 0 ? void 0 : _targetRef$current.call(targetRef)) || window;
+    var t = getTargetElement(targetRef.current) || window;
     targetRectRef.current = t !== window ? t.getBoundingClientRect() : {
       top: 0,
       bottom: t.innerHeight,
@@ -3792,19 +3790,8 @@ var Affix = function Affix(props) {
     } // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, [getAffixed, data]);
-  React.useEffect(function () {
-    var _targetRef$current2;
-
-    var onScroll = throttle(onScrollUpdate, 16, false);
-    var t = ((_targetRef$current2 = targetRef.current) === null || _targetRef$current2 === void 0 ? void 0 : _targetRef$current2.call(targetRef)) || window;
-    t.addEventListener('scroll', onScroll);
-    onScroll();
-    return function () {
-      if (t) {
-        t.removeEventListener('scroll', onScroll);
-      }
-    };
-  }, [offsetRef, onScrollUpdate]);
+  var onScroll = useThrottle(onScrollUpdate, 16);
+  useEventListener(target, 'scroll', onScroll);
   var affixed = data.affixed;
 
   if (!affixed) {

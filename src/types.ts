@@ -17,6 +17,4 @@ export type BaseProps = {
 export type TargetElementType =
   | HTMLElement
   | (() => HTMLElement)
-  | React.MutableRefObject<HTMLElement>
-  | Window
-  | Document;
+  | React.MutableRefObject<HTMLElement>;

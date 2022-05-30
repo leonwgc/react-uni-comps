@@ -9,4 +9,4 @@ export declare type BaseProps = {
     className?: string;
     children?: React.ReactNode;
 };
-export declare type TargetElementType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement> | Window | Document;
+export declare type TargetElementType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
