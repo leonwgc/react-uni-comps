@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useLatest from './hooks/useLatest';
-import { throttle } from './helper';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
+import type { BaseProps, TargetElementType } from './types';
+import useEventListener from './hooks/useEventListener';
+import useThrottle from './hooks/useThrottle';
+import { getTargetElement } from './helper';
 
 type Props = {
   /** 距离窗口顶部达到指定偏移量后触发 */
@@ -11,8 +13,8 @@ type Props = {
   offsetBottom?: number;
   /** 固定状态改变时触发的回调函数 */
   onChange?: (affixed: boolean) => void;
-  /**设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
-  target?: () => HTMLElement | Window;
+  /**设置 Affix 需要监听其滚动事件的元素 */
+  target?: TargetElementType;
   /**
    * 固钉定位层级
    * @default 100
@@ -42,7 +44,7 @@ const Affix: React.FC<Props> = (props) => {
   });
 
   const onChangeRef = useLatest(onChange);
-  const targetRef = useRef<() => HTMLElement | Window>(target);
+  const targetRef = useRef(target);
   const wrapElRef = useRef<HTMLDivElement>();
   const fixedElRef = useRef<HTMLDivElement>();
   const targetRectRef = useRef<Partial<DOMRect>>({ top: 0, bottom: 0 });
@@ -103,7 +105,7 @@ const Affix: React.FC<Props> = (props) => {
   }, [getAffixed, data, zIndex]);
 
   useEffect(() => {
-    const t = targetRef.current?.() || window;
+    const t = getTargetElement(targetRef.current) || window;
     targetRectRef.current =
       t !== window
         ? (t as HTMLElement).getBoundingClientRect()
@@ -130,21 +132,8 @@ const Affix: React.FC<Props> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAffixed, data]);
 
-  useEffect(() => {
-    const onScroll = throttle(onScrollUpdate, 16, false);
-
-    const t = targetRef.current?.() || window;
-
-    t.addEventListener('scroll', onScroll);
-
-    onScroll();
-
-    return () => {
-      if (t) {
-        t.removeEventListener('scroll', onScroll);
-      }
-    };
-  }, [offsetRef, onScrollUpdate]);
+  const onScroll = useThrottle(onScrollUpdate, 16);
+  useEventListener(target, 'scroll', onScroll);
 
   const { affixed } = data;
 

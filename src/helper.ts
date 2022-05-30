@@ -162,9 +162,9 @@ export const deepClone = <T>(src: T): T => {
  * get element from fn/ref/el target
  *
  * @param {TargetElementType} target
- * @return {*}  {HTMLElement}
+ * @return {*}  {HTMLElement | Window | Document}
  */
-export const getTargetElement = (target: TargetElementType): HTMLElement => {
+export const getTargetElement = (target: TargetElementType): HTMLElement | Window | Document => {
   let node;
 
   if (target instanceof HTMLElement) {
