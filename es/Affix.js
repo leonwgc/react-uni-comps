@@ -1,6 +1,6 @@
 import { __assign, __rest } from "tslib";
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import { throttle } from './helper';
 import clsx from 'clsx';
 /** 将页面元素钉在可视范围*/
@@ -23,7 +23,7 @@ var Affix = function Affix(props) {
       data = _b[0],
       setData = _b[1];
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var targetRef = useRef(target);
   var wrapElRef = useRef();
   var fixedElRef = useRef();
@@ -117,8 +117,9 @@ var Affix = function Affix(props) {
         height: height === 0 ? 'auto' : height
       });
       (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, currentAffixed);
-    }
-  }, [getAffixed, onChangeRef, data]);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [getAffixed, data]);
   useEffect(function () {
     var _a;
 

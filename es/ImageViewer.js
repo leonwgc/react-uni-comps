@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Slide from './Slide';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import Space from './Space';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
@@ -40,7 +40,7 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
       index = _e[0],
       setIndex = _e[1];
 
-  var onIndexChangeRef = useCallbackRef(onIndexChange);
+  var onIndexChangeRef = useLatest(onIndexChange);
   var slideRef = useRef();
   useEffect(function () {
     setUrls(Array.isArray(images) ? images : [images]);
@@ -73,8 +73,8 @@ var ImageViewer = /*#__PURE__*/React.forwardRef(function (props, ref) {
         src: url,
         key: url
       });
-    }));
-  }, [urls, onIndexChangeRef, slideRef]);
+    })); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urls, slideRef]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Mask, {
     visible: visible,
     style: maskStyle,

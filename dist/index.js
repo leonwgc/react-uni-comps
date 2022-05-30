@@ -2512,25 +2512,6 @@ var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Checkbox.displayName = 'UC-Checkbox';
 
-/**
- *  保存最新的值在ref中
- *
- * @deprecated
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useCallbackRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
-
 var _excluded$f = ["className", "button", "onChange", "options", "value", "disabled"];
 var StyledCheckboxGroup = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CheckboxGroup__StyledCheckboxGroup",
@@ -2549,7 +2530,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
       disabled = props.disabled,
       rest = _objectWithoutProperties(props, _excluded$f);
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
     var _onChangeRef$current;
 
@@ -2566,7 +2547,8 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
     }
 
     (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, _toConsumableArray(value));
-  }, [value, onChangeRef]);
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [value]);
   return /*#__PURE__*/React__default['default'].createElement(StyledCheckboxGroup, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className, 'uc-checkbox-group')
@@ -2629,7 +2611,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       disabled = props.disabled,
       rest = _objectWithoutProperties(props, _excluded$h);
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
     if (checked) {
       var _onChangeRef$current;
@@ -3713,7 +3695,7 @@ var Affix = function Affix(props) {
       data = _useState2[0],
       setData = _useState2[1];
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var targetRef = React.useRef(target);
   var wrapElRef = React.useRef();
   var fixedElRef = React.useRef();
@@ -3807,8 +3789,9 @@ var Affix = function Affix(props) {
         height: height === 0 ? 'auto' : height
       });
       (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, currentAffixed);
-    }
-  }, [getAffixed, onChangeRef, data]);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [getAffixed, data]);
   React.useEffect(function () {
     var _targetRef$current2;
 
@@ -4103,10 +4086,10 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 
   var arRef = React.useRef(getArray(length));
   var inputRefArray = React.useRef([]);
-  var autoFocusRef = useCallbackRef(autoFocus);
-  var vRef = useCallbackRef(value);
-  var inputValueRef = useCallbackRef(value.split(''));
-  var onFinishRef = useCallbackRef(onFinish);
+  var autoFocusRef = useLatest(autoFocus);
+  var vRef = useLatest(value);
+  var inputValueRef = useLatest(value.split(''));
+  var onFinishRef = useLatest(onFinish);
   React.useImperativeHandle(ref, function () {
     return {
       focus: function focus() {
@@ -4724,7 +4707,7 @@ var Wheel = function Wheel(props) {
 
   var firstItemY = itemHeight * 3;
   var elRef = React.useRef();
-  var onIndexChangeRef = useCallbackRef(onIndexChange);
+  var onIndexChangeRef = useLatest(onIndexChange);
   var yRef = React.useRef(firstItemY);
 
   var _useState = React.useState(index),
@@ -5125,13 +5108,13 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       val = _useState2[0],
       setVal = _useState2[1];
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var onValueChange = React.useCallback(function (value) {
     var _onChangeRef$current;
 
     setVal(value);
-    (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, value);
-  }, [onChangeRef]);
+    (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, value); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledDrawer$1, _extends({}, rest, {
     className: clsx__default['default']('uc-picker', className),
     position: "bottom",
@@ -5448,7 +5431,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       setVal = _useState2[1];
 
   var starList = Array(count).fill(null);
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   useUpdateEffect(function () {
     var _onChangeRef$current;
 
@@ -6251,7 +6234,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       index = _useState4[0],
       setIndex = _useState4[1];
 
-  var onIndexChangeRef = useCallbackRef(onIndexChange);
+  var onIndexChangeRef = useLatest(onIndexChange);
   var slideRef = React.useRef();
   React.useEffect(function () {
     setUrls(Array.isArray(images) ? images : [images]);
@@ -6284,8 +6267,8 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
         src: url,
         key: url
       });
-    }));
-  }, [urls, onIndexChangeRef, slideRef]);
+    })); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urls, slideRef]);
   return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
     visible: visible,
     style: maskStyle,
@@ -8652,6 +8635,25 @@ var useDebounce = function useDebounce(fn) {
     }, timeout);
   }, fnDeps);
 };
+
+/**
+ *  保存最新的值在ref中
+ *
+ * @deprecated
+ *
+ * @export
+ * @template T
+ * @param {T} value
+ * @return {*}  {MutableRefObject<T>}
+ */
+
+function useCallbackRef(value) {
+  var ref = React.useRef(value);
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
 
 /**
  * 获取验证码倒计时

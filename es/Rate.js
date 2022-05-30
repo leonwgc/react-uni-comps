@@ -2,7 +2,7 @@ import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 var StyledRate = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: ", ";\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"], ["\n  display: inline-flex;\n  .box {\n    position: relative;\n  }\n\n  .char {\n    padding: calc(24px / 8);\n    line-height: 24px;\n    font-size: 24px;\n    color: #ccc;\n    text-align: center;\n    overflow: hidden;\n    cursor: pointer;\n    &.half {\n      padding-right: 0;\n      width: 50%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n    &.active {\n      color: ", ";\n    }\n    &.readonly {\n      cursor: unset;\n    }\n  }\n"])), function (props) {
   return props.$color;
@@ -42,7 +42,7 @@ var Rate = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setVal = _g[1];
 
   var starList = Array(count).fill(null);
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   useUpdateEffect(function () {
     var _a;
 

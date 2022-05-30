@@ -5,7 +5,7 @@ import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView from './PickerView';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
 
 /** picker 下方弹出选择器 */
@@ -41,13 +41,13 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
       val = _g[0],
       setVal = _g[1];
 
-  var onChangeRef = useCallbackRef(onChange);
+  var onChangeRef = useLatest(onChange);
   var onValueChange = useCallback(function (value) {
     var _a;
 
     setVal(value);
-    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, value);
-  }, [onChangeRef]);
+    (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, value); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return /*#__PURE__*/React.createElement(StyledDrawer, __assign({}, rest, {
     className: clsx('uc-picker', className),
     position: "bottom",

@@ -2,7 +2,7 @@ import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
@@ -32,7 +32,7 @@ var Wheel = function Wheel(props) {
 
   var firstItemY = itemHeight * 3;
   var elRef = useRef();
-  var onIndexChangeRef = useCallbackRef(onIndexChange);
+  var onIndexChangeRef = useLatest(onIndexChange);
   var yRef = useRef(firstItemY);
 
   var _e = useState(index),
