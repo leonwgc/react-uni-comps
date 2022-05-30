@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Slide, { SlideRefType } from './Slide';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import Space from './Space';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
@@ -108,7 +108,7 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [urls, setUrls] = useState(Array.isArray(images) ? images : [images]);
   const [index, setIndex] = useState<number>(0);
 
-  const onIndexChangeRef = useCallbackRef(onIndexChange);
+  const onIndexChangeRef = useLatest(onIndexChange);
   const slideRef = useRef<SlideRefType>();
 
   useEffect(() => {
@@ -140,7 +140,8 @@ const ImageViewer = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         ))}
       </Slide>
     );
-  }, [urls, onIndexChangeRef, slideRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urls, slideRef]);
 
   return (
     <>

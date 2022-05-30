@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useImperativeHandle, useCallback } from 'reac
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import type { BaseProps } from './types';
 
 type Props = {
@@ -128,10 +128,10 @@ const PasswordInput = React.forwardRef<RefType, Props>((props, ref) => {
   const arRef = useRef<Array<number>>(getArray(length));
   const inputRefArray = useRef<Array<HTMLInputElement>>([]);
 
-  const autoFocusRef = useCallbackRef(autoFocus);
-  const vRef = useCallbackRef(value);
-  const inputValueRef = useCallbackRef<string[]>(value.split(''));
-  const onFinishRef = useCallbackRef(onFinish);
+  const autoFocusRef = useLatest(autoFocus);
+  const vRef = useLatest(value);
+  const inputValueRef = useLatest<string[]>(value.split(''));
+  const onFinishRef = useLatest(onFinish);
 
   useImperativeHandle(ref, () => ({
     focus: () => {

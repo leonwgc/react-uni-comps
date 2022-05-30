@@ -4,7 +4,7 @@ import { getThemeColorCss } from './themeHelper';
 import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView from './PickerView';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import type { StringOrNumber } from './types';
 import type { Props as PickerviewProps, PickerViewRefType } from './PickerView';
 
@@ -83,15 +83,13 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   useImperativeHandle(ref, () => pickerViewRef.current);
   const [val, setVal] = useState(value);
 
-  const onChangeRef = useCallbackRef(onChange);
+  const onChangeRef = useLatest(onChange);
 
-  const onValueChange = useCallback(
-    (value) => {
-      setVal(value);
-      onChangeRef.current?.(value);
-    },
-    [onChangeRef]
-  );
+  const onValueChange = useCallback((value) => {
+    setVal(value);
+    onChangeRef.current?.(value);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StyledDrawer

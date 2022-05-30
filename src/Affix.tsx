@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import { throttle } from './helper';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
@@ -41,7 +41,7 @@ const Affix: React.FC<Props> = (props) => {
     height: 0,
   });
 
-  const onChangeRef = useCallbackRef(onChange);
+  const onChangeRef = useLatest(onChange);
   const targetRef = useRef<() => HTMLElement | Window>(target);
   const wrapElRef = useRef<HTMLDivElement>();
   const fixedElRef = useRef<HTMLDivElement>();
@@ -127,7 +127,8 @@ const Affix: React.FC<Props> = (props) => {
       });
       onChangeRef.current?.(currentAffixed);
     }
-  }, [getAffixed, onChangeRef, data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getAffixed, data]);
 
   useEffect(() => {
     const onScroll = throttle(onScrollUpdate, 16, false);

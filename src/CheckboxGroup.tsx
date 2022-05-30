@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import Checkbox from './Checkbox';
 import { isObject } from './helper';
 import type { StringOrNumber } from './types';
@@ -35,7 +35,7 @@ const StyledCheckboxGroup = styled.div``;
 const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, button, onChange, options = [], value = [], disabled, ...rest } = props;
 
-  const onChangeRef = useCallbackRef(onChange);
+  const onChangeRef = useLatest(onChange);
 
   const onCheckboxChange = useCallback(
     (checked, v) => {
@@ -51,7 +51,8 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       }
       onChangeRef.current?.([...value]);
     },
-    [value, onChangeRef]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [value]
   );
 
   return (

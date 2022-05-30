@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import useCallbackRef from './hooks/useCallbackRef';
+import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
@@ -65,7 +65,7 @@ const Wheel: React.FC<Props> = (props) => {
   const firstItemY = itemHeight * 3;
 
   const elRef = useRef<HTMLDivElement>();
-  const onIndexChangeRef = useCallbackRef(onIndexChange);
+  const onIndexChangeRef = useLatest(onIndexChange);
   const yRef = useRef(firstItemY);
   const [_index, _setIndex] = useState(index);
 
