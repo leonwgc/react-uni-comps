@@ -1,4 +1,4 @@
-import type { TargetElementType } from '../types';
+import type { EventTargetType } from '../types';
 /**
  * 事件监听
  *
@@ -8,4 +8,4 @@ import type { TargetElementType } from '../types';
  * @param {(e:Event) => void} [handler] 事件处理
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
-export default function useEventListener(target: TargetElementType, eventName?: string, handler?: (e: Event) => void, options?: boolean | AddEventListenerOptions | undefined): void;
+export default function useEventListener(target: EventTargetType, eventName?: string, handler?: (e: Event) => void, options?: boolean | AddEventListenerOptions | undefined): void;

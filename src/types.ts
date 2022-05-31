@@ -18,3 +18,5 @@ export type TargetElementType =
   | HTMLElement
   | (() => HTMLElement)
   | React.MutableRefObject<HTMLElement>;
+
+export type EventTargetType = TargetElementType | Window | Document;

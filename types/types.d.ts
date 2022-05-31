@@ -10,3 +10,4 @@ export declare type BaseProps = {
     children?: React.ReactNode;
 };
 export declare type TargetElementType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+export declare type EventTargetType = TargetElementType | Window | Document;

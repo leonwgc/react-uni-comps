@@ -1,7 +1,30 @@
 import { useEffect } from 'react';
-import { getTargetElement } from '../helper';
 import useLatest from './useLatest';
-import type { TargetElementType } from '../types';
+import type { EventTargetType } from '../types';
+import { isObject } from '../helper';
+import { isBrowser } from '../dom';
+
+const getEventTarget = (target: EventTargetType, defaultTarget) => {
+  if (!isBrowser) {
+    return undefined;
+  }
+
+  if (!target) {
+    return defaultTarget;
+  }
+
+  let targetElement;
+
+  if (typeof target === 'function') {
+    targetElement = target();
+  } else if (isObject(target) && 'current' in target) {
+    targetElement = target.current;
+  } else {
+    targetElement = target;
+  }
+
+  return targetElement;
+};
 
 /**
  * 事件监听
@@ -13,7 +36,7 @@ import type { TargetElementType } from '../types';
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
 export default function useEventListener(
-  target: TargetElementType,
+  target: EventTargetType,
   eventName = 'click',
   handler?: (e: Event) => void,
   // eslint-disable-next-line no-undef
@@ -25,7 +48,7 @@ export default function useEventListener(
   const optionsRef = useLatest(options);
 
   useEffect(() => {
-    const targetElement = getTargetElement(targetRef.current) || window;
+    const targetElement = getEventTarget(targetRef.current, window);
     if (!targetElement?.addEventListener) {
       return;
     }

@@ -2882,6 +2882,27 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Waypoint.displayName = 'UC-Waypoint';
 
+var getEventTarget = function getEventTarget(target, defaultTarget) {
+  if (!isBrowser) {
+    return undefined;
+  }
+
+  if (!target) {
+    return defaultTarget;
+  }
+
+  var targetElement;
+
+  if (typeof target === 'function') {
+    targetElement = target();
+  } else if (isObject(target) && 'current' in target) {
+    targetElement = target.current;
+  } else {
+    targetElement = target;
+  }
+
+  return targetElement;
+};
 /**
  * 事件监听
  *
@@ -2891,6 +2912,8 @@ Waypoint.displayName = 'UC-Waypoint';
  * @param {(e:Event) => void} [handler] 事件处理
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
+
+
 function useEventListener(target) {
   var eventName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'click';
   var handler = arguments.length > 2 ? arguments[2] : undefined;
@@ -2900,7 +2923,7 @@ function useEventListener(target) {
   var targetRef = useLatest(target);
   var optionsRef = useLatest(options);
   React.useEffect(function () {
-    var targetElement = getTargetElement(targetRef.current) || window;
+    var targetElement = getEventTarget(targetRef.current, window);
 
     if (!(targetElement === null || targetElement === void 0 ? void 0 : targetElement.addEventListener)) {
       return;
