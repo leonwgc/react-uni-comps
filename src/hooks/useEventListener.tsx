@@ -30,20 +30,20 @@ const getEventTarget = (target: EventTargetType, defaultTarget) => {
  * 事件监听
  *
  * @export
- * @param {TargetType} target 绑定事件对象, 找不到则用window
- * @param {string} [eventName='click'] 事件类型
+ * @param {EventTargetType} target 绑定事件对象, 找不到则用window
+ * @param {string}  事件类型
  * @param {(e:Event) => void} [handler] 事件处理
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
 export default function useEventListener(
   target: EventTargetType,
-  eventName = 'click',
+  type,
   handler?: (e: Event) => void,
   // eslint-disable-next-line no-undef
   options: boolean | AddEventListenerOptions | undefined = undefined
 ) {
   const handlerRef = useLatest(handler);
-  const eventNameRef = useLatest(eventName);
+  const typeRef = useLatest(type);
   const targetRef = useLatest(target);
   const optionsRef = useLatest(options);
 
@@ -57,7 +57,7 @@ export default function useEventListener(
       return handlerRef.current(e);
     };
 
-    const type = eventNameRef.current;
+    const type = typeRef.current;
     const options = optionsRef.current;
 
     targetElement.addEventListener(type, eventListener, options);

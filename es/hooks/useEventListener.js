@@ -28,25 +28,21 @@ var getEventTarget = function getEventTarget(target, defaultTarget) {
  * 事件监听
  *
  * @export
- * @param {TargetType} target 绑定事件对象, 找不到则用window
- * @param {string} [eventName='click'] 事件类型
+ * @param {EventTargetType} target 绑定事件对象, 找不到则用window
+ * @param {string}  事件类型
  * @param {(e:Event) => void} [handler] 事件处理
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
 
 
-export default function useEventListener(target, eventName, handler, // eslint-disable-next-line no-undef
+export default function useEventListener(target, type, handler, // eslint-disable-next-line no-undef
 options) {
-  if (eventName === void 0) {
-    eventName = 'click';
-  }
-
   if (options === void 0) {
     options = undefined;
   }
 
   var handlerRef = useLatest(handler);
-  var eventNameRef = useLatest(eventName);
+  var typeRef = useLatest(type);
   var targetRef = useLatest(target);
   var optionsRef = useLatest(options);
   useEffect(function () {
@@ -60,7 +56,7 @@ options) {
       return handlerRef.current(e);
     };
 
-    var type = eventNameRef.current;
+    var type = typeRef.current;
     var options = optionsRef.current;
     targetElement.addEventListener(type, eventListener, options);
     return function () {
