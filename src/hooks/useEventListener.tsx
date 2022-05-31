@@ -37,7 +37,7 @@ const getEventTarget = (target: EventTargetType, defaultTarget) => {
  */
 export default function useEventListener(
   target: EventTargetType,
-  type,
+  type: string,
   handler?: (e: Event) => void,
   // eslint-disable-next-line no-undef
   options: boolean | AddEventListenerOptions | undefined = undefined
