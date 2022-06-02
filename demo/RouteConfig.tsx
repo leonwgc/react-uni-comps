@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/MasonryWithPull',
+    component: lazy(() => import('./MasonryWithPull')),
+  },
+  {
     path: '/AspectRatio',
     component: lazy(() => import('./AspectRatio')),
   },

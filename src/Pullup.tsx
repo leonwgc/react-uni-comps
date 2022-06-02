@@ -41,10 +41,10 @@ function isInViewport(el: HTMLElement, container: HTMLElement) {
 }
 
 type Props = {
-  /** 数据列表 */
-  dataList: Array<unknown>;
-  /** 数据渲染 */
-  dataRender: (data: unknown, index: number) => React.ReactNode;
+  /** 数据列表, 作为 dataRender 列表数据 */
+  dataList?: Array<unknown>;
+  /** 数据渲染, 也可以在children里面遍历dataList */
+  dataRender?: (data: unknown, index: number) => React.ReactNode;
   /**
    * ajax获取数据，当拉到底部，还有更多数据时调用
    *  */

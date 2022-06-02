@@ -5,10 +5,10 @@ import type { BaseProps } from './types';
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
 declare const Pullup: React.ForwardRefExoticComponent<{
-    /** 数据列表 */
-    dataList: Array<unknown>;
-    /** 数据渲染 */
-    dataRender: (data: unknown, index: number) => React.ReactNode;
+    /** 数据列表, 作为 dataRender 列表数据 */
+    dataList?: Array<unknown>;
+    /** 数据渲染, 也可以在children里面遍历dataList */
+    dataRender?: (data: unknown, index: number) => React.ReactNode;
     /**
      * ajax获取数据，当拉到底部，还有更多数据时调用
      *  */
