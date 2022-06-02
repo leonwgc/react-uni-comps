@@ -55,9 +55,9 @@ const App = () => {
   }, []);
 
   return (
-    <PageWrap style={{ padding: 0 }}>
+    <PageWrap>
       <PullToRefresh onRefresh={onRefresh}>
-        <Pullup dataList={list} fetchData={fetchData} finished={finished}>
+        <Pullup fetchData={fetchData} finished={finished}>
           <Masonry>
             {list.map((item) => (
               <StyledItem>{item}</StyledItem>
