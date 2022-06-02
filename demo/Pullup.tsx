@@ -1,6 +1,28 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
-import { Pullup, Cell, PullToRefresh } from 'react-uni-comps';
+import DemoBlock from './common/DemoBlock';
+import { Pullup, Cell, PullToRefresh, styled, Masonry } from 'react-uni-comps';
+
+const images = [
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=3946740267,701192077&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=165171033,838989231&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+];
+
+const StyledItem = styled.div`
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const pageSize = 30;
 
@@ -47,15 +69,40 @@ const App = () => {
   }, []);
 
   return (
-    <PageWrap style={{ padding: 0 }}>
-      <PullToRefresh onRefresh={onRefresh}>
+    <PageWrap>
+      <DemoBlock title="dom滚动 (默认是监听window滚动)">
         <Pullup
+          useWindowScroll={false}
+          height={120}
           dataList={list}
           fetchData={fetchData}
           finished={finished}
-          dataRender={(data) => <Cell title={`item${data}`} />}
+          dataRender={(item) => <StyledItem>{item}</StyledItem>}
         />
-      </PullToRefresh>
+      </DemoBlock>
+
+      <DemoBlock title="搭配瀑布流布局">
+        <Pullup useWindowScroll={false} height={240} fetchData={fetchData} finished={finished}>
+          <Masonry>
+            {list.map((item, idx) => (
+              <img src={images[idx % images.length]} key={idx} />
+            ))}
+          </Masonry>
+        </Pullup>
+      </DemoBlock>
+
+      <DemoBlock title="下拉刷新">
+        <PullToRefresh onRefresh={onRefresh}>
+          <Pullup
+            useWindowScroll={false}
+            height={120}
+            dataList={list}
+            fetchData={fetchData}
+            finished={finished}
+            dataRender={(item) => <StyledItem>{item}</StyledItem>}
+          />
+        </PullToRefresh>
+      </DemoBlock>
     </PageWrap>
   );
 };
