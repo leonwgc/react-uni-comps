@@ -1,7 +1,7 @@
 ---
 title: PopMenu 弹出菜单
 order: 4
-mobile: false
+mobile: true
 group:
   title: 反馈
   order: 3

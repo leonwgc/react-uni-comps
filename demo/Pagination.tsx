@@ -20,25 +20,19 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="默认">
-        <Pagination pageCount={5} onPageChange={console.log} />
+        <Pagination pageCount={4} />
       </DemoBlock>
       <DemoBlock title="显示首尾页">
         <Space direction="vertical" size={24}>
-          <Pagination pageCount={5} onPageChange={console.log} showFirstLastText />
+          <Pagination pageCount={2} showFirstLastText />
 
-          <Pagination
-            pageCount={5}
-            onPageChange={console.log}
-            showFirstLastText
-            firstText="first"
-            lastText="last"
-          />
+          <Pagination pageCount={2} showFirstLastText firstText="first" lastText="last" />
         </Space>
       </DemoBlock>
       <DemoBlock title="可视页按钮数量">
         <Space direction="vertical" size={24}>
           <Pagination
-            pageCount={5}
+            pageCount={4}
             currentPage={page}
             onPageChange={(p) => {
               setPage(p);
@@ -47,10 +41,10 @@ export default function App() {
           />
 
           <Pagination
-            pageCount={5}
+            pageCount={4}
             currentPage={page}
             onPageChange={setPage}
-            visiblePageCount={5}
+            visiblepageCount={4}
           />
         </Space>
       </DemoBlock>
@@ -61,7 +55,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="自定义样式">
-        <StyledPagination pageCount={5} />
+        <StyledPagination pageCount={4} />
       </DemoBlock>
     </PageWrap>
   );

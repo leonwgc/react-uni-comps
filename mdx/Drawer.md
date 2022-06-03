@@ -1,7 +1,7 @@
 ---
 title: Drawer 抽屉
 order: 1
-mobile: false
+mobile: true
 group:
   title: 反馈
   order: 3

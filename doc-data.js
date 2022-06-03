@@ -191,12 +191,10 @@ module.exports = [
       {
         name: 'Drawer',
         title: 'Drawer 抽屉',
-        mobile: false,
       },
       {
         name: 'AlertDialog',
         title: 'AlertDialog alert/confirm弹框',
-        mobile: false,
       },
       {
         name: 'Tooltip',
@@ -205,7 +203,6 @@ module.exports = [
       {
         name: 'PopMenu',
         title: 'PopMenu 弹出菜单',
-        mobile: false,
       },
       {
         name: 'Pullup',
@@ -222,7 +219,6 @@ module.exports = [
       {
         name: 'PopConfirm',
         title: 'PopConfirm 气泡确认框',
-        mobile: false,
       },
 
       {

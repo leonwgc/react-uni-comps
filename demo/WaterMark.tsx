@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <PageWrap>
-      <DemoBlock title="水印">
+      <DemoBlock title="">
         <Space>
           <Button onClick={() => setProps(textProps)}>普通水印</Button>
           <Button type="primary" onClick={() => setProps(imageProps)}>

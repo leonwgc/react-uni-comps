@@ -7,7 +7,7 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="只包含确定按钮, 代替window.alert">
-        <Space>
+        <Space direction='vertical'>
           <Button
             onClick={() =>
               AlertDialog.show({
@@ -129,7 +129,7 @@ export default function App() {
                 Toast.show('你点击了确定');
                 close();
               },
-              wrapStyle: { width: 260, border: '1px solid red' },
+              wrapStyle: { width: '75%', border: '1px solid red' },
             })
           }
         >

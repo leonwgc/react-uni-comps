@@ -20,7 +20,7 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="自定义">
+      <DemoBlock title="内容和图片">
         <Space wrap size={30}>
           <Avatar>W</Avatar>
 

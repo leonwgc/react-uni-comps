@@ -1,7 +1,7 @@
 ---
 title: AlertDialog alert/confirm弹框
 order: 2
-mobile: false
+mobile: true
 group:
   title: 反馈
   order: 3

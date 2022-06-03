@@ -1,7 +1,7 @@
 ---
 title: PopConfirm 气泡确认框
 order: 8
-mobile: false
+mobile: true
 group:
   title: 反馈
   order: 3

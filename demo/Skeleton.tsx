@@ -33,7 +33,7 @@ export default function SkeletonDemo() {
         <StyledContent>
           <Space>
             <Switch checked={loading} onChange={(v) => setLoading(v)} />
-            {loading && <Spin />}加载中...
+            {loading && <Spin />}
           </Space>
 
           <Skeleton

@@ -20,7 +20,7 @@ export default function App() {
               })
             }
           >
-            隐藏后的回调
+            关闭回调
           </Button>
         </Space>
       </DemoBlock>

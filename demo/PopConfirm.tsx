@@ -13,46 +13,21 @@ export default function App() {
         title="动画效果"
         content={<Switch checked={animate} onChange={(c) => setAnimate(c)}></Switch>}
       ></Cell>
+
       <DemoBlock title="默认">
         <PopConfirm
           placement="bottom-left"
           animate={animate}
-          title="确定发布此页面?"
-          style={{ width: 300 }}
+          title="确定执行此操作?"
+          style={{ width: '75%' }}
           onOk={() => {
-            Toast.show('发布中..');
+            Toast.show('操作成功');
+          }}
+          onCancel={() => {
+            Toast.show('取消执行');
           }}
         >
-          <Button>默认</Button>
-        </PopConfirm>
-      </DemoBlock>
-
-      <DemoBlock title="自定义">
-        <PopConfirm
-          animate={animate}
-          ref={ref}
-          placement="right"
-          icon={<Icon type="uc-icon-yiwen" />}
-          title="确定删除吗?"
-          okText="ok"
-          closeOnClick={false}
-          onOk={() => {
-            Toast.show('you clicked ok');
-            setTimeout(() => {
-              ref.current.hide();
-            }, 1200);
-          }}
-          cancelText="cancel"
-          cancelButtonProps={{
-            style: {
-              border: '1px solid green',
-              height: 30,
-            },
-          }}
-          style={{ width: 260 }}
-          onCancel={() => Toast.show('you cancelled')}
-        >
-          <Button>自定义</Button>
+          <Button>操作</Button>
         </PopConfirm>
       </DemoBlock>
     </PageWrap>

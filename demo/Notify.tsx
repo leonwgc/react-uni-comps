@@ -8,12 +8,9 @@ export default function App() {
     <PageWrap>
       <DemoBlock style={{ marginTop: 100 }} title="顶部全局消息通知">
         <Space size={16} wrap>
-          <Button type="primary" onClick={() => Notify.show('明天不上学')}>
-            默认
-          </Button>
+          <Button onClick={() => Notify.show('明天不上学')}>默认</Button>
 
           <Button
-            type="primary"
             onClick={() =>
               Notify.show({
                 content: '顶部全局消息通知',
@@ -24,7 +21,6 @@ export default function App() {
             自定义
           </Button>
           <Button
-            type="primary"
             onClick={() =>
               Notify.show(
                 <Space size={4}>
@@ -37,7 +33,6 @@ export default function App() {
             自定义内容
           </Button>
           <Button
-            type="primary"
             onClick={() =>
               Notify.show({
                 content: '明天不上学',

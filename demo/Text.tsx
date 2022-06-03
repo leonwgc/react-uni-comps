@@ -11,10 +11,6 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="1行">
         <Text style={{ width: 200 }}>{text}</Text>
-
-        <Text style={{ width: 200, marginTop: 16 }}>
-          <span style={{ color: 'red' }}>插入其他内容</span> <span>{text}</span>
-        </Text>
       </DemoBlock>
 
       <DemoBlock title="2行">
