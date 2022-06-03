@@ -5,7 +5,6 @@ import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
 import type { BaseProps } from './types';
-import { nanoid } from 'nanoid';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -89,9 +88,9 @@ const Masonry = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         {columnCountArr.map((items, i) => {
           return (
             <div className="uc-masonry-col" key={i} style={{ width: colRef.current.colWidth }}>
-              {items.map((item) => (
+              {items.map((item, idx) => (
                 <div
-                  key={item.key || nanoid()}
+                  key={item.key || idx}
                   className={clsx('uc-masonry-item')}
                   style={{ marginBottom: rowGap }}
                 >

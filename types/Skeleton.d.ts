@@ -1,8 +1,8 @@
 import React from 'react';
 import type { BaseProps } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** loading结束渲染的元素 */
-    children?: React.ReactElement;
+    children?: React.ReactNode;
     /**
      * 是否显示动画效果
      * @default true

@@ -4,15 +4,15 @@ import SkeletonBase from './SkeletonBase';
 import clsx from 'clsx';
 import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** loading结束渲染的元素 */
-  children?: React.ReactElement;
-  /** 
+  children?: React.ReactNode;
+  /**
    * 是否显示动画效果
    * @default true
    * */
   animated?: boolean;
-  /** 
+  /**
    * 几行，默认4行, 最小1行
    * @default 4
    *  */
@@ -26,7 +26,7 @@ type Props = {
    * @default false
    * */
   avatar?: boolean;
-  /** 
+  /**
    * 头像大小
    * @default 32
    *  */

@@ -11,7 +11,7 @@ type Props = {
 
 /** 延迟渲染子元素, 用于防止loading闪烁等问题 */
 const WaitLoading: React.FC<Props> = (props) => {
-  const { wait = 500, children } = props;
+  const { wait = 400, children } = props;
   const [show, setShow] = useState(false);
 
   useEffect(() => {

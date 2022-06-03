@@ -40,18 +40,29 @@ const StyledMenu = styled(PopMenu)`
   }
 `;
 
-export type Props = {
-  className?: string;
-  /** 显示箭头,默认不显示 */
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
+  /**
+   * 显示箭头
+   * @default false
+   * */
   arrow?: boolean;
-  /** 显示位置,默认top,参考popover */
+  /**
+   * 显示位置,默认top,参考popover
+   * @default top
+   *  */
   placement?: Placement;
+  /** 触发元素，如果是组件，需要forwardRef到dom */
   children?: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
-  /** 触发方式 */
+  /**
+   * 触发方式
+   * @default click
+   */
   trigger?: 'click' | 'hover';
-  /** 点击内容区域关闭,默认true */
+  /** 点击内容区域关闭
+   * @default true
+   */
   closeOnClick?: boolean;
   hoverDelay?: number;
   /** visible状态变化回调 */

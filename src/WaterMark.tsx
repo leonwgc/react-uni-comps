@@ -108,6 +108,7 @@ const WaterMark: React.FC<Props> = (props) => {
     fontColor = 'rgba(0,0,0,.15)',
     fontSize = 14,
     fontFamily = 'sans-serif',
+    ...rest
   } = props;
 
   const [base64Url, setBase64Url] = useState('');
@@ -184,6 +185,7 @@ const WaterMark: React.FC<Props> = (props) => {
 
   return (
     <StyledWaterMark
+      {...rest}
       className={clsx('uc-watermark', className)}
       style={{
         zIndex,

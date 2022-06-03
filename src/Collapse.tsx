@@ -35,7 +35,7 @@ const Item: React.FC<ItemProps> = (props) => {
   return <>{props.children}</>;
 };
 
-type CollapseProps = {
+type CollapseProps = React.HTMLAttributes<HTMLDivElement> & {
   /** 子元素*/
   children: React.ReactElement<ItemProps>[];
   /** 当前激活 tab 面板的 key, 如果是数组则可以展开多个项，否则只有一个展开项（手风琴模式） */
