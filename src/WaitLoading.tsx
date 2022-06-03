@@ -1,43 +1,30 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   /**
-   * 渲染子元素等待时间
-   * @default 500
+   * 延迟渲染时间
+   * @default 400 ms
    * */
   wait?: number;
-  /** 是否显示子元素 */
-  visible: boolean;
-  children?: React.ReactNode;
+  children?: React.ReactElement;
 };
 
 /** 延迟渲染子元素, 用于防止loading闪烁等问题 */
-const WaitLoading = (props: Props) => {
-  const { wait = 500, visible = false, children } = props;
+const WaitLoading: React.FC<Props> = (props) => {
+  const { wait = 500, children } = props;
   const [show, setShow] = useState(false);
-  const ref = useRef<number>();
 
   useEffect(() => {
-    if (visible) {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-      ref.current = window.setTimeout(() => {
-        setShow(true);
-      }, wait);
-    } else {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-      setShow(false);
-    }
-    return () => {
-      setShow(false);
-      clearTimeout(ref.current);
-    };
-  }, [visible, wait]);
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, wait);
 
-  return show ? children : null;
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [wait]);
+
+  return show && children;
 };
 
 export default WaitLoading;

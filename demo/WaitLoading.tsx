@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Button, Space, WaitLoading, Spin } from 'react-uni-comps';
+import { WaitLoading, Spin } from 'react-uni-comps';
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
   return (
     <PageWrap>
-      <DemoBlock title="延迟渲染子元素">
-        <Space>
-          <Button type="primary" onClick={() => setLoading(true)} loading={loading}>
-            700ms后显示 loading
-          </Button>
+      <DemoBlock title="默认延迟400ms渲染">
+        <WaitLoading>
+          <Spin />
+        </WaitLoading>
+      </DemoBlock>
 
-          <Button onClick={() => setLoading(false)}>隐藏loading </Button>
-        </Space>
-
-        <div style={{ marginTop: 24 }}>
-          <WaitLoading visible={loading}>
-            <Spin style={{ fontSize: 30, color: '#00bc8d' }} />
-          </WaitLoading>
-        </div>
+      <DemoBlock title="延迟1s渲染">
+        <WaitLoading wait={1000}>
+          <Spin />
+        </WaitLoading>
       </DemoBlock>
     </PageWrap>
   );
