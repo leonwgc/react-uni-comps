@@ -19,6 +19,18 @@ export default defineConfig({
       output: './.mfsu-dev',
     },
   },
+  chainWebpack: function (config, { webpack, env }) {
+    config.merge({
+      cache: {
+        type: 'filesystem',
+        name: 'ruc-' + env,
+        buildDependencies: {
+          config: [__filename],
+        },
+        store: 'pack',
+      },
+    });
+  },
   dynamicImport: {},
   locales: [['zh-CN', '中文']],
   hash: true,
