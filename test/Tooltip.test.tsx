@@ -14,7 +14,7 @@ describe('Tooltip test groups', () => {
         <button />
       </Tooltip>
     );
-    const el = screen.getByTitle('Tooltip');
-    expect(el).toBeDefined();
+    const el = screen.queryByTitle('Tooltip');
+    expect(el).toBeNull();
   });
 });

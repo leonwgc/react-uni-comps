@@ -4,7 +4,7 @@ import type { BaseProps } from './types';
  *  上拉无限滚动
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
  */
-declare const Pullup: React.ForwardRefExoticComponent<{
+declare const Pullup: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 数据列表, 作为 dataRender 列表数据 */
     dataList?: Array<unknown>;
     /** 数据渲染, 也可以在children里面遍历dataList */

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { debug } from 'jest-preview';
@@ -9,9 +8,14 @@ import Pullup from '../src/Pullup';
 const title = 'Pullup';
 
 describe('Pullup test groups', () => {
-    test('render', () => {
-      render(<Pullup title="Pullup"/>);
-      const el = screen.getByTitle('Pullup');
-      expect(el).toBeDefined();
-    });
+  test('render', () => {
+    const fetchData = jest.fn();
+    render(
+      <Pullup title="Pullup" fetchData={fetchData} finished>
+        <div></div>
+      </Pullup>
+    );
+    const el = screen.queryByTitle('Pullup');
+    expect(el).not.toBeNull();
+  });
 });

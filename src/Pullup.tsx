@@ -40,7 +40,7 @@ function isInViewport(el: HTMLElement, container: HTMLElement) {
   }
 }
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 数据列表, 作为 dataRender 列表数据 */
   dataList?: Array<unknown>;
   /** 数据渲染, 也可以在children里面遍历dataList */

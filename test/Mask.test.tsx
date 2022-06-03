@@ -16,7 +16,7 @@ describe('Mask test groups', () => {
 
   test('render invisible', () => {
     render(<Mask title="Mask" />);
-    const el = screen.getByTitle('Mask');
-    expect(el).not.toBeDefined();
+    const el = screen.queryByTitle('Mask');
+    expect(el).toBeNull();
   });
 });
