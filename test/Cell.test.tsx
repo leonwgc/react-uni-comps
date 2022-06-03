@@ -10,7 +10,7 @@ const title = 'Cell';
 describe('Cell test groups', () => {
   test('render', () => {
     render(<Cell title="Cell" test-id="Cell" content="content" />);
-    const el = screen.getByTestId('Cell');
+    const el = screen.queryByTitle('Cell');
     expect(el).toBeDefined();
   });
 });

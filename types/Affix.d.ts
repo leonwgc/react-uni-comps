@@ -1,6 +1,6 @@
 import React from 'react';
 import type { BaseProps, TargetElementType } from './types';
-declare type Props = {
+declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 距离窗口顶部达到指定偏移量后触发 */
     offsetTop?: number;
     /** 距离窗口底部达到指定偏移量后触发 */

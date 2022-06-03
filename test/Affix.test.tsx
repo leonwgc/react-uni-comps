@@ -10,7 +10,7 @@ const title = 'Affix';
 describe('Affix test groups', () => {
   test('render', () => {
     render(<Affix title="Affix" />);
-    const el = screen.getByTitle('Affix');
+    const el = screen.queryByTitle('Affix');
     expect(el).toBeDefined();
   });
 });
