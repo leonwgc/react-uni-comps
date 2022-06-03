@@ -1,20 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 type Props = {
-  /** 
+  /**
    * 渲染子元素等待时间
-   * @default 700
+   * @default 500
    * */
   wait?: number;
   /** 是否显示子元素 */
   visible: boolean;
-  /** 子元素 */
-  children?: React.ReactElement;
+  children?: React.ReactNode;
 };
 
-/** 延迟渲染子元素, 一般用于防止loading闪烁等问题 */
-const WaitLoading: React.FC<Props> = (props) => {
-  const { wait = 700, visible = false, children } = props;
+/** 延迟渲染子元素, 用于防止loading闪烁等问题 */
+const WaitLoading = (props: Props) => {
+  const { wait = 500, visible = false, children } = props;
   const [show, setShow] = useState(false);
   const ref = useRef<number>();
 

@@ -6,7 +6,7 @@ import useEventListener from './hooks/useEventListener';
 import useThrottle from './hooks/useThrottle';
 import { getTargetElement } from './helper';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 距离窗口顶部达到指定偏移量后触发 */
   offsetTop?: number;
   /** 距离窗口底部达到指定偏移量后触发 */
@@ -146,8 +146,8 @@ const Affix: React.FC<Props> = (props) => {
   }
 
   return (
-    <div ref={wrapElRef} className={clsx('uc-affix', 'affixed')}>
-      <div ref={fixedElRef} {...rest} style={getAffixeStyle() as React.CSSProperties}>
+    <div {...rest} ref={wrapElRef} className={clsx('uc-affix', 'affixed')}>
+      <div ref={fixedElRef} style={getAffixeStyle() as React.CSSProperties}>
         {children}
       </div>
     </div>
