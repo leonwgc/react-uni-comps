@@ -8600,7 +8600,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: getClassName$3('body'),
     ref: bodyRef
-  }, children, showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
+  }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
     className: getClassName$3('track'),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -8609,7 +8609,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       backgroundColor: fillColor
     },
     ref: fillRef
-  }))));
+  })));
 });
 ScrollBox.displayName = 'UC-ScrollBox';
 

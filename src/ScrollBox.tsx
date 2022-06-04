@@ -115,16 +115,16 @@ const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledWrap {...rest} ref={ref} className={clsx(getClassName(), className)}>
       <div className={getClassName('body')} ref={bodyRef}>
         {children}
-        {showIndicator && (
-          <div className={getClassName('track')} style={indicatorStyle}>
-            <div
-              className={getClassName('fill')}
-              style={{ backgroundColor: fillColor }}
-              ref={fillRef}
-            ></div>
-          </div>
-        )}
       </div>
+      {showIndicator && (
+        <div className={getClassName('track')} style={indicatorStyle}>
+          <div
+            className={getClassName('fill')}
+            style={{ backgroundColor: fillColor }}
+            ref={fillRef}
+          ></div>
+        </div>
+      )}
     </StyledWrap>
   );
 });

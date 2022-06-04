@@ -58,7 +58,7 @@ var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement("div", {
     className: getClassName('body'),
     ref: bodyRef
-  }, children, showIndicator && /*#__PURE__*/React.createElement("div", {
+  }, children), showIndicator && /*#__PURE__*/React.createElement("div", {
     className: getClassName('track'),
     style: indicatorStyle
   }, /*#__PURE__*/React.createElement("div", {
@@ -67,7 +67,7 @@ var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
       backgroundColor: fillColor
     },
     ref: fillRef
-  }))));
+  })));
 });
 ScrollBox.displayName = 'UC-ScrollBox';
 export default ScrollBox;
