@@ -11,6 +11,9 @@ const GlobalStyle = createGlobalStyle`
     'Microsoft Yahei', Tahoma, Simsun, sans-serif;
     line-height: 1.5715;
   }
+  *{
+    box-sizing: border-box;;
+  }
 `;
 
 const getColor = () => document.documentElement.style.getPropertyValue('--uc-color') || '#005cff';

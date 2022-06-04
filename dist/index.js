@@ -1862,12 +1862,10 @@ var HairLineBox = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 HairLineBox.displayName = 'UC-HairLineBox';
 
-/** 延迟渲染子元素, 一般用于防止loading闪烁等问题 */
+/** 延迟渲染子元素, 用于防止loading闪烁等问题 */
 var WaitLoading = function WaitLoading(props) {
   var _props$wait = props.wait,
-      wait = _props$wait === void 0 ? 700 : _props$wait,
-      _props$visible = props.visible,
-      visible = _props$visible === void 0 ? false : _props$visible,
+      wait = _props$wait === void 0 ? 400 : _props$wait,
       children = props.children;
 
   var _useState = React.useState(false),
@@ -1875,30 +1873,15 @@ var WaitLoading = function WaitLoading(props) {
       show = _useState2[0],
       setShow = _useState2[1];
 
-  var ref = React.useRef();
   React.useEffect(function () {
-    if (visible) {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      ref.current = window.setTimeout(function () {
-        setShow(true);
-      }, wait);
-    } else {
-      if (ref.current) {
-        clearTimeout(ref.current);
-      }
-
-      setShow(false);
-    }
-
+    var timer = setTimeout(function () {
+      setShow(true);
+    }, wait);
     return function () {
-      setShow(false);
-      clearTimeout(ref.current);
+      window.clearTimeout(timer);
     };
-  }, [visible, wait]);
-  return show ? children : null;
+  }, [wait]);
+  return show && children;
 };
 
 var _templateObject;
@@ -3822,14 +3805,13 @@ var Affix = function Affix(props) {
     }, children);
   }
 
-  return /*#__PURE__*/React__default['default'].createElement("div", {
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
     ref: wrapElRef,
     className: clsx__default['default']('uc-affix', 'affixed')
-  }, /*#__PURE__*/React__default['default'].createElement("div", _extends({
-    ref: fixedElRef
-  }, rest, {
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    ref: fixedElRef,
     style: getAffixeStyle()
-  }), children));
+  }, children));
 };
 
 Affix.displayName = 'UC-Affix';
@@ -5943,6 +5925,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
 });
 ProgressCircle.displayName = 'UC-ProgressCircle';
 
+var _excluded$K = ["style", "className", "zIndex", "gapX", "gapY", "width", "height", "rotate", "image", "imageWidth", "imageHeight", "content", "fontStyle", "fontWeight", "fontColor", "fontSize", "fontFamily"];
 var StyledWaterMark = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "WaterMark__StyledWaterMark",
   componentId: "sc-1sjiaa1-0"
@@ -5979,7 +5962,8 @@ var WaterMark = function WaterMark(props) {
       _props$fontSize = props.fontSize,
       fontSize = _props$fontSize === void 0 ? 14 : _props$fontSize,
       _props$fontFamily = props.fontFamily,
-      fontFamily = _props$fontFamily === void 0 ? 'sans-serif' : _props$fontFamily;
+      fontFamily = _props$fontFamily === void 0 ? 'sans-serif' : _props$fontFamily,
+      rest = _objectWithoutProperties(props, _excluded$K);
 
   var _useState = React.useState(''),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6028,19 +6012,19 @@ var WaterMark = function WaterMark(props) {
       throw new Error('当前环境不支持Canvas');
     }
   }, [gapX, gapY, rotate, fontStyle, fontWeight, width, height, fontFamily, fontColor, image, content, fontSize, imageHeight, imageWidth]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWaterMark, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWaterMark, _extends({}, rest, {
     className: clsx__default['default']('uc-watermark', className),
     style: _objectSpread2({
       zIndex: zIndex,
       backgroundSize: "".concat(gapX + width, "px"),
       backgroundImage: "url('".concat(base64Url, "')")
     }, style)
-  });
+  }));
 };
 
 WaterMark.displayName = 'UC-WaterMark';
 
-var _excluded$K = ["content", "style", "className"],
+var _excluded$L = ["content", "style", "className"],
     _excluded2$3 = ["duration"];
 var transitionDuration$2 = animationNormal;
 var StyledNotify = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -6054,7 +6038,7 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var content = props.content,
       style = props.style,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$K);
+      rest = _objectWithoutProperties(props, _excluded$L);
 
   var elRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -6146,7 +6130,7 @@ Notify.show = function (props) {
 
 Notify.displayName = 'UC-Notify';
 
-var _excluded$L = ["children", "className", "content", "badgeStyle"];
+var _excluded$M = ["children", "className", "content", "badgeStyle"];
 var StyledBadge = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Badge__StyledBadge",
   componentId: "sc-usucgg-0"
@@ -6158,7 +6142,7 @@ var Badge = function Badge(props) {
       className = props.className,
       content = props.content,
       badgeStyle = props.badgeStyle,
-      rest = _objectWithoutProperties(props, _excluded$L);
+      rest = _objectWithoutProperties(props, _excluded$M);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledBadge, _extends({}, rest, {
     className: clsx__default['default']('uc-badge', className)
@@ -6173,7 +6157,7 @@ var Badge = function Badge(props) {
 
 Badge.displayName = 'UC-Badge';
 
-var _excluded$M = ["size", "className", "shape", "style", "children"];
+var _excluded$N = ["size", "className", "shape", "style", "children"];
 var StyledAvatar = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Avatar__StyledAvatar",
   componentId: "sc-1moyxql-0"
@@ -6188,7 +6172,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       shape = _props$shape === void 0 ? 'circle' : _props$shape,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$M);
+      rest = _objectWithoutProperties(props, _excluded$N);
 
   var s = _objectSpread2({
     width: size,
@@ -6206,7 +6190,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$N = ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"];
+var _excluded$O = ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"];
 var StyledImageViewer = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ImageViewer__StyledImageViewer",
   componentId: "sc-oqxxes-0"
@@ -6230,7 +6214,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       _props$showPrevNextBu = props.showPrevNextButton,
       showPrevNextButton = _props$showPrevNextBu === void 0 ? false : _props$showPrevNextBu,
       maskStyle = props.maskStyle,
-      rest = _objectWithoutProperties(props, _excluded$N);
+      rest = _objectWithoutProperties(props, _excluded$O);
 
   var _useState = React.useState(Array.isArray(images) ? images : [images]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6325,7 +6309,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _excluded$O = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
+var _excluded$P = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 var StyledModal = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "Modal__StyledModal",
   componentId: "sc-1wtmr6p-0"
@@ -6340,7 +6324,7 @@ var Modal = function Modal(props) {
       header = props.header,
       children = props.children,
       footer = props.footer,
-      rest = _objectWithoutProperties(props, _excluded$O);
+      rest = _objectWithoutProperties(props, _excluded$P);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({}, rest, {
     visible: visible,
@@ -6362,7 +6346,7 @@ var Modal = function Modal(props) {
 
 Modal.displayName = 'UC-Modal';
 
-var _excluded$P = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
+var _excluded$Q = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
 var StyledPopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
   displayName: "PopMenu__StyledPopover",
   componentId: "sc-28uxwy-0"
@@ -6398,7 +6382,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       _props$closeOnClickOu = props.closeOnClickOutside,
       closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$P);
+      popoverRest = _objectWithoutProperties(props, _excluded$Q);
 
   var timerRef = React.useRef(0);
 
@@ -6473,7 +6457,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 PopMenu.displayName = 'UC-PopMenu';
 
-var _excluded$Q = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
+var _excluded$R = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
 var StyledMenu = /*#__PURE__*/styled__default['default'](PopMenu).withConfig({
   displayName: "PopConfirm__StyledMenu",
   componentId: "sc-1xornwa-0"
@@ -6514,7 +6498,7 @@ var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$closeOnClick = props.closeOnClick,
       closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
       onCancel = props.onCancel,
-      popomenuRest = _objectWithoutProperties(props, _excluded$Q);
+      popomenuRest = _objectWithoutProperties(props, _excluded$R);
 
   var popmenuRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -6829,7 +6813,7 @@ var locales = /*#__PURE__*/Object.freeze({
   en: en
 });
 
-var _excluded$R = ["position", "className", "style", "children"];
+var _excluded$S = ["position", "className", "style", "children"];
 
 function upperFirstLetter(str) {
   return str[0].toUpperCase() + str.slice(1);
@@ -6845,7 +6829,7 @@ var SafeArea = function SafeArea(props) {
       className = props.className,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$R);
+      rest = _objectWithoutProperties(props, _excluded$S);
 
   var styles = _objectSpread2(_objectSpread2({
     display: 'block',
@@ -6860,7 +6844,7 @@ var SafeArea = function SafeArea(props) {
 
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$S = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
+var _excluded$T = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
 //#region styled
 var StyledWrap$5 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "calendar__StyledWrap",
@@ -6885,7 +6869,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       onChange = props.onChange,
       _props$value = props.value,
       value = _props$value === void 0 ? new Date() : _props$value,
-      rest = _objectWithoutProperties(props, _excluded$S);
+      rest = _objectWithoutProperties(props, _excluded$T);
 
   var max = props.max,
       min = props.min;
@@ -6984,7 +6968,7 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   }, deps);
 };
 
-var _excluded$T = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
+var _excluded$U = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
 var locales$1 = {
   zh: {
     year: '年',
@@ -7054,7 +7038,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       maxYear = _props$maxYear === void 0 ? 2030 : _props$maxYear,
       _props$locale = props.locale,
       locale = _props$locale === void 0 ? 'zh' : _props$locale,
-      rest = _objectWithoutProperties(props, _excluded$T);
+      rest = _objectWithoutProperties(props, _excluded$U);
 
   var _useState = React.useState(getData(minYear, maxYear, locale)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7120,7 +7104,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 DatePicker.displayName = 'UC-DatePicker';
 
-var _excluded$U = ["text", "colorDark", "colorLight", "size", "className", "style"];
+var _excluded$V = ["text", "colorDark", "colorLight", "size", "className", "style"];
 
 /** 二维码 */
 var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7133,7 +7117,7 @@ var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       size = _props$size === void 0 ? 128 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$U);
+      rest = _objectWithoutProperties(props, _excluded$V);
 
   var domRef = React.useRef();
   var qrRef = React.useRef();
@@ -7170,7 +7154,7 @@ var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 QRCode.displayName = 'UC-QRCode';
 
-var _excluded$V = ["children", "onChange", "className", "animated", "keys"];
+var _excluded$W = ["children", "onChange", "className", "animated", "keys"];
 
 /**
  *  子项，放在Collapse里面
@@ -7264,7 +7248,7 @@ var Collapse = function Collapse(_ref) {
       animated = _ref.animated,
       _ref$keys = _ref.keys,
       keys = _ref$keys === void 0 ? '' : _ref$keys,
-      rest = _objectWithoutProperties(_ref, _excluded$V);
+      rest = _objectWithoutProperties(_ref, _excluded$W);
 
   var count = React__default['default'].Children.count(children); // 手风琴模式
 
@@ -7352,7 +7336,7 @@ var Collapse$1 = attachPropertiesToComponent(Collapse, {
   Item: Item
 });
 
-var _excluded$W = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+var _excluded$X = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
 /** 进度条 */
 var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7365,7 +7349,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       percent = _props$percent === void 0 ? 0 : _props$percent,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$W);
+      rest = _objectWithoutProperties(props, _excluded$X);
 
   var theme = styled.useTheme() || {};
   var color = theme.color || primary;
@@ -7389,7 +7373,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ProgressBar.displayName = 'UC-ProgressBar';
 
-var _excluded$X = ["children"];
+var _excluded$Y = ["children"];
 var StyledWrap$6 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AutoCenter__StyledWrap",
   componentId: "sc-eqv38w-0"
@@ -7398,7 +7382,7 @@ var StyledWrap$6 = /*#__PURE__*/styled__default['default'].div.withConfig({
 
 var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$X);
+      rest = _objectWithoutProperties(props, _excluded$Y);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
     ref: ref,
@@ -7409,7 +7393,7 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 AutoCenter.displayName = 'UC-AutoCenter';
 
-var _excluded$Y = ["number", "delay", "className"];
+var _excluded$Z = ["number", "delay", "className"];
 
 /** 滚动数字 */
 var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7417,7 +7401,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 200 : _props$delay,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$Y);
+      rest = _objectWithoutProperties(props, _excluded$Z);
 
   var spring = web.useSpring({
     from: {
@@ -7436,7 +7420,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 RollingNumber.displayName = 'UC-RollingNumber';
 
-var _excluded$Z = ["className", "color", "duration", "startScale", "children", "block"];
+var _excluded$_ = ["className", "color", "duration", "startScale", "children", "block"];
 var StyledWrap$7 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Ripple__StyledWrap",
   componentId: "sc-cbwg15-0"
@@ -7453,7 +7437,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       startScale = _props$startScale === void 0 ? 0.3 : _props$startScale,
       children = props.children,
       block = props.block,
-      rest = _objectWithoutProperties(props, _excluded$Z);
+      rest = _objectWithoutProperties(props, _excluded$_);
 
   var elRef = React.useRef(null);
   var isRunningRef = React.useRef(false);
@@ -7550,7 +7534,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Ripple.displayName = 'UC-Ripple';
 
-var _excluded$_ = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
+var _excluded$$ = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
 var StyledWrap$8 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "PullToRefresh__StyledWrap",
   componentId: "sc-159qm0m-0"
@@ -7577,7 +7561,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       renderText = props.renderText,
       children = props.children,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$_);
+      rest = _objectWithoutProperties(props, _excluded$$);
 
   var _useState = React.useState('init'),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7863,7 +7847,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
-var _excluded$$ = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
+var _excluded$10 = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
 
 /**
  * get pages arr
@@ -7929,7 +7913,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       showIfOnePage = props.showIfOnePage,
       onPageChange = props.onPageChange,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$$);
+      rest = _objectWithoutProperties(props, _excluded$10);
 
   var domRef = React.useRef();
 
@@ -8017,7 +8001,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 Pagination.displayName = 'UC-Pagination';
 
-var _excluded$10 = ["image", "desc", "className", "extra"];
+var _excluded$11 = ["image", "desc", "className", "extra"];
 var StyledWrap$a = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Result__StyledWrap",
   componentId: "sc-1xsmtez-0"
@@ -8029,7 +8013,7 @@ var Result = function Result(props) {
       desc = props.desc,
       className = props.className,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$10);
+      rest = _objectWithoutProperties(props, _excluded$11);
 
   var imgNode = typeof image === 'string' ? /*#__PURE__*/React__default['default'].createElement("img", {
     src: image,
@@ -8048,7 +8032,7 @@ var Result = function Result(props) {
 
 Result.displayName = 'UC-Result';
 
-var _excluded$11 = ["image", "desc", "className"];
+var _excluded$12 = ["image", "desc", "className"];
 var StyledResult = /*#__PURE__*/styled__default['default'](Result).withConfig({
   displayName: "Empty__StyledResult",
   componentId: "sc-1u07bdn-0"
@@ -8082,7 +8066,7 @@ var Empty = function Empty(props) {
       _props$desc = props.desc,
       desc = _props$desc === void 0 ? '暂无数据' : _props$desc,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$11);
+      rest = _objectWithoutProperties(props, _excluded$12);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledResult, _extends({}, rest, {
     className: clsx__default['default']('uc-empty', className),
@@ -8093,7 +8077,7 @@ var Empty = function Empty(props) {
 
 Empty.displayName = 'UC-Empty';
 
-var _excluded$12 = ["items", "index", "defaultIndex", "onChange", "className"];
+var _excluded$13 = ["items", "index", "defaultIndex", "onChange", "className"];
 var StyledWrapper$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SideBar__StyledWrapper",
   componentId: "sc-nyu3mo-0"
@@ -8111,7 +8095,7 @@ var SideBar = function SideBar(_ref) {
       defaultIndex = _ref$defaultIndex === void 0 ? 0 : _ref$defaultIndex,
       onChange = _ref.onChange,
       className = _ref.className,
-      rest = _objectWithoutProperties(_ref, _excluded$12);
+      rest = _objectWithoutProperties(_ref, _excluded$13);
 
   var _useState = React.useState(typeof index === 'undefined' ? defaultIndex : index),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8162,7 +8146,7 @@ var SideBar = function SideBar(_ref) {
   }));
 };
 
-var _excluded$13 = ["dataList", "dataRender", "onSort", "config", "className"];
+var _excluded$14 = ["dataList", "dataRender", "onSort", "config", "className"];
 var StyledWrapper$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SortableList__StyledWrapper",
   componentId: "sc-tk9dv2-0"
@@ -8200,7 +8184,7 @@ var SortableList = function SortableList(props) {
       onSort = props.onSort,
       config = props.config,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$13);
+      rest = _objectWithoutProperties(props, _excluded$14);
 
   var wrapElRef = React.useRef();
   var keyedList = addKeyToList(dataList);
@@ -8253,7 +8237,7 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$14 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
+var _excluded$15 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 //#region  style
 var StyledWrap$b = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Stepper__StyledWrap",
@@ -8290,7 +8274,7 @@ var Stepper = function Stepper(props) {
       disabled = props.disabled,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$14);
+      rest = _objectWithoutProperties(props, _excluded$15);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8350,7 +8334,7 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$15 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
+var _excluded$16 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 //#region  style
 var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SearchBar__StyledWrap",
@@ -8368,7 +8352,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _onFocus = props.onFocus,
       onCancel = props.onCancel,
       onSearch = props.onSearch,
-      inputProps = _objectWithoutProperties(props, _excluded$15);
+      inputProps = _objectWithoutProperties(props, _excluded$16);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8403,7 +8387,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 SearchBar.displayName = 'UC-SearchBar';
 
-var _excluded$16 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
+var _excluded$17 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
 
 //#region  style
 //#endregion
@@ -8434,7 +8418,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       max = props.max,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$16);
+      rest = _objectWithoutProperties(props, _excluded$17);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8479,7 +8463,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 InputNumber.displayName = 'UC-InputNumber';
 
-var _excluded$17 = ["className", "children", "columnGap", "rowGap", "columnCount"];
+var _excluded$18 = ["className", "children", "columnGap", "rowGap", "columnCount"];
 var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Masonry__StyledWrap",
   componentId: "sc-dzi4mt-0"
@@ -8495,7 +8479,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       rowGap = _props$rowGap === void 0 ? 10 : _props$rowGap,
       _props$columnCount = props.columnCount,
       columnCount = _props$columnCount === void 0 ? 2 : _props$columnCount,
-      rest = _objectWithoutProperties(props, _excluded$17);
+      rest = _objectWithoutProperties(props, _excluded$18);
 
   var wrapElRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -8550,9 +8534,9 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       style: {
         width: colRef.current.colWidth
       }
-    }, items.map(function (item) {
+    }, items.map(function (item, idx) {
       return /*#__PURE__*/React__default['default'].createElement("div", {
-        key: item.key || nanoid.nanoid(),
+        key: item.key || idx,
         className: clsx__default['default']('uc-masonry-item'),
         style: {
           marginBottom: rowGap
@@ -8563,8 +8547,74 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 Masonry.displayName = 'UC-Masonry';
 
-var _excluded$18 = ["children", "className", "ratio"];
+var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "fillColor", "children"];
+var getClassName$3 = prefixClassName('uc-scroll-box');
+//#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "ScrollBox__StyledWrap",
+  componentId: "sc-1lxfvtx-0"
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:40px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$3('body'), getClassName$3('track'), getClassName$3('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+
+/** 带指示器的水平滚动盒子 */
+
+var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$showIndicator = props.showIndicator,
+      showIndicator = _props$showIndicator === void 0 ? true : _props$showIndicator,
+      indicatorStyle = props.indicatorStyle,
+      fillColor = props.fillColor,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$19);
+
+  var bodyRef = React.useRef();
+  var fillRef = React.useRef();
+  var showIndicatorRef = useLatest(showIndicator);
+  var onScroll = useThrottle(function () {
+    if (!showIndicatorRef.current) {
+      return;
+    }
+
+    var body = bodyRef.current;
+    var fill = fillRef.current;
+    var track = fill.parentNode;
+    var trackWidth = track.offsetWidth;
+
+    if (body.scrollWidth > body.offsetWidth) {
+      track.style.visibility = 'unset';
+      var distance = body.scrollWidth - body.offsetWidth;
+
+      if (fill.offsetWidth === 0) {
+        fill.style.width = Math.floor(body.offsetWidth * trackWidth / body.scrollWidth) + 'px';
+      }
+
+      if (body.scrollLeft >= 0) {
+        fill.style.left = body.scrollLeft * (trackWidth - fill.offsetWidth) / distance + 'px';
+      }
+    }
+  }, 16);
+  useMount(onScroll);
+  useEventListener(bodyRef, 'scroll', onScroll);
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({}, rest, {
+    ref: ref,
+    className: clsx__default['default'](getClassName$3(), className)
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: getClassName$3('body'),
+    ref: bodyRef
+  }, children, showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
+    className: getClassName$3('track'),
+    style: indicatorStyle
+  }, /*#__PURE__*/React__default['default'].createElement("div", {
+    className: getClassName$3('fill'),
+    style: {
+      backgroundColor: fillColor
+    },
+    ref: fillRef
+  }))));
+});
+ScrollBox.displayName = 'UC-ScrollBox';
+
+var _excluded$1a = ["children", "className", "ratio"];
+var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AspectRatio__StyledWrap",
   componentId: "sc-1dp29mr-0"
 })(["position:relative;&::before{height:0;content:'';display:block;padding-bottom:", ";}img{max-width:100%;object-fit:cover;}*{box-sizing:border-box;overflow:hidden;position:absolute;inset:0px;display:flex;align-items:center;width:100%;height:100%;}"], function (props) {
@@ -8577,9 +8627,9 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       className = props.className,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 4 / 3 : _props$ratio,
-      rest = _objectWithoutProperties(props, _excluded$18);
+      rest = _objectWithoutProperties(props, _excluded$1a);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$f, _extends({}, rest, {
     ref: ref,
     ratio: ratio,
     className: clsx__default['default']('ruc-aspect-ratio', className)
@@ -8851,7 +8901,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$19 = ["children", "label", "name"],
+var _excluded$1b = ["children", "label", "name"],
     _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8861,7 +8911,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$19);
+      fieldProps = _objectWithoutProperties(props, _excluded$1b);
 
   var required = false;
 
@@ -9105,6 +9155,7 @@ exports.Result = Result;
 exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
 exports.SafeArea = SafeArea;
+exports.ScrollBox = ScrollBox;
 exports.SearchBar = SearchBar;
 exports.SideBar = SideBar;
 exports.Signature = Signature;

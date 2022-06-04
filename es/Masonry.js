@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
-import { nanoid } from 'nanoid';
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n\n  .uc-masonry-col {\n    display: flex;\n    flex-direction: column;\n  }\n"], ["\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n\n  .uc-masonry-col {\n    display: flex;\n    flex-direction: column;\n  }\n"])));
 /** 瀑布流布局 */
 
@@ -73,9 +72,9 @@ var Masonry = /*#__PURE__*/React.forwardRef(function (props, ref) {
       style: {
         width: colRef.current.colWidth
       }
-    }, items.map(function (item) {
+    }, items.map(function (item, idx) {
       return /*#__PURE__*/React.createElement("div", {
-        key: item.key || nanoid(),
+        key: item.key || idx,
         className: clsx('uc-masonry-item'),
         style: {
           marginBottom: rowGap

@@ -35,6 +35,10 @@ module.exports = [
         name: 'AspectRatio',
         title: 'AspectRatio 宽高比',
       },
+      {
+        name: 'ScrollBox',
+        title: 'ScrollBox 滚动盒子',
+      },
     ],
   },
   {

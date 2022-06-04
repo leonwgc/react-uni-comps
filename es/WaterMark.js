@@ -1,4 +1,4 @@
-import { __assign, __makeTemplateObject } from "tslib";
+import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
@@ -35,7 +35,8 @@ var WaterMark = function WaterMark(props) {
       _m = props.fontSize,
       fontSize = _m === void 0 ? 14 : _m,
       _o = props.fontFamily,
-      fontFamily = _o === void 0 ? 'sans-serif' : _o;
+      fontFamily = _o === void 0 ? 'sans-serif' : _o,
+      rest = __rest(props, ["style", "className", "zIndex", "gapX", "gapY", "width", "height", "rotate", "image", "imageWidth", "imageHeight", "content", "fontStyle", "fontWeight", "fontColor", "fontSize", "fontFamily"]);
 
   var _p = useState(''),
       base64Url = _p[0],
@@ -83,14 +84,14 @@ var WaterMark = function WaterMark(props) {
       throw new Error('当前环境不支持Canvas');
     }
   }, [gapX, gapY, rotate, fontStyle, fontWeight, width, height, fontFamily, fontColor, image, content, fontSize, imageHeight, imageWidth]);
-  return /*#__PURE__*/React.createElement(StyledWaterMark, {
+  return /*#__PURE__*/React.createElement(StyledWaterMark, __assign({}, rest, {
     className: clsx('uc-watermark', className),
     style: __assign({
       zIndex: zIndex,
       backgroundSize: "".concat(gapX + width, "px"),
       backgroundImage: "url('".concat(base64Url, "')")
     }, style)
-  });
+  }));
 };
 
 WaterMark.displayName = 'UC-WaterMark';

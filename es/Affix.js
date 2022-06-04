@@ -131,14 +131,13 @@ var Affix = function Affix(props) {
     }, children);
   }
 
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", __assign({}, rest, {
     ref: wrapElRef,
     className: clsx('uc-affix', 'affixed')
-  }, /*#__PURE__*/React.createElement("div", __assign({
-    ref: fixedElRef
-  }, rest, {
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: fixedElRef,
     style: getAffixeStyle()
-  }), children));
+  }, children));
 };
 
 Affix.displayName = 'UC-Affix';
