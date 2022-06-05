@@ -21,6 +21,10 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
    * 指示器样式
    */
   indicatorStyle?: React.CSSProperties;
+  /**
+   * 指示器样式类
+   */
+  indicatorClass?: string;
 
   /**
    * 指示器颜色
@@ -80,7 +84,15 @@ const StyledWrap = styled.div`
 
 /** 带指示器的水平滚动盒子 */
 const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, showIndicator = true, indicatorStyle, fillColor, children, ...rest } = props;
+  const {
+    className,
+    showIndicator = true,
+    indicatorStyle,
+    indicatorClass,
+    fillColor,
+    children,
+    ...rest
+  } = props;
 
   const bodyRef = useRef<HTMLDivElement>();
   const fillRef = useRef<HTMLDivElement>();
@@ -96,20 +108,22 @@ const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const trackWidth = track.offsetWidth;
 
     if (body.scrollWidth > body.offsetWidth) {
+      track.style.display = 'unset';
       track.style.visibility = 'unset';
       const distance = body.scrollWidth - body.offsetWidth;
-      if (fill.offsetWidth === 0) {
-        fill.style.width = Math.floor((body.offsetWidth * trackWidth) / body.scrollWidth) + 'px';
-      }
+      fill.style.width = Math.floor((body.offsetWidth * trackWidth) / body.scrollWidth) + 'px';
 
       if (body.scrollLeft >= 0) {
         fill.style.left = (body.scrollLeft * (trackWidth - fill.offsetWidth)) / distance + 'px';
       }
+    } else {
+      track.style.display = 'none';
     }
   }, 16);
 
   useMount(onScroll);
   useEventListener(bodyRef, 'scroll', onScroll);
+  useEventListener(() => window, 'resize', onScroll);
 
   return (
     <StyledWrap {...rest} ref={ref} className={clsx(getClassName(), className)}>
@@ -117,7 +131,7 @@ const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         {children}
       </div>
       {showIndicator && (
-        <div className={getClassName('track')} style={indicatorStyle}>
+        <div className={clsx(getClassName('track'), indicatorClass)} style={indicatorStyle}>
           <div
             className={getClassName('fill')}
             style={{ backgroundColor: fillColor }}

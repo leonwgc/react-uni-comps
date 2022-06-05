@@ -10,6 +10,10 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      */
     indicatorStyle?: React.CSSProperties;
     /**
+     * 指示器样式类
+     */
+    indicatorClass?: string;
+    /**
      * 指示器颜色
      * @default 默认主题色
      * @default
@@ -27,6 +31,10 @@ declare const ScrollBox: React.ForwardRefExoticComponent<React.HTMLAttributes<HT
      * 指示器样式
      */
     indicatorStyle?: React.CSSProperties;
+    /**
+     * 指示器样式类
+     */
+    indicatorClass?: string;
     /**
      * 指示器颜色
      * @default 默认主题色
