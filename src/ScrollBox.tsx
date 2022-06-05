@@ -108,7 +108,7 @@ const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const trackWidth = track.offsetWidth;
 
     if (body.scrollWidth > body.offsetWidth) {
-      track.style.display = 'unset';
+      track.style.display = '';
       track.style.visibility = 'unset';
       const distance = body.scrollWidth - body.offsetWidth;
       fill.style.width = Math.floor((body.offsetWidth * trackWidth) / body.scrollWidth) + 'px';
