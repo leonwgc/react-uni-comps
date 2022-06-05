@@ -9,5 +9,6 @@ export declare type BaseProps = {
     className?: string;
     children?: React.ReactNode;
 };
-export declare type TargetElementType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
-export declare type EventTargetType = TargetElementType | Window | Document;
+/** Mount container type  */
+export declare type TargetElementType = Element | (() => Element) | React.MutableRefObject<Element>;
+export declare type EventTargetType = EventTarget | React.MutableRefObject<EventTarget> | (() => EventTarget);

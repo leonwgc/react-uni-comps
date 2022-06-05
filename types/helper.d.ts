@@ -59,12 +59,12 @@ export declare const sleep: (time: number) => Promise<unknown>;
  */
 export declare const deepClone: <T>(src: T) => T;
 /**
- * get element from fn/ref/el target
+ * Get element from fn/ref/el
  *
  * @param {TargetElementType} target
- * @return {*}  {HTMLElement}
+ * @return {*}  {Element}
  */
-export declare const getTargetElement: (target: TargetElementType) => HTMLElement;
+export declare const getTargetElement: (target: TargetElementType) => Element;
 /**
  * className with prefix gen
  *

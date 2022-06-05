@@ -14,9 +14,10 @@ export type BaseProps = {
   children?: React.ReactNode;
 };
 
-export type TargetElementType =
-  | HTMLElement
-  | (() => HTMLElement)
-  | React.MutableRefObject<HTMLElement>;
+/** Mount container type  */
+export type TargetElementType = Element | (() => Element) | React.MutableRefObject<Element>;
 
-export type EventTargetType = TargetElementType | Window | Document;
+export type EventTargetType =
+  | EventTarget
+  | React.MutableRefObject<EventTarget>
+  | (() => EventTarget);
