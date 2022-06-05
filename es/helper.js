@@ -210,16 +210,16 @@ export var deepClone = function deepClone(src) {
   return dest;
 };
 /**
- * get element from fn/ref/el target
+ * Get element from fn/ref/el
  *
  * @param {TargetElementType} target
- * @return {*}  {HTMLElement}
+ * @return {*}  {Element}
  */
 
 export var getTargetElement = function getTargetElement(target) {
   var node;
 
-  if (target instanceof HTMLElement) {
+  if (target instanceof Element) {
     node = target;
   } else if (isObject(target) && 'current' in target) {
     node = target.current;

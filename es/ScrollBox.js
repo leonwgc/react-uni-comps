@@ -20,9 +20,10 @@ var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _a = props.showIndicator,
       showIndicator = _a === void 0 ? true : _a,
       indicatorStyle = props.indicatorStyle,
+      indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,
       children = props.children,
-      rest = __rest(props, ["className", "showIndicator", "indicatorStyle", "fillColor", "children"]);
+      rest = __rest(props, ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"]);
 
   var bodyRef = useRef();
   var fillRef = useRef();
@@ -38,20 +39,23 @@ var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
     var trackWidth = track.offsetWidth;
 
     if (body.scrollWidth > body.offsetWidth) {
+      track.style.display = '';
       track.style.visibility = 'unset';
       var distance = body.scrollWidth - body.offsetWidth;
-
-      if (fill.offsetWidth === 0) {
-        fill.style.width = Math.floor(body.offsetWidth * trackWidth / body.scrollWidth) + 'px';
-      }
+      fill.style.width = Math.floor(body.offsetWidth * trackWidth / body.scrollWidth) + 'px';
 
       if (body.scrollLeft >= 0) {
         fill.style.left = body.scrollLeft * (trackWidth - fill.offsetWidth) / distance + 'px';
       }
+    } else {
+      track.style.display = 'none';
     }
   }, 16);
   useMount(onScroll);
   useEventListener(bodyRef, 'scroll', onScroll);
+  useEventListener(function () {
+    return window;
+  }, 'resize', onScroll);
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     ref: ref,
     className: clsx(getClassName(), className)
@@ -59,7 +63,7 @@ var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: getClassName('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React.createElement("div", {
-    className: getClassName('track'),
+    className: clsx(getClassName('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React.createElement("div", {
     className: getClassName('fill'),

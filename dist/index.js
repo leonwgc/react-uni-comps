@@ -925,16 +925,16 @@ var deepClone = function deepClone(src) {
   return dest;
 };
 /**
- * get element from fn/ref/el target
+ * Get element from fn/ref/el
  *
  * @param {TargetElementType} target
- * @return {*}  {HTMLElement}
+ * @return {*}  {Element}
  */
 
 var getTargetElement = function getTargetElement(target) {
   var node;
 
-  if (target instanceof HTMLElement) {
+  if (target instanceof Element) {
     node = target;
   } else if (isObject(target) && 'current' in target) {
     node = target.current;
@@ -8547,7 +8547,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 Masonry.displayName = 'UC-Masonry';
 
-var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "fillColor", "children"];
+var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
 var getClassName$3 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -8562,6 +8562,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _props$showIndicator = props.showIndicator,
       showIndicator = _props$showIndicator === void 0 ? true : _props$showIndicator,
       indicatorStyle = props.indicatorStyle,
+      indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$19);
@@ -8580,20 +8581,23 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     var trackWidth = track.offsetWidth;
 
     if (body.scrollWidth > body.offsetWidth) {
+      track.style.display = '';
       track.style.visibility = 'unset';
       var distance = body.scrollWidth - body.offsetWidth;
-
-      if (fill.offsetWidth === 0) {
-        fill.style.width = Math.floor(body.offsetWidth * trackWidth / body.scrollWidth) + 'px';
-      }
+      fill.style.width = Math.floor(body.offsetWidth * trackWidth / body.scrollWidth) + 'px';
 
       if (body.scrollLeft >= 0) {
         fill.style.left = body.scrollLeft * (trackWidth - fill.offsetWidth) / distance + 'px';
       }
+    } else {
+      track.style.display = 'none';
     }
   }, 16);
   useMount(onScroll);
   useEventListener(bodyRef, 'scroll', onScroll);
+  useEventListener(function () {
+    return window;
+  }, 'resize', onScroll);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](getClassName$3(), className)
@@ -8601,7 +8605,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     className: getClassName$3('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$3('track'),
+    className: clsx__default['default'](getClassName$3('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
     className: getClassName$3('fill'),
