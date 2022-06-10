@@ -69,6 +69,7 @@ const StyledWrap = styled.div`
   .${getClassName('side')} {
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
     right: 12px;
     z-index: 300;
 
