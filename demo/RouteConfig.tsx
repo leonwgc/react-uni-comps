@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/IndexListPop',
+    component: lazy(() => import('./IndexListPop')),
+  },
+  {
     path: '/ScrollBox',
     component: lazy(() => import('./ScrollBox')),
   },
