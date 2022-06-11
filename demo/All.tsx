@@ -20,6 +20,26 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> IndexListPop
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('IndexListPop')}
+      ></Cell>
+
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> ScrollBox
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ScrollBox')}
+      ></Cell>
+
+      <Cell
+        label={
+          <Space>
             <IconComponent /> SwipeAction
           </Space>
         }
