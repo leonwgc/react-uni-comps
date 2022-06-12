@@ -81,6 +81,7 @@ export { default as InputNumber } from './InputNumber';
 export { default as Result } from './Result';
 export { default as Masonry } from './Masonry';
 export { default as ScrollBox } from './ScrollBox';
+export { default as Audio } from './Audio';
 export { default as AspectRatio } from './AspectRatio';
 
 /** only has static method */

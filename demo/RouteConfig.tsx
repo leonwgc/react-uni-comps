@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Audio',
+    component: lazy(() => import('./Audio')),
+  },
+  {
     path: '/IndexListPop',
     component: lazy(() => import('./IndexListPop')),
   },
