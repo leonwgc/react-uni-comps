@@ -14,7 +14,7 @@ export type SigPadRef = {
   download: (fileName: string) => void;
 };
 
-type Props = {
+type Props = React.HTMLAttributes<Element> & {
   /**
    * 画布背景色
    * @default #fff

@@ -40,7 +40,7 @@ const CalendarMonthView = React.forwardRef<RefType, any>((props, ref) => {
     const key = `${target.getFullYear()}-${target.getMonth()}`;
 
     if (key === monthKey) {
-      nodeRef.current.scrollIntoView({ behavior: !mountedRef.current ? 'auto' : 'smooth' });
+      nodeRef.current?.scrollIntoView?.({ behavior: !mountedRef.current ? 'auto' : 'smooth' });
     }
 
     if (!mountedRef.current) {
@@ -51,7 +51,7 @@ const CalendarMonthView = React.forwardRef<RefType, any>((props, ref) => {
   useImperativeHandle(ref, () => ({
     anchor: () => {
       if (nodeRef.current && nodeRef.current.scrollIntoView) {
-        nodeRef.current.scrollIntoView({ behavior: 'smooth' });
+        nodeRef.current?.scrollIntoView?.({ behavior: 'smooth' });
       }
     },
   }));

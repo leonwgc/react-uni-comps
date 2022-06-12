@@ -36,7 +36,7 @@ const StyledWrap = styled(animated.div)`
 
 type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 
-type Props = {
+type Props = React.HTMLAttributes<Element> & {
   /** 触发刷新时的处理函数 */
   onRefresh?: () => Promise<any>;
   /** 下拉的提示文案 */

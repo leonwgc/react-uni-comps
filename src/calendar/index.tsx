@@ -15,7 +15,7 @@ import type { BaseProps } from '../types';
 
 export type ValueType = Date | Date[] | DateOrString | DateOrString[];
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**  最小可选日期,默认当前日期*/
   min?: DateOrString;
   /**  最大可选日期,默认min+1年*/

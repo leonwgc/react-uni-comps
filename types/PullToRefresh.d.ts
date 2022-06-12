@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import type { BaseProps } from './types';
 declare type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 /** 下拉刷新 */
-declare const PullToRefresh: React.ForwardRefExoticComponent<{
+declare const PullToRefresh: React.ForwardRefExoticComponent<React.HTMLAttributes<Element> & {
     /** 触发刷新时的处理函数 */
     onRefresh?: () => Promise<any>;
     /** 下拉的提示文案 */
