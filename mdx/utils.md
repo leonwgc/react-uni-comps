@@ -32,3 +32,7 @@ group:
 * nanoid
 
 `返回随机字符串` 
+
+* getScrollParent
+
+`获取元素最近的可滚动父元素`

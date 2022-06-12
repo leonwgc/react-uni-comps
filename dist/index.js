@@ -9187,6 +9187,7 @@ exports.debounce = debounce;
 exports.deepClone = deepClone;
 exports.flatArray = flatArray;
 exports.flatSimpleArray = flatSimpleArray;
+exports.getScrollParent = getScrollParent;
 exports.getThemeColor = getThemeColor;
 exports.getThemeColorCss = getThemeColorCss;
 exports.initI18n = initI18n;
