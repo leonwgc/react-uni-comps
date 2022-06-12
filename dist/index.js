@@ -6720,7 +6720,9 @@ var CalendarMonthView = /*#__PURE__*/React__default['default'].forwardRef(functi
     var key = "".concat(target.getFullYear(), "-").concat(target.getMonth());
 
     if (key === monthKey) {
-      nodeRef.current.scrollIntoView({
+      var _nodeRef$current, _nodeRef$current$scro;
+
+      (_nodeRef$current = nodeRef.current) === null || _nodeRef$current === void 0 ? void 0 : (_nodeRef$current$scro = _nodeRef$current.scrollIntoView) === null || _nodeRef$current$scro === void 0 ? void 0 : _nodeRef$current$scro.call(_nodeRef$current, {
         behavior: !mountedRef.current ? 'auto' : 'smooth'
       });
     }
@@ -6733,7 +6735,9 @@ var CalendarMonthView = /*#__PURE__*/React__default['default'].forwardRef(functi
     return {
       anchor: function anchor() {
         if (nodeRef.current && nodeRef.current.scrollIntoView) {
-          nodeRef.current.scrollIntoView({
+          var _nodeRef$current2, _nodeRef$current2$scr;
+
+          (_nodeRef$current2 = nodeRef.current) === null || _nodeRef$current2 === void 0 ? void 0 : (_nodeRef$current2$scr = _nodeRef$current2.scrollIntoView) === null || _nodeRef$current2$scr === void 0 ? void 0 : _nodeRef$current2$scr.call(_nodeRef$current2, {
             behavior: 'smooth'
           });
         }

@@ -33,12 +33,14 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var monthKey = "".concat(year, "-").concat(month);
   var mountedRef = useRef(false);
   useLayoutEffect(function () {
-    // auto anchor to value date / now
+    var _a, _b; // auto anchor to value date / now
+
+
     var target = value[0] || new Date();
     var key = "".concat(target.getFullYear(), "-").concat(target.getMonth());
 
     if (key === monthKey) {
-      nodeRef.current.scrollIntoView({
+      (_b = (_a = nodeRef.current) === null || _a === void 0 ? void 0 : _a.scrollIntoView) === null || _b === void 0 ? void 0 : _b.call(_a, {
         behavior: !mountedRef.current ? 'auto' : 'smooth'
       });
     }
@@ -50,8 +52,10 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return {
       anchor: function anchor() {
+        var _a, _b;
+
         if (nodeRef.current && nodeRef.current.scrollIntoView) {
-          nodeRef.current.scrollIntoView({
+          (_b = (_a = nodeRef.current) === null || _a === void 0 ? void 0 : _a.scrollIntoView) === null || _b === void 0 ? void 0 : _b.call(_a, {
             behavior: 'smooth'
           });
         }
