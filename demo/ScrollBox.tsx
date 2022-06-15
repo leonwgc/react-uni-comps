@@ -3,16 +3,27 @@ import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { ScrollBox, styled } from 'react-uni-comps';
 
-const items = Array.from(new Array(10), (v, i) => i);
+const images = [
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=165171033,838989231&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1645722484,272016793&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1854303985,2925188750&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1530513282,1246043720&fm=193&f=GIF',
+];
 
-const StyledItem = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+const StyledImage = styled.img`
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
   &:not(:last-child) {
     margin-right: 12px;
   }
@@ -22,16 +33,16 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock padding={0} title="显示指示器 (默认)">
-        <ScrollBox style={{ padding: '20px 12px', height: 90 }}>
-          {items.map((i) => (
-            <StyledItem key={i}>{i}</StyledItem>
+        <ScrollBox style={{ padding: '30px 12px' }}>
+          {images.map((i) => (
+            <StyledImage src={i} />
           ))}
         </ScrollBox>
       </DemoBlock>
 
       <DemoBlock padding={0} title="指示器样式">
         <ScrollBox
-          style={{ padding: '20px 12px', height: 90 }}
+          style={{ padding: '30px 12px' }}
           indicatorStyle={{
             background: 'yellow',
             width: 60,
@@ -41,16 +52,16 @@ export default function App() {
           }}
           fillColor="red"
         >
-          {items.map((i) => (
-            <StyledItem key={i}>{i}</StyledItem>
+          {images.map((i) => (
+            <StyledImage src={i} />
           ))}
         </ScrollBox>
       </DemoBlock>
 
-      <DemoBlock padding={0} title="隐藏指示器">
-        <ScrollBox style={{ padding: '20px 12px', height: 90 }} showIndicator={false}>
-          {items.map((i) => (
-            <StyledItem key={i}>{i}</StyledItem>
+      <DemoBlock padding={0} title="无指示器">
+        <ScrollBox style={{ padding: '30px 12px' }} showIndicator={false}>
+          {images.map((i) => (
+            <StyledImage src={i} />
           ))}
         </ScrollBox>
       </DemoBlock>
