@@ -44,10 +44,10 @@ export default function App() {
         <ScrollBox
           style={{ padding: '30px 12px' }}
           indicatorStyle={{
-            background: 'yellow',
+            background: '#eee',
             width: 60,
             height: 4,
-            bottom: 4,
+            bottom: 12,
             borderRadius: 5,
           }}
           fillColor="red"
