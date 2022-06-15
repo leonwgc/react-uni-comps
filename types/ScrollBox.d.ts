@@ -2,7 +2,6 @@ import React from 'react';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否显示指示器
-     * @default true
      */
     showIndicator?: boolean;
     /**
@@ -24,7 +23,6 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
 declare const ScrollBox: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否显示指示器
-     * @default true
      */
     showIndicator?: boolean;
     /**

@@ -21,8 +21,8 @@ const images = [
 
 const StyledImage = styled.img`
   display: inline-block;
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   &:not(:last-child) {
     margin-right: 12px;
@@ -32,8 +32,16 @@ const StyledImage = styled.img`
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock padding={0} title="显示指示器 (默认)">
+      <DemoBlock padding={0} title="默认">
         <ScrollBox style={{ padding: '30px 12px' }}>
+          {images.map((i) => (
+            <StyledImage src={i} />
+          ))}
+        </ScrollBox>
+      </DemoBlock>
+
+      <DemoBlock padding={0} title="指示器">
+        <ScrollBox style={{ padding: '30px 12px' }} showIndicator>
           {images.map((i) => (
             <StyledImage src={i} />
           ))}
@@ -42,24 +50,17 @@ export default function App() {
 
       <DemoBlock padding={0} title="指示器样式">
         <ScrollBox
+          showIndicator
           style={{ padding: '30px 12px' }}
           indicatorStyle={{
             background: '#eee',
-            width: 60,
+            width: 40,
             height: 4,
             bottom: 12,
             borderRadius: 5,
           }}
           fillColor="red"
         >
-          {images.map((i) => (
-            <StyledImage src={i} />
-          ))}
-        </ScrollBox>
-      </DemoBlock>
-
-      <DemoBlock padding={0} title="无指示器">
-        <ScrollBox style={{ padding: '30px 12px' }} showIndicator={false}>
           {images.map((i) => (
             <StyledImage src={i} />
           ))}

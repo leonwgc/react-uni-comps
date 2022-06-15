@@ -14,7 +14,6 @@ const getClassName = prefixClassName('uc-scroll-box');
 export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 是否显示指示器
-   * @default true
    */
   showIndicator?: boolean;
   /**
@@ -84,15 +83,8 @@ const StyledWrap = styled.div`
 
 /** 带指示器的水平滚动盒子 */
 const ScrollBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const {
-    className,
-    showIndicator = true,
-    indicatorStyle,
-    indicatorClass,
-    fillColor,
-    children,
-    ...rest
-  } = props;
+  const { className, showIndicator, indicatorStyle, indicatorClass, fillColor, children, ...rest } =
+    props;
 
   const bodyRef = useRef<HTMLDivElement>();
   const fillRef = useRef<HTMLDivElement>();

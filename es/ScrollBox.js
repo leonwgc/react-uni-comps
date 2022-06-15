@@ -17,8 +17,7 @@ var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTempla
 
 var ScrollBox = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
-      _a = props.showIndicator,
-      showIndicator = _a === void 0 ? true : _a,
+      showIndicator = props.showIndicator,
       indicatorStyle = props.indicatorStyle,
       indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,

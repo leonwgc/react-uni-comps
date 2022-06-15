@@ -13,7 +13,7 @@ describe('ScrollBox test groups', () => {
   test('render', () => {
     render(
       <div style={{ width: 100, display: 'inline-block', border: '1px solid #eee' }}>
-        <ScrollBox title="ScrollBox" showIndicator className="test" style={{ color: 'blue' }}>
+        <ScrollBox title={title} showIndicator className="test" style={{ color: 'blue' }}>
           {items.map((i) => (
             <div style={{ width: 30 }} key={i}>
               {i}
@@ -110,7 +110,7 @@ describe('ScrollBox test groups', () => {
   test('render no scroll', () => {
     render(
       <div style={{ width: 100, display: 'inline-block' }}>
-        <ScrollBox title="ScrollBox">
+        <ScrollBox title="ScrollBox" showIndicator>
           <div style={{ width: 10 }}>1</div>
         </ScrollBox>
       </div>

@@ -8563,8 +8563,7 @@ var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
 
 var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
-      _props$showIndicator = props.showIndicator,
-      showIndicator = _props$showIndicator === void 0 ? true : _props$showIndicator,
+      showIndicator = props.showIndicator,
       indicatorStyle = props.indicatorStyle,
       indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,
