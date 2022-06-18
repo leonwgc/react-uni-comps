@@ -8874,6 +8874,44 @@ var useList = function useList() {
 };
 
 /**
+ * 定时器setTimeout
+ *
+ * @param {Func} fn
+ * @param {number} delay
+ */
+function useTimeout(fn, delay) {
+  var fnRef = useLatest(fn);
+  React.useEffect(function () {
+    if (typeof delay !== 'number' || delay < 0) return;
+    var timer = setTimeout(function () {
+      fnRef.current();
+    }, delay);
+    return function () {
+      clearTimeout(timer);
+    };
+  }, [delay]);
+}
+
+/**
+ * 定时器setInterval
+ *
+ * @param {Func} fn
+ * @param {number} delay
+ */
+function useInterval(fn, delay) {
+  var fnRef = useLatest(fn);
+  React.useEffect(function () {
+    if (typeof delay !== 'number' || delay < 0) return;
+    var timer = setInterval(function () {
+      fnRef.current();
+    }, delay);
+    return function () {
+      clearInterval(timer);
+    };
+  }, [delay]);
+}
+
+/**
  * 初始化i18n
  *
  * @param {Record<string, any>} resources  翻译对象
@@ -9206,14 +9244,15 @@ exports.useCallbackRef = useCallbackRef;
 exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
-exports.useEventListener = useEventListener;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
+exports.useInterval = useInterval;
 exports.useLatest = useLatest;
 exports.useList = useList;
 exports.useMount = useMount;
 exports.usePrevious = usePrevious;
 exports.useThrottle = useThrottle;
+exports.useTimeout = useTimeout;
 exports.useUnmount = useUnmount;
 exports.useUpdateEffect = useUpdateEffect;
 exports.useUpdateLayoutEffect = useUpdateLayoutEffect;
