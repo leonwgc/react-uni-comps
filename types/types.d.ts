@@ -12,3 +12,4 @@ export declare type BaseProps = {
 /** Mount container type  */
 export declare type TargetElementType = Element | (() => Element) | React.MutableRefObject<Element>;
 export declare type EventTargetType = EventTarget | React.MutableRefObject<EventTarget> | (() => EventTarget);
+export declare type Func = () => void;

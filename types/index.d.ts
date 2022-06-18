@@ -106,7 +106,8 @@ export { default as usePrevious } from './hooks/usePrevious';
 export { default as useList } from './hooks/useList';
 export { default as useLatest } from './hooks/useLatest';
 export { default as useClickAway } from './hooks/useClickAway';
-export { default as useEventListener } from './hooks/useEventListener';
+export { default as useTimeout } from './hooks/useTimeout';
+export { default as useInterval } from './hooks/useInterval';
 /** third-party libs */
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
 export { default as clsx } from 'clsx';

@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Hooks',
+    component: lazy(() => import('./Hooks')),
+  },
+  {
     path: '/IndexListPop',
     component: lazy(() => import('./IndexListPop')),
   },

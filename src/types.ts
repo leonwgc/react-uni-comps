@@ -21,3 +21,5 @@ export type EventTargetType =
   | EventTarget
   | React.MutableRefObject<EventTarget>
   | (() => EventTarget);
+
+export type Func = () => void;
