@@ -64,7 +64,7 @@ const StyledWrap = styled.div`
     transform: translateX(-50%);
     bottom: 10px;
     height: 4px;
-    width: 40px;
+    width: 30px;
     background-color: #f0f0f0;
     visibility: hidden;
   }

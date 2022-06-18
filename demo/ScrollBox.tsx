@@ -54,7 +54,7 @@ export default function App() {
           style={{ padding: '30px 12px' }}
           indicatorStyle={{
             background: '#eee',
-            width: 40,
+            width: 20,
             height: 4,
             bottom: 12,
             borderRadius: 5,

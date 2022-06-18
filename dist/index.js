@@ -8557,7 +8557,7 @@ var getClassName$3 = prefixClassName('uc-scroll-box');
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:40px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$3('body'), getClassName$3('track'), getClassName$3('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$3('body'), getClassName$3('track'), getClassName$3('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 
