@@ -56,3 +56,11 @@ group:
 - useEventListener
 
 `事件监听`
+
+- useTimeout
+
+`定时器setTimeout`
+
+- useInterval
+
+`定时器setInterval`
