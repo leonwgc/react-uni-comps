@@ -3,7 +3,6 @@ import type { BaseProps, StringOrNumber } from './types';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否自动播放
-     * @default false
      */
     autoPlay?: boolean;
     /**
@@ -43,6 +42,16 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * @default 280
      */
     duration?: number;
+    /**
+     * 分页容器样式
+     *
+     */
+    pageStyle?: React.CSSProperties;
+    /**
+     * 分页容器类名
+     *
+     */
+    pageClassName?: string;
 } & BaseProps;
 export declare type SlideRefType = {
     prev: () => void;
@@ -61,7 +70,6 @@ export declare type SlideRefType = {
 declare const Slide: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否自动播放
-     * @default false
      */
     autoPlay?: boolean;
     /**
@@ -101,5 +109,15 @@ declare const Slide: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      * @default 280
      */
     duration?: number;
+    /**
+     * 分页容器样式
+     *
+     */
+    pageStyle?: React.CSSProperties;
+    /**
+     * 分页容器类名
+     *
+     */
+    pageClassName?: string;
 } & BaseProps & React.RefAttributes<SlideRefType>>;
 export default Slide;

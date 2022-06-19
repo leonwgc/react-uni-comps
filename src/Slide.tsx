@@ -1,3 +1,4 @@
+//#region  imports & styles
 import React, {
   useState,
   useRef,
@@ -13,12 +14,15 @@ import Touch from 'w-touch';
 import Space from './Space';
 import type { BaseProps, StringOrNumber } from './types';
 import useMount from './hooks/useMount';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-slide');
 
 const StyledSlide = styled.div`
   overflow: hidden;
   position: relative;
 
-  .wrap {
+  .${getClassName('wrap')} {
     position: relative;
     display: flex;
     flex-wrap: nowrap;
@@ -30,26 +34,25 @@ const StyledSlide = styled.div`
     &.vertical {
       flex-direction: column;
     }
-
-    .uc-slide-page {
-      width: 100%;
-      flex-shrink: 0;
-    }
+  }
+  .${getClassName('page')} {
+    width: 100%;
+    flex-shrink: 0;
   }
 
-  .pager {
+  .${getClassName('indicator')} {
     position: absolute;
     bottom: 8px;
     left: 50%;
     transform: translate3d(-50%, 0, 0);
     line-height: 4px;
 
-    .item {
+    .${getClassName('item')} {
       cursor: pointer;
       display: inline-block;
       width: 8px;
       height: 4px;
-      border-radius: 2px;
+      /* border-radius: 2px; */
       background-color: #fff;
       opacity: 0.4;
 
@@ -63,9 +66,10 @@ const StyledSlide = styled.div`
       right: 8px;
       top: 50%;
       left: unset;
+      bottom: unset;
       transform: translate3d(0, -50%, 0);
 
-      .item {
+      .${getClassName('item')} {
         display: block;
         width: 4px;
         height: 8px;
@@ -74,12 +78,13 @@ const StyledSlide = styled.div`
   }
 `;
 
+//#endregion
+
 type Direction = 'horizontal' | 'vertical';
 
 export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 是否自动播放
-   * @default false
    */
   autoPlay?: boolean;
   /**
@@ -120,6 +125,16 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 280
    */
   duration?: number;
+  /**
+   * 分页容器样式
+   *
+   */
+  pageStyle?: React.CSSProperties;
+  /**
+   * 分页容器类名
+   *
+   */
+  pageClassName?: string;
 } & BaseProps;
 
 export type SlideRefType = {
@@ -140,7 +155,7 @@ const getItems = (children, loop, height) => {
   return React.Children.map(items, (c, index) =>
     React.cloneElement(c, {
       key: index,
-      className: clsx('uc-slide-page', c.props?.className),
+      className: clsx(getClassName('page'), c.props?.className),
       style: { ...c.props?.style, height },
     })
   );
@@ -170,6 +185,8 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     style,
     showPageIndicator = true,
     ratio = 0.1,
+    pageStyle,
+    pageClassName,
     ...rest
   } = props;
 
@@ -286,16 +303,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     slideToPageIndex(0, false);
   });
 
-  useLayoutEffect(() => {
-    if (showPageIndicator) {
-      const pageWrapEl = pageWrapElRef.current;
-      if (pageWrapEl) {
-        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
-        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
-      }
-    }
-  }, [showPageIndicator, direction]);
-
   useEffect(() => {
     if (autoPlay && len > 1) {
       thisRef.current.timer = window.setInterval(
@@ -382,12 +389,12 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     <StyledSlide
       ref={containerRef}
       {...rest}
-      className={clsx('uc-slide', className)}
+      className={clsx(getClassName(), className)}
       style={{ ...style, height }}
     >
       <div
         ref={wrapElRef}
-        className={clsx('wrap', { vertical: direction === 'vertical' })}
+        className={clsx(getClassName('wrap'), { vertical: direction === 'vertical' })}
         onTransitionEnd={() => {
           ensurePageIndex();
         }}
@@ -397,17 +404,23 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
       </div>
 
       {showPageIndicator && len > 1 && (
-        <div className={clsx('pager', { vertical: direction === 'vertical' })}>
-          <Space size={6} direction={direction} ref={pageWrapElRef}>
-            {React.Children.map(children, (c, idx) => (
-              <span
-                key={idx}
-                className={clsx('item', { active: pageIndex === idx })}
-                onClick={() => slideToPageIndex(idx)}
-              ></span>
-            ))}
-          </Space>
-        </div>
+        <Space
+          size={4}
+          direction={direction}
+          ref={pageWrapElRef}
+          className={clsx(getClassName('indicator'), pageClassName, {
+            vertical: direction === 'vertical',
+          })}
+          style={pageStyle}
+        >
+          {React.Children.map(children, (c, idx) => (
+            <span
+              key={idx}
+              className={clsx(getClassName('item'), { active: pageIndex === idx })}
+              onClick={() => slideToPageIndex(idx)}
+            ></span>
+          ))}
+        </Space>
       )}
     </StyledSlide>
   );
