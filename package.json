@@ -22,8 +22,10 @@
     "build": "father-build && tsc",
     "doc:dev": "dumi dev",
     "doc:build": "dumi build",
+    "jest-preview": "jest-preview",
     "test": "jest",
-    "test:dev": "jest-preview & jest --watch",
+    "test:watch": "jest --watch",
+    "test:dev": "npm-run-all -p jest-preview test:watch",
     "start": "node pack"
   },
   "peerDependencies": {
@@ -61,9 +63,10 @@
     "husky": "^7.0.4",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
-    "jest-preview": "^0.2.3",
+    "jest-preview": "^0.2.5",
     "jest-watch-typeahead": "^1.1.0",
     "lint-staged": "^12.1.2",
+    "npm-run-all": "^4.1.5",
     "packw": "^1.1.2",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
