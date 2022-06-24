@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 水印之间的水平间距
@@ -73,7 +72,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * @default 14
      */
     fontSize?: number | string;
-} & BaseProps;
+};
 /** 图片/文字水印 */
 declare const WaterMark: React.FC<Props>;
 export default WaterMark;

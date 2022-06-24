@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 进度条 */
 declare const ProgressBar: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
@@ -20,5 +19,5 @@ declare const ProgressBar: React.ForwardRefExoticComponent<React.HTMLAttributes<
     trackColor?: string;
     /** 填充的颜色，默认主题色*/
     fillColor?: string;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default ProgressBar;

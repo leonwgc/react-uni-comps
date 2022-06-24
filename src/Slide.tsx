@@ -12,7 +12,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
 import Touch from 'w-touch';
 import Space from './Space';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 import useMount from './hooks/useMount';
 import { prefixClassName } from './helper';
 
@@ -135,7 +135,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
    *
    */
   pageClassName?: string;
-} & BaseProps;
+};
 
 export type SlideRefType = {
   prev: () => void;

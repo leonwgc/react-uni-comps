@@ -6,7 +6,6 @@ import useLatest from './hooks/useLatest';
 import Space from './Space';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Icon from './Icon';
-import type { BaseProps } from './types';
 import Mask from './Mask';
 import Button from './Button';
 import IconArrow from './IconArrow';
@@ -37,7 +36,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    *
    */
   next?: React.ReactNode;
-} & BaseProps;
+};
 
 const StyledImageViewer = styled.div`
   position: fixed;

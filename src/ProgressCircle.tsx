@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 进度条颜色,默认读主题色 */
@@ -29,7 +28,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 120
    *  */
   size?: number;
-} & BaseProps;
+};
 
 const StyledProgressCircle = styled.div`
   position: relative;

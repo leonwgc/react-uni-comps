@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { isMobile } from './dom';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 type Pos = 'top' | 'right' | 'bottom' | 'left' | 'all';
 
@@ -27,7 +26,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default true
    *  */
   mobile?: boolean;
-} & BaseProps;
+};
 
 const StyledDiv = styled.div<{ position?: Pos; $color: string; borderRadius?: number }>`
   position: relative;

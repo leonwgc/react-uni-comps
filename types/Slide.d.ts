@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 是否自动播放
@@ -52,7 +52,7 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      *
      */
     pageClassName?: string;
-} & BaseProps;
+};
 export declare type SlideRefType = {
     prev: () => void;
     next: () => void;
@@ -119,5 +119,5 @@ declare const Slide: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      *
      */
     pageClassName?: string;
-} & BaseProps & React.RefAttributes<SlideRefType>>;
+} & React.RefAttributes<SlideRefType>>;
 export default Slide;

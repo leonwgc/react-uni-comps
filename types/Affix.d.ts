@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps, TargetElementType } from './types';
+import type { TargetElementType } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 距离窗口顶部达到指定偏移量后触发 */
     offsetTop?: number;
@@ -14,7 +14,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * @default 100
      */
     zIndex?: number;
-} & BaseProps;
+};
 /** 将页面元素钉在可视范围*/
 declare const Affix: React.FC<Props>;
 export default Affix;
