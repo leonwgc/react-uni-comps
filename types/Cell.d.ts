@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
     required?: boolean;
@@ -26,7 +25,7 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * @default true
      */
     withPaddingLeft?: boolean;
-} & BaseProps;
+};
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
@@ -54,5 +53,5 @@ declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDiv
      * @default true
      */
     withPaddingLeft?: boolean;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

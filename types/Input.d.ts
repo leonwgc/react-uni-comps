@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 declare type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
 export declare type Props = {
     /** 只读 */
@@ -42,7 +41,7 @@ export declare type Props = {
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (value: string) => void;
-} & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt>;
 declare type RefType = HTMLInputElement | HTMLTextAreaElement;
 /** 单行/多行输入框 input/textarea */
 declare const Input: React.ForwardRefExoticComponent<{
@@ -86,5 +85,5 @@ declare const Input: React.ForwardRefExoticComponent<{
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (value: string) => void;
-} & BaseProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & React.RefAttributes<RefType>>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> & Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt> & React.RefAttributes<RefType>>;
 export default Input;
