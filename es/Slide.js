@@ -1,4 +1,5 @@
-import { __assign, __makeTemplateObject, __rest } from "tslib";
+import { __assign, __makeTemplateObject, __rest } from "tslib"; //#region  imports & styles
+
 import React, { useState, useRef, useCallback, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
@@ -6,7 +7,9 @@ import clsx from 'clsx';
 import Touch from 'w-touch';
 import Space from './Space';
 import useMount from './hooks/useMount';
-var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transform-style: preserve-3d;\n    transition-property: transform;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      border-radius: 2px;\n      background-color: #fff;\n      opacity: 0.4;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .wrap {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transform-style: preserve-3d;\n    transition-property: transform;\n\n    &.vertical {\n      flex-direction: column;\n    }\n\n    .uc-slide-page {\n      width: 100%;\n      flex-shrink: 0;\n    }\n  }\n\n  .pager {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .item {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      border-radius: 2px;\n      background-color: #fff;\n      opacity: 0.4;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .item {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"])));
+import { prefixClassName } from './helper';
+var getClassName = prefixClassName('uc-slide');
+var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .", " {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transform-style: preserve-3d;\n    transition-property: transform;\n\n    &.vertical {\n      flex-direction: column;\n    }\n  }\n  .", " {\n    width: 100%;\n    flex-shrink: 0;\n  }\n\n  .", " {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .", " {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      /* border-radius: 2px; */\n      background-color: #fff;\n      opacity: 0.4;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      bottom: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .", " {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .", " {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transform-style: preserve-3d;\n    transition-property: transform;\n\n    &.vertical {\n      flex-direction: column;\n    }\n  }\n  .", " {\n    width: 100%;\n    flex-shrink: 0;\n  }\n\n  .", " {\n    position: absolute;\n    bottom: 8px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 4px;\n\n    .", " {\n      cursor: pointer;\n      display: inline-block;\n      width: 8px;\n      height: 4px;\n      /* border-radius: 2px; */\n      background-color: #fff;\n      opacity: 0.4;\n\n      &.active {\n        opacity: 1;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 8px;\n      top: 50%;\n      left: unset;\n      bottom: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .", " {\n        display: block;\n        width: 4px;\n        height: 8px;\n      }\n    }\n  }\n"])), getClassName('wrap'), getClassName('page'), getClassName('indicator'), getClassName('item'), getClassName('item'));
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -23,7 +26,7 @@ var getItems = function getItems(children, loop, height) {
 
     return /*#__PURE__*/React.cloneElement(c, {
       key: index,
-      className: clsx('uc-slide-page', (_a = c.props) === null || _a === void 0 ? void 0 : _a.className),
+      className: clsx(getClassName('page'), (_a = c.props) === null || _a === void 0 ? void 0 : _a.className),
       style: __assign(__assign({}, (_b = c.props) === null || _b === void 0 ? void 0 : _b.style), {
         height: height
       })
@@ -63,7 +66,9 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       showPageIndicator = _g === void 0 ? true : _g,
       _h = props.ratio,
       ratio = _h === void 0 ? 0.1 : _h,
-      rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"]);
+      pageStyle = props.pageStyle,
+      pageClassName = props.pageClassName,
+      rest = __rest(props, ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"]);
 
   var containerRef = useRef(null);
   var wrapElRef = useRef();
@@ -174,16 +179,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     $this.wrapHeight = container.offsetHeight;
     slideToPageIndex(0, false);
   });
-  useLayoutEffect(function () {
-    if (showPageIndicator) {
-      var pageWrapEl = pageWrapElRef.current;
-
-      if (pageWrapEl) {
-        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
-        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
-      }
-    }
-  }, [showPageIndicator, direction]);
   useEffect(function () {
     if (autoPlay && len > 1) {
       thisRef.current.timer = window.setInterval(function (p) {
@@ -265,13 +260,13 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledSlide, __assign({
     ref: containerRef
   }, rest, {
-    className: clsx('uc-slide', className),
+    className: clsx(getClassName(), className),
     style: __assign(__assign({}, style), {
       height: height
     })
   }), /*#__PURE__*/React.createElement("div", {
     ref: wrapElRef,
-    className: clsx('wrap', {
+    className: clsx(getClassName('wrap'), {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
@@ -280,25 +275,25 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     style: {
       transitionDuration: "".concat(duration, "ms")
     }
-  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React.createElement("div", {
-    className: clsx('pager', {
-      vertical: direction === 'vertical'
-    })
-  }, /*#__PURE__*/React.createElement(Space, {
-    size: 6,
+  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React.createElement(Space, {
+    size: 4,
     direction: direction,
-    ref: pageWrapElRef
+    ref: pageWrapElRef,
+    className: clsx(getClassName('indicator'), pageClassName, {
+      vertical: direction === 'vertical'
+    }),
+    style: pageStyle
   }, React.Children.map(children, function (c, idx) {
     return /*#__PURE__*/React.createElement("span", {
       key: idx,
-      className: clsx('item', {
+      className: clsx(getClassName('item'), {
         active: pageIndex === idx
       }),
       onClick: function onClick() {
         return slideToPageIndex(idx);
       }
     });
-  }))));
+  })));
 });
 Slide.displayName = 'UC-Slide';
 export default Slide;

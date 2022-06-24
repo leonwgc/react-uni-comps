@@ -3817,10 +3817,11 @@ var Affix = function Affix(props) {
 Affix.displayName = 'UC-Affix';
 
 var _excluded$u = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
+var getClassName$3 = prefixClassName('uc-actionsheet');
 var StyledActionSheet = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "ActionSheet__StyledActionSheet",
   componentId: "sc-1wphsp-0"
-})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;.wrap{background-color:#fff;}.extra{display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.button-list{.wrapper{background-color:#ffffff;border-top:1px solid ", ";&.disabled{color:#999;&:active{background-color:unset;}}&:first-child{border-top:none;}&:active{background-color:rgba(0,0,0,0.1);}button{width:100%;padding:14px;height:55px;text-align:center;background-color:transparent;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;&:disabled{background-color:#fff;color:#999;}.button-item-name{color:#333;&.disabled{color:#999 !important;}}.button-item-description{font-size:12px;margin-top:4px;color:#999;}}}}.uc-actionsheet-cancel{background-color:#f5f5f5;padding-top:8px;.wrapper{background-color:#fff;button{padding:14px;text-align:center;border-radius:0;}}}"], border, border);
+})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;background-color:#f5f5f5;user-select:none;.", "{background-color:#fff;display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.", "{border-top:1px solid ", ";background-color:#fff;width:100%;padding:14px;height:55px;text-align:center;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;color:#333;&.disabled{opacity:1;color:#999;}&.default.pc:hover{border-color:", ";}.", "{font-size:12px;margin-top:4px;color:#999;}&:not(:last-child){border-bottom:1px solid ", ";}&.cancel{margin-top:8px;border-bottom:none;}}"], getClassName$3('extra'), border, getClassName$3('action-item'), border, border, getClassName$3('action-item-description'), border);
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -3838,21 +3839,23 @@ var ActionSheet = function ActionSheet(props) {
       rest = _objectWithoutProperties(props, _excluded$u);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
-    className: clsx__default['default']('uc-actionsheet', className),
+    className: clsx__default['default'](getClassName$3(), className),
     visible: visible,
     position: "bottom",
     closeOnMaskClick: closeOnMaskClick,
     onClose: onClose
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "wrap"
+    className: getClassName$3('action-list')
   }, extra && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "extra"
-  }, extra), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "button-list"
-  }, actions.map(function (action, index) {
-    return /*#__PURE__*/React__default['default'].createElement("div", {
+    className: getClassName$3('extra')
+  }, extra), actions.map(function (action, index) {
+    return /*#__PURE__*/React__default['default'].createElement(Button, {
       key: index,
-      className: clsx__default['default']('wrapper', {
+      disabled: action.disabled,
+      style: {
+        color: action.color
+      },
+      className: clsx__default['default'](getClassName$3('action-item'), {
         disabled: action.disabled
       }),
       onClick: function onClick() {
@@ -3860,30 +3863,15 @@ var ActionSheet = function ActionSheet(props) {
 
         (_action$onClick = action.onClick) === null || _action$onClick === void 0 ? void 0 : _action$onClick.call(action);
       }
-    }, /*#__PURE__*/React__default['default'].createElement(Button, {
-      disabled: action.disabled
-    }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: clsx__default['default']('button-item-name', {
-        disabled: action.disabled
-      }),
-      style: {
-        color: action.color || '#333'
-      }
-    }, action.text), action.description && /*#__PURE__*/React__default['default'].createElement("div", {
-      className: "button-item-description"
-    }, action.description)));
-  })), cancelText && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "uc-actionsheet-cancel button-list"
-  }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "wrapper"
-  }, /*#__PURE__*/React__default['default'].createElement(Button, {
-    className: "button-item",
+    }, action.text, action.description && /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$3('action-item-description')
+    }, action.description));
+  }), cancelText && /*#__PURE__*/React__default['default'].createElement(Button, {
+    className: clsx__default['default'](getClassName$3('action-item'), 'cancel'),
     onClick: function onClick() {
       onClose === null || onClose === void 0 ? void 0 : onClose();
     }
-  }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "button-item-name"
-  }, cancelText))))));
+  }, cancelText)));
 };
 
 ActionSheet.displayName = 'UC-ActionSheet';
@@ -5564,11 +5552,12 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$I = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
+var _excluded$I = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"];
+var getClassName$4 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.wrap{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}.uc-slide-page{width:100%;flex-shrink:0;}}.pager{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.item{cursor:pointer;display:inline-block;width:8px;height:4px;border-radius:2px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;transform:translate3d(0,-50%,0);.item{display:block;width:4px;height:8px;}}}"]);
+})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$4('wrap'), getClassName$4('page'), getClassName$4('indicator'), getClassName$4('item'), getClassName$4('item')); //#endregion
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -5585,7 +5574,7 @@ var getItems = function getItems(children, loop, height) {
 
     return /*#__PURE__*/React__default['default'].cloneElement(c, {
       key: index,
-      className: clsx__default['default']('uc-slide-page', (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
+      className: clsx__default['default'](getClassName$4('page'), (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
       style: _objectSpread2(_objectSpread2({}, (_c$props2 = c.props) === null || _c$props2 === void 0 ? void 0 : _c$props2.style), {}, {
         height: height
       })
@@ -5625,6 +5614,8 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       showPageIndicator = _props$showPageIndica === void 0 ? true : _props$showPageIndica,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
+      pageStyle = props.pageStyle,
+      pageClassName = props.pageClassName,
       rest = _objectWithoutProperties(props, _excluded$I);
 
   var containerRef = React.useRef(null);
@@ -5735,16 +5726,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     $this.wrapHeight = container.offsetHeight;
     slideToPageIndex(0, false);
   });
-  React.useLayoutEffect(function () {
-    if (showPageIndicator) {
-      var pageWrapEl = pageWrapElRef.current;
-
-      if (pageWrapEl) {
-        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
-        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
-      }
-    }
-  }, [showPageIndicator, direction]);
   React.useEffect(function () {
     if (autoPlay && len > 1) {
       thisRef.current.timer = window.setInterval(function (p) {
@@ -5826,13 +5807,13 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
-    className: clsx__default['default']('uc-slide', className),
+    className: clsx__default['default'](getClassName$4(), className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
-    className: clsx__default['default']('wrap', {
+    className: clsx__default['default'](getClassName$4('wrap'), {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
@@ -5841,25 +5822,25 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: {
       transitionDuration: "".concat(duration, "ms")
     }
-  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('pager', {
-      vertical: direction === 'vertical'
-    })
-  }, /*#__PURE__*/React__default['default'].createElement(Space, {
-    size: 6,
+  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React__default['default'].createElement(Space, {
+    size: 4,
     direction: direction,
-    ref: pageWrapElRef
+    ref: pageWrapElRef,
+    className: clsx__default['default'](getClassName$4('indicator'), pageClassName, {
+      vertical: direction === 'vertical'
+    }),
+    style: pageStyle
   }, React__default['default'].Children.map(children, function (c, idx) {
     return /*#__PURE__*/React__default['default'].createElement("span", {
       key: idx,
-      className: clsx__default['default']('item', {
+      className: clsx__default['default'](getClassName$4('item'), {
         active: pageIndex === idx
       }),
       onClick: function onClick() {
         return slideToPageIndex(idx);
       }
     });
-  }))));
+  })));
 });
 Slide.displayName = 'UC-Slide';
 
@@ -8552,12 +8533,12 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 Masonry.displayName = 'UC-Masonry';
 
 var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
-var getClassName$3 = prefixClassName('uc-scroll-box');
+var getClassName$5 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$3('body'), getClassName$3('track'), getClassName$3('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$5('body'), getClassName$5('track'), getClassName$5('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 
@@ -8603,15 +8584,15 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, 'resize', onScroll);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](getClassName$3(), className)
+    className: clsx__default['default'](getClassName$5(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$3('body'),
+    className: getClassName$5('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](getClassName$3('track'), indicatorClass),
+    className: clsx__default['default'](getClassName$5('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$3('fill'),
+    className: getClassName$5('fill'),
     style: {
       backgroundColor: fillColor
     },
