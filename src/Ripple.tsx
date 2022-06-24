@@ -2,7 +2,6 @@ import React, { useRef, useImperativeHandle } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { useSpring, animated, easings } from '@react-spring/web';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -23,7 +22,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   duration?: number;
   /** 100% 宽度 */
   block?: boolean;
-} & BaseProps;
+};
 
 const StyledWrap = styled.div`
   overflow: hidden;

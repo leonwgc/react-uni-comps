@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 波纹效果,给子元素添加点击波纹效果 */
 declare const Ripple: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
@@ -19,5 +18,5 @@ declare const Ripple: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLD
     duration?: number;
     /** 100% 宽度 */
     block?: boolean;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Ripple;

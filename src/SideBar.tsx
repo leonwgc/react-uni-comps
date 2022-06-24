@@ -7,7 +7,7 @@ import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useMount from './hooks/useMount';
-import type { StringOrNumber, BaseProps } from './types';
+import type { StringOrNumber } from './types';
 
 type Item = {
   /** 禁用 */
@@ -18,7 +18,7 @@ type Item = {
   key?: StringOrNumber;
 };
 
-type SideBarProps = {
+type SideBarProps = React.HTMLAttributes<HTMLDivElement> & {
   /** 选择的index,非受控模式使用*/
   defaultIndex?: number;
   /** 选择的index, 默认 0 */
@@ -27,7 +27,7 @@ type SideBarProps = {
   onChange?: (index: number) => void;
   /** 配置项列表 */
   items: Array<Item>;
-} & BaseProps;
+};
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

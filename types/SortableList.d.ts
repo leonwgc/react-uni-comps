@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import type { ObjectType } from './types';
-import type { BaseProps } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 数据列表 */
     dataList?: Array<ObjectType>;
@@ -10,7 +9,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     onSort?: (list: Array<ObjectType>) => void;
     /** sortablejs 配置 */
     config?: ObjectType;
-} & BaseProps;
+};
 /**
  * 拖拽排序列表
  */
