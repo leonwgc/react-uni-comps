@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 遮罩层 */
 declare const Mask: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
@@ -19,5 +18,5 @@ declare const Mask: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDiv
      * @default 0.45
      */
     opacity?: number;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Mask;

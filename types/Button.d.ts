@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 按钮 */
 declare const Button: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
     /**
@@ -29,9 +28,7 @@ declare const Button: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLA
     /** 是否幽灵按钮 */
     ghost?: boolean;
     htmlType?: 'submit' | 'reset' | 'button' | undefined;
-    /** 点击回调 */
-    onClick?: (e: React.SyntheticEvent) => void;
     /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
     wait?: number | boolean;
-} & BaseProps & React.RefAttributes<HTMLButtonElement>>;
+} & React.RefAttributes<HTMLButtonElement>>;
 export default Button;

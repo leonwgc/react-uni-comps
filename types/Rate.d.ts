@@ -1,11 +1,10 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 评分 */
 declare const Rate: React.ForwardRefExoticComponent<{
     /**
      * 是否允许再次点击后清除
      * @default true
-    */
+     */
     allowClear?: boolean;
     /**是否允许半选 */
     allowHalf?: boolean;
@@ -29,5 +28,5 @@ declare const Rate: React.ForwardRefExoticComponent<{
      * @default #ffd21e
      *   */
     color?: string;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default Rate;

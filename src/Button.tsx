@@ -6,7 +6,6 @@ import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import Spin from './Spin';
 import Space from './Space';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
   /**
@@ -36,11 +35,9 @@ type Props = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
   /** 是否幽灵按钮 */
   ghost?: boolean;
   htmlType?: 'submit' | 'reset' | 'button' | undefined;
-  /** 点击回调 */
-  onClick?: (e: React.SyntheticEvent) => void;
   /** 点击后，下次能点击的时间间隔，防止重复点击, 如果是true, 间隔默认是1s  */
   wait?: number | boolean;
-} & BaseProps;
+};
 
 const StyledButton = styled.button`
   color: inherit;

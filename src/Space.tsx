@@ -76,7 +76,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   split?: React.ReactNode;
   /** 是否自动换行，仅在 horizontal 时有效 */
   wrap?: boolean;
-} & BaseProps;
+};
 
 const StyledSpace = styled.div<{
   align?: 'center' | 'flex-start' | 'flex-end' | 'baseline';

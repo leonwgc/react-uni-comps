@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 开关 */
 declare const Switch: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> & {
     /** 禁用 */
@@ -10,5 +9,5 @@ declare const Switch: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<
     defaultChecked?: boolean;
     /** 变化时回调函数 */
     onChange?: (checked: boolean) => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Switch;

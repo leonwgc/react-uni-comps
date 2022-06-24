@@ -1,9 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import type { BaseProps } from './types';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & BaseProps;
+type Props = React.HTMLAttributes<HTMLDivElement>;
 
 const StyledSpin = styled.div`
   @-webkit-keyframes loading {
