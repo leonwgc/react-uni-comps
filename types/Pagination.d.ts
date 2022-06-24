@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 分页 */
 declare const Pagination: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 可视按钮数量 */
@@ -18,5 +17,5 @@ declare const Pagination: React.ForwardRefExoticComponent<React.HTMLAttributes<H
     currentPage?: number;
     /** 当前页改变回调 */
     onPageChange?: (page: number) => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Pagination;

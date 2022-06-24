@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 分割线水平还是垂直
@@ -18,7 +17,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * @default #eee
      *  */
     color?: string;
-} & BaseProps;
+};
 /** 分割线 */
 declare const Divider: React.FC<Props>;
 export default Divider;

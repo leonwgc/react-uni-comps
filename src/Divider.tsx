@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -22,7 +21,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default #eee
    *  */
   color?: string;
-} & BaseProps;
+};
 
 const StyledDivider = styled.div`
   box-sizing: border-box;

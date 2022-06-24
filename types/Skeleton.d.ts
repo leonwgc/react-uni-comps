@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** loading结束渲染的元素 */
     children?: React.ReactNode;
@@ -29,7 +28,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     avatarSize?: number;
     /** loading为true显示骨架，false则显示子元素*/
     loading?: boolean;
-} & BaseProps;
+};
 /** 骨架屏 */
 declare const Skeleton: React.FC<Props>;
 export default Skeleton;

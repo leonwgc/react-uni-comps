@@ -10,7 +10,7 @@ import { throttle, prefixClassName } from './helper';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
 import useMount from './hooks/useMount';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 
 const getClassName = prefixClassName('uc-tabs');
 
@@ -43,7 +43,7 @@ type TabsProp = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'default
    * tab标题宽度
    */
   tabWidth?: StringOrNumber;
-} & BaseProps;
+};
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
