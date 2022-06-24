@@ -1,37 +1,47 @@
 import React from 'react';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
+import styled from 'styled-components';
+import { prefixClassName } from './helper';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+const getClassName = prefixClassName('uc-safe-area');
+
+const StyledWrap = styled.div`
+  display: block;
+  width: 100%;
+
+  &.${getClassName('top')} {
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  &.${getClassName('bottom')} {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+`;
+
+type Props = {
   /**
    * 安全区的位置
    * @default bottom
    * */
-  position?: 'top' | 'bottom' | 'right' | 'left';
-} & BaseProps;
-
-function upperFirstLetter(str: string): string {
-  return str[0].toUpperCase() + str.slice(1);
-}
+  position?: 'top' | 'bottom';
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /** 安全区 */
-const SafeArea: React.FC<Props> = (props) => {
-  const { position = 'bottom', className, style, children, ...rest } = props;
-
-  const styles: React.CSSProperties = {
-    display: 'block',
-    width: '100%',
-    ...style,
-    [`padding${upperFirstLetter(position)}`]: `constant(safe-area-inset-${position})`,
-    [`padding${upperFirstLetter(position)}`]: `env(safe-area-inset-${position})`,
-  };
+const SafeArea = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { position = 'bottom', className, children, ...rest } = props;
 
   return (
-    <div {...rest} className={clsx('uc-safe-area', className)} style={styles}>
+    <StyledWrap
+      ref={ref}
+      {...rest}
+      className={clsx(getClassName(), getClassName(position), className)}
+    >
       {children}
-    </div>
+    </StyledWrap>
   );
-};
+});
 
 SafeArea.displayName = 'UC-SafeArea';
 

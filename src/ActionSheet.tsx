@@ -6,6 +6,7 @@ import * as vars from './vars';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
 import type { Props as PopupProps } from './Popup';
+import SafeArea from './SafeArea';
 
 const getClassName = prefixClassName('uc-actionsheet');
 
@@ -111,7 +112,7 @@ const ActionSheet: React.FC<Props> = (props) => {
       closeOnMaskClick={closeOnMaskClick}
       onClose={onClose}
     >
-      <div className={getClassName('action-list')}>
+      <SafeArea className={getClassName('action-list')}>
         {extra && <div className={getClassName('extra')}>{extra}</div>}
         {actions.map((action, index) => (
           <Button
@@ -139,7 +140,7 @@ const ActionSheet: React.FC<Props> = (props) => {
             {cancelText}
           </Button>
         )}
-      </div>
+      </SafeArea>
     </StyledActionSheet>
   );
 };
