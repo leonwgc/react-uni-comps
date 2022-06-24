@@ -6,10 +6,7 @@ declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      * 间距大小
      * @default 8
      */
-    size?: number | [
-        number,
-        number
-    ];
+    size?: number | [number, number];
     /**
      * 排列方向
      * @default horizontal
