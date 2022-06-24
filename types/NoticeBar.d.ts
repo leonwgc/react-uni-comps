@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 通告栏  */
 declare const NoticeBar: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 公告内容 */
@@ -22,5 +21,5 @@ declare const NoticeBar: React.ForwardRefExoticComponent<React.HTMLAttributes<HT
     extra?: React.ReactNode;
     /** 关闭时的回调 */
     onClose?: () => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default NoticeBar;

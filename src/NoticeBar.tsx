@@ -3,7 +3,6 @@ import React, { useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
-import type { BaseProps } from './types';
 
 const StyledNoticeBar = styled.div`
   height: 30px;
@@ -68,7 +67,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   extra?: React.ReactNode;
   /** 关闭时的回调 */
   onClose?: () => void;
-} & BaseProps;
+};
 
 /** 通告栏  */
 const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {

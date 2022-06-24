@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 export declare type Step = {
     /** 标题 */
     title?: React.ReactNode;
@@ -27,5 +26,5 @@ declare const Steps: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      * @default false
      *  */
     dotStyle?: boolean;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Steps;
