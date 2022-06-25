@@ -3821,7 +3821,7 @@ var StyledWrap$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   componentId: "sc-622652-0"
 })(["display:block;width:100%;&.", "{padding-top:constant(safe-area-inset-top);padding-top:env(safe-area-inset-top);}&.", "{padding-bottom:constant(safe-area-inset-bottom);padding-bottom:env(safe-area-inset-bottom);}"], getClassName$3('top'), getClassName$3('bottom'));
 
-/** 安全区 */
+/** 安全区容器 */
 var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$position = props.position,
       position = _props$position === void 0 ? 'bottom' : _props$position,
@@ -8521,7 +8521,7 @@ var getClassName$6 = prefixClassName('uc-scroll-box');
 var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$6('body'), getClassName$6('track'), getClassName$6('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$6('body'), getClassName$6('track'), getClassName$6('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 

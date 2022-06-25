@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { prefixClassName } from './helper';
 var getClassName = prefixClassName('uc-safe-area');
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: block;\n  width: 100%;\n\n  &.", " {\n    padding-top: constant(safe-area-inset-top);\n    padding-top: env(safe-area-inset-top);\n  }\n\n  &.", " {\n    padding-bottom: constant(safe-area-inset-bottom);\n    padding-bottom: env(safe-area-inset-bottom);\n  }\n"], ["\n  display: block;\n  width: 100%;\n\n  &.", " {\n    padding-top: constant(safe-area-inset-top);\n    padding-top: env(safe-area-inset-top);\n  }\n\n  &.", " {\n    padding-bottom: constant(safe-area-inset-bottom);\n    padding-bottom: env(safe-area-inset-bottom);\n  }\n"])), getClassName('top'), getClassName('bottom'));
-/** 安全区 */
+/** 安全区容器 */
 
 var SafeArea = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.position,

@@ -28,7 +28,7 @@ type Props = {
   position?: 'top' | 'bottom';
 } & React.HTMLAttributes<HTMLDivElement>;
 
-/** 安全区 */
+/** 安全区容器 */
 const SafeArea = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { position = 'bottom', className, children, ...rest } = props;
 

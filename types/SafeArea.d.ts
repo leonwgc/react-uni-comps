@@ -1,5 +1,5 @@
 import React from 'react';
-/** 安全区 */
+/** 安全区容器 */
 declare const SafeArea: React.ForwardRefExoticComponent<{
     /**
      * 安全区的位置
