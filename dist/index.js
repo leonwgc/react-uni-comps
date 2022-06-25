@@ -3837,7 +3837,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$v = ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"];
+var _excluded$v = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"];
 var getClassName$4 = prefixClassName('uc-actionsheet');
 var StyledActionSheet = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "ActionSheet__StyledActionSheet",
@@ -3850,8 +3850,8 @@ var ActionSheet = function ActionSheet(props) {
       visible = _props$visible === void 0 ? false : _props$visible,
       _props$actions = props.actions,
       actions = _props$actions === void 0 ? [] : _props$actions,
-      _props$cancelText = props.cancelText,
-      cancelText = _props$cancelText === void 0 ? '' : _props$cancelText,
+      cancelText = props.cancelText,
+      onCancel = props.onCancel,
       _props$closeOnMaskCli = props.closeOnMaskClick,
       closeOnMaskClick = _props$closeOnMaskCli === void 0 ? true : _props$closeOnMaskCli,
       onClose = props.onClose,
@@ -3891,6 +3891,7 @@ var ActionSheet = function ActionSheet(props) {
     className: clsx__default['default'](getClassName$4('action-item'), 'cancel'),
     onClick: function onClick() {
       onClose === null || onClose === void 0 ? void 0 : onClose();
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
     }
   }, cancelText)));
 };

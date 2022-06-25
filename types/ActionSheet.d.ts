@@ -17,8 +17,10 @@ declare type Props = {
     actions?: Action[];
     /** 顶部的额外区域   */
     extra?: React.ReactNode;
-    /** 取消按钮文字，如果设置为空则不显示取消按钮   */
-    cancelText?: string;
+    /** 取消按钮内容   */
+    cancelText?: React.ReactNode;
+    /** 取消回调 */
+    onCancel?: () => void;
 } & Omit<PopupProps, 'position' | 'flip' | 'children'>;
 /** 动作面板 */
 declare const ActionSheet: React.FC<Props>;

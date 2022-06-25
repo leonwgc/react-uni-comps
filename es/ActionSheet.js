@@ -16,14 +16,14 @@ var ActionSheet = function ActionSheet(props) {
       visible = _a === void 0 ? false : _a,
       _b = props.actions,
       actions = _b === void 0 ? [] : _b,
-      _c = props.cancelText,
-      cancelText = _c === void 0 ? '' : _c,
-      _d = props.closeOnMaskClick,
-      closeOnMaskClick = _d === void 0 ? true : _d,
+      cancelText = props.cancelText,
+      onCancel = props.onCancel,
+      _c = props.closeOnMaskClick,
+      closeOnMaskClick = _c === void 0 ? true : _c,
       onClose = props.onClose,
       className = props.className,
       extra = props.extra,
-      rest = __rest(props, ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"]);
+      rest = __rest(props, ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"]);
 
   return /*#__PURE__*/React.createElement(StyledActionSheet, __assign({}, rest, {
     className: clsx(getClassName(), className),
@@ -57,6 +57,7 @@ var ActionSheet = function ActionSheet(props) {
     className: clsx(getClassName('action-item'), 'cancel'),
     onClick: function onClick() {
       onClose === null || onClose === void 0 ? void 0 : onClose();
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
     }
   }, cancelText)));
 };
