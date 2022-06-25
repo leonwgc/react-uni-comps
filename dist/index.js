@@ -5663,92 +5663,74 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var min = exp ? -1 : 0;
   var max = exp ? len : len - 1;
+  var propsRef = useLatest({
+    exp: exp,
+    ratio: ratio,
+    direction: direction,
+    pageIndex: pageIndex,
+    len: len,
+    min: min,
+    max: max,
+    count: count
+  });
   var thisRef = React.useRef({
     x: 0,
     y: 0,
     lastX: 0,
     lastY: 0,
-    wrapHeight: 0,
-    wrapWidth: 0,
     isMoving: false,
-    pageIndex: pageIndex,
-    min: min,
-    max: max,
-    exp: exp,
-    len: len,
-    ratio: ratio,
-    direction: direction
-  });
-  thisRef.current = _objectSpread2(_objectSpread2({}, thisRef.current), {}, {
-    pageIndex: pageIndex,
-    min: min,
-    max: max,
-    exp: exp,
-    len: len,
-    ratio: ratio,
-    direction: direction
+    timer: 0
   });
   var slideToPageIndex = React.useCallback(function (newPageIndex) {
     var transition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var $this = thisRef.current;
-    var _thisRef$current = thisRef.current,
-        wrapWidth = _thisRef$current.wrapWidth,
-        wrapHeight = _thisRef$current.wrapHeight,
-        direction = _thisRef$current.direction,
-        exp = _thisRef$current.exp;
+    var _propsRef$current = propsRef.current,
+        direction = _propsRef$current.direction,
+        exp = _propsRef$current.exp;
     var el = wrapElRef.current;
 
     if (el) {
+      var _containerRef$current = containerRef.current,
+          wrapWidth = _containerRef$current.offsetWidth,
+          wrapHeight = _containerRef$current.offsetHeight;
       el.style.transitionProperty = transition ? 'transform' : 'none';
 
       if (direction === 'horizontal') {
         var x = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapWidth;
         el.style.transform = "translate3d(".concat(x, "px, 0, 0)");
-        $this.x = x;
+        thisRef.current.x = x;
       } else {
         var y = (newPageIndex + (exp ? 1 : 0)) * -1 * wrapHeight;
         el.style.transform = "translate3d(0, ".concat(y, "px, 0)");
-        $this.y = y;
+        thisRef.current.y = y;
       }
 
       setPageIndex(newPageIndex);
     }
-  }, [thisRef]);
+  }, []);
   React.useImperativeHandle(ref, function () {
     return {
       prev: function prev() {
-        slideToPageIndex(Math.max(thisRef.current.min, pageIndex - 1));
+        slideToPageIndex(Math.max(min, pageIndex - 1));
       },
       next: function next() {
-        slideToPageIndex(Math.min(thisRef.current.max, pageIndex + 1));
+        slideToPageIndex(Math.min(max, pageIndex + 1));
       }
     };
   });
-  var ensurePageIndex = React.useCallback(function () {
-    if (pageIndex >= len) {
-      slideToPageIndex(0, false);
-    } else if (pageIndex === -1) {
-      slideToPageIndex(len - 1, false);
-    }
-  }, [slideToPageIndex, len, pageIndex]);
   useUpdateEffect(function () {
     setItems(getItems(children, loop, height));
     slideToPageIndex(0, false);
-  }, [children, loop, height, slideToPageIndex]);
+  }, [children, loop, height]);
   useUpdateEffect(function () {
     if (pageIndex >= 0 && pageIndex < len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
     }
   }, [pageIndex]);
   useMount(function () {
-    var $this = thisRef.current;
-    var container = containerRef.current;
-    $this.wrapWidth = container.offsetWidth;
-    $this.wrapHeight = container.offsetHeight;
     slideToPageIndex(0, false);
   });
   React.useEffect(function () {
-    if (autoPlay && len > 1) {
+    if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       thisRef.current.timer = window.setInterval(function (p) {
         if (!thisRef.current.isMoving) {
           slideToPageIndex(p + 1);
@@ -5758,73 +5740,80 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
         window.clearInterval(thisRef.current.timer);
       };
     }
-  }, [slideToPageIndex, autoPlay, interval, len, pageIndex]);
+  }, [autoPlay, interval, len, pageIndex]);
   React.useLayoutEffect(function () {
-    var wrapEl = wrapElRef.current;
-    var fg = new Touch__default['default'](wrapEl, {
+    var el = wrapElRef.current;
+    var _containerRef$current2 = containerRef.current,
+        wrapWidth = _containerRef$current2.offsetWidth,
+        wrapHeight = _containerRef$current2.offsetHeight;
+    var fg = new Touch__default['default'](el, {
       onTouchStart: function onTouchStart(e) {
         e.preventDefault();
-        var $this = thisRef.current;
-        $this.isMoving = true;
-        wrapEl.style.transitionProperty = 'none';
-        $this.lastX = $this.x;
-        $this.lastY = $this.y;
+        el.style.transitionProperty = 'none';
+        thisRef.current.isMoving = true;
+        thisRef.current.lastX = thisRef.current.x;
+        thisRef.current.lastY = thisRef.current.y;
       },
       onTouchEnd: function onTouchEnd() {
-        var $this = thisRef.current;
-
-        if (!$this.isMoving) {
+        if (!thisRef.current.isMoving) {
           return;
         }
 
-        $this.isMoving = false;
-        var ratio = $this.ratio,
-            pageIndex = $this.pageIndex,
-            max = $this.max,
-            len = $this.len;
+        thisRef.current.isMoving = false;
+        var _propsRef$current2 = propsRef.current,
+            ratio = _propsRef$current2.ratio,
+            pageIndex = _propsRef$current2.pageIndex,
+            max = _propsRef$current2.max,
+            len = _propsRef$current2.len,
+            exp = _propsRef$current2.exp;
 
-        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
-          slideToPageIndex($this.pageIndex === max ? 0 : len - 1, false);
+        if (exp && (max === pageIndex || min === pageIndex)) {
+          slideToPageIndex(pageIndex === max ? 0 : len - 1, false);
           return;
         }
 
-        if (direction === 'horizontal' && Math.abs($this.x - $this.lastX) > $this.wrapWidth * ratio) {
-          slideToPageIndex(pageIndex + ($this.x < $this.lastX ? 1 : -1));
-        } else if (direction === 'vertical' && Math.abs($this.y - $this.lastY) > $this.wrapHeight * ratio) {
-          slideToPageIndex(pageIndex + ($this.y < $this.lastY ? 1 : -1));
+        if (direction === 'horizontal' && Math.abs(thisRef.current.x - thisRef.current.lastX) > wrapWidth * ratio) {
+          slideToPageIndex(pageIndex + (thisRef.current.x < thisRef.current.lastX ? 1 : -1));
+        } else if (direction === 'vertical' && Math.abs(thisRef.current.y - thisRef.current.lastY) > wrapHeight * ratio) {
+          slideToPageIndex(pageIndex + (thisRef.current.y < thisRef.current.lastY ? 1 : -1));
         } else {
           // reset
           slideToPageIndex(pageIndex);
         }
       },
       onPressMove: function onPressMove(e) {
-        var $this = thisRef.current;
+        var _propsRef$current3 = propsRef.current,
+            pageIndex = _propsRef$current3.pageIndex,
+            max = _propsRef$current3.max,
+            exp = _propsRef$current3.exp,
+            count = _propsRef$current3.count,
+            direction = _propsRef$current3.direction;
 
-        if ($this.exp && ($this.max === $this.pageIndex || $this.min === $this.pageIndex)) {
+        if (exp && (max === pageIndex || min === pageIndex)) {
           return;
         }
 
         if (direction === 'horizontal') {
-          if ($this.x > 0 || $this.x < -1 * (count - 1) * $this.wrapWidth) {
+          if (thisRef.current.x > 0 || thisRef.current.x < -1 * (count - 1) * wrapWidth) {
             return;
           }
 
-          $this.x += e.deltaX;
-          wrapElRef.current.style.transform = "translate3d(".concat($this.x, "px, 0, 0)");
+          thisRef.current.x += e.deltaX;
+          el.style.transform = "translate3d(".concat(thisRef.current.x, "px, 0, 0)");
         } else {
-          if ($this.y > 0 || $this.y < -1 * (count - 1) * $this.wrapHeight) {
+          if (thisRef.current.y > 0 || thisRef.current.y < -1 * (count - 1) * wrapHeight) {
             return;
           }
 
-          $this.y += e.deltaY;
-          wrapElRef.current.style.transform = "translate3d(0, ".concat($this.y, "px, 0)");
+          thisRef.current.y += e.deltaY;
+          el.style.transform = "translate3d(0, ".concat(thisRef.current.y, "px, 0)");
         }
       }
     });
     return function () {
       return fg.destroy();
     };
-  }, [count, direction, thisRef, slideToPageIndex]);
+  }, []);
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
@@ -5838,7 +5827,11 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
-      ensurePageIndex();
+      if (pageIndex >= len) {
+        slideToPageIndex(0, false);
+      } else if (pageIndex === -1) {
+        slideToPageIndex(len - 1, false);
+      }
     },
     style: {
       transitionDuration: "".concat(duration, "ms")
