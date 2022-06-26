@@ -1,52 +1,31 @@
-桌面和移动端 react 组件库 [在线体验](https://leonwgc.github.io/react-uni-comps/base)
+####[在线体验 (online demo)](https://leonwgc.github.io/react-uni-comps/base)
 
-安装 [npm](https://npmjs.org/) / [yarn](https://yarnpkg.com)
+### 安装 (Installation) 
 
 ```js
 npm install react-uni-comps --save
 yarn add react-uni-comps
 ```
 
-### 特点
+### 特点 (Features)
 
-1. 组件丰富，体积小，自动按需加载
-2. 同时支持桌面和移动端，同一套组件，一致的开发体验
-3. 纯 react-hooks 实现, 拥抱 react 未来
-4. 样式采用 css-in-js
-5. 只提供基础样式,方便二次开发 / 定制 / 扩展
-6. 使用 ts 编写，内置类型定义，开发智能提示
-7. 可以和 antd / antd-mobile / zarm 等组件库搭配 / 替换使用
-8. 重新导出了依赖组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展
+1. 组件丰富，体积小，自动按需加载 (rich components, tiny size and load on-demand)
+2. 同时支持桌面和移动端，同一套组件，一致的开发体验 (supports both mobile & desktop)
+3. 纯 react-hooks 实现, 拥抱 react 未来 (written in react hooks)
+4. 样式采用 css-in-js (written in [styled-components](https://styled-components.com/), a css-in-js library)
+5. 只提供基础样式,方便二次开发 / 定制 / 扩展 (easy to extend and customize)
+6. 使用 ts 编写，内置类型定义，开发智能提示 (written in [typescript](https://www.typescriptlang.org/) with predictable static types.)
+7. 可以和 antd / antd-mobile / zarm 等组件库搭配使用 (work together well with other UI libs )
+8. 重新导出了三方组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展 （re-export 3-party libs and internal functions. easy to extend and customize with the same stack ）
 
-### 按需加载
+### 按需加载 (Import On Demand)
 
-支持基于 Tree Shaking 的按需加载，大部分的构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking。
+支持基于 Tree Shaking 的按需加载，大部分构建工具（例如 webpack 4+ 和 rollup）都支持 Tree Shaking。
 
-对于webpack4以下使用如下方式按需加载(不推荐)
+supports on-demand loading based on Tree Shaking, most of the build tools (such as webpack 4+ and rollup) support Tree Shaking.
 
-1. babel-plugin-import
 
-```js
-  plugins: [
-    [
-      'import',
-      {
-        libraryName: 'react-uni-comps',
-        libraryDirectory: 'es',
-        camel2DashComponentName: false,
-      },
-    ],
-  ],
-```
-
-2. 直接引用组件
-
-```js
-// 以Button组件为例
-import Button from 'react-uni-comps/es/Button';
-```
-
-### 主题色
+### 主题色 (Theme)
 
 ```js
 <ThemeProvider color="#409eff">
@@ -54,23 +33,22 @@ import Button from 'react-uni-comps/es/Button';
 </ThemeProvider>
 ```
 
-### 自定义样式
+### 自定义样式 (Styles)
+styles is based on [styled-components](https://styled-components.com/) , a popular react css-in-js  lib
+
 ```js
 import { Button, styled } from 'react-uni-comps';
 
-// 类似面向对象概念的继承
 const StyledButton = styled(Button)`
   width: 80px;
   height: 32px;
   border-radius: 4px;
 `;
 
-<StyledButton>
-  自定义按钮
-</StyledButton>;
+<StyledButton>my style button</StyledButton>;
 ```
 
-### 引用重新导出的第三方库
+### 引用三方库 (import 3-party libs)
 
 ```js
 // styled-components
@@ -86,7 +64,7 @@ import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
 import { useSpring, animated, easings } from 'react-uni-comps';
 ```
 
-### 参考
+### 参考 (references)
 
 - [Ant Design](https://ant.design/)
 - [Ant Design Mobile](https://next.mobile.ant.design/)
