@@ -32,10 +32,10 @@ const Loading: React.FC = () => {
 /**
  * Toast show loading with text
  *
- * @param {React.ReactNode} [text='正在提交...']
+ * @param {React.ReactNode} [text='Loading...']
  * @param {number} [space=16] 内容和spin距离
  */
-const show = (text: React.ReactNode = '正在提交...', space = 16) => {
+const show = (text: React.ReactNode = 'Loading...', space = 16) => {
   Toast.show({
     content: (
       <StyledLoading>
