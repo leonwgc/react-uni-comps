@@ -62,7 +62,12 @@ const PullupDom = () => {
   return (
     <PageWrap>
       <DemoBlock title="搭配pullup" padding={'100px 0 0'}>
-        <StyledPullToRefresh onRefresh={onRefresh} headHeight={94} pullingText="简单，快速">
+        <StyledPullToRefresh
+          onRefresh={onRefresh}
+          headHeight={94}
+          threshold={120}
+          pullingText="简单，快速"
+        >
           <Pullup
             dataList={list}
             fetchData={fetchData}
