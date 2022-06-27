@@ -31,15 +31,16 @@ const Loading: React.FC = () => {
 };
 
 /**
- *  加载中
+ * Toast show loading with text
  *
  * @param {React.ReactNode} [text='正在提交...']
+ * @param {number} [space=16] 内容和spin距离
  */
-const show = (text: React.ReactNode = '正在提交...') => {
+const show = (text: React.ReactNode = '正在提交...', space = 16) => {
   Toast.show({
     content: (
       <StyledLoading>
-        <Space direction="vertical" size={12} style={{ width: 100 }}>
+        <Space direction="vertical" size={space} style={{ width: 100 }}>
           <Spin />
           {text}
         </Space>
