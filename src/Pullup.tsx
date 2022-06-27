@@ -5,7 +5,6 @@ import useInViewport from './hooks/useInViewport';
 import usePrevious from './hooks/usePrevious';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 const StyledWrap = styled.div`
   user-select: none;
@@ -80,7 +79,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    *  @default 加载中 | 我是有底线的
    *  */
   footer?: (loading: boolean, finished: boolean) => React.ReactNode;
-} & BaseProps;
+};
 
 const DefaultLoadingText = (
   <Space>

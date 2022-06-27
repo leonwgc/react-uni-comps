@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   /** 禁用 */
@@ -13,7 +12,7 @@ type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   defaultChecked?: boolean;
   /** 变化时回调函数 */
   onChange?: (checked: boolean) => void;
-} & BaseProps;
+};
 
 const StyledSwitch = styled.div`
   position: relative;

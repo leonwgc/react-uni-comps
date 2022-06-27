@@ -14,7 +14,6 @@ import Spin from './Spin';
 import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
-import type { BaseProps } from './types';
 import useLatest from './hooks/useLatest';
 
 const StyledWrap = styled(animated.div)`
@@ -36,7 +35,7 @@ const StyledWrap = styled(animated.div)`
 
 type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 
-type Props = React.HTMLAttributes<Element> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 触发刷新时的处理函数 */
   onRefresh?: () => Promise<any>;
   /** 下拉的提示文案 */
@@ -69,7 +68,7 @@ type Props = React.HTMLAttributes<Element> & {
    * 作为组件，请使用React.forwardRef 将ref引到dom
    *  */
   children?: React.ReactElement;
-} & BaseProps;
+};
 
 /** 下拉刷新 */
 const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {

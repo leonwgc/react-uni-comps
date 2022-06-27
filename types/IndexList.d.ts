@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 declare type Item = {
     label: React.ReactNode;
     value: StringOrNumber;
@@ -13,7 +13,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     data?: DataItem[];
     /** 点击数据项回调 */
     onItemClick?: (item: Item) => void;
-} & BaseProps;
+};
 /** 索引列表 */
 declare const IndexList: React.FC<Props>;
 export default IndexList;

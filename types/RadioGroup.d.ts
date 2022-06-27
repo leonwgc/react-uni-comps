@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import type { StringOrNumber } from './types';
-import type { BaseProps } from './types';
 declare type LabelValue = {
     label?: React.ReactNode;
     value: StringOrNumber;
@@ -20,5 +19,5 @@ declare const RadioGroup: React.ForwardRefExoticComponent<Omit<React.HTMLAttribu
     options?: LabelValue[] | ReactNode[];
     /** 选项checked改变时回调 */
     onChange?: (val: StringOrNumber) => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default RadioGroup;

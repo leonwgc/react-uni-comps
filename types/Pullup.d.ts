@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /**
  *  上拉无限滚动
  *  注意：第一次加载数据应该撑满容器,否则会一直拉数据直到撑满容器
@@ -44,5 +43,5 @@ declare const Pullup: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLD
      *  @default 加载中 | 我是有底线的
      *  */
     footer?: (loading: boolean, finished: boolean) => React.ReactNode;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Pullup;

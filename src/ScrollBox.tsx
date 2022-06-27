@@ -62,9 +62,9 @@ const StyledWrap = styled.div`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10px;
-    height: 4px;
-    width: 30px;
+    bottom: 12px;
+    height: 3px;
+    width: 24px;
     background-color: #f0f0f0;
     visibility: hidden;
   }

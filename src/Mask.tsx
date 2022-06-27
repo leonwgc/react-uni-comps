@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 const StyledMask = styled(animated.div)`
   background-color: rgba(0, 0, 0);
@@ -36,7 +35,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 0.45
    */
   opacity?: number;
-} & BaseProps;
+};
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {

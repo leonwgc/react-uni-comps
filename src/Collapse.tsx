@@ -8,7 +8,7 @@ import useMount from './hooks/useMount';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import { animationNormal } from './vars';
 import { attachPropertiesToComponent } from './util';
-import type { StringOrNumber, BaseProps } from './types';
+import type { StringOrNumber } from './types';
 
 type KeysType = Array<StringOrNumber> | StringOrNumber;
 
@@ -36,15 +36,13 @@ const Item: React.FC<ItemProps> = (props) => {
 };
 
 type CollapseProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** 子元素*/
-  children: React.ReactElement<ItemProps>[];
   /** 当前激活 tab 面板的 key, 如果是数组则可以展开多个项，否则只有一个展开项（手风琴模式） */
   keys?: KeysType;
   /** 切换面板的回调 */
   onChange?: (keys: KeysType) => void;
   /** 展开动画*/
   animated?: boolean;
-} & BaseProps;
+};
 
 const StyledWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;

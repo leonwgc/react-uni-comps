@@ -1,5 +1,4 @@
 import * as React from 'react';
-import type { BaseProps } from './types';
 declare type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 /** 间距 */
 declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
@@ -19,5 +18,5 @@ declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
     split?: React.ReactNode;
     /** 是否自动换行，仅在 horizontal 时有效 */
     wrap?: boolean;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Space;

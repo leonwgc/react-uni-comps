@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { getThemeColorCss } from './themeHelper';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 import { prefixClassName } from './helper';
 import Space from './Space';
 import useEventListener from './hooks/useEventListener';
@@ -23,7 +23,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   data?: DataItem[];
   /** 点击数据项回调 */
   onItemClick?: (item: Item) => void;
-} & BaseProps;
+};
 
 const getClassName = prefixClassName('uc-index-list');
 

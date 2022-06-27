@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -76,7 +75,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 14
    */
   fontSize?: number | string;
-} & BaseProps;
+};
 
 const StyledWaterMark = styled.div`
   position: fixed;

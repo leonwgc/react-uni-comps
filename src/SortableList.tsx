@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import type { ObjectType } from './types';
 import Sortable from 'sortablejs';
 import { nanoid } from 'nanoid';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 数据列表 */
@@ -17,7 +16,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   onSort?: (list: Array<ObjectType>) => void;
   /** sortablejs 配置 */
   config?: ObjectType;
-} & BaseProps;
+};
 
 const StyledWrapper = styled.div``;
 

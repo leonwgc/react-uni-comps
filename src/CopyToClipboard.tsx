@@ -2,16 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import copy from './copy';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 要复制的文本 */
   text: string;
   /** 复制成功的回调 */
   onCopy?: () => void;
+  /** 包裹的元素 */
   children?: React.ReactNode;
-  onClick?: () => void;
-} & BaseProps;
+};
 
 const StyledWrap = styled.div`
   display: inline-flex;
@@ -20,7 +19,7 @@ const StyledWrap = styled.div`
 
 /** 复制文本*/
 const CopyToClipboard = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { text, onClick, onCopy, children, className, ...rest } = props;
+  const { text, onCopy, children, className, ...rest } = props;
 
   return (
     <StyledWrap
@@ -29,7 +28,6 @@ const CopyToClipboard = React.forwardRef<HTMLDivElement, Props>((props: Props, r
       className={clsx('uc-copy-to-clipboard', className)}
       onClick={() => {
         copy(text) && onCopy?.();
-        onClick?.();
       }}
     >
       {children}

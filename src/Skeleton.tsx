@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import SkeletonBase from './SkeletonBase';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** loading结束渲染的元素 */
@@ -33,7 +32,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   avatarSize?: number;
   /** loading为true显示骨架，false则显示子元素*/
   loading?: boolean;
-} & BaseProps;
+};
 
 const StyledSkeleton = styled.div`
   .uc-skeleton {

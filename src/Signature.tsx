@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 export type SigPadRef = {
   /** 获取图片dataURL字符串 */
@@ -25,8 +24,7 @@ type Props = React.HTMLAttributes<Element> & {
    * @default #000
    *  */
   penColor?: string;
-} & BaseProps &
-  RefAttributes<SigPadRef>;
+} & RefAttributes<SigPadRef>;
 
 const StyledSignature = styled.div`
   position: relative;

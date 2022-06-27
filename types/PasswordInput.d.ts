@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 export declare type RefType = {
     /** 触发获得焦点 */
     focus: () => void;
@@ -28,5 +27,5 @@ declare const PasswordInput: React.ForwardRefExoticComponent<{
     userVirtualInput?: boolean;
     /** 自动获取焦点 */
     autoFocus?: boolean;
-} & BaseProps & React.RefAttributes<RefType>>;
+} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<RefType>>;
 export default PasswordInput;

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps, StringOrNumber } from './types';
+import type { StringOrNumber } from './types';
 declare type ItemProp = {
     /** 禁用 */
     disabled?: boolean;
@@ -28,7 +28,7 @@ declare type TabsProp = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 
      * tab标题宽度
      */
     tabWidth?: StringOrNumber;
-} & BaseProps;
+};
 declare const _default: React.FC<TabsProp> & {
     Tab: React.FC<ItemProp>;
 };

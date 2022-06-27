@@ -6,7 +6,6 @@ import Radio from './Radio';
 import { isObject } from './helper';
 import type { StringOrNumber } from './types';
 import Space from './Space';
-import type { BaseProps } from './types';
 
 type LabelValue = {
   label?: React.ReactNode;
@@ -27,7 +26,7 @@ type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   options?: LabelValue[] | ReactNode[];
   /** 选项checked改变时回调 */
   onChange?: (val: StringOrNumber) => void;
-} & BaseProps;
+};
 
 const StyledRadioGroup = styled.div``;
 

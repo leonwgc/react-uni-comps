@@ -5,7 +5,6 @@ import Button from './Button';
 import Space from './Space';
 import IconArrow from './IconArrow';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 可视按钮数量 */
@@ -24,7 +23,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   currentPage?: number;
   /** 当前页改变回调 */
   onPageChange?: (page: number) => void;
-} & BaseProps;
+};
 
 /**
  * get pages arr

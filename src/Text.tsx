@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 const StyledMultiLines = styled.div<{ $lines?: number }>`
   display: -webkit-box;
@@ -23,7 +22,7 @@ type Props = {
    * @default 1
    */
   lines?: number;
-} & BaseProps;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /** 文本显示，1.超过行数显示省略号 2.单行超过宽度显示省略号 */
 const Text = React.forwardRef<any, Props>((props: Props, ref) => {

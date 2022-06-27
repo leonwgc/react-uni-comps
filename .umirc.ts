@@ -51,7 +51,8 @@ export default defineConfig({
         const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
           return (
             !declaration.fileName.includes('node_modules') ||
-            declaration.fileName.includes('Popover')
+            declaration.fileName.includes('Popover') ||
+            declaration.fileName.includes('TouchElement')
           );
         });
 

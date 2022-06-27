@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps } from './types';
+declare type Props = React.HTMLAttributes<HTMLDivElement>;
 /** 加载中 */
-declare const Spin: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & BaseProps & React.RefAttributes<HTMLDivElement>>;
+declare const Spin: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>>;
 export default Spin;

@@ -2,7 +2,6 @@ import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 生成二维码文本 */
@@ -22,7 +21,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 128
    */
   size?: number;
-} & BaseProps;
+};
 
 type QRProps = {
   makeCode: (text: string) => void;

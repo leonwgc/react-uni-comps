@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
-import type { BaseProps } from './types';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -36,7 +35,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 10
    */
   rowGap?: number;
-} & BaseProps;
+};
 
 /** 瀑布流布局 */
 const Masonry = React.forwardRef<HTMLDivElement, Props>((props, ref) => {

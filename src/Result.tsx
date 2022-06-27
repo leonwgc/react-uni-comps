@@ -1,16 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import type { BaseProps } from './types';
 
-export type ResultProps = {
+export type ResultProps = React.HTMLAttributes<HTMLDivElement> & {
   /** 图片下方的描述文字 */
   desc?: React.ReactNode;
   /** 自定义图片, 节点/图片链接 */
   image?: React.ReactNode;
   /** 最下面的自定义节点 */
   extra?: React.ReactNode;
-} & BaseProps;
+};
 
 const StyledWrap = styled.div`
   display: flex;

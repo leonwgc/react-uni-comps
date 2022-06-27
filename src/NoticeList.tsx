@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
 import Text from './Text';
-import type { BaseProps } from './types';
 
 const StyledNoticeList = styled.div`
   font-size: 14px;
@@ -72,7 +71,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   extra?: React.ReactNode;
   /** 关闭时的回调 */
   onClose?: () => void;
-} & BaseProps;
+};
 
 /** 多条信息垂直滚动通知栏  */
 const NoticeList = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {

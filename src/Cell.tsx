@@ -4,7 +4,6 @@ import * as vars from './vars';
 import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 是否显示红色*标记 */
@@ -32,7 +31,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default true
    */
   withPaddingLeft?: boolean;
-} & BaseProps;
+};
 
 const StyledCell = styled.div`
   background-color: #fff;

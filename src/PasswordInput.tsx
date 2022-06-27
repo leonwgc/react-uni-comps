@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
-import type { BaseProps } from './types';
 
 type Props = {
   /** 值 */
@@ -14,7 +13,7 @@ type Props = {
   onChange: (v: string) => void;
   /** 获取焦点回调 */
   onFocus?: () => void;
-  /** 
+  /**
    * 输入长度
    * @default 6
    *  */
@@ -28,7 +27,7 @@ type Props = {
   userVirtualInput?: boolean;
   /** 自动获取焦点 */
   autoFocus?: boolean;
-} & BaseProps;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledPasswordInput = styled.div`
   user-select: none;

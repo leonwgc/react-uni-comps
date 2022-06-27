@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import type { BaseProps } from './types';
 
 const StyledRate = styled.div<{ $color: string }>`
   display: inline-flex;
@@ -36,10 +35,10 @@ const StyledRate = styled.div<{ $color: string }>`
 `;
 
 type Props = {
-  /** 
+  /**
    * 是否允许再次点击后清除
    * @default true
-  */
+   */
   allowClear?: boolean;
   /**是否允许半选 */
   allowHalf?: boolean;
@@ -64,7 +63,7 @@ type Props = {
    * @default #ffd21e
    *   */
   color?: string;
-} & BaseProps;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const defaultChar = (
   <svg viewBox="64 64 896 896" data-icon="star" width="1em" height="1em" fill="currentColor">

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Icon from './Icon';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -17,7 +16,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   shape?: 'circle' | 'square';
   /** 文字/icon/img 不设置，则为默认头像icon */
   children?: React.ReactNode;
-} & BaseProps;
+};
 
 const StyledAvatar = styled.div`
   box-sizing: border-box;

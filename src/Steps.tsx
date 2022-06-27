@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import { throttle } from './helper';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 export type Step = {
   /** 标题 */
@@ -32,7 +31,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default false
    *  */
   dotStyle?: boolean;
-} & BaseProps;
+};
 
 const StyledSteps = styled.div<{ space: number }>`
   .step {

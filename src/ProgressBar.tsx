@@ -2,7 +2,6 @@ import React from 'react';
 import { useTheme } from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -23,7 +22,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   trackColor?: string;
   /** 填充的颜色，默认主题色*/
   fillColor?: string;
-} & BaseProps;
+};
 
 /** 进度条 */
 const ProgressBar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {

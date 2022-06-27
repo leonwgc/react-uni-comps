@@ -1,7 +1,6 @@
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 import useLatest from './hooks/useLatest';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {
@@ -9,7 +8,7 @@ type Props = React.HTMLAttributes<HTMLSpanElement> & {
   onVisible?: (el: HTMLElement) => void;
   /** 不可见回调 */
   onInVisible?: (el: HTMLElement) => void;
-} & BaseProps;
+};
 
 /** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
 const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {

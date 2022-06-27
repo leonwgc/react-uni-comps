@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
-import type { BaseProps } from './types';
 declare type PullStatus = 'init' | 'pulling' | 'canRelease' | 'refreshing' | 'complete';
 /** 下拉刷新 */
-declare const PullToRefresh: React.ForwardRefExoticComponent<React.HTMLAttributes<Element> & {
+declare const PullToRefresh: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 触发刷新时的处理函数 */
     onRefresh?: () => Promise<any>;
     /** 下拉的提示文案 */
@@ -35,5 +34,5 @@ declare const PullToRefresh: React.ForwardRefExoticComponent<React.HTMLAttribute
      * 作为组件，请使用React.forwardRef 将ref引到dom
      *  */
     children?: React.ReactElement;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default PullToRefresh;

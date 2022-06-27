@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 图标类型 */
-  type: string;
-} & BaseProps;
+  type?: string;
+};
 
 const StyledIcon = styled.span`
   display: inline-block;

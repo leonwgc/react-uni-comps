@@ -5,7 +5,10 @@ import Popup from './Popup';
 import Button from './Button';
 import * as vars from './vars';
 import clsx from 'clsx';
-var StyledActionSheet = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"], ["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n\n  .wrap {\n    background-color: #fff;\n  }\n\n  .extra {\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .button-list {\n    .wrapper {\n      background-color: #ffffff;\n      border-top: 1px solid ", ";\n\n      &.disabled {\n        color: #999;\n\n        &:active {\n          background-color: unset;\n        }\n      }\n      &:first-child {\n        border-top: none;\n      }\n      &:active {\n        background-color: rgba(0, 0, 0, 0.1);\n      }\n\n      button {\n        width: 100%;\n        padding: 14px;\n        height: 55px;\n        text-align: center;\n        background-color: transparent;\n        border: none;\n        border-radius: 0;\n        display: flex;\n        flex-direction: column;\n        font-size: 18px;\n        &:disabled {\n          background-color: #fff;\n          color: #999;\n        }\n\n        .button-item-name {\n          color: #333;\n          &.disabled {\n            color: #999 !important;\n          }\n        }\n\n        .button-item-description {\n          font-size: 12px;\n          margin-top: 4px;\n          color: #999;\n        }\n      }\n    }\n  }\n\n  .uc-actionsheet-cancel {\n    background-color: #f5f5f5;\n    padding-top: 8px;\n\n    .wrapper {\n      background-color: #fff;\n      button {\n        padding: 14px;\n        text-align: center;\n        border-radius: 0;\n      }\n    }\n  }\n"])), vars.border, vars.border);
+import { prefixClassName } from './helper';
+import SafeArea from './SafeArea';
+var getClassName = prefixClassName('uc-actionsheet');
+var StyledActionSheet = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n  background-color: #f5f5f5;\n  user-select: none;\n\n  .", " {\n    background-color: #fff;\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .", " {\n    border-top: 1px solid ", ";\n    background-color: #fff;\n    width: 100%;\n    padding: 14px;\n    height: 55px;\n    text-align: center;\n    border: none;\n    border-radius: 0;\n    display: flex;\n    flex-direction: column;\n    font-size: 18px;\n    color: #333;\n\n    &.disabled {\n      opacity: 1;\n      color: #999;\n    }\n\n    &.default.pc:hover {\n      border-color: ", ";\n    }\n\n    .", " {\n      font-size: 12px;\n      margin-top: 4px;\n      color: #999;\n    }\n\n    &:not(:last-child) {\n      border-bottom: 1px solid ", ";\n    }\n\n    &.cancel {\n      margin-top: 8px;\n      border-bottom: none;\n    }\n  }\n"], ["\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  overflow: hidden;\n  width: 100%;\n  background-color: #f5f5f5;\n  user-select: none;\n\n  .", " {\n    background-color: #fff;\n    display: flex;\n    justify-content: center;\n    color: #999;\n    font-size: 15px;\n    padding: 18px 16px;\n    border-bottom: 1px solid ", ";\n  }\n\n  .", " {\n    border-top: 1px solid ", ";\n    background-color: #fff;\n    width: 100%;\n    padding: 14px;\n    height: 55px;\n    text-align: center;\n    border: none;\n    border-radius: 0;\n    display: flex;\n    flex-direction: column;\n    font-size: 18px;\n    color: #333;\n\n    &.disabled {\n      opacity: 1;\n      color: #999;\n    }\n\n    &.default.pc:hover {\n      border-color: ", ";\n    }\n\n    .", " {\n      font-size: 12px;\n      margin-top: 4px;\n      color: #999;\n    }\n\n    &:not(:last-child) {\n      border-bottom: 1px solid ", ";\n    }\n\n    &.cancel {\n      margin-top: 8px;\n      border-bottom: none;\n    }\n  }\n"])), getClassName('extra'), vars.border, getClassName('action-item'), vars.border, vars.border, getClassName('action-item-description'), vars.border);
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -13,31 +16,33 @@ var ActionSheet = function ActionSheet(props) {
       visible = _a === void 0 ? false : _a,
       _b = props.actions,
       actions = _b === void 0 ? [] : _b,
-      _c = props.cancelText,
-      cancelText = _c === void 0 ? '' : _c,
-      _d = props.closeOnMaskClick,
-      closeOnMaskClick = _d === void 0 ? true : _d,
+      cancelText = props.cancelText,
+      onCancel = props.onCancel,
+      _c = props.closeOnMaskClick,
+      closeOnMaskClick = _c === void 0 ? true : _c,
       onClose = props.onClose,
       className = props.className,
       extra = props.extra,
-      rest = __rest(props, ["visible", "actions", "cancelText", "closeOnMaskClick", "onClose", "className", "extra"]);
+      rest = __rest(props, ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"]);
 
   return /*#__PURE__*/React.createElement(StyledActionSheet, __assign({}, rest, {
-    className: clsx('uc-actionsheet', className),
+    className: clsx(getClassName(), className),
     visible: visible,
     position: "bottom",
     closeOnMaskClick: closeOnMaskClick,
     onClose: onClose
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "wrap"
+  }), /*#__PURE__*/React.createElement(SafeArea, {
+    className: getClassName('action-list')
   }, extra && /*#__PURE__*/React.createElement("div", {
-    className: "extra"
-  }, extra), /*#__PURE__*/React.createElement("div", {
-    className: "button-list"
-  }, actions.map(function (action, index) {
-    return /*#__PURE__*/React.createElement("div", {
+    className: getClassName('extra')
+  }, extra), actions.map(function (action, index) {
+    return /*#__PURE__*/React.createElement(Button, {
       key: index,
-      className: clsx('wrapper', {
+      disabled: action.disabled,
+      style: {
+        color: action.color
+      },
+      className: clsx(getClassName('action-item'), {
         disabled: action.disabled
       }),
       onClick: function onClick() {
@@ -45,30 +50,16 @@ var ActionSheet = function ActionSheet(props) {
 
         (_a = action.onClick) === null || _a === void 0 ? void 0 : _a.call(action);
       }
-    }, /*#__PURE__*/React.createElement(Button, {
-      disabled: action.disabled
-    }, /*#__PURE__*/React.createElement("div", {
-      className: clsx('button-item-name', {
-        disabled: action.disabled
-      }),
-      style: {
-        color: action.color || '#333'
-      }
-    }, action.text), action.description && /*#__PURE__*/React.createElement("div", {
-      className: "button-item-description"
-    }, action.description)));
-  })), cancelText && /*#__PURE__*/React.createElement("div", {
-    className: "uc-actionsheet-cancel button-list"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "wrapper"
-  }, /*#__PURE__*/React.createElement(Button, {
-    className: "button-item",
+    }, action.text, action.description && /*#__PURE__*/React.createElement("div", {
+      className: getClassName('action-item-description')
+    }, action.description));
+  }), cancelText && /*#__PURE__*/React.createElement(Button, {
+    className: clsx(getClassName('action-item'), 'cancel'),
     onClick: function onClick() {
       onClose === null || onClose === void 0 ? void 0 : onClose();
+      onCancel === null || onCancel === void 0 ? void 0 : onCancel();
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "button-item-name"
-  }, cancelText))))));
+  }, cancelText)));
 };
 
 ActionSheet.displayName = 'UC-ActionSheet';

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useLatest from './hooks/useLatest';
 import clsx from 'clsx';
-import type { BaseProps, TargetElementType } from './types';
+import type { TargetElementType } from './types';
 import useEventListener from './hooks/useEventListener';
 import useThrottle from './hooks/useThrottle';
 import { getTargetElement } from './helper';
@@ -20,7 +20,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 100
    */
   zIndex?: number;
-} & BaseProps;
+};
 
 type StateInfo = {
   affixed: boolean;

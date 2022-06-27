@@ -44,6 +44,7 @@ export default function App() {
         visible={visible}
         actions={actions}
         onClose={() => setVisible(false)}
+        onCancel={() => Toast.show('action canceled')}
       />
     </PageWrap>
   );

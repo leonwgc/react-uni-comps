@@ -1,9 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled, { keyframes } from 'styled-components';
-import type { BaseProps } from './types';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & BaseProps;
+type Props = React.HTMLAttributes<HTMLDivElement>;
 
 const loading = keyframes`
    0% {

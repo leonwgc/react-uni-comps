@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 图片查看器 */
 declare const ImageViewer: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 是否可见 */
@@ -27,5 +26,5 @@ declare const ImageViewer: React.ForwardRefExoticComponent<React.HTMLAttributes<
      *
      */
     next?: React.ReactNode;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default ImageViewer;

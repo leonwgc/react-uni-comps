@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 瀑布流布局 */
 declare const Masonry: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
@@ -20,5 +19,5 @@ declare const Masonry: React.ForwardRefExoticComponent<React.HTMLAttributes<HTML
      * @default 10
      */
     rowGap?: number;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default Masonry;

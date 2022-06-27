@@ -6,7 +6,6 @@ import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
-import type { BaseProps } from './types';
 
 type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
 
@@ -51,8 +50,7 @@ export type Props = {
   onClear?: () => void;
   /** Enter回调 */
   onPressEnter?: (value: string) => void;
-} & BaseProps &
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> &
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, ignoredEvt> &
   Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, ignoredEvt>;
 
 //#region  style

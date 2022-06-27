@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 export declare type Notice = {
     /** 公告内容 */
     text?: React.ReactNode;
@@ -23,5 +22,5 @@ declare const NoticeList: React.ForwardRefExoticComponent<React.HTMLAttributes<H
     extra?: React.ReactNode;
     /** 关闭时的回调 */
     onClose?: () => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default NoticeList;

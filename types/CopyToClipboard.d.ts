@@ -1,12 +1,11 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 复制文本*/
-declare const CopyToClipboard: React.ForwardRefExoticComponent<{
+declare const CopyToClipboard: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 要复制的文本 */
     text: string;
     /** 复制成功的回调 */
     onCopy?: () => void;
+    /** 包裹的元素 */
     children?: React.ReactNode;
-    onClick?: () => void;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default CopyToClipboard;
