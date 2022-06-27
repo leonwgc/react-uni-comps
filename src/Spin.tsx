@@ -1,40 +1,27 @@
 import React from 'react';
 import clsx from 'clsx';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & BaseProps;
 
+const loading = keyframes`
+   0% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 0, 1, 360deg);
+    }
+`;
+
 const StyledSpin = styled.div`
-  @-webkit-keyframes loading {
-    0% {
-      -webkit-transform: rotate3d(0, 0, 1, 0deg);
-      transform: rotate3d(0, 0, 1, 0deg);
-    }
-
-    100% {
-      -webkit-transform: rotate3d(0, 0, 1, 360deg);
-      transform: rotate3d(0, 0, 1, 360deg);
-    }
-  }
-  @keyframes loading {
-    0% {
-      -webkit-transform: rotate3d(0, 0, 1, 0deg);
-      transform: rotate3d(0, 0, 1, 0deg);
-    }
-
-    100% {
-      -webkit-transform: rotate3d(0, 0, 1, 360deg);
-      transform: rotate3d(0, 0, 1, 360deg);
-    }
-  }
-
   display: inline-flex;
   position: relative;
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  animation: loading 1s steps(60, end) infinite;
+  animation: ${loading} 1s steps(60, end) infinite;
   :before,
   :after {
     content: '';
