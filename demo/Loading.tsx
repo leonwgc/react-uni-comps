@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Button, Space, Loading, Spin } from 'react-uni-comps';
+import { Button, Space, Loading } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -22,16 +22,11 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="自定义">
+      <DemoBlock title="自定义文本">
         <Space>
           <Button
             onClick={() => {
-              Loading.show(
-                <Space direction="vertical" size={12} style={{ width: 100 }}>
-                  <Spin style={{ fontSize: 42 }} />
-                  加载中...
-                </Space>
-              );
+              Loading.show('努力提交中..');
 
               setTimeout(() => {
                 Loading.hide();
