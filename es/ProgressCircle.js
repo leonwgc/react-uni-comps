@@ -15,7 +15,7 @@ var ProgressCircle = /*#__PURE__*/React.forwardRef(function (props, ref) {
       _c = props.strokeWidth,
       strokeWidth = _c === void 0 ? 10 : _c,
       _d = props.size,
-      size = _d === void 0 ? 120 : _d,
+      size = _d === void 0 ? 60 : _d,
       className = props.className,
       style = props.style,
       rest = __rest(props, ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"]);

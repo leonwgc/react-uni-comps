@@ -1616,10 +1616,13 @@ var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (
 LazyLoadImage.displayName = 'UC-LazyLoadImage';
 
 var _excluded$5 = ["className"];
+
+var _templateObject;
+var loading = styled.keyframes(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n   0% {\n      transform: rotate3d(0, 0, 1, 0deg);\n    }\n\n    100% {\n      transform: rotate3d(0, 0, 1, 360deg);\n    }\n"])));
 var StyledSpin = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Spin__StyledSpin",
   componentId: "sc-g3ipak-0"
-})(["@-webkit-keyframes loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg);}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg);}}@keyframes loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg);}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg);}}display:inline-flex;position:relative;width:1em;height:1em;vertical-align:middle;animation:loading 1s steps(60,end) infinite;:before,:after{content:'';display:block;width:0.5em;height:1em;box-sizing:border-box;border:0.125em solid;border-color:currentColor;}:before{border-right-width:0;border-top-left-radius:1em;border-bottom-left-radius:1em;mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);}:after{border-left-width:0;border-top-right-radius:1em;border-bottom-right-radius:1em;mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);}"]);
+})(["display:inline-flex;position:relative;width:1em;height:1em;vertical-align:middle;animation:", " 1s steps(60,end) infinite;:before,:after{content:'';display:block;width:0.5em;height:1em;box-sizing:border-box;border:0.125em solid;border-color:currentColor;}:before{border-right-width:0;border-top-left-radius:1em;border-bottom-left-radius:1em;mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,#000000 8%,rgba(0,0,0,0.3) 95%);}:after{border-left-width:0;border-top-right-radius:1em;border-bottom-right-radius:1em;mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 8%,rgba(0,0,0,0.3) 95%);}"], loading);
 /** 加载中 */
 
 var Spin = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
@@ -1884,7 +1887,7 @@ var WaitLoading = function WaitLoading(props) {
   return show && children;
 };
 
-var _templateObject;
+var _templateObject$1;
 /**
  *  获取包含主题色的styled-components css片段
  *
@@ -1895,7 +1898,7 @@ var _templateObject;
 
 var getThemeColorCss = function getThemeColorCss(prop) {
   var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  return styled.css(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
+  return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
     return props.theme.color || primary;
   }, prop, leftValue, primary);
 };
@@ -5564,11 +5567,12 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$I = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio"];
+var _excluded$I = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"];
+var getClassName$3 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.wrap{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}.uc-slide-page{width:100%;flex-shrink:0;}}.pager{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.item{cursor:pointer;display:inline-block;width:8px;height:4px;border-radius:2px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;transform:translate3d(0,-50%,0);.item{display:block;width:4px;height:8px;}}}"]);
+})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$3('wrap'), getClassName$3('page'), getClassName$3('indicator'), getClassName$3('item'), getClassName$3('item')); //#endregion
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -5585,7 +5589,7 @@ var getItems = function getItems(children, loop, height) {
 
     return /*#__PURE__*/React__default['default'].cloneElement(c, {
       key: index,
-      className: clsx__default['default']('uc-slide-page', (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
+      className: clsx__default['default'](getClassName$3('page'), (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
       style: _objectSpread2(_objectSpread2({}, (_c$props2 = c.props) === null || _c$props2 === void 0 ? void 0 : _c$props2.style), {}, {
         height: height
       })
@@ -5625,6 +5629,8 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       showPageIndicator = _props$showPageIndica === void 0 ? true : _props$showPageIndica,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
+      pageStyle = props.pageStyle,
+      pageClassName = props.pageClassName,
       rest = _objectWithoutProperties(props, _excluded$I);
 
   var containerRef = React.useRef(null);
@@ -5735,16 +5741,6 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     $this.wrapHeight = container.offsetHeight;
     slideToPageIndex(0, false);
   });
-  React.useLayoutEffect(function () {
-    if (showPageIndicator) {
-      var pageWrapEl = pageWrapElRef.current;
-
-      if (pageWrapEl) {
-        pageWrapEl.parentElement.style.height = pageWrapEl.offsetHeight + 'px';
-        pageWrapEl.parentElement.style.width = pageWrapEl.offsetWidth + 'px';
-      }
-    }
-  }, [showPageIndicator, direction]);
   React.useEffect(function () {
     if (autoPlay && len > 1) {
       thisRef.current.timer = window.setInterval(function (p) {
@@ -5826,13 +5822,13 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
-    className: clsx__default['default']('uc-slide', className),
+    className: clsx__default['default'](getClassName$3(), className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
-    className: clsx__default['default']('wrap', {
+    className: clsx__default['default'](getClassName$3('wrap'), {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
@@ -5841,25 +5837,25 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     style: {
       transitionDuration: "".concat(duration, "ms")
     }
-  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default']('pager', {
-      vertical: direction === 'vertical'
-    })
-  }, /*#__PURE__*/React__default['default'].createElement(Space, {
-    size: 6,
+  }, items), showPageIndicator && len > 1 && /*#__PURE__*/React__default['default'].createElement(Space, {
+    size: 4,
     direction: direction,
-    ref: pageWrapElRef
+    ref: pageWrapElRef,
+    className: clsx__default['default'](getClassName$3('indicator'), pageClassName, {
+      vertical: direction === 'vertical'
+    }),
+    style: pageStyle
   }, React__default['default'].Children.map(children, function (c, idx) {
     return /*#__PURE__*/React__default['default'].createElement("span", {
       key: idx,
-      className: clsx__default['default']('item', {
+      className: clsx__default['default'](getClassName$3('item'), {
         active: pageIndex === idx
       }),
       onClick: function onClick() {
         return slideToPageIndex(idx);
       }
     });
-  }))));
+  })));
 });
 Slide.displayName = 'UC-Slide';
 
@@ -5879,7 +5875,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
       _props$strokeWidth = props.strokeWidth,
       strokeWidth = _props$strokeWidth === void 0 ? 10 : _props$strokeWidth,
       _props$size = props.size,
-      size = _props$size === void 0 ? 120 : _props$size,
+      size = _props$size === void 0 ? 60 : _props$size,
       className = props.className,
       style = props.style,
       rest = _objectWithoutProperties(props, _excluded$J);
@@ -8552,12 +8548,12 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 Masonry.displayName = 'UC-Masonry';
 
 var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
-var getClassName$3 = prefixClassName('uc-scroll-box');
+var getClassName$4 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$3('body'), getClassName$3('track'), getClassName$3('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;height:4px;width:30px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$4('body'), getClassName$4('track'), getClassName$4('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 
@@ -8603,15 +8599,15 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, 'resize', onScroll);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](getClassName$3(), className)
+    className: clsx__default['default'](getClassName$4(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$3('body'),
+    className: getClassName$4('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](getClassName$3('track'), indicatorClass),
+    className: clsx__default['default'](getClassName$4('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$3('fill'),
+    className: getClassName$4('fill'),
     style: {
       backgroundColor: fillColor
     },
@@ -8644,11 +8640,10 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 AspectRatio.displayName = 'UC-AutoCenter';
 
-/* eslint-disable @typescript-eslint/no-empty-function */
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
-})(["display:inline-flex;padding:20px;align-items:center;justify-content:center;border-radius:4px;.uc-spin{font-size:42px;}"]);
+})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;border-radius:8px;font-size:15px;.uc-spin{font-size:32px;}"]);
 /**
  * 加载中, 只有静态调用
  *
@@ -8658,11 +8653,29 @@ var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
 var Loading = function Loading() {
   return null;
 };
+/**
+ * Toast show loading with text
+ *
+ * @param {React.ReactNode} [text='Loading...']
+ * @param {number} [space=16] 内容和spin距离
+ */
 
-var show = function show(content) {
+
+var show = function show() {
+  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Loading...';
+  var space = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 16;
   Toast.show({
-    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, content ? content : /*#__PURE__*/React__default['default'].createElement(Spin, null)),
-    duration: 24 * 60 * 60 * 1000
+    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, /*#__PURE__*/React__default['default'].createElement(Space, {
+      direction: "vertical",
+      size: space,
+      style: {
+        width: 100
+      }
+    }, /*#__PURE__*/React__default['default'].createElement(Spin, null), text)),
+    duration: 24 * 60 * 60 * 1000,
+    style: {
+      padding: 0
+    }
   });
 };
 
@@ -8671,7 +8684,10 @@ var hide = function hide() {
 };
 
 var Loading$1 = attachPropertiesToComponent(Loading, {
+  /** show loading with text */
   show: show,
+
+  /** hide loading */
   hide: hide
 });
 
