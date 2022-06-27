@@ -1,10 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Pullup, PullToRefresh, Cell, Toast } from 'react-uni-comps';
+import { Pullup, PullToRefresh, Cell, styled } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 10;
+
+const StyledPullToRefresh = styled(PullToRefresh)`
+  .head {
+    background-color: #0d72ff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 
 const PullupDom = () => {
   const [list, setList] = useState([]);
@@ -52,7 +62,7 @@ const PullupDom = () => {
   return (
     <PageWrap>
       <DemoBlock title="搭配pullup" padding={'100px 0 0'}>
-        <PullToRefresh onRefresh={onRefresh}>
+        <StyledPullToRefresh onRefresh={onRefresh} headHeight={94} pullingText="简单，快速">
           <Pullup
             dataList={list}
             fetchData={fetchData}
@@ -62,7 +72,7 @@ const PullupDom = () => {
             finished={finished}
             dataRender={(data) => <Cell>{data}</Cell>}
           ></Pullup>
-        </PullToRefresh>
+        </StyledPullToRefresh>
       </DemoBlock>
     </PageWrap>
   );
