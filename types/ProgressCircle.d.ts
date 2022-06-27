@@ -1,5 +1,4 @@
 import React from 'react';
-import type { BaseProps } from './types';
 /** 环形进度条 */
 declare const ProgressCircle: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 进度条颜色,默认读主题色 */
@@ -23,8 +22,8 @@ declare const ProgressCircle: React.ForwardRefExoticComponent<React.HTMLAttribut
     children?: React.ReactNode;
     /**
      * 环的直径
-     * @default 120
+     * @default 60
      *  */
     size?: number;
-} & BaseProps & React.RefAttributes<HTMLDivElement>>;
+} & React.RefAttributes<HTMLDivElement>>;
 export default ProgressCircle;

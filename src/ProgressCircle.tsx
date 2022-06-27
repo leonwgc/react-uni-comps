@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import type { BaseProps } from './types';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 进度条颜色,默认读主题色 */
@@ -26,10 +25,10 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   children?: React.ReactNode;
   /**
    * 环的直径
-   * @default 120
+   * @default 60
    *  */
   size?: number;
-} & BaseProps;
+};
 
 const StyledProgressCircle = styled.div`
   position: relative;
@@ -48,7 +47,7 @@ const ProgressCircle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     percent = 0,
     strokeLinecap = 'round',
     strokeWidth = 10,
-    size = 120,
+    size = 60,
     className,
     style,
     ...rest
