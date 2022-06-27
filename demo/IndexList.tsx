@@ -67,7 +67,7 @@ export default function App() {
       <IndexList
         style={{ height: '100vh' }}
         data={data}
-        onItemClick={(item) => Toast.show({ content: item.value, duration: 1000 })}
+        onItemClick={(item) => Toast.show(item.value)}
       />
     </PageWrap>
   );
