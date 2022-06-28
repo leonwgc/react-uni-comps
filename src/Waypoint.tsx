@@ -10,10 +10,10 @@ type Props = React.HTMLAttributes<HTMLSpanElement> & {
   onInVisible?: (el: HTMLElement) => void;
 };
 
-/** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
+/** 路标,可见性发生变化执行回调 */
 const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
   const elRef = useRef<HTMLSpanElement>();
-  const { onVisible, onInVisible, style, className, ...rest } = props;
+  const { onVisible, onInVisible, className, ...rest } = props;
 
   const vv = useLatest(onVisible);
   const vi = useLatest(onInVisible);
@@ -36,7 +36,11 @@ const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => elRef.current);
 
-  return <span {...rest} className={clsx('uc-waypoint', className)} ref={elRef}></span>;
+  return (
+    <span {...rest} className={clsx('uc-waypoint', className)} ref={elRef}>
+      {props.children}
+    </span>
+  );
 });
 
 Waypoint.displayName = 'UC-Waypoint';
