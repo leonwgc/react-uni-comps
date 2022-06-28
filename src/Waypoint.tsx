@@ -29,23 +29,14 @@ const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
 
     return () => {
       if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         unobserve(elRef.current);
       }
     };
-  }, [vv, vi]);
+  }, []);
 
   useImperativeHandle(ref, () => elRef.current);
 
-  return (
-    <span
-      {...rest}
-      data-role="waypoint"
-      className={clsx('uc-waypoint', className)}
-      style={{ fontSize: 0, ...style }}
-      ref={elRef}
-    ></span>
-  );
+  return <span {...rest} className={clsx('uc-waypoint', className)} ref={elRef}></span>;
 });
 
 Waypoint.displayName = 'UC-Waypoint';
