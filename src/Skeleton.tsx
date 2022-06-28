@@ -4,34 +4,26 @@ import SkeletonBase from './SkeletonBase';
 import clsx from 'clsx';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
-  /** loading结束渲染的元素 */
-  children?: React.ReactNode;
   /**
-   * 是否显示动画效果
-   * @default true
-   * */
-  animated?: boolean;
-  /**
-   * 几行，默认4行, 最小1行
-   * @default 4
+   * count of rows
+   * @default 3
    *  */
-  row?: number;
-  /** 每一行宽度，默认 ['40%','100%','100%','60%']，设置为string,则每一行都一样长 */
+  rowCount?: number;
+  /**
+   * row width，set to string ,each row width set to the same
+   *
+   * @default ['40%', '100%', '60%']
+   */
   rowWidth?: string | string[];
-  /** 矩形条高度 */
+  /** 矩形条高度
+   * @default 16
+   */
   rowHeight?: number;
   /**
-   * 是否显示头像
-   * @default false
-   * */
-  avatar?: boolean;
-  /**
-   * 头像大小
-   * @default 32
+   * show avatar on the left side if avatar > 0
+   * @default 0
    *  */
-  avatarSize?: number;
-  /** loading为true显示骨架，false则显示子元素*/
-  loading?: boolean;
+  avatar?: number;
 };
 
 const StyledSkeleton = styled.div`
@@ -39,23 +31,14 @@ const StyledSkeleton = styled.div`
     &:not(:first-child) {
       margin-top: 12px;
     }
-
-    &:nth-child(2) {
-      margin-top: 20px;
-    }
   }
 
   &.avatar {
     display: flex;
 
-    > .avatar {
-      flex: none;
-    }
-
     > .rows {
       flex: 1;
       margin-left: 16px;
-      padding-top: 8px;
     }
   }
 `;
@@ -63,62 +46,51 @@ const StyledSkeleton = styled.div`
 /** 骨架屏 */
 const Skeleton: React.FC<Props> = (props) => {
   const {
-    animated = true,
-    row = 4,
-    rowWidth = ['40%', '100%', '100%', '60%'],
+    rowCount = 3,
+    rowWidth = ['40%', '100%', '60%'],
     rowHeight = 16,
     avatar,
-    avatarSize = 32,
     className,
-    children,
-    loading,
     ...rest
   } = props;
 
-  if (row < 1) {
+  if (rowCount < 1) {
     throw new Error('row必须大于等于1,默认4');
   }
 
   let rowWidthAr = [];
 
   if (Array.isArray(rowWidth)) {
-    if (row <= rowWidth.length) {
-      rowWidthAr = rowWidth.slice(0, row);
+    if (rowCount <= rowWidth.length) {
+      rowWidthAr = rowWidth.slice(0, rowCount);
     } else {
-      while (rowWidth.length < row) {
+      while (rowWidth.length < rowCount) {
         rowWidth.push('100%');
       }
       rowWidthAr = rowWidth;
     }
   } else {
-    rowWidthAr = Array.from(new Array(row), () => rowWidth);
+    rowWidthAr = Array.from(new Array(rowCount), () => rowWidth);
   }
 
-  return loading ? (
-    avatar ? (
-      <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
+  return (
+    <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
+      {avatar > 0 && (
         <SkeletonBase
-          animated={animated}
           shape="circle"
           className="avatar"
-          width={avatarSize}
-          height={avatarSize}
+          style={{
+            width: avatar,
+            height: avatar,
+          }}
         />
-        <div className="rows">
-          {rowWidthAr.map((v, idx) => (
-            <SkeletonBase animated={animated} key={idx} shape="rect" width={v} height={rowHeight} />
-          ))}
-        </div>
-      </StyledSkeleton>
-    ) : (
-      <StyledSkeleton {...rest} className={clsx({ avatar: avatar }, className)}>
+      )}
+      <div className="rows">
         {rowWidthAr.map((v, idx) => (
-          <SkeletonBase animated={animated} key={idx} shape="rect" width={v} height={rowHeight} />
+          <SkeletonBase key={idx} shape="rect" style={{ width: v, height: rowHeight }} />
         ))}
-      </StyledSkeleton>
-    )
-  ) : (
-    <>{children}</>
+      </div>
+    </StyledSkeleton>
   );
 };
 

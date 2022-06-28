@@ -7,6 +7,14 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/SkeletonBase',
+    component: lazy(() => import('./SkeletonBase')),
+  },
+  {
+    path: '/Skeleton',
+    component: lazy(() => import('./Skeleton')),
+  },
+  {
     path: '/Hooks',
     component: lazy(() => import('./Hooks')),
   },
@@ -174,10 +182,7 @@ const routes = [
     path: '/Tabs',
     component: lazy(() => import('./Tabs')),
   },
-  {
-    path: '/Skeleton',
-    component: lazy(() => import('./Skeleton')),
-  },
+
   {
     path: '/Checkbox',
     component: lazy(() => import('./Checkbox')),
