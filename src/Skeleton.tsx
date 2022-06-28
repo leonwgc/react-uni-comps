@@ -43,7 +43,7 @@ const StyledSkeleton = styled.div`
   }
 `;
 
-/** 骨架屏 */
+/** 骨架屏, 包行两种风格, 基于SkeletonBase封装 */
 const Skeleton: React.FC<Props> = (props) => {
   const {
     rowCount = 3,

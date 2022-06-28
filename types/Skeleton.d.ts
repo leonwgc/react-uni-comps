@@ -21,6 +21,6 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      *  */
     avatar?: number;
 };
-/** 骨架屏 */
+/** 骨架屏, 包行两种风格, 基于SkeletonBase封装 */
 declare const Skeleton: React.FC<Props>;
 export default Skeleton;
