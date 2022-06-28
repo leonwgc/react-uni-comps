@@ -22,7 +22,7 @@ const pulse = keyframes`
     }
 `;
 
-const StyledSkeletonBase = styled.div`
+const StyledWrap = styled.div`
   background-color: rgba(0, 0, 0, 0.08);
   animation: ${pulse} 1.5s ease-in-out 0.5s infinite;
 
@@ -37,14 +37,13 @@ const StyledSkeletonBase = styled.div`
 `;
 
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
-const SkeletonBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const SkeletonElement = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { shape = 'rect', className, ...rest } = props;
-
   return (
-    <StyledSkeletonBase {...rest} ref={ref} className={clsx('uc-skeleton', shape, className)} />
+    <StyledWrap {...rest} ref={ref} className={clsx('uc-skeleton-element', shape, className)} />
   );
 });
 
-SkeletonBase.displayName = 'UC-SkeletonBase';
+SkeletonElement.displayName = 'UC-SkeletonElement';
 
-export default SkeletonBase;
+export default SkeletonElement;

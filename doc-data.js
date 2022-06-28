@@ -239,6 +239,11 @@ module.exports = [
         name: 'Skeleton',
         title: 'Skeleton 骨架屏',
       },
+
+      {
+        name: 'SkeletonElement',
+        title: 'SkeletonElement 骨架元素',
+      },
       {
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',

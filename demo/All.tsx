@@ -20,6 +20,24 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> SkeletonElement
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SkeletonElement')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> Skeleton
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('Skeleton')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> ImageViewer
           </Space>
         }
@@ -642,15 +660,7 @@ export default function All() {
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('LazyLoadElement')}
       ></Cell>
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> Skeleton
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('Skeleton')}
-      ></Cell>
+
       <Cell
         label={
           <Space>

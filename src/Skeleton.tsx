@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SkeletonBase from './SkeletonBase';
+import SkeletonElement from './SkeletonElement';
 import clsx from 'clsx';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -10,12 +10,12 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    *  */
   rowCount?: number;
   /**
-   * row width，set to string ,each row width set to the same
+   * row width，if set to string ,each row width set to the same
    *
    * @default ['40%', '100%', '60%']
    */
   rowWidth?: string | string[];
-  /** 矩形条高度
+  /** height of row
    * @default 16
    */
   rowHeight?: number;
@@ -27,7 +27,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const StyledSkeleton = styled.div`
-  .uc-skeleton {
+  .uc-skeleton-element {
     &:not(:first-child) {
       margin-top: 12px;
     }
@@ -43,7 +43,7 @@ const StyledSkeleton = styled.div`
   }
 `;
 
-/** 骨架屏, 包行两种风格, 基于SkeletonBase封装 */
+/** 骨架屏, 包行两种风格, 基于SkeletonElement封装 */
 const Skeleton: React.FC<Props> = (props) => {
   const {
     rowCount = 3,
@@ -76,7 +76,7 @@ const Skeleton: React.FC<Props> = (props) => {
   return (
     <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
       {avatar > 0 && (
-        <SkeletonBase
+        <SkeletonElement
           shape="circle"
           className="avatar"
           style={{
@@ -87,7 +87,7 @@ const Skeleton: React.FC<Props> = (props) => {
       )}
       <div className="rows">
         {rowWidthAr.map((v, idx) => (
-          <SkeletonBase key={idx} shape="rect" style={{ width: v, height: rowHeight }} />
+          <SkeletonElement key={idx} shape="rect" style={{ width: v, height: rowHeight }} />
         ))}
       </div>
     </StyledSkeleton>

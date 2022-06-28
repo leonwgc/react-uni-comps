@@ -11,7 +11,7 @@ export { default as Spin } from './Spin';
 export { default as Tabs } from './Tabs';
 export { default as Cell } from './Cell';
 export { default as Skeleton } from './Skeleton';
-export { default as SkeletonBase } from './SkeletonBase';
+export { default as SkeletonElement } from './SkeletonElement';
 export { default as Checkbox } from './Checkbox';
 export { default as CheckboxGroup } from './CheckboxGroup';
 export { default as RadioGroup } from './RadioGroup';

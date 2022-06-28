@@ -2191,120 +2191,92 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Cell.displayName = 'UC-Cell';
 
-var _excluded$a = ["animated", "width", "height", "shape"],
-    _excluded2 = ["style", "className"];
-var StyledSkeletonBase = /*#__PURE__*/styled__default['default'].div.withConfig({
-  displayName: "SkeletonBase__StyledSkeletonBase",
-  componentId: "sc-1fq9mje-0"
-})(["display:block;background-color:rgba(0,0,0,0.11);height:1.2em;@keyframes kf-pulse{0%{opacity:1;}50%{opacity:0.4;}100%{opacity:1;}}&.react{}&.circle{border-radius:50%;display:inline-block;}&.pulse{animation:kf-pulse 1.5s ease-in-out 0.5s infinite;}"]);
+var _excluded$a = ["shape", "className"];
+
+var _templateObject$2;
+var pulse = styled.keyframes(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n   0% {\n      opacity: 1;\n    }\n    50% {\n      opacity: 0.4;\n    }\n    100% {\n      opacity: 1;\n    }\n"])));
+var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "SkeletonElement__StyledWrap",
+  componentId: "sc-1nka7lt-0"
+})(["background-color:rgba(0,0,0,0.08);animation:", " 1.5s ease-in-out 0.5s infinite;&.rect{height:1.2em;}&.circle{border-radius:50%;display:inline-block;}"], pulse);
 /** 骨架屏 组成基本元素，可以进一步封装为特定结构UI组件 */
 
-var SkeletonBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$animated = props.animated,
-      animated = _props$animated === void 0 ? true : _props$animated,
-      width = props.width,
-      _props$height = props.height,
-      height = _props$height === void 0 ? 16 : _props$height,
-      _props$shape = props.shape,
+var SkeletonElement = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$shape = props.shape,
       shape = _props$shape === void 0 ? 'rect' : _props$shape,
-      other = _objectWithoutProperties(props, _excluded$a);
+      className = props.className,
+      rest = _objectWithoutProperties(props, _excluded$a);
 
-  var style = other.style,
-      className = other.className,
-      rest = _objectWithoutProperties(other, _excluded2);
-
-  return /*#__PURE__*/React__default['default'].createElement(StyledSkeletonBase, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default']('uc-skeleton', shape, {
-      pulse: animated
-    }, className),
-    style: _objectSpread2({
-      width: width,
-      height: height
-    }, style)
+    className: clsx__default['default']('uc-skeleton-element', shape, className)
   }));
 });
-SkeletonBase.displayName = 'UC-SkeletonBase';
+SkeletonElement.displayName = 'UC-SkeletonElement';
 
-var _excluded$b = ["animated", "row", "rowWidth", "rowHeight", "avatar", "avatarSize", "className", "children", "loading"];
+var _excluded$b = ["rowCount", "rowWidth", "rowHeight", "avatar", "className"];
 var StyledSkeleton = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Skeleton__StyledSkeleton",
   componentId: "sc-10ncp1x-0"
-})([".uc-skeleton{&:not(:first-child){margin-top:12px;}&:nth-child(2){margin-top:20px;}}&.avatar{display:flex;> .avatar{flex:none;}> .rows{flex:1;margin-left:16px;padding-top:8px;}}"]);
-/** 骨架屏 */
+})([".uc-skeleton-element{&:not(:first-child){margin-top:12px;}}&.avatar{display:flex;> .rows{flex:1;margin-left:16px;}}"]);
+/** 骨架屏, 包行两种风格, 基于SkeletonElement封装 */
 
 var Skeleton = function Skeleton(props) {
-  var _props$animated = props.animated,
-      animated = _props$animated === void 0 ? true : _props$animated,
-      _props$row = props.row,
-      row = _props$row === void 0 ? 4 : _props$row,
+  var _props$rowCount = props.rowCount,
+      rowCount = _props$rowCount === void 0 ? 3 : _props$rowCount,
       _props$rowWidth = props.rowWidth,
-      rowWidth = _props$rowWidth === void 0 ? ['40%', '100%', '100%', '60%'] : _props$rowWidth,
+      rowWidth = _props$rowWidth === void 0 ? ['40%', '100%', '60%'] : _props$rowWidth,
       _props$rowHeight = props.rowHeight,
       rowHeight = _props$rowHeight === void 0 ? 16 : _props$rowHeight,
       avatar = props.avatar,
-      _props$avatarSize = props.avatarSize,
-      avatarSize = _props$avatarSize === void 0 ? 32 : _props$avatarSize,
       className = props.className,
-      children = props.children,
-      loading = props.loading,
       rest = _objectWithoutProperties(props, _excluded$b);
 
-  if (row < 1) {
+  if (rowCount < 1) {
     throw new Error('row必须大于等于1,默认4');
   }
 
   var rowWidthAr = [];
 
   if (Array.isArray(rowWidth)) {
-    if (row <= rowWidth.length) {
-      rowWidthAr = rowWidth.slice(0, row);
+    if (rowCount <= rowWidth.length) {
+      rowWidthAr = rowWidth.slice(0, rowCount);
     } else {
-      while (rowWidth.length < row) {
+      while (rowWidth.length < rowCount) {
         rowWidth.push('100%');
       }
 
       rowWidthAr = rowWidth;
     }
   } else {
-    rowWidthAr = Array.from(new Array(row), function () {
+    rowWidthAr = Array.from(new Array(rowCount), function () {
       return rowWidth;
     });
   }
 
-  return loading ? avatar ? /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
     className: clsx__default['default']('uc-skeleton', {
       avatar: avatar
     }, className)
-  }), /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-    animated: animated,
+  }), avatar > 0 && /*#__PURE__*/React__default['default'].createElement(SkeletonElement, {
     shape: "circle",
     className: "avatar",
-    width: avatarSize,
-    height: avatarSize
+    style: {
+      width: avatar,
+      height: avatar
+    }
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "rows"
   }, rowWidthAr.map(function (v, idx) {
-    return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-      animated: animated,
+    return /*#__PURE__*/React__default['default'].createElement(SkeletonElement, {
       key: idx,
       shape: "rect",
-      width: v,
-      height: rowHeight
+      style: {
+        width: v,
+        height: rowHeight
+      }
     });
-  }))) : /*#__PURE__*/React__default['default'].createElement(StyledSkeleton, _extends({}, rest, {
-    className: clsx__default['default']({
-      avatar: avatar
-    }, className)
-  }), rowWidthAr.map(function (v, idx) {
-    return /*#__PURE__*/React__default['default'].createElement(SkeletonBase, {
-      animated: animated,
-      key: idx,
-      shape: "rect",
-      width: v,
-      height: rowHeight
-    });
-  })) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, children);
+  })));
 };
 
 var _excluded$c = ["type", "disabled", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
@@ -2954,7 +2926,7 @@ var useThrottle = function useThrottle(fn) {
 
 var _excluded$m = ["data", "onItemClick", "className"];
 var getClassName$2 = prefixClassName('uc-index-list');
-var StyledWrap$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
   componentId: "sc-6nas4t-0"
 })(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$2('body'), getClassName$2('anchor'), getClassName$2('title'), getClassName$2('item'), getClassName$2('side'), getClassName$2('side-item'), getThemeColorCss('background-color'));
@@ -2988,7 +2960,7 @@ var IndexList = function IndexList(props) {
     }
   });
   useEventListener(bodyRef, 'scroll', onScrollSpy);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$1, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
     className: clsx__default['default'](getClassName$2(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: getClassName$2('body'),
@@ -3414,7 +3386,7 @@ function copy(text) {
 }
 
 var _excluded$o = ["text", "onCopy", "children", "className"];
-var StyledWrap$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CopyToClipboard__StyledWrap",
   componentId: "sc-16edrok-0"
 })(["display:inline-flex;cursor:pointer;"]);
@@ -3427,7 +3399,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
       className = props.className,
       rest = _objectWithoutProperties(props, _excluded$o);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$3, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-copy-to-clipboard', className),
     onClick: function onClick() {
@@ -3466,7 +3438,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 Text.displayName = 'UC-Text';
 
 var _excluded$q = ["content", "visible", "modal", "maskStyle", "className"],
-    _excluded2$1 = ["duration"];
+    _excluded2 = ["duration"];
 var StyledToast = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Toast__StyledToast",
   componentId: "sc-1evhb0v-0"
@@ -3510,7 +3482,7 @@ Toast.show = function (props) {
   if (isToastProps) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 1500 : _props$duration,
-        rest = _objectWithoutProperties(props, _excluded2$1);
+        rest = _objectWithoutProperties(props, _excluded2);
 
     toastProps = rest;
     _duration = duration;
@@ -3819,7 +3791,7 @@ Affix.displayName = 'UC-Affix';
 
 var _excluded$u = ["position", "className", "children"];
 var getClassName$3 = prefixClassName('uc-safe-area');
-var StyledWrap$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SafeArea__StyledWrap",
   componentId: "sc-622652-0"
 })(["display:block;width:100%;&.", "{padding-top:constant(safe-area-inset-top);padding-top:env(safe-area-inset-top);}&.", "{padding-bottom:constant(safe-area-inset-bottom);padding-bottom:env(safe-area-inset-bottom);}"], getClassName$3('top'), getClassName$3('bottom'));
@@ -3832,7 +3804,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$u);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$3, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({
     ref: ref
   }, rest, {
     className: clsx__default['default'](getClassName$3(), getClassName$3(position), className)
@@ -3902,7 +3874,7 @@ var ActionSheet = function ActionSheet(props) {
 ActionSheet.displayName = 'UC-ActionSheet';
 
 var _excluded$w = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
-    _excluded2$2 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
+    _excluded2$1 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
 var StyledAlertDialog = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "AlertDialog__StyledAlertDialog",
   componentId: "sc-1ifj2xy-0"
@@ -4021,7 +3993,7 @@ AlertDialog.show = function (props) {
       _onCancel = props.onCancel,
       wait = props.wait,
       wrapStyle = props.wrapStyle,
-      rest = _objectWithoutProperties(props, _excluded2$2);
+      rest = _objectWithoutProperties(props, _excluded2$1);
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup', transitionDuration$1);
@@ -4682,7 +4654,7 @@ var Drawer = function Drawer(props) {
 Drawer.displayName = 'UC-Drawer';
 
 var _excluded$C = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
-var StyledWrap$4 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
+var StyledWrap$5 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Wheel__StyledWrap",
   componentId: "sc-otlop6-0"
 })(["transform:translate3d(0px,105px,0px);touch-action:none;flex:1;.item{display:flex;justify-content:center;align-items:center;height:35px;font-size:18px;user-select:none;cursor:grab;}"]); // 惯性滑动
@@ -4824,7 +4796,7 @@ var Wheel = function Wheel(props) {
       return fg.destroy();
     };
   }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({
     ref: elRef
   }, rest, {
     className: clsx__default['default']('uc-wheel', className),
@@ -4847,7 +4819,7 @@ var Wheel = function Wheel(props) {
 Wheel.displayName = 'UC-Wheel';
 
 var _excluded$D = ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"];
-var StyledWrap$5 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$6 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "PickerView__StyledWrap",
   componentId: "sc-1ne1yls-0"
 })(["display:flex;position:relative;background-color:#fff;height:", "px;touch-action:none;.mask{position:absolute;top:0;left:0;z-index:1;width:100%;height:100%;background-image:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.4)),linear-gradient(0deg,rgba(255,255,255,0.9),rgba(255,255,255,0.4));background-repeat:no-repeat;background-position:top,bottom;-webkit-transform:translateZ(0);transform:translateZ(0);pointer-events:none;background-size:100% ", "px;}.hairline{position:absolute;height:", "px;width:100%;border-left:0;border-right:0;top:", "px;&:after{content:'';pointer-events:none;position:absolute;width:100%;height:100%;left:0;top:0;border-top:1px solid #d8d8d8;border-bottom:1px solid #d8d8d8;@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){width:200%;height:200%;transform:scale(0.5);transform-origin:0 0;}}}.columnitem{width:0;flex-grow:1;height:100%;.wheel-wrap{display:flex;position:relative;text-align:center;overflow-y:hidden;height:100%;}}"], function (props) {
@@ -5006,7 +4978,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     indexArrRef.current = getIndexArrayFromValue(value, list, cols);
     forceUpdate();
   }, [data]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
     className: clsx__default['default']('uc-pickerview', className),
     itemHeight: itemHeight
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -6024,7 +5996,7 @@ var WaterMark = function WaterMark(props) {
 WaterMark.displayName = 'UC-WaterMark';
 
 var _excluded$M = ["content", "style", "className"],
-    _excluded2$3 = ["duration"];
+    _excluded2$2 = ["duration"];
 var transitionDuration$2 = animationNormal;
 var StyledNotify = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Notify__StyledNotify",
@@ -6103,7 +6075,7 @@ Notify.show = function (props) {
   if (_typeof(props) === 'object' && 'content' in props) {
     var _props$duration = props.duration,
         duration = _props$duration === void 0 ? 2000 : _props$duration,
-        rest = _objectWithoutProperties(props, _excluded2$3);
+        rest = _objectWithoutProperties(props, _excluded2$2);
 
     notifyProps = rest;
     _duration = duration;
@@ -6818,7 +6790,7 @@ var locales = /*#__PURE__*/Object.freeze({
 
 var _excluded$T = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
 //#region styled
-var StyledWrap$6 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$7 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "calendar__StyledWrap",
   componentId: "sc-lwn702-0"
 })(["background-color:#fff;user-select:none;ul{list-style-type:disc;li{display:inline-block;width:14.28571%;text-align:center;vertical-align:middle;}}.head{display:flex;font-size:14px;color:#999;margin:0;padding:0;list-style-type:disc;.item{height:40px;line-height:40px;}box-shadow:", ";}.body{padding:10px 0;overflow:auto;max-height:50vh;.month{color:#343434;&:before{content:attr(title);display:block;margin:15px auto;font-size:17px;font-weight:500;padding-left:15px;}ul{margin:0;padding:0;}.day{margin:10px 0;position:relative;font-size:16px;cursor:pointer;white-space:nowrap;}.day__content{width:30px;height:30px;background-color:transparent;border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto;}.day.firstday-1{margin-left:14.28571%;}.day.firstday-2{margin-left:28.57142%;}.day.firstday-3{margin-left:42.85713%;}.day.firstday-4{margin-left:57.14284%;}.day.firstday-5{margin-left:71.42855%;}.day.firstday-6{margin-left:85.71426%;}.day--selected{.day__content{", " ", " color:#fff;}}.day--disabled{cursor:auto;}.day--disabled .day__content{color:#bcbcbc;}.day--range{background-color:", ";", " .day__content{background-color:transparent;}}.day.range-start.range-end{background-image:none;}.day.range-start:not(.range-end):not(.d6):not(:last-child){background-image:linear-gradient( to right,transparent 0,transparent 50%,", " 50% );}.day.range-end:not(.range-start):not(.d7):not(:first-child){background-image:linear-gradient( to left,transparent 0,transparent 50%,", " 50% );}}}"], boxShadow, getThemeColorCss('background-color'), getThemeColorCss('box-shadow', '0 0 4px 0'), function (props) {
@@ -6902,7 +6874,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var arr = Array.from({
     length: utils.getMonthCount(startMonth, max)
   });
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$6, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$7, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-calendar', className)
   }), /*#__PURE__*/React__default['default'].createElement("ul", {
@@ -7346,7 +7318,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 ProgressBar.displayName = 'UC-ProgressBar';
 
 var _excluded$Y = ["children"];
-var StyledWrap$7 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$8 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AutoCenter__StyledWrap",
   componentId: "sc-eqv38w-0"
 })(["display:flex;justify-content:center;.content{flex:0 1 auto;}"]);
@@ -7356,7 +7328,7 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   var children = props.children,
       rest = _objectWithoutProperties(props, _excluded$Y);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$7, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$8, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-auto-center')
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -7393,7 +7365,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 RollingNumber.displayName = 'UC-RollingNumber';
 
 var _excluded$_ = ["className", "color", "duration", "startScale", "children", "block"];
-var StyledWrap$8 = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$9 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Ripple__StyledWrap",
   componentId: "sc-cbwg15-0"
 })(["overflow:hidden;position:relative;display:inline-block;cursor:pointer;&.block{display:block;}.ripple-el{position:absolute;z-index:0;top:0;right:0;bottom:0;left:0;border-radius:50%;}> *{position:relative;z-index:1;}"]);
@@ -7479,7 +7451,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       scale: 1
     });
   }, [api, startScale]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$8, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$9, _extends({}, rest, {
     onClick: function onClick(e) {
       var _props$onClick;
 
@@ -7507,7 +7479,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 Ripple.displayName = 'UC-Ripple';
 
 var _excluded$$ = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
-var StyledWrap$9 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
+var StyledWrap$a = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "PullToRefresh__StyledWrap",
   componentId: "sc-159qm0m-0"
 })(["color:#999;.head{overflow:hidden;position:relative;.status-text{position:absolute;bottom:0;left:0;width:100%;display:flex;justify-content:center;align-items:center;}}"]);
@@ -7806,7 +7778,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
     throw Error('children must be ReactElement');
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$9, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$a, _extends({
     ref: wrapRef
   }, rest, {
     className: clsx__default['default']('uc-pull-to-refresh', className),
@@ -7861,7 +7833,7 @@ function getPages(currentPage, pageCount, visiblePageCount) {
   return pages;
 }
 
-var StyledWrap$a = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$b = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Pagination__StyledWrap",
   componentId: "sc-xuhhtx-0"
 })(["font-size:14px;.uc-button{width:32px;padding:0;transition:none;}&.no-page{display:flex;width:100%;justify-content:space-between;}"]);
@@ -7964,7 +7936,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     }, lastText));
   };
 
-  return (showIfOnePage || pageCount > 1) && /*#__PURE__*/React__default['default'].createElement(StyledWrap$a, _extends({}, rest, {
+  return (showIfOnePage || pageCount > 1) && /*#__PURE__*/React__default['default'].createElement(StyledWrap$b, _extends({}, rest, {
     ref: domRef,
     className: clsx__default['default']('uc-pagination', className, {
       'no-page': visiblePageCount === 0
@@ -7974,7 +7946,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 Pagination.displayName = 'UC-Pagination';
 
 var _excluded$11 = ["image", "desc", "className", "extra"];
-var StyledWrap$b = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Result__StyledWrap",
   componentId: "sc-1xsmtez-0"
 })(["display:flex;flex-direction:column;align-items:center;justify-content:center;.image{line-height:1;img{max-width:100%;}}.desc{}.extra{}"]);
@@ -7991,7 +7963,7 @@ var Result = function Result(props) {
     src: image,
     alt: ""
   }) : image;
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$b, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$c, _extends({}, rest, {
     className: clsx__default['default']('uc-result', className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "image"
@@ -8211,7 +8183,7 @@ SortableList.displayName = 'UC-SortableList';
 
 var _excluded$15 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 //#region  style
-var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Stepper__StyledWrap",
   componentId: "sc-r5zxer-0"
 })(["width:110px;display:inline-flex;.uc-button{flex:none;width:28px;height:28px;padding:0;background-color:#f5f5f5;border:none;font-weight:normal;", "}.uc-input{flex:1;background-color:#f5f5f5;border:none;padding:0;height:28px;margin:0 2px;input{text-align:center;}&:hover:not(.disabled,.read-only){border:none;}&.focused:not(.disabled,.read-only){border:none;box-shadow:none;}}"], getThemeColorCss('color')); //#endregion
@@ -8273,7 +8245,7 @@ var Stepper = function Stepper(props) {
       setVal(value);
     }
   }, [value]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$c, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$d, _extends({}, rest, {
     style: style,
     className: clsx__default['default']('uc-stepper', className)
   }), /*#__PURE__*/React__default['default'].createElement(Button, {
@@ -8308,7 +8280,7 @@ Stepper.displayName = 'UC-Stepper';
 
 var _excluded$16 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 //#region  style
-var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SearchBar__StyledWrap",
   componentId: "sc-192vbqd-0"
 })(["display:flex;align-items:center;.uc-input{flex:1;background:#f7f7f7;border-radius:16px;padding:4px 12px;line-height:24px;.uc-icon{color:#999;font-size:15px;}.prefix{line-height:1;}}.cancel-text{flex:none;display:inline-block;margin-left:12px;cursor:pointer;}"]); //#endregion
@@ -8331,7 +8303,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       focused = _useState2[0],
       setFocused = _useState2[1];
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$d, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, {
     ref: ref,
     style: style,
     className: clsx__default['default']('uc-search-bar', className)
@@ -8436,7 +8408,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 InputNumber.displayName = 'UC-InputNumber';
 
 var _excluded$18 = ["className", "children", "columnGap", "rowGap", "columnCount"];
-var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Masonry__StyledWrap",
   componentId: "sc-dzi4mt-0"
 })(["display:flex;width:100%;overflow:hidden;.uc-masonry-col{display:flex;flex-direction:column;}"]);
@@ -8491,7 +8463,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
     columnCountArr[colIndex].push(items[i]);
   }
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$e, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$f, _extends({
     ref: wrapElRef
   }, rest, {
     className: clsx__default['default'](className, 'uc-masonry')
@@ -8522,7 +8494,7 @@ Masonry.displayName = 'UC-Masonry';
 var _excluded$19 = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
 var getClassName$6 = prefixClassName('uc-scroll-box');
 //#region  style
-var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
 })(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$6('body'), getClassName$6('track'), getClassName$6('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
@@ -8569,7 +8541,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   useEventListener(function () {
     return window;
   }, 'resize', onScroll);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$f, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$g, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](getClassName$6(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
@@ -8589,7 +8561,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 ScrollBox.displayName = 'UC-ScrollBox';
 
 var _excluded$1a = ["children", "className", "ratio"];
-var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$h = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AspectRatio__StyledWrap",
   componentId: "sc-1dp29mr-0"
 })(["position:relative;&::before{height:0;content:'';display:block;padding-bottom:", ";}img{max-width:100%;object-fit:cover;}*{box-sizing:border-box;overflow:hidden;position:absolute;inset:0px;display:flex;align-items:center;width:100%;height:100%;}"], function (props) {
@@ -8604,7 +8576,7 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       ratio = _props$ratio === void 0 ? 4 / 3 : _props$ratio,
       rest = _objectWithoutProperties(props, _excluded$1a);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$g, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$h, _extends({}, rest, {
     ref: ref,
     ratio: ratio,
     className: clsx__default['default']('ruc-aspect-ratio', className)
@@ -8935,7 +8907,7 @@ var initI18n = function initI18n(resources) {
 };
 
 var _excluded$1b = ["children", "label", "name"],
-    _excluded2$4 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
+    _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
   var _ref = React.useContext(FormContext) || {},
@@ -8991,7 +8963,7 @@ var Form = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       toastError = _props$toastError === void 0 ? isMobile : _props$toastError,
       _props$scrollIntoErro = props.scrollIntoErrorField,
       scrollIntoErrorField = _props$scrollIntoErro === void 0 ? isMobile : _props$scrollIntoErro,
-      rest = _objectWithoutProperties(props, _excluded2$4);
+      rest = _objectWithoutProperties(props, _excluded2$3);
 
   return /*#__PURE__*/React__default['default'].createElement(RcForm__default['default'], _extends({}, rest, {
     ref: ref,
@@ -9193,7 +9165,7 @@ exports.SearchBar = SearchBar;
 exports.SideBar = SideBar;
 exports.Signature = Signature;
 exports.Skeleton = Skeleton;
-exports.SkeletonBase = SkeletonBase;
+exports.SkeletonElement = SkeletonElement;
 exports.Slide = Slide;
 exports.SortableList = SortableList;
 exports.Space = Space;

@@ -6,12 +6,12 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      *  */
     rowCount?: number;
     /**
-     * row width，set to string ,each row width set to the same
+     * row width，if set to string ,each row width set to the same
      *
      * @default ['40%', '100%', '60%']
      */
     rowWidth?: string | string[];
-    /** 矩形条高度
+    /** height of row
      * @default 16
      */
     rowHeight?: number;
@@ -21,6 +21,6 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      *  */
     avatar?: number;
 };
-/** 骨架屏, 包行两种风格, 基于SkeletonBase封装 */
+/** 骨架屏, 包行两种风格, 基于SkeletonElement封装 */
 declare const Skeleton: React.FC<Props>;
 export default Skeleton;
