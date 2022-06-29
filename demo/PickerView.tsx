@@ -141,7 +141,7 @@ export default function App() {
     <PageWrap>
       <Affix>
         <DemoBlock title="当前值：" style={{ background: '#fff' }}>
-          {v}
+          {v?.join(' / ')}
         </DemoBlock>
       </Affix>
 
