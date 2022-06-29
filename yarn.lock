@@ -15801,10 +15801,15 @@ typer-js@^5.5.3:
   resolved "https://registry.yarnpkg.com/typer-js/-/typer-js-5.5.3.tgz#38335fd0bc5c3122e3ae5aa8a1edcf4f2b7e4932"
   integrity sha512-r+bWjynXirPw6ju5oSEoMlbJBRgVdqOAPWABJ+r8lEWc27wgDXinrCOeFGiwiVWLAt3dhmk0YBSc0bmtkHGiMw==
 
-typescript@^4.0.5, typescript@^4.4.3, typescript@^4.6.2:
+typescript@^4.0.5, typescript@^4.4.3:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.2.tgz#fe12d2727b708f4eef40f51598b3398baa9611d4"
   integrity sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==
+
+typescript@^4.6.2:
+  version "4.7.4"
+  resolved "https://npm.zhonganinfo.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 uglify-js@^2.8.22:
   version "2.8.29"
