@@ -1,10 +1,12 @@
-import React, { useRef, useLayoutEffect, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import Touch from 'w-touch';
 import useClickAway from './hooks/useClickAway';
+import useUpdateEffect from './hooks/useUpdateEffect';
+import useLatest from './hooks/useLatest';
 
 type Action = {
   text: string;
@@ -108,13 +110,16 @@ const SwipeAction: React.FC<Props> = (props) => {
     rightWidth: 0,
   });
 
-  useEffect(() => {
+  const onOpenRef = useLatest(onOpen);
+  const onCloseRef = useLatest(onClose);
+
+  useUpdateEffect(() => {
     if (isOpen) {
-      onOpen?.();
+      onOpenRef.current?.();
     } else {
-      onClose?.();
+      onCloseRef.current?.();
     }
-  }, [isOpen, onOpen, onClose]);
+  }, [isOpen]);
 
   const startTransform = useCallback((transformStr, x) => {
     const v = thisRef.current;
