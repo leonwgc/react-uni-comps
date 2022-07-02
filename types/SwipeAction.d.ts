@@ -4,7 +4,8 @@ declare type Action = {
     color?: string;
     onClick?: () => void;
 };
-declare type Props = {
+/** SwipeAction 滑动操作 */
+declare const SwipeAction: React.ForwardRefExoticComponent<{
     /** 左边actions */
     left?: Action[];
     /** 右边actions */
@@ -13,11 +14,14 @@ declare type Props = {
     onOpen?: () => void;
     /** 关闭回调 */
     onClose?: () => void;
-    /** 点击按钮后是否自动关闭,默认true */
+    /** 点击按钮后是否自动关闭
+     * @default true
+     */
     autoClose?: boolean;
-    /** 点击外部区域关闭,默认true*/
+    /**
+     * 点击外部区域关闭
+     * @default true
+     * */
     closeOnClickOutside?: boolean;
-};
-/** SwipeAction 滑动操作 */
-declare const SwipeAction: React.FC<Props>;
+} & React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export default SwipeAction;
