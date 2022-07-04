@@ -1,10 +1,15 @@
-import React, { useRef, useLayoutEffect, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
 import Button from './Button';
 import Touch from 'w-touch';
 import useClickAway from './hooks/useClickAway';
+import useUpdateEffect from './hooks/useUpdateEffect';
+import useLatest from './hooks/useLatest';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-swipe-action');
 
 type Action = {
   text: string;
@@ -21,11 +26,16 @@ type Props = {
   onOpen?: () => void;
   /** 关闭回调 */
   onClose?: () => void;
-  /** 点击按钮后是否自动关闭,默认true */
+  /** 点击按钮后是否自动关闭
+   * @default true
+   */
   autoClose?: boolean;
-  /** 点击外部区域关闭,默认true*/
+  /**
+   * 点击外部区域关闭
+   * @default true
+   * */
   closeOnClickOutside?: boolean;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledSwipeAction = styled.div`
   user-select: none;
@@ -35,28 +45,27 @@ const StyledSwipeAction = styled.div`
   cursor: grab;
   box-sizing: border-box;
 
-  .wrap {
+  .${getClassName('wrap')} {
     transition: transform 0.3s ease-in-out;
     overflow: visible;
     display: flex;
     flex-wrap: nowrap;
 
-    .left-part,
-    .right-part {
+    .${getClassName('left')}, .${getClassName('right')} {
       position: absolute;
       top: 0;
       height: 100%;
     }
 
-    .left-part {
+    .${getClassName('left')} {
       left: 0px;
       transform: translate3d(-100%, 0, 0);
     }
-    .right-part {
+    .${getClassName('right')} {
       right: 0px;
       transform: translate3d(100%, 0, 0);
     }
-    .middle-part {
+    .${getClassName('middle')} {
       width: 100%;
       box-sizing: border-box;
       position: relative;
@@ -69,7 +78,7 @@ const StyledSwipeAction = styled.div`
       box-sizing: border-box;
     }
 
-    .swipe-action-item {
+    .${getClassName('item')} {
       * {
         pointer-events: none;
       }
@@ -86,7 +95,7 @@ const StyledButton = styled(Button)`
 `;
 
 /** SwipeAction 滑动操作 */
-const SwipeAction: React.FC<Props> = (props) => {
+const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     left = [],
     right = [],
@@ -94,7 +103,9 @@ const SwipeAction: React.FC<Props> = (props) => {
     onOpen,
     autoClose = true,
     closeOnClickOutside = true,
+    className,
     children,
+    ...rest
   } = props;
   const elRef = useRef<HTMLDivElement>();
   const [isOpen, setIsOpen] = useState(false);
@@ -108,13 +119,16 @@ const SwipeAction: React.FC<Props> = (props) => {
     rightWidth: 0,
   });
 
-  useEffect(() => {
+  const onOpenRef = useLatest(onOpen);
+  const onCloseRef = useLatest(onClose);
+
+  useUpdateEffect(() => {
     if (isOpen) {
-      onOpen?.();
+      onOpenRef.current?.();
     } else {
-      onClose?.();
+      onCloseRef.current?.();
     }
-  }, [isOpen, onOpen, onClose]);
+  }, [isOpen]);
 
   const startTransform = useCallback((transformStr, x) => {
     const v = thisRef.current;
@@ -141,7 +155,7 @@ const SwipeAction: React.FC<Props> = (props) => {
       <StyledButton
         onClick={item.onClick}
         key={idx}
-        className="swipe-action-item"
+        className={getClassName('item')}
         style={{ backgroundColor: item.color || vars.primary }}
       >
         {item.text}
@@ -198,30 +212,30 @@ const SwipeAction: React.FC<Props> = (props) => {
   }, [startTransform]);
 
   return (
-    <StyledSwipeAction className={clsx('uc-swipe-action')}>
+    <StyledSwipeAction {...rest} ref={ref} className={clsx(getClassName(), className)}>
       <div
         ref={elRef}
-        className="wrap"
+        className={getClassName('wrap')}
         onClick={(e: any) => {
-          if (autoClose && e.target?.classList?.contains('swipe-action-item')) {
+          if (autoClose && e.target?.classList?.contains(getClassName('item'))) {
             startTransform('translate3d(0,0,0)', 0);
             setIsOpen(false);
           }
         }}
       >
-        <div ref={(ref) => (thisRef.current.leftEl = ref)} className={clsx('left-part')}>
+        <div ref={(ref) => (thisRef.current.leftEl = ref)} className={getClassName('left')}>
           {left.map((item, idx) => renderAction(item, idx))}
         </div>
 
-        <div className="middle-part">{children}</div>
+        <div className={getClassName('middle')}>{children}</div>
 
-        <div ref={(ref) => (thisRef.current.rightEl = ref)} className={clsx('right-part')}>
+        <div ref={(ref) => (thisRef.current.rightEl = ref)} className={getClassName('right')}>
           {right.map((item, idx) => renderAction(item, idx))}
         </div>
       </div>
     </StyledSwipeAction>
   );
-};
+});
 
 SwipeAction.displayName = 'UC-SwipeAction';
 

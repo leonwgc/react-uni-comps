@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> SwipeAction
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SwipeAction')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> SkeletonElement
           </Space>
         }
@@ -80,16 +89,6 @@ export default function All() {
         }
         content={<IconArrow direction="right" />}
         onClick={() => gotoPage('ScrollBox')}
-      ></Cell>
-
-      <Cell
-        label={
-          <Space>
-            <IconComponent /> SwipeAction
-          </Space>
-        }
-        content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SwipeAction')}
       ></Cell>
 
       <Cell
