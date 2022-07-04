@@ -3,16 +3,15 @@ import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
-/** 路标点，一个0*0大小的点，指示当前点位是否可见，并执行onVisible,onInVisible回调 */
+/** 路标,可见性发生变化执行回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var elRef = useRef();
 
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
-      style = props.style,
       className = props.className,
-      rest = __rest(props, ["onVisible", "onInVisible", "style", "className"]);
+      rest = __rest(props, ["onVisible", "onInVisible", "className"]);
 
   var vv = useLatest(onVisible);
   var vi = useLatest(onInVisible);
@@ -28,22 +27,17 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
     return function () {
       if (elRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         unobserve(elRef.current);
       }
     };
-  }, [vv, vi]);
+  }, []);
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
   return /*#__PURE__*/React.createElement("span", __assign({}, rest, {
-    "data-role": "waypoint",
     className: clsx('uc-waypoint', className),
-    style: __assign({
-      fontSize: 0
-    }, style),
     ref: elRef
-  }));
+  }), props.children);
 });
 Waypoint.displayName = 'UC-Waypoint';
 export default Waypoint;
