@@ -82,6 +82,7 @@ export { default as Result } from './Result';
 export { default as Masonry } from './Masonry';
 export { default as ScrollBox } from './ScrollBox';
 export { default as AspectRatio } from './AspectRatio';
+export { default as SyncLoader } from './SyncLoader';
 /** only has static method */
 export { default as Loading } from './Loading';
 /** helper & dom */

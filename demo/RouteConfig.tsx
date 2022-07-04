@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/SyncLoader',
+    component: lazy(() => import('./SyncLoader')),
+  },
+  {
     path: '/SkeletonElement',
     component: lazy(() => import('./SkeletonElement')),
   },
