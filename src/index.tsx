@@ -83,6 +83,7 @@ export { default as Masonry } from './Masonry';
 export { default as ScrollBox } from './ScrollBox';
 export { default as AspectRatio } from './AspectRatio';
 export { default as SyncLoader } from './SyncLoader';
+export { default as YYLoader } from './YYLoader';
 
 /** only has static method */
 export { default as Loading } from './Loading';
