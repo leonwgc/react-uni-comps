@@ -102,7 +102,7 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="示例">
         <Space wrap>
-          <Button onClick={() => setVisible(1)}>单个</Button>
+          <Button onClick={() => setVisible(1)}>1列</Button>
 
           <Button
             onClick={() => {
@@ -116,7 +116,7 @@ export default function App() {
               setVisible(3);
             }}
           >
-            城市选择
+            3列城市选择
           </Button>
 
           <Button

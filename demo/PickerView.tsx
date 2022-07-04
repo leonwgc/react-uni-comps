@@ -140,9 +140,10 @@ export default function App() {
   return (
     <PageWrap>
       <Affix>
-        <DemoBlock title="当前值：" style={{ background: '#fff' }}>
-          {v?.join(' / ')}
-        </DemoBlock>
+        <DemoBlock
+          title={`当前值:${v?.join(' / ') || ''}`}
+          style={{ background: '#fff' }}
+        ></DemoBlock>
       </Affix>
 
       <DemoBlock title="一列 字符串数组">
