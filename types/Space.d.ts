@@ -1,5 +1,4 @@
 import * as React from 'react';
-declare type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 /** 间距 */
 declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
@@ -12,8 +11,8 @@ declare const Space: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDi
      * @default horizontal
      *  */
     direction?: 'horizontal' | 'vertical';
-    /** 对齐方式 */
-    align?: Align;
+    /** 交叉轴对齐方式 */
+    align?: 'center' | 'flex-start' | 'flex-end' | 'baseline';
     /** 设置拆分 */
     split?: React.ReactNode;
     /** 是否自动换行，仅在 horizontal 时有效 */

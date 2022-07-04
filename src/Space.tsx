@@ -3,9 +3,6 @@ import { toArray } from './util';
 import styled from 'styled-components';
 import { isCssPropExist } from './dom';
 import clsx from 'clsx';
-import type { BaseProps } from './types';
-
-type Align = 'center' | 'flex-start' | 'flex-end' | 'baseline';
 
 type ItemProps = {
   children: React.ReactNode;
@@ -70,8 +67,8 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default horizontal
    *  */
   direction?: 'horizontal' | 'vertical';
-  /** 对齐方式 */
-  align?: Align;
+  /** 交叉轴对齐方式 */
+  align?: 'center' | 'flex-start' | 'flex-end' | 'baseline';
   /** 设置拆分 */
   split?: React.ReactNode;
   /** 是否自动换行，仅在 horizontal 时有效 */
