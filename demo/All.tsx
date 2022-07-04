@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> SyncLoader
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SyncLoader')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> SwipeAction
           </Space>
         }

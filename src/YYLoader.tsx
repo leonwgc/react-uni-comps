@@ -1,59 +1,82 @@
 import React from 'react';
 import clsx from 'clsx';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 type Props = React.HTMLAttributes<HTMLDivElement>;
 
-const loading = keyframes`
-   0% {
-      transform: rotate3d(0, 0, 1, 0deg);
+const StyledLoader = styled.div`
+  @keyframes cp-eclipse-animate {
+    0% {
+      transform: rotate(0);
     }
 
     100% {
-      transform: rotate3d(0, 0, 1, 360deg);
+      transform: rotate(360deg);
     }
-`;
+  }
 
-const StyledSpin = styled.div`
-  display: inline-flex;
   position: relative;
-  font-size: 20px;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  /* animation: ${loading} 1s steps(60, end) infinite; */
-  :before,
-  :after {
-    content: '';
-    display: block;
-    width: 0.5em;
-    height: 1em;
-    box-sizing: border-box;
-    border: 0.125em solid;
-    border-color: currentColor;
-  }
-  :before {
-    border-right-width: 0;
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 1em;
-    mask-image: linear-gradient(180deg, #000000 40%, rgba(0, 0, 0, 0.3) 95%);
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: currentColor;
+  margin: 12px;
+  animation: cp-eclipse-animate 1s ease-out infinite;
 
-    transform: rotate3d(0, 0, 1, 90deg);
+  .circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background: #0d72ff;
+    z-index: 1;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
   }
+
+  :before {
+    border-radius: 50%;
+    content: ' ';
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    box-sizing: border-box;
+    border-top: solid 6px transparent;
+    border-right: solid 6px currentColor;
+    border-bottom: solid 6px transparent;
+    border-left: solid 6px transparent;
+    position: absolute;
+    top: -18px;
+    left: -18px;
+  }
+
   :after {
-    display: none;
+    border-radius: 50%;
+    content: ' ';
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    box-sizing: border-box;
+    border-top: solid 6px transparent;
+    border-right: solid 6px transparent;
+    border-bottom: solid 6px transparent;
+    border-left: solid 6px currentColor;
+    position: absolute;
+    top: -18px;
+    right: -18px;
   }
-  /* :after {
-    border-left-width: 0;
-    border-top-right-radius: 1em;
-    border-bottom-right-radius: 1em;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.3) 95%);
-  } */
 `;
 
 /** yiyuan tech style loader */
 const YYLoader = React.forwardRef<HTMLDivElement, Props>(({ className, ...rest }, ref) => {
-  return <StyledSpin {...rest} ref={ref} className={clsx(className, 'uc-spin')}></StyledSpin>;
+  return (
+    <StyledLoader {...rest} ref={ref} className={clsx(className, 'uc-spin')}>
+      <div className="circle"></div>
+    </StyledLoader>
+  );
 });
 
 YYLoader.displayName = 'UC-YYLoader';
