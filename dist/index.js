@@ -8590,7 +8590,7 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 AspectRatio.displayName = 'UC-AutoCenter';
 
 var _excluded$1c = ["className", "style", "size", "gap", "duration", "iterationCount", "color"];
-var getClassName$8 = prefixClassName('uc-sync-loader');
+var getClassName$8 = prefixClassName('uc-dot-spin');
 
 var normalizePx = function normalizePx(n) {
   if (typeof n === 'number') {
@@ -8601,9 +8601,9 @@ var normalizePx = function normalizePx(n) {
 };
 
 var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
-  displayName: "SyncLoader__StyledLoader",
-  componentId: "sc-1b03nv9-0"
-})(["display:inline-flex;@keyframes ", "{25%{transform:translateY(-1.2em);}50%{transform:translateY(0px);}75%{transform:translateY(1.2em);}100%{transform:translateY(0px);}}.", "{width:1em;height:1em;border-radius:50%;animation:", "ms linear ", "ms ", " normal both running ", ";&:nth-child(2){animation-delay:", "ms;}&:nth-child(3){animation-delay:", "ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$8('ball'), getClassName$8('item'), function (_ref) {
+  displayName: "DotSpin__StyledLoader",
+  componentId: "sc-10gb303-0"
+})(["display:inline-flex;vertical-align:middle;@keyframes ", "{25%{transform:translateY(-1.1em);}50%{transform:translateY(0px);}75%{transform:translateY(1.1em);}100%{transform:translateY(0px);}}.", "{width:1em;height:1em;border-radius:50%;animation:", "ms linear ", "ms ", " normal both running ", ";&:nth-child(2){animation-delay:", "ms;}&:nth-child(3){animation-delay:", "ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$8('ball'), getClassName$8('item'), function (_ref) {
   var $duration = _ref.$duration;
   return $duration;
 }, function (_ref2) {
@@ -8624,7 +8624,7 @@ var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
 });
 /** 加载指示器,三个跳动的小球 */
 
-var SyncLoader = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       style = props.style,
       _props$size = props.size,
@@ -8658,7 +8658,118 @@ var SyncLoader = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     });
   }));
 });
-SyncLoader.displayName = 'UC-SyncLoader';
+DotSpin.displayName = 'UC-DotSpin';
+
+var _excluded$1d = ["className", "duration"];
+
+var _templateObject$3, _templateObject2;
+var rotate = styled.keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n 0% {\n      transform: rotate(0);\n    }\n\n    100% {\n      transform: rotate(360);\n    }\n"])));
+var circle = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 1, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 60, 314;\n    stroke-dashoffset: -97;\n  }\n\n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
+var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "BallSpin__StyledLoader",
+  componentId: "sc-1f3hu62-0"
+})(["display:inline-flex;vertical-align:middle;svg{animation:", " ", "ms ease-in-out infinite;animation-fill-mode:backwards;}.my-circle{animation:", " ", "ms ease-in-out infinite;}"], rotate, function (_ref) {
+  var $duration = _ref.$duration;
+  return $duration;
+}, circle, function (_ref2) {
+  var $duration = _ref2.$duration;
+  return $duration;
+});
+var SVGProps$2 = {
+  width: '1.25em',
+  height: '1.25em',
+  strokeWidth: 8,
+  fill: 'none'
+};
+/** ball spin */
+
+var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 600 : _props$duration,
+      rest = _objectWithoutProperties(props, _excluded$1d);
+
+  var _React$useState = React__default['default'].useState(false),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      isWhite = _React$useState2[0],
+      setIsWhite = _React$useState2[1];
+
+  var elRef = React__default['default'].useRef();
+  var idRef = React__default['default'].useRef(nanoid.nanoid());
+  React__default['default'].useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  useMount(function () {
+    var el = elRef.current;
+    var color = window.getComputedStyle(el).getPropertyValue('color');
+
+    if (color === 'rgb(255, 255, 255)' || color === '#fff') {
+      setIsWhite(true);
+    }
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$1, _extends({
+    ref: elRef,
+    $duration: duration
+  }, rest, {
+    className: clsx__default['default'](className, 'uc-ball-spin', {
+      white: isWhite
+    })
+  }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
+    viewBox: "0 0 120 120"
+  }, SVGProps$2), /*#__PURE__*/React__default['default'].createElement("defs", null, /*#__PURE__*/React__default['default'].createElement("linearGradient", {
+    id: idRef.current,
+    x1: "100%",
+    y1: "0%",
+    x2: "100%",
+    y2: "100%"
+  }, /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "0%",
+    style: {
+      stopOpacity: 1,
+      stopColor: 'currentColor'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "20%",
+    style: {
+      stopOpacity: 0.9,
+      stopColor: 'currentColor'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "40%",
+    style: {
+      stopOpacity: 0.9,
+      stopColor: 'currentColor'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "100%",
+    style: {
+      stopOpacity: 0.1,
+      stopColor: 'currentColor'
+    }
+  }))), /*#__PURE__*/React__default['default'].createElement("circle", {
+    className: "my-circle",
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: isWhite ? '#fff' : "url(#".concat(idRef.current, ")"),
+    strokeLinecap: "round",
+    transform: "rotate(-180,60,60)"
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+    className: "my-circle",
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: isWhite ? '#fff' : "url(#".concat(idRef.current, ")"),
+    strokeLinecap: "round",
+    transform: "rotate(0,60,60)"
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+    r: "14",
+    cx: "60",
+    cy: "60",
+    stroke: "currentColor"
+  })));
+});
+BallSpin.displayName = 'UC-BallSpin';
 
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
@@ -8982,7 +9093,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$1d = ["children", "label", "name"],
+var _excluded$1e = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -8992,7 +9103,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1d);
+      fieldProps = _objectWithoutProperties(props, _excluded$1e);
 
   var required = false;
 
@@ -9184,6 +9295,7 @@ exports.AutoCenter = AutoCenter;
 exports.Avatar = Avatar;
 exports.BackTop = BackTop;
 exports.Badge = Badge;
+exports.BallSpin = BallSpin;
 exports.Button = Button;
 exports.Calendar = Calendar;
 exports.Cell = Cell;
@@ -9193,6 +9305,7 @@ exports.Collapse = Collapse$1;
 exports.CopyToClipboard = CopyToClipboard;
 exports.DatePicker = DatePicker;
 exports.Divider = Divider;
+exports.DotSpin = DotSpin;
 exports.Drag = Drag;
 exports.Drawer = Drawer;
 exports.Empty = Empty;
@@ -9250,7 +9363,6 @@ exports.Stepper = Stepper;
 exports.Steps = Steps;
 exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;
-exports.SyncLoader = SyncLoader;
 exports.Tabs = Tabs$1;
 exports.Text = Text;
 exports.ThemeProvider = ThemeProvider;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Pullup, PullToRefresh, Cell, styled, Space, SyncLoader } from 'react-uni-comps';
+import { Pullup, PullToRefresh, Cell, styled, Space, DotSpin } from 'react-uni-comps';
 
 // 第一次加载数据应该撑满容器,否则会一直拉数据直到撑满
 const pageSize = 10;
@@ -19,14 +19,14 @@ const StyledPullToRefresh = styled(PullToRefresh)`
 const pullingText = (
   <Space direction="vertical" align="center">
     <div>简单，快速, simple and quick</div>
-    <SyncLoader iterationCount={0} />
+    <DotSpin iterationCount={0} />
   </Space>
 );
 
 const refreshingText = (
   <Space direction="vertical" align="center">
     <div>简单，快速, simple and quick</div>
-    <SyncLoader iterationCount={2} />
+    <DotSpin iterationCount={2} />
   </Space>
 );
 

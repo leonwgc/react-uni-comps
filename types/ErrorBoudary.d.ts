@@ -1,8 +1,4 @@
 import React from 'react';
-declare type Props = {
-    /** 错误回调 */
-    onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
-};
 /**
  * 错误边界
  *
@@ -10,7 +6,7 @@ declare type Props = {
  * @class ErrorBoundary
  * @extends {React.Component}
  */
-export default class ErrorBoundary extends React.Component<Props> {
+export default class ErrorBoundary extends React.Component {
     state: {
         hasError: boolean;
         error: any;
@@ -19,7 +15,5 @@ export default class ErrorBoundary extends React.Component<Props> {
         hasError: boolean;
         error: any;
     };
-    componentDidCatch(error: any, info: any): void;
     render(): React.ReactNode;
 }
-export {};

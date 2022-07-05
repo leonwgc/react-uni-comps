@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { prefixClassName } from './helper';
-var getClassName = prefixClassName('uc-sync-loader');
+var getClassName = prefixClassName('uc-dot-spin');
 
 var normalizePx = function normalizePx(n) {
   if (typeof n === 'number') {
@@ -13,7 +13,7 @@ var normalizePx = function normalizePx(n) {
   }
 };
 
-var StyledLoader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.2em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.2em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"], ["\n  display: inline-flex;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.2em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.2em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"])), getClassName('ball'), getClassName('item'), function (_a) {
+var StyledLoader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.1em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.1em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.1em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.1em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"])), getClassName('ball'), getClassName('item'), function (_a) {
   var $duration = _a.$duration;
   return $duration;
 }, function (_a) {
@@ -34,7 +34,7 @@ var StyledLoader = styled.div(templateObject_1 || (templateObject_1 = __makeTemp
 });
 /** 加载指示器,三个跳动的小球 */
 
-var SyncLoader = /*#__PURE__*/React.forwardRef(function (props, ref) {
+var DotSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       style = props.style,
       _a = props.size,
@@ -68,6 +68,6 @@ var SyncLoader = /*#__PURE__*/React.forwardRef(function (props, ref) {
     });
   }));
 });
-SyncLoader.displayName = 'UC-SyncLoader';
-export default SyncLoader;
+DotSpin.displayName = 'UC-DotSpin';
+export default DotSpin;
 var templateObject_1;
