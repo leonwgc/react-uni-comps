@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
-import useMount from './hooks/useMount';
 import { nanoid } from 'nanoid';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -73,15 +72,15 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   React.useImperativeHandle(ref, () => elRef.current);
 
-  useMount(() => {
-    const el = elRef.current;
+  // React.useEffect(() => {
+  //   const el = elRef.current;
 
-    const color = window.getComputedStyle(el).getPropertyValue('color');
+  //   const color = window.getComputedStyle(el).getPropertyValue('color');
 
-    if (color === 'rgb(255, 255, 255)' || color === '#fff') {
-      setIsWhite(true);
-    }
-  });
+  //   if (color === 'rgb(255, 255, 255)' || color === '#fff') {
+  //     // setIsWhite(true);
+  //   }
+  // }, []);
 
   return (
     <StyledLoader
@@ -94,8 +93,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <defs>
           <linearGradient id={idRef.current} x1="100%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style={{ stopOpacity: 1, stopColor: 'currentColor' }} />
-            <stop offset="20%" style={{ stopOpacity: 0.9, stopColor: 'currentColor' }} />
-            <stop offset="40%" style={{ stopOpacity: 0.9, stopColor: 'currentColor' }} />
+            <stop offset="50%" style={{ stopOpacity: 0.9, stopColor: 'currentColor' }} />
             <stop offset="100%" style={{ stopOpacity: 0.1, stopColor: 'currentColor' }} />
           </linearGradient>
         </defs>

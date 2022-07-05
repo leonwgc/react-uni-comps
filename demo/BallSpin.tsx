@@ -47,7 +47,7 @@ export default function App() {
       <DemoBlock title="背景带中心圈">
         <StyledBg>
           <Space size={4}>
-            <BallSpin showCircle /> <span>加载中...</span>
+            <BallSpin showCircle style={{ fontSize: 20 }} /> <span>加载中...</span>
           </Space>
         </StyledBg>
       </DemoBlock>
