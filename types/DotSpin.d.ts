@@ -3,27 +3,27 @@ import type { StringOrNumber } from './types';
 /** 加载指示器,三个跳动的小球 */
 declare const DotSpin: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
-     * ball size
+     * 小球宽高
      * @default 3
      */
     size?: number;
     /**
-     * ball gap
+     * 小球间距
      * @default 4
      */
     gap?: number;
     /**
-     * ball color
+     * 小球颜色
      * @default #D9D9D9
      */
     color?: string;
     /**
-     * animation duration, ms
+     * 动画时间，单位:ms
      * @default 600
      */
     duration?: number;
     /**
-     * animation iteration count
+     * 动画次数
      * @default 1
      */
     iterationCount?: StringOrNumber;

@@ -20,11 +20,20 @@ export default function All() {
       <Cell
         label={
           <Space>
-            <IconComponent /> SyncLoader
+            <IconComponent /> DotSpin
           </Space>
         }
         content={<IconArrow direction="right" />}
-        onClick={() => gotoPage('SyncLoader')}
+        onClick={() => gotoPage('DotSpin')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
+            <IconComponent /> BallSpin
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('BallSpin')}
       ></Cell>
       <Cell
         label={

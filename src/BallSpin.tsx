@@ -6,10 +6,14 @@ import { nanoid } from 'nanoid';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
-   * animation duration (unit: ms)
+   * 动画持续时间 (单位: ms)
    * @default 600
    */
   duration?: number;
+  /**
+   * 显示中心圆圈
+   */
+  showCircle?: boolean;
 };
 
 const rotate = keyframes`
@@ -59,9 +63,9 @@ const SVGProps = {
   fill: 'none',
 };
 
-/** ball spin */
+/** 转圈圈spin */
 const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, duration = 600, ...rest } = props;
+  const { className, duration = 600, showCircle, ...rest } = props;
   const [isWhite, setIsWhite] = React.useState(false);
   const elRef = React.useRef();
 
@@ -113,7 +117,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           strokeLinecap="round"
           transform="rotate(0,60,60)"
         />
-        <circle r="14" cx="60" cy="60" stroke="currentColor" />
+        {showCircle && <circle r="14" cx="60" cy="60" stroke="currentColor" />}
       </svg>
     </StyledLoader>
   );

@@ -26,10 +26,28 @@ export default function App() {
         </AutoCenter>
       </DemoBlock>
 
+      <DemoBlock title="中间圆圈">
+        <AutoCenter>
+          <Space>
+            <BallSpin style={{ color: '#005cff', fontSize: 20 }} showCircle />
+
+            <BallSpin style={{ color: 'red', fontSize: 20 }} showCircle />
+          </Space>
+        </AutoCenter>
+      </DemoBlock>
+
       <DemoBlock title="有色背景">
         <StyledBg>
           <Space size={4}>
             <BallSpin /> <span>加载中...</span>
+          </Space>
+        </StyledBg>
+      </DemoBlock>
+
+      <DemoBlock title="背景带中心圈">
+        <StyledBg>
+          <Space size={4}>
+            <BallSpin showCircle /> <span>加载中...</span>
           </Space>
         </StyledBg>
       </DemoBlock>
