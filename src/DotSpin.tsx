@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { prefixClassName } from './helper';
 import type { StringOrNumber } from './types';
 
-const getClassName = prefixClassName('uc-sync-loader');
+const getClassName = prefixClassName('uc-dot-spin');
 
 const normalizePx = (n: StringOrNumber) => {
   if (typeof n === 'number') {
@@ -45,10 +45,11 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 const StyledLoader = styled.div<{ $gap?: number; $duration; $iterationCount }>`
   display: inline-flex;
+  vertical-align: middle;
 
   @keyframes ${getClassName('ball')} {
     25% {
-      transform: translateY(-1.2em);
+      transform: translateY(-1.1em);
     }
 
     50% {
@@ -56,7 +57,7 @@ const StyledLoader = styled.div<{ $gap?: number; $duration; $iterationCount }>`
     }
 
     75% {
-      transform: translateY(1.2em);
+      transform: translateY(1.1em);
     }
 
     100% {
@@ -86,7 +87,7 @@ const StyledLoader = styled.div<{ $gap?: number; $duration; $iterationCount }>`
 `;
 
 /** 加载指示器,三个跳动的小球 */
-const SyncLoader = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+const DotSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     className,
     style,
@@ -114,6 +115,6 @@ const SyncLoader = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-SyncLoader.displayName = 'UC-SyncLoader';
+DotSpin.displayName = 'UC-DotSpin';
 
-export default SyncLoader;
+export default DotSpin;

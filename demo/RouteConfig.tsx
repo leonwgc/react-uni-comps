@@ -7,12 +7,12 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
-    path: '/YYLoader',
-    component: lazy(() => import('./YYLoader')),
+    path: '/BallSpin',
+    component: lazy(() => import('./BallSpin')),
   },
   {
-    path: '/SyncLoader',
-    component: lazy(() => import('./SyncLoader')),
+    path: '/DotSpin',
+    component: lazy(() => import('./DotSpin')),
   },
   {
     path: '/SkeletonElement',
