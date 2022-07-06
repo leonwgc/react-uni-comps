@@ -8660,7 +8660,7 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 DotSpin.displayName = 'UC-DotSpin';
 
-var _excluded$1d = ["className", "duration"];
+var _excluded$1d = ["className", "duration", "showCircle"];
 
 var _templateObject$3, _templateObject2;
 var rotate = styled.keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n 0% {\n      transform: rotate(0);\n    }\n\n    100% {\n      transform: rotate(360);\n    }\n"])));
@@ -8681,12 +8681,13 @@ var SVGProps$2 = {
   strokeWidth: 8,
   fill: 'none'
 };
-/** ball spin */
+/** 转圈圈spin */
 
 var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? 600 : _props$duration,
+      showCircle = props.showCircle,
       rest = _objectWithoutProperties(props, _excluded$1d);
 
   var _React$useState = React__default['default'].useState(false),
@@ -8698,15 +8699,14 @@ var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var idRef = React__default['default'].useRef(nanoid.nanoid());
   React__default['default'].useImperativeHandle(ref, function () {
     return elRef.current;
-  });
-  useMount(function () {
-    var el = elRef.current;
-    var color = window.getComputedStyle(el).getPropertyValue('color');
+  }); // React.useEffect(() => {
+  //   const el = elRef.current;
+  //   const color = window.getComputedStyle(el).getPropertyValue('color');
+  //   if (color === 'rgb(255, 255, 255)' || color === '#fff') {
+  //     // setIsWhite(true);
+  //   }
+  // }, []);
 
-    if (color === 'rgb(255, 255, 255)' || color === '#fff') {
-      setIsWhite(true);
-    }
-  });
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$1, _extends({
     ref: elRef,
     $duration: duration
@@ -8729,13 +8729,7 @@ var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props
       stopColor: 'currentColor'
     }
   }), /*#__PURE__*/React__default['default'].createElement("stop", {
-    offset: "20%",
-    style: {
-      stopOpacity: 0.9,
-      stopColor: 'currentColor'
-    }
-  }), /*#__PURE__*/React__default['default'].createElement("stop", {
-    offset: "40%",
+    offset: "50%",
     style: {
       stopOpacity: 0.9,
       stopColor: 'currentColor'
@@ -8762,7 +8756,7 @@ var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props
     stroke: isWhite ? '#fff' : "url(#".concat(idRef.current, ")"),
     strokeLinecap: "round",
     transform: "rotate(0,60,60)"
-  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+  }), showCircle && /*#__PURE__*/React__default['default'].createElement("circle", {
     r: "14",
     cx: "60",
     cy: "60",
@@ -9393,6 +9387,7 @@ exports.useCallbackRef = useCallbackRef;
 exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
+exports.useEventListener = useEventListener;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useInterval = useInterval;
