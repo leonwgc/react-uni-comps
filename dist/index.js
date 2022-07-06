@@ -8668,7 +8668,7 @@ var circle = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTem
 var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "BallSpin__StyledLoader",
   componentId: "sc-1f3hu62-0"
-})(["display:inline-flex;vertical-align:middle;svg{animation:", " ", "ms ease-in-out infinite;animation-fill-mode:backwards;}.my-circle{animation:", " ", "ms ease-in-out infinite;}"], rotate, function (_ref) {
+})(["display:inline-flex;vertical-align:middle;svg{animation:", " ", "ms linear infinite;animation-fill-mode:backwards;}.my-circle{animation:", " ", "ms linear infinite;}"], rotate, function (_ref) {
   var $duration = _ref.$duration;
   return $duration;
 }, circle, function (_ref2) {

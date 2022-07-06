@@ -46,12 +46,12 @@ const StyledLoader = styled.div<{ $duration: number }>`
   display: inline-flex;
   vertical-align: middle;
   svg {
-    animation: ${rotate} ${({ $duration }) => $duration}ms ease-in-out infinite;
+    animation: ${rotate} ${({ $duration }) => $duration}ms linear infinite;
     animation-fill-mode: backwards;
   }
 
   .my-circle {
-    animation: ${circle} ${({ $duration }) => $duration}ms ease-in-out infinite;
+    animation: ${circle} ${({ $duration }) => $duration}ms linear infinite;
   }
 `;
 
