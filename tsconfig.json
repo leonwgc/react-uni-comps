@@ -26,5 +26,6 @@
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "es", "dist"]
+  "exclude": ["node_modules", "es", "dist"],
+  "extends": "plugin:import/recommended"
 }
