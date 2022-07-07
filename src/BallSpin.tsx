@@ -23,7 +23,7 @@ const circle = keyframes`
 
   50% {
     stroke-dasharray: 78.5, 314;
-    stroke-dashoffset: -39;
+    stroke-dashoffset: -29;
   }
 
  
