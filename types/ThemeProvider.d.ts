@@ -1,8 +1,7 @@
-import React from 'react';
 declare type Props = {
     /** 主题色 */
     color?: string;
-    children?: React.ReactNode;
+    children: any;
 };
 /**
  * @description 主题色设置

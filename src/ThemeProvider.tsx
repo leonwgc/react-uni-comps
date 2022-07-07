@@ -5,7 +5,7 @@ import { ThemeProvider as StyledProvider } from 'styled-components';
 type Props = {
   /** 主题色 */
   color?: string;
-  children?: React.ReactNode;
+  children: any;
 };
 
 /**

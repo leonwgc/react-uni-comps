@@ -7,17 +7,17 @@ import { animationNormal } from './vars';
 type Props = {
   /** 作为组件，请使用React.forwardRef 将ref引到 dom, 或者使用HTMLElement */
   children: React.ReactElement;
-  /** 
+  /**
    * 动画时间
    * @default 220
    *  */
   duration?: number;
-  /** 
+  /**
    * 动画开始类名
    * @default from
    *  */
   fromClass?: string;
-  /** 
+  /**
    * 动画结束类名
    * @default to
    * */
@@ -66,7 +66,7 @@ const TransitionElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
               ...children.props?.style,
               transitionDuration: duration + 'ms',
             },
-          })
+          }) as any
         }
       </Transition>
     );
