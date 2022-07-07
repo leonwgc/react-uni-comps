@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * 动画持续时间 (单位: ms)
-   * @default 600
+   * @default 640
    */
   duration?: number;
   /**
@@ -15,16 +15,6 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   showCircle?: boolean;
 };
 
-const rotate = keyframes`
- 0% {
-      transform: rotate(0);
-    }
-
-    100% {
-      transform: rotate(360);
-    }
-`;
-
 const circle = keyframes`
  0% {
     stroke-dasharray: 1, 314; // 2piR
@@ -32,10 +22,11 @@ const circle = keyframes`
   }
 
   50% {
-    stroke-dasharray: 60, 314;
-    stroke-dashoffset: -97;
+    stroke-dasharray: 78.5, 314;
+    stroke-dashoffset: -39;
   }
 
+ 
   100% {
     stroke-dasharray: 0, 314;
     stroke-dashoffset: -157;
@@ -45,10 +36,6 @@ const circle = keyframes`
 const StyledLoader = styled.div<{ $duration: number }>`
   display: inline-flex;
   vertical-align: middle;
-  svg {
-    animation: ${rotate} ${({ $duration }) => $duration}ms linear infinite;
-    animation-fill-mode: backwards;
-  }
 
   .my-circle {
     animation: ${circle} ${({ $duration }) => $duration}ms linear infinite;
@@ -64,7 +51,7 @@ const SVGProps = {
 
 /** 转圈圈spin */
 const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, duration = 600, showCircle, ...rest } = props;
+  const { className, duration = 640, showCircle, ...rest } = props;
   const elRef = React.useRef();
 
   const idRef = React.useRef<string>(nanoid());

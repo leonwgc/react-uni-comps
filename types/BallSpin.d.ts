@@ -3,7 +3,7 @@ import React from 'react';
 declare const BallSpin: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
      * 动画持续时间 (单位: ms)
-     * @default 600
+     * @default 640
      */
     duration?: number;
     /**
