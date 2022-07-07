@@ -65,29 +65,18 @@ const SVGProps = {
 /** 转圈圈spin */
 const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, duration = 600, showCircle, ...rest } = props;
-  const [isWhite, setIsWhite] = React.useState(false);
   const elRef = React.useRef();
 
   const idRef = React.useRef<string>(nanoid());
 
   React.useImperativeHandle(ref, () => elRef.current);
 
-  // React.useEffect(() => {
-  //   const el = elRef.current;
-
-  //   const color = window.getComputedStyle(el).getPropertyValue('color');
-
-  //   if (color === 'rgb(255, 255, 255)' || color === '#fff') {
-  //     // setIsWhite(true);
-  //   }
-  // }, []);
-
   return (
     <StyledLoader
       ref={elRef}
       $duration={duration}
       {...rest}
-      className={clsx(className, 'uc-ball-spin', { white: isWhite })}
+      className={clsx(className, 'uc-ball-spin')}
     >
       <svg viewBox="0 0 120 120" {...SVGProps}>
         <defs>
@@ -102,7 +91,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           r="50"
           cx="60"
           cy="60"
-          stroke={isWhite ? '#fff' : `url(#${idRef.current})`}
+          stroke={`url(#${idRef.current})`}
           strokeLinecap="round"
           transform="rotate(-180,60,60)"
         />
@@ -111,7 +100,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           r="50"
           cx="60"
           cy="60"
-          stroke={isWhite ? '#fff' : `url(#${idRef.current})`}
+          stroke={`url(#${idRef.current})`}
           strokeLinecap="round"
           transform="rotate(0,60,60)"
         />
