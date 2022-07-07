@@ -1,24 +1,16 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 declare type Props = {
     /** 主题色 */
     color?: string;
-    children: ReactElement;
+    children?: React.ReactNode;
 };
 /**
- * 主题色设置
- *
- * @export
- * @param {{
- *   color: string;
- *   children: ReactElement;
- * }} {
- *   color = colors.primary,
- *   children,
- * }
- * @return {*}  {React.ReactElement}
+ * @description 主题色设置
+ * @param {Props} props
+ * @return {*}
  */
 declare const ThemeProvider: {
-    (props: Props): React.ReactElement;
+    (props: Props): JSX.Element;
     displayName: string;
 };
 export default ThemeProvider;

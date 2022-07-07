@@ -1,27 +1,19 @@
-import React, { ReactElement, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 
 type Props = {
   /** 主题色 */
   color?: string;
-  children: ReactElement;
+  children?: React.ReactNode;
 };
 
 /**
- * 主题色设置
- *
- * @export
- * @param {{
- *   color: string;
- *   children: ReactElement;
- * }} {
- *   color = colors.primary,
- *   children,
- * }
- * @return {*}  {React.ReactElement}
+ * @description 主题色设置
+ * @param {Props} props
+ * @return {*}
  */
-const ThemeProvider = (props: Props): React.ReactElement => {
+const ThemeProvider = (props: Props) => {
   const { color = vars.primary, children } = props;
 
   useLayoutEffect(() => {
