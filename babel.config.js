@@ -11,5 +11,7 @@ module.exports = {
         pure: true,
       },
     ],
+    ['@babel/plugin-proposal-private-methods', { loose: false }],
+    ['@babel/plugin-proposal-class-properties', { loose: false }],
   ],
 };
