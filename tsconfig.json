@@ -25,7 +25,6 @@
       "react-uni-comps": ["src"]
     }
   },
-  "include": ["src", "**/*/*.tsx", "**/*/*.tsx"], // "**/*/*.ts", "**/*/*.tsx"
+  "include": ["src", "demo"],
   "exclude": ["node_modules", "es", "dist", "test", "types", "mdx", "config"] // "demo"
-  // "extends": "plugin:import/recommended"
 }
