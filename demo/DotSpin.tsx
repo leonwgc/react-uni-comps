@@ -8,22 +8,18 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="默认">
         <DotSpin />
-
-        <div style={{ marginTop: 10 }}>
-          <DotSpin iterationCount="infinite" />
-        </div>
       </DemoBlock>
 
       <DemoBlock title="尺寸和间距">
-        <DotSpin size={12} gap={12} />
+        <DotSpin size={6} gap={6} />
       </DemoBlock>
 
       <DemoBlock title="颜色">
         <DotSpin color="#005cff" />
       </DemoBlock>
 
-      <DemoBlock title="动画设置">
-        <DotSpin duration={500} iterationCount="infinite" size={12} />
+      <DemoBlock title="动画次数">
+        <DotSpin iteration={3} size={6} />
       </DemoBlock>
     </PageWrap>
   );
