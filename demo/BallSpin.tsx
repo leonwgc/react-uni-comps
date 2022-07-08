@@ -52,11 +52,11 @@ export default function App() {
         </StyledBg>
       </DemoBlock>
 
-      <DemoBlock title="Big">
+      {/* <DemoBlock title="Big">
         <AutoCenter>
           <BallSpin style={{ fontSize: 60, color: '#666' }} />
         </AutoCenter>
-      </DemoBlock>
+      </DemoBlock> */}
     </PageWrap>
   );
 }
