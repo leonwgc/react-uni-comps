@@ -17,13 +17,13 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 const circle = keyframes`
  0% {
-    stroke-dasharray: 1, 314; // 2piR
+    stroke-dasharray: 0, 314; // 2piR
     stroke-dashoffset: 0;
   }
 
   50% {
-    stroke-dasharray: 78.5, 314;
-    stroke-dashoffset: -29;
+    stroke-dasharray: 120, 314;
+    stroke-dashoffset: -37;
   }
 
  
@@ -51,7 +51,7 @@ const SVGProps = {
 
 /** 转圈圈spin */
 const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, duration = 640, showCircle, ...rest } = props;
+  const { className, duration = 800, showCircle, ...rest } = props;
   const elRef = React.useRef();
 
   const idRef = React.useRef<string>(nanoid());
@@ -67,9 +67,9 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <svg viewBox="0 0 120 120" {...SVGProps}>
         <defs>
-          <linearGradient id={idRef.current} x1="100%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={idRef.current} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style={{ stopOpacity: 1, stopColor: 'currentColor' }} />
-            <stop offset="50%" style={{ stopOpacity: 0.9, stopColor: 'currentColor' }} />
+            <stop offset="50%" style={{ stopOpacity: 0.7, stopColor: 'currentColor' }} />
             <stop offset="100%" style={{ stopOpacity: 0.1, stopColor: 'currentColor' }} />
           </linearGradient>
         </defs>
