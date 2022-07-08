@@ -3,7 +3,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
 import { nanoid } from 'nanoid';
-var circle = keyframes(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n 0% {\n    stroke-dasharray: 1, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 78.5, 314;\n    stroke-dashoffset: -29;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"], ["\n 0% {\n    stroke-dasharray: 1, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 78.5, 314;\n    stroke-dashoffset: -29;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
+var circle = keyframes(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n 0% {\n    stroke-dasharray: 0, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 120, 314;\n    stroke-dashoffset: -37;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"], ["\n 0% {\n    stroke-dasharray: 0, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 120, 314;\n    stroke-dashoffset: -37;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
 var StyledLoader = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .my-circle {\n    animation: ", " ", "ms linear infinite;\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .my-circle {\n    animation: ", " ", "ms linear infinite;\n  }\n"])), circle, function (_a) {
   var $duration = _a.$duration;
   return $duration;
@@ -19,7 +19,7 @@ var SVGProps = {
 var BallSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
       _a = props.duration,
-      duration = _a === void 0 ? 640 : _a,
+      duration = _a === void 0 ? 800 : _a,
       showCircle = props.showCircle,
       rest = __rest(props, ["className", "duration", "showCircle"]);
 
@@ -37,10 +37,10 @@ var BallSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
     viewBox: "0 0 120 120"
   }, SVGProps), /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
     id: idRef.current,
-    x1: "100%",
+    x1: "0%",
     y1: "0%",
     x2: "100%",
-    y2: "100%"
+    y2: "0%"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
     style: {
@@ -50,7 +50,7 @@ var BallSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "50%",
     style: {
-      stopOpacity: 0.9,
+      stopOpacity: 0.7,
       stopColor: 'currentColor'
     }
   }), /*#__PURE__*/React.createElement("stop", {
