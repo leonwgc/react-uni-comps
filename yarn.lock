@@ -114,9 +114,9 @@
     json5 "^2.2.1"
     semver "^6.3.0"
 
-"@babel/eslint-parser@^7.17.0":
+"@babel/eslint-parser@^7.18.2":
   version "7.18.2"
-  resolved "https://registry.npmmirror.com/@babel/eslint-parser/-/eslint-parser-7.18.2.tgz#e14dee36c010edfb0153cf900c2b0815e82e3245"
+  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.18.2.tgz#e14dee36c010edfb0153cf900c2b0815e82e3245"
   integrity sha512-oFQYkE8SuH14+uR51JVAmdqwKYXGRjEXx7s+WiagVjqQ+HPE+nnwyF2qlVG8evUsUHmPcA+6YXMEDbIhEyQc5A==
   dependencies:
     eslint-scope "^5.1.1"
@@ -5383,14 +5383,14 @@ css-loader@^6.6.0:
     postcss-value-parser "^4.2.0"
     semver "^7.3.5"
 
-css-minimizer-webpack-plugin@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.npmmirror.com/css-minimizer-webpack-plugin/-/css-minimizer-webpack-plugin-3.4.1.tgz#ab78f781ced9181992fe7b6e4f3422e76429878f"
-  integrity sha512-1u6D71zeIfgngN2XNRJefc/hY7Ybsxd74Jm4qngIXyUEk7fss3VUzuHxLAq/R8NAba4QU9OUSaMZlbpRc7bM4Q==
+css-minimizer-webpack-plugin@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/css-minimizer-webpack-plugin/-/css-minimizer-webpack-plugin-4.0.0.tgz#e11800388c19c2b7442c39cc78ac8ae3675c9605"
+  integrity sha512-7ZXXRzRHvofv3Uac5Y+RkWRNo0ZMlcg8e9/OtrqUYmwDWJo+qs67GvdeFrXLsFb7czKNwjQhPkM0avlIYl+1nA==
   dependencies:
-    cssnano "^5.0.6"
-    jest-worker "^27.0.2"
-    postcss "^8.3.5"
+    cssnano "^5.1.8"
+    jest-worker "^27.5.1"
+    postcss "^8.4.13"
     schema-utils "^4.0.0"
     serialize-javascript "^6.0.0"
     source-map "^0.6.1"
@@ -5641,9 +5641,9 @@ cssnano@^4.1.10:
     is-resolvable "^1.0.0"
     postcss "^7.0.0"
 
-cssnano@^5.0.6:
+cssnano@^5.1.8:
   version "5.1.12"
-  resolved "https://registry.npmmirror.com/cssnano/-/cssnano-5.1.12.tgz#bcd0b64d6be8692de79332c501daa7ece969816c"
+  resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-5.1.12.tgz#bcd0b64d6be8692de79332c501daa7ece969816c"
   integrity sha512-TgvArbEZu0lk/dvg2ja+B7kYoD7BBCmn3+k58xD0qjrGHsFzXY/wKTo9M5egcUCabPol05e/PVoIu79s2JN4WQ==
   dependencies:
     cssnano-preset-default "^5.2.12"
@@ -9348,7 +9348,7 @@ jest-worker@26.6.2, jest-worker@^26.2.1:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jest-worker@^27.0.2, jest-worker@^27.4.5:
+jest-worker@^27.4.5, jest-worker@^27.5.1:
   version "27.5.1"
   resolved "https://registry.npmmirror.com/jest-worker/-/jest-worker-27.5.1.tgz#8d146f0900e8973b106b6f73cc1e9a8cb86f8db0"
   integrity sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==
@@ -11119,14 +11119,14 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packw@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/packw/-/packw-1.1.2.tgz#e5ad3bc0524e375197921fbaac8d5b57e962da2d"
-  integrity sha512-1uzgS3l/7AAq+9OtOVbKg7lgHVYme+8YYnUHNIpmsGrJwODwRsUNNRSmsdz9IkX9t5laotnT23LUlCPZ+WeW6A==
+packw@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/packw/-/packw-1.2.0.tgz#eb28acd11bf32885f02841657aa64227e88180b8"
+  integrity sha512-zSqAwJz9O/fF7SZRHWBSiAt61RritoH4y8Y9nBs10W9BcdcwPvWoUZXewxshdVsPOwSV/WacMZhLZ26pHIq46g==
   dependencies:
     "@babel/cli" "^7.17.6"
     "@babel/core" "^7.17.5"
-    "@babel/eslint-parser" "^7.17.0"
+    "@babel/eslint-parser" "^7.18.2"
     "@babel/plugin-proposal-class-properties" "^7.16.7"
     "@babel/plugin-proposal-decorators" "^7.17.2"
     "@babel/plugin-proposal-optional-chaining" "^7.16.7"
@@ -11152,7 +11152,7 @@ packw@^1.1.2:
     commander "^8.3.0"
     core-js "3"
     css-loader "^6.6.0"
-    css-minimizer-webpack-plugin "^3.4.1"
+    css-minimizer-webpack-plugin "^4.0.0"
     ejs "^3.1.6"
     fs-extra "^10.0.1"
     glob "^7.2.0"
@@ -12643,7 +12643,7 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.1
     picocolors "^0.2.1"
     source-map "^0.6.1"
 
-postcss@^8.3.5, postcss@^8.4.12, postcss@^8.4.7:
+postcss@^8.4.12, postcss@^8.4.13, postcss@^8.4.7:
   version "8.4.14"
   resolved "https://registry.npmmirror.com/postcss/-/postcss-8.4.14.tgz#ee9274d5622b4858c1007a74d76e42e56fd21caf"
   integrity sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==

@@ -18,13 +18,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  globals: {
-    __client__: true,
-    __production__: true,
-    __dev__: true,
-    __env__: true,
-    iHealthBridge: true,
-  },
+  globals: {},
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',

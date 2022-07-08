@@ -19,12 +19,13 @@
     "allowJs": true,
     "strictNullChecks": false,
     "removeComments": false,
-    "outDir": "types",
+    "declarationDir": "types",
     "lib": ["es2015", "DOM"],
     "paths": {
       "react-uni-comps": ["src"]
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "es", "dist", "types"]
+  "exclude": ["node_modules", "es", "dist"],
+  "extends": "plugin:import/recommended"
 }
