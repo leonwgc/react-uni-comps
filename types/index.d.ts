@@ -84,6 +84,7 @@ export { default as ScrollBox } from './ScrollBox';
 export { default as AspectRatio } from './AspectRatio';
 export { default as DotSpin } from './DotSpin';
 export { default as BallSpin } from './BallSpin';
+export { default as CircleSpin } from './CircleSpin';
 /** only has static method */
 export { default as Loading } from './Loading';
 /** helper & dom */
