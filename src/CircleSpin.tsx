@@ -33,7 +33,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 const move = keyframes`
  0% {
-    stroke-dasharray: 85, 254; // 2piR
+    stroke-dasharray: 85, 254; 
     stroke-dashoffset: 0;
   }
  
@@ -72,7 +72,7 @@ const CircleSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ref={elRef}
       $duration={duration}
       {...rest}
-      className={clsx(className, 'uc-ball-spin')}
+      className={clsx(className, 'uc-circle-spin')}
     >
       <svg
         viewBox="0 0 120 120"
