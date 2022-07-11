@@ -9074,6 +9074,65 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 DotSpin.displayName = 'UC-DotSpin';
 
+var _excluded$1e = ["className", "duration", "trackColor", "color", "size", "strokeWidth"];
+
+var _templateObject$5;
+var move = styled.keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 85, 254; \n    stroke-dashoffset: 0;\n  }\n \n  100% {\n    stroke-dasharray: 85, 254; \n    stroke-dashoffset: -339;\n  }\n"])));
+var StyledLoader$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "CircleSpin__StyledLoader",
+  componentId: "sc-cn0z0p-0"
+})(["display:inline-flex;vertical-align:middle;.my-circle{animation:", " ", "ms linear infinite;}"], move, function (_ref) {
+  var $duration = _ref.$duration;
+  return $duration;
+});
+/** 圆圈spin */
+
+var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 1000 : _props$duration,
+      _props$trackColor = props.trackColor,
+      trackColor = _props$trackColor === void 0 ? '#d9d9d9' : _props$trackColor,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'currentColor' : _props$color,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 32 : _props$size,
+      _props$strokeWidth = props.strokeWidth,
+      strokeWidth = _props$strokeWidth === void 0 ? 8 : _props$strokeWidth,
+      rest = _objectWithoutProperties(props, _excluded$1e);
+
+  var elRef = React__default['default'].useRef();
+  React__default['default'].useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$2, _extends({
+    ref: elRef,
+    $duration: duration
+  }, rest, {
+    className: clsx__default['default'](className, 'uc-circle-spin')
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
+    viewBox: "0 0 120 120",
+    width: size,
+    height: size,
+    fill: "none",
+    strokeWidth: Math.min(strokeWidth, 8)
+  }, /*#__PURE__*/React__default['default'].createElement("circle", {
+    r: "54",
+    cx: "60",
+    cy: "60",
+    stroke: trackColor
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+    className: "my-circle",
+    r: "54",
+    cx: "60",
+    cy: "60",
+    stroke: color,
+    strokeLinecap: "round",
+    transform: "rotate(-90,60,60)"
+  })));
+});
+CircleSpin.displayName = 'UC-CircleSpin';
+
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
@@ -9399,7 +9458,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$1e = ["children", "label", "name"],
+var _excluded$1f = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9409,7 +9468,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1e);
+      fieldProps = _objectWithoutProperties(props, _excluded$1f);
 
   var required = false;
 
@@ -9607,6 +9666,7 @@ exports.Calendar = Calendar;
 exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
+exports.CircleSpin = CircleSpin;
 exports.Collapse = Collapse$1;
 exports.CopyToClipboard = CopyToClipboard;
 exports.DatePicker = DatePicker;

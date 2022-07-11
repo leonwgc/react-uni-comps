@@ -19,7 +19,7 @@ declare const CircleSpin: React.ForwardRefExoticComponent<React.HTMLAttributes<H
     color?: string;
     /**
      * 轨道颜色
-     * @default #bababa
+     * @default #d9d9d9
      */
     trackColor?: string;
     /**
