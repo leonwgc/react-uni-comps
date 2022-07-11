@@ -387,6 +387,10 @@ module.exports = [
         name: 'DotSpin',
         title: 'DotSpin 点状加载指示器',
       },
+      {
+        name: 'CircleSpin',
+        title: 'CircleSpin 圈圈加载指示器',
+      },
     ],
   },
   {
