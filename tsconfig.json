@@ -25,6 +25,6 @@
       "react-uni-comps": ["src"]
     }
   },
-  "include": ["src", "demo"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

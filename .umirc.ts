@@ -31,7 +31,7 @@ export default defineConfig({
       },
     });
   },
-  dynamicImport: {},
+  dynamicImport: false,
   locales: [['zh-CN', '中文']],
   hash: true,
   webpack5: {},
