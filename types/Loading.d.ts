@@ -1,7 +1,7 @@
 import React from 'react';
 declare const _default: React.FC<{}> & {
     /** show loading with text */
-    show: (text?: React.ReactNode, space?: number) => void;
+    show: (text?: React.ReactNode, type?: "ball" | "wechat", space?: number) => void;
     /** hide loading */
     hide: () => void;
 };

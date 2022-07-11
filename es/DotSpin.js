@@ -1,7 +1,7 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React from 'react';
 import clsx from 'clsx';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { prefixClassName } from './helper';
 var getClassName = prefixClassName('uc-dot-spin');
 
@@ -13,22 +13,11 @@ var normalizePx = function normalizePx(n) {
   }
 };
 
-var StyledLoader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.1em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.1em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    25% {\n      transform: translateY(-1.1em);\n    }\n\n    50% {\n      transform: translateY(0px);\n    }\n\n    75% {\n      transform: translateY(1.1em);\n    }\n\n    100% {\n      transform: translateY(0px);\n    }\n  }\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: ", "ms linear ", "ms\n      ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: ", "ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: ", "ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"])), getClassName('ball'), getClassName('item'), function (_a) {
-  var $duration = _a.$duration;
-  return $duration;
-}, function (_a) {
-  var $duration = _a.$duration;
-  return $duration * 0.2;
-}, function (_a) {
-  var $iterationCount = _a.$iterationCount;
-  return $iterationCount;
-}, getClassName('ball'), function (_a) {
-  var $duration = _a.$duration;
-  return $duration * 0.4;
-}, function (_a) {
-  var $duration = _a.$duration;
-  return $duration * 0.6;
-}, function (_a) {
+var dance = keyframes(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    0% {\n      transform: translateY(0);\n    }\n\n    25% {\n      transform: translateY(-1em);\n    }\n\n    50% {\n      transform: translateY(0);\n    }\n\n    75% {\n      transform: translateY(1em);\n    }\n\n    100% {\n      transform: translateY(0);\n    }\n"], ["\n    0% {\n      transform: translateY(0);\n    }\n\n    25% {\n      transform: translateY(-1em);\n    }\n\n    50% {\n      transform: translateY(0);\n    }\n\n    75% {\n      transform: translateY(1em);\n    }\n\n    100% {\n      transform: translateY(0);\n    }\n"])));
+var StyledLoader = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: 600ms linear 200ms ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: 360ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: 520ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .", " {\n    width: 1em;\n    height: 1em;\n    border-radius: 50%;\n    animation: 600ms linear 200ms ", " normal both running ", ";\n\n    &:nth-child(2) {\n      animation-delay: 360ms;\n    }\n\n    &:nth-child(3) {\n      animation-delay: 520ms;\n    }\n\n    &:not(:first-child) {\n      margin-left: ", ";\n    }\n  }\n"])), getClassName('item'), function (_a) {
+  var $iteration = _a.$iteration;
+  return $iteration;
+}, dance, function (_a) {
   var $gap = _a.$gap;
   return normalizePx($gap);
 });
@@ -41,19 +30,16 @@ var DotSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
       size = _a === void 0 ? 3 : _a,
       _b = props.gap,
       gap = _b === void 0 ? 4 : _b,
-      _c = props.duration,
-      duration = _c === void 0 ? 600 : _c,
-      _d = props.iterationCount,
-      iterationCount = _d === void 0 ? 1 : _d,
-      _e = props.color,
-      color = _e === void 0 ? '#d9d9d9' : _e,
-      rest = __rest(props, ["className", "style", "size", "gap", "duration", "iterationCount", "color"]);
+      _c = props.iteration,
+      iteration = _c === void 0 ? 1 : _c,
+      _d = props.color,
+      color = _d === void 0 ? '#d9d9d9' : _d,
+      rest = __rest(props, ["className", "style", "size", "gap", "iteration", "color"]);
 
   return /*#__PURE__*/React.createElement(StyledLoader, __assign({}, rest, {
     ref: ref,
     "$gap": gap,
-    "$duration": duration,
-    "$iterationCount": iterationCount,
+    "$iteration": iteration,
     className: clsx(className, getClassName()),
     style: __assign({
       fontSize: size
@@ -70,4 +56,4 @@ var DotSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
 });
 DotSpin.displayName = 'UC-DotSpin';
 export default DotSpin;
-var templateObject_1;
+var templateObject_1, templateObject_2;

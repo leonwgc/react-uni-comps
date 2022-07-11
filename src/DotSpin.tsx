@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { prefixClassName } from './helper';
 import type { StringOrNumber } from './types';
 
@@ -19,65 +19,63 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * 小球宽高
    * @default 3
    */
-  size?: number;
+  size?: StringOrNumber;
   /**
    * 小球间距
    * @default 4
    */
 
-  gap?: number;
+  gap?: StringOrNumber;
   /**
    * 小球颜色
    * @default #D9D9D9
    */
   color?: string;
   /**
-   * 动画时间，单位:ms
-   * @default 600
-   */
-  duration?: number;
-  /**
    * 动画次数
    * @default 1
    */
-  iterationCount?: StringOrNumber;
+  iteration?: number;
 };
 
-const StyledLoader = styled.div<{ $gap?: number; $duration; $iterationCount }>`
-  display: inline-flex;
-  vertical-align: middle;
+const dance = keyframes`
+    0% {
+      transform: translateY(0);
+    }
 
-  @keyframes ${getClassName('ball')} {
     25% {
-      transform: translateY(-1.1em);
+      transform: translateY(-1em);
     }
 
     50% {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
 
     75% {
-      transform: translateY(1.1em);
+      transform: translateY(1em);
     }
 
     100% {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
-  }
+`;
+
+const StyledLoader = styled.div<{ $gap?: StringOrNumber; $iteration }>`
+  display: inline-flex;
+  vertical-align: middle;
 
   .${getClassName('item')} {
     width: 1em;
     height: 1em;
     border-radius: 50%;
-    animation: ${({ $duration }) => $duration}ms linear ${({ $duration }) => $duration * 0.2}ms
-      ${({ $iterationCount }) => $iterationCount} normal both running ${getClassName('ball')};
+    animation: 600ms linear 200ms ${({ $iteration }) => $iteration} normal both running ${dance};
 
     &:nth-child(2) {
-      animation-delay: ${({ $duration }) => $duration * 0.4}ms;
+      animation-delay: 360ms;
     }
 
     &:nth-child(3) {
-      animation-delay: ${({ $duration }) => $duration * 0.6}ms;
+      animation-delay: 520ms;
     }
 
     &:not(:first-child) {
@@ -88,23 +86,13 @@ const StyledLoader = styled.div<{ $gap?: number; $duration; $iterationCount }>`
 
 /** 加载指示器,三个跳动的小球 */
 const DotSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const {
-    className,
-    style,
-    size = 3,
-    gap = 4,
-    duration = 600,
-    iterationCount = 1,
-    color = '#d9d9d9',
-    ...rest
-  } = props;
+  const { className, style, size = 3, gap = 4, iteration = 1, color = '#d9d9d9', ...rest } = props;
   return (
     <StyledLoader
       {...rest}
       ref={ref}
       $gap={gap}
-      $duration={duration}
-      $iterationCount={iterationCount}
+      $iteration={iteration}
       className={clsx(className, getClassName())}
       style={{ fontSize: size, ...style }}
     >

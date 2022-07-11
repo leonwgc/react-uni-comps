@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import * as vars from './vars';
 import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
-import Spin from './Spin';
 import Space from './Space';
+import BallSpin from './BallSpin';
 
 type Props = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> & {
   /**
@@ -186,7 +186,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const usingWait = waitTime > 0;
 
-  const icon = props.icon || (loading ? <Spin /> : null);
+  const icon = props.icon || (loading || waiting ? <BallSpin showCircle={false} /> : null);
 
   return (
     <StyledButton

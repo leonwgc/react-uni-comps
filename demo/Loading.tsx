@@ -37,6 +37,22 @@ export default function App() {
           </Button>
         </Space>
       </DemoBlock>
+
+      <DemoBlock title="spin类型">
+        <Space>
+          <Button
+            onClick={() => {
+              Loading.show('努力提交中..', 'wechat');
+
+              setTimeout(() => {
+                Loading.hide();
+              }, 1000);
+            }}
+          >
+            微信风格loading
+          </Button>
+        </Space>
+      </DemoBlock>
     </PageWrap>
   );
 }

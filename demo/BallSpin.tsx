@@ -51,6 +51,12 @@ export default function App() {
           </Space>
         </StyledBg>
       </DemoBlock>
+
+      {/* <DemoBlock title="Big">
+        <AutoCenter>
+          <BallSpin style={{ fontSize: 60, color: '#666' }} />
+        </AutoCenter>
+      </DemoBlock> */}
     </PageWrap>
   );
 }

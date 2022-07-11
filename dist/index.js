@@ -10,13 +10,13 @@ var clsx = require('clsx');
 var web = require('@react-spring/web');
 var reactIs = require('react-is');
 require('intersection-observer');
+var nanoid = require('nanoid');
 var Popover = require('w-popover');
 var Touch = require('w-touch');
 var color = require('color');
 var SignaturePad = require('signature_pad');
 var WQRCode = require('w-qrcode');
 var Sortable = require('sortablejs');
-var nanoid = require('nanoid');
 var i18n = require('i18next');
 var reactI18next = require('react-i18next');
 var RcForm = require('rc-field-form');
@@ -2622,7 +2622,94 @@ var Skeleton = function Skeleton(props) {
   })));
 };
 
-var _excluded$c = ["type", "disabled", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
+var _excluded$c = ["className", "duration", "showCircle"];
+
+var _templateObject$3;
+var circle = styled.keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 0, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 120, 314;\n    stroke-dashoffset: -37;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
+var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "BallSpin__StyledLoader",
+  componentId: "sc-1f3hu62-0"
+})(["display:inline-flex;vertical-align:middle;.my-circle{animation:", " ", "ms linear infinite;}"], circle, function (_ref) {
+  var $duration = _ref.$duration;
+  return $duration;
+});
+var SVGProps = {
+  width: '1.25em',
+  height: '1.25em',
+  strokeWidth: 8,
+  fill: 'none'
+};
+/** 转圈圈spin */
+
+var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 800 : _props$duration,
+      showCircle = props.showCircle,
+      rest = _objectWithoutProperties(props, _excluded$c);
+
+  var elRef = React__default['default'].useRef();
+  var idRef = React__default['default'].useRef(nanoid.nanoid());
+  React__default['default'].useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader, _extends({
+    ref: elRef,
+    $duration: duration
+  }, rest, {
+    className: clsx__default['default'](className, 'uc-ball-spin')
+  }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
+    viewBox: "0 0 120 120"
+  }, SVGProps), /*#__PURE__*/React__default['default'].createElement("defs", null, /*#__PURE__*/React__default['default'].createElement("linearGradient", {
+    id: idRef.current,
+    x1: "0%",
+    y1: "0%",
+    x2: "100%",
+    y2: "0%"
+  }, /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "0%",
+    style: {
+      stopOpacity: 1,
+      stopColor: 'currentColor'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "50%",
+    style: {
+      stopOpacity: 0.7,
+      stopColor: 'currentColor'
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("stop", {
+    offset: "100%",
+    style: {
+      stopOpacity: 0.1,
+      stopColor: 'currentColor'
+    }
+  }))), /*#__PURE__*/React__default['default'].createElement("circle", {
+    className: "my-circle",
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: "url(#".concat(idRef.current, ")"),
+    strokeLinecap: "round",
+    transform: "rotate(-180,60,60)"
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+    className: "my-circle",
+    r: "50",
+    cx: "60",
+    cy: "60",
+    stroke: "url(#".concat(idRef.current, ")"),
+    strokeLinecap: "round",
+    transform: "rotate(0,60,60)"
+  }), showCircle && /*#__PURE__*/React__default['default'].createElement("circle", {
+    r: "14",
+    cx: "60",
+    cy: "60",
+    stroke: "currentColor"
+  })));
+});
+BallSpin.displayName = 'UC-BallSpin';
+
+var _excluded$d = ["type", "disabled", "outlined", "block", "className", "children", "htmlType", "circle", "dashed", "danger", "loading", "ghost", "onClick", "wait"];
 var StyledButton = /*#__PURE__*/styled__default['default'].button.withConfig({
   displayName: "Button__StyledButton",
   componentId: "sc-15o16bj-0"
@@ -2645,7 +2732,7 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       ghost = props.ghost,
       _onClick = props.onClick,
       wait = props.wait,
-      rest = _objectWithoutProperties(props, _excluded$c);
+      rest = _objectWithoutProperties(props, _excluded$d);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2654,7 +2741,9 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 1000 : 0;
   var usingWait = waitTime > 0;
-  var icon = props.icon || (loading ? /*#__PURE__*/React__default['default'].createElement(Spin, null) : null);
+  var icon = props.icon || (loading || waiting ? /*#__PURE__*/React__default['default'].createElement(BallSpin, {
+    showCircle: false
+  }) : null);
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
     ref: ref,
     disabled: disabled,
@@ -2685,12 +2774,12 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Button.displayName = 'UC-Button';
 
-var _excluded$d = ["type", "className"];
+var _excluded$e = ["type", "className"];
 var StyledIcon = /*#__PURE__*/styled__default['default'].span.withConfig({
   displayName: "Icon__StyledIcon",
   componentId: "sc-vk5gmu-0"
 })(["display:inline-block;color:inherit;font-style:normal;line-height:0;text-align:center;text-transform:none;vertical-align:-0.125em;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;"]);
-var SVGProps = {
+var SVGProps$1 = {
   width: '1em',
   height: '1em',
   fill: 'currentColor'
@@ -2700,12 +2789,12 @@ var SVGProps = {
 var Icon = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var type = props.type,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$e);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledIcon, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-icon', className, type)
-  }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps, /*#__PURE__*/React__default['default'].createElement("use", {
+  }), /*#__PURE__*/React__default['default'].createElement("svg", SVGProps$1, /*#__PURE__*/React__default['default'].createElement("use", {
     xlinkHref: "#".concat(type)
   })));
 });
@@ -2723,7 +2812,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
-var _excluded$e = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate"];
+var _excluded$f = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate"];
 var StyledButton$1 = /*#__PURE__*/styled__default['default'](Button).withConfig({
   displayName: "CheckboxBase__StyledButton",
   componentId: "sc-1rcmrlp-0"
@@ -2748,7 +2837,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       disabled = props.disabled,
       children = props.children,
       indeterminate = props.indeterminate,
-      rest = _objectWithoutProperties(props, _excluded$e);
+      rest = _objectWithoutProperties(props, _excluded$f);
 
   var _useState = React.useState(typeof checked === 'boolean' ? checked : defaultChecked),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2813,7 +2902,7 @@ var Checkbox = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 Checkbox.displayName = 'UC-Checkbox';
 
-var _excluded$f = ["className", "button", "onChange", "options", "value", "disabled"];
+var _excluded$g = ["className", "button", "onChange", "options", "value", "disabled"];
 var StyledCheckboxGroup = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CheckboxGroup__StyledCheckboxGroup",
   componentId: "sc-1bljibr-0"
@@ -2829,7 +2918,7 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       disabled = props.disabled,
-      rest = _objectWithoutProperties(props, _excluded$f);
+      rest = _objectWithoutProperties(props, _excluded$g);
 
   var onChangeRef = useLatest(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
@@ -2878,13 +2967,13 @@ var CheckboxGroup = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 CheckboxGroup.displayName = 'UC-CheckboxGroup';
 
-var _excluded$g = ["size"];
+var _excluded$h = ["size"];
 
 /** 单选框 */
 var Radio = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$size = props.size,
       size = _props$size === void 0 ? 16 : _props$size,
-      rest = _objectWithoutProperties(props, _excluded$g);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
   return /*#__PURE__*/React__default['default'].createElement(CheckboxBase, _extends({}, rest, {
     size: size,
@@ -2894,7 +2983,7 @@ var Radio = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Radio.displayName = 'UC-Radio';
 
-var _excluded$h = ["className", "button", "onChange", "options", "value", "disabled"];
+var _excluded$i = ["className", "button", "onChange", "options", "value", "disabled"];
 var StyledRadioGroup = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "RadioGroup__StyledRadioGroup",
   componentId: "sc-psd39l-0"
@@ -2910,7 +2999,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$value = props.value,
       value = _props$value === void 0 ? [] : _props$value,
       disabled = props.disabled,
-      rest = _objectWithoutProperties(props, _excluded$h);
+      rest = _objectWithoutProperties(props, _excluded$i);
 
   var onChangeRef = useLatest(onChange);
   var onCheckboxChange = React.useCallback(function (checked, v) {
@@ -2947,7 +3036,7 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 RadioGroup.displayName = 'UC-RadioGroup';
 
-var _excluded$i = ["disabled", "checked", "defaultChecked", "className", "onChange"];
+var _excluded$j = ["disabled", "checked", "defaultChecked", "className", "onChange"];
 var StyledSwitch = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Switch__StyledSwitch",
   componentId: "sc-1p80du9-0"
@@ -2960,7 +3049,7 @@ var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       defaultChecked = props.defaultChecked,
       className = props.className,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$i);
+      rest = _objectWithoutProperties(props, _excluded$j);
 
   var _useState = React.useState(function () {
     return typeof checked !== 'undefined' ? checked : typeof defaultChecked !== 'undefined' ? defaultChecked : false;
@@ -3046,7 +3135,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   return ErrorBoundary;
 }(React__default['default'].Component);
 
-var _excluded$j = ["type", "textPosition", "className", "dashed", "color", "children"];
+var _excluded$k = ["type", "textPosition", "className", "dashed", "color", "children"];
 var StyledDivider = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Divider__StyledDivider",
   componentId: "sc-wvxm3u-0"
@@ -3072,7 +3161,7 @@ var Divider = function Divider(props) {
       _props$color = props.color,
       color = _props$color === void 0 ? border : _props$color,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$j);
+      rest = _objectWithoutProperties(props, _excluded$k);
 
   var hasText = !!children;
   return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({}, rest, {
@@ -3086,7 +3175,7 @@ var Divider = function Divider(props) {
   }, children) : null);
 };
 
-var _excluded$k = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
+var _excluded$l = ["onChange", "disabled", "multiple", "accept", "capture", "children", "className"];
 var StyledFileInputTrigger = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FileInputTrigger__StyledFileInputTrigger",
   componentId: "sc-z4rp1z-0"
@@ -3103,7 +3192,7 @@ var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(functio
       capture = props.capture,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$k);
+      rest = _objectWithoutProperties(props, _excluded$l);
 
   React.useImperativeHandle(ref, function () {
     return inputRef.current;
@@ -3138,7 +3227,7 @@ var FileInputTrigger = /*#__PURE__*/React__default['default'].forwardRef(functio
 });
 FileInputTrigger.displayName = 'UC-FileInputTrigger';
 
-var _excluded$l = ["onVisible", "onInVisible", "className"];
+var _excluded$m = ["onVisible", "onInVisible", "className"];
 
 /** 路标,可见性发生变化执行回调 */
 var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -3147,7 +3236,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
   var onVisible = props.onVisible,
       onInVisible = props.onInVisible,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$l);
+      rest = _objectWithoutProperties(props, _excluded$m);
 
   var vv = useLatest(onVisible);
   var vi = useLatest(onInVisible);
@@ -3263,7 +3352,7 @@ var useThrottle = function useThrottle(fn) {
   }, fnDeps);
 };
 
-var _excluded$m = ["data", "onItemClick", "className"];
+var _excluded$n = ["data", "onItemClick", "className"];
 var getClassName$2 = prefixClassName('uc-index-list');
 var StyledWrap$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
@@ -3276,7 +3365,7 @@ var IndexList = function IndexList(props) {
       data = _props$data === void 0 ? [] : _props$data,
       onItemClick = props.onItemClick,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$m);
+      rest = _objectWithoutProperties(props, _excluded$n);
 
   var bodyRef = React.useRef();
 
@@ -3408,7 +3497,7 @@ var BackTop = function BackTop(props) {
 
 BackTop.displayName = 'UC-BackTop';
 
-var _excluded$n = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
+var _excluded$o = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
 var StylePopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
   displayName: "Tooltip__StylePopover",
   componentId: "sc-51s5pc-0"
@@ -3429,7 +3518,7 @@ var Tooltip = function Tooltip(props) {
       className = props.className,
       style = props.style,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$n); // 鼠标移到popover内容区，不关闭popover
+      popoverRest = _objectWithoutProperties(props, _excluded$o); // 鼠标移到popover内容区，不关闭popover
 
 
   var ref = React.useRef(0);
@@ -3716,7 +3805,7 @@ function copy(text) {
   return isSuccess;
 }
 
-var _excluded$o = ["text", "onCopy", "children", "className"];
+var _excluded$p = ["text", "onCopy", "children", "className"];
 var StyledWrap$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CopyToClipboard__StyledWrap",
   componentId: "sc-16edrok-0"
@@ -3728,7 +3817,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
       onCopy = props.onCopy,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$o);
+      rest = _objectWithoutProperties(props, _excluded$p);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$3, _extends({}, rest, {
     ref: ref,
@@ -3740,7 +3829,7 @@ var CopyToClipboard = /*#__PURE__*/React__default['default'].forwardRef(function
 });
 CopyToClipboard.displayName = 'UC-CopyToClipboard';
 
-var _excluded$p = ["lines", "children", "className"];
+var _excluded$q = ["lines", "children", "className"];
 var StyledMultiLines = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Text__StyledMultiLines",
   componentId: "sc-1lf0pma-0"
@@ -3758,7 +3847,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       lines = _props$lines === void 0 ? 1 : _props$lines,
       children = props.children,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$p);
+      rest = _objectWithoutProperties(props, _excluded$q);
 
   return /*#__PURE__*/React__default['default'].createElement(lines > 1 ? StyledMultiLines : StyledLine, _objectSpread2(_objectSpread2({}, rest), {}, {
     className: clsx__default['default']('uc-text', className),
@@ -3768,7 +3857,7 @@ var Text = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Text.displayName = 'UC-Text';
 
-var _excluded$q = ["content", "visible", "modal", "maskStyle", "className"],
+var _excluded$r = ["content", "visible", "modal", "maskStyle", "className"],
     _excluded2 = ["duration"];
 var StyledToast = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Toast__StyledToast",
@@ -3783,7 +3872,7 @@ var Toast = function Toast(props) {
       modal = _props$modal === void 0 ? true : _props$modal,
       maskStyle = props.maskStyle,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$q);
+      rest = _objectWithoutProperties(props, _excluded$r);
 
   return visible ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, /*#__PURE__*/React__default['default'].createElement(Mask, {
     visible: modal,
@@ -3855,12 +3944,12 @@ Toast.hide = function () {
 
 Toast.displayName = 'UC-Toast';
 
-var _excluded$r = ["direction", "className"];
+var _excluded$s = ["direction", "className"];
 var StyledArrow = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IconArrow__StyledArrow",
   componentId: "sc-vejiu7-0"
 })(["display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;svg{transition:transform ", "ms ease-in-out;}&.right{svg{transform:rotate(-90deg);}}&.left{svg{transform:rotate(90deg);}}&.top{svg{transform:rotate(-180deg);}}&.bottom{}"], animationSlow);
-var SVGProps$1 = {
+var SVGProps$2 = {
   width: '1em',
   height: '1em',
   fill: 'currentColor'
@@ -3871,7 +3960,7 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'bottom' : _props$direction,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$r);
+      rest = _objectWithoutProperties(props, _excluded$s);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledArrow, _extends({}, rest, {
     ref: ref,
@@ -3879,14 +3968,14 @@ var IconArrow = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 16 16"
-  }, SVGProps$1), /*#__PURE__*/React__default['default'].createElement("path", {
+  }, SVGProps$2), /*#__PURE__*/React__default['default'].createElement("path", {
     fillRule: "evenodd",
     d: "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
   })));
 });
 IconArrow.displayName = 'UC-IconArrow';
 
-var _excluded$s = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
+var _excluded$t = ["content", "delay", "icon", "speed", "closeable", "className", "onClose", "extra"];
 var StyledNoticeBar = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "NoticeBar__StyledNoticeBar",
   componentId: "sc-zrqize-0"
@@ -3908,7 +3997,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$s);
+      rest = _objectWithoutProperties(props, _excluded$t);
 
   var wrapRef = React.useRef();
   var contentRef = React.useRef();
@@ -3981,7 +4070,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 NoticeBar.displayName = 'UC-NoticeBar';
 
-var _excluded$t = ["children", "offsetTop", "offsetBottom", "zIndex", "target", "onChange"];
+var _excluded$u = ["children", "offsetTop", "offsetBottom", "zIndex", "target", "onChange"];
 
 /** 将页面元素钉在可视范围*/
 var Affix = function Affix(props) {
@@ -3992,7 +4081,7 @@ var Affix = function Affix(props) {
       zIndex = _props$zIndex === void 0 ? 100 : _props$zIndex,
       target = props.target,
       onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$t);
+      rest = _objectWithoutProperties(props, _excluded$u);
 
   var _useState = React.useState({
     affixed: false,
@@ -4120,7 +4209,7 @@ var Affix = function Affix(props) {
 
 Affix.displayName = 'UC-Affix';
 
-var _excluded$u = ["position", "className", "children"];
+var _excluded$v = ["position", "className", "children"];
 var getClassName$3 = prefixClassName('uc-safe-area');
 var StyledWrap$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SafeArea__StyledWrap",
@@ -4133,7 +4222,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
       position = _props$position === void 0 ? 'bottom' : _props$position,
       className = props.className,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$u);
+      rest = _objectWithoutProperties(props, _excluded$v);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({
     ref: ref
@@ -4143,7 +4232,7 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$v = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"];
+var _excluded$w = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"];
 var getClassName$4 = prefixClassName('uc-actionsheet');
 var StyledActionSheet = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "ActionSheet__StyledActionSheet",
@@ -4163,7 +4252,7 @@ var ActionSheet = function ActionSheet(props) {
       onClose = props.onClose,
       className = props.className,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$v);
+      rest = _objectWithoutProperties(props, _excluded$w);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
     className: clsx__default['default'](getClassName$4(), className),
@@ -4204,7 +4293,7 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$w = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
+var _excluded$x = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
     _excluded2$1 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
 var StyledAlertDialog = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "AlertDialog__StyledAlertDialog",
@@ -4236,7 +4325,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className = props.className,
       wrapStyle = props.wrapStyle,
       wait = props.wait,
-      rest = _objectWithoutProperties(props, _excluded$w);
+      rest = _objectWithoutProperties(props, _excluded$x);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({}, rest, {
     ref: ref,
@@ -4357,7 +4446,7 @@ AlertDialog.show = function (props) {
   }))), container);
 };
 
-var _excluded$x = ["value", "length", "className", "mask", "autoFocus", "userVirtualInput", "onFinish", "onFocus", "onChange"];
+var _excluded$y = ["value", "length", "className", "mask", "autoFocus", "userVirtualInput", "onFinish", "onFocus", "onChange"];
 var StyledPasswordInput = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "PasswordInput__StyledPasswordInput",
   componentId: "sc-10w2tte-0"
@@ -4388,7 +4477,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
       onFinish = props.onFinish,
       onFocus = props.onFocus,
       _onChange = props.onChange,
-      rest = _objectWithoutProperties(props, _excluded$x);
+      rest = _objectWithoutProperties(props, _excluded$y);
 
   var arRef = React.useRef(getArray(length));
   var inputRefArray = React.useRef([]);
@@ -4485,7 +4574,7 @@ var PasswordInput = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PasswordInput.displayName = 'UC-PasswordInput';
 
-var _excluded$y = ["onClick", "okText", "customKey", "className"];
+var _excluded$z = ["onClick", "okText", "customKey", "className"];
 var StyledNumberKeyboardBase = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "NumberKeyboardBase__StyledNumberKeyboardBase",
   componentId: "sc-1pcvc0u-0"
@@ -4503,7 +4592,7 @@ var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(funct
       _props$customKey = props.customKey,
       customKey = _props$customKey === void 0 ? '' : _props$customKey,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$y);
+      rest = _objectWithoutProperties(props, _excluded$z);
 
   var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
   return /*#__PURE__*/React__default['default'].createElement(StyledNumberKeyboardBase, _extends({}, rest, {
@@ -4554,7 +4643,7 @@ var NumberKeyboardBase = /*#__PURE__*/React__default['default'].forwardRef(funct
 });
 NumberKeyboardBase.displayName = 'UC-NumberKeyboardBase';
 
-var _excluded$z = ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"];
+var _excluded$A = ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"];
 var StyledPopup = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "NumberKeyboard__StyledPopup",
   componentId: "sc-z3xmg5-0"
@@ -4573,7 +4662,7 @@ var NumberKeyboard = function NumberKeyboard(props) {
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$z);
+      rest = _objectWithoutProperties(props, _excluded$A);
 
   var _useState = React.useState(''),
       _useState2 = _slicedToArray(_useState, 2),
@@ -4660,7 +4749,7 @@ onClickAway) {
   }, []);
 }
 
-var _excluded$A = ["left", "right", "onClose", "onOpen", "autoClose", "closeOnClickOutside", "className", "children"];
+var _excluded$B = ["left", "right", "onClose", "onOpen", "autoClose", "closeOnClickOutside", "className", "children"];
 var getClassName$5 = prefixClassName('uc-swipe-action');
 var StyledSwipeAction = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SwipeAction__StyledSwipeAction",
@@ -4685,7 +4774,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       className = props.className,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$A);
+      rest = _objectWithoutProperties(props, _excluded$B);
 
   var elRef = React.useRef();
 
@@ -4822,7 +4911,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 SwipeAction.displayName = 'UC-SwipeAction';
 
-var _excluded$B = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onPressEnter"];
+var _excluded$C = ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onPressEnter"];
 //#region  style
 var StyledInput = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Input__StyledInput",
@@ -4847,7 +4936,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       clearable = props.clearable,
       onClear = props.onClear,
       onPressEnter = props.onPressEnter,
-      rest = _objectWithoutProperties(props, _excluded$B);
+      rest = _objectWithoutProperties(props, _excluded$C);
 
   var inputRef = React.useRef();
   var isImeModeRef = React.useRef(false);
@@ -4957,7 +5046,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Input.displayName = 'UC-Input';
 
-var _excluded$C = ["className", "style", "header", "children", "footer", "position"];
+var _excluded$D = ["className", "style", "header", "children", "footer", "position"];
 var StyledDrawer = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "Drawer__StyledDrawer",
   componentId: "sc-lvm6xc-0"
@@ -4972,7 +5061,7 @@ var Drawer = function Drawer(props) {
       footer = props.footer,
       _props$position = props.position,
       position = _props$position === void 0 ? 'right' : _props$position,
-      rest = _objectWithoutProperties(props, _excluded$C);
+      rest = _objectWithoutProperties(props, _excluded$D);
 
   var _style = position === 'left' || position === 'right' ? {
     height: '100vh'
@@ -4995,7 +5084,7 @@ var Drawer = function Drawer(props) {
 
 Drawer.displayName = 'UC-Drawer';
 
-var _excluded$D = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
+var _excluded$E = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
 var StyledWrap$5 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Wheel__StyledWrap",
   componentId: "sc-otlop6-0"
@@ -5020,7 +5109,7 @@ var Wheel = function Wheel(props) {
       _props$index = props.index,
       index = _props$index === void 0 ? 0 : _props$index,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$D);
+      rest = _objectWithoutProperties(props, _excluded$E);
 
   var firstItemY = itemHeight * 3;
   var elRef = React.useRef();
@@ -5160,7 +5249,7 @@ var Wheel = function Wheel(props) {
 
 Wheel.displayName = 'UC-Wheel';
 
-var _excluded$E = ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"];
+var _excluded$F = ["className", "onChange", "onWheelChange", "itemHeight", "labelRender", "value", "data"];
 var StyledWrap$6 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "PickerView__StyledWrap",
   componentId: "sc-1ne1yls-0"
@@ -5266,7 +5355,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      rest = _objectWithoutProperties(props, _excluded$E);
+      rest = _objectWithoutProperties(props, _excluded$F);
 
   var cols = 1;
   var cdata = data || []; // 非级联
@@ -5385,7 +5474,7 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 PickerView.displayName = 'UC-PickerView';
 
-var _excluded$F = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "labelRender", "className", "value", "data"];
+var _excluded$G = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "labelRender", "className", "value", "data"];
 var StyledDrawer$1 = /*#__PURE__*/styled__default['default'](Drawer).withConfig({
   displayName: "Picker__StyledDrawer",
   componentId: "sc-1j9idoi-0"
@@ -5413,7 +5502,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       value = _props$value === void 0 ? [] : _props$value,
       _props$data = props.data,
       data = _props$data === void 0 ? [] : _props$data,
-      rest = _objectWithoutProperties(props, _excluded$F);
+      rest = _objectWithoutProperties(props, _excluded$G);
 
   var pickerViewRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -5461,7 +5550,7 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Picker.displayName = 'UC-Picker';
 
-var _excluded$G = ["current", "dotStyle", "className", "direction", "steps"];
+var _excluded$H = ["current", "dotStyle", "className", "direction", "steps"];
 var StyledSteps = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Steps__StyledSteps",
   componentId: "sc-1lhd3k3-0"
@@ -5484,7 +5573,7 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       direction = _props$direction === void 0 ? 'horizontal' : _props$direction,
       _props$steps = props.steps,
       steps = _props$steps === void 0 ? [] : _props$steps,
-      rest = _objectWithoutProperties(props, _excluded$G);
+      rest = _objectWithoutProperties(props, _excluded$H);
 
   var domRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -5655,7 +5744,7 @@ function App(cavansRef) {
   };
 }
 
-var _excluded$H = ["padColor", "penColor", "className"];
+var _excluded$I = ["padColor", "penColor", "className"];
 var StyledSignature = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Signature__StyledSignature",
   componentId: "sc-iq8pms-0"
@@ -5666,7 +5755,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var padColor = props.padColor,
       penColor = props.penColor,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$H);
+      rest = _objectWithoutProperties(props, _excluded$I);
 
   var elRef = React.useRef();
   var canvasRef = React.useRef();
@@ -5705,7 +5794,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Signature.displayName = 'UC-Signature';
 
-var _excluded$I = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "color", "allowClear"];
+var _excluded$J = ["value", "defaultValue", "allowHalf", "readonly", "count", "char", "onChange", "className", "color", "allowClear"];
 var StyledRate = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Rate__StyledRate",
   componentId: "sc-784nos-0"
@@ -5740,7 +5829,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       color = _props$color === void 0 ? '#ffd21e' : _props$color,
       _props$allowClear = props.allowClear,
       allowClear = _props$allowClear === void 0 ? true : _props$allowClear,
-      rest = _objectWithoutProperties(props, _excluded$I);
+      rest = _objectWithoutProperties(props, _excluded$J);
 
   var _useState = React.useState(typeof value === 'number' ? value : defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5790,7 +5879,7 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
 });
 Rate.displayName = 'UC-Rate';
 
-var _excluded$J = ["list", "stayTime", "icon", "closeable", "className", "onClose", "extra"];
+var _excluded$K = ["list", "stayTime", "icon", "closeable", "className", "onClose", "extra"];
 var StyledNoticeList = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "NoticeList__StyledNoticeList",
   componentId: "sc-1cr8sap-0"
@@ -5808,7 +5897,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       className = props.className,
       onClose = props.onClose,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$J);
+      rest = _objectWithoutProperties(props, _excluded$K);
 
   var listRef = React.useRef();
   var wrapRef = React.useRef();
@@ -5891,7 +5980,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 NoticeList.displayName = 'UC-NoticeList';
 
-var _excluded$K = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"];
+var _excluded$L = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"];
 var getClassName$6 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
@@ -5955,7 +6044,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       ratio = _props$ratio === void 0 ? 0.1 : _props$ratio,
       pageStyle = props.pageStyle,
       pageClassName = props.pageClassName,
-      rest = _objectWithoutProperties(props, _excluded$K);
+      rest = _objectWithoutProperties(props, _excluded$L);
 
   var containerRef = React.useRef(null);
   var wrapElRef = React.useRef();
@@ -6176,7 +6265,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 });
 Slide.displayName = 'UC-Slide';
 
-var _excluded$L = ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"];
+var _excluded$M = ["children", "percent", "strokeLinecap", "strokeWidth", "size", "className", "style"];
 var StyledProgressCircle = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ProgressCircle__StyledProgressCircle",
   componentId: "sc-y56d1s-0"
@@ -6195,7 +6284,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
       size = _props$size === void 0 ? 60 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$L);
+      rest = _objectWithoutProperties(props, _excluded$M);
 
   var theme = styled.useTheme() || {};
   var color = props.color || theme.color || primary;
@@ -6238,7 +6327,7 @@ var ProgressCircle = /*#__PURE__*/React__default['default'].forwardRef(function 
 });
 ProgressCircle.displayName = 'UC-ProgressCircle';
 
-var _excluded$M = ["style", "className", "zIndex", "gapX", "gapY", "width", "height", "rotate", "image", "imageWidth", "imageHeight", "content", "fontStyle", "fontWeight", "fontColor", "fontSize", "fontFamily"];
+var _excluded$N = ["style", "className", "zIndex", "gapX", "gapY", "width", "height", "rotate", "image", "imageWidth", "imageHeight", "content", "fontStyle", "fontWeight", "fontColor", "fontSize", "fontFamily"];
 var StyledWaterMark = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "WaterMark__StyledWaterMark",
   componentId: "sc-1sjiaa1-0"
@@ -6276,7 +6365,7 @@ var WaterMark = function WaterMark(props) {
       fontSize = _props$fontSize === void 0 ? 14 : _props$fontSize,
       _props$fontFamily = props.fontFamily,
       fontFamily = _props$fontFamily === void 0 ? 'sans-serif' : _props$fontFamily,
-      rest = _objectWithoutProperties(props, _excluded$M);
+      rest = _objectWithoutProperties(props, _excluded$N);
 
   var _useState = React.useState(''),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6337,7 +6426,7 @@ var WaterMark = function WaterMark(props) {
 
 WaterMark.displayName = 'UC-WaterMark';
 
-var _excluded$N = ["content", "style", "className"],
+var _excluded$O = ["content", "style", "className"],
     _excluded2$2 = ["duration"];
 var transitionDuration$2 = animationNormal;
 var StyledNotify = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -6351,7 +6440,7 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var content = props.content,
       style = props.style,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$N);
+      rest = _objectWithoutProperties(props, _excluded$O);
 
   var elRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -6443,7 +6532,7 @@ Notify.show = function (props) {
 
 Notify.displayName = 'UC-Notify';
 
-var _excluded$O = ["children", "className", "content", "badgeStyle"];
+var _excluded$P = ["children", "className", "content", "badgeStyle"];
 var StyledBadge = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Badge__StyledBadge",
   componentId: "sc-usucgg-0"
@@ -6455,7 +6544,7 @@ var Badge = function Badge(props) {
       className = props.className,
       content = props.content,
       badgeStyle = props.badgeStyle,
-      rest = _objectWithoutProperties(props, _excluded$O);
+      rest = _objectWithoutProperties(props, _excluded$P);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledBadge, _extends({}, rest, {
     className: clsx__default['default']('uc-badge', className)
@@ -6470,7 +6559,7 @@ var Badge = function Badge(props) {
 
 Badge.displayName = 'UC-Badge';
 
-var _excluded$P = ["size", "className", "shape", "style", "children"];
+var _excluded$Q = ["size", "className", "shape", "style", "children"];
 var StyledAvatar = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Avatar__StyledAvatar",
   componentId: "sc-1moyxql-0"
@@ -6485,7 +6574,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       shape = _props$shape === void 0 ? 'circle' : _props$shape,
       style = props.style,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$P);
+      rest = _objectWithoutProperties(props, _excluded$Q);
 
   var s = _objectSpread2({
     width: size,
@@ -6503,7 +6592,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Avatar.displayName = 'UC-Avatar';
 
-var _excluded$Q = ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"];
+var _excluded$R = ["className", "visible", "onClose", "images", "onIndexChange", "prev", "next", "showPrevNextButton", "maskStyle"];
 var StyledImageViewer = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ImageViewer__StyledImageViewer",
   componentId: "sc-oqxxes-0"
@@ -6527,7 +6616,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       _props$showPrevNextBu = props.showPrevNextButton,
       showPrevNextButton = _props$showPrevNextBu === void 0 ? false : _props$showPrevNextBu,
       maskStyle = props.maskStyle,
-      rest = _objectWithoutProperties(props, _excluded$Q);
+      rest = _objectWithoutProperties(props, _excluded$R);
 
   var _useState = React.useState(Array.isArray(images) ? images : [images]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6622,7 +6711,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ImageViewer.displayName = 'UC-ImageViewer';
 
-var _excluded$R = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
+var _excluded$S = ["closable", "visible", "onClose", "className", "header", "children", "footer"];
 var StyledModal = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "Modal__StyledModal",
   componentId: "sc-1wtmr6p-0"
@@ -6637,7 +6726,7 @@ var Modal = function Modal(props) {
       header = props.header,
       children = props.children,
       footer = props.footer,
-      rest = _objectWithoutProperties(props, _excluded$R);
+      rest = _objectWithoutProperties(props, _excluded$S);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledModal, _extends({}, rest, {
     visible: visible,
@@ -6659,7 +6748,7 @@ var Modal = function Modal(props) {
 
 Modal.displayName = 'UC-Modal';
 
-var _excluded$S = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
+var _excluded$T = ["content", "trigger", "placement", "arrow", "offset", "className", "closeOnClick", "hoverDelay", "closeOnClickOutside", "children"];
 var StyledPopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
   displayName: "PopMenu__StyledPopover",
   componentId: "sc-28uxwy-0"
@@ -6695,7 +6784,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       _props$closeOnClickOu = props.closeOnClickOutside,
       closeOnClickOutside = _props$closeOnClickOu === void 0 ? true : _props$closeOnClickOu,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$S);
+      popoverRest = _objectWithoutProperties(props, _excluded$T);
 
   var timerRef = React.useRef(0);
 
@@ -6770,7 +6859,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 PopMenu.displayName = 'UC-PopMenu';
 
-var _excluded$T = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
+var _excluded$U = ["placement", "icon", "className", "children", "title", "okText", "okButtonProps", "cancelButtonProps", "cancelText", "arrow", "onOk", "closeOnClick", "onCancel"];
 var StyledMenu = /*#__PURE__*/styled__default['default'](PopMenu).withConfig({
   displayName: "PopConfirm__StyledMenu",
   componentId: "sc-1xornwa-0"
@@ -6811,7 +6900,7 @@ var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       _props$closeOnClick = props.closeOnClick,
       closeOnClick = _props$closeOnClick === void 0 ? true : _props$closeOnClick,
       onCancel = props.onCancel,
-      popomenuRest = _objectWithoutProperties(props, _excluded$T);
+      popomenuRest = _objectWithoutProperties(props, _excluded$U);
 
   var popmenuRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -7130,7 +7219,7 @@ var locales = /*#__PURE__*/Object.freeze({
   en: en
 });
 
-var _excluded$U = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
+var _excluded$V = ["range", "className", "locale", "dateRender", "disabledDate", "onChange", "value"];
 //#region styled
 var StyledWrap$7 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "calendar__StyledWrap",
@@ -7155,7 +7244,7 @@ var Calendar = /*#__PURE__*/React__default['default'].forwardRef(function (props
       onChange = props.onChange,
       _props$value = props.value,
       value = _props$value === void 0 ? new Date() : _props$value,
-      rest = _objectWithoutProperties(props, _excluded$U);
+      rest = _objectWithoutProperties(props, _excluded$V);
 
   var max = props.max,
       min = props.min;
@@ -7254,7 +7343,7 @@ var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   }, deps);
 };
 
-var _excluded$V = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
+var _excluded$W = ["className", "value", "onOk", "onChange", "minYear", "maxYear", "locale"];
 var locales$1 = {
   zh: {
     year: '年',
@@ -7324,7 +7413,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       maxYear = _props$maxYear === void 0 ? 2030 : _props$maxYear,
       _props$locale = props.locale,
       locale = _props$locale === void 0 ? 'zh' : _props$locale,
-      rest = _objectWithoutProperties(props, _excluded$V);
+      rest = _objectWithoutProperties(props, _excluded$W);
 
   var _useState = React.useState(getData(minYear, maxYear, locale)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7390,7 +7479,7 @@ var DatePicker = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 DatePicker.displayName = 'UC-DatePicker';
 
-var _excluded$W = ["text", "colorDark", "colorLight", "size", "className", "style"];
+var _excluded$X = ["text", "colorDark", "colorLight", "size", "className", "style"];
 
 /** 二维码 */
 var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7403,7 +7492,7 @@ var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       size = _props$size === void 0 ? 128 : _props$size,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$W);
+      rest = _objectWithoutProperties(props, _excluded$X);
 
   var domRef = React.useRef();
   var qrRef = React.useRef();
@@ -7440,7 +7529,7 @@ var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 QRCode.displayName = 'UC-QRCode';
 
-var _excluded$X = ["children", "onChange", "className", "animated", "keys"];
+var _excluded$Y = ["children", "onChange", "className", "animated", "keys"];
 
 /**
  *  子项，放在Collapse里面
@@ -7534,7 +7623,7 @@ var Collapse = function Collapse(_ref) {
       animated = _ref.animated,
       _ref$keys = _ref.keys,
       keys = _ref$keys === void 0 ? '' : _ref$keys,
-      rest = _objectWithoutProperties(_ref, _excluded$X);
+      rest = _objectWithoutProperties(_ref, _excluded$Y);
 
   var count = React__default['default'].Children.count(children); // 手风琴模式
 
@@ -7622,7 +7711,7 @@ var Collapse$1 = attachPropertiesToComponent(Collapse, {
   Item: Item
 });
 
-var _excluded$Y = ["trackColor", "fillColor", "height", "percent", "className", "style"];
+var _excluded$Z = ["trackColor", "fillColor", "height", "percent", "className", "style"];
 
 /** 进度条 */
 var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7635,7 +7724,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       percent = _props$percent === void 0 ? 0 : _props$percent,
       className = props.className,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$Y);
+      rest = _objectWithoutProperties(props, _excluded$Z);
 
   var theme = styled.useTheme() || {};
   var color = theme.color || primary;
@@ -7659,7 +7748,7 @@ var ProgressBar = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 ProgressBar.displayName = 'UC-ProgressBar';
 
-var _excluded$Z = ["children"];
+var _excluded$_ = ["children"];
 var StyledWrap$8 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AutoCenter__StyledWrap",
   componentId: "sc-eqv38w-0"
@@ -7668,7 +7757,7 @@ var StyledWrap$8 = /*#__PURE__*/styled__default['default'].div.withConfig({
 
 var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$Z);
+      rest = _objectWithoutProperties(props, _excluded$_);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$8, _extends({}, rest, {
     ref: ref,
@@ -7679,7 +7768,7 @@ var AutoCenter = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 AutoCenter.displayName = 'UC-AutoCenter';
 
-var _excluded$_ = ["number", "delay", "className"];
+var _excluded$$ = ["number", "delay", "className"];
 
 /** 滚动数字 */
 var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -7687,7 +7776,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 200 : _props$delay,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$_);
+      rest = _objectWithoutProperties(props, _excluded$$);
 
   var spring = web.useSpring({
     from: {
@@ -7706,7 +7795,7 @@ var RollingNumber = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 RollingNumber.displayName = 'UC-RollingNumber';
 
-var _excluded$$ = ["className", "color", "duration", "startScale", "children", "block"];
+var _excluded$10 = ["className", "color", "duration", "startScale", "children", "block"];
 var StyledWrap$9 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Ripple__StyledWrap",
   componentId: "sc-cbwg15-0"
@@ -7723,7 +7812,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       startScale = _props$startScale === void 0 ? 0.3 : _props$startScale,
       children = props.children,
       block = props.block,
-      rest = _objectWithoutProperties(props, _excluded$$);
+      rest = _objectWithoutProperties(props, _excluded$10);
 
   var elRef = React.useRef(null);
   var isRunningRef = React.useRef(false);
@@ -7820,7 +7909,7 @@ var Ripple = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Ripple.displayName = 'UC-Ripple';
 
-var _excluded$10 = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
+var _excluded$11 = ["pullingText", "canReleaseText", "refreshingText", "completeText", "completeDelay", "onRefresh", "headHeight", "threshold", "className", "renderText", "children", "style"];
 var StyledWrap$a = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "PullToRefresh__StyledWrap",
   componentId: "sc-159qm0m-0"
@@ -7847,7 +7936,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       renderText = props.renderText,
       children = props.children,
       style = props.style,
-      rest = _objectWithoutProperties(props, _excluded$10);
+      rest = _objectWithoutProperties(props, _excluded$11);
 
   var _useState = React.useState('init'),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8133,7 +8222,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
-var _excluded$11 = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
+var _excluded$12 = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
 
 /**
  * get pages arr
@@ -8199,7 +8288,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       showIfOnePage = props.showIfOnePage,
       onPageChange = props.onPageChange,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$11);
+      rest = _objectWithoutProperties(props, _excluded$12);
 
   var domRef = React.useRef();
 
@@ -8287,7 +8376,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 Pagination.displayName = 'UC-Pagination';
 
-var _excluded$12 = ["image", "desc", "className", "extra"];
+var _excluded$13 = ["image", "desc", "className", "extra"];
 var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Result__StyledWrap",
   componentId: "sc-1xsmtez-0"
@@ -8299,7 +8388,7 @@ var Result = function Result(props) {
       desc = props.desc,
       className = props.className,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$12);
+      rest = _objectWithoutProperties(props, _excluded$13);
 
   var imgNode = typeof image === 'string' ? /*#__PURE__*/React__default['default'].createElement("img", {
     src: image,
@@ -8318,7 +8407,7 @@ var Result = function Result(props) {
 
 Result.displayName = 'UC-Result';
 
-var _excluded$13 = ["image", "desc", "className"];
+var _excluded$14 = ["image", "desc", "className"];
 var StyledResult = /*#__PURE__*/styled__default['default'](Result).withConfig({
   displayName: "Empty__StyledResult",
   componentId: "sc-1u07bdn-0"
@@ -8352,7 +8441,7 @@ var Empty = function Empty(props) {
       _props$desc = props.desc,
       desc = _props$desc === void 0 ? '暂无数据' : _props$desc,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$13);
+      rest = _objectWithoutProperties(props, _excluded$14);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledResult, _extends({}, rest, {
     className: clsx__default['default']('uc-empty', className),
@@ -8363,7 +8452,7 @@ var Empty = function Empty(props) {
 
 Empty.displayName = 'UC-Empty';
 
-var _excluded$14 = ["items", "index", "defaultIndex", "onChange", "className"];
+var _excluded$15 = ["items", "index", "defaultIndex", "onChange", "className"];
 var StyledWrapper$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SideBar__StyledWrapper",
   componentId: "sc-nyu3mo-0"
@@ -8381,7 +8470,7 @@ var SideBar = function SideBar(_ref) {
       defaultIndex = _ref$defaultIndex === void 0 ? 0 : _ref$defaultIndex,
       onChange = _ref.onChange,
       className = _ref.className,
-      rest = _objectWithoutProperties(_ref, _excluded$14);
+      rest = _objectWithoutProperties(_ref, _excluded$15);
 
   var _useState = React.useState(typeof index === 'undefined' ? defaultIndex : index),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8432,7 +8521,7 @@ var SideBar = function SideBar(_ref) {
   }));
 };
 
-var _excluded$15 = ["dataList", "dataRender", "onSort", "config", "className"];
+var _excluded$16 = ["dataList", "dataRender", "onSort", "config", "className"];
 var StyledWrapper$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SortableList__StyledWrapper",
   componentId: "sc-tk9dv2-0"
@@ -8470,7 +8559,7 @@ var SortableList = function SortableList(props) {
       onSort = props.onSort,
       config = props.config,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$15);
+      rest = _objectWithoutProperties(props, _excluded$16);
 
   var wrapElRef = React.useRef();
   var keyedList = addKeyToList(dataList);
@@ -8523,7 +8612,7 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$16 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
+var _excluded$17 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 //#region  style
 var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Stepper__StyledWrap",
@@ -8560,7 +8649,7 @@ var Stepper = function Stepper(props) {
       disabled = props.disabled,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$16);
+      rest = _objectWithoutProperties(props, _excluded$17);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8620,7 +8709,7 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$17 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
+var _excluded$18 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 //#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SearchBar__StyledWrap",
@@ -8638,7 +8727,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _onFocus = props.onFocus,
       onCancel = props.onCancel,
       onSearch = props.onSearch,
-      inputProps = _objectWithoutProperties(props, _excluded$17);
+      inputProps = _objectWithoutProperties(props, _excluded$18);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8673,7 +8762,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 SearchBar.displayName = 'UC-SearchBar';
 
-var _excluded$18 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
+var _excluded$19 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
 
 //#region  style
 //#endregion
@@ -8704,7 +8793,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       max = props.max,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$18);
+      rest = _objectWithoutProperties(props, _excluded$19);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8749,7 +8838,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 InputNumber.displayName = 'UC-InputNumber';
 
-var _excluded$19 = ["className", "children", "columnGap", "rowGap", "columnCount"];
+var _excluded$1a = ["className", "children", "columnGap", "rowGap", "columnCount"];
 var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Masonry__StyledWrap",
   componentId: "sc-dzi4mt-0"
@@ -8765,7 +8854,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       rowGap = _props$rowGap === void 0 ? 10 : _props$rowGap,
       _props$columnCount = props.columnCount,
       columnCount = _props$columnCount === void 0 ? 2 : _props$columnCount,
-      rest = _objectWithoutProperties(props, _excluded$19);
+      rest = _objectWithoutProperties(props, _excluded$1a);
 
   var wrapElRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -8833,7 +8922,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 Masonry.displayName = 'UC-Masonry';
 
-var _excluded$1a = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
+var _excluded$1b = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
 var getClassName$7 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -8850,7 +8939,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$1a);
+      rest = _objectWithoutProperties(props, _excluded$1b);
 
   var bodyRef = React.useRef();
   var fillRef = React.useRef();
@@ -8902,7 +8991,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 ScrollBox.displayName = 'UC-ScrollBox';
 
-var _excluded$1b = ["children", "className", "ratio"];
+var _excluded$1c = ["children", "className", "ratio"];
 var StyledWrap$h = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AspectRatio__StyledWrap",
   componentId: "sc-1dp29mr-0"
@@ -8916,7 +9005,7 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       className = props.className,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 4 / 3 : _props$ratio,
-      rest = _objectWithoutProperties(props, _excluded$1b);
+      rest = _objectWithoutProperties(props, _excluded$1c);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$h, _extends({}, rest, {
     ref: ref,
@@ -8926,7 +9015,9 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 AspectRatio.displayName = 'UC-AutoCenter';
 
-var _excluded$1c = ["className", "style", "size", "gap", "duration", "iterationCount", "color"];
+var _excluded$1d = ["className", "style", "size", "gap", "iteration", "color"];
+
+var _templateObject$4;
 var getClassName$8 = prefixClassName('uc-dot-spin');
 
 var normalizePx = function normalizePx(n) {
@@ -8937,26 +9028,15 @@ var normalizePx = function normalizePx(n) {
   }
 };
 
-var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
+var dance = styled.keyframes(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n    0% {\n      transform: translateY(0);\n    }\n\n    25% {\n      transform: translateY(-1em);\n    }\n\n    50% {\n      transform: translateY(0);\n    }\n\n    75% {\n      transform: translateY(1em);\n    }\n\n    100% {\n      transform: translateY(0);\n    }\n"])));
+var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "DotSpin__StyledLoader",
   componentId: "sc-10gb303-0"
-})(["display:inline-flex;vertical-align:middle;@keyframes ", "{25%{transform:translateY(-1.1em);}50%{transform:translateY(0px);}75%{transform:translateY(1.1em);}100%{transform:translateY(0px);}}.", "{width:1em;height:1em;border-radius:50%;animation:", "ms linear ", "ms ", " normal both running ", ";&:nth-child(2){animation-delay:", "ms;}&:nth-child(3){animation-delay:", "ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$8('ball'), getClassName$8('item'), function (_ref) {
-  var $duration = _ref.$duration;
-  return $duration;
-}, function (_ref2) {
-  var $duration = _ref2.$duration;
-  return $duration * 0.2;
-}, function (_ref3) {
-  var $iterationCount = _ref3.$iterationCount;
-  return $iterationCount;
-}, getClassName$8('ball'), function (_ref4) {
-  var $duration = _ref4.$duration;
-  return $duration * 0.4;
-}, function (_ref5) {
-  var $duration = _ref5.$duration;
-  return $duration * 0.6;
-}, function (_ref6) {
-  var $gap = _ref6.$gap;
+})(["display:inline-flex;vertical-align:middle;.", "{width:1em;height:1em;border-radius:50%;animation:600ms linear 200ms ", " normal both running ", ";&:nth-child(2){animation-delay:360ms;}&:nth-child(3){animation-delay:520ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$8('item'), function (_ref) {
+  var $iteration = _ref.$iteration;
+  return $iteration;
+}, dance, function (_ref2) {
+  var $gap = _ref2.$gap;
   return normalizePx($gap);
 });
 /** 加载指示器,三个跳动的小球 */
@@ -8968,19 +9048,16 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       size = _props$size === void 0 ? 3 : _props$size,
       _props$gap = props.gap,
       gap = _props$gap === void 0 ? 4 : _props$gap,
-      _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 600 : _props$duration,
-      _props$iterationCount = props.iterationCount,
-      iterationCount = _props$iterationCount === void 0 ? 1 : _props$iterationCount,
+      _props$iteration = props.iteration,
+      iteration = _props$iteration === void 0 ? 1 : _props$iteration,
       _props$color = props.color,
       color = _props$color === void 0 ? '#d9d9d9' : _props$color,
-      rest = _objectWithoutProperties(props, _excluded$1c);
+      rest = _objectWithoutProperties(props, _excluded$1d);
 
-  return /*#__PURE__*/React__default['default'].createElement(StyledLoader, _extends({}, rest, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$1, _extends({}, rest, {
     ref: ref,
     $gap: gap,
-    $duration: duration,
-    $iterationCount: iterationCount,
+    $iteration: iteration,
     className: clsx__default['default'](className, getClassName$8()),
     style: _objectSpread2({
       fontSize: size
@@ -8997,97 +9074,10 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 DotSpin.displayName = 'UC-DotSpin';
 
-var _excluded$1d = ["className", "duration", "showCircle"];
-
-var _templateObject$3;
-var circle = styled.keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 1, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 78.5, 314;\n    stroke-dashoffset: -29;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
-var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
-  displayName: "BallSpin__StyledLoader",
-  componentId: "sc-1f3hu62-0"
-})(["display:inline-flex;vertical-align:middle;.my-circle{animation:", " ", "ms linear infinite;}"], circle, function (_ref) {
-  var $duration = _ref.$duration;
-  return $duration;
-});
-var SVGProps$2 = {
-  width: '1.25em',
-  height: '1.25em',
-  strokeWidth: 8,
-  fill: 'none'
-};
-/** 转圈圈spin */
-
-var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var className = props.className,
-      _props$duration = props.duration,
-      duration = _props$duration === void 0 ? 640 : _props$duration,
-      showCircle = props.showCircle,
-      rest = _objectWithoutProperties(props, _excluded$1d);
-
-  var elRef = React__default['default'].useRef();
-  var idRef = React__default['default'].useRef(nanoid.nanoid());
-  React__default['default'].useImperativeHandle(ref, function () {
-    return elRef.current;
-  });
-  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$1, _extends({
-    ref: elRef,
-    $duration: duration
-  }, rest, {
-    className: clsx__default['default'](className, 'uc-ball-spin')
-  }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
-    viewBox: "0 0 120 120"
-  }, SVGProps$2), /*#__PURE__*/React__default['default'].createElement("defs", null, /*#__PURE__*/React__default['default'].createElement("linearGradient", {
-    id: idRef.current,
-    x1: "100%",
-    y1: "0%",
-    x2: "100%",
-    y2: "100%"
-  }, /*#__PURE__*/React__default['default'].createElement("stop", {
-    offset: "0%",
-    style: {
-      stopOpacity: 1,
-      stopColor: 'currentColor'
-    }
-  }), /*#__PURE__*/React__default['default'].createElement("stop", {
-    offset: "50%",
-    style: {
-      stopOpacity: 0.9,
-      stopColor: 'currentColor'
-    }
-  }), /*#__PURE__*/React__default['default'].createElement("stop", {
-    offset: "100%",
-    style: {
-      stopOpacity: 0.1,
-      stopColor: 'currentColor'
-    }
-  }))), /*#__PURE__*/React__default['default'].createElement("circle", {
-    className: "my-circle",
-    r: "50",
-    cx: "60",
-    cy: "60",
-    stroke: "url(#".concat(idRef.current, ")"),
-    strokeLinecap: "round",
-    transform: "rotate(-180,60,60)"
-  }), /*#__PURE__*/React__default['default'].createElement("circle", {
-    className: "my-circle",
-    r: "50",
-    cx: "60",
-    cy: "60",
-    stroke: "url(#".concat(idRef.current, ")"),
-    strokeLinecap: "round",
-    transform: "rotate(0,60,60)"
-  }), showCircle && /*#__PURE__*/React__default['default'].createElement("circle", {
-    r: "14",
-    cx: "60",
-    cy: "60",
-    stroke: "currentColor"
-  })));
-});
-BallSpin.displayName = 'UC-BallSpin';
-
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
-})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;border-radius:8px;font-size:15px;.uc-spin{font-size:32px;}"]);
+})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;border-radius:8px;font-size:15px;.uc-ball-spin{font-size:32px;}.uc-spin{font-size:40px;}"]);
 /**
  * 加载中, 只有静态调用
  *
@@ -9101,13 +9091,16 @@ var Loading = function Loading() {
  * Toast show loading with text
  *
  * @param {React.ReactNode} [text='Loading...']
+ * @param {number} [type=ball | wechat] 风格
  * @param {number} [space=16] 内容和spin距离
+ *
  */
 
 
 var show = function show() {
   var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Loading...';
-  var space = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 16;
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ball';
+  var space = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
   Toast.show({
     content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, /*#__PURE__*/React__default['default'].createElement(Space, {
       direction: "vertical",
@@ -9115,7 +9108,7 @@ var show = function show() {
       style: {
         width: 100
       }
-    }, /*#__PURE__*/React__default['default'].createElement(Spin, null), text)),
+    }, type == 'ball' ? /*#__PURE__*/React__default['default'].createElement(BallSpin, null) : /*#__PURE__*/React__default['default'].createElement(Spin, null), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
@@ -9569,6 +9562,12 @@ Object.defineProperty(exports, 'useSpring', {
     return web.useSpring;
   }
 });
+Object.defineProperty(exports, 'nanoid', {
+  enumerable: true,
+  get: function () {
+    return nanoid.nanoid;
+  }
+});
 Object.defineProperty(exports, 'Popover', {
   enumerable: true,
   get: function () {
@@ -9585,12 +9584,6 @@ Object.defineProperty(exports, 'TouchElement', {
   enumerable: true,
   get: function () {
     return Touch.TouchElement;
-  }
-});
-Object.defineProperty(exports, 'nanoid', {
-  enumerable: true,
-  get: function () {
-    return nanoid.nanoid;
   }
 });
 Object.defineProperty(exports, 'useTranslation', {

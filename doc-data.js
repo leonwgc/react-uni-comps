@@ -379,6 +379,14 @@ module.exports = [
         name: 'BackTop',
         title: 'BackTop 回到顶部',
       },
+      {
+        name: 'BallSpin',
+        title: 'BallSpin 球形加载指示器',
+      },
+      {
+        name: 'DotSpin',
+        title: 'DotSpin 点状加载指示器',
+      },
     ],
   },
   {

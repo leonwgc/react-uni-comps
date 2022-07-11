@@ -125,24 +125,11 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="防止重复click">
-        <Space wrap>
-          <Button
-            wait
-            onClick={() => {
-              console.log(1);
-            }}
-          >
-            1s内点一次
-          </Button>
+        <Space>
+          <Button wait>1s点一次</Button>
 
-          <Button
-            outlined
-            wait={2000}
-            onClick={() => {
-              console.log(2);
-            }}
-          >
-            2s内点一次
+          <Button type="primary" wait={2000}>
+            2s点一次
           </Button>
         </Space>
       </DemoBlock>
