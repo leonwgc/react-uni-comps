@@ -7,7 +7,9 @@ import type { BaseProps } from './types';
 
 const StylePopover = styled(Popover)`
   color: #fff;
-  padding: 12px;
+  padding: 6px 8px;
+  max-width: 250px;
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 type Offset = { x?: number; y?: number };
@@ -23,7 +25,7 @@ export type Props = {
   children: React.ReactElement;
   /** 弹框自定义偏移 */
   offset?: Offset;
-  /** 
+  /**
    * hover触发显示，关闭的timeout时间
    * @default 100
    *  */
@@ -46,9 +48,8 @@ const Tooltip = (props: Props): React.ReactElement => {
     arrow = true,
     offset,
     className,
-    style,
     children,
-    ...popoverRest
+    ...rest
   } = props;
   // 鼠标移到popover内容区，不关闭popover
   const ref = useRef<number>(0);
@@ -83,9 +84,8 @@ const Tooltip = (props: Props): React.ReactElement => {
 
   return (
     <StylePopover
-      {...popoverRest}
+      {...rest}
       className={clsx('uc-tooltip', className)}
-      style={{ backgroundColor: 'rgb(0, 0, 0, 0.85)', ...style }}
       visible={visible}
       placement={placement}
       content={title}
