@@ -1,8 +1,25 @@
 import React from 'react';
+declare type Config = {
+    /**
+     * spin 类型
+     * @default ball
+     */
+    type?: 'ball' | 'wechat';
+    /**
+     * spin和内容间距
+     * @default 16
+     */
+    gap?: number;
+    /**
+     * spin大小
+     * @default 32
+     */
+    spinSize?: number;
+};
 declare const _default: React.FC<{}> & {
-    /** show loading with text */
-    show: (text?: React.ReactNode, type?: "ball" | "wechat", space?: number) => void;
-    /** hide loading */
+    /** 显示loading */
+    show: (text?: React.ReactNode, config?: Config) => void;
+    /** 隐藏loading */
     hide: () => void;
 };
 export default _default;

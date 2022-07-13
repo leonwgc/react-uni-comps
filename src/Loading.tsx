@@ -15,14 +15,6 @@ const StyledLoading = styled.div`
   justify-content: center;
   border-radius: 8px;
   font-size: 15px;
-
-  .uc-ball-spin {
-    font-size: 32px;
-  }
-
-  .uc-spin {
-    font-size: 40px;
-  }
 `;
 
 /**
@@ -34,24 +26,39 @@ const Loading: React.FC = () => {
   return null;
 };
 
+type Config = {
+  /**
+   * spin 类型
+   * @default ball
+   */
+  type?: 'ball' | 'wechat';
+  /**
+   * spin和内容间距
+   * @default 16
+   */
+  gap?: number;
+  /**
+   * spin大小
+   * @default 32
+   */
+  spinSize?: number;
+};
+
 /**
- * Toast show loading with text
- *
- * @param {React.ReactNode} [text='Loading...']
- * @param {number} [type=ball | wechat] 风格
- * @param {number} [space=16] 内容和spin距离
- *
+ * @description 显示Loading 提示
+ * @param {React.ReactNode} text
+ * @param {Config} config
  */
-const show = (
-  text: React.ReactNode = 'Loading...',
-  type: 'ball' | 'wechat' = 'ball',
-  space = 16
-) => {
+const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 16, spinSize: 32 }) => {
+  const { type = 'ball', gap = 16, spinSize = 32 } = config;
+
   Toast.show({
     content: (
       <StyledLoading>
-        <Space direction="vertical" size={space} style={{ width: 100 }}>
-          {type == 'ball' ? <BallSpin /> : <Spin />}
+        <Space direction="vertical" size={text ? gap : 0}>
+          <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
+            {type == 'ball' ? <BallSpin /> : <Spin />}
+          </span>
           {text}
         </Space>
       </StyledLoading>
@@ -66,8 +73,8 @@ const hide = () => {
 };
 
 export default attachPropertiesToComponent(Loading, {
-  /** show loading with text */
+  /** 显示loading */
   show,
-  /** hide loading */
+  /** 隐藏loading */
   hide,
 });

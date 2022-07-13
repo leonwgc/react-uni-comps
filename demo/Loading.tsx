@@ -42,7 +42,7 @@ export default function App() {
         <Space>
           <Button
             onClick={() => {
-              Loading.show('努力提交中..', 'wechat');
+              Loading.show('努力提交中..', { type: 'wechat', spinSize: 46, gap: 8 });
 
               setTimeout(() => {
                 Loading.hide();
