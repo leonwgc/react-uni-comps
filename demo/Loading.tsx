@@ -42,14 +42,36 @@ export default function App() {
         <Space>
           <Button
             onClick={() => {
-              Loading.show('努力提交中..', { type: 'wechat', spinSize: 46, gap: 8 });
+              Loading.show('努力提交中..', {
+                type: 'wechat',
+              });
 
               setTimeout(() => {
                 Loading.hide();
               }, 1000);
             }}
           >
-            微信风格loading
+            微信风格Spin
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="自定义样式">
+        <Space>
+          <Button
+            onClick={() => {
+              Loading.show('so big', {
+                spinSize: 60,
+                gap: 8,
+                containerStyle: { width: 180, height: 180, fontSize: 20 },
+              });
+
+              setTimeout(() => {
+                Loading.hide();
+              }, 1000);
+            }}
+          >
+            自定义样式
           </Button>
         </Space>
       </DemoBlock>

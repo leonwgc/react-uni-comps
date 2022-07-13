@@ -42,6 +42,10 @@ type Config = {
    * @default 32
    */
   spinSize?: number;
+  /**
+   * 容器样式
+   */
+  containerStyle?: React.CSSProperties;
 };
 
 /**
@@ -50,11 +54,11 @@ type Config = {
  * @param {Config} config
  */
 const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 16, spinSize: 32 }) => {
-  const { type = 'ball', gap = 16, spinSize = 32 } = config;
+  const { type = 'ball', gap = 16, spinSize = 32, containerStyle } = config;
 
   Toast.show({
     content: (
-      <StyledLoading>
+      <StyledLoading style={containerStyle}>
         <Space direction="vertical" size={text ? gap : 0}>
           <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
             {type == 'ball' ? <BallSpin /> : <Spin />}

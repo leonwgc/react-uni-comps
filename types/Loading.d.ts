@@ -15,6 +15,10 @@ declare type Config = {
      * @default 32
      */
     spinSize?: number;
+    /**
+     * 容器样式
+     */
+    containerStyle?: React.CSSProperties;
 };
 declare const _default: React.FC<{}> & {
     /** 显示loading */
