@@ -34,9 +34,9 @@ var Button = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 1000 : 0;
   var usingWait = waitTime > 0;
-  var icon = props.icon || (loading || waiting ? /*#__PURE__*/React.createElement(BallSpin, {
+  var icon = loading || waiting ? /*#__PURE__*/React.createElement(BallSpin, {
     showCircle: false
-  }) : null);
+  }) : props.icon;
   return /*#__PURE__*/React.createElement(StyledButton, __assign({}, rest, {
     ref: ref,
     disabled: disabled,

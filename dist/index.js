@@ -2741,9 +2741,9 @@ var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   var waitTime = typeof wait === 'number' && wait > 0 ? wait : typeof wait === 'boolean' && wait === true ? 1000 : 0;
   var usingWait = waitTime > 0;
-  var icon = props.icon || (loading || waiting ? /*#__PURE__*/React__default['default'].createElement(BallSpin, {
+  var icon = loading || waiting ? /*#__PURE__*/React__default['default'].createElement(BallSpin, {
     showCircle: false
-  }) : null);
+  }) : props.icon;
   return /*#__PURE__*/React__default['default'].createElement(StyledButton, _extends({}, rest, {
     ref: ref,
     disabled: disabled,
@@ -3497,11 +3497,11 @@ var BackTop = function BackTop(props) {
 
 BackTop.displayName = 'UC-BackTop';
 
-var _excluded$o = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
+var _excluded$o = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
 var StylePopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
   displayName: "Tooltip__StylePopover",
   componentId: "sc-51s5pc-0"
-})(["color:#fff;padding:12px;"]);
+})(["color:#fff;padding:6px 8px;max-width:250px;background-color:rgba(0,0,0,0.75);"]);
 
 /** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
@@ -3516,9 +3516,8 @@ var Tooltip = function Tooltip(props) {
       arrow = _props$arrow === void 0 ? true : _props$arrow,
       offset = props.offset,
       className = props.className,
-      style = props.style,
       children = props.children,
-      popoverRest = _objectWithoutProperties(props, _excluded$o); // 鼠标移到popover内容区，不关闭popover
+      rest = _objectWithoutProperties(props, _excluded$o); // 鼠标移到popover内容区，不关闭popover
 
 
   var ref = React.useRef(0);
@@ -3555,11 +3554,8 @@ var Tooltip = function Tooltip(props) {
       active: visible
     })
   };
-  return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({}, popoverRest, {
+  return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({}, rest, {
     className: clsx__default['default']('uc-tooltip', className),
-    style: _objectSpread2({
-      backgroundColor: 'rgb(0, 0, 0, 0.85)'
-    }, style),
     visible: visible,
     placement: placement,
     content: title,
@@ -9136,7 +9132,7 @@ CircleSpin.displayName = 'UC-CircleSpin';
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
-})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;border-radius:8px;font-size:15px;.uc-ball-spin{font-size:32px;}.uc-spin{font-size:40px;}"]);
+})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;font-size:15px;"]);
 /**
  * 加载中, 只有静态调用
  *
@@ -9146,28 +9142,37 @@ var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
 var Loading = function Loading() {
   return null;
 };
+
 /**
- * Toast show loading with text
- *
- * @param {React.ReactNode} [text='Loading...']
- * @param {number} [type=ball | wechat] 风格
- * @param {number} [space=16] 内容和spin距离
- *
+ * @description 显示Loading 提示
+ * @param {React.ReactNode} text
+ * @param {Config} config
  */
-
-
-var show = function show() {
-  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Loading...';
-  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ball';
-  var space = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
+var show = function show(text) {
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    type: 'ball',
+    gap: 16,
+    spinSize: 32
+  };
+  var _config$type = config.type,
+      type = _config$type === void 0 ? 'ball' : _config$type,
+      _config$gap = config.gap,
+      gap = _config$gap === void 0 ? 16 : _config$gap,
+      _config$spinSize = config.spinSize,
+      spinSize = _config$spinSize === void 0 ? 32 : _config$spinSize,
+      containerStyle = config.containerStyle;
   Toast.show({
-    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, /*#__PURE__*/React__default['default'].createElement(Space, {
+    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
+      style: containerStyle
+    }, /*#__PURE__*/React__default['default'].createElement(Space, {
       direction: "vertical",
-      size: space,
+      size: text ? gap : 0
+    }, /*#__PURE__*/React__default['default'].createElement("span", {
       style: {
-        width: 100
+        fontSize: spinSize,
+        display: 'inline-flex'
       }
-    }, type == 'ball' ? /*#__PURE__*/React__default['default'].createElement(BallSpin, null) : /*#__PURE__*/React__default['default'].createElement(Spin, null), text)),
+    }, type == 'ball' ? /*#__PURE__*/React__default['default'].createElement(BallSpin, null) : /*#__PURE__*/React__default['default'].createElement(Spin, null)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
@@ -9180,10 +9185,10 @@ var hide = function hide() {
 };
 
 var Loading$1 = attachPropertiesToComponent(Loading, {
-  /** show loading with text */
+  /** 显示loading */
   show: show,
 
-  /** hide loading */
+  /** 隐藏loading */
   hide: hide
 });
 

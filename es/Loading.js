@@ -6,7 +6,7 @@ import { attachPropertiesToComponent } from './util';
 import Space from './Space';
 import BallSpin from './BallSpin';
 import Spin from './Spin';
-var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  border-radius: 8px;\n  font-size: 15px;\n\n  .uc-ball-spin {\n    font-size: 32px;\n  }\n\n  .uc-spin {\n    font-size: 40px;\n  }\n"], ["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  border-radius: 8px;\n  font-size: 15px;\n\n  .uc-ball-spin {\n    font-size: 32px;\n  }\n\n  .uc-spin {\n    font-size: 40px;\n  }\n"])));
+var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
 /**
  * 加载中, 只有静态调用
  *
@@ -17,36 +17,40 @@ var Loading = function Loading() {
   return null;
 };
 /**
- * Toast show loading with text
- *
- * @param {React.ReactNode} [text='Loading...']
- * @param {number} [type=ball | wechat] 风格
- * @param {number} [space=16] 内容和spin距离
- *
+ * @description 显示Loading 提示
+ * @param {React.ReactNode} text
+ * @param {Config} config
  */
 
 
-var show = function show(text, type, space) {
-  if (text === void 0) {
-    text = 'Loading...';
+var show = function show(text, config) {
+  if (config === void 0) {
+    config = {
+      type: 'ball',
+      gap: 16,
+      spinSize: 32
+    };
   }
 
-  if (type === void 0) {
-    type = 'ball';
-  }
-
-  if (space === void 0) {
-    space = 16;
-  }
-
+  var _a = config.type,
+      type = _a === void 0 ? 'ball' : _a,
+      _b = config.gap,
+      gap = _b === void 0 ? 16 : _b,
+      _c = config.spinSize,
+      spinSize = _c === void 0 ? 32 : _c,
+      containerStyle = config.containerStyle;
   Toast.show({
-    content: /*#__PURE__*/React.createElement(StyledLoading, null, /*#__PURE__*/React.createElement(Space, {
+    content: /*#__PURE__*/React.createElement(StyledLoading, {
+      style: containerStyle
+    }, /*#__PURE__*/React.createElement(Space, {
       direction: "vertical",
-      size: space,
+      size: text ? gap : 0
+    }, /*#__PURE__*/React.createElement("span", {
       style: {
-        width: 100
+        fontSize: spinSize,
+        display: 'inline-flex'
       }
-    }, type == 'ball' ? /*#__PURE__*/React.createElement(BallSpin, null) : /*#__PURE__*/React.createElement(Spin, null), text)),
+    }, type == 'ball' ? /*#__PURE__*/React.createElement(BallSpin, null) : /*#__PURE__*/React.createElement(Spin, null)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
@@ -59,10 +63,10 @@ var hide = function hide() {
 };
 
 export default attachPropertiesToComponent(Loading, {
-  /** show loading with text */
+  /** 显示loading */
   show: show,
 
-  /** hide loading */
+  /** 隐藏loading */
   hide: hide
 });
 var templateObject_1;
