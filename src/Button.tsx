@@ -186,7 +186,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const usingWait = waitTime > 0;
 
-  const icon = props.icon || (loading || waiting ? <BallSpin showCircle={false} /> : null);
+  const icon = loading || waiting ? <BallSpin showCircle={false} /> : props.icon;
 
   return (
     <StyledButton

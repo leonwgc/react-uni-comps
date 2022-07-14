@@ -131,6 +131,10 @@ export default function App() {
           <Button type="primary" wait={2000}>
             2s点一次
           </Button>
+
+          <Button wait icon={<Icon type="uc-icon-sousuo" />}>
+            1s点一次
+          </Button>
         </Space>
       </DemoBlock>
     </PageWrap>
