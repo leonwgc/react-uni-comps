@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Space, Switch } from 'react-uni-comps';
+import { Space, Switch, Button } from 'react-uni-comps';
 
 export default function App() {
   const [c, setC] = useState<boolean>(false);
@@ -14,6 +14,8 @@ export default function App() {
             <Switch checked={c} onChange={setC} />
             {c ? 'checked' : 'unchecked'}
           </Space>
+
+          <Button onClick={() => setC(true)}>set checked</Button>
 
           <Switch checked />
 

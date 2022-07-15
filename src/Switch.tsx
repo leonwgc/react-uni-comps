@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
+import useUpdateEffect from './hooks/useUpdateEffect';
 
 type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   /** 禁用 */
@@ -81,6 +82,12 @@ const Switch = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ? defaultChecked
       : false;
   });
+
+  useUpdateEffect(() => {
+    if (_checked !== checked) {
+      _setChecked(checked);
+    }
+  }, [checked]);
 
   return (
     <StyledSwitch
