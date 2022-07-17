@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Space, Switch, Button } from 'react-uni-comps';
+import { Space, Switch, Icon, Checkbox } from 'react-uni-comps';
 
 export default function App() {
-  const [c, setC] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   return (
     <PageWrap>
-      <DemoBlock title="示例">
-        <Space size={16} wrap>
-          <Space>
-            <Switch checked={c} onChange={setC} />
-            {c ? 'checked' : 'unchecked'}
-          </Space>
+      <DemoBlock title="默认">
+        <Space>
+          <Switch checked={checked} onChange={setChecked} />
 
-          <Button onClick={() => setC(true)}>set checked</Button>
+          <Switch disabled checked={checked} onChange={setChecked} />
 
-          <Switch checked />
+          <Checkbox checked={checked} onChange={setChecked}>
+            开
+          </Checkbox>
+        </Space>
+      </DemoBlock>
 
-          <Space>
-            <Switch defaultChecked /> 默认打开
-          </Space>
+      <DemoBlock title="文本">
+        <Space>
+          <Switch checked={checked} onChange={setChecked} checkedText="开" unCheckedText="关" />
 
-          <Space>
-            <Switch disabled defaultChecked /> 禁用
-          </Space>
-
-          <Space>
-            <Switch disabled /> 禁用
-          </Space>
+          <Switch
+            checked={checked}
+            onChange={setChecked}
+            checkedText={<Icon type="uc-icon-chenggong" />}
+            unCheckedText={<Icon type="uc-icon-guanbi" />}
+          />
         </Space>
       </DemoBlock>
     </PageWrap>

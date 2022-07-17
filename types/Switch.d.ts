@@ -9,5 +9,9 @@ declare const Switch: React.ForwardRefExoticComponent<Omit<React.HTMLAttributes<
     defaultChecked?: boolean;
     /** 变化时回调函数 */
     onChange?: (checked: boolean) => void;
+    /** 选中时的内容 */
+    checkedText?: React.ReactNode;
+    /** 非选中时的内容 */
+    unCheckedText?: React.ReactNode;
 } & React.RefAttributes<HTMLDivElement>>;
 export default Switch;

@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
 import useUpdateEffect from './hooks/useUpdateEffect';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-switch');
 
 type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   /** 禁用 */
@@ -13,6 +16,10 @@ type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   defaultChecked?: boolean;
   /** 变化时回调函数 */
   onChange?: (checked: boolean) => void;
+  /** 选中时的内容 */
+  checkedText?: React.ReactNode;
+  /** 非选中时的内容 */
+  unCheckedText?: React.ReactNode;
 };
 
 const StyledSwitch = styled.div`
@@ -24,7 +31,7 @@ const StyledSwitch = styled.div`
   border: none;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out;
 
   color: inherit;
   cursor: pointer;
@@ -49,7 +56,7 @@ const StyledSwitch = styled.div`
     border-radius: 50%;
     content: ' ';
     cursor: pointer;
-    transition: left 0.3s ease-in-out;
+    transition: left 0.2s ease-in-out;
   }
 
   &.checked {
@@ -69,11 +76,31 @@ const StyledSwitch = styled.div`
       cursor: not-allowed;
     }
   }
+
+  .${getClassName('text')} {
+    font-size: 12px;
+    color: #fff;
+    margin: 0 7px 0 25px;
+    transition: margin 0.2s ease-in-out;
+
+    &.checked {
+      margin: 0 25px 0 7px;
+    }
+  }
 `;
 
 /** 开关 */
 const Switch = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { disabled, checked, defaultChecked, className, onChange, ...rest } = props;
+  const {
+    disabled,
+    checked,
+    defaultChecked,
+    checkedText,
+    unCheckedText,
+    className,
+    onChange,
+    ...rest
+  } = props;
 
   const [_checked, _setChecked] = useState(() => {
     return typeof checked !== 'undefined'
@@ -98,12 +125,16 @@ const Switch = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           onChange?.(!_checked);
         }
       }}
-      className={clsx('uc-switch', className, {
+      className={clsx(getClassName(), className, {
         disabled: disabled,
         checked: _checked,
       })}
       {...rest}
-    ></StyledSwitch>
+    >
+      <span className={clsx(getClassName('text'), { checked: _checked })}>
+        {_checked ? checkedText : unCheckedText}
+      </span>
+    </StyledSwitch>
   );
 });
 

@@ -3036,17 +3036,20 @@ var RadioGroup = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 RadioGroup.displayName = 'UC-RadioGroup';
 
-var _excluded$j = ["disabled", "checked", "defaultChecked", "className", "onChange"];
+var _excluded$j = ["disabled", "checked", "defaultChecked", "checkedText", "unCheckedText", "className", "onChange"];
+var getClassName$2 = prefixClassName('uc-switch');
 var StyledSwitch = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Switch__StyledSwitch",
   componentId: "sc-1p80du9-0"
-})(["position:relative;box-sizing:border-box;width:44px;height:22px;border-radius:100px;border:none;background-color:rgba(0,0,0,0.4);cursor:pointer;transition:all 0.3s ease;color:inherit;cursor:pointer;margin:0;display:inline-flex;align-items:center;outline:0;position:relative;user-select:none;-moz-appearance:none;text-decoration:none;-webkit-appearance:none;-webkit-tap-highlight-color:transparent;vertical-align:middle;&::after{background-color:#fff;position:absolute;left:2px;width:18px;height:18px;border-radius:50%;content:' ';cursor:pointer;transition:left 0.3s ease-in-out;}&.checked{", " ", " &::after{left:calc(100% - 20px);}}&.disabled{cursor:not-allowed;opacity:0.6;&::after{cursor:not-allowed;}}"], getThemeColorCss('background-color'), getThemeColorCss('border-color'));
+})(["position:relative;box-sizing:border-box;width:44px;height:22px;border-radius:100px;border:none;background-color:rgba(0,0,0,0.4);cursor:pointer;transition:all 0.2s ease-in-out;color:inherit;cursor:pointer;margin:0;display:inline-flex;align-items:center;outline:0;position:relative;user-select:none;-moz-appearance:none;text-decoration:none;-webkit-appearance:none;-webkit-tap-highlight-color:transparent;vertical-align:middle;&::after{background-color:#fff;position:absolute;left:2px;width:18px;height:18px;border-radius:50%;content:' ';cursor:pointer;transition:left 0.2s ease-in-out;}&.checked{", " ", " &::after{left:calc(100% - 20px);}}&.disabled{cursor:not-allowed;opacity:0.6;&::after{cursor:not-allowed;}}.", "{font-size:12px;color:#fff;margin:0 7px 0 25px;transition:margin 0.2s ease-in-out;&.checked{margin:0 25px 0 7px;}}"], getThemeColorCss('background-color'), getThemeColorCss('border-color'), getClassName$2('text'));
 /** 开关 */
 
 var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var disabled = props.disabled,
       checked = props.checked,
       defaultChecked = props.defaultChecked,
+      checkedText = props.checkedText,
+      unCheckedText = props.unCheckedText,
       className = props.className,
       onChange = props.onChange,
       rest = _objectWithoutProperties(props, _excluded$j);
@@ -3072,11 +3075,15 @@ var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
         onChange === null || onChange === void 0 ? void 0 : onChange(!_checked);
       }
     },
-    className: clsx__default['default']('uc-switch', className, {
+    className: clsx__default['default'](getClassName$2(), className, {
       disabled: disabled,
       checked: _checked
     })
-  }, rest));
+  }, rest), /*#__PURE__*/React__default['default'].createElement("span", {
+    className: clsx__default['default'](getClassName$2('text'), {
+      checked: _checked
+    })
+  }, _checked ? checkedText : unCheckedText));
 });
 Switch.displayName = 'UC-Switch';
 
@@ -3356,11 +3363,11 @@ var useThrottle = function useThrottle(fn) {
 };
 
 var _excluded$n = ["data", "onItemClick", "className"];
-var getClassName$2 = prefixClassName('uc-index-list');
+var getClassName$3 = prefixClassName('uc-index-list');
 var StyledWrap$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "IndexList__StyledWrap",
   componentId: "sc-6nas4t-0"
-})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$2('body'), getClassName$2('anchor'), getClassName$2('title'), getClassName$2('item'), getClassName$2('side'), getClassName$2('side-item'), getThemeColorCss('background-color'));
+})(["height:100%;position:relative;overflow:hidden;.", "{overflow:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}}.", "{}.", "{position:sticky;top:0;left:0;box-sizing:border-box;color:#333;font-size:14px;padding:8px 16px;background-color:#f5f5f5;}.", "{color:#666;display:flex;align-items:center;box-sizing:border-box;padding:10px 16px;font-size:14px;background-color:#fff;margin:0;}.", "{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:300;.", "{cursor:pointer;color:#999;width:16px;height:16px;display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;font-size:12px;&.active{", ";color:#fff;border-radius:50%;}}}"], getClassName$3('body'), getClassName$3('anchor'), getClassName$3('title'), getClassName$3('item'), getClassName$3('side'), getClassName$3('side-item'), getThemeColorCss('background-color'));
 /** 索引列表 */
 
 var IndexList = function IndexList(props) {
@@ -3392,20 +3399,20 @@ var IndexList = function IndexList(props) {
   });
   useEventListener(bodyRef, 'scroll', onScrollSpy);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$2, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$2(), className)
+    className: clsx__default['default'](getClassName$3(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$2('body'),
+    className: getClassName$3('body'),
     ref: bodyRef
   }, data.map(function (dataItem, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
       "data-index": index,
-      className: getClassName$2('anchor')
+      className: getClassName$3('anchor')
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$2('title')
+      className: getClassName$3('title')
     }, dataItem.title), dataItem.children.map(function (item, idx) {
       return /*#__PURE__*/React__default['default'].createElement("dd", {
-        className: getClassName$2('item'),
+        className: getClassName$3('item'),
         onClick: function onClick() {
           onItemClick === null || onItemClick === void 0 ? void 0 : onItemClick(item);
         },
@@ -3414,12 +3421,12 @@ var IndexList = function IndexList(props) {
       }, item.label);
     }));
   })), /*#__PURE__*/React__default['default'].createElement(Space, {
-    className: getClassName$2('side'),
+    className: getClassName$3('side'),
     direction: "vertical",
     size: 2
   }, data.map(function (item, idx) {
     return /*#__PURE__*/React__default['default'].createElement("a", {
-      className: clsx__default['default'](getClassName$2('side-item'), {
+      className: clsx__default['default'](getClassName$3('side-item'), {
         active: idx === activeIndex
       }),
       key: idx,
@@ -4209,11 +4216,11 @@ var Affix = function Affix(props) {
 Affix.displayName = 'UC-Affix';
 
 var _excluded$v = ["position", "className", "children"];
-var getClassName$3 = prefixClassName('uc-safe-area');
+var getClassName$4 = prefixClassName('uc-safe-area');
 var StyledWrap$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SafeArea__StyledWrap",
   componentId: "sc-622652-0"
-})(["display:block;width:100%;&.", "{padding-top:constant(safe-area-inset-top);padding-top:env(safe-area-inset-top);}&.", "{padding-bottom:constant(safe-area-inset-bottom);padding-bottom:env(safe-area-inset-bottom);}"], getClassName$3('top'), getClassName$3('bottom'));
+})(["display:block;width:100%;&.", "{padding-top:constant(safe-area-inset-top);padding-top:env(safe-area-inset-top);}&.", "{padding-bottom:constant(safe-area-inset-bottom);padding-bottom:env(safe-area-inset-bottom);}"], getClassName$4('top'), getClassName$4('bottom'));
 
 /** 安全区容器 */
 var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -4226,17 +4233,17 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$4, _extends({
     ref: ref
   }, rest, {
-    className: clsx__default['default'](getClassName$3(), getClassName$3(position), className)
+    className: clsx__default['default'](getClassName$4(), getClassName$4(position), className)
   }), children);
 });
 SafeArea.displayName = 'UC-SafeArea';
 
 var _excluded$w = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"];
-var getClassName$4 = prefixClassName('uc-actionsheet');
+var getClassName$5 = prefixClassName('uc-actionsheet');
 var StyledActionSheet = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "ActionSheet__StyledActionSheet",
   componentId: "sc-1wphsp-0"
-})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;background-color:#f5f5f5;user-select:none;.", "{background-color:#fff;display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.", "{border-top:1px solid ", ";background-color:#fff;width:100%;padding:14px;height:55px;text-align:center;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;color:#333;&.disabled{opacity:1;color:#999;}&.default.pc:hover{border-color:", ";}.", "{font-size:12px;margin-top:4px;color:#999;}&:not(:last-child){border-bottom:1px solid ", ";}&.cancel{margin-top:8px;border-bottom:none;}}"], getClassName$4('extra'), border, getClassName$4('action-item'), border, border, getClassName$4('action-item-description'), border);
+})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;background-color:#f5f5f5;user-select:none;.", "{background-color:#fff;display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.", "{border-top:1px solid ", ";background-color:#fff;width:100%;padding:14px;height:55px;text-align:center;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;color:#333;&.disabled{opacity:1;color:#999;}&.default.pc:hover{border-color:", ";}.", "{font-size:12px;margin-top:4px;color:#999;}&:not(:last-child){border-bottom:1px solid ", ";}&.cancel{margin-top:8px;border-bottom:none;}}"], getClassName$5('extra'), border, getClassName$5('action-item'), border, border, getClassName$5('action-item-description'), border);
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -4254,15 +4261,15 @@ var ActionSheet = function ActionSheet(props) {
       rest = _objectWithoutProperties(props, _excluded$w);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$4(), className),
+    className: clsx__default['default'](getClassName$5(), className),
     visible: visible,
     position: "bottom",
     closeOnMaskClick: closeOnMaskClick,
     onClose: onClose
   }), /*#__PURE__*/React__default['default'].createElement(SafeArea, {
-    className: getClassName$4('action-list')
+    className: getClassName$5('action-list')
   }, extra && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$4('extra')
+    className: getClassName$5('extra')
   }, extra), actions.map(function (action, index) {
     return /*#__PURE__*/React__default['default'].createElement(Button, {
       key: index,
@@ -4270,7 +4277,7 @@ var ActionSheet = function ActionSheet(props) {
       style: {
         color: action.color
       },
-      className: clsx__default['default'](getClassName$4('action-item'), {
+      className: clsx__default['default'](getClassName$5('action-item'), {
         disabled: action.disabled
       }),
       onClick: function onClick() {
@@ -4279,10 +4286,10 @@ var ActionSheet = function ActionSheet(props) {
         (_action$onClick = action.onClick) === null || _action$onClick === void 0 ? void 0 : _action$onClick.call(action);
       }
     }, action.text, action.description && /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$4('action-item-description')
+      className: getClassName$5('action-item-description')
     }, action.description));
   }), cancelText && /*#__PURE__*/React__default['default'].createElement(Button, {
-    className: clsx__default['default'](getClassName$4('action-item'), 'cancel'),
+    className: clsx__default['default'](getClassName$5('action-item'), 'cancel'),
     onClick: function onClick() {
       onClose === null || onClose === void 0 ? void 0 : onClose();
       onCancel === null || onCancel === void 0 ? void 0 : onCancel();
@@ -4749,11 +4756,11 @@ onClickAway) {
 }
 
 var _excluded$B = ["left", "right", "onClose", "onOpen", "autoClose", "closeOnClickOutside", "className", "children"];
-var getClassName$5 = prefixClassName('uc-swipe-action');
+var getClassName$6 = prefixClassName('uc-swipe-action');
 var StyledSwipeAction = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SwipeAction__StyledSwipeAction",
   componentId: "sc-k9tztb-0"
-})(["user-select:none;position:relative;display:block;overflow:hidden;cursor:grab;box-sizing:border-box;.", "{transition:transform 0.3s ease-in-out;overflow:visible;display:flex;flex-wrap:nowrap;.", ",.", "{position:absolute;top:0;height:100%;}.", "{left:0px;transform:translate3d(-100%,0,0);}.", "{right:0px;transform:translate3d(100%,0,0);}.", "{width:100%;box-sizing:border-box;position:relative;height:44px;padding:0 16px;display:flex;align-items:center;background:#fff;color:#666;box-sizing:border-box;}.", "{*{pointer-events:none;}}}"], getClassName$5('wrap'), getClassName$5('left'), getClassName$5('right'), getClassName$5('left'), getClassName$5('right'), getClassName$5('middle'), getClassName$5('item'));
+})(["user-select:none;position:relative;display:block;overflow:hidden;cursor:grab;box-sizing:border-box;.", "{transition:transform 0.3s ease-in-out;overflow:visible;display:flex;flex-wrap:nowrap;.", ",.", "{position:absolute;top:0;height:100%;}.", "{left:0px;transform:translate3d(-100%,0,0);}.", "{right:0px;transform:translate3d(100%,0,0);}.", "{width:100%;box-sizing:border-box;position:relative;height:44px;padding:0 16px;display:flex;align-items:center;background:#fff;color:#666;box-sizing:border-box;}.", "{*{pointer-events:none;}}}"], getClassName$6('wrap'), getClassName$6('left'), getClassName$6('right'), getClassName$6('left'), getClassName$6('right'), getClassName$6('middle'), getClassName$6('item'));
 var StyledButton$2 = /*#__PURE__*/styled__default['default'](Button).withConfig({
   displayName: "SwipeAction__StyledButton",
   componentId: "sc-k9tztb-1"
@@ -4824,7 +4831,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     return /*#__PURE__*/React__default['default'].createElement(StyledButton$2, {
       onClick: item.onClick,
       key: idx,
-      className: getClassName$5('item'),
+      className: getClassName$6('item'),
       style: {
         backgroundColor: item.color || primary
       }
@@ -4878,14 +4885,14 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, [startTransform]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwipeAction, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](getClassName$5(), className)
+    className: clsx__default['default'](getClassName$6(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: elRef,
-    className: getClassName$5('wrap'),
+    className: getClassName$6('wrap'),
     onClick: function onClick(e) {
       var _e$target, _e$target$classList;
 
-      if (autoClose && ((_e$target = e.target) === null || _e$target === void 0 ? void 0 : (_e$target$classList = _e$target.classList) === null || _e$target$classList === void 0 ? void 0 : _e$target$classList.contains(getClassName$5('item')))) {
+      if (autoClose && ((_e$target = e.target) === null || _e$target === void 0 ? void 0 : (_e$target$classList = _e$target.classList) === null || _e$target$classList === void 0 ? void 0 : _e$target$classList.contains(getClassName$6('item')))) {
         startTransform('translate3d(0,0,0)', 0);
         setIsOpen(false);
       }
@@ -4894,16 +4901,16 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
     ref: function ref(_ref) {
       return thisRef.current.leftEl = _ref;
     },
-    className: getClassName$5('left')
+    className: getClassName$6('left')
   }, left.map(function (item, idx) {
     return renderAction(item, idx);
   })), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$5('middle')
+    className: getClassName$6('middle')
   }, children), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: function ref(_ref2) {
       return thisRef.current.rightEl = _ref2;
     },
-    className: getClassName$5('right')
+    className: getClassName$6('right')
   }, right.map(function (item, idx) {
     return renderAction(item, idx);
   }))));
@@ -5980,11 +5987,11 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 NoticeList.displayName = 'UC-NoticeList';
 
 var _excluded$L = ["autoPlay", "loop", "onPageChange", "direction", "interval", "duration", "children", "className", "height", "style", "showPageIndicator", "ratio", "pageStyle", "pageClassName"];
-var getClassName$6 = prefixClassName('uc-slide');
+var getClassName$7 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$6('wrap'), getClassName$6('page'), getClassName$6('indicator'), getClassName$6('item'), getClassName$6('item')); //#endregion
+})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$7('wrap'), getClassName$7('page'), getClassName$7('indicator'), getClassName$7('item'), getClassName$7('item')); //#endregion
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -6001,7 +6008,7 @@ var getItems = function getItems(children, loop, height) {
 
     return /*#__PURE__*/React__default['default'].cloneElement(c, {
       key: index,
-      className: clsx__default['default'](getClassName$6('page'), (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
+      className: clsx__default['default'](getClassName$7('page'), (_c$props = c.props) === null || _c$props === void 0 ? void 0 : _c$props.className),
       style: _objectSpread2(_objectSpread2({}, (_c$props2 = c.props) === null || _c$props2 === void 0 ? void 0 : _c$props2.style), {}, {
         height: height
       })
@@ -6223,13 +6230,13 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   return /*#__PURE__*/React__default['default'].createElement(StyledSlide, _extends({
     ref: containerRef
   }, rest, {
-    className: clsx__default['default'](getClassName$6(), className),
+    className: clsx__default['default'](getClassName$7(), className),
     style: _objectSpread2(_objectSpread2({}, style), {}, {
       height: height
     })
   }), /*#__PURE__*/React__default['default'].createElement("div", {
     ref: wrapElRef,
-    className: clsx__default['default'](getClassName$6('wrap'), {
+    className: clsx__default['default'](getClassName$7('wrap'), {
       vertical: direction === 'vertical'
     }),
     onTransitionEnd: function onTransitionEnd() {
@@ -6246,14 +6253,14 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     size: 4,
     direction: direction,
     ref: pageWrapElRef,
-    className: clsx__default['default'](getClassName$6('indicator'), pageClassName, {
+    className: clsx__default['default'](getClassName$7('indicator'), pageClassName, {
       vertical: direction === 'vertical'
     }),
     style: pageStyle
   }, React__default['default'].Children.map(children, function (c, idx) {
     return /*#__PURE__*/React__default['default'].createElement("span", {
       key: idx,
-      className: clsx__default['default'](getClassName$6('item'), {
+      className: clsx__default['default'](getClassName$7('item'), {
         active: pageIndex === idx
       }),
       onClick: function onClick() {
@@ -8922,12 +8929,12 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 Masonry.displayName = 'UC-Masonry';
 
 var _excluded$1b = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
-var getClassName$7 = prefixClassName('uc-scroll-box');
+var getClassName$8 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$7('body'), getClassName$7('track'), getClassName$7('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$8('body'), getClassName$8('track'), getClassName$8('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 
@@ -8973,15 +8980,15 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, 'resize', onScroll);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$g, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](getClassName$7(), className)
+    className: clsx__default['default'](getClassName$8(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$7('body'),
+    className: getClassName$8('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](getClassName$7('track'), indicatorClass),
+    className: clsx__default['default'](getClassName$8('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$7('fill'),
+    className: getClassName$8('fill'),
     style: {
       backgroundColor: fillColor
     },
@@ -9017,7 +9024,7 @@ AspectRatio.displayName = 'UC-AutoCenter';
 var _excluded$1d = ["className", "style", "size", "gap", "iteration", "color"];
 
 var _templateObject$4;
-var getClassName$8 = prefixClassName('uc-dot-spin');
+var getClassName$9 = prefixClassName('uc-dot-spin');
 
 var normalizePx = function normalizePx(n) {
   if (typeof n === 'number') {
@@ -9031,7 +9038,7 @@ var dance = styled.keyframes(_templateObject$4 || (_templateObject$4 = _taggedTe
 var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "DotSpin__StyledLoader",
   componentId: "sc-10gb303-0"
-})(["display:inline-flex;vertical-align:middle;.", "{width:1em;height:1em;border-radius:50%;animation:600ms linear 200ms ", " normal both running ", ";&:nth-child(2){animation-delay:360ms;}&:nth-child(3){animation-delay:520ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$8('item'), function (_ref) {
+})(["display:inline-flex;vertical-align:middle;.", "{width:1em;height:1em;border-radius:50%;animation:600ms linear 200ms ", " normal both running ", ";&:nth-child(2){animation-delay:360ms;}&:nth-child(3){animation-delay:520ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$9('item'), function (_ref) {
   var $iteration = _ref.$iteration;
   return $iteration;
 }, dance, function (_ref2) {
@@ -9057,14 +9064,14 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
     ref: ref,
     $gap: gap,
     $iteration: iteration,
-    className: clsx__default['default'](className, getClassName$8()),
+    className: clsx__default['default'](className, getClassName$9()),
     style: _objectSpread2({
       fontSize: size
     }, style)
   }), [1, 2, 3].map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: item,
-      className: getClassName$8('item'),
+      className: getClassName$9('item'),
       style: {
         background: color
       }
