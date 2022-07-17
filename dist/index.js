@@ -3058,6 +3058,11 @@ var Switch = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       _checked = _useState2[0],
       _setChecked = _useState2[1];
 
+  useUpdateEffect(function () {
+    if (_checked !== checked) {
+      _setChecked(checked);
+    }
+  }, [checked]);
   return /*#__PURE__*/React__default['default'].createElement(StyledSwitch, _extends({
     ref: ref,
     onClick: function onClick() {
