@@ -9,7 +9,6 @@ const StylePopover = styled(Popover)`
   color: #fff;
   padding: 6px 8px;
   max-width: 250px;
-  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 type Offset = { x?: number; y?: number };
@@ -48,6 +47,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     arrow = true,
     offset,
     className,
+    style,
     children,
     ...rest
   } = props;
@@ -86,6 +86,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     <StylePopover
       {...rest}
       className={clsx('uc-tooltip', className)}
+      style={{ background: 'rgba(0, 0, 0, 0.75)', ...style }}
       visible={visible}
       placement={placement}
       content={title}
