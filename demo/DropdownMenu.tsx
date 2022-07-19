@@ -36,7 +36,7 @@ export default function App() {
         {v && (
           <Space className="list" wrap style={{ justifyContent: 'space-between' }}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-              <Button key={item} outlined>
+              <Button key={item} onClick={() => setV(false)}>
                 {item}
               </Button>
             ))}
