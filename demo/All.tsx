@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> DropdownMenu
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('DropdownMenu')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> CircleSpin
           </Space>
         }
