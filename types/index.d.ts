@@ -86,6 +86,7 @@ export { default as DotSpin } from './DotSpin';
 export { default as BallSpin } from './BallSpin';
 export { default as CircleSpin } from './CircleSpin';
 export { default as RoundSpin } from './RoundSpin';
+export { default as Countdown } from './Countdown';
 /** only has static method */
 export { default as Loading } from './Loading';
 /** helper & dom */

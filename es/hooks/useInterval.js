@@ -3,7 +3,7 @@ import useLatest from './useLatest';
 /**
  * 定时器setInterval
  *
- * @param {Func} fn
+ * @param {Func} fn, fn返回false 计时器停止
  * @param {number} delay
  */
 
@@ -12,7 +12,11 @@ function useInterval(fn, delay) {
   useEffect(function () {
     if (typeof delay !== 'number' || delay < 0) return;
     var timer = setInterval(function () {
-      fnRef.current();
+      var rt = fnRef.current();
+
+      if (rt === false) {
+        clearInterval(timer);
+      }
     }, delay);
     return function () {
       clearInterval(timer);

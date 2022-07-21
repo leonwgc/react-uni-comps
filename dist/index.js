@@ -9191,6 +9191,102 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 RoundSpin.displayName = 'UC-RoundSpin';
 
+/**
+ * 定时器setInterval
+ *
+ * @param {Func} fn, fn返回false 计时器停止
+ * @param {number} delay
+ */
+function useInterval(fn, delay) {
+  var fnRef = useLatest(fn);
+  React.useEffect(function () {
+    if (typeof delay !== 'number' || delay < 0) return;
+    var timer = setInterval(function () {
+      var rt = fnRef.current();
+
+      if (rt === false) {
+        clearInterval(timer);
+      }
+    }, delay);
+    return function () {
+      clearInterval(timer);
+    };
+  }, [delay]);
+}
+
+var _excluded$1g = ["millisec", "value", "onFinish", "className", "children"];
+var getClassName$a = prefixClassName('uc-countdown');
+
+/**
+ * 倒计时
+ * @param props
+ * @returns
+ */
+var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var _props$millisec = props.millisec,
+      millisec = _props$millisec === void 0 ? false : _props$millisec,
+      value = props.value,
+      onFinish = props.onFinish,
+      className = props.className,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$1g);
+
+  var _useState = React.useState({
+    day: 0,
+    hour: 0,
+    min: 0,
+    sec: 0,
+    millisec: 0
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      date = _useState2[0],
+      setDate = _useState2[1];
+
+  var onFinishRef = useLatest(onFinish);
+  var valueRef = useLatest(value);
+  var finishedRef = React.useRef(false);
+  useInterval(function () {
+    if (!valueRef.current || finishedRef.current) {
+      return false; // clear timer
+    }
+
+    var distance = valueRef.current.getTime() - Date.now();
+
+    if (distance < 0) {
+      var _onFinishRef$current;
+
+      finishedRef.current = true;
+      setDate({
+        day: 0,
+        hour: 0,
+        min: 0,
+        sec: 0,
+        millisec: 0
+      });
+      (_onFinishRef$current = onFinishRef.current) === null || _onFinishRef$current === void 0 ? void 0 : _onFinishRef$current.call(onFinishRef);
+      return;
+    }
+
+    var day = Math.floor(distance / 86400000);
+    var hour = Math.floor(distance % 86400000 / 3600000);
+    var min = Math.floor(distance % 3600000 / 60000);
+    var sec = Math.floor(distance % 60000 / 1000);
+    var millisecond = Math.floor(distance % 60000 % 1000);
+    setDate({
+      day: day,
+      hour: hour,
+      min: min,
+      sec: sec,
+      millisec: millisecond
+    });
+  }, millisec ? 1 : 1000);
+  return /*#__PURE__*/React__default['default'].createElement("div", _extends({
+    ref: ref,
+    className: clsx__default['default'](getClassName$a(), className)
+  }, rest), typeof children === 'function' && children(date));
+});
+Countdown.displayName = 'Countdown';
+
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
@@ -9492,25 +9588,6 @@ function useTimeout(fn, delay) {
 }
 
 /**
- * 定时器setInterval
- *
- * @param {Func} fn
- * @param {number} delay
- */
-function useInterval(fn, delay) {
-  var fnRef = useLatest(fn);
-  React.useEffect(function () {
-    if (typeof delay !== 'number' || delay < 0) return;
-    var timer = setInterval(function () {
-      fnRef.current();
-    }, delay);
-    return function () {
-      clearInterval(timer);
-    };
-  }, [delay]);
-}
-
-/**
  * 初始化i18n
  *
  * @param {Record<string, any>} resources  翻译对象
@@ -9545,7 +9622,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$1g = ["children", "label", "name"],
+var _excluded$1h = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9555,7 +9632,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1g);
+      fieldProps = _objectWithoutProperties(props, _excluded$1h);
 
   var required = false;
 
@@ -9756,6 +9833,7 @@ exports.CheckboxGroup = CheckboxGroup;
 exports.CircleSpin = CircleSpin;
 exports.Collapse = Collapse$1;
 exports.CopyToClipboard = CopyToClipboard;
+exports.Countdown = Countdown;
 exports.DatePicker = DatePicker;
 exports.Divider = Divider;
 exports.DotSpin = DotSpin;

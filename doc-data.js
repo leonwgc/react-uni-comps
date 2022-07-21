@@ -97,6 +97,10 @@ module.exports = [
         name: 'Steps',
         title: 'Steps 步骤条',
       },
+      {
+        name: 'Countdown',
+        title: 'Countdown 倒计时',
+      },
     ],
   },
   {
@@ -390,6 +394,10 @@ module.exports = [
       {
         name: 'CircleSpin',
         title: 'CircleSpin 圈圈加载指示器',
+      },
+      {
+        name: 'RoundSpin',
+        title: 'RoundSpin 转圈加载指示器',
       },
     ],
   },
