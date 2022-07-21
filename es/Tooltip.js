@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Popover from './Popover';
 import clsx from 'clsx';
-var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 6px 8px;\n  max-width: 250px;\n  background-color: rgba(0, 0, 0, 0.75);\n"], ["\n  color: #fff;\n  padding: 6px 8px;\n  max-width: 250px;\n  background-color: rgba(0, 0, 0, 0.75);\n"])));
+var StylePopover = styled(Popover)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #fff;\n  padding: 6px 8px;\n  max-width: 250px;\n"], ["\n  color: #fff;\n  padding: 6px 8px;\n  max-width: 250px;\n"])));
 /** 文字提示气泡框, 基于Popover */
 
 var Tooltip = function Tooltip(props) {
@@ -18,8 +18,9 @@ var Tooltip = function Tooltip(props) {
       arrow = _d === void 0 ? true : _d,
       offset = props.offset,
       className = props.className,
+      style = props.style,
       children = props.children,
-      rest = __rest(props, ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"]); // 鼠标移到popover内容区，不关闭popover
+      rest = __rest(props, ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"]); // 鼠标移到popover内容区，不关闭popover
 
 
   var ref = useRef(0);
@@ -57,6 +58,9 @@ var Tooltip = function Tooltip(props) {
   };
   return /*#__PURE__*/React.createElement(StylePopover, __assign({}, rest, {
     className: clsx('uc-tooltip', className),
+    style: __assign({
+      background: 'rgba(0, 0, 0, 0.75)'
+    }, style),
     visible: visible,
     placement: placement,
     content: title,

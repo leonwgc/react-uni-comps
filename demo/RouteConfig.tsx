@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/RoundSpin',
+    component: lazy(() => import('./RoundSpin')),
+  },
+  {
     path: '/DropdownMenu',
     component: lazy(() => import('./DropdownMenu')),
   },

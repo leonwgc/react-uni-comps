@@ -6,6 +6,7 @@ import { attachPropertiesToComponent } from './util';
 import Space from './Space';
 import BallSpin from './BallSpin';
 import Spin from './Spin';
+import RoundSpin from './RoundSpin';
 var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
 /**
  * 加载中, 只有静态调用
@@ -15,6 +16,25 @@ var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTem
 
 var Loading = function Loading() {
   return null;
+};
+
+var renderSpin = function renderSpin(type) {
+  switch (type) {
+    case 'ball':
+      {
+        return /*#__PURE__*/React.createElement(BallSpin, null);
+      }
+
+    case 'wechat':
+      {
+        return /*#__PURE__*/React.createElement(Spin, null);
+      }
+
+    case 'zarm':
+      {
+        return /*#__PURE__*/React.createElement(RoundSpin, null);
+      }
+  }
 };
 /**
  * @description 显示Loading 提示
@@ -27,7 +47,7 @@ var show = function show(text, config) {
   if (config === void 0) {
     config = {
       type: 'ball',
-      gap: 16,
+      gap: 12,
       spinSize: 32
     };
   }
@@ -35,7 +55,7 @@ var show = function show(text, config) {
   var _a = config.type,
       type = _a === void 0 ? 'ball' : _a,
       _b = config.gap,
-      gap = _b === void 0 ? 16 : _b,
+      gap = _b === void 0 ? 12 : _b,
       _c = config.spinSize,
       spinSize = _c === void 0 ? 32 : _c,
       containerStyle = config.containerStyle;
@@ -50,7 +70,7 @@ var show = function show(text, config) {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, type == 'ball' ? /*#__PURE__*/React.createElement(BallSpin, null) : /*#__PURE__*/React.createElement(Spin, null)), text)),
+    }, renderSpin(type)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0

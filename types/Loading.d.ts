@@ -4,10 +4,10 @@ declare type Config = {
      * spin 类型
      * @default ball
      */
-    type?: 'ball' | 'wechat';
+    type?: 'ball' | 'wechat' | 'zarm';
     /**
      * spin和内容间距
-     * @default 16
+     * @default 12
      */
     gap?: number;
     /**

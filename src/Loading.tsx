@@ -5,6 +5,7 @@ import { attachPropertiesToComponent } from './util';
 import Space from './Space';
 import BallSpin from './BallSpin';
 import Spin from './Spin';
+import RoundSpin from './RoundSpin';
 
 const StyledLoading = styled.div`
   display: inline-flex;
@@ -30,10 +31,10 @@ type Config = {
    * spin 类型
    * @default ball
    */
-  type?: 'ball' | 'wechat';
+  type?: 'ball' | 'wechat' | 'zarm';
   /**
    * spin和内容间距
-   * @default 16
+   * @default 12
    */
   gap?: number;
   /**
@@ -47,21 +48,33 @@ type Config = {
   containerStyle?: React.CSSProperties;
 };
 
+const renderSpin = (type) => {
+  switch (type) {
+    case 'ball': {
+      return <BallSpin />;
+    }
+    case 'wechat': {
+      return <Spin />;
+    }
+    case 'zarm': {
+      return <RoundSpin />;
+    }
+  }
+};
+
 /**
  * @description 显示Loading 提示
  * @param {React.ReactNode} text
  * @param {Config} config
  */
-const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 16, spinSize: 32 }) => {
-  const { type = 'ball', gap = 16, spinSize = 32, containerStyle } = config;
+const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 12, spinSize: 32 }) => {
+  const { type = 'ball', gap = 12, spinSize = 32, containerStyle } = config;
 
   Toast.show({
     content: (
       <StyledLoading style={containerStyle}>
         <Space direction="vertical" size={text ? gap : 0}>
-          <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
-            {type == 'ball' ? <BallSpin /> : <Spin />}
-          </span>
+          <span style={{ fontSize: spinSize, display: 'inline-flex' }}>{renderSpin(type)}</span>
           {text}
         </Space>
       </StyledLoading>

@@ -44,6 +44,7 @@ export default function App() {
             onClick={() => {
               Loading.show('努力提交中..', {
                 type: 'wechat',
+                spinSize: 40,
               });
 
               setTimeout(() => {
@@ -52,6 +53,29 @@ export default function App() {
             }}
           >
             微信风格Spin
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="spin类型">
+        <Space>
+          <Button
+            onClick={() => {
+              Loading.show(null, {
+                type: 'zarm',
+                spinSize: 40,
+                containerStyle: {
+                  width: 100,
+                  height: 100,
+                },
+              });
+
+              setTimeout(() => {
+                Loading.hide();
+              }, 1000);
+            }}
+          >
+            众安zarm风格Spin
           </Button>
         </Space>
       </DemoBlock>

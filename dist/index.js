@@ -3507,11 +3507,11 @@ var BackTop = function BackTop(props) {
 
 BackTop.displayName = 'UC-BackTop';
 
-var _excluded$o = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "children"];
+var _excluded$o = ["title", "hoverDelay", "placement", "arrow", "offset", "className", "style", "children"];
 var StylePopover = /*#__PURE__*/styled__default['default'](Popover__default['default']).withConfig({
   displayName: "Tooltip__StylePopover",
   componentId: "sc-51s5pc-0"
-})(["color:#fff;padding:6px 8px;max-width:250px;background-color:rgba(0,0,0,0.75);"]);
+})(["color:#fff;padding:6px 8px;max-width:250px;"]);
 
 /** 文字提示气泡框, 基于Popover */
 var Tooltip = function Tooltip(props) {
@@ -3526,6 +3526,7 @@ var Tooltip = function Tooltip(props) {
       arrow = _props$arrow === void 0 ? true : _props$arrow,
       offset = props.offset,
       className = props.className,
+      style = props.style,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$o); // 鼠标移到popover内容区，不关闭popover
 
@@ -3566,6 +3567,9 @@ var Tooltip = function Tooltip(props) {
   };
   return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({}, rest, {
     className: clsx__default['default']('uc-tooltip', className),
+    style: _objectSpread2({
+      background: 'rgba(0, 0, 0, 0.75)'
+    }, style),
     visible: visible,
     placement: placement,
     content: title,
@@ -9139,6 +9143,54 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 CircleSpin.displayName = 'UC-CircleSpin';
 
+var _excluded$1f = ["className", "color", "strokeWidth"];
+
+var _templateObject$6, _templateObject2;
+var radius = 31;
+var duration = 1500;
+var rotate = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0%{\n        transform: rotate(0);\n    }\n    100%{\n        transform: rotate(360deg);\n    }\n"])));
+var move$1 = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  0% {\n      stroke-dasharray: 1, 200;\n      stroke-dashoffset: 0;\n    }\n\n    50% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -60;\n    }\n\n    100% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -180;\n    }\n"])));
+var StyledLoader$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "RoundSpin__StyledLoader",
+  componentId: "sc-evbanp-0"
+})(["display:inline-flex;vertical-align:middle;transform:rotate(-90deg);animation:", " 2s linear infinite;width:1em;height:1em;svg{animation:", " ", "ms ease-in-out infinite;}"], rotate, move$1, function (_ref) {
+  var $duration = _ref.$duration;
+  return $duration;
+});
+/** 圈圈 spin */
+
+var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'currentColor' : _props$color,
+      _props$strokeWidth = props.strokeWidth,
+      strokeWidth = _props$strokeWidth === void 0 ? 5 : _props$strokeWidth,
+      rest = _objectWithoutProperties(props, _excluded$1f);
+
+  var elRef = React__default['default'].useRef();
+  React__default['default'].useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$3, _extends({}, rest, {
+    ref: elRef,
+    $duration: duration,
+    className: clsx__default['default'](className, 'uc-round-spin')
+  }), /*#__PURE__*/React__default['default'].createElement("svg", {
+    viewBox: "".concat(radius, " ").concat(radius, " ").concat(radius * 2, " ").concat(radius * 2)
+  }, /*#__PURE__*/React__default['default'].createElement("circle", {
+    cx: radius * 2,
+    cy: radius * 2,
+    r: radius - strokeWidth / 2,
+    stroke: color,
+    fill: "none",
+    strokeLinecap: "round",
+    style: {
+      strokeWidth: strokeWidth
+    }
+  })));
+});
+RoundSpin.displayName = 'UC-RoundSpin';
+
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
@@ -9153,21 +9205,41 @@ var Loading = function Loading() {
   return null;
 };
 
+var renderSpin = function renderSpin(type) {
+  switch (type) {
+    case 'ball':
+      {
+        return /*#__PURE__*/React__default['default'].createElement(BallSpin, null);
+      }
+
+    case 'wechat':
+      {
+        return /*#__PURE__*/React__default['default'].createElement(Spin, null);
+      }
+
+    case 'zarm':
+      {
+        return /*#__PURE__*/React__default['default'].createElement(RoundSpin, null);
+      }
+  }
+};
 /**
  * @description 显示Loading 提示
  * @param {React.ReactNode} text
  * @param {Config} config
  */
+
+
 var show = function show(text) {
   var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     type: 'ball',
-    gap: 16,
+    gap: 12,
     spinSize: 32
   };
   var _config$type = config.type,
       type = _config$type === void 0 ? 'ball' : _config$type,
       _config$gap = config.gap,
-      gap = _config$gap === void 0 ? 16 : _config$gap,
+      gap = _config$gap === void 0 ? 12 : _config$gap,
       _config$spinSize = config.spinSize,
       spinSize = _config$spinSize === void 0 ? 32 : _config$spinSize,
       containerStyle = config.containerStyle;
@@ -9182,7 +9254,7 @@ var show = function show(text) {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, type == 'ball' ? /*#__PURE__*/React__default['default'].createElement(BallSpin, null) : /*#__PURE__*/React__default['default'].createElement(Spin, null)), text)),
+    }, renderSpin(type)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
@@ -9473,7 +9545,7 @@ var initI18n = function initI18n(resources) {
   return i18n__default['default'];
 };
 
-var _excluded$1f = ["children", "label", "name"],
+var _excluded$1g = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9483,7 +9555,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1f);
+      fieldProps = _objectWithoutProperties(props, _excluded$1g);
 
   var required = false;
 
@@ -9729,6 +9801,7 @@ exports.Rate = Rate;
 exports.Result = Result;
 exports.Ripple = Ripple;
 exports.RollingNumber = RollingNumber;
+exports.RoundSpin = RoundSpin;
 exports.SafeArea = SafeArea;
 exports.ScrollBox = ScrollBox;
 exports.SearchBar = SearchBar;
