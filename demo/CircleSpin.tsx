@@ -11,7 +11,6 @@ export default function App() {
           <CircleSpin />
           <CircleSpin size={48} />
           <CircleSpin color="red" />
-          <CircleSpin size={48} duration={2000} color="#666" />
         </Space>
       </DemoBlock>
     </PageWrap>

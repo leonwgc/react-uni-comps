@@ -29,6 +29,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> RoundSpin
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('RoundSpin')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> CircleSpin
           </Space>
         }
