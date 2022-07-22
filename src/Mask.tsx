@@ -19,7 +19,7 @@ const StyledMask = styled(animated.div)`
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
-   * 显示遮罩时，设置body.style.overflow为hidden
+   * 隐藏body overflow
    * @default true
    */
   hideOverflow?: boolean;
@@ -40,7 +40,6 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const {
-    children,
     className,
     visible,
     duration = vars.animationSlow,
@@ -50,7 +49,6 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     ...rest
   } = props;
 
-  // animation effect
   const [active, setActive] = useState(visible);
 
   const styles = useSpring({
@@ -81,9 +79,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       {...rest}
       className={clsx('uc-mask', className)}
       style={{ ...styles, ...style }}
-    >
-      {children}
-    </StyledMask>
+    />
   ) : null;
 });
 

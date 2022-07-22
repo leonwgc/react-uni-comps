@@ -2,7 +2,7 @@ import React from 'react';
 /** 遮罩层 */
 declare const Mask: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
-     * 显示遮罩时，设置body.style.overflow为hidden
+     * 隐藏body overflow
      * @default true
      */
     hideOverflow?: boolean;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { ErrorBoundary, Toast, Button } from 'react-uni-comps';
+import { ErrorBoundary, Button } from 'react-uni-comps';
 
 const ErrorApp = () => {
   const [dead, setDead] = useState(false);
@@ -29,7 +29,7 @@ export default function App() {
       <DemoBlock title="错误边界区">
         <ErrorBoundary
           onError={(error, info) => {
-            Toast.show(error.message);
+            console.log(error.message);
           }}
           fallback={<div> 挂了吧 </div>}
         >
