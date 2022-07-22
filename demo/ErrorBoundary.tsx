@@ -26,18 +26,19 @@ const ErrorApp = () => {
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock>
+      <DemoBlock title="错误边界区">
         <ErrorBoundary
           onError={(error, info) => {
             Toast.show(error.message);
           }}
-          fallback={<div> something goes wrong!!</div>}
+          fallback={<div> 挂了吧 </div>}
         >
           <ErrorApp />
         </ErrorBoundary>
-        <Button block style={{ marginTop: 50, height: 60 }}>
-          这里不受影响
-        </Button>
+      </DemoBlock>
+
+      <DemoBlock title="非错误边界区">
+        <Button block>这里不受影响</Button>
       </DemoBlock>
     </PageWrap>
   );
