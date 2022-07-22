@@ -31,6 +31,7 @@ export default function App() {
           onError={(error, info) => {
             Toast.show(error.message);
           }}
+          fallback={<div> something goes wrong!!</div>}
         >
           <ErrorApp />
         </ErrorBoundary>

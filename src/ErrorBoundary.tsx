@@ -3,6 +3,9 @@ import React from 'react';
 type Props = {
   /** 错误回调 */
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
+  /** 发生错误显示的ui */
+  fallback?: React.ReactNode;
+  children?: any;
 };
 
 /**
@@ -12,7 +15,7 @@ type Props = {
  * @class ErrorBoundary
  * @extends {React.Component}
  */
-export default class ErrorBoundary extends React.Component<Props> {
+export default class ErrorBoundary extends React.Component<Props, any> {
   state = { hasError: false, error: null };
 
   static getDerivedStateFromError(error) {
@@ -25,7 +28,7 @@ export default class ErrorBoundary extends React.Component<Props> {
 
   render() {
     if (this.state.hasError) {
-      return null;
+      return this.props.fallback;
     }
 
     return this.props.children;
