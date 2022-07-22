@@ -34,21 +34,36 @@ type Props = {
   }) => React.ReactNode;
 } & BaseProps;
 
+const getCountdown = (value: Date) => {
+  if (!value) {
+    return { day: 0, hour: 0, min: 0, sec: 0, millisec: 0 };
+  }
+
+  const diff = value.getTime() - Date.now();
+
+  if (diff < 0) {
+    return { day: 0, hour: 0, min: 0, sec: 0, millisec: 0 };
+  }
+
+  const day = Math.floor(diff / 86400000);
+  const hour = Math.floor((diff % 86400000) / 3600000);
+  const min = Math.floor((diff % 3600000) / 60000);
+  const sec = Math.floor((diff % 60000) / 1000);
+  const millisecond = Math.floor((diff % 60000) % 1000);
+
+  return { day, hour, min, sec, millisec: millisecond };
+};
+
 /**
  * 倒计时
  * @param props
  * @returns
  */
 const Countdown = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { millisec = false, value, onFinish, className, children, ...rest } = props;
+  const { millisec, value, onFinish, className, children, ...rest } = props;
 
-  const [date, setDate] = useState<{
-    day: number;
-    hour: number;
-    min: number;
-    sec: number;
-    millisec: number;
-  }>({ day: 0, hour: 0, min: 0, sec: 0, millisec: 0 });
+  const [date, setDate] = useState(() => getCountdown(value));
+
   const onFinishRef = useLatest(onFinish);
   const valueRef = useLatest(value);
   const finishedRef = useRef(false);
@@ -59,21 +74,15 @@ const Countdown = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         return false; // clear timer
       }
 
-      const distance = valueRef.current.getTime() - Date.now();
+      const diff = valueRef.current.getTime() - Date.now();
 
-      if (distance < 0) {
+      if (diff < 0) {
         finishedRef.current = true;
         setDate({ day: 0, hour: 0, min: 0, sec: 0, millisec: 0 });
         onFinishRef.current?.();
         return;
       }
-
-      const day = Math.floor(distance / 86400000);
-      const hour = Math.floor((distance % 86400000) / 3600000);
-      const min = Math.floor((distance % 3600000) / 60000);
-      const sec = Math.floor((distance % 60000) / 1000);
-      const millisecond = Math.floor((distance % 60000) % 1000);
-      setDate({ day, hour, min, sec, millisec: millisecond });
+      setDate(getCountdown(valueRef.current));
     },
     millisec ? 1 : 1000
   );
