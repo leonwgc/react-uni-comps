@@ -3127,7 +3127,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.state.hasError) {
-        return null;
+        return this.props.fallback;
       }
 
       return this.props.children;
@@ -9217,26 +9217,59 @@ function useInterval(fn, delay) {
 var _excluded$1g = ["millisec", "value", "onFinish", "className", "children"];
 var getClassName$a = prefixClassName('uc-countdown');
 
+var getCountdown = function getCountdown(value) {
+  if (!value) {
+    return {
+      day: 0,
+      hour: 0,
+      min: 0,
+      sec: 0,
+      millisec: 0
+    };
+  }
+
+  var diff = value.getTime() - Date.now();
+
+  if (diff < 0) {
+    return {
+      day: 0,
+      hour: 0,
+      min: 0,
+      sec: 0,
+      millisec: 0
+    };
+  }
+
+  var day = Math.floor(diff / 86400000);
+  var hour = Math.floor(diff % 86400000 / 3600000);
+  var min = Math.floor(diff % 3600000 / 60000);
+  var sec = Math.floor(diff % 60000 / 1000);
+  var millisecond = Math.floor(diff % 60000 % 1000);
+  return {
+    day: day,
+    hour: hour,
+    min: min,
+    sec: sec,
+    millisec: millisecond
+  };
+};
 /**
  * 倒计时
  * @param props
  * @returns
  */
+
+
 var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var _props$millisec = props.millisec,
-      millisec = _props$millisec === void 0 ? false : _props$millisec,
+  var millisec = props.millisec,
       value = props.value,
       onFinish = props.onFinish,
       className = props.className,
       children = props.children,
       rest = _objectWithoutProperties(props, _excluded$1g);
 
-  var _useState = React.useState({
-    day: 0,
-    hour: 0,
-    min: 0,
-    sec: 0,
-    millisec: 0
+  var _useState = React.useState(function () {
+    return getCountdown(value);
   }),
       _useState2 = _slicedToArray(_useState, 2),
       date = _useState2[0],
@@ -9250,9 +9283,9 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       return false; // clear timer
     }
 
-    var distance = valueRef.current.getTime() - Date.now();
+    var diff = valueRef.current.getTime() - Date.now();
 
-    if (distance < 0) {
+    if (diff < 0) {
       var _onFinishRef$current;
 
       finishedRef.current = true;
@@ -9267,18 +9300,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       return;
     }
 
-    var day = Math.floor(distance / 86400000);
-    var hour = Math.floor(distance % 86400000 / 3600000);
-    var min = Math.floor(distance % 3600000 / 60000);
-    var sec = Math.floor(distance % 60000 / 1000);
-    var millisecond = Math.floor(distance % 60000 % 1000);
-    setDate({
-      day: day,
-      hour: hour,
-      min: min,
-      sec: sec,
-      millisec: millisecond
-    });
+    setDate(getCountdown(valueRef.current));
   }, millisec ? 1 : 1000);
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: ref,

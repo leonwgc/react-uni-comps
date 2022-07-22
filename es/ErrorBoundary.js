@@ -38,7 +38,7 @@ function (_super) {
 
   ErrorBoundary.prototype.render = function () {
     if (this.state.hasError) {
-      return null;
+      return this.props.fallback;
     }
 
     return this.props.children;
