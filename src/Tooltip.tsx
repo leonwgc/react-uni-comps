@@ -86,7 +86,7 @@ const Tooltip = (props: Props): React.ReactElement => {
     <StylePopover
       {...rest}
       className={clsx('uc-tooltip', className)}
-      style={{ background: 'rgba(0, 0, 0, 0.75)', ...style }}
+      style={{ background: '#333', ...style }}
       visible={visible}
       placement={placement}
       content={title}
