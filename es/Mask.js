@@ -9,8 +9,7 @@ var StyledMask = styled(animated.div)(templateObject_1 || (templateObject_1 = __
 /** 遮罩层 */
 
 var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
-  var children = props.children,
-      className = props.className,
+  var className = props.className,
       visible = props.visible,
       _a = props.duration,
       duration = _a === void 0 ? vars.animationSlow : _a,
@@ -19,8 +18,7 @@ var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
       hideOverflow = _b === void 0 ? true : _b,
       _c = props.opacity,
       opacity = _c === void 0 ? 0.45 : _c,
-      rest = __rest(props, ["children", "className", "visible", "duration", "style", "hideOverflow", "opacity"]); // animation effect
-
+      rest = __rest(props, ["className", "visible", "duration", "style", "hideOverflow", "opacity"]);
 
   var _d = useState(visible),
       active = _d[0],
@@ -50,7 +48,7 @@ var Mask = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, rest, {
     className: clsx('uc-mask', className),
     style: __assign(__assign({}, styles), style)
-  }), children) : null;
+  })) : null;
 });
 Mask.displayName = 'UC-Mask';
 export default Mask;

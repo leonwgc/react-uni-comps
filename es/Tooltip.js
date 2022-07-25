@@ -59,7 +59,7 @@ var Tooltip = function Tooltip(props) {
   return /*#__PURE__*/React.createElement(StylePopover, __assign({}, rest, {
     className: clsx('uc-tooltip', className),
     style: __assign({
-      background: 'rgba(0, 0, 0, 0.75)'
+      background: '#333'
     }, style),
     visible: visible,
     placement: placement,

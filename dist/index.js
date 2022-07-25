@@ -806,7 +806,7 @@ var animationNormal = 220;
 
 var animationFast = 160;
 
-var _excluded = ["children", "className", "visible", "duration", "style", "hideOverflow", "opacity"];
+var _excluded = ["className", "visible", "duration", "style", "hideOverflow", "opacity"];
 var StyledMask = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Mask__StyledMask",
   componentId: "sc-1t93aio-0"
@@ -814,8 +814,7 @@ var StyledMask = /*#__PURE__*/styled__default['default'](web.animated.div).withC
 
 /** 遮罩层 */
 var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
-  var children = props.children,
-      className = props.className,
+  var className = props.className,
       visible = props.visible,
       _props$duration = props.duration,
       duration = _props$duration === void 0 ? animationSlow : _props$duration,
@@ -824,8 +823,7 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       hideOverflow = _props$hideOverflow === void 0 ? true : _props$hideOverflow,
       _props$opacity = props.opacity,
       opacity = _props$opacity === void 0 ? 0.45 : _props$opacity,
-      rest = _objectWithoutProperties(props, _excluded); // animation effect
-
+      rest = _objectWithoutProperties(props, _excluded);
 
   var _useState = React.useState(visible),
       _useState2 = _slicedToArray(_useState, 2),
@@ -856,7 +854,7 @@ var Mask = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   }, rest, {
     className: clsx__default['default']('uc-mask', className),
     style: _objectSpread2(_objectSpread2({}, styles), style)
-  }), children) : null;
+  })) : null;
 });
 Mask.displayName = 'UC-Mask';
 
@@ -3568,7 +3566,7 @@ var Tooltip = function Tooltip(props) {
   return /*#__PURE__*/React__default['default'].createElement(StylePopover, _extends({}, rest, {
     className: clsx__default['default']('uc-tooltip', className),
     style: _objectSpread2({
-      background: 'rgba(0, 0, 0, 0.75)'
+      background: '#333'
     }, style),
     visible: visible,
     placement: placement,
