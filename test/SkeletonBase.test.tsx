@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { debug } from 'jest-preview';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import SkeletonBase from '../src/SkeletonBase';
+import SkeletonElement from '../src/SkeletonElement';
 
-const title = 'SkeletonBase';
-
-describe('SkeletonBase test groups', () => {
-    test('render', () => {
-      render(<SkeletonBase title="SkeletonBase"/>);
-      const el = screen.getByTitle('SkeletonBase');
-      expect(el).toBeDefined();
-    });
+describe('SkeletonElement test groups', () => {
+  test('render', () => {
+    render(<SkeletonElement title="SkeletonElement" />);
+    const el = screen.getByTitle('SkeletonElement');
+    expect(el).toBeDefined();
+  });
 });

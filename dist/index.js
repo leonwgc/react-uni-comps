@@ -10,13 +10,13 @@ var clsx = require('clsx');
 var web = require('@react-spring/web');
 var reactIs = require('react-is');
 require('intersection-observer');
-var nanoid = require('nanoid');
 var Popover = require('w-popover');
 var Touch = require('w-touch');
 var color = require('color');
 var SignaturePad = require('signature_pad');
 var WQRCode = require('w-qrcode');
 var Sortable = require('sortablejs');
+var nanoid = require('nanoid');
 var i18n = require('i18next');
 var reactI18next = require('react-i18next');
 var RcForm = require('rc-field-form');
@@ -780,10 +780,10 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
  */
 
 var useUnmount = function useUnmount(fn) {
-  React.useLayoutEffect(function () {
+  React.useEffect(function () {
     return function () {
       fn === null || fn === void 0 ? void 0 : fn();
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
   }, []);
 };
 
@@ -1041,7 +1041,6 @@ var getScrollTop = function getScrollTop(el) {
   return scrollParent.scrollTop;
 };
 
-/* eslint-disable react-hooks/exhaustive-deps */
 /**
  *  组件加载执行回调
  *
@@ -1049,12 +1048,8 @@ var getScrollTop = function getScrollTop(el) {
  */
 
 var useMount = function useMount(fn) {
-  var isMounted = React.useRef(false);
-  React.useLayoutEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      fn === null || fn === void 0 ? void 0 : fn();
-    }
+  React.useEffect(function () {
+    fn === null || fn === void 0 ? void 0 : fn();
   }, []);
 };
 
@@ -1420,7 +1415,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return closeOnMaskClick && (onClose === null || onClose === void 0 ? void 0 : onClose());
     }
   }), /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-    in: visible,
+    "in": visible,
     timeout: duration,
     unmountOnExit: unmountOnExit
   }, function (status) {
@@ -1682,7 +1677,7 @@ var unobserve = function unobserve(el) {
     var _intersectionObserver3, _intersectionObserver4;
 
     (_intersectionObserver3 = (_intersectionObserver4 = intersectionObserver).unobserve) === null || _intersectionObserver3 === void 0 ? void 0 : _intersectionObserver3.call(_intersectionObserver4, el);
-    handlers.delete(el);
+    handlers["delete"](el);
   }
 };
 
@@ -1760,7 +1755,7 @@ var TransitionElement = /*#__PURE__*/React__default['default'].forwardRef(functi
 
   if ( /*#__PURE__*/React__default['default'].isValidElement(children)) {
     return /*#__PURE__*/React__default['default'].createElement(reactTransitionGroup.Transition, {
-      in: isInViewport,
+      "in": isInViewport,
       timeout: duration
     }, function (state) {
       var _children$props, _children$props2;
@@ -2119,7 +2114,7 @@ var Pullup = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       setLoading(true);
       fetchData().then(function () {
         setLoading(false);
-      }).catch(function () {
+      })["catch"](function () {
         setLoading(false);
       });
     }
@@ -2623,6 +2618,7 @@ var Skeleton = function Skeleton(props) {
 var _excluded$c = ["className", "duration", "showCircle"];
 
 var _templateObject$3;
+var id = 0;
 var circle = styled.keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 0, 314; // 2piR\n    stroke-dashoffset: 0;\n  }\n\n  50% {\n    stroke-dasharray: 120, 314;\n    stroke-dashoffset: -37;\n  }\n\n \n  100% {\n    stroke-dasharray: 0, 314;\n    stroke-dashoffset: -157;\n  }\n"])));
 var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "BallSpin__StyledLoader",
@@ -2647,7 +2643,7 @@ var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props
       rest = _objectWithoutProperties(props, _excluded$c);
 
   var elRef = React__default['default'].useRef();
-  var idRef = React__default['default'].useRef(nanoid.nanoid());
+  var idRef = React__default['default'].useRef(id++);
   React__default['default'].useImperativeHandle(ref, function () {
     return elRef.current;
   });
@@ -2659,7 +2655,7 @@ var BallSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props
   }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({
     viewBox: "0 0 120 120"
   }, SVGProps), /*#__PURE__*/React__default['default'].createElement("defs", null, /*#__PURE__*/React__default['default'].createElement("linearGradient", {
-    id: idRef.current,
+    id: idRef.current + '',
     x1: "0%",
     y1: "0%",
     x2: "100%",
@@ -5829,8 +5825,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       readonly = props.readonly,
       _props$count = props.count,
       count = _props$count === void 0 ? 5 : _props$count,
-      _props$char = props.char,
-      char = _props$char === void 0 ? defaultChar : _props$char,
+      _props$char = props["char"],
+      _char = _props$char === void 0 ? defaultChar : _props$char,
       onChange = props.onChange,
       className = props.className,
       _props$color = props.color,
@@ -5872,8 +5868,8 @@ var Rate = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
           setVal(v);
         }
       }
-    }, char);
-  }, [allowClear, char, readonly]);
+    }, _char);
+  }, [allowClear, _char, readonly]);
   return /*#__PURE__*/React__default['default'].createElement(StyledRate, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default'](className),
@@ -9805,12 +9801,6 @@ Object.defineProperty(exports, 'useSpring', {
     return web.useSpring;
   }
 });
-Object.defineProperty(exports, 'nanoid', {
-  enumerable: true,
-  get: function () {
-    return nanoid.nanoid;
-  }
-});
 Object.defineProperty(exports, 'Popover', {
   enumerable: true,
   get: function () {
@@ -9827,6 +9817,12 @@ Object.defineProperty(exports, 'TouchElement', {
   enumerable: true,
   get: function () {
     return Touch.TouchElement;
+  }
+});
+Object.defineProperty(exports, 'nanoid', {
+  enumerable: true,
+  get: function () {
+    return nanoid.nanoid;
   }
 });
 Object.defineProperty(exports, 'useTranslation', {

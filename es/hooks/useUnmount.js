@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 /**
  *  组件卸载执行回调
  *
@@ -6,10 +6,10 @@ import { useLayoutEffect } from 'react';
  */
 
 var useUnmount = function useUnmount(fn) {
-  useLayoutEffect(function () {
+  useEffect(function () {
     return function () {
       fn === null || fn === void 0 ? void 0 : fn();
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
   }, []);
 };
 

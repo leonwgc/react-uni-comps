@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect } from 'react';
 /**
  *  组件加载执行回调
  *
@@ -7,12 +6,8 @@ import { useLayoutEffect, useRef } from 'react';
  */
 
 var useMount = function useMount(fn) {
-  var isMounted = useRef(false);
-  useLayoutEffect(function () {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      fn === null || fn === void 0 ? void 0 : fn();
-    }
+  useEffect(function () {
+    fn === null || fn === void 0 ? void 0 : fn();
   }, []);
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
-import { nanoid } from 'nanoid';
+
+let id = 0;
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -54,7 +55,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { className, duration = 800, showCircle, ...rest } = props;
   const elRef = React.useRef();
 
-  const idRef = React.useRef<string>(nanoid());
+  const idRef = React.useRef(id++);
 
   React.useImperativeHandle(ref, () => elRef.current);
 
@@ -67,7 +68,7 @@ const BallSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <svg viewBox="0 0 120 120" {...SVGProps}>
         <defs>
-          <linearGradient id={idRef.current} x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id={idRef.current + ''} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style={{ stopOpacity: 1, stopColor: 'currentColor' }} />
             <stop offset="50%" style={{ stopOpacity: 0.7, stopColor: 'currentColor' }} />
             <stop offset="100%" style={{ stopOpacity: 0.1, stopColor: 'currentColor' }} />
