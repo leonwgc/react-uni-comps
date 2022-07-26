@@ -10,8 +10,8 @@ export default function App() {
         <Space>
           <RoundSpin />
           <RoundSpin style={{ color: '#005cff' }} />
-          <RoundSpin style={{ color: 'red', fontSize: 20 }} />
-          <RoundSpin style={{ color: '#005cff', fontSize: 30 }} strokeWidth={2} />
+          <RoundSpin style={{ color: 'red', fontSize: 40 }} />
+          <RoundSpin style={{ color: '#c8c9cc', fontSize: 60 }} />
         </Space>
       </DemoBlock>
     </PageWrap>
