@@ -1,5 +1,5 @@
 ---
-title: ScrollBox 滚动盒子
+title: ScrollBox 带指示器的滚动
 order: 8
 mobile: true
 group:
@@ -8,7 +8,7 @@ group:
   path: base
 ---
 
-# ScrollBox 滚动盒子
+# ScrollBox 带指示器的滚动
 
 <code src="../demo/ScrollBox.tsx"></code>
 <API src="../src/ScrollBox.tsx"></API>

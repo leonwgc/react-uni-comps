@@ -37,7 +37,7 @@ module.exports = [
       },
       {
         name: 'ScrollBox',
-        title: 'ScrollBox 滚动盒子',
+        title: 'ScrollBox 带指示器的滚动',
       },
     ],
   },
@@ -397,7 +397,7 @@ module.exports = [
       },
       {
         name: 'RoundSpin',
-        title: 'RoundSpin 转圈加载指示器',
+        title: 'RoundSpin zarm风格指示器',
       },
     ],
   },

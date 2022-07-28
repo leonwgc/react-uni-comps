@@ -1,5 +1,5 @@
 ---
-title: RoundSpin 转圈加载指示器
+title: RoundSpin zarm风格指示器
 order: 10
 mobile: true
 group:
@@ -8,7 +8,7 @@ group:
   path: other
 ---
 
-# RoundSpin 转圈加载指示器
+# RoundSpin zarm风格指示器
 
 <code src="../demo/RoundSpin.tsx"></code>
 <API src="../src/RoundSpin.tsx"></API>
