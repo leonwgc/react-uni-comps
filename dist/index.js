@@ -9603,39 +9603,20 @@ function useTimeout(fn, delay) {
   }, [delay]);
 }
 
+var defaultInitOptions = {
+  interpolation: {
+    escapeValue: false // not needed for react!!
+
+  }
+};
 /**
  * 初始化i18n
- *
- * @param {Record<string, any>} resources  翻译对象
- * @param {string} [lang='zh'] 默认语言
+ * @param options i18next InitOptions
  */
 
-var initI18n = function initI18n(resources) {
-  var lang = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'zh';
+var initI18n = function initI18n(options) {
   i18n__default['default'].use(reactI18next.initReactI18next) // bind react-i18next to the instance
-  .init({
-    lng: lang,
-    fallbackLng: lang,
-    resources: resources,
-    interpolation: {
-      escapeValue: false // not needed for react!!
-
-    } // react i18next special options (optional)
-    // override if needed - omit if ok with defaults
-
-    /*
-    react: {
-    bindI18n: 'languageChanged',
-    bindI18nStore: '',
-    transEmptyNodeValue: '',
-    transSupportBasicHtmlNodes: true,
-    transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
-    useSuspense: true,
-    }
-    */
-
-  });
-  return i18n__default['default'];
+  .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
 var _excluded$1h = ["children", "label", "name"],
@@ -9823,6 +9804,12 @@ Object.defineProperty(exports, 'nanoid', {
   enumerable: true,
   get: function () {
     return nanoid.nanoid;
+  }
+});
+Object.defineProperty(exports, 'i18n', {
+  enumerable: true,
+  get: function () {
+    return i18n__default['default'];
   }
 });
 Object.defineProperty(exports, 'useTranslation', {

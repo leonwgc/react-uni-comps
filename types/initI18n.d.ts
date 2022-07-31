@@ -1,8 +1,8 @@
+import i18n from 'i18next';
+import type { InitOptions } from 'i18next';
 /**
  * 初始化i18n
- *
- * @param {Record<string, any>} resources  翻译对象
- * @param {string} [lang='zh'] 默认语言
+ * @param options i18next InitOptions
  */
-declare const initI18n: (resources: Record<string, any>, lang?: string) => import("i18next").i18n;
-export default initI18n;
+export declare const initI18n: (options?: InitOptions) => void;
+export default i18n;
