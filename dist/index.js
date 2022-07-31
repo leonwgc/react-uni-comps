@@ -9144,10 +9144,15 @@ var radius = 31;
 var duration = 1500;
 var rotate = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0%{\n        transform: rotate(0);\n    }\n    100%{\n        transform: rotate(360deg);\n    }\n"])));
 var move$1 = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  0% {\n      stroke-dasharray: 1, 200;\n      stroke-dashoffset: 0;\n    }\n\n    50% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -60;\n    }\n\n    100% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -180;\n    }\n"])));
+var SVGProps$3 = {
+  width: '1em',
+  height: '1em',
+  fill: 'none'
+};
 var StyledLoader$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "RoundSpin__StyledLoader",
   componentId: "sc-evbanp-0"
-})(["display:inline-flex;vertical-align:middle;transform:rotate(-90deg);animation:", " 2s linear infinite;width:1em;height:1em;svg{animation:", " ", "ms ease-in-out infinite;}"], rotate, move$1, function (_ref) {
+})(["display:inline-flex;vertical-align:middle;transform:rotate(-90deg);animation:", " 2s linear infinite;svg{animation:", " ", "ms ease-in-out infinite;}"], rotate, move$1, function (_ref) {
   var $duration = _ref.$duration;
   return $duration;
 });
@@ -9169,14 +9174,13 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     ref: elRef,
     $duration: duration,
     className: clsx__default['default'](className, 'uc-round-spin')
-  }), /*#__PURE__*/React__default['default'].createElement("svg", {
+  }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({}, SVGProps$3, {
     viewBox: "".concat(radius, " ").concat(radius, " ").concat(radius * 2, " ").concat(radius * 2)
-  }, /*#__PURE__*/React__default['default'].createElement("circle", {
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
     cx: radius * 2,
     cy: radius * 2,
     r: radius - strokeWidth / 2,
     stroke: color,
-    fill: "none",
     strokeLinecap: "round",
     style: {
       strokeWidth: strokeWidth
