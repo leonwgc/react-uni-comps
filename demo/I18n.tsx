@@ -20,7 +20,10 @@ import * as langs from './langs';
 const defaultLang = 'zh';
 const defaultNamespace = 'ns';
 
-initI18n();
+initI18n({
+  debug: true,
+  initImmediate: false, // fix mdx docs
+});
 
 export default function App() {
   const { countdown, isRunning, start, isReStarted } = useCountdown(60);
@@ -45,7 +48,7 @@ export default function App() {
     }, 500);
   });
 
-  return (
+  return ready ? (
     <PageWrap>
       <Cell
         label={t('changeLang')}
@@ -61,53 +64,49 @@ export default function App() {
         }
       />
       <DemoBlock title={t('app.account.login')}>
-        {ready ? (
-          <Form toastError>
-            <Form.Item
-              name="phone"
-              rules={[
-                { required: true, message: t('inputTel') },
-                {
-                  pattern: /^1\d{10}$/,
-                  message: t('inputTel'),
-                },
-              ]}
-            >
-              <InputNumber placeholder={t('inputTel')} clearable maxLength={11} />
-            </Form.Item>
+        <Form toastError>
+          <Form.Item
+            name="phone"
+            rules={[
+              { required: true, message: t('inputTel') },
+              {
+                pattern: /^1\d{10}$/,
+                message: t('inputTel'),
+              },
+            ]}
+          >
+            <InputNumber placeholder={t('inputTel')} clearable maxLength={11} />
+          </Form.Item>
 
-            <Form.Item name="code">
-              <Input
-                clearable
-                placeholder={t('inputCode')}
-                maxLength={6}
-                suffix={
-                  <Button as="a" onClick={isRunning ? undefined : start}>
-                    {isRunning
-                      ? countdown + t('sec')
-                      : `${isReStarted ? t('retry') : t('verifycode')}`}
-                  </Button>
-                }
-              />
-            </Form.Item>
+          <Form.Item name="code">
+            <Input
+              clearable
+              placeholder={t('inputCode')}
+              maxLength={6}
+              suffix={
+                <Button as="a" onClick={isRunning ? undefined : start}>
+                  {isRunning
+                    ? countdown + t('sec')
+                    : `${isReStarted ? t('retry') : t('verifycode')}`}
+                </Button>
+              }
+            />
+          </Form.Item>
 
-            <Button
-              type="primary"
-              block
-              wait
-              style={{
-                borderRadius: 20,
-                height: 36,
-                margin: '20px auto',
-              }}
-            >
-              {t('app.account.login')}
-            </Button>
-          </Form>
-        ) : (
-          <div style={{ height: 200 }}></div>
-        )}
+          <Button
+            type="primary"
+            block
+            wait
+            style={{
+              borderRadius: 20,
+              height: 36,
+              margin: '20px auto',
+            }}
+          >
+            {t('app.account.login')}
+          </Button>
+        </Form>
       </DemoBlock>
     </PageWrap>
-  );
+  ) : null;
 }
