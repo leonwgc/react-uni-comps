@@ -5989,7 +5989,7 @@ var getClassName$7 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transform-style:preserve-3d;transition-property:transform;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$7('wrap'), getClassName$7('page'), getClassName$7('indicator'), getClassName$7('item'), getClassName$7('item')); //#endregion
+})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transition-property:transform;backface-visibility:hidden;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:8px;height:4px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:4px;height:8px;}}}"], getClassName$7('wrap'), getClassName$7('page'), getClassName$7('indicator'), getClassName$7('item'), getClassName$7('item')); //#endregion
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -6063,6 +6063,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
 
   var count = items.length;
   var len = React__default['default'].Children.count(children);
+  var childrenRef = useLatest(children);
 
   var _useState3 = React.useState(0),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -6129,9 +6130,9 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     };
   });
   useUpdateEffect(function () {
-    setItems(getItems(children, loop, height));
+    setItems(getItems(childrenRef.current, loop, height));
     slideToPageIndex(0, false);
-  }, [children, loop, height]);
+  }, [loop, height]);
   useUpdateEffect(function () {
     if (pageIndex >= 0 && pageIndex < len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
