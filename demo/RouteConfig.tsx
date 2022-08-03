@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/SlideCard',
+    component: lazy(() => import('./SlideCard')),
+  },
+  {
     path: '/Countdown',
     component: lazy(() => import('./Countdown')),
   },

@@ -29,8 +29,8 @@ const StyledSlide = styled.div`
     flex-wrap: nowrap;
     touch-action: none;
     width: 100%;
-    transform-style: preserve-3d;
     transition-property: transform;
+    backface-visibility: hidden;
 
     &.vertical {
       flex-direction: column;
@@ -197,6 +197,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   const count = items.length;
   const len = React.Children.count(children);
+  const childrenRef = useLatest(children);
 
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
@@ -255,9 +256,9 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   }));
 
   useUpdateEffect(() => {
-    setItems(getItems(children, loop, height));
+    setItems(getItems(childrenRef.current, loop, height));
     slideToPageIndex(0, false);
-  }, [children, loop, height]);
+  }, [loop, height]);
 
   useUpdateEffect(() => {
     if (pageIndex >= 0 && pageIndex < len) {

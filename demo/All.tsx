@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> SlideCard
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('SlideCard')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Countdown
           </Space>
         }
