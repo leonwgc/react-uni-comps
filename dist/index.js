@@ -9312,7 +9312,7 @@ var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   componentId: "sc-1jrp0l7-0"
 })(["position:relative;overflow:hidden;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$c('inner'), getClassName$c('pointer'), getClassName$c('name'), getClassName$c('img'), getClassName$c('prize'), getClassName$c('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
-/** turntable */
+/** 转盘抽奖 */
 
 var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
