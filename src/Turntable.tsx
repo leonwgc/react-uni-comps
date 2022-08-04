@@ -128,7 +128,7 @@ const prizeBgColors = [
   'rgb(255, 247, 223)',
 ];
 
-/** turntable */
+/** 转盘抽奖 */
 const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     className,

@@ -10,7 +10,7 @@ declare type PrizeInfo = {
     /** 扇形背景色 */
     color?: string;
 };
-/** turntable */
+/** 转盘抽奖 */
 declare const Turntable: React.ForwardRefExoticComponent<{
     /** 奖品列表 */
     prizeList?: Array<PrizeInfo>;

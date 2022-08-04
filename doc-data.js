@@ -311,6 +311,10 @@ module.exports = [
         name: 'IndexList',
         title: 'IndexList 索引列表',
       },
+      {
+        name: 'Turntable',
+        title: 'Turntable 转盘抽奖',
+      },
     ],
   },
 
