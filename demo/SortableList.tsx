@@ -3,17 +3,9 @@ import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
 import { SortableList, Button, Space, AutoCenter } from 'react-uni-comps';
 
-const list = [
-  { title: '1' },
-  { title: '2' },
-  { title: '3' },
-  { title: '4' },
-  { title: '5' },
-  { title: '6' },
-  { title: '7' },
-  { title: '8' },
-  { title: '9' },
-];
+const list = Array.from(new Array(9), (v, i) => ({
+  title: i + 1,
+}));
 
 export default function App() {
   const [dataList, setDataList] = useState<any>(list);
