@@ -9304,6 +9304,193 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Countdown.displayName = 'Countdown';
 
+var _excluded$1h = ["className", "width", "height", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"];
+var getClassName$c = prefixClassName('uc-turntable');
+var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "Turntable__StyledWrap",
+  componentId: "sc-1jrp0l7-0"
+})(["position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;overflow:hidden;.pointer{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.drawTable-name{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.drawTable-img{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.turntable{position:absolute;left:0;top:0;width:100%;height:100%;#canvasWx{width:200%;height:100%;}.mlcanvas{margin-left:-50%;}}.prize{position:absolute;left:25%;top:0;width:50%;height:50%;.item{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}}"]);
+var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
+/** turntable */
+
+var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      _props$width = props.width,
+      width = _props$width === void 0 ? 300 : _props$width,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 300 : _props$height,
+      _props$prizeList = props.prizeList,
+      prizeList = _props$prizeList === void 0 ? [] : _props$prizeList,
+      _props$turnsNumber = props.turnsNumber,
+      turnsNumber = _props$turnsNumber === void 0 ? 5 : _props$turnsNumber,
+      _props$turnsTime = props.turnsTime,
+      turnsTime = _props$turnsTime === void 0 ? 5 : _props$turnsTime,
+      pointer = props.pointer,
+      _props$borderColor = props.borderColor,
+      borderColor = _props$borderColor === void 0 ? '#ff9800' : _props$borderColor,
+      onStart = props.onStart,
+      onEnd = props.onEnd,
+      _props$times = props.times,
+      times = _props$times === void 0 ? 1 : _props$times,
+      onNoTimes = props.onNoTimes,
+      rest = _objectWithoutProperties(props, _excluded$1h); // 用来锁定转盘，避免同时多次点击转动
+
+
+  var lock = React.useRef(false); // 剩余抽奖次数
+
+  var num = React.useRef(times); // 开始转动的角度
+
+  var startRotateDegree = React.useRef(0); // 设置指针默认指向的位置,现在是默认指向2个扇形之间的边线上
+
+  var rotateAngle = React.useRef(0);
+  var rotateTransition = React.useRef('');
+  var wrapRef = React.useRef();
+  var innerRef = React.useRef();
+  var canvasDomRef = React.useRef();
+  var turnIndex = React.useRef(-1); // 保持结果
+
+  var forceUpdate = useForceUpdate(); // 根据index计算每一格要旋转的角度的样式
+
+  var getRotateAngle = function getRotateAngle(index) {
+    var angle = 360 / prizeList.length * index + 180 / prizeList.length;
+    return {
+      transform: "rotate(".concat(angle, "deg)")
+    };
+  };
+
+  useMount(function () {
+    var prizeNum = prizeList.length; // 开始绘画
+
+    var canvas = canvasDomRef.current;
+    var luckdraw = wrapRef.current;
+
+    if (canvas && luckdraw) {
+      var ctx = canvas.getContext('2d');
+
+      if (ctx) {
+        var canvasW = canvas.width = luckdraw.clientWidth; // 画板的高度
+
+        var canvasH = canvas.height = luckdraw.clientHeight; // 画板的宽度
+        // translate方法重新映射画布上的 (0,0) 位置
+
+        ctx.translate(0, canvasH); // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
+
+        ctx.rotate(-90 * Math.PI / 180); // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
+
+        var outRadius = canvasW / 2 - 1; // 圆环的内圆的半径
+
+        var innerRadius = 0;
+        var baseAngle = Math.PI * 2 / prizeNum; // 每个奖项所占角度数
+
+        ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
+
+        ctx.strokeStyle = borderColor; // 设置画图线的颜色
+
+        for (var _index = 0; _index < prizeNum; _index++) {
+          var angle = _index * baseAngle;
+
+          if (prizeList[_index]['color']) {
+            ctx.fillStyle = prizeList[_index]['color']; //设置每个扇形区域的颜色,根据每条数据中单独设置的优先
+          } else {
+            ctx.fillStyle = prizeBgColors[_index]; //设置每个扇形区域的颜色
+          }
+
+          ctx.beginPath(); //开始绘制
+          // 标准圆弧：arc(x,y,radius,startAngle,endAngle,anticlockwise)
+
+          ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
+          ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
+          ctx.stroke();
+          ctx.fill();
+          ctx.save();
+        }
+      }
+    }
+  }); // 判断是否可以转动
+
+  var canBeRotated = function canBeRotated() {
+    if (lock.current) {
+      return false;
+    }
+
+    if (num.current <= 0) {
+      onNoTimes === null || onNoTimes === void 0 ? void 0 : onNoTimes();
+      return false;
+    }
+
+    return true;
+  };
+
+  var startTurns = function startTurns() {
+    if (!canBeRotated()) {
+      return false;
+    }
+
+    lock.current = true; // 设置在哪里停下，与后台交互，
+    // const index = Math.floor(Math.random() * prizeList.length);
+
+    turnIndex.current = -1; // reset
+
+    onStart().then(function (index) {
+      turnIndex.current = index;
+      num.current--;
+      rotate(index);
+    });
+  }; // 转动起来
+
+
+  var rotate = function rotate(index) {
+    var turnsTimeNum = turnsTime;
+    var rotateAngleValue = startRotateDegree.current + turnsNumber * 360 + 360 - (180 / prizeList.length + 360 / prizeList.length * index) - startRotateDegree.current % 360;
+    startRotateDegree.current = rotateAngleValue;
+    rotateAngle.current = "rotate(".concat(rotateAngleValue, "deg)");
+    rotateTransition.current = "transform ".concat(turnsTimeNum, "s cubic-bezier(0.250, 0.460, 0.455, 0.995)");
+    forceUpdate();
+    setTimeout(function () {
+      // end
+      lock.current = false;
+      onEnd === null || onEnd === void 0 ? void 0 : onEnd(turnIndex.current);
+    }, turnsTimeNum * 1000 + 500);
+  };
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$i, _extends({}, rest, {
+    className: clsx__default['default'](getClassName$c(), className),
+    ref: wrapRef,
+    style: {
+      width: width,
+      height: height
+    }
+  }), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "turntable",
+    ref: innerRef,
+    style: {
+      transform: rotateAngle.current,
+      transition: rotateTransition.current
+    }
+  }, /*#__PURE__*/React__default['default'].createElement("canvas", {
+    id: "canvas",
+    ref: canvasDomRef
+  }, "\u6D4F\u89C8\u5668\u7248\u672C\u8FC7\u4F4E"), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "prize"
+  }, prizeList.map(function (item, index) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: index,
+      className: "item",
+      style: getRotateAngle(index)
+    }, /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "drawTable-name"
+    }, item.name), /*#__PURE__*/React__default['default'].createElement("div", {
+      className: "drawTable-img"
+    }, /*#__PURE__*/React__default['default'].createElement("img", {
+      src: item.img
+    })));
+  }))), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: "pointer",
+    onClick: startTurns
+  }, pointer));
+});
+Turntable.displayName = 'UC-Turntable';
+
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
@@ -9620,7 +9807,7 @@ var initI18n = function initI18n(options) {
   .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
-var _excluded$1h = ["children", "label", "name"],
+var _excluded$1i = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9630,7 +9817,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1h);
+      fieldProps = _objectWithoutProperties(props, _excluded$1i);
 
   var required = false;
 
@@ -9905,6 +10092,7 @@ exports.ThemeProvider = ThemeProvider;
 exports.Toast = Toast;
 exports.Tooltip = Tooltip;
 exports.TransitionElement = TransitionElement;
+exports.Turntable = Turntable;
 exports.WaitLoading = WaitLoading;
 exports.WaterMark = WaterMark;
 exports.Waypoint = Waypoint;
