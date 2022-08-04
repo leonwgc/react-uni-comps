@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
@@ -22,17 +22,8 @@ type PrizeInfo = {
 };
 
 type Props = {
+  /** 奖品列表 */
   prizeList?: Array<PrizeInfo>;
-  /**
-   * 抽奖宽度
-   * @default 300
-   */
-  width?: StringOrNumber;
-  /**
-   * 抽奖高度
-   * @default 300
-   */
-  height?: StringOrNumber;
   /** 转动圈数 */
   turnsNumber?: number;
   /**
@@ -65,6 +56,11 @@ type Props = {
    * @default 1
    */
   onNoTimes?: () => void;
+  /**
+   * 宽高
+   * @default 300
+   */
+  size?: number;
 } & BaseProps;
 
 const StyledWrap = styled.div`
@@ -146,8 +142,7 @@ const prizeBgColors = [
 const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     className,
-    width = 300,
-    height = 300,
+    size = 300,
     prizeList = [],
     turnsNumber = 5,
     turnsTime = 5,
@@ -177,6 +172,8 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const forceUpdate = useForceUpdate();
 
+  useImperativeHandle(ref, () => wrapRef.current);
+
   // 根据index计算每一格要旋转的角度的样式
   const getRotateAngle = (index: number) => {
     const angle = (360 / prizeList.length) * index + 180 / prizeList.length;
@@ -192,39 +189,47 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const canvas = canvasDomRef.current;
     const luckdraw = wrapRef.current;
 
+    let dpr = window.devicePixelRatio || 1;
+    dpr = dpr >= 1 ? Math.ceil(dpr) : 1;
+
     if (canvas && luckdraw) {
+      const canvasW = dpr * size; // 画板的高度
+      const canvasH = dpr * size; // 画板的宽度
+
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
+
       const ctx = canvas.getContext('2d');
 
-      if (ctx) {
-        const canvasW = (canvas.width = luckdraw.clientWidth); // 画板的高度
-        const canvasH = (canvas.height = luckdraw.clientHeight); // 画板的宽度
-        // translate方法重新映射画布上的 (0,0) 位置
-        ctx.translate(0, canvasH);
-        // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
-        ctx.rotate((-90 * Math.PI) / 180);
-        // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
-        const outRadius = canvasW / 2 - 1;
-        // 圆环的内圆的半径
-        const innerRadius = 0;
-        const baseAngle = (Math.PI * 2) / prizeNum; // 每个奖项所占角度数
-        ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
-        ctx.strokeStyle = borderColor; // 设置画图线的颜色
-        for (let index = 0; index < prizeNum; index++) {
-          const angle = index * baseAngle;
-          if (prizeList[index]['color']) {
-            ctx.fillStyle = prizeList[index]['color']; //设置每个扇形区域的颜色,根据每条数据中单独设置的优先
-          } else {
-            ctx.fillStyle = prizeBgColors[index]; //设置每个扇形区域的颜色
-          }
-          ctx.beginPath(); //开始绘制
-          // 标准圆弧：arc(x,y,radius,startAngle,endAngle,anticlockwise)
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
-          ctx.stroke();
-          ctx.fill();
-          ctx.save();
+      // translate方法重新映射画布上的 (0,0) 位置
+      ctx.translate(0, canvasH);
+      // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
+      ctx.rotate((-90 * Math.PI) / 180);
+      // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
+      const outRadius = canvasW / 2 - 1;
+      // 圆环的内圆的半径
+      const innerRadius = 0;
+      const baseAngle = (Math.PI * 2) / prizeNum; // 每个奖项所占角度数
+      ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
+      ctx.strokeStyle = borderColor; // 设置画图线的颜色
+      for (let index = 0; index < prizeNum; index++) {
+        const angle = index * baseAngle;
+        if (prizeList[index]['color']) {
+          ctx.fillStyle = prizeList[index]['color'];
+        } else {
+          ctx.fillStyle = prizeBgColors[index];
         }
+        ctx.beginPath();
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
+        ctx.stroke();
+        ctx.fill();
+        ctx.save();
       }
+      ctx.scale(dpr, dpr);
     }
   });
 
@@ -282,7 +287,7 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       {...rest}
       className={clsx(getClassName(), className)}
       ref={wrapRef}
-      style={{ width, height }}
+      style={{ width: size, height: size }}
     >
       <div
         className="turntable"
