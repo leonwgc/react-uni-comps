@@ -24,8 +24,8 @@ export default function App() {
         <AutoCenter style={{ marginBottom: 24 }}>
           <Space>
             当前排列
-            {dataList.map((item) => (
-              <span>{item.title}</span>
+            {dataList.map((item, index) => (
+              <span key={index}>{item.title}</span>
             ))}
           </Space>
         </AutoCenter>
