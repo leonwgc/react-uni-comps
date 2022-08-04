@@ -9304,21 +9304,20 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Countdown.displayName = 'Countdown';
 
-var _excluded$1h = ["className", "width", "height", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"];
+var _excluded$1h = ["className", "size", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"];
+
 var getClassName$c = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
   componentId: "sc-1jrp0l7-0"
-})(["position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;overflow:hidden;.pointer{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.drawTable-name{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.drawTable-img{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.turntable{position:absolute;left:0;top:0;width:100%;height:100%;#canvasWx{width:200%;height:100%;}.mlcanvas{margin-left:-50%;}}.prize{position:absolute;left:25%;top:0;width:50%;height:50%;.item{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}}"]);
+})(["position:relative;overflow:hidden;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$c('inner'), getClassName$c('pointer'), getClassName$c('name'), getClassName$c('img'), getClassName$c('prize'), getClassName$c('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
 /** turntable */
 
 var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
-      _props$width = props.width,
-      width = _props$width === void 0 ? 300 : _props$width,
-      _props$height = props.height,
-      height = _props$height === void 0 ? 300 : _props$height,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 300 : _props$size,
       _props$prizeList = props.prizeList,
       prizeList = _props$prizeList === void 0 ? [] : _props$prizeList,
       _props$turnsNumber = props.turnsNumber,
@@ -9349,7 +9348,10 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var canvasDomRef = React.useRef();
   var turnIndex = React.useRef(-1); // 保持结果
 
-  var forceUpdate = useForceUpdate(); // 根据index计算每一格要旋转的角度的样式
+  var forceUpdate = useForceUpdate();
+  React.useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  }); // 根据index计算每一格要旋转的角度的样式
 
   var getRotateAngle = function getRotateAngle(index) {
     var angle = 360 / prizeList.length * index + 180 / prizeList.length;
@@ -9363,48 +9365,51 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 
     var canvas = canvasDomRef.current;
     var luckdraw = wrapRef.current;
+    var dpr = window.devicePixelRatio || 1;
+    dpr = dpr >= 1 ? Math.ceil(dpr) : 1;
 
     if (canvas && luckdraw) {
-      var ctx = canvas.getContext('2d');
+      var canvasW = dpr * size; // 画板的高度
 
-      if (ctx) {
-        var canvasW = canvas.width = luckdraw.clientWidth; // 画板的高度
+      var canvasH = dpr * size; // 画板的宽度
 
-        var canvasH = canvas.height = luckdraw.clientHeight; // 画板的宽度
-        // translate方法重新映射画布上的 (0,0) 位置
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
+      var ctx = canvas.getContext('2d'); // translate方法重新映射画布上的 (0,0) 位置
 
-        ctx.translate(0, canvasH); // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
+      ctx.translate(0, canvasH); // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
 
-        ctx.rotate(-90 * Math.PI / 180); // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
+      ctx.rotate(-90 * Math.PI / 180); // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
 
-        var outRadius = canvasW / 2 - 1; // 圆环的内圆的半径
+      var outRadius = canvasW / 2 - 1; // 圆环的内圆的半径
 
-        var innerRadius = 0;
-        var baseAngle = Math.PI * 2 / prizeNum; // 每个奖项所占角度数
+      var innerRadius = 0;
+      var baseAngle = Math.PI * 2 / prizeNum; // 每个奖项所占角度数
 
-        ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
+      ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
 
-        ctx.strokeStyle = borderColor; // 设置画图线的颜色
+      ctx.strokeStyle = borderColor; // 设置画图线的颜色
 
-        for (var _index = 0; _index < prizeNum; _index++) {
-          var angle = _index * baseAngle;
+      for (var _index = 0; _index < prizeNum; _index++) {
+        var angle = _index * baseAngle;
 
-          if (prizeList[_index]['color']) {
-            ctx.fillStyle = prizeList[_index]['color']; //设置每个扇形区域的颜色,根据每条数据中单独设置的优先
-          } else {
-            ctx.fillStyle = prizeBgColors[_index]; //设置每个扇形区域的颜色
-          }
-
-          ctx.beginPath(); //开始绘制
-          // 标准圆弧：arc(x,y,radius,startAngle,endAngle,anticlockwise)
-
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
-          ctx.stroke();
-          ctx.fill();
-          ctx.save();
+        if (prizeList[_index]['color']) {
+          ctx.fillStyle = prizeList[_index]['color'];
+        } else {
+          ctx.fillStyle = prizeBgColors[_index];
         }
+
+        ctx.beginPath();
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
+        ctx.stroke();
+        ctx.fill();
+        ctx.save();
       }
+
+      ctx.scale(dpr, dpr);
     }
   }); // 判断是否可以转动
 
@@ -9457,35 +9462,34 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     className: clsx__default['default'](getClassName$c(), className),
     ref: wrapRef,
     style: {
-      width: width,
-      height: height
+      width: size,
+      height: size
     }
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "turntable",
+    className: getClassName$c('inner'),
     ref: innerRef,
     style: {
       transform: rotateAngle.current,
       transition: rotateTransition.current
     }
   }, /*#__PURE__*/React__default['default'].createElement("canvas", {
-    id: "canvas",
     ref: canvasDomRef
   }, "\u6D4F\u89C8\u5668\u7248\u672C\u8FC7\u4F4E"), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "prize"
+    className: getClassName$c('prize')
   }, prizeList.map(function (item, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
-      className: "item",
+      className: getClassName$c('item'),
       style: getRotateAngle(index)
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: "drawTable-name"
+      className: getClassName$c('name')
     }, item.name), /*#__PURE__*/React__default['default'].createElement("div", {
-      className: "drawTable-img"
+      className: getClassName$c('img')
     }, /*#__PURE__*/React__default['default'].createElement("img", {
       src: item.img
     })));
   }))), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: "pointer",
+    className: getClassName$c('pointer'),
     onClick: startTurns
   }, pointer));
 });

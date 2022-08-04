@@ -12,17 +12,8 @@ declare type PrizeInfo = {
 };
 /** turntable */
 declare const Turntable: React.ForwardRefExoticComponent<{
+    /** 奖品列表 */
     prizeList?: Array<PrizeInfo>;
-    /**
-     * 抽奖宽度
-     * @default 300
-     */
-    width?: StringOrNumber;
-    /**
-     * 抽奖高度
-     * @default 300
-     */
-    height?: StringOrNumber;
     /** 转动圈数 */
     turnsNumber?: number;
     /**
@@ -55,5 +46,10 @@ declare const Turntable: React.ForwardRefExoticComponent<{
      * @default 1
      */
     onNoTimes?: () => void;
+    /**
+     * 宽高
+     * @default 300
+     */
+    size?: number;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Turntable;

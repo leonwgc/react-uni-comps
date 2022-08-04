@@ -64,20 +64,24 @@ type Props = {
 } & BaseProps;
 
 const StyledWrap = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  position: relative;
   overflow: hidden;
-  .pointer {
+  .${getClassName('inner')} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .${getClassName('pointer')} {
     position: absolute;
     left: 50%;
     top: 50%;
     z-index: 99;
     transform: translate(-43.75%, -50%);
   }
-  .drawTable-name {
+  .${getClassName('name')} {
     position: absolute;
     left: 10px;
     top: 20px;
@@ -86,7 +90,7 @@ const StyledWrap = styled.div`
     text-align: center;
     color: #ff5722;
   }
-  .drawTable-img {
+  .${getClassName('img')} {
     position: absolute;
     left: calc(50% - 30px / 2);
     top: 60px;
@@ -98,34 +102,20 @@ const StyledWrap = styled.div`
       height: 100%;
     }
   }
-  .turntable {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    #canvasWx {
-      width: 200%;
-      height: 100%;
-    }
-    .mlcanvas {
-      margin-left: -50%;
-    }
-  }
-  .prize {
+  .${getClassName('prize')} {
     position: absolute;
     left: 25%;
     top: 0;
     width: 50%;
     height: 50%;
-    .item {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      transform-origin: center bottom;
-    }
+  }
+  .${getClassName('item')} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center bottom;
   }
 `;
 
@@ -290,25 +280,23 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       style={{ width: size, height: size }}
     >
       <div
-        className="turntable"
+        className={getClassName('inner')}
         ref={innerRef}
         style={{ transform: rotateAngle.current, transition: rotateTransition.current }}
       >
-        <canvas id="canvas" ref={canvasDomRef}>
-          浏览器版本过低
-        </canvas>
-        <div className="prize">
+        <canvas ref={canvasDomRef}>浏览器版本过低</canvas>
+        <div className={getClassName('prize')}>
           {prizeList.map((item, index) => (
-            <div key={index} className="item" style={getRotateAngle(index)}>
-              <div className="drawTable-name">{item.name}</div>
-              <div className="drawTable-img">
+            <div key={index} className={getClassName('item')} style={getRotateAngle(index)}>
+              <div className={getClassName('name')}>{item.name}</div>
+              <div className={getClassName('img')}>
                 <img src={item.img} />
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="pointer" onClick={startTurns}>
+      <div className={getClassName('pointer')} onClick={startTurns}>
         {pointer}
       </div>
     </StyledWrap>

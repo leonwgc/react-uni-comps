@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import { Turntable, Toast, styled } from 'react-uni-comps';
+import { Turntable, Toast, styled, AutoCenter } from 'react-uni-comps';
 
 const prizeList = [
   {
@@ -49,23 +49,26 @@ const StyledPointer = styled.div({
 export default function App() {
   return (
     <PageWrap>
-      <Turntable
-        prizeList={prizeList}
-        pointer={<StyledPointer />}
-        times={2}
-        onNoTimes={() => Toast.show('抽奖机会用完了..')}
-        onStart={() => {
-          //模拟接口
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(Math.floor(Math.random() * prizeList.length));
-            }, 500);
-          });
-        }}
-        onEnd={(index) => {
-          Toast.show('你抽中了: ' + prizeList[index].name);
-        }}
-      />
+      <AutoCenter style={{ margin: 80 }}>
+        <Turntable
+          prizeList={prizeList}
+          pointer={<StyledPointer />}
+          times={5}
+          size={260}
+          onNoTimes={() => Toast.show('抽奖机会用完了..')}
+          onStart={() => {
+            //模拟接口
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(Math.floor(Math.random() * prizeList.length));
+              });
+            });
+          }}
+          onEnd={(index) => {
+            Toast.show('你抽中了: ' + prizeList[index].name);
+          }}
+        />
+      </AutoCenter>
     </PageWrap>
   );
 }

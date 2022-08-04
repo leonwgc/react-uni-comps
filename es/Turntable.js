@@ -1,36 +1,35 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
 import useMount from './hooks/useMount';
-import useForceUpdate from './hooks/useForceUpdate';
+import useForceUpdate from './hooks/useForceUpdate'; // trans from https://nutui.jd.com/bingo/#/turntable
+
 var getClassName = prefixClassName('uc-turntable');
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  text-align: center;\n  overflow: hidden;\n  .pointer {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .drawTable-name {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .drawTable-img {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .turntable {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    #canvasWx {\n      width: 200%;\n      height: 100%;\n    }\n    .mlcanvas {\n      margin-left: -50%;\n    }\n  }\n  .prize {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n    .item {\n      position: absolute;\n      left: 0;\n      top: 0;\n      width: 100%;\n      height: 100%;\n      transform-origin: center bottom;\n    }\n  }\n"], ["\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  text-align: center;\n  overflow: hidden;\n  .pointer {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .drawTable-name {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .drawTable-img {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .turntable {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    #canvasWx {\n      width: 200%;\n      height: 100%;\n    }\n    .mlcanvas {\n      margin-left: -50%;\n    }\n  }\n  .prize {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n    .item {\n      position: absolute;\n      left: 0;\n      top: 0;\n      width: 100%;\n      height: 100%;\n      transform-origin: center bottom;\n    }\n  }\n"])));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  overflow: hidden;\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n  }\n\n  .", " {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .", " {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .", " {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .", " {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n  }\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    transform-origin: center bottom;\n  }\n"], ["\n  position: relative;\n  overflow: hidden;\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n  }\n\n  .", " {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .", " {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .", " {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .", " {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n  }\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    transform-origin: center bottom;\n  }\n"])), getClassName('inner'), getClassName('pointer'), getClassName('name'), getClassName('img'), getClassName('prize'), getClassName('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
 /** turntable */
 
 var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
-      _a = props.width,
-      width = _a === void 0 ? 300 : _a,
-      _b = props.height,
-      height = _b === void 0 ? 300 : _b,
-      _c = props.prizeList,
-      prizeList = _c === void 0 ? [] : _c,
-      _d = props.turnsNumber,
-      turnsNumber = _d === void 0 ? 5 : _d,
-      _e = props.turnsTime,
-      turnsTime = _e === void 0 ? 5 : _e,
+      _a = props.size,
+      size = _a === void 0 ? 300 : _a,
+      _b = props.prizeList,
+      prizeList = _b === void 0 ? [] : _b,
+      _c = props.turnsNumber,
+      turnsNumber = _c === void 0 ? 5 : _c,
+      _d = props.turnsTime,
+      turnsTime = _d === void 0 ? 5 : _d,
       pointer = props.pointer,
-      _f = props.borderColor,
-      borderColor = _f === void 0 ? '#ff9800' : _f,
+      _e = props.borderColor,
+      borderColor = _e === void 0 ? '#ff9800' : _e,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      _g = props.times,
-      times = _g === void 0 ? 1 : _g,
+      _f = props.times,
+      times = _f === void 0 ? 1 : _f,
       onNoTimes = props.onNoTimes,
-      rest = __rest(props, ["className", "width", "height", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"]); // 用来锁定转盘，避免同时多次点击转动
+      rest = __rest(props, ["className", "size", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"]); // 用来锁定转盘，避免同时多次点击转动
 
 
   var lock = useRef(false); // 剩余抽奖次数
@@ -46,7 +45,10 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var canvasDomRef = useRef();
   var turnIndex = useRef(-1); // 保持结果
 
-  var forceUpdate = useForceUpdate(); // 根据index计算每一格要旋转的角度的样式
+  var forceUpdate = useForceUpdate();
+  useImperativeHandle(ref, function () {
+    return wrapRef.current;
+  }); // 根据index计算每一格要旋转的角度的样式
 
   var getRotateAngle = function getRotateAngle(index) {
     var angle = 360 / prizeList.length * index + 180 / prizeList.length;
@@ -60,48 +62,51 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
     var canvas = canvasDomRef.current;
     var luckdraw = wrapRef.current;
+    var dpr = window.devicePixelRatio || 1;
+    dpr = dpr >= 1 ? Math.ceil(dpr) : 1;
 
     if (canvas && luckdraw) {
-      var ctx = canvas.getContext('2d');
+      var canvasW = dpr * size; // 画板的高度
 
-      if (ctx) {
-        var canvasW = canvas.width = luckdraw.clientWidth; // 画板的高度
+      var canvasH = dpr * size; // 画板的宽度
 
-        var canvasH = canvas.height = luckdraw.clientHeight; // 画板的宽度
-        // translate方法重新映射画布上的 (0,0) 位置
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
+      var ctx = canvas.getContext('2d'); // translate方法重新映射画布上的 (0,0) 位置
 
-        ctx.translate(0, canvasH); // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
+      ctx.translate(0, canvasH); // rotate方法旋转当前的绘图，因为文字是和当前扇形中心线垂直的
 
-        ctx.rotate(-90 * Math.PI / 180); // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
+      ctx.rotate(-90 * Math.PI / 180); // 圆环的外圆的半径,可用来调整圆盘大小来适应外部盒子的大小
 
-        var outRadius = canvasW / 2 - 1; // 圆环的内圆的半径
+      var outRadius = canvasW / 2 - 1; // 圆环的内圆的半径
 
-        var innerRadius = 0;
-        var baseAngle = Math.PI * 2 / prizeNum; // 每个奖项所占角度数
+      var innerRadius = 0;
+      var baseAngle = Math.PI * 2 / prizeNum; // 每个奖项所占角度数
 
-        ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
+      ctx.clearRect(0, 0, canvasW, canvasH); //去掉背景默认色
 
-        ctx.strokeStyle = borderColor; // 设置画图线的颜色
+      ctx.strokeStyle = borderColor; // 设置画图线的颜色
 
-        for (var index = 0; index < prizeNum; index++) {
-          var angle = index * baseAngle;
+      for (var index = 0; index < prizeNum; index++) {
+        var angle = index * baseAngle;
 
-          if (prizeList[index]['color']) {
-            ctx.fillStyle = prizeList[index]['color']; //设置每个扇形区域的颜色,根据每条数据中单独设置的优先
-          } else {
-            ctx.fillStyle = prizeBgColors[index]; //设置每个扇形区域的颜色
-          }
-
-          ctx.beginPath(); //开始绘制
-          // 标准圆弧：arc(x,y,radius,startAngle,endAngle,anticlockwise)
-
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
-          ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
-          ctx.stroke();
-          ctx.fill();
-          ctx.save();
+        if (prizeList[index]['color']) {
+          ctx.fillStyle = prizeList[index]['color'];
+        } else {
+          ctx.fillStyle = prizeBgColors[index];
         }
+
+        ctx.beginPath();
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, outRadius, angle, angle + baseAngle, false);
+        ctx.arc(canvasW * 0.5, canvasH * 0.5, innerRadius, angle + baseAngle, angle, true);
+        ctx.stroke();
+        ctx.fill();
+        ctx.save();
       }
+
+      ctx.scale(dpr, dpr);
     }
   }); // 判断是否可以转动
 
@@ -154,35 +159,34 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: clsx(getClassName(), className),
     ref: wrapRef,
     style: {
-      width: width,
-      height: height
+      width: size,
+      height: size
     }
   }), /*#__PURE__*/React.createElement("div", {
-    className: "turntable",
+    className: getClassName('inner'),
     ref: innerRef,
     style: {
       transform: rotateAngle.current,
       transition: rotateTransition.current
     }
   }, /*#__PURE__*/React.createElement("canvas", {
-    id: "canvas",
     ref: canvasDomRef
   }, "\u6D4F\u89C8\u5668\u7248\u672C\u8FC7\u4F4E"), /*#__PURE__*/React.createElement("div", {
-    className: "prize"
+    className: getClassName('prize')
   }, prizeList.map(function (item, index) {
     return /*#__PURE__*/React.createElement("div", {
       key: index,
-      className: "item",
+      className: getClassName('item'),
       style: getRotateAngle(index)
     }, /*#__PURE__*/React.createElement("div", {
-      className: "drawTable-name"
+      className: getClassName('name')
     }, item.name), /*#__PURE__*/React.createElement("div", {
-      className: "drawTable-img"
+      className: getClassName('img')
     }, /*#__PURE__*/React.createElement("img", {
       src: item.img
     })));
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "pointer",
+    className: getClassName('pointer'),
     onClick: startTurns
   }, pointer));
 });
