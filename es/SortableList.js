@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import Sortable from 'sortablejs';
 import { nanoid } from 'nanoid';
+import { prefixClassName } from './helper';
+import useLatest from './hooks/useLatest';
+var getClassName = prefixClassName('uc-sortable-list');
 var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""]))); //#endregion
 
 var addKeyToList = function addKeyToList(list) {
@@ -34,16 +37,11 @@ var SortableList = function SortableList(props) {
 
   var wrapElRef = useRef();
   var keyedList = addKeyToList(dataList);
-  var ref = useRef({
+  var ref = useLatest({
     list: keyedList,
     onSort: onSort,
     config: config
   });
-  ref.current = {
-    list: keyedList,
-    onSort: onSort,
-    config: config
-  };
   useEffect(function () {
     var el = wrapElRef.current;
     var st;
@@ -71,12 +69,12 @@ var SortableList = function SortableList(props) {
   }, [ref]);
   return /*#__PURE__*/React.createElement(StyledWrapper, __assign({}, rest, {
     ref: wrapElRef,
-    className: clsx('uc-sortable-list', className)
+    className: clsx(getClassName(), className)
   }), keyedList.map(function (item) {
     return /*#__PURE__*/React.createElement("div", {
       key: item._key,
       "data-id": item._key,
-      className: "uc-sortable-item"
+      className: getClassName('item')
     }, dataRender(item));
   }));
 };

@@ -8527,6 +8527,7 @@ var SideBar = function SideBar(_ref) {
 };
 
 var _excluded$16 = ["dataList", "dataRender", "onSort", "config", "className"];
+var getClassName$8 = prefixClassName('uc-sortable-list');
 var StyledWrapper$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SortableList__StyledWrapper",
   componentId: "sc-tk9dv2-0"
@@ -8568,16 +8569,11 @@ var SortableList = function SortableList(props) {
 
   var wrapElRef = React.useRef();
   var keyedList = addKeyToList(dataList);
-  var ref = React.useRef({
+  var ref = useLatest({
     list: keyedList,
     onSort: onSort,
     config: config
   });
-  ref.current = {
-    list: keyedList,
-    onSort: onSort,
-    config: config
-  };
   React.useEffect(function () {
     var el = wrapElRef.current;
     var st;
@@ -8605,12 +8601,12 @@ var SortableList = function SortableList(props) {
   }, [ref]);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrapper$4, _extends({}, rest, {
     ref: wrapElRef,
-    className: clsx__default['default']('uc-sortable-list', className)
+    className: clsx__default['default'](getClassName$8(), className)
   }), keyedList.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: item._key,
       "data-id": item._key,
-      className: "uc-sortable-item"
+      className: getClassName$8('item')
     }, dataRender(item));
   }));
 };
@@ -8928,12 +8924,12 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 Masonry.displayName = 'UC-Masonry';
 
 var _excluded$1b = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
-var getClassName$8 = prefixClassName('uc-scroll-box');
+var getClassName$9 = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ScrollBox__StyledWrap",
   componentId: "sc-1lxfvtx-0"
-})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$8('body'), getClassName$8('track'), getClassName$8('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
+})(["position:relative;overflow:hidden;width:100%;.", "{display:flex;flex-wrap:nowrap;overflow-x:scroll;height:100%;width:100%;&::-webkit-scrollbar{display:none;}*{flex:none;}}.", "{position:relative;overflow:hidden;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;height:3px;width:24px;background-color:#f0f0f0;visibility:hidden;}.", "{position:absolute;left:0;width:0;border-radius:inherit;height:100%;", " transition:left ", "ms ease;}"], getClassName$9('body'), getClassName$9('track'), getClassName$9('fill'), getThemeColorCss('background-color'), animationFast); //#endregion
 
 /** 带指示器的水平滚动盒子 */
 
@@ -8979,15 +8975,15 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, 'resize', onScroll);
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$g, _extends({}, rest, {
     ref: ref,
-    className: clsx__default['default'](getClassName$8(), className)
+    className: clsx__default['default'](getClassName$9(), className)
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$8('body'),
+    className: getClassName$9('body'),
     ref: bodyRef
   }, children), showIndicator && /*#__PURE__*/React__default['default'].createElement("div", {
-    className: clsx__default['default'](getClassName$8('track'), indicatorClass),
+    className: clsx__default['default'](getClassName$9('track'), indicatorClass),
     style: indicatorStyle
   }, /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$8('fill'),
+    className: getClassName$9('fill'),
     style: {
       backgroundColor: fillColor
     },
@@ -9023,7 +9019,7 @@ AspectRatio.displayName = 'UC-AutoCenter';
 var _excluded$1d = ["className", "style", "size", "gap", "iteration", "color"];
 
 var _templateObject$4;
-var getClassName$9 = prefixClassName('uc-dot-spin');
+var getClassName$a = prefixClassName('uc-dot-spin');
 
 var normalizePx = function normalizePx(n) {
   if (typeof n === 'number') {
@@ -9037,7 +9033,7 @@ var dance = styled.keyframes(_templateObject$4 || (_templateObject$4 = _taggedTe
 var StyledLoader$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "DotSpin__StyledLoader",
   componentId: "sc-10gb303-0"
-})(["display:inline-flex;vertical-align:middle;.", "{width:1em;height:1em;border-radius:50%;animation:600ms linear 200ms ", " normal both running ", ";&:nth-child(2){animation-delay:360ms;}&:nth-child(3){animation-delay:520ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$9('item'), function (_ref) {
+})(["display:inline-flex;vertical-align:middle;.", "{width:1em;height:1em;border-radius:50%;animation:600ms linear 200ms ", " normal both running ", ";&:nth-child(2){animation-delay:360ms;}&:nth-child(3){animation-delay:520ms;}&:not(:first-child){margin-left:", ";}}"], getClassName$a('item'), function (_ref) {
   var $iteration = _ref.$iteration;
   return $iteration;
 }, dance, function (_ref2) {
@@ -9063,14 +9059,14 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
     ref: ref,
     $gap: gap,
     $iteration: iteration,
-    className: clsx__default['default'](className, getClassName$9()),
+    className: clsx__default['default'](className, getClassName$a()),
     style: _objectSpread2({
       fontSize: size
     }, style)
   }), [1, 2, 3].map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: item,
-      className: getClassName$9('item'),
+      className: getClassName$a('item'),
       style: {
         background: color
       }
@@ -9214,7 +9210,7 @@ function useInterval(fn, delay) {
 }
 
 var _excluded$1g = ["millisec", "value", "onFinish", "className", "children"];
-var getClassName$a = prefixClassName('uc-countdown');
+var getClassName$b = prefixClassName('uc-countdown');
 
 var getCountdown = function getCountdown(value) {
   if (!value) {
@@ -9303,7 +9299,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, millisec ? 1 : 1000);
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: ref,
-    className: clsx__default['default'](getClassName$a(), className)
+    className: clsx__default['default'](getClassName$b(), className)
   }, rest), typeof children === 'function' && children(date));
 });
 Countdown.displayName = 'Countdown';

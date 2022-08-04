@@ -4,8 +4,12 @@ import React, { useRef, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import type { ObjectType } from './types';
-import Sortable from 'sortablejs';
+import Sortable, { Options } from 'sortablejs';
 import { nanoid } from 'nanoid';
+import { prefixClassName } from './helper';
+import useLatest from './hooks/useLatest';
+
+const getClassName = prefixClassName('uc-sortable-list');
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 数据列表 */
@@ -14,8 +18,8 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   dataRender?: (data: ObjectType) => ReactNode;
   /** 顺序改变回调 */
   onSort?: (list: Array<ObjectType>) => void;
-  /** sortablejs 配置 */
-  config?: ObjectType;
+  /** sortablejs 配置 http://www.sortablejs.com/options.html */
+  config?: Options;
 };
 
 const StyledWrapper = styled.div``;
@@ -40,17 +44,11 @@ const SortableList: React.FC<Props> = (props) => {
 
   const wrapElRef = useRef<HTMLDivElement>();
   const keyedList = addKeyToList(dataList);
-  const ref = useRef({
+  const ref = useLatest({
     list: keyedList,
     onSort: onSort,
     config: config,
   });
-
-  ref.current = {
-    list: keyedList,
-    onSort: onSort,
-    config: config,
-  };
 
   useEffect(() => {
     const el = wrapElRef.current;
@@ -68,7 +66,7 @@ const SortableList: React.FC<Props> = (props) => {
             ref.current.onSort?.([...newList]);
           },
         },
-      } as any);
+      } as Options);
     }
     return () => {
       st.destroy();
@@ -76,9 +74,9 @@ const SortableList: React.FC<Props> = (props) => {
   }, [ref]);
 
   return (
-    <StyledWrapper {...rest} ref={wrapElRef} className={clsx('uc-sortable-list', className)}>
+    <StyledWrapper {...rest} ref={wrapElRef} className={clsx(getClassName(), className)}>
       {keyedList.map((item: any) => (
-        <div key={item._key} data-id={item._key} className="uc-sortable-item">
+        <div key={item._key} data-id={item._key} className={getClassName('item')}>
           {dataRender(item)}
         </div>
       ))}

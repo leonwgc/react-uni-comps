@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import type { ObjectType } from './types';
+import { Options } from 'sortablejs';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 数据列表 */
     dataList?: Array<ObjectType>;
@@ -7,8 +8,8 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     dataRender?: (data: ObjectType) => ReactNode;
     /** 顺序改变回调 */
     onSort?: (list: Array<ObjectType>) => void;
-    /** sortablejs 配置 */
-    config?: ObjectType;
+    /** sortablejs 配置 http://www.sortablejs.com/options.html */
+    config?: Options;
 };
 /**
  * 拖拽排序列表

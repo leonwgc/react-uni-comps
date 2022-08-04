@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type ObjectType = Record<string, unknown>;
+export type ObjectType = Record<string, any>;
 
 export type StringOrNumber = string | number;
 
