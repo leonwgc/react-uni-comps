@@ -55,7 +55,14 @@ export default function App() {
       <Sudoku
         prizeList={prizeList}
         blockSize={100}
-        pointer={<div>开始</div>}
+        pointer={
+          <div>
+            <img
+              src="https://img13.360buyimg.com/imagetools/jfs/t1/205479/17/4245/32041/61309346E02bd3b6b/b41be60bedbb1e69.png"
+              width={80}
+            />
+          </div>
+        }
         onStart={(start) => {
           start(4);
         }}

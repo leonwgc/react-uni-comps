@@ -67,7 +67,7 @@ const StyledWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  .item {
+  .${getClassName('item')} {
     color: #fff;
     background-color: #005cff;
     border-radius: 8px;
@@ -225,7 +225,7 @@ const Sudoku = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div
           key={v}
           style={{ height: size }}
-          className={clsx('item', { active: v === seq[index.current] })}
+          className={clsx(getClassName('item'), { active: v === seq[index.current] })}
         >
           {v === 4 ? (
             <div className={getClassName('pointer')} onClick={start}>
