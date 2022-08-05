@@ -69,7 +69,7 @@ const StyledWrap = styled.div`
 
   .item {
     color: #fff;
-    background-color: #999;
+    background-color: #005cff;
     border-radius: 8px;
     display: flex;
     align-items: center;
