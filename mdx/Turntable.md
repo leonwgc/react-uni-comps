@@ -1,11 +1,11 @@
 ---
 title: Turntable 转盘抽奖
-order: 10
+order: 0
 mobile: true
 group:
-  title: 导航布局
-  order: 4
-  path: navlayout
+  title: 抽奖
+  order: 8
+  path: luckydraw
 ---
 
 # Turntable 转盘抽奖

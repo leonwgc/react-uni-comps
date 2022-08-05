@@ -311,10 +311,6 @@ module.exports = [
         name: 'IndexList',
         title: 'IndexList 索引列表',
       },
-      {
-        name: 'Turntable',
-        title: 'Turntable 转盘抽奖',
-      },
     ],
   },
 
@@ -402,6 +398,20 @@ module.exports = [
       {
         name: 'RoundSpin',
         title: 'RoundSpin zarm风格指示器',
+      },
+    ],
+  },
+  {
+    title: '抽奖',
+    path: 'luckydraw',
+    comps: [
+      {
+        name: 'Turntable',
+        title: 'Turntable 转盘抽奖',
+      },
+      {
+        name: 'Sudoku',
+        title: 'Sudoku 九宫格抽奖',
       },
     ],
   },

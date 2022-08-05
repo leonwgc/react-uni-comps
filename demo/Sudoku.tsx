@@ -53,6 +53,7 @@ export default function App() {
   return (
     <PageWrap>
       <Sudoku
+        style={{ margin: '40px 4px' }}
         prizeList={prizeList}
         pointer={
           <div>
