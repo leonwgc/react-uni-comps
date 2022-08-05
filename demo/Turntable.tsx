@@ -53,16 +53,12 @@ export default function App() {
         <Turntable
           prizeList={prizeList}
           pointer={<StyledPointer />}
-          times={5}
           size={260}
-          onNoTimes={() => Toast.show('抽奖机会用完了..')}
-          onStart={() => {
+          onStart={(start) => {
             //模拟接口
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(Math.floor(Math.random() * prizeList.length));
-              });
-            });
+            setTimeout(() => {
+              start(Math.floor(Math.random() * prizeList.length));
+            }, 200);
           }}
           onEnd={(index) => {
             Toast.show('你抽中了: ' + prizeList[index].name);

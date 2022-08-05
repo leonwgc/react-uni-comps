@@ -6,8 +6,6 @@ import { StringOrNumber, BaseProps } from './types';
 import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
 
-// trans from https://nutui.jd.com/bingo/#/turntable
-
 const getClassName = prefixClassName('uc-turntable');
 
 type PrizeInfo = {
@@ -24,8 +22,11 @@ type PrizeInfo = {
 type Props = {
   /** 奖品列表 */
   prizeList?: Array<PrizeInfo>;
-  /** 转动圈数 */
-  turnsNumber?: number;
+  /**
+   * 转动圈数
+   * @default 5
+   *  */
+  round?: number;
   /**
    * 每一个扇形的外边框颜色
    * @default #ff9800
@@ -35,27 +36,18 @@ type Props = {
    * 转动需要持续的时间(秒)
    * @default 5
    */
-  turnsTime?: number;
+  duration?: number;
   /** 转盘指针 */
   pointer?: React.ReactNode;
   /**
    * 从后端拉取获奖索引,并开始转动
    */
-  onStart?: () => Promise<number>;
+  onStart?: (start: (index: number) => void) => void;
   /**
    * 转动结束,带上索引信息
    */
   onEnd?: (index: number) => void;
-  /**
-   * 抽奖次数
-   * @default 1
-   */
-  times?: number;
-  /**
-   * 剩余抽奖次数为0 回调
-   * @default 1
-   */
-  onNoTimes?: () => void;
+
   /**
    * 宽高
    * @default 300
@@ -134,21 +126,18 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     className,
     size = 300,
     prizeList = [],
-    turnsNumber = 5,
-    turnsTime = 5,
+    round = 5,
+    duration = 5,
     pointer,
     borderColor = '#ff9800',
     onStart,
     onEnd,
-    times = 1,
-    onNoTimes,
     ...rest
   } = props;
 
   // 用来锁定转盘，避免同时多次点击转动
   const lock = useRef(false);
-  // 剩余抽奖次数
-  const num = useRef(times);
+
   // 开始转动的角度
   const startRotateDegree = useRef(0);
   // 设置指针默认指向的位置,现在是默认指向2个扇形之间的边线上
@@ -158,7 +147,6 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const wrapRef = useRef<HTMLDivElement>();
   const innerRef = useRef<HTMLDivElement>();
   const canvasDomRef = useRef<HTMLCanvasElement>();
-  const turnIndex = useRef(-1); // 保持结果
 
   const forceUpdate = useForceUpdate();
 
@@ -223,53 +211,37 @@ const Turntable = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   });
 
-  // 判断是否可以转动
-  const canBeRotated = () => {
-    if (lock.current) {
-      return false;
+  // 转动起来
+  const rotate = (index: number) => {
+    if (index >= 0 && index < prizeList.length) {
+      const rotateAngleValue =
+        startRotateDegree.current +
+        round * 360 +
+        360 -
+        (180 / prizeList.length + (360 / prizeList.length) * index) -
+        (startRotateDegree.current % 360);
+      startRotateDegree.current = rotateAngleValue;
+
+      rotateAngle.current = `rotate(${rotateAngleValue}deg)`;
+      rotateTransition.current = `transform ${duration}s cubic-bezier(0.250, 0.460, 0.455, 0.995)`;
+
+      forceUpdate();
+      setTimeout(() => {
+        // end
+        lock.current = false;
+        onEnd?.(index);
+      }, duration * 1000 + 500);
     }
-    if (num.current <= 0) {
-      onNoTimes?.();
-      return false;
-    }
-    return true;
   };
+
   const startTurns = () => {
-    if (!canBeRotated()) {
+    if (lock.current) {
       return false;
     }
 
     lock.current = true;
-    // 设置在哪里停下，与后台交互，
-    // const index = Math.floor(Math.random() * prizeList.length);
 
-    turnIndex.current = -1; // reset
-    onStart().then((index) => {
-      turnIndex.current = index;
-      num.current--;
-      rotate(index);
-    });
-  };
-  // 转动起来
-  const rotate = (index: number) => {
-    const turnsTimeNum = turnsTime;
-    const rotateAngleValue =
-      startRotateDegree.current +
-      turnsNumber * 360 +
-      360 -
-      (180 / prizeList.length + (360 / prizeList.length) * index) -
-      (startRotateDegree.current % 360);
-    startRotateDegree.current = rotateAngleValue;
-
-    rotateAngle.current = `rotate(${rotateAngleValue}deg)`;
-    rotateTransition.current = `transform ${turnsTimeNum}s cubic-bezier(0.250, 0.460, 0.455, 0.995)`;
-
-    forceUpdate();
-    setTimeout(() => {
-      // end
-      lock.current = false;
-      onEnd?.(turnIndex.current);
-    }, turnsTimeNum * 1000 + 500);
+    onStart(rotate);
   };
 
   return (
