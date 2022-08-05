@@ -2,11 +2,11 @@ import React from 'react';
 import { StringOrNumber, BaseProps } from './types';
 declare type PrizeInfo = {
     /** 奖品id */
-    id: StringOrNumber;
+    id?: StringOrNumber;
     /** 奖品名称 */
     name: string;
     /** 奖品图片链接 */
-    img: string;
+    img?: string;
     /** 扇形背景色 */
     color?: string;
 };

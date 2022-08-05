@@ -25,11 +25,11 @@ const map = {
 
 type PrizeInfo = {
   /** 奖品id */
-  id: StringOrNumber;
+  id?: StringOrNumber;
   /** 奖品名称 */
   name: string;
   /** 奖品图片链接 */
-  img: string;
+  img?: string;
 };
 
 type Props = {
