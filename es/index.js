@@ -88,6 +88,7 @@ export { default as CircleSpin } from './CircleSpin';
 export { default as RoundSpin } from './RoundSpin';
 export { default as Countdown } from './Countdown';
 export { default as Turntable } from './Turntable';
+export { default as Sudoku } from './Sudoku';
 /** only has static method */
 
 export { default as Loading } from './Loading';

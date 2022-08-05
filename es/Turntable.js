@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
 import useMount from './hooks/useMount';
-import useForceUpdate from './hooks/useForceUpdate'; // trans from https://nutui.jd.com/bingo/#/turntable
-
+import useForceUpdate from './hooks/useForceUpdate';
 var getClassName = prefixClassName('uc-turntable');
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  overflow: hidden;\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n  }\n\n  .", " {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .", " {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .", " {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .", " {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n  }\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    transform-origin: center bottom;\n  }\n"], ["\n  position: relative;\n  overflow: hidden;\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n  }\n\n  .", " {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    z-index: 99;\n    transform: translate(-43.75%, -50%);\n  }\n  .", " {\n    position: absolute;\n    left: 10px;\n    top: 20px;\n    width: calc(100% - 20px);\n    font-size: 12px;\n    text-align: center;\n    color: #ff5722;\n  }\n  .", " {\n    position: absolute;\n    left: calc(50% - 30px / 2);\n    top: 60px;\n    width: 30px;\n    height: 30px;\n    img {\n      display: inline-block;\n      width: 100%;\n      height: 100%;\n    }\n  }\n  .", " {\n    position: absolute;\n    left: 25%;\n    top: 0;\n    width: 50%;\n    height: 50%;\n  }\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    transform-origin: center bottom;\n  }\n"])), getClassName('inner'), getClassName('pointer'), getClassName('name'), getClassName('img'), getClassName('prize'), getClassName('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
@@ -17,24 +16,19 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
       size = _a === void 0 ? 300 : _a,
       _b = props.prizeList,
       prizeList = _b === void 0 ? [] : _b,
-      _c = props.turnsNumber,
-      turnsNumber = _c === void 0 ? 5 : _c,
-      _d = props.turnsTime,
-      turnsTime = _d === void 0 ? 5 : _d,
+      _c = props.round,
+      round = _c === void 0 ? 5 : _c,
+      _d = props.duration,
+      duration = _d === void 0 ? 5 : _d,
       pointer = props.pointer,
       _e = props.borderColor,
       borderColor = _e === void 0 ? '#ff9800' : _e,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      _f = props.times,
-      times = _f === void 0 ? 1 : _f,
-      onNoTimes = props.onNoTimes,
-      rest = __rest(props, ["className", "size", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"]); // 用来锁定转盘，避免同时多次点击转动
+      rest = __rest(props, ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"]); // 用来锁定转盘，避免同时多次点击转动
 
 
-  var lock = useRef(false); // 剩余抽奖次数
-
-  var num = useRef(times); // 开始转动的角度
+  var lock = useRef(false); // 开始转动的角度
 
   var startRotateDegree = useRef(0); // 设置指针默认指向的位置,现在是默认指向2个扇形之间的边线上
 
@@ -43,8 +37,6 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var wrapRef = useRef();
   var innerRef = useRef();
   var canvasDomRef = useRef();
-  var turnIndex = useRef(-1); // 保持结果
-
   var forceUpdate = useForceUpdate();
   useImperativeHandle(ref, function () {
     return wrapRef.current;
@@ -108,51 +100,30 @@ var Turntable = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
       ctx.scale(dpr, dpr);
     }
-  }); // 判断是否可以转动
+  }); // 转动起来
 
-  var canBeRotated = function canBeRotated() {
+  var rotate = function rotate(index) {
+    if (index >= 0 && index < prizeList.length) {
+      var rotateAngleValue = startRotateDegree.current + round * 360 + 360 - (180 / prizeList.length + 360 / prizeList.length * index) - startRotateDegree.current % 360;
+      startRotateDegree.current = rotateAngleValue;
+      rotateAngle.current = "rotate(".concat(rotateAngleValue, "deg)");
+      rotateTransition.current = "transform ".concat(duration, "s cubic-bezier(0.250, 0.460, 0.455, 0.995)");
+      forceUpdate();
+      setTimeout(function () {
+        // end
+        lock.current = false;
+        onEnd === null || onEnd === void 0 ? void 0 : onEnd(index);
+      }, duration * 1000 + 500);
+    }
+  };
+
+  var startTurns = function startTurns() {
     if (lock.current) {
       return false;
     }
 
-    if (num.current <= 0) {
-      onNoTimes === null || onNoTimes === void 0 ? void 0 : onNoTimes();
-      return false;
-    }
-
-    return true;
-  };
-
-  var startTurns = function startTurns() {
-    if (!canBeRotated()) {
-      return false;
-    }
-
-    lock.current = true; // 设置在哪里停下，与后台交互，
-    // const index = Math.floor(Math.random() * prizeList.length);
-
-    turnIndex.current = -1; // reset
-
-    onStart().then(function (index) {
-      turnIndex.current = index;
-      num.current--;
-      rotate(index);
-    });
-  }; // 转动起来
-
-
-  var rotate = function rotate(index) {
-    var turnsTimeNum = turnsTime;
-    var rotateAngleValue = startRotateDegree.current + turnsNumber * 360 + 360 - (180 / prizeList.length + 360 / prizeList.length * index) - startRotateDegree.current % 360;
-    startRotateDegree.current = rotateAngleValue;
-    rotateAngle.current = "rotate(".concat(rotateAngleValue, "deg)");
-    rotateTransition.current = "transform ".concat(turnsTimeNum, "s cubic-bezier(0.250, 0.460, 0.455, 0.995)");
-    forceUpdate();
-    setTimeout(function () {
-      // end
-      lock.current = false;
-      onEnd === null || onEnd === void 0 ? void 0 : onEnd(turnIndex.current);
-    }, turnsTimeNum * 1000 + 500);
+    lock.current = true;
+    onStart(rotate);
   };
 
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {

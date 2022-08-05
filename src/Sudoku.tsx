@@ -55,11 +55,6 @@ type Props = {
    * 转动结束,带上索引信息
    */
   onEnd?: (index: number) => void;
-  /**
-   * 方块宽高
-   * @default 75
-   */
-  blockSize?: StringOrNumber;
 } & BaseProps;
 
 const StyledWrap = styled.div`

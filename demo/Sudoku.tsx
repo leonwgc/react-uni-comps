@@ -54,7 +54,6 @@ export default function App() {
     <PageWrap>
       <Sudoku
         prizeList={prizeList}
-        blockSize={100}
         pointer={
           <div>
             <img
@@ -64,10 +63,13 @@ export default function App() {
           </div>
         }
         onStart={(start) => {
-          start(4);
+          const index = Math.floor(Math.random() * prizeList.length);
+          console.log(index);
+          start(index);
         }}
         onEnd={(index) => {
           console.log(index);
+          console.log('end');
           Toast.show('你抽中了: ' + prizeList[index].name);
         }}
       />

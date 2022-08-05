@@ -9304,8 +9304,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Countdown.displayName = 'Countdown';
 
-var _excluded$1h = ["className", "size", "prizeList", "turnsNumber", "turnsTime", "pointer", "borderColor", "onStart", "onEnd", "times", "onNoTimes"];
-
+var _excluded$1h = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
 var getClassName$c = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
@@ -9320,24 +9319,19 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       size = _props$size === void 0 ? 300 : _props$size,
       _props$prizeList = props.prizeList,
       prizeList = _props$prizeList === void 0 ? [] : _props$prizeList,
-      _props$turnsNumber = props.turnsNumber,
-      turnsNumber = _props$turnsNumber === void 0 ? 5 : _props$turnsNumber,
-      _props$turnsTime = props.turnsTime,
-      turnsTime = _props$turnsTime === void 0 ? 5 : _props$turnsTime,
+      _props$round = props.round,
+      round = _props$round === void 0 ? 5 : _props$round,
+      _props$duration = props.duration,
+      duration = _props$duration === void 0 ? 5 : _props$duration,
       pointer = props.pointer,
       _props$borderColor = props.borderColor,
       borderColor = _props$borderColor === void 0 ? '#ff9800' : _props$borderColor,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      _props$times = props.times,
-      times = _props$times === void 0 ? 1 : _props$times,
-      onNoTimes = props.onNoTimes,
       rest = _objectWithoutProperties(props, _excluded$1h); // 用来锁定转盘，避免同时多次点击转动
 
 
-  var lock = React.useRef(false); // 剩余抽奖次数
-
-  var num = React.useRef(times); // 开始转动的角度
+  var lock = React.useRef(false); // 开始转动的角度
 
   var startRotateDegree = React.useRef(0); // 设置指针默认指向的位置,现在是默认指向2个扇形之间的边线上
 
@@ -9346,8 +9340,6 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   var wrapRef = React.useRef();
   var innerRef = React.useRef();
   var canvasDomRef = React.useRef();
-  var turnIndex = React.useRef(-1); // 保持结果
-
   var forceUpdate = useForceUpdate();
   React.useImperativeHandle(ref, function () {
     return wrapRef.current;
@@ -9411,51 +9403,30 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 
       ctx.scale(dpr, dpr);
     }
-  }); // 判断是否可以转动
+  }); // 转动起来
 
-  var canBeRotated = function canBeRotated() {
+  var rotate = function rotate(index) {
+    if (index >= 0 && index < prizeList.length) {
+      var rotateAngleValue = startRotateDegree.current + round * 360 + 360 - (180 / prizeList.length + 360 / prizeList.length * index) - startRotateDegree.current % 360;
+      startRotateDegree.current = rotateAngleValue;
+      rotateAngle.current = "rotate(".concat(rotateAngleValue, "deg)");
+      rotateTransition.current = "transform ".concat(duration, "s cubic-bezier(0.250, 0.460, 0.455, 0.995)");
+      forceUpdate();
+      setTimeout(function () {
+        // end
+        lock.current = false;
+        onEnd === null || onEnd === void 0 ? void 0 : onEnd(index);
+      }, duration * 1000 + 500);
+    }
+  };
+
+  var startTurns = function startTurns() {
     if (lock.current) {
       return false;
     }
 
-    if (num.current <= 0) {
-      onNoTimes === null || onNoTimes === void 0 ? void 0 : onNoTimes();
-      return false;
-    }
-
-    return true;
-  };
-
-  var startTurns = function startTurns() {
-    if (!canBeRotated()) {
-      return false;
-    }
-
-    lock.current = true; // 设置在哪里停下，与后台交互，
-    // const index = Math.floor(Math.random() * prizeList.length);
-
-    turnIndex.current = -1; // reset
-
-    onStart().then(function (index) {
-      turnIndex.current = index;
-      num.current--;
-      rotate(index);
-    });
-  }; // 转动起来
-
-
-  var rotate = function rotate(index) {
-    var turnsTimeNum = turnsTime;
-    var rotateAngleValue = startRotateDegree.current + turnsNumber * 360 + 360 - (180 / prizeList.length + 360 / prizeList.length * index) - startRotateDegree.current % 360;
-    startRotateDegree.current = rotateAngleValue;
-    rotateAngle.current = "rotate(".concat(rotateAngleValue, "deg)");
-    rotateTransition.current = "transform ".concat(turnsTimeNum, "s cubic-bezier(0.250, 0.460, 0.455, 0.995)");
-    forceUpdate();
-    setTimeout(function () {
-      // end
-      lock.current = false;
-      onEnd === null || onEnd === void 0 ? void 0 : onEnd(turnIndex.current);
-    }, turnsTimeNum * 1000 + 500);
+    lock.current = true;
+    onStart(rotate);
   };
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$i, _extends({}, rest, {
@@ -9494,6 +9465,164 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, pointer));
 });
 Turntable.displayName = 'UC-Turntable';
+
+var _excluded$1i = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd"];
+var getClassName$d = prefixClassName('uc-sudoku');
+var seq = [0, 1, 2, 5, 8, 7, 6, 3]; // turn sequence
+// key top-down,left-right ,value: prizeList seq
+
+var map = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 7,
+  5: 3,
+  6: 6,
+  7: 5,
+  8: 4
+};
+var StyledWrap$j = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "Sudoku__StyledWrap",
+  componentId: "sc-1a4co3k-0"
+})(["width:100%;display:flex;flex-wrap:wrap;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;}"], getClassName$d('item'), getClassName$d('prize'), getClassName$d('pointer'));
+/** 9宫格抽奖 */
+
+var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      pointer = props.pointer,
+      _props$prizeList = props.prizeList,
+      prizeList = _props$prizeList === void 0 ? [] : _props$prizeList,
+      _props$round = props.round,
+      round = _props$round === void 0 ? 30 : _props$round,
+      _props$speed = props.speed,
+      speed = _props$speed === void 0 ? 150 : _props$speed,
+      onStart = props.onStart,
+      onEnd = props.onEnd,
+      rest = _objectWithoutProperties(props, _excluded$1i);
+
+  var forceUpdate = useForceUpdate();
+
+  var _useState = React.useState(),
+      _useState2 = _slicedToArray(_useState, 2),
+      size = _useState2[0],
+      setSize = _useState2[1];
+
+  var lock = React.useRef(false); // 转动到的商品的index
+
+  var index = React.useRef(-1); // 转动次数
+
+  var steps = React.useRef(0); // 初始速度
+
+  var speedRef = React.useRef(speed);
+  var roundRef = React.useRef(round);
+  var timer = React.useRef(0);
+  var wrapElRef = React.useRef();
+  React.useImperativeHandle(ref, function () {
+    return wrapElRef.current;
+  });
+  var resize = React.useCallback(function () {
+    var wrapEl = wrapElRef.current;
+    var child = wrapEl.firstElementChild;
+
+    if (child) {
+      setSize(child.offsetWidth);
+    }
+  }, []);
+  useMount(resize);
+  useEventListener(function () {
+    return window;
+  }, 'resize', resize);
+
+  var rollup = function rollup(winIndex) {
+    if (winIndex >= 0 && winIndex < 8) {
+      steps.current += 1;
+      var idx = index.current;
+      var count = seq.length;
+      idx += 1;
+
+      if (idx > count - 1) {
+        idx = 0;
+      }
+
+      index.current = idx;
+      forceUpdate();
+      getPrize(winIndex);
+    }
+  };
+
+  var getPrize = function getPrize(winIndex) {
+    if (steps.current > roundRef.current && winIndex === index.current) {
+      clearTimeout(timer.current); // reset
+
+      index.current = -1;
+      timer.current = 0;
+      steps.current = 0;
+      speedRef.current = speed;
+      roundRef.current = round;
+      setTimeout(function () {
+        index.current = seq[winIndex];
+        lock.current = false;
+        onEnd === null || onEnd === void 0 ? void 0 : onEnd(winIndex);
+      }, 100);
+    } else {
+      if (steps.current < roundRef.current) {
+        speedRef.current -= 4;
+      } else {
+        speedRef.current += 20;
+      } // start to roll
+
+
+      timer.current = window.setTimeout(function () {
+        return rollup(winIndex);
+      }, speedRef.current);
+    }
+  };
+
+  var start = function start() {
+    if (!lock.current) {
+      lock.current = true;
+      onStart(rollup);
+    }
+  };
+
+  var renderBlock = function renderBlock(index) {
+    var item = prizeList[index];
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$d('prize')
+    }, /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$d('img')
+    }, /*#__PURE__*/React__default['default'].createElement("img", {
+      alt: "prize",
+      src: item.img
+    })), /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$d('name')
+    }, item.name));
+  };
+
+  if (!prizeList || prizeList.length !== 8) {
+    // bad data
+    return null;
+  }
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$j, _extends({}, rest, {
+    className: (getClassName$d(), className),
+    ref: wrapElRef
+  }), [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (v) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: v,
+      style: {
+        height: size
+      },
+      className: clsx__default['default'](getClassName$d('item'), {
+        active: v === seq[index.current]
+      })
+    }, v === 4 ? /*#__PURE__*/React__default['default'].createElement("div", {
+      className: getClassName$d('pointer'),
+      onClick: start
+    }, pointer) : renderBlock(map[v]));
+  }));
+});
+Sudoku.displayName = 'UC-Sudoku';
 
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
@@ -9811,7 +9940,7 @@ var initI18n = function initI18n(options) {
   .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
-var _excluded$1i = ["children", "label", "name"],
+var _excluded$1j = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9821,7 +9950,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1i);
+      fieldProps = _objectWithoutProperties(props, _excluded$1j);
 
   var required = false;
 
@@ -10088,6 +10217,7 @@ exports.Space = Space;
 exports.Spin = Spin;
 exports.Stepper = Stepper;
 exports.Steps = Steps;
+exports.Sudoku = Sudoku;
 exports.SwipeAction = SwipeAction;
 exports.Switch = Switch;
 exports.Tabs = Tabs$1;
