@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/Sudoku',
+    component: lazy(() => import('./Sudoku')),
+  },
+  {
     path: '/Turntable',
     component: lazy(() => import('./Turntable')),
   },
