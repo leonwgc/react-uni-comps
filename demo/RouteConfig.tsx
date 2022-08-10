@@ -8,7 +8,7 @@ const routes = [
   },
   {
     path: '/FLowerSpin',
-    component: lazy(() => import('./FLowerSpin')),
+    component: lazy(() => import('./FlowerSpin')),
   },
   {
     path: '/Sudoku',

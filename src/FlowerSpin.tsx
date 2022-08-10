@@ -16,21 +16,23 @@ const getClassName = prefixClassName('uc-flower-spin');
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
-   * 动画持续时间 (单位: ms)
-   * @default 640
+   * 尺寸
+   * @default 60
    */
-  duration?: number;
+  size?: number;
 };
 
-const StyledLoader = styled.div`
+const itemBaseSize = 6;
+
+const StyledLoader = styled.div<{ _size: number }>`
   color: currentColor;
   display: inline-flex;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: ${(props) => props._size}px;
+  height: ${(props) => props._size}px;
 
   .${getClassName('item')} {
-    transform-origin: 40px 40px;
+    transform-origin: ${(props) => props._size / 2}px;
     animation: ${spin} 1.2s linear infinite;
 
     &::after {
@@ -38,9 +40,9 @@ const StyledLoader = styled.div`
       display: block;
       position: absolute;
       top: 3px;
-      left: 37px;
-      width: 6px;
-      height: 18px;
+      left: ${(props) => props._size / 2 - 3}px;
+      width: ${(props) => Math.floor((props._size * itemBaseSize) / 80)}px;
+      height: ${(props) => Math.floor((props._size * itemBaseSize * 3) / 80)}px;
       border-radius: 20%;
       background: currentColor;
     }
@@ -99,10 +101,10 @@ const items = new Array(12).fill(0);
 
 /** 菊花spin */
 const FlowerSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, ...rest } = props;
+  const { className, size = 60, ...rest } = props;
 
   return (
-    <StyledLoader ref={ref} {...rest} className={clsx(getClassName(), className)}>
+    <StyledLoader _size={size} ref={ref} {...rest} className={clsx(getClassName(), className)}>
       {items.map((v, i) => (
         <div key={i} className={getClassName('item')} />
       ))}
