@@ -14,7 +14,7 @@ declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     dashed?: boolean;
     /**
      * 分割线颜色
-     * @default #eee
+     * @default #d9d9d9
      *  */
     color?: string;
 };

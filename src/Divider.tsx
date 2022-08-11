@@ -18,12 +18,12 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   dashed?: boolean;
   /**
    * 分割线颜色
-   * @default #eee
+   * @default #d9d9d9
    *  */
   color?: string;
 };
 
-const StyledDivider = styled.div`
+const StyledDivider = styled.div<{ $color?: string }>`
   box-sizing: border-box;
   margin: 16px 0;
   padding: 0;
@@ -34,7 +34,7 @@ const StyledDivider = styled.div`
   list-style: none;
   font-feature-settings: 'tnum';
   border: none;
-  border-top: 1px solid ${({ color }) => color};
+  border-top: 1px solid ${({ $color }) => $color};
 
   &.horizontal {
     display: flex;
@@ -58,7 +58,7 @@ const StyledDivider = styled.div`
     &::before,
     &::after {
       width: 50%;
-      border-top: 1px solid ${({ color }) => color};
+      border-top: 1px solid ${({ $color }) => $color};
       transform: translateY(50%);
       content: '';
     }
@@ -96,7 +96,7 @@ const StyledDivider = styled.div`
     margin: 0 8px;
     vertical-align: middle;
     border-top: 0;
-    border-left: 1px solid ${({ color }) => color};
+    border-left: 1px solid ${({ $color: color }) => color};
   }
 `;
 
@@ -117,7 +117,7 @@ const Divider: React.FC<Props> = (props) => {
   return (
     <StyledDivider
       {...rest}
-      color={color}
+      $color={color}
       className={clsx('uc-divider', type, hasText ? textPosition : '', className, {
         dashed: dashed,
         text: hasText,
