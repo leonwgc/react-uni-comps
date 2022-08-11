@@ -20,5 +20,5 @@ declare type Props = React.HTMLAttributes<Element> & {
     penColor?: string;
 } & RefAttributes<SigPadRef>;
 /** 签名 */
-declare const Signature: React.ForwardRefExoticComponent<Pick<Props, "key" | "penColor" | keyof React.HTMLAttributes<Element> | "padColor"> & React.RefAttributes<SigPadRef>>;
+declare const Signature: React.ForwardRefExoticComponent<Pick<Props, "key" | keyof React.HTMLAttributes<Element> | "padColor" | "penColor"> & React.RefAttributes<SigPadRef>>;
 export default Signature;

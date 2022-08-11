@@ -1,5 +1,5 @@
 /** 统一浅色边框色 */
-export const border = '#eee';
+export const border = '#d9d9d9';
 
 export const disabledText = 'rgba(0, 0, 0, 0.25)';
 export const disabledBg = '#f5f5f5';
