@@ -1,5 +1,5 @@
 /** 统一浅色边框色 */
-export var border = '#eee';
+export var border = '#d9d9d9';
 export var disabledText = 'rgba(0, 0, 0, 0.25)';
 export var disabledBg = '#f5f5f5';
 export var primary = '#005cff';
