@@ -11,11 +11,11 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="颜色">
-        <FlowerSpin style={{ color: 'red' }} />
+        <FlowerSpin color="red" />
       </DemoBlock>
 
-      <DemoBlock title="尺寸">
-        <FlowerSpin size={30} />
+      <DemoBlock title="大小">
+        <FlowerSpin size={40} color="#005cff" />
       </DemoBlock>
     </PageWrap>
   );

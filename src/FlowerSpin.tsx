@@ -2,97 +2,102 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { prefixClassName } from './helper';
 import clsx from 'clsx';
+import { StringOrNumber } from './types';
 
-const spin = keyframes`
-     0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
+const rotate = keyframes`
+    0% {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
 `;
 
 const getClassName = prefixClassName('uc-flower-spin');
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
-   * 尺寸
-   * @default 60
+   * 颜色
+   * @default currentColor
    */
-  size?: number;
+  color?: string;
+  /**
+   * 大小
+   * @default 30
+   */
+  size?: StringOrNumber;
 };
 
-const itemBaseSize = 6;
-
-const StyledLoader = styled.div<{ _size: number }>`
-  color: currentColor;
+const StyledLoader = styled.div`
   display: inline-flex;
+  vertical-align: middle;
   position: relative;
-  width: ${(props) => props._size}px;
-  height: ${(props) => props._size}px;
+  animation: ${rotate} 0.8s steps(12) infinite;
 
   .${getClassName('item')} {
-    transform-origin: ${(props) => props._size / 2}px;
-    animation: ${spin} 1.2s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-    &::after {
-      content: ' ';
+    &::before {
       display: block;
-      position: absolute;
-      top: 3px;
-      left: ${(props) => props._size / 2 - 3}px;
-      width: ${(props) => Math.floor((props._size * itemBaseSize) / 80)}px;
-      height: ${(props) => Math.floor((props._size * itemBaseSize * 3) / 80)}px;
-      border-radius: 20%;
-      background: currentColor;
+      width: 2px;
+      height: 25%;
+      margin: 0 auto;
+      background-color: currentColor;
+      border-radius: 40%;
+      content: ' ';
     }
     &:nth-child(1) {
       transform: rotate(0deg);
-      animation-delay: -1.1s;
+      opacity: 1;
     }
     &:nth-child(2) {
       transform: rotate(30deg);
-      animation-delay: -1s;
+      opacity: ${1 - 0.75 / 12};
     }
     &:nth-child(3) {
       transform: rotate(60deg);
-      animation-delay: -0.9s;
+      opacity: ${1 - (0.75 / 12) * 2};
     }
     &:nth-child(4) {
       transform: rotate(90deg);
-      animation-delay: -0.8s;
+      opacity: ${1 - (0.75 / 12) * 3};
     }
     &:nth-child(5) {
       transform: rotate(120deg);
-      animation-delay: -0.7s;
+      opacity: ${1 - (0.75 / 12) * 4};
     }
     &:nth-child(6) {
       transform: rotate(150deg);
-      animation-delay: -0.6s;
+      opacity: ${1 - (0.75 / 12) * 5};
     }
     &:nth-child(7) {
       transform: rotate(180deg);
-      animation-delay: -0.5s;
+      opacity: ${1 - (0.75 / 12) * 6};
     }
     &:nth-child(8) {
       transform: rotate(210deg);
-      animation-delay: -0.4s;
+      opacity: ${1 - (0.75 / 12) * 7};
     }
     &:nth-child(9) {
       transform: rotate(240deg);
-      animation-delay: -0.3s;
+      opacity: ${1 - (0.75 / 12) * 8};
     }
     &:nth-child(10) {
       transform: rotate(270deg);
-      animation-delay: -0.2s;
+      opacity: ${1 - (0.75 / 12) * 9};
     }
     &:nth-child(11) {
       transform: rotate(300deg);
-      animation-delay: -0.1s;
+      opacity: ${1 - (0.75 / 12) * 10};
     }
     &:nth-child(12) {
       transform: rotate(330deg);
-      animation-delay: 0s;
+      opacity: ${1 - (0.75 / 12) * 11};
     }
   }
 `;
@@ -101,10 +106,15 @@ const items = new Array(12).fill(0);
 
 /** 菊花spin */
 const FlowerSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, size = 60, ...rest } = props;
+  const { className, style, size = 30, color = 'currentColor', ...rest } = props;
 
   return (
-    <StyledLoader _size={size} ref={ref} {...rest} className={clsx(getClassName(), className)}>
+    <StyledLoader
+      style={{ color: color, width: size, height: size, ...style }}
+      ref={ref}
+      {...rest}
+      className={clsx(getClassName(), className)}
+    >
       {items.map((v, i) => (
         <div key={i} className={getClassName('item')} />
       ))}

@@ -1,10 +1,16 @@
 import React from 'react';
+import { StringOrNumber } from './types';
 /** 菊花spin */
 declare const FlowerSpin: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /**
-     * 尺寸
-     * @default 60
+     * 颜色
+     * @default currentColor
      */
-    size?: number;
+    color?: string;
+    /**
+     * 大小
+     * @default 30
+     */
+    size?: StringOrNumber;
 } & React.RefAttributes<HTMLDivElement>>;
 export default FlowerSpin;
