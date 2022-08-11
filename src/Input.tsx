@@ -126,6 +126,11 @@ const StyledInput = styled.div`
     -webkit-appearance: none;
     box-shadow: none;
     width: 100%;
+
+    &::placeholder {
+      color: #bfbfbf;
+      user-select: none;
+    }
   }
 
   textarea {
