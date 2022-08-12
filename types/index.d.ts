@@ -86,7 +86,7 @@ export { default as DotSpin } from './DotSpin';
 export { default as BallSpin } from './BallSpin';
 export { default as CircleSpin } from './CircleSpin';
 export { default as RoundSpin } from './RoundSpin';
-export { default as FlowerSpin } from './FlowerSpin';
+export { default as ClockSpin } from './ClockSpin';
 export { default as Countdown } from './Countdown';
 export { default as Turntable } from './Turntable';
 export { default as Sudoku } from './Sudoku';
