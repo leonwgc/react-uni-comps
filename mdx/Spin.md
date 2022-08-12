@@ -4,7 +4,7 @@ order: 0
 mobile: true
 group:
   title: 加载指示器
-  order: 8
+  order: 7
   path: loading
 ---
 

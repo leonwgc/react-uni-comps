@@ -4,7 +4,7 @@ order: 1
 mobile: true
 group:
   title: 其他
-  order: 7
+  order: 10
   path: other
 ---
 

@@ -342,40 +342,7 @@ module.exports = [
       },
     ],
   },
-  {
-    title: '其他',
-    path: 'other',
-    comps: [
-      {
-        name: 'LazyLoadImage',
-        title: 'LazyLoadImage 图片懒加载',
-      },
-      {
-        name: 'LazyLoadElement',
-        title: 'LazyLoadElement 组件懒加载',
-      },
-      {
-        name: 'ErrorBoundary',
-        title: 'ErrorBoundary 错误边界',
-      },
-      {
-        name: 'Text',
-        title: 'Text 文本省略',
-      },
-      {
-        name: 'WaitLoading',
-        title: 'WaitLoading 延迟渲染子元素',
-      },
-      {
-        name: 'Waypoint',
-        title: 'Waypoint 路标',
-      },
-      {
-        name: 'BackTop',
-        title: 'BackTop 回到顶部',
-      },
-    ],
-  },
+
   {
     title: '加载指示器',
     path: 'loading',
@@ -432,6 +399,40 @@ module.exports = [
         name: 'i18n',
         title: 'i18n 多语言',
         desc: '多语言',
+      },
+    ],
+  },
+  {
+    title: '其他',
+    path: 'other',
+    comps: [
+      {
+        name: 'LazyLoadImage',
+        title: 'LazyLoadImage 图片懒加载',
+      },
+      {
+        name: 'LazyLoadElement',
+        title: 'LazyLoadElement 组件懒加载',
+      },
+      {
+        name: 'ErrorBoundary',
+        title: 'ErrorBoundary 错误边界',
+      },
+      {
+        name: 'Text',
+        title: 'Text 文本省略',
+      },
+      {
+        name: 'WaitLoading',
+        title: 'WaitLoading 延迟渲染子元素',
+      },
+      {
+        name: 'Waypoint',
+        title: 'Waypoint 路标',
+      },
+      {
+        name: 'BackTop',
+        title: 'BackTop 回到顶部',
       },
     ],
   },
