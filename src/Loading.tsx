@@ -10,8 +10,6 @@ import ClockSpin from './ClockSpin';
 
 const StyledLoading = styled.div`
   display: inline-flex;
-  width: 124px;
-  height: 124px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -40,7 +38,7 @@ type Config = {
   gap?: number;
   /**
    * spin大小
-   * @default 40
+   * @default 32
    */
   spinSize?: number;
   /**
@@ -72,11 +70,13 @@ const renderSpin = (type, size) => {
  * @param {Config} config
  */
 const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 12, spinSize: 32 }) => {
-  const { type = 'ball', gap = 12, spinSize = 40, containerStyle } = config;
+  const { type = 'ball', gap = 12, spinSize = 32, containerStyle } = config;
+
+  const size = text ? 124 : 80;
 
   Toast.show({
     content: (
-      <StyledLoading style={containerStyle}>
+      <StyledLoading style={{ width: size, height: size, ...containerStyle }}>
         <Space direction="vertical" size={text ? gap : 0}>
           <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
             {renderSpin(type, spinSize)}

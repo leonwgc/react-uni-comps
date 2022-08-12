@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Spin, Space, Toast, Button, Icon, ClockSpin } from 'react-uni-comps';
+import { Spin, Space, Toast, Button, ClockSpin } from 'react-uni-comps';
 
 export default function App() {
   return (

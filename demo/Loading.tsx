@@ -44,7 +44,6 @@ export default function App() {
             onClick={() => {
               Loading.show('', {
                 type: 'spin',
-                spinSize: 40,
               });
 
               setTimeout(() => {

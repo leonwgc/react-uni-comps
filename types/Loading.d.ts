@@ -12,7 +12,7 @@ declare type Config = {
     gap?: number;
     /**
      * spin大小
-     * @default 40
+     * @default 32
      */
     spinSize?: number;
     /**
