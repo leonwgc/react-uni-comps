@@ -1,14 +1,14 @@
 ---
-title: RoundSpin zarm风格指示器
-order: 10
+title: RoundSpin 半圆大小渐变
+order: 5
 mobile: true
 group:
-  title: 其他
-  order: 7
-  path: other
+  title: 加载指示器
+  order: 8
+  path: loading
 ---
 
-# RoundSpin zarm风格指示器
+# RoundSpin 半圆大小渐变
 
 <code src="../demo/RoundSpin.tsx"></code>
 <API src="../src/RoundSpin.tsx"></API>

@@ -1,14 +1,14 @@
 ---
-title: Spin 加载中
-order: 3
+title: Spin 微信风格
+order: 0
 mobile: true
 group:
-  title: 基础组件
-  order: 0
-  path: base
+  title: 加载指示器
+  order: 8
+  path: loading
 ---
 
-# Spin 加载中
+# Spin 微信风格
 
 <code src="../demo/Spin.tsx"></code>
 <API src="../src/Spin.tsx"></API>

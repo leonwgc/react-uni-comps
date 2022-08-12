@@ -1,14 +1,14 @@
 ---
-title: CircleSpin 圈圈加载指示器
-order: 9
+title: CircleSpin github圆圈
+order: 4
 mobile: true
 group:
-  title: 其他
-  order: 7
-  path: other
+  title: 加载指示器
+  order: 8
+  path: loading
 ---
 
-# CircleSpin 圈圈加载指示器
+# CircleSpin github圆圈
 
 <code src="../demo/CircleSpin.tsx"></code>
 <API src="../src/CircleSpin.tsx"></API>

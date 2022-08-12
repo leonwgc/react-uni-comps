@@ -1,6 +1,6 @@
 ---
 title: AspectRatio 宽高比
-order: 7
+order: 6
 mobile: true
 group:
   title: 基础组件

@@ -1,14 +1,14 @@
 ---
-title: DotSpin 点状加载指示器
-order: 8
+title: DotSpin 宜员三点
+order: 3
 mobile: true
 group:
-  title: 其他
-  order: 7
-  path: other
+  title: 加载指示器
+  order: 8
+  path: loading
 ---
 
-# DotSpin 点状加载指示器
+# DotSpin 宜员三点
 
 <code src="../demo/DotSpin.tsx"></code>
 <API src="../src/DotSpin.tsx"></API>

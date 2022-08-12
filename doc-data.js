@@ -16,10 +16,6 @@ module.exports = [
         title: 'Icon 图标',
       },
       {
-        name: 'Spin',
-        title: 'Spin 加载中',
-      },
-      {
         name: 'Mask',
         title: 'Mask 遮罩',
       },
@@ -252,11 +248,6 @@ module.exports = [
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',
       },
-
-      {
-        name: 'Loading',
-        title: 'Loading 加载中Toast',
-      },
       {
         name: 'Empty',
         title: 'Empty 空状态',
@@ -383,21 +374,39 @@ module.exports = [
         name: 'BackTop',
         title: 'BackTop 回到顶部',
       },
+    ],
+  },
+  {
+    title: '加载指示器',
+    path: 'loading',
+    comps: [
+      {
+        name: 'Spin',
+        title: 'Spin 微信风格',
+      },
+      {
+        name: 'ClockSpin',
+        title: 'ClockSpin 时钟风格',
+      },
       {
         name: 'BallSpin',
-        title: 'BallSpin 球形加载指示器',
+        title: 'BallSpin 宜员圆圈',
       },
       {
         name: 'DotSpin',
-        title: 'DotSpin 点状加载指示器',
+        title: 'DotSpin 宜员三点',
       },
       {
         name: 'CircleSpin',
-        title: 'CircleSpin 圈圈加载指示器',
+        title: 'CircleSpin github圆圈',
       },
       {
         name: 'RoundSpin',
-        title: 'RoundSpin zarm风格指示器',
+        title: 'RoundSpin 半圆大小渐变',
+      },
+      {
+        name: 'Loading',
+        title: 'Loading 弹层加载',
       },
     ],
   },

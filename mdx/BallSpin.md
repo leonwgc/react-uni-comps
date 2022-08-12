@@ -1,14 +1,14 @@
 ---
-title: BallSpin 球形加载指示器
-order: 7
+title: BallSpin 宜员圆圈
+order: 2
 mobile: true
 group:
-  title: 其他
-  order: 7
-  path: other
+  title: 加载指示器
+  order: 8
+  path: loading
 ---
 
-# BallSpin 球形加载指示器
+# BallSpin 宜员圆圈
 
 <code src="../demo/BallSpin.tsx"></code>
 <API src="../src/BallSpin.tsx"></API>

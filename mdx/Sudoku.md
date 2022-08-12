@@ -4,7 +4,7 @@ order: 1
 mobile: true
 group:
   title: 抽奖
-  order: 8
+  order: 9
   path: luckydraw
 ---
 

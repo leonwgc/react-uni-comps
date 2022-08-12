@@ -1,6 +1,6 @@
 ---
 title: ScrollBox 带指示器的滚动
-order: 8
+order: 7
 mobile: true
 group:
   title: 基础组件

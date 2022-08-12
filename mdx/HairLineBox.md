@@ -1,6 +1,6 @@
 ---
 title: HairLineBox 一像素边框
-order: 6
+order: 5
 mobile: true
 group:
   title: 基础组件

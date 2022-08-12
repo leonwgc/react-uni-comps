@@ -10,14 +10,12 @@ export default function App() {
         <Spin />
       </DemoBlock>
 
-      <DemoBlock title="大小和颜色">
-        <Space>
-          <Spin style={{ fontSize: 24 }}></Spin>
+      <DemoBlock title="颜色">
+        <Spin style={{ color: 'red' }}></Spin>
+      </DemoBlock>
 
-          <Spin style={{ fontSize: 32, color: 'red' }}></Spin>
-
-          <Spin style={{ fontSize: 40, color: '#005cff' }}></Spin>
-        </Space>
+      <DemoBlock title="大小">
+        <Spin style={{ fontSize: 30, color: '#005cff' }}></Spin>
       </DemoBlock>
     </PageWrap>
   );

@@ -22,7 +22,7 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="自定义文本">
+      <DemoBlock title="文本">
         <Space>
           <Button
             onClick={() => {
@@ -33,7 +33,7 @@ export default function App() {
               }, 1000);
             }}
           >
-            自定义内容
+            文本
           </Button>
         </Space>
       </DemoBlock>
@@ -42,8 +42,8 @@ export default function App() {
         <Space>
           <Button
             onClick={() => {
-              Loading.show('努力提交中..', {
-                type: 'wechat',
+              Loading.show('', {
+                type: 'spin',
                 spinSize: 40,
               });
 
@@ -52,7 +52,7 @@ export default function App() {
               }, 1000);
             }}
           >
-            微信风格Spin
+            微信风格
           </Button>
         </Space>
       </DemoBlock>
@@ -62,12 +62,8 @@ export default function App() {
           <Button
             onClick={() => {
               Loading.show(null, {
-                type: 'zarm',
+                type: 'round',
                 spinSize: 40,
-                containerStyle: {
-                  width: 100,
-                  height: 100,
-                },
               });
 
               setTimeout(() => {
@@ -75,7 +71,25 @@ export default function App() {
               }, 1000);
             }}
           >
-            众安zarm风格Spin
+            半圆风格
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="spin类型">
+        <Space>
+          <Button
+            onClick={() => {
+              Loading.show(null, {
+                type: 'clock',
+              });
+
+              setTimeout(() => {
+                Loading.hide();
+              }, 1000);
+            }}
+          >
+            时钟/花瓣风格
           </Button>
         </Space>
       </DemoBlock>
@@ -84,10 +98,10 @@ export default function App() {
         <Space>
           <Button
             onClick={() => {
-              Loading.show('so big', {
-                spinSize: 60,
-                gap: 8,
-                containerStyle: { width: 180, height: 180, fontSize: 20 },
+              Loading.show('', {
+                spinSize: 50,
+                type: 'clock',
+                containerStyle: { width: 100, height: 100, fontSize: 20 },
               });
 
               setTimeout(() => {
