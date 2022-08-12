@@ -8,7 +8,7 @@ import BallSpin from './BallSpin';
 import Spin from './Spin';
 import RoundSpin from './RoundSpin';
 import ClockSpin from './ClockSpin';
-var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
+var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
 /**
  * 加载中, 只有静态调用
  *
@@ -71,12 +71,7 @@ var show = function show(text, config) {
       containerStyle = config.containerStyle;
   var size = text ? 124 : 80;
   Toast.show({
-    content: /*#__PURE__*/React.createElement(StyledLoading, {
-      style: __assign({
-        width: size,
-        height: size
-      }, containerStyle)
-    }, /*#__PURE__*/React.createElement(Space, {
+    content: /*#__PURE__*/React.createElement(StyledLoading, null, /*#__PURE__*/React.createElement(Space, {
       direction: "vertical",
       size: text ? gap : 0
     }, /*#__PURE__*/React.createElement("span", {
@@ -86,9 +81,11 @@ var show = function show(text, config) {
       }
     }, renderSpin(type, spinSize)), text)),
     duration: 24 * 60 * 60 * 1000,
-    style: {
+    style: __assign({
+      width: size,
+      height: size,
       padding: 0
-    }
+    }, containerStyle)
   });
 };
 

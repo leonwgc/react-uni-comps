@@ -97,10 +97,10 @@ export default function App() {
         <Space>
           <Button
             onClick={() => {
-              Loading.show('', {
+              Loading.show('加载中...', {
                 spinSize: 50,
                 type: 'clock',
-                containerStyle: { width: 100, height: 100, fontSize: 20 },
+                containerStyle: { width: 140, height: 140, fontSize: 20 },
               });
 
               setTimeout(() => {

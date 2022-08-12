@@ -3,7 +3,7 @@ title: hooks 钩子函数
 order: 0
 group:
   title: Hooks
-  order: 9
+  order: 11
   path: hooks
 ---
 

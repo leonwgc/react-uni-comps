@@ -9666,7 +9666,7 @@ Sudoku.displayName = 'UC-Sudoku';
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
-})(["display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;font-size:15px;"]);
+})(["display:inline-flex;width:100%;height:100%;box-sizing:border-box;align-items:center;justify-content:center;font-size:15px;"]);
 /**
  * 加载中, 只有静态调用
  *
@@ -9726,12 +9726,7 @@ var show = function show(text) {
       containerStyle = config.containerStyle;
   var size = text ? 124 : 80;
   Toast.show({
-    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
-      style: _objectSpread2({
-        width: size,
-        height: size
-      }, containerStyle)
-    }, /*#__PURE__*/React__default['default'].createElement(Space, {
+    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, /*#__PURE__*/React__default['default'].createElement(Space, {
       direction: "vertical",
       size: text ? gap : 0
     }, /*#__PURE__*/React__default['default'].createElement("span", {
@@ -9741,9 +9736,11 @@ var show = function show(text) {
       }
     }, renderSpin(type, spinSize)), text)),
     duration: 24 * 60 * 60 * 1000,
-    style: {
+    style: _objectSpread2({
+      width: size,
+      height: size,
       padding: 0
-    }
+    }, containerStyle)
   });
 };
 
