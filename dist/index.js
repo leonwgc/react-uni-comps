@@ -3144,13 +3144,13 @@ var StyledDivider = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Divider__StyledDivider",
   componentId: "sc-wvxm3u-0"
 })(["box-sizing:border-box;margin:16px 0;padding:0;color:#000000d9;font-size:14px;font-variant:tabular-nums;line-height:1.5715;list-style:none;font-feature-settings:'tnum';border:none;border-top:1px solid ", ";&.horizontal{display:flex;clear:both;width:100%;min-width:100%;}&.dashed{border-top-style:dashed;}&.text{border-top:0;.inner-text{display:inline-block;padding:0 1em;white-space:nowrap;text-align:center;}&::before,&::after{width:50%;border-top:1px solid ", ";transform:translateY(50%);content:'';}&.dashed{&::before,&::after{border-top-style:dashed;}}&.left{&::before{width:5%;}&::after{width:95%;}}&.right{&::before{width:95%;}&::after{width:5%;}}}&.vertical{position:relative;top:-0.06em;display:inline-block;height:0.9em;margin:0 8px;vertical-align:middle;border-top:0;border-left:1px solid ", ";}"], function (_ref) {
-  var color = _ref.color;
-  return color;
+  var $color = _ref.$color;
+  return $color;
 }, function (_ref2) {
-  var color = _ref2.color;
-  return color;
+  var $color = _ref2.$color;
+  return $color;
 }, function (_ref3) {
-  var color = _ref3.color;
+  var color = _ref3.$color;
   return color;
 });
 /** 分割线 */
@@ -3169,7 +3169,7 @@ var Divider = function Divider(props) {
 
   var hasText = !!children;
   return /*#__PURE__*/React__default['default'].createElement(StyledDivider, _extends({}, rest, {
-    color: color,
+    $color: color,
     className: clsx__default['default']('uc-divider', type, hasText ? textPosition : '', className, {
       dashed: dashed,
       text: hasText
@@ -9134,13 +9134,11 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 CircleSpin.displayName = 'UC-CircleSpin';
 
-var _excluded$1f = ["className", "color", "strokeWidth"];
+var _excluded$1f = ["className", "style", "size", "color", "strokeWidth"];
 
 var _templateObject$6, _templateObject2;
-var radius = 31;
-var duration = 1500;
-var rotate = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0%{\n        transform: rotate(0);\n    }\n    100%{\n        transform: rotate(360deg);\n    }\n"])));
-var move$1 = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  0% {\n      stroke-dasharray: 1, 200;\n      stroke-dashoffset: 0;\n    }\n\n    50% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -60;\n    }\n\n    100% {\n      stroke-dasharray: 120, 200;\n      stroke-dashoffset: -180;\n    }\n"])));
+var circle$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
+var rotate = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n   0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
 var SVGProps$3 = {
   width: '1em',
   height: '1em',
@@ -9149,18 +9147,18 @@ var SVGProps$3 = {
 var StyledLoader$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "RoundSpin__StyledLoader",
   componentId: "sc-evbanp-0"
-})(["display:inline-flex;vertical-align:middle;transform:rotate(-90deg);animation:", " 2s linear infinite;svg{animation:", " ", "ms ease-in-out infinite;}"], rotate, move$1, function (_ref) {
-  var $duration = _ref.$duration;
-  return $duration;
-});
+})(["display:inline-flex;vertical-align:middle;animation:", " 2s linear infinite;svg{circle{animation:", " 1.5s ease-in-out infinite;}}"], rotate, circle$1);
 /** 圈圈 spin */
 
 var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var className = props.className,
+      style = props.style,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 30 : _props$size,
       _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
       _props$strokeWidth = props.strokeWidth,
-      strokeWidth = _props$strokeWidth === void 0 ? 5 : _props$strokeWidth,
+      strokeWidth = _props$strokeWidth === void 0 ? 3 : _props$strokeWidth,
       rest = _objectWithoutProperties(props, _excluded$1f);
 
   var elRef = React__default['default'].useRef();
@@ -9168,16 +9166,18 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     return elRef.current;
   });
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$3, _extends({}, rest, {
+    style: _objectSpread2({
+      fontSize: size
+    }, style),
     ref: elRef,
-    $duration: duration,
     className: clsx__default['default'](className, 'uc-round-spin')
   }), /*#__PURE__*/React__default['default'].createElement("svg", _extends({}, SVGProps$3, {
-    viewBox: "".concat(radius, " ").concat(radius, " ").concat(radius * 2, " ").concat(radius * 2)
-  }), /*#__PURE__*/React__default['default'].createElement("circle", {
-    cx: radius * 2,
-    cy: radius * 2,
-    r: radius - strokeWidth / 2,
     stroke: color,
+    viewBox: "25 25 50 50"
+  }), /*#__PURE__*/React__default['default'].createElement("circle", {
+    cx: "50",
+    cy: "50",
+    r: "20",
     strokeLinecap: "round",
     style: {
       strokeWidth: strokeWidth
@@ -9185,6 +9185,45 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   })));
 });
 RoundSpin.displayName = 'UC-RoundSpin';
+
+var _excluded$1g = ["className", "style", "size", "color"];
+
+var _templateObject$7;
+var rotate$1 = styled.keyframes(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
+var getClassName$b = prefixClassName('uc-flower-spin');
+var StyledLoader$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "ClockSpin__StyledLoader",
+  componentId: "sc-11a5fov-0"
+})(["display:inline-flex;vertical-align:middle;position:relative;animation:", " 0.8s steps(12) infinite;.", "{position:absolute;top:0;left:0;width:100%;height:100%;&::before{display:block;width:2px;height:25%;margin:0 auto;background-color:currentColor;border-radius:40%;content:' ';}&:nth-child(1){transform:rotate(0deg);opacity:1;}&:nth-child(2){transform:rotate(30deg);opacity:", ";}&:nth-child(3){transform:rotate(60deg);opacity:", ";}&:nth-child(4){transform:rotate(90deg);opacity:", ";}&:nth-child(5){transform:rotate(120deg);opacity:", ";}&:nth-child(6){transform:rotate(150deg);opacity:", ";}&:nth-child(7){transform:rotate(180deg);opacity:", ";}&:nth-child(8){transform:rotate(210deg);opacity:", ";}&:nth-child(9){transform:rotate(240deg);opacity:", ";}&:nth-child(10){transform:rotate(270deg);opacity:", ";}&:nth-child(11){transform:rotate(300deg);opacity:", ";}&:nth-child(12){transform:rotate(330deg);opacity:", ";}}"], rotate$1, getClassName$b('item'), 1 - 0.75 / 12, 1 - 0.75 / 12 * 2, 1 - 0.75 / 12 * 3, 1 - 0.75 / 12 * 4, 1 - 0.75 / 12 * 5, 1 - 0.75 / 12 * 6, 1 - 0.75 / 12 * 7, 1 - 0.75 / 12 * 8, 1 - 0.75 / 12 * 9, 1 - 0.75 / 12 * 10, 1 - 0.75 / 12 * 11);
+var items = new Array(12).fill(0);
+/** 菊花spin */
+
+var FlowerSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
+  var className = props.className,
+      style = props.style,
+      _props$size = props.size,
+      size = _props$size === void 0 ? 30 : _props$size,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'currentColor' : _props$color,
+      rest = _objectWithoutProperties(props, _excluded$1g);
+
+  return /*#__PURE__*/React__default['default'].createElement(StyledLoader$4, _extends({
+    style: _objectSpread2({
+      color: color,
+      width: size,
+      height: size
+    }, style),
+    ref: ref
+  }, rest, {
+    className: clsx__default['default'](getClassName$b(), className)
+  }), items.map(function (v, i) {
+    return /*#__PURE__*/React__default['default'].createElement("div", {
+      key: i,
+      className: getClassName$b('item')
+    });
+  }));
+});
+FlowerSpin.displayName = 'UC-FlowerSpin';
 
 /**
  * 定时器setInterval
@@ -9209,8 +9248,8 @@ function useInterval(fn, delay) {
   }, [delay]);
 }
 
-var _excluded$1g = ["millisec", "value", "onFinish", "className", "children"];
-var getClassName$b = prefixClassName('uc-countdown');
+var _excluded$1h = ["millisec", "value", "onFinish", "className", "children"];
+var getClassName$c = prefixClassName('uc-countdown');
 
 var getCountdown = function getCountdown(value) {
   if (!value) {
@@ -9261,7 +9300,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       onFinish = props.onFinish,
       className = props.className,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$1g);
+      rest = _objectWithoutProperties(props, _excluded$1h);
 
   var _useState = React.useState(function () {
     return getCountdown(value);
@@ -9299,17 +9338,17 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, millisec ? 1 : 1000);
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: ref,
-    className: clsx__default['default'](getClassName$b(), className)
+    className: clsx__default['default'](getClassName$c(), className)
   }, rest), typeof children === 'function' && children(date));
 });
 Countdown.displayName = 'Countdown';
 
-var _excluded$1h = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
-var getClassName$c = prefixClassName('uc-turntable');
+var _excluded$1i = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
+var getClassName$d = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
   componentId: "sc-1jrp0l7-0"
-})(["position:relative;overflow:hidden;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$c('inner'), getClassName$c('pointer'), getClassName$c('name'), getClassName$c('img'), getClassName$c('prize'), getClassName$c('item'));
+})(["position:relative;overflow:hidden;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$d('inner'), getClassName$d('pointer'), getClassName$d('name'), getClassName$d('img'), getClassName$d('prize'), getClassName$d('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
 /** 转盘抽奖 */
 
@@ -9328,7 +9367,7 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       borderColor = _props$borderColor === void 0 ? '#ff9800' : _props$borderColor,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      rest = _objectWithoutProperties(props, _excluded$1h); // 用来锁定转盘，避免同时多次点击转动
+      rest = _objectWithoutProperties(props, _excluded$1i); // 用来锁定转盘，避免同时多次点击转动
 
 
   var lock = React.useRef(false); // 开始转动的角度
@@ -9430,14 +9469,14 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   };
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$i, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$c(), className),
+    className: clsx__default['default'](getClassName$d(), className),
     ref: wrapRef,
     style: {
       width: size,
       height: size
     }
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$c('inner'),
+    className: getClassName$d('inner'),
     ref: innerRef,
     style: {
       transform: rotateAngle.current,
@@ -9446,28 +9485,28 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, /*#__PURE__*/React__default['default'].createElement("canvas", {
     ref: canvasDomRef
   }, "\u6D4F\u89C8\u5668\u7248\u672C\u8FC7\u4F4E"), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$c('prize')
+    className: getClassName$d('prize')
   }, prizeList.map(function (item, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
-      className: getClassName$c('item'),
+      className: getClassName$d('item'),
       style: getRotateAngle(index)
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$c('name')
+      className: getClassName$d('name')
     }, item.name), /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$c('img')
+      className: getClassName$d('img')
     }, /*#__PURE__*/React__default['default'].createElement("img", {
       src: item.img
     })));
   }))), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$c('pointer'),
+    className: getClassName$d('pointer'),
     onClick: startTurns
   }, pointer));
 });
 Turntable.displayName = 'UC-Turntable';
 
-var _excluded$1i = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd"];
-var getClassName$d = prefixClassName('uc-sudoku');
+var _excluded$1j = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd"];
+var getClassName$e = prefixClassName('uc-sudoku');
 var seq = [0, 1, 2, 5, 8, 7, 6, 3]; // turn sequence
 // key top-down,left-right ,value: prizeList seq
 
@@ -9484,7 +9523,7 @@ var map = {
 var StyledWrap$j = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Sudoku__StyledWrap",
   componentId: "sc-1a4co3k-0"
-})(["width:100%;display:flex;flex-wrap:wrap;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;}"], getClassName$d('item'), getClassName$d('prize'), getClassName$d('pointer'));
+})(["width:100%;display:flex;flex-wrap:wrap;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;}"], getClassName$e('item'), getClassName$e('prize'), getClassName$e('pointer'));
 /** 9宫格抽奖 */
 
 var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9498,7 +9537,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       speed = _props$speed === void 0 ? 150 : _props$speed,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      rest = _objectWithoutProperties(props, _excluded$1i);
+      rest = _objectWithoutProperties(props, _excluded$1j);
 
   var forceUpdate = useForceUpdate();
 
@@ -9588,14 +9627,14 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var renderBlock = function renderBlock(index) {
     var item = prizeList[index];
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$d('prize')
+      className: getClassName$e('prize')
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$d('img')
+      className: getClassName$e('img')
     }, /*#__PURE__*/React__default['default'].createElement("img", {
       alt: "prize",
       src: item.img
     })), /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$d('name')
+      className: getClassName$e('name')
     }, item.name));
   };
 
@@ -9605,7 +9644,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$j, _extends({}, rest, {
-    className: (getClassName$d(), className),
+    className: (getClassName$e(), className),
     ref: wrapElRef
   }), [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (v) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
@@ -9613,11 +9652,11 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       style: {
         height: size
       },
-      className: clsx__default['default'](getClassName$d('item'), {
+      className: clsx__default['default'](getClassName$e('item'), {
         active: v === seq[index.current]
       })
     }, v === 4 ? /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$d('pointer'),
+      className: getClassName$e('pointer'),
       onClick: start
     }, pointer) : renderBlock(map[v]));
   }));
@@ -9627,7 +9666,7 @@ Sudoku.displayName = 'UC-Sudoku';
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
-})(["display:inline-flex;width:124px;height:124px;box-sizing:border-box;align-items:center;justify-content:center;font-size:15px;"]);
+})(["display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;font-size:15px;"]);
 /**
  * 加载中, 只有静态调用
  *
@@ -9638,21 +9677,30 @@ var Loading = function Loading() {
   return null;
 };
 
-var renderSpin = function renderSpin(type) {
+var renderSpin = function renderSpin(type, size) {
   switch (type) {
     case 'ball':
       {
         return /*#__PURE__*/React__default['default'].createElement(BallSpin, null);
       }
 
-    case 'wechat':
+    case 'spin':
       {
         return /*#__PURE__*/React__default['default'].createElement(Spin, null);
       }
 
-    case 'zarm':
+    case 'round':
       {
-        return /*#__PURE__*/React__default['default'].createElement(RoundSpin, null);
+        return /*#__PURE__*/React__default['default'].createElement(RoundSpin, {
+          size: size
+        });
+      }
+
+    case 'clock':
+      {
+        return /*#__PURE__*/React__default['default'].createElement(FlowerSpin, {
+          size: size
+        });
       }
   }
 };
@@ -9676,9 +9724,13 @@ var show = function show(text) {
       _config$spinSize = config.spinSize,
       spinSize = _config$spinSize === void 0 ? 32 : _config$spinSize,
       containerStyle = config.containerStyle;
+  var size = text ? 124 : 80;
   Toast.show({
     content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, {
-      style: containerStyle
+      style: _objectSpread2({
+        width: size,
+        height: size
+      }, containerStyle)
     }, /*#__PURE__*/React__default['default'].createElement(Space, {
       direction: "vertical",
       size: text ? gap : 0
@@ -9687,7 +9739,7 @@ var show = function show(text) {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, renderSpin(type)), text)),
+    }, renderSpin(type, spinSize)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
@@ -9940,7 +9992,7 @@ var initI18n = function initI18n(options) {
   .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
-var _excluded$1j = ["children", "label", "name"],
+var _excluded$1k = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -9950,7 +10002,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1j);
+      fieldProps = _objectWithoutProperties(props, _excluded$1k);
 
   var required = false;
 
@@ -10155,6 +10207,7 @@ exports.Cell = Cell;
 exports.Checkbox = Checkbox;
 exports.CheckboxGroup = CheckboxGroup;
 exports.CircleSpin = CircleSpin;
+exports.ClockSpin = FlowerSpin;
 exports.Collapse = Collapse$1;
 exports.CopyToClipboard = CopyToClipboard;
 exports.Countdown = Countdown;

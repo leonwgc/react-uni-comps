@@ -1,4 +1,4 @@
-import { __makeTemplateObject } from "tslib";
+import { __assign, __makeTemplateObject } from "tslib";
 import React from 'react';
 import styled from 'styled-components';
 import Toast from './Toast';
@@ -7,7 +7,8 @@ import Space from './Space';
 import BallSpin from './BallSpin';
 import Spin from './Spin';
 import RoundSpin from './RoundSpin';
-var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  width: 124px;\n  height: 124px;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
+import ClockSpin from './ClockSpin';
+var StyledLoading = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"], ["\n  display: inline-flex;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  font-size: 15px;\n"])));
 /**
  * 加载中, 只有静态调用
  *
@@ -18,21 +19,30 @@ var Loading = function Loading() {
   return null;
 };
 
-var renderSpin = function renderSpin(type) {
+var renderSpin = function renderSpin(type, size) {
   switch (type) {
     case 'ball':
       {
         return /*#__PURE__*/React.createElement(BallSpin, null);
       }
 
-    case 'wechat':
+    case 'spin':
       {
         return /*#__PURE__*/React.createElement(Spin, null);
       }
 
-    case 'zarm':
+    case 'round':
       {
-        return /*#__PURE__*/React.createElement(RoundSpin, null);
+        return /*#__PURE__*/React.createElement(RoundSpin, {
+          size: size
+        });
+      }
+
+    case 'clock':
+      {
+        return /*#__PURE__*/React.createElement(ClockSpin, {
+          size: size
+        });
       }
   }
 };
@@ -59,9 +69,13 @@ var show = function show(text, config) {
       _c = config.spinSize,
       spinSize = _c === void 0 ? 32 : _c,
       containerStyle = config.containerStyle;
+  var size = text ? 124 : 80;
   Toast.show({
     content: /*#__PURE__*/React.createElement(StyledLoading, {
-      style: containerStyle
+      style: __assign({
+        width: size,
+        height: size
+      }, containerStyle)
     }, /*#__PURE__*/React.createElement(Space, {
       direction: "vertical",
       size: text ? gap : 0
@@ -70,7 +84,7 @@ var show = function show(text, config) {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, renderSpin(type)), text)),
+    }, renderSpin(type, spinSize)), text)),
     duration: 24 * 60 * 60 * 1000,
     style: {
       padding: 0
