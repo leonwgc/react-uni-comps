@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Spin, Space, Toast, Button, Icon } from 'react-uni-comps';
+import { Spin, Space, Toast, Button, Icon, ClockSpin } from 'react-uni-comps';
 
 export default function App() {
   return (
@@ -98,10 +98,15 @@ export default function App() {
                 <Space
                   direction="vertical"
                   size={12}
-                  style={{ width: 120, textAlign: 'center', color: '#fff' }}
+                  style={{
+                    width: 80,
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    color: '#fff',
+                  }}
                 >
-                  <Icon type="uc-icon-tick" style={{ fontSize: 40 }} />
-                  认证成功
+                  <ClockSpin />
+                  加载中...
                 </Space>
               ),
             })
