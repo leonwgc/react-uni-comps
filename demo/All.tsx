@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> ClockSpin
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('ClockSpin')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> Sudoku
           </Space>
         }
