@@ -1,6 +1,7 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect } from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
+import useTheme from './hooks/useTheme';
 
 type Props = {
   /** 主题色 */
@@ -19,8 +20,13 @@ const ThemeProvider = (props: Props) => {
   useLayoutEffect(() => {
     document.documentElement.style.setProperty('--uc-color', color);
   }, [color]);
+  const theme = useTheme();
 
-  return <StyledProvider theme={{ color }}>{children}</StyledProvider>;
+  useEffect(() => {
+    document.documentElement.style.setProperty('--uc-theme', theme);
+  }, [theme]);
+
+  return <StyledProvider theme={{ color, theme }}>{children}</StyledProvider>;
 };
 
 ThemeProvider.displayName = 'UC-ThemeProvider';
