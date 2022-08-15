@@ -16,11 +16,11 @@ type Props = {
  */
 const ThemeProvider = (props: Props) => {
   const { color = vars.primary, children } = props;
+  const theme = useTheme();
 
   useLayoutEffect(() => {
     document.documentElement.style.setProperty('--uc-color', color);
   }, [color]);
-  const theme = useTheme();
 
   useEffect(() => {
     document.documentElement.style.setProperty('--uc-theme', theme);
