@@ -3575,6 +3575,35 @@ var Tooltip = function Tooltip(props) {
 Tooltip.displayName = 'UC-Tooltip';
 
 /**
+ * 获得系统颜色模式
+ * @returns 'light' | 'dark'
+ */
+var useTheme = function useTheme() {
+  var _React$useState = React__default['default'].useState('light'),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      theme = _React$useState2[0],
+      setTheme = _React$useState2[1];
+
+  useMount(function () {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  });
+  useEventListener(function () {
+    return window.matchMedia('(prefers-color-scheme: dark)');
+  }, 'change', function (event) {
+    if (event.matches) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  });
+  return theme;
+};
+
+/**
  * @description 主题色设置
  * @param {Props} props
  * @return {*}
@@ -3583,12 +3612,17 @@ var ThemeProvider = function ThemeProvider(props) {
   var _props$color = props.color,
       color = _props$color === void 0 ? primary : _props$color,
       children = props.children;
+  var theme = useTheme();
   React.useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
   }, [color]);
+  React.useEffect(function () {
+    document.documentElement.style.setProperty('--uc-theme', theme);
+  }, [theme]);
   return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
     theme: {
-      color: color
+      color: color,
+      theme: theme
     }
   }, children);
 };
@@ -4920,7 +4954,7 @@ var _excluded$C = ["className", "style", "prefix", "value", "onChange", "suffix"
 var StyledInput = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Input__StyledInput",
   componentId: "sc-1k64vsa-0"
-})(["display:flex;align-items:center;padding:4px 12px;font-size:14px;width:100%;background-color:#fff;overflow:hidden;box-sizing:border-box;color:#333;&.pc{background-image:none;border:1px solid ", ";border-radius:2px;transition:all 0.3s;&:hover:not(.disabled,.read-only){", "}&.focused:not(.disabled,.read-only){", " box-shadow:0 0 2px 2px ", ";}}&.mobile{border:none;padding:0 4px;line-height:24px;}&.disabled{color:#666;}&.read-only{}.prefix{margin-right:8px;}.suffix{margin-left:8px;color:#999;}.clear{color:#bcbcbc;cursor:pointer;line-height:1;}input,textarea{flex:1;position:relative;box-sizing:border-box;margin:0;padding:0;line-height:inherit;text-align:left;background-color:transparent;border:0;resize:none;outline:none;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;box-shadow:none;width:100%;&::placeholder{color:#bfbfbf;user-select:none;}}textarea{resize:none;word-break:break-all;word-wrap:break-word;& + *{align-self:flex-end;}}"], border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
+})(["display:flex;align-items:center;padding:4px 12px;font-size:14px;width:100%;background-color:#fff;overflow:hidden;box-sizing:border-box;color:#333;&.pc{background-image:none;border:1px solid ", ";border-radius:2px;transition:all 0.3s;&:hover:not(.disabled,.read-only){", "}&.focused:not(.disabled,.read-only){", " box-shadow:0 0 2px 2px ", ";}}&.mobile{border:none;padding:0 4px;line-height:24px;}&.disabled{color:#666;}&.read-only{}.prefix{margin-right:8px;}.suffix{margin-left:8px;color:#00000040;cursor:pointer;transition:color 0.3s;&:hover{color:#00000073;}}.clear{color:#bcbcbc;cursor:pointer;line-height:1;}input,textarea{flex:1;position:relative;box-sizing:border-box;margin:0;padding:0;line-height:inherit;text-align:left;background-color:transparent;border:0;resize:none;outline:none;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;box-shadow:none;width:100%;&::placeholder{color:#bfbfbf;user-select:none;}}textarea{resize:none;word-break:break-all;word-wrap:break-word;& + *{align-self:flex-end;}}"], border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
   return color__default['default'](getThemeColor() || props.theme.color || primary).fade(0.85);
 }); //#endregion
 
@@ -5036,7 +5070,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     })
   }, prefix && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('prefix')
-  }, prefix), /*#__PURE__*/React__default['default'].createElement(isTextArea ? 'textarea' : 'input', elProps), clearable && focused && typeof _onChange === 'function' && (value === null || value === void 0 ? void 0 : value.length) > 0 && /*#__PURE__*/React__default['default'].createElement("span", {
+  }, prefix), /*#__PURE__*/React__default['default'].createElement(isTextArea ? 'textarea' : 'input', elProps), clearable && typeof _onChange === 'function' && (value === null || value === void 0 ? void 0 : value.length) > 0 && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('suffix', 'clear')
   }, /*#__PURE__*/React__default['default'].createElement(Icon, {
     type: "uc-icon-clear",
