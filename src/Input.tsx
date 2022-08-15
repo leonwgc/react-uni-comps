@@ -248,7 +248,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
       {prefix && <span className={clsx('prefix')}>{prefix}</span>}
       {React.createElement(isTextArea ? 'textarea' : 'input', elProps)}
 
-      {clearable && focused && typeof onChange === 'function' && value?.length > 0 && (
+      {clearable && typeof onChange === 'function' && value?.length > 0 && (
         <span className={clsx('suffix', 'clear')}>
           <Icon
             type="uc-icon-clear"
