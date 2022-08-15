@@ -99,7 +99,13 @@ const StyledInput = styled.div`
   }
   .suffix {
     margin-left: 8px;
-    color: #999;
+    color: #00000040;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #00000073;
+    }
   }
 
   .clear {
