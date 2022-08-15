@@ -99,6 +99,9 @@ const StyledInput = styled.div`
   }
   .suffix {
     margin-left: 8px;
+  }
+
+  .clear {
     color: #00000040;
     cursor: pointer;
     transition: color 0.3s;
@@ -106,12 +109,6 @@ const StyledInput = styled.div`
     &:hover {
       color: #00000073;
     }
-  }
-
-  .clear {
-    color: #bcbcbc;
-    cursor: pointer;
-    line-height: 1;
   }
 
   input,
