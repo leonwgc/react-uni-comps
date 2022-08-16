@@ -1,6 +1,6 @@
 ---
 title: Waypoint 路标
-order: 5
+order: 4
 mobile: true
 group:
   title: 其他

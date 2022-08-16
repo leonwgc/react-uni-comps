@@ -1,14 +1,14 @@
 ---
-title: Cell 列表项
-order: 4
+title: Cell 单元格
+order: 9
 mobile: true
 group:
-  title: 数据展示
-  order: 1
-  path: display
+  title: 基础组件
+  order: 0
+  path: base
 ---
 
-# Cell 列表项
+# Cell 单元格
 
 <code src="../demo/Cell.tsx"></code>
 <API src="../src/Cell.tsx"></API>

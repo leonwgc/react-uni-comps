@@ -1,6 +1,6 @@
 ---
 title: WaitLoading 延迟渲染子元素
-order: 4
+order: 3
 mobile: true
 group:
   title: 其他

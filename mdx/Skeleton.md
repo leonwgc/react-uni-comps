@@ -1,11 +1,11 @@
 ---
 title: Skeleton 骨架屏
-order: 11
+order: 7
 mobile: true
 group:
-  title: 反馈
-  order: 3
-  path: feedback
+  title: 加载指示器
+  order: 7
+  path: loading
 ---
 
 # Skeleton 骨架屏

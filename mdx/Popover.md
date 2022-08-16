@@ -1,6 +1,6 @@
 ---
 title: Popover 气泡框
-order: 4
+order: 3
 mobile: true
 group:
   title: 基础组件

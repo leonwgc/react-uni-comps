@@ -1,6 +1,6 @@
 ---
 title: Slide 轮播
-order: 8
+order: 7
 mobile: true
 group:
   title: 数据展示

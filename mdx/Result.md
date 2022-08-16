@@ -1,11 +1,11 @@
 ---
 title: Result 结果
-order: 15
+order: 14
 mobile: true
 group:
-  title: 反馈
-  order: 3
-  path: feedback
+  title: 数据展示
+  order: 1
+  path: display
 ---
 
 # Result 结果

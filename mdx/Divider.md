@@ -1,6 +1,6 @@
 ---
 title: Divider 分割线
-order: 2
+order: 3
 mobile: true
 group:
   title: 导航布局

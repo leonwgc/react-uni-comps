@@ -1,11 +1,11 @@
 ---
 title: Toast 轻提示
-order: 7
+order: 8
 mobile: true
 group:
-  title: 反馈
-  order: 3
-  path: feedback
+  title: 基础组件
+  order: 0
+  path: base
 ---
 
 # Toast 轻提示

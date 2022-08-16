@@ -23,7 +23,7 @@ export default function App() {
   const [visible5, setVisible5] = useState(false);
 
   const [x, setX] = useState(false);
-  const ref = useRef();
+  const ref = useRef<any>();
 
   return (
     <PageWrap>
@@ -89,7 +89,7 @@ export default function App() {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 300,
+          height: 240,
           border: '1px solid #eee',
         }}
       ></div>

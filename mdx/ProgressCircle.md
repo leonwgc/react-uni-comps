@@ -1,6 +1,6 @@
 ---
 title: ProgressCircle 环形进度条
-order: 7
+order: 6
 mobile: true
 group:
   title: 数据展示

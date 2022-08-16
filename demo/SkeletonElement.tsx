@@ -15,7 +15,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="颜色">
-        <SkeletonElement style={{ height: 10, background: '#00bc8d' }} />
+        <SkeletonElement style={{ height: 10, background: '#ccc' }} />
       </DemoBlock>
     </PageWrap>
   );

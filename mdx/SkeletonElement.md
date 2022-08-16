@@ -1,11 +1,11 @@
 ---
 title: SkeletonElement 骨架元素
-order: 12
+order: 8
 mobile: true
 group:
-  title: 反馈
-  order: 3
-  path: feedback
+  title: 加载指示器
+  order: 7
+  path: loading
 ---
 
 # SkeletonElement 骨架元素

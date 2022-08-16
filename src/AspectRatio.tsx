@@ -41,12 +41,12 @@ const StyledWrap = styled.div<{ ratio: number }>`
 const AspectRatio = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { children, className, ratio = 4 / 3, ...rest } = props;
   return (
-    <StyledWrap {...rest} ref={ref} ratio={ratio} className={clsx('ruc-aspect-ratio', className)}>
+    <StyledWrap {...rest} ref={ref} ratio={ratio} className={clsx('uc-aspect-ratio', className)}>
       {children}
     </StyledWrap>
   );
 });
 
-AspectRatio.displayName = 'UC-AutoCenter';
+AspectRatio.displayName = 'UC-AspectRatio';
 
 export default AspectRatio;

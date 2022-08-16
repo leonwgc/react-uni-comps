@@ -1,6 +1,6 @@
 ---
 title: Masonry 瀑布流布局
-order: 8
+order: 9
 mobile: true
 group:
   title: 导航布局

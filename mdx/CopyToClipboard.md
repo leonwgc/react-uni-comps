@@ -1,6 +1,6 @@
 ---
 title: CopyToClipboard 复制
-order: 13
+order: 10
 mobile: true
 group:
   title: 反馈

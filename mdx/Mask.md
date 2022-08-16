@@ -1,6 +1,6 @@
 ---
 title: Mask 遮罩
-order: 3
+order: 2
 mobile: true
 group:
   title: 基础组件

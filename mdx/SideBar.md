@@ -1,6 +1,6 @@
 ---
 title: SideBar 侧边选项卡
-order: 7
+order: 8
 mobile: true
 group:
   title: 导航布局

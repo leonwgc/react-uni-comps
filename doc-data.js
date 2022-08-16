@@ -8,10 +8,6 @@ module.exports = [
         title: 'Button 按钮',
       },
       {
-        name: 'Space',
-        title: 'Space 间距',
-      },
-      {
         name: 'Icon',
         title: 'Icon 图标',
       },
@@ -33,7 +29,19 @@ module.exports = [
       },
       {
         name: 'ScrollBox',
-        title: 'ScrollBox 带指示器的滚动',
+        title: 'ScrollBox 水平滚动',
+      },
+      {
+        name: 'Popup',
+        title: 'Popup 弹出层',
+      },
+      {
+        name: 'Toast',
+        title: 'Toast 轻提示',
+      },
+      {
+        name: 'Cell',
+        title: 'Cell 单元格',
       },
     ],
   },
@@ -57,10 +65,7 @@ module.exports = [
         name: 'QRCode',
         title: 'QRCode 二维码',
       },
-      {
-        name: 'Cell',
-        title: 'Cell 列表项',
-      },
+
       {
         name: 'ImageViewer',
         title: 'ImageViewer 图片查看',
@@ -96,6 +101,18 @@ module.exports = [
       {
         name: 'Countdown',
         title: 'Countdown 倒计时',
+      },
+      {
+        name: 'Empty',
+        title: 'Empty 空状态',
+      },
+      {
+        name: 'Result',
+        title: 'Result 结果',
+      },
+      {
+        name: 'Text',
+        title: 'Text 文本省略',
       },
     ],
   },
@@ -216,10 +233,7 @@ module.exports = [
         name: 'PullToRefresh',
         title: 'PullToRefresh 下拉刷新',
       },
-      {
-        name: 'Toast',
-        title: 'Toast 轻提示',
-      },
+
       {
         name: 'PopConfirm',
         title: 'PopConfirm 气泡确认框',
@@ -236,25 +250,8 @@ module.exports = [
       },
 
       {
-        name: 'Skeleton',
-        title: 'Skeleton 骨架屏',
-      },
-
-      {
-        name: 'SkeletonElement',
-        title: 'SkeletonElement 骨架元素',
-      },
-      {
         name: 'CopyToClipboard',
         title: 'CopyToClipboard 复制',
-      },
-      {
-        name: 'Empty',
-        title: 'Empty 空状态',
-      },
-      {
-        name: 'Result',
-        title: 'Result 结果',
       },
     ],
   },
@@ -265,6 +262,10 @@ module.exports = [
       {
         name: 'AutoCenter',
         title: 'AutoCenter 自动居中',
+      },
+      {
+        name: 'Space',
+        title: 'Space 间距',
       },
       {
         name: 'Collapse',
@@ -375,6 +376,14 @@ module.exports = [
         name: 'Loading',
         title: 'Loading 弹层加载',
       },
+      {
+        name: 'Skeleton',
+        title: 'Skeleton 骨架屏',
+      },
+      {
+        name: 'SkeletonElement',
+        title: 'SkeletonElement 骨架元素',
+      },
     ],
   },
   {
@@ -417,10 +426,6 @@ module.exports = [
       {
         name: 'ErrorBoundary',
         title: 'ErrorBoundary 错误边界',
-      },
-      {
-        name: 'Text',
-        title: 'Text 文本省略',
       },
       {
         name: 'WaitLoading',

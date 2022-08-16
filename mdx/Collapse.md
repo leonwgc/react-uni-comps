@@ -1,6 +1,6 @@
 ---
 title: Collapse 折叠面板
-order: 1
+order: 2
 mobile: true
 group:
   title: 导航布局
