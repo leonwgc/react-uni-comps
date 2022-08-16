@@ -6,9 +6,11 @@ import { getThemeColorCss, getThemeColor } from './themeHelper';
 import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
-import color from 'color'; //#region  style
+import color from 'color';
+import { prefixClassName } from './helper';
+var getClassName = prefixClassName('uc-input'); //#region  style
 
-var StyledInput = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n  color: #333;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover:not(.disabled, .read-only) {\n      ", "\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  &.disabled {\n    color: #666;\n  }\n\n  &.read-only {\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n  }\n\n  .clear {\n    color: #00000040;\n    cursor: pointer;\n    transition: color 0.3s;\n\n    &:hover {\n      color: #00000073;\n    }\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n\n    &::placeholder {\n      color: #bfbfbf;\n      user-select: none;\n    }\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n  color: #333;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover:not(.disabled, .read-only) {\n      ", "\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  &.disabled {\n    color: #666;\n  }\n\n  &.read-only {\n  }\n\n  .prefix {\n    margin-right: 8px;\n  }\n  .suffix {\n    margin-left: 8px;\n  }\n\n  .clear {\n    color: #00000040;\n    cursor: pointer;\n    transition: color 0.3s;\n\n    &:hover {\n      color: #00000073;\n    }\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n\n    &::placeholder {\n      color: #bfbfbf;\n      user-select: none;\n    }\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), vars.border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
+var StyledInput = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n  color: #333;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover:not(.disabled, .read-only) {\n      ", "\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  &.disabled {\n    color: #666;\n  }\n\n  &.read-only {\n  }\n\n  .prefix {\n    margin-right: 8px;\n    user-select: none;\n  }\n  .suffix {\n    margin-left: 8px;\n    user-select: none;\n  }\n\n  .clear {\n    color: #00000040;\n    cursor: pointer;\n    transition: color 0.3s;\n\n    &:hover {\n      color: #00000073;\n    }\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n\n    &::placeholder {\n      color: #bfbfbf;\n      user-select: none;\n    }\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  padding: 4px 12px;\n  font-size: 14px;\n  width: 100%;\n  background-color: #fff;\n  overflow: hidden;\n  box-sizing: border-box;\n  color: #333;\n\n  &.pc {\n    background-image: none;\n    border: 1px solid ", ";\n    border-radius: 2px;\n    transition: all 0.3s;\n    &:hover:not(.disabled, .read-only) {\n      ", "\n    }\n\n    &.focused:not(.disabled, .read-only) {\n      ", "\n      box-shadow: 0 0 2px 2px ", ";\n    }\n  }\n  &.mobile {\n    border: none;\n    padding: 0 4px;\n    line-height: 24px;\n  }\n\n  &.disabled {\n    color: #666;\n  }\n\n  &.read-only {\n  }\n\n  .prefix {\n    margin-right: 8px;\n    user-select: none;\n  }\n  .suffix {\n    margin-left: 8px;\n    user-select: none;\n  }\n\n  .clear {\n    color: #00000040;\n    cursor: pointer;\n    transition: color 0.3s;\n\n    &:hover {\n      color: #00000073;\n    }\n  }\n\n  input,\n  textarea {\n    flex: 1;\n    position: relative;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n\n    line-height: inherit;\n    text-align: left;\n    background-color: transparent;\n    border: 0;\n    resize: none;\n    outline: none;\n    -webkit-tap-highlight-color: transparent;\n    -webkit-appearance: none;\n    box-shadow: none;\n    width: 100%;\n\n    &::placeholder {\n      color: #bfbfbf;\n      user-select: none;\n    }\n  }\n\n  textarea {\n    resize: none;\n    word-break: break-all;\n    word-wrap: break-word;\n    & + * {\n      align-self: flex-end;\n    }\n  }\n"])), vars.border, getThemeColorCss('border-color'), getThemeColorCss('border-color'), function (props) {
   return color(getThemeColor() || props.theme.color || vars.primary).fade(0.85);
 });
 /** 单行/多行输入框 input/textarea */
@@ -113,7 +115,7 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   return /*#__PURE__*/React.createElement(StyledInput, {
     style: style,
-    className: clsx('uc-input', className, {
+    className: clsx(getClassName(), className, {
       'mobile': isMobile,
       'pc': !isMobile,
       'focused': focused,
@@ -121,9 +123,9 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
       'read-only': readOnly
     })
   }, prefix && /*#__PURE__*/React.createElement("span", {
-    className: clsx('prefix')
+    className: clsx('prefix', getClassName('prefix'))
   }, prefix), /*#__PURE__*/React.createElement(isTextArea ? 'textarea' : 'input', elProps), clearable && typeof _onChange === 'function' && (value === null || value === void 0 ? void 0 : value.length) > 0 && /*#__PURE__*/React.createElement("span", {
-    className: clsx('suffix', 'clear')
+    className: clsx('suffix', 'clear', getClassName('suffix'), getClassName('clear'))
   }, /*#__PURE__*/React.createElement(Icon, {
     type: "uc-icon-clear",
     onClick: function onClick() {
@@ -131,7 +133,7 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClear === null || onClear === void 0 ? void 0 : onClear();
     }
   })), suffix && /*#__PURE__*/React.createElement("span", {
-    className: clsx('suffix')
+    className: clsx('suffix', getClassName('suffix'))
   }, suffix));
 });
 Input.displayName = 'UC-Input';

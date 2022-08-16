@@ -17,9 +17,9 @@ var AspectRatio = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledWrap, __assign({}, rest, {
     ref: ref,
     ratio: ratio,
-    className: clsx('ruc-aspect-ratio', className)
+    className: clsx('uc-aspect-ratio', className)
   }), children);
 });
-AspectRatio.displayName = 'UC-AutoCenter';
+AspectRatio.displayName = 'UC-AspectRatio';
 export default AspectRatio;
 var templateObject_1;

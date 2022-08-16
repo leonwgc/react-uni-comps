@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Icon from './Icon';
 import clsx from 'clsx';
-import Input from './Input'; //#region  style
+import Input from './Input';
+import { prefixClassName } from './helper';
+var getClassName = prefixClassName('uc-search-bar'); //#region  style
 
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    line-height: 24px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    .prefix {\n      line-height: 1;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    line-height: 24px;\n    .uc-icon {\n      color: #999;\n      font-size: 15px;\n    }\n    .prefix {\n      line-height: 1;\n    }\n  }\n  .cancel-text {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n  }\n"]))); //#endregion
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    line-height: 24px;\n\n    .prefix {\n      .uc-icon {\n        font-size: 1.143em;\n        color: #8c8c8c;\n      }\n    }\n  }\n  .", " {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n    user-select: none;\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  .uc-input {\n    flex: 1;\n    background: #f7f7f7;\n    border-radius: 16px;\n    padding: 4px 12px;\n    line-height: 24px;\n\n    .prefix {\n      .uc-icon {\n        font-size: 1.143em;\n        color: #8c8c8c;\n      }\n    }\n  }\n  .", " {\n    flex: none;\n    display: inline-block;\n    margin-left: 12px;\n    cursor: pointer;\n    user-select: none;\n  }\n"])), getClassName('cancel')); //#endregion
 
 /** 搜索框 */
 
@@ -27,7 +29,7 @@ var SearchBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledWrap, {
     ref: ref,
     style: style,
-    className: clsx('uc-search-bar', className)
+    className: clsx(getClassName(), className)
   }, /*#__PURE__*/React.createElement(Input, __assign({
     prefix: /*#__PURE__*/React.createElement(Icon, {
       type: "uc-icon-sousuo"
@@ -39,10 +41,7 @@ var SearchBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     onChange: onChange,
     onPressEnter: onSearch
   }, inputProps)), focused && cancelText && /*#__PURE__*/React.createElement("div", {
-    className: "cancel-text",
-    style: {
-      marginLeft: 12
-    },
+    className: getClassName('cancel'),
     onClick: function onClick() {
       setFocused(false);
       onCancel === null || onCancel === void 0 ? void 0 : onCancel();
