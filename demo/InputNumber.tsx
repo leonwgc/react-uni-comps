@@ -18,6 +18,7 @@ export default function App() {
       <Block title="禁用">
         <InputNumber disabled defaultValue={12345} />
       </Block>
+
       <Block title="前后缀">
         <InputNumber
           prefix={<Icon type="uc-icon-gouwuche" />}
@@ -29,12 +30,6 @@ export default function App() {
 
       <Block title="最大最小值 2-16">
         <InputNumber defaultValue={10} min={2} max={16} onChange={console.log} />
-      </Block>
-      <Block title="受控">
-        <Space>
-          <InputNumber value={v} onChange={setV} /> {v}
-          <Button onClick={() => setV(6)}>设置为6</Button>
-        </Space>
       </Block>
     </PageWrap>
   );

@@ -99,9 +99,11 @@ const StyledInput = styled.div`
 
   .prefix {
     margin-right: 8px;
+    user-select: none;
   }
   .suffix {
     margin-left: 8px;
+    user-select: none;
   }
 
   .clear {
