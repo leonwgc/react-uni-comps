@@ -15,7 +15,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="大小">
-        <ClockSpin size={50} color="#005cff" />
+        <ClockSpin size={36} color="#005cff" />
       </DemoBlock>
     </PageWrap>
   );

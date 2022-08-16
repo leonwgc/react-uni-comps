@@ -9,7 +9,7 @@ type Props = React.HTMLAttributes<HTMLSpanElement> & {
 };
 
 const StyledIcon = styled.span`
-  display: inline-block;
+  display: inline-flex;
   color: inherit;
   font-style: normal;
   line-height: 0;

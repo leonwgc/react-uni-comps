@@ -96,6 +96,7 @@ const StyledWrap = styled.div`
 
   .${getClassName('pointer')} {
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 
