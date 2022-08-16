@@ -1,25 +1,26 @@
 import React from 'react';
+import type { StringOrNumber } from './types';
 declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /**
-     * count of rows
+     * 行数
      * @default 3
      *  */
     rowCount?: number;
     /**
-     * row width，if set to string ,each row width set to the same
+     * 行宽
      *
      * @default ['40%', '100%', '60%']
      */
-    rowWidth?: string | string[];
-    /** height of row
-     * @default 16
-     */
-    rowHeight?: number;
+    rowWidth?: StringOrNumber | StringOrNumber[];
     /**
-     * show avatar on the left side if avatar > 0
-     * @default 0
+     * 行高
+     * @default 12
+     */
+    rowHeight?: StringOrNumber;
+    /**
+     * 左侧显示圆形的尺寸，不设置不显示
      *  */
-    avatar?: number;
+    round?: StringOrNumber;
 };
 /** 骨架屏, 包行两种风格, 基于SkeletonElement封装 */
 declare const Skeleton: React.FC<Props>;

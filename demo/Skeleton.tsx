@@ -9,11 +9,13 @@ export default function SkeletonDemo() {
       <DemoBlock title="默认">
         <Skeleton />
       </DemoBlock>
-      <DemoBlock title="行数">
-        <Skeleton rowCount={2} />
+
+      <DemoBlock title="行数,行高,和行宽">
+        <Skeleton rowCount={4} rowWidth={['38%', '50%', 100, '100%']} rowHeight={6} />
       </DemoBlock>
-      <DemoBlock title="头像">
-        <Skeleton avatar={60} row={3} rowWidth={['38%', '50%']} rowHeight={12} />
+
+      <DemoBlock title="左侧显示圆形">
+        <Skeleton round={48} rowCount={4} rowWidth={['38%', '50%']} rowHeight={6} />
       </DemoBlock>
     </PageWrap>
   );

@@ -2,28 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import SkeletonElement from './SkeletonElement';
 import clsx from 'clsx';
+import type { StringOrNumber } from './types';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-skeleton');
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /**
-   * count of rows
+   * 行数
    * @default 3
    *  */
   rowCount?: number;
   /**
-   * row width，if set to string ,each row width set to the same
+   * 行宽
    *
    * @default ['40%', '100%', '60%']
    */
-  rowWidth?: string | string[];
-  /** height of row
-   * @default 16
-   */
-  rowHeight?: number;
+  rowWidth?: StringOrNumber | StringOrNumber[];
   /**
-   * show avatar on the left side if avatar > 0
-   * @default 0
+   * 行高
+   * @default 12
+   */
+  rowHeight?: StringOrNumber;
+  /**
+   * 左侧显示圆形的尺寸，不设置不显示
    *  */
-  avatar?: number;
+  round?: StringOrNumber;
 };
 
 const StyledSkeleton = styled.div`
@@ -33,13 +37,13 @@ const StyledSkeleton = styled.div`
     }
   }
 
-  &.avatar {
+  &.${getClassName('round')} {
     display: flex;
+  }
 
-    > .rows {
-      flex: 1;
-      margin-left: 16px;
-    }
+  .${getClassName('rows')} {
+    flex: 1;
+    margin-left: 16px;
   }
 `;
 
@@ -48,8 +52,8 @@ const Skeleton: React.FC<Props> = (props) => {
   const {
     rowCount = 3,
     rowWidth = ['40%', '100%', '60%'],
-    rowHeight = 16,
-    avatar,
+    rowHeight = 12,
+    round,
     className,
     ...rest
   } = props;
@@ -74,18 +78,21 @@ const Skeleton: React.FC<Props> = (props) => {
   }
 
   return (
-    <StyledSkeleton {...rest} className={clsx('uc-skeleton', { avatar: avatar }, className)}>
-      {avatar > 0 && (
+    <StyledSkeleton
+      {...rest}
+      className={clsx(getClassName(), { [getClassName('round')]: round }, className)}
+    >
+      {round && (
         <SkeletonElement
           shape="circle"
-          className="avatar"
+          className="round"
           style={{
-            width: avatar,
-            height: avatar,
+            width: round,
+            height: round,
           }}
         />
       )}
-      <div className="rows">
+      <div className={getClassName('rows')}>
         {rowWidthAr.map((v, idx) => (
           <SkeletonElement key={idx} shape="rect" style={{ width: v, height: rowHeight }} />
         ))}
