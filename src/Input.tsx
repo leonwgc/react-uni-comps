@@ -6,6 +6,9 @@ import * as vars from './vars';
 import Icon from './Icon';
 import clsx from 'clsx';
 import color from 'color';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-input');
 
 type ignoredEvt = 'prefix' | 'onChange' | 'onFocus' | 'onBlur';
 
@@ -240,7 +243,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
   return (
     <StyledInput
       style={style}
-      className={clsx('uc-input', className, {
+      className={clsx(getClassName(), className, {
         'mobile': isMobile,
         'pc': !isMobile,
         'focused': focused,
@@ -248,11 +251,11 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
         'read-only': readOnly,
       })}
     >
-      {prefix && <span className={clsx('prefix')}>{prefix}</span>}
+      {prefix && <span className={clsx('prefix', getClassName('prefix'))}>{prefix}</span>}
       {React.createElement(isTextArea ? 'textarea' : 'input', elProps)}
 
       {clearable && typeof onChange === 'function' && value?.length > 0 && (
-        <span className={clsx('suffix', 'clear')}>
+        <span className={clsx('suffix', 'clear', getClassName('suffix'), getClassName('clear'))}>
           <Icon
             type="uc-icon-clear"
             onClick={() => {
@@ -262,7 +265,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
           />
         </span>
       )}
-      {suffix && <span className={clsx('suffix')}>{suffix}</span>}
+      {suffix && <span className={clsx('suffix', getClassName('suffix'))}>{suffix}</span>}
     </StyledInput>
   );
 });

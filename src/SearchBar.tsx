@@ -4,6 +4,9 @@ import Icon from './Icon';
 import clsx from 'clsx';
 import Input from './Input';
 import type { Props as InputProps } from './Input';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-search-bar');
 
 export type Props = {
   /**
@@ -28,19 +31,20 @@ const StyledWrap = styled.div`
     border-radius: 16px;
     padding: 4px 12px;
     line-height: 24px;
-    .uc-icon {
-      color: #999;
-      font-size: 15px;
-    }
+
     .prefix {
-      line-height: 1;
+      .uc-icon {
+        font-size: 1.143em;
+        color: #8c8c8c;
+      }
     }
   }
-  .cancel-text {
+  .${getClassName('cancel')} {
     flex: none;
     display: inline-block;
     margin-left: 12px;
     cursor: pointer;
+    user-select: none;
   }
 `;
 //#endregion
@@ -61,7 +65,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [focused, setFocused] = useState(false);
 
   return (
-    <StyledWrap ref={ref} style={style} className={clsx('uc-search-bar', className)}>
+    <StyledWrap ref={ref} style={style} className={clsx(getClassName(), className)}>
       <Input
         prefix={<Icon type="uc-icon-sousuo" />}
         onFocus={(e: any) => {
@@ -74,8 +78,7 @@ const SearchBar = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       />
       {focused && cancelText && (
         <div
-          className="cancel-text"
-          style={{ marginLeft: 12 }}
+          className={getClassName('cancel')}
           onClick={() => {
             setFocused(false);
             onCancel?.();
