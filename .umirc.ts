@@ -67,9 +67,6 @@ export default defineConfig({
   publicPath: repo ? `/${repo}/` : '/',
   styles: [
     `
-    #root .__dumi-default-menu-header p {
-      display:none;
-    }
     #root .__dumi-default-menu-header h1 {
       font-size: 24px;
       margin: 16px auto;
