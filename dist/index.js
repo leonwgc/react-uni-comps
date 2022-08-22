@@ -2225,18 +2225,15 @@ var WaitLoading = function WaitLoading(props) {
 
 var _templateObject$1;
 /**
- *  获取包含主题色的styled-components css片段
- *
- * @param {string} css属性
- * @param {string} [leftValue=''] 左侧值
- * @return {*}  {*}
+ *  获取包含主题色的css片段
+ * @param prop 属性
+ * @param leftValue 属性值 (左侧部分)
+ * @returns
  */
 
 var getThemeColorCss = function getThemeColorCss(prop) {
   var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
-    return props.theme.color || primary;
-  }, prop, leftValue, primary);
+  return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || primary);
 };
 /**
  *  get theme color from root css var
@@ -2245,7 +2242,7 @@ var getThemeColorCss = function getThemeColorCss(prop) {
  */
 
 var getThemeColor = function getThemeColor() {
-  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
+  return isBrowser && document.documentElement.dataset.themeColor;
 };
 
 /**
@@ -3614,9 +3611,10 @@ var ThemeProvider = function ThemeProvider(props) {
   var theme = useTheme();
   React.useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
+    document.documentElement.setAttribute('data-theme-color', color);
   }, [color]);
-  React.useEffect(function () {
-    document.documentElement.style.setProperty('--uc-theme', theme);
+  React.useLayoutEffect(function () {
+    document.documentElement.setAttribute('data-theme-mode', theme);
   }, [theme]);
   return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
     theme: {

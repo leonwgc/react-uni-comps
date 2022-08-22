@@ -3,11 +3,10 @@ import { css } from 'styled-components';
 import { isBrowser } from './dom';
 import * as vars from './vars';
 /**
- *  获取包含主题色的styled-components css片段
- *
- * @param {string} css属性
- * @param {string} [leftValue=''] 左侧值
- * @return {*}  {*}
+ *  获取包含主题色的css片段
+ * @param prop 属性
+ * @param leftValue 属性值 (左侧部分)
+ * @returns
  */
 
 export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
@@ -15,9 +14,7 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
     leftValue = '';
   }
 
-  return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "], ["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
-    return props.theme.color || vars.primary;
-  }, prop, leftValue, vars.primary);
+  return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    ", ":", " ", ";\n  "], ["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || vars.primary);
 };
 /**
  *  get theme color from root css var
@@ -26,6 +23,6 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
  */
 
 export var getThemeColor = function getThemeColor() {
-  return isBrowser && document.documentElement.style.getPropertyValue('--uc-color');
+  return isBrowser && document.documentElement.dataset.themeColor;
 };
 var templateObject_1;

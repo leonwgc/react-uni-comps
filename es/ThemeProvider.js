@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 import useTheme from './hooks/useTheme';
@@ -15,9 +15,10 @@ var ThemeProvider = function ThemeProvider(props) {
   var theme = useTheme();
   useLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
+    document.documentElement.setAttribute('data-theme-color', color);
   }, [color]);
-  useEffect(function () {
-    document.documentElement.style.setProperty('--uc-theme', theme);
+  useLayoutEffect(function () {
+    document.documentElement.setAttribute('data-theme-mode', theme);
   }, [theme]);
   return /*#__PURE__*/React.createElement(StyledProvider, {
     theme: {
