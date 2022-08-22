@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 import useTheme from './hooks/useTheme';
@@ -20,10 +20,11 @@ const ThemeProvider = (props: Props) => {
 
   useLayoutEffect(() => {
     document.documentElement.style.setProperty('--uc-color', color);
+    document.documentElement.setAttribute('data-theme-color', color);
   }, [color]);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty('--uc-theme', theme);
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-theme-mode', theme);
   }, [theme]);
 
   return <StyledProvider theme={{ color, theme }}>{children}</StyledProvider>;
