@@ -15,9 +15,7 @@ export const getThemeColorCss = (prop: string, leftValue = ''): any => {
 };
 
 /**
- *  get theme color from root css var
- *
- * @return {*}
+ *  获取主题色
  */
 export const getThemeColor = () => {
   return isBrowser && document.documentElement.dataset.themeColor;

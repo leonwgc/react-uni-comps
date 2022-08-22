@@ -6,8 +6,6 @@
  */
 export declare const getThemeColorCss: (prop: string, leftValue?: string) => any;
 /**
- *  get theme color from root css var
- *
- * @return {*}
+ *  获取主题色
  */
 export declare const getThemeColor: () => string;
