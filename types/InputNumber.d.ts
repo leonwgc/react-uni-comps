@@ -53,5 +53,5 @@ declare const InputNumber: React.ForwardRefExoticComponent<{
     onClear?: () => void;
     /** Enter回调 */
     onPressEnter?: (v: string) => void;
-} & Omit<Partial<InputProps>, "value" | "defaultValue" | "onChange"> & React.RefAttributes<HTMLInputElement>>;
+} & Omit<Partial<InputProps>, "onChange" | "defaultValue" | "value"> & React.RefAttributes<HTMLInputElement>>;
 export default InputNumber;

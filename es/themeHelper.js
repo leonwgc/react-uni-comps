@@ -17,9 +17,7 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
   return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    ", ":", " ", ";\n  "], ["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || vars.primary);
 };
 /**
- *  get theme color from root css var
- *
- * @return {*}
+ *  获取主题色
  */
 
 export var getThemeColor = function getThemeColor() {

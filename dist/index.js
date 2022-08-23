@@ -2236,9 +2236,7 @@ var getThemeColorCss = function getThemeColorCss(prop) {
   return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || primary);
 };
 /**
- *  get theme color from root css var
- *
- * @return {*}
+ *  获取主题色
  */
 
 var getThemeColor = function getThemeColor() {
