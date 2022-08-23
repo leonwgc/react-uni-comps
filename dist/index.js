@@ -9376,7 +9376,7 @@ var getClassName$g = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
   componentId: "sc-1jrp0l7-0"
-})(["position:relative;overflow:hidden;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$g('inner'), getClassName$g('pointer'), getClassName$g('name'), getClassName$g('img'), getClassName$g('prize'), getClassName$g('item'));
+})(["position:relative;overflow:hidden;margin:0 auto;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$g('inner'), getClassName$g('pointer'), getClassName$g('name'), getClassName$g('img'), getClassName$g('prize'), getClassName$g('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
 /** 转盘抽奖 */
 
@@ -9551,7 +9551,7 @@ var map = {
 var StyledWrap$j = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Sudoku__StyledWrap",
   componentId: "sc-1a4co3k-0"
-})(["width:100%;display:flex;flex-wrap:wrap;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$h('item'), getClassName$h('prize'), getClassName$h('pointer'));
+})(["width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$h('item'), getClassName$h('prize'), getClassName$h('pointer'));
 /** 9宫格抽奖 */
 
 var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
