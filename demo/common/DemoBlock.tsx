@@ -42,7 +42,7 @@ export default function Block({
 }: Props) {
   return (
     <StyledBlock {...rest}>
-      <div className="title">{title}</div>
+      {title && <div className="title">{title}</div>}
       <div
         className="main"
         style={{

@@ -13,7 +13,6 @@ import {
   initI18n,
   useTranslation,
   useMount,
-  Loading,
 } from 'react-uni-comps';
 import * as langs from './langs';
 
@@ -22,7 +21,7 @@ const defaultNamespace = 'ns';
 
 initI18n({
   debug: true,
-  initImmediate: false, // fix mdx docs
+  initImmediate: false, // dynamic load lang
 });
 
 export default function App() {
@@ -36,16 +35,14 @@ export default function App() {
   }, [lang]);
 
   useMount(() => {
-    Loading.show('加载中...');
-
     // 模拟动态加载语言
     setTimeout(() => {
       i18n.addResources('zh', defaultNamespace, langs.zh);
       i18n.addResources('en', defaultNamespace, langs.en);
       setLang('zh');
-      Loading.hide();
+
       setReady(true);
-    }, 500);
+    }, 200);
   });
 
   return ready ? (

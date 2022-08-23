@@ -1,6 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import { Turntable, Toast, styled, AutoCenter } from 'react-uni-comps';
+import DemoBlock from './common/DemoBlock';
+import { Turntable, Toast, styled } from 'react-uni-comps';
 
 const prizeList = [
   {
@@ -49,7 +50,7 @@ const StyledPointer = styled.div({
 export default function App() {
   return (
     <PageWrap>
-      <AutoCenter style={{ margin: 80 }}>
+      <DemoBlock>
         <Turntable
           prizeList={prizeList}
           pointer={<StyledPointer />}
@@ -64,7 +65,7 @@ export default function App() {
             Toast.show('你抽中了: ' + prizeList[index].name);
           }}
         />
-      </AutoCenter>
+      </DemoBlock>
     </PageWrap>
   );
 }

@@ -58,6 +58,7 @@ type Props = {
 const StyledWrap = styled.div`
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
   .${getClassName('inner')} {
     position: absolute;
     left: 0;

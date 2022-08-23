@@ -1,6 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import { Sudoku, Toast } from 'react-uni-comps';
+import DemoBlock from './common/DemoBlock';
 
 //从第一个格子顺时针转， index与之对应
 const prizeList = [
@@ -52,28 +53,29 @@ const prizeList = [
 export default function App() {
   return (
     <PageWrap>
-      <Sudoku
-        style={{ margin: '40px 4px' }}
-        prizeList={prizeList}
-        pointer={
-          <div>
-            <img
-              src="https://img13.360buyimg.com/imagetools/jfs/t1/205479/17/4245/32041/61309346E02bd3b6b/b41be60bedbb1e69.png"
-              width={80}
-            />
-          </div>
-        }
-        onStart={(start) => {
-          const index = Math.floor(Math.random() * prizeList.length);
-          console.log(index);
-          start(index);
-        }}
-        onEnd={(index) => {
-          console.log(index);
-          console.log('end');
-          Toast.show('你抽中了: ' + prizeList[index].name);
-        }}
-      />
+      <DemoBlock>
+        <Sudoku
+          prizeList={prizeList}
+          pointer={
+            <div>
+              <img
+                src="https://img13.360buyimg.com/imagetools/jfs/t1/205479/17/4245/32041/61309346E02bd3b6b/b41be60bedbb1e69.png"
+                width={80}
+              />
+            </div>
+          }
+          onStart={(start) => {
+            const index = Math.floor(Math.random() * prizeList.length);
+            console.log(index);
+            start(index);
+          }}
+          onEnd={(index) => {
+            console.log(index);
+            console.log('end');
+            Toast.show('你抽中了: ' + prizeList[index].name);
+          }}
+        />
+      </DemoBlock>
     </PageWrap>
   );
 }
