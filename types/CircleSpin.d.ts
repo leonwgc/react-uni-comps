@@ -31,6 +31,6 @@ declare const CircleSpin: React.ForwardRefExoticComponent<React.HTMLAttributes<H
      * 上层半圆百分比
      * @default 25
      */
-    percent?: 25;
+    percent?: number;
 } & React.RefAttributes<HTMLDivElement>>;
 export default CircleSpin;

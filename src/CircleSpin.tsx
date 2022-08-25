@@ -36,7 +36,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * 上层半圆百分比
    * @default 25
    */
-  percent?: 25;
+  percent?: number;
 };
 
 let index = 0;

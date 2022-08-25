@@ -17,8 +17,8 @@ export default function App() {
       <DemoBlock title="百分比">
         <Space>
           <CircleSpin percent={10} />
-          <CircleSpin size={48} percent={50} />
-          <CircleSpin color="red" percent={5} />
+          <CircleSpin size={48} percent={5} />
+          <CircleSpin color="red" percent={15} />
         </Space>
       </DemoBlock>
     </PageWrap>
