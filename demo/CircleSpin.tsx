@@ -13,6 +13,14 @@ export default function App() {
           <CircleSpin color="red" />
         </Space>
       </DemoBlock>
+
+      <DemoBlock title="百分比">
+        <Space>
+          <CircleSpin percent={10} />
+          <CircleSpin size={48} percent={50} />
+          <CircleSpin color="red" percent={5} />
+        </Space>
+      </DemoBlock>
     </PageWrap>
   );
 }
