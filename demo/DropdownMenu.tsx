@@ -35,21 +35,21 @@ const StyledWrap = styled.div`
 
 export default function App() {
   const [v, setV] = useState(false);
-  const wrapRef = useRef();
-  const maskRef = useRef();
-  const dropdownRef = useRef();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const maskRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useUpdateEffect(() => {
     if (v) {
-      const pos = wrapRef.current.getBoundingClientRect().bottom + 'px';
-      maskRef.current.style.top = pos;
-      dropdownRef.current.style.top = pos;
+      const pos = wrapRef.current!.getBoundingClientRect().bottom + 'px';
+      maskRef.current!.style.top = pos;
+      dropdownRef.current!.style.top = pos;
     }
   }, [v]);
 
   return (
     <PageWrap>
-      <StyledWrap className={clsx({ visible: v })} ref={wrapRef}>
+      <StyledWrap className={clsx('wrap', { visible: v })} ref={wrapRef}>
         <Space onClick={() => setV(!v)}>
           全部分类 <IconArrow direction={v ? 'top' : 'bottom'} />
         </Space>
