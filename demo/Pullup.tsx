@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Pullup, Cell, PullToRefresh, styled, Masonry } from 'react-uni-comps';
+import { Pullup, PullToRefresh, styled, Masonry } from 'react-uni-comps';
 
 const images = [
   'https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF',
@@ -22,12 +22,13 @@ const StyledItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #666;
 `;
 
 const pageSize = 30;
 
 const App = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any>([]);
   const [finished, setFinished] = useState(false);
   const ref = useRef(0);
 
@@ -40,8 +41,6 @@ const App = () => {
       setTimeout(() => {
         setList((d) => d.concat(ar));
         ref.current++;
-
-        console.log(ref.current);
 
         if (ref.current > 3) {
           setFinished(true);
@@ -71,14 +70,21 @@ const App = () => {
   return (
     <PageWrap>
       <DemoBlock title="dom滚动 (默认是监听window滚动)">
-        <Pullup
-          useWindowScroll={false}
-          height={120}
-          dataList={list}
-          fetchData={fetchData}
-          finished={finished}
-          dataRender={(item) => <StyledItem>{item}</StyledItem>}
-        />
+        <Pullup useWindowScroll={false} height={120} fetchData={fetchData} finished={finished}>
+          {list.map((item, idx) => (
+            <StyledItem key={idx}>{item}</StyledItem>
+          ))}
+        </Pullup>
+      </DemoBlock>
+
+      <DemoBlock title="下拉刷新">
+        <PullToRefresh onRefresh={onRefresh}>
+          <Pullup useWindowScroll={false} height={120} fetchData={fetchData} finished={finished}>
+            {list.map((item, idx) => (
+              <StyledItem key={idx}>{item}</StyledItem>
+            ))}
+          </Pullup>
+        </PullToRefresh>
       </DemoBlock>
 
       <DemoBlock title="搭配瀑布流布局">
@@ -89,19 +95,6 @@ const App = () => {
             ))}
           </Masonry>
         </Pullup>
-      </DemoBlock>
-
-      <DemoBlock title="下拉刷新">
-        <PullToRefresh onRefresh={onRefresh}>
-          <Pullup
-            useWindowScroll={false}
-            height={120}
-            dataList={list}
-            fetchData={fetchData}
-            finished={finished}
-            dataRender={(item) => <StyledItem>{item}</StyledItem>}
-          />
-        </PullToRefresh>
       </DemoBlock>
     </PageWrap>
   );
