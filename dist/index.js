@@ -9103,15 +9103,32 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 DotSpin.displayName = 'UC-DotSpin';
 
-var _excluded$1e = ["className", "duration", "trackColor", "color", "size", "strokeWidth"];
-
-var _templateObject$5;
-var move = styled.keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n 0% {\n    stroke-dasharray: 85, 254; \n    stroke-dashoffset: 0;\n  }\n \n  100% {\n    stroke-dasharray: 85, 254; \n    stroke-dashoffset: -339;\n  }\n"])));
+var _excluded$1e = ["className", "duration", "trackColor", "color", "size", "strokeWidth", "percent"];
+var getClassName$e = prefixClassName('uc-circle-spin');
+var index = 0;
 var StyledLoader$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CircleSpin__StyledLoader",
   componentId: "sc-cn0z0p-0"
-})(["display:inline-flex;vertical-align:middle;.my-circle{animation:", " ", "ms linear infinite;}"], move, function (_ref) {
-  var $duration = _ref.$duration;
+})(["display:inline-flex;vertical-align:middle;@keyframes ", "{0%{stroke-dasharray:", ",", ";stroke-dashoffset:0;}100%{stroke-dasharray:", ",", ";stroke-dashoffset:-339;}}.", "{animation:", " ", "ms linear infinite;}"], function (_ref) {
+  var $index = _ref.$index;
+  return 'circle-spin-' + $index;
+}, function (_ref2) {
+  var $percent = _ref2.$percent;
+  return $percent * 339 / 100;
+}, function (_ref3) {
+  var $percent = _ref3.$percent;
+  return 339 - $percent * 339 / 100;
+}, function (_ref4) {
+  var $percent = _ref4.$percent;
+  return $percent * 339 / 100;
+}, function (_ref5) {
+  var $percent = _ref5.$percent;
+  return 339 - $percent * 339 / 100;
+}, getClassName$e('circle'), function (_ref6) {
+  var $index = _ref6.$index;
+  return 'circle-spin-' + $index;
+}, function (_ref7) {
+  var $duration = _ref7.$duration;
   return $duration;
 });
 /** 圆圈spin */
@@ -9128,17 +9145,26 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       size = _props$size === void 0 ? 32 : _props$size,
       _props$strokeWidth = props.strokeWidth,
       strokeWidth = _props$strokeWidth === void 0 ? 8 : _props$strokeWidth,
+      _props$percent = props.percent,
+      percent = _props$percent === void 0 ? 25 : _props$percent,
       rest = _objectWithoutProperties(props, _excluded$1e);
 
   var elRef = React__default['default'].useRef();
   React__default['default'].useImperativeHandle(ref, function () {
     return elRef.current;
   });
+
+  if (typeof percent !== 'number' || percent <= 0 || percent >= 100) {
+    throw new Error('percent 必须是0-100之间的数字');
+  }
+
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$2, _extends({
     ref: elRef,
-    $duration: duration
+    $duration: duration,
+    $index: index++,
+    $percent: percent
   }, rest, {
-    className: clsx__default['default'](className, 'uc-circle-spin')
+    className: clsx__default['default'](className, getClassName$e())
   }), /*#__PURE__*/React__default['default'].createElement("svg", {
     viewBox: "0 0 120 120",
     width: size,
@@ -9151,7 +9177,7 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     cy: "60",
     stroke: trackColor
   }), /*#__PURE__*/React__default['default'].createElement("circle", {
-    className: "my-circle",
+    className: getClassName$e('circle'),
     r: "54",
     cx: "60",
     cy: "60",
@@ -9164,8 +9190,8 @@ CircleSpin.displayName = 'UC-CircleSpin';
 
 var _excluded$1f = ["className", "style", "size", "color", "strokeWidth"];
 
-var _templateObject$6, _templateObject2;
-var circle$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
+var _templateObject$5, _templateObject2;
+var circle$1 = styled.keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
 var rotate = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n   0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
 var SVGProps$3 = {
   width: '1em',
@@ -9216,13 +9242,13 @@ RoundSpin.displayName = 'UC-RoundSpin';
 
 var _excluded$1g = ["className", "style", "size", "color"];
 
-var _templateObject$7;
-var rotate$1 = styled.keyframes(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
-var getClassName$e = prefixClassName('uc-flower-spin');
+var _templateObject$6;
+var rotate$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
+var getClassName$f = prefixClassName('uc-flower-spin');
 var StyledLoader$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ClockSpin__StyledLoader",
   componentId: "sc-11a5fov-0"
-})(["display:inline-flex;vertical-align:middle;position:relative;animation:", " 0.8s steps(12) infinite;.", "{position:absolute;top:0;left:0;width:100%;height:100%;&::before{display:block;width:2px;height:25%;margin:0 auto;background-color:currentColor;border-radius:40%;content:' ';}&:nth-child(1){transform:rotate(0deg);opacity:1;}&:nth-child(2){transform:rotate(30deg);opacity:", ";}&:nth-child(3){transform:rotate(60deg);opacity:", ";}&:nth-child(4){transform:rotate(90deg);opacity:", ";}&:nth-child(5){transform:rotate(120deg);opacity:", ";}&:nth-child(6){transform:rotate(150deg);opacity:", ";}&:nth-child(7){transform:rotate(180deg);opacity:", ";}&:nth-child(8){transform:rotate(210deg);opacity:", ";}&:nth-child(9){transform:rotate(240deg);opacity:", ";}&:nth-child(10){transform:rotate(270deg);opacity:", ";}&:nth-child(11){transform:rotate(300deg);opacity:", ";}&:nth-child(12){transform:rotate(330deg);opacity:", ";}}"], rotate$1, getClassName$e('item'), 1 - 0.75 / 12, 1 - 0.75 / 12 * 2, 1 - 0.75 / 12 * 3, 1 - 0.75 / 12 * 4, 1 - 0.75 / 12 * 5, 1 - 0.75 / 12 * 6, 1 - 0.75 / 12 * 7, 1 - 0.75 / 12 * 8, 1 - 0.75 / 12 * 9, 1 - 0.75 / 12 * 10, 1 - 0.75 / 12 * 11);
+})(["display:inline-flex;vertical-align:middle;position:relative;animation:", " 0.8s steps(12) infinite;.", "{position:absolute;top:0;left:0;width:100%;height:100%;&::before{display:block;width:2px;height:25%;margin:0 auto;background-color:currentColor;border-radius:40%;content:' ';}&:nth-child(1){transform:rotate(0deg);opacity:1;}&:nth-child(2){transform:rotate(30deg);opacity:", ";}&:nth-child(3){transform:rotate(60deg);opacity:", ";}&:nth-child(4){transform:rotate(90deg);opacity:", ";}&:nth-child(5){transform:rotate(120deg);opacity:", ";}&:nth-child(6){transform:rotate(150deg);opacity:", ";}&:nth-child(7){transform:rotate(180deg);opacity:", ";}&:nth-child(8){transform:rotate(210deg);opacity:", ";}&:nth-child(9){transform:rotate(240deg);opacity:", ";}&:nth-child(10){transform:rotate(270deg);opacity:", ";}&:nth-child(11){transform:rotate(300deg);opacity:", ";}&:nth-child(12){transform:rotate(330deg);opacity:", ";}}"], rotate$1, getClassName$f('item'), 1 - 0.75 / 12, 1 - 0.75 / 12 * 2, 1 - 0.75 / 12 * 3, 1 - 0.75 / 12 * 4, 1 - 0.75 / 12 * 5, 1 - 0.75 / 12 * 6, 1 - 0.75 / 12 * 7, 1 - 0.75 / 12 * 8, 1 - 0.75 / 12 * 9, 1 - 0.75 / 12 * 10, 1 - 0.75 / 12 * 11);
 var items = new Array(12).fill(0);
 /** 菊花spin */
 
@@ -9243,11 +9269,11 @@ var FlowerSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     }, style),
     ref: ref
   }, rest, {
-    className: clsx__default['default'](getClassName$e(), className)
+    className: clsx__default['default'](getClassName$f(), className)
   }), items.map(function (v, i) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: i,
-      className: getClassName$e('item')
+      className: getClassName$f('item')
     });
   }));
 });
@@ -9277,7 +9303,7 @@ function useInterval(fn, delay) {
 }
 
 var _excluded$1h = ["millisec", "value", "onFinish", "className", "children"];
-var getClassName$f = prefixClassName('uc-countdown');
+var getClassName$g = prefixClassName('uc-countdown');
 
 var getCountdown = function getCountdown(value) {
   if (!value) {
@@ -9366,17 +9392,17 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, millisec ? 1 : 1000);
   return /*#__PURE__*/React__default['default'].createElement("div", _extends({
     ref: ref,
-    className: clsx__default['default'](getClassName$f(), className)
+    className: clsx__default['default'](getClassName$g(), className)
   }, rest), typeof children === 'function' && children(date));
 });
 Countdown.displayName = 'Countdown';
 
 var _excluded$1i = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
-var getClassName$g = prefixClassName('uc-turntable');
+var getClassName$h = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
   componentId: "sc-1jrp0l7-0"
-})(["position:relative;overflow:hidden;margin:0 auto;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$g('inner'), getClassName$g('pointer'), getClassName$g('name'), getClassName$g('img'), getClassName$g('prize'), getClassName$g('item'));
+})(["position:relative;overflow:hidden;margin:0 auto;.", "{position:absolute;left:0;top:0;width:100%;height:100%;}.", "{position:absolute;left:50%;top:50%;z-index:99;transform:translate(-43.75%,-50%);}.", "{position:absolute;left:10px;top:20px;width:calc(100% - 20px);font-size:12px;text-align:center;color:#ff5722;}.", "{position:absolute;left:calc(50% - 30px / 2);top:60px;width:30px;height:30px;img{display:inline-block;width:100%;height:100%;}}.", "{position:absolute;left:25%;top:0;width:50%;height:50%;}.", "{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:center bottom;}"], getClassName$h('inner'), getClassName$h('pointer'), getClassName$h('name'), getClassName$h('img'), getClassName$h('prize'), getClassName$h('item'));
 var prizeBgColors = ['rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)', 'rgb(255, 231, 149)', 'rgb(255, 247, 223)'];
 /** 转盘抽奖 */
 
@@ -9497,14 +9523,14 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   };
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$i, _extends({}, rest, {
-    className: clsx__default['default'](getClassName$g(), className),
+    className: clsx__default['default'](getClassName$h(), className),
     ref: wrapRef,
     style: {
       width: size,
       height: size
     }
   }), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$g('inner'),
+    className: getClassName$h('inner'),
     ref: innerRef,
     style: {
       transform: rotateAngle.current,
@@ -9513,28 +9539,28 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
   }, /*#__PURE__*/React__default['default'].createElement("canvas", {
     ref: canvasDomRef
   }, "\u6D4F\u89C8\u5668\u7248\u672C\u8FC7\u4F4E"), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$g('prize')
+    className: getClassName$h('prize')
   }, prizeList.map(function (item, index) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: index,
-      className: getClassName$g('item'),
+      className: getClassName$h('item'),
       style: getRotateAngle(index)
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$g('name')
+      className: getClassName$h('name')
     }, item.name), /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$g('img')
+      className: getClassName$h('img')
     }, /*#__PURE__*/React__default['default'].createElement("img", {
       src: item.img
     })));
   }))), /*#__PURE__*/React__default['default'].createElement("div", {
-    className: getClassName$g('pointer'),
+    className: getClassName$h('pointer'),
     onClick: startTurns
   }, pointer));
 });
 Turntable.displayName = 'UC-Turntable';
 
 var _excluded$1j = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd"];
-var getClassName$h = prefixClassName('uc-sudoku');
+var getClassName$i = prefixClassName('uc-sudoku');
 var seq = [0, 1, 2, 5, 8, 7, 6, 3]; // turn sequence
 // key top-down,left-right ,value: prizeList seq
 
@@ -9551,7 +9577,7 @@ var map = {
 var StyledWrap$j = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Sudoku__StyledWrap",
   componentId: "sc-1a4co3k-0"
-})(["width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$h('item'), getClassName$h('prize'), getClassName$h('pointer'));
+})(["width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$i('item'), getClassName$i('prize'), getClassName$i('pointer'));
 /** 9宫格抽奖 */
 
 var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9655,14 +9681,14 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var renderBlock = function renderBlock(index) {
     var item = prizeList[index];
     return /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$h('prize')
+      className: getClassName$i('prize')
     }, /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$h('img')
+      className: getClassName$i('img')
     }, /*#__PURE__*/React__default['default'].createElement("img", {
       alt: "prize",
       src: item.img
     })), /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$h('name')
+      className: getClassName$i('name')
     }, item.name));
   };
 
@@ -9672,7 +9698,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   }
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$j, _extends({}, rest, {
-    className: (getClassName$h(), className),
+    className: (getClassName$i(), className),
     ref: wrapElRef
   }), [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (v) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
@@ -9680,11 +9706,11 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       style: {
         height: size
       },
-      className: clsx__default['default'](getClassName$h('item'), {
+      className: clsx__default['default'](getClassName$i('item'), {
         active: v === seq[index.current]
       })
     }, v === 4 ? /*#__PURE__*/React__default['default'].createElement("div", {
-      className: getClassName$h('pointer'),
+      className: getClassName$i('pointer'),
       onClick: start
     }, pointer) : renderBlock(map[v]));
   }));
