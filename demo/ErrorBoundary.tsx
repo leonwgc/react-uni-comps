@@ -37,7 +37,7 @@ export default function App() {
         </ErrorBoundary>
       </DemoBlock>
 
-      <DemoBlock title="非错误边界区">
+      <DemoBlock title="错误边界以外区域">
         <Button block>这里不受影响</Button>
       </DemoBlock>
     </PageWrap>
