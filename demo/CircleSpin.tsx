@@ -18,7 +18,7 @@ export default function App() {
         <Space>
           <CircleSpin percent={10} />
           <CircleSpin size={48} percent={5} />
-          <CircleSpin color="red" percent={15} />
+          <CircleSpin color="red" percent={2} />
         </Space>
       </DemoBlock>
     </PageWrap>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
 import type { StringOrNumber } from './types';
 import { prefixClassName } from './helper';
@@ -39,29 +39,26 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   percent?: number;
 };
 
-let index = 0;
+const ani = (props: { $percent: number }) => keyframes`
+0% {
+     stroke-dasharray: ${(props.$percent * 339) / 100},
+       ${339 - (props.$percent * 339) / 100};
+     stroke-dashoffset: 0;
+   }
 
-const StyledLoader = styled.div<{ $duration: number; $percent: number; $index }>`
+   100% {
+    stroke-dasharray: ${(props.$percent * 339) / 100},
+       ${339 - (props.$percent * 339) / 100};
+     stroke-dashoffset: -339;
+   }
+`;
+
+const StyledLoader = styled.div<{ $duration: number; $percent: number }>`
   display: inline-flex;
   vertical-align: middle;
 
-  @keyframes ${({ $index }) => 'circle-spin-' + $index} {
-    0% {
-      stroke-dasharray: ${({ $percent }) => ($percent * 339) / 100},
-        ${({ $percent }) => 339 - ($percent * 339) / 100};
-      stroke-dashoffset: 0;
-    }
-
-    100% {
-      stroke-dasharray: ${({ $percent }) => ($percent * 339) / 100},
-        ${({ $percent }) => 339 - ($percent * 339) / 100};
-      stroke-dashoffset: -339;
-    }
-  }
-
   .${getClassName('circle')} {
-    animation: ${({ $index }) => 'circle-spin-' + $index} ${({ $duration }) => $duration}ms linear
-      infinite;
+    animation: ${(props) => ani(props)} ${({ $duration }) => $duration}ms linear infinite;
   }
 `;
 
@@ -89,7 +86,6 @@ const CircleSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledLoader
       ref={elRef}
       $duration={duration}
-      $index={index++}
       $percent={percent}
       {...rest}
       className={clsx(className, getClassName())}
