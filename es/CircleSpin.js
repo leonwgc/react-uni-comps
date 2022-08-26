@@ -1,28 +1,16 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
 var getClassName = prefixClassName('uc-circle-spin');
-var index = 0;
-var StyledLoader = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    0% {\n      stroke-dasharray: ", ",\n        ", ";\n      stroke-dashoffset: 0;\n    }\n\n    100% {\n      stroke-dasharray: ", ",\n        ", ";\n      stroke-dashoffset: -339;\n    }\n  }\n\n  .", " {\n    animation: ", " ", "ms linear\n      infinite;\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  @keyframes ", " {\n    0% {\n      stroke-dasharray: ", ",\n        ", ";\n      stroke-dashoffset: 0;\n    }\n\n    100% {\n      stroke-dasharray: ", ",\n        ", ";\n      stroke-dashoffset: -339;\n    }\n  }\n\n  .", " {\n    animation: ", " ", "ms linear\n      infinite;\n  }\n"])), function (_a) {
-  var $index = _a.$index;
-  return 'circle-spin-' + $index;
-}, function (_a) {
-  var $percent = _a.$percent;
-  return $percent * 339 / 100;
-}, function (_a) {
-  var $percent = _a.$percent;
-  return 339 - $percent * 339 / 100;
-}, function (_a) {
-  var $percent = _a.$percent;
-  return $percent * 339 / 100;
-}, function (_a) {
-  var $percent = _a.$percent;
-  return 339 - $percent * 339 / 100;
-}, getClassName('circle'), function (_a) {
-  var $index = _a.$index;
-  return 'circle-spin-' + $index;
+
+var ani = function ani(props) {
+  return keyframes(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n0% {\n     stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: 0;\n   }\n\n   100% {\n    stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: -339;\n   }\n"], ["\n0% {\n     stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: 0;\n   }\n\n   100% {\n    stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: -339;\n   }\n"])), props.$percent * 339 / 100, 339 - props.$percent * 339 / 100, props.$percent * 339 / 100, 339 - props.$percent * 339 / 100);
+};
+
+var StyledLoader = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .", " {\n    animation: ", " ", "ms linear infinite;\n  }\n"], ["\n  display: inline-flex;\n  vertical-align: middle;\n\n  .", " {\n    animation: ", " ", "ms linear infinite;\n  }\n"])), getClassName('circle'), function (props) {
+  return ani(props);
 }, function (_a) {
   var $duration = _a.$duration;
   return $duration;
@@ -57,7 +45,6 @@ var CircleSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledLoader, __assign({
     ref: elRef,
     "$duration": duration,
-    "$index": index++,
     "$percent": percent
   }, rest, {
     className: clsx(className, getClassName())
@@ -84,4 +71,4 @@ var CircleSpin = /*#__PURE__*/React.forwardRef(function (props, ref) {
 });
 CircleSpin.displayName = 'UC-CircleSpin';
 export default CircleSpin;
-var templateObject_1;
+var templateObject_1, templateObject_2;

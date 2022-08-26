@@ -9104,31 +9104,21 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 DotSpin.displayName = 'UC-DotSpin';
 
 var _excluded$1e = ["className", "duration", "trackColor", "color", "size", "strokeWidth", "percent"];
+
+var _templateObject$5;
 var getClassName$e = prefixClassName('uc-circle-spin');
-var index = 0;
+
+var ani = function ani(props) {
+  return styled.keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n0% {\n     stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: 0;\n   }\n\n   100% {\n    stroke-dasharray: ", ",\n       ", ";\n     stroke-dashoffset: -339;\n   }\n"])), props.$percent * 339 / 100, 339 - props.$percent * 339 / 100, props.$percent * 339 / 100, 339 - props.$percent * 339 / 100);
+};
+
 var StyledLoader$2 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CircleSpin__StyledLoader",
   componentId: "sc-cn0z0p-0"
-})(["display:inline-flex;vertical-align:middle;@keyframes ", "{0%{stroke-dasharray:", ",", ";stroke-dashoffset:0;}100%{stroke-dasharray:", ",", ";stroke-dashoffset:-339;}}.", "{animation:", " ", "ms linear infinite;}"], function (_ref) {
-  var $index = _ref.$index;
-  return 'circle-spin-' + $index;
-}, function (_ref2) {
-  var $percent = _ref2.$percent;
-  return $percent * 339 / 100;
-}, function (_ref3) {
-  var $percent = _ref3.$percent;
-  return 339 - $percent * 339 / 100;
-}, function (_ref4) {
-  var $percent = _ref4.$percent;
-  return $percent * 339 / 100;
-}, function (_ref5) {
-  var $percent = _ref5.$percent;
-  return 339 - $percent * 339 / 100;
-}, getClassName$e('circle'), function (_ref6) {
-  var $index = _ref6.$index;
-  return 'circle-spin-' + $index;
-}, function (_ref7) {
-  var $duration = _ref7.$duration;
+})(["display:inline-flex;vertical-align:middle;.", "{animation:", " ", "ms linear infinite;}"], getClassName$e('circle'), function (props) {
+  return ani(props);
+}, function (_ref) {
+  var $duration = _ref.$duration;
   return $duration;
 });
 /** 圆圈spin */
@@ -9161,7 +9151,6 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$2, _extends({
     ref: elRef,
     $duration: duration,
-    $index: index++,
     $percent: percent
   }, rest, {
     className: clsx__default['default'](className, getClassName$e())
@@ -9190,8 +9179,8 @@ CircleSpin.displayName = 'UC-CircleSpin';
 
 var _excluded$1f = ["className", "style", "size", "color", "strokeWidth"];
 
-var _templateObject$5, _templateObject2;
-var circle$1 = styled.keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
+var _templateObject$6, _templateObject2;
+var circle$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
 var rotate = styled.keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n   0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
 var SVGProps$3 = {
   width: '1em',
@@ -9242,8 +9231,8 @@ RoundSpin.displayName = 'UC-RoundSpin';
 
 var _excluded$1g = ["className", "style", "size", "color"];
 
-var _templateObject$6;
-var rotate$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
+var _templateObject$7;
+var rotate$1 = styled.keyframes(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
 var getClassName$f = prefixClassName('uc-flower-spin');
 var StyledLoader$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "ClockSpin__StyledLoader",
