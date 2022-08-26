@@ -169,7 +169,7 @@ describe('Tabs test groups', () => {
     const item = screen.getByTitle(title);
     const wrap = item.querySelector('.uc-tabs-header-wrap');
     expect(wrap).toHaveStyle({
-      'border-bottom': '1px solid #eee',
+      'border-bottom': '1px solid #d9d9d9',
     });
   });
 
