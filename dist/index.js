@@ -3115,7 +3115,7 @@ var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.state.hasError) {
-        return this.props.fallback;
+        return this.props.fallback || null;
       }
 
       return this.props.children;
