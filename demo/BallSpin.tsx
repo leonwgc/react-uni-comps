@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { BallSpin, styled, AutoCenter, Space } from 'react-uni-comps';
 
 const StyledBg = styled.div({
-  fontSize: 16,
+  fontSize: 24,
   background: '#0D72FF',
   height: 80,
   display: 'flex',
@@ -19,9 +19,9 @@ export default function App() {
       <DemoBlock title="默认">
         <AutoCenter>
           <Space>
-            <BallSpin style={{ color: '#005cff', fontSize: 20 }} />
+            <BallSpin style={{ color: '#005cff', fontSize: 24 }} />
 
-            <BallSpin style={{ color: 'red', fontSize: 20 }} />
+            <BallSpin style={{ color: 'red', fontSize: 24 }} />
           </Space>
         </AutoCenter>
       </DemoBlock>
@@ -29,9 +29,9 @@ export default function App() {
       <DemoBlock title="中间圆圈">
         <AutoCenter>
           <Space>
-            <BallSpin style={{ color: '#005cff', fontSize: 20 }} showCircle />
+            <BallSpin style={{ color: '#005cff', fontSize: 24 }} showCircle />
 
-            <BallSpin style={{ color: 'red', fontSize: 20 }} showCircle />
+            <BallSpin style={{ color: 'red', fontSize: 24 }} showCircle />
           </Space>
         </AutoCenter>
       </DemoBlock>
@@ -47,7 +47,7 @@ export default function App() {
       <DemoBlock title="背景带中心圈">
         <StyledBg>
           <Space size={4}>
-            <BallSpin showCircle style={{ fontSize: 20 }} /> <span>加载中...</span>
+            <BallSpin showCircle /> <span>加载中...</span>
           </Space>
         </StyledBg>
       </DemoBlock>

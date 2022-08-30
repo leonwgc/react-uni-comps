@@ -35,7 +35,7 @@ type Config = {
   type?: 'ball' | 'spin' | 'round' | 'clock';
   /**
    * spin和内容间距
-   * @default 12
+   * @default 6
    */
   gap?: number;
   /**
@@ -71,20 +71,26 @@ const renderSpin = (type, size) => {
  * @param {React.ReactNode} text
  * @param {Config} config
  */
-const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 12, spinSize: 32 }) => {
-  const { type = 'ball', gap = 12, spinSize = 32, containerStyle } = config;
+const show = (text?: React.ReactNode, config: Config = { type: 'ball', gap: 6, spinSize: 32 }) => {
+  const { type = 'ball', gap = 6, spinSize = 32, containerStyle } = config;
 
-  const size = text ? 124 : 80;
+  const size = text ? 120 : 80;
 
   Toast.show({
     content: (
       <StyledLoading>
-        <Space direction="vertical" size={text ? gap : 0}>
+        {text ? (
+          <Space direction="vertical" size={gap}>
+            <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
+              {renderSpin(type, spinSize)}
+            </span>
+            {text}
+          </Space>
+        ) : (
           <span style={{ fontSize: spinSize, display: 'inline-flex' }}>
             {renderSpin(type, spinSize)}
           </span>
-          {text}
-        </Space>
+        )}
       </StyledLoading>
     ),
     duration: 24 * 60 * 60 * 1000,

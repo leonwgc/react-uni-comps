@@ -57,7 +57,7 @@ var show = function show(text, config) {
   if (config === void 0) {
     config = {
       type: 'ball',
-      gap: 12,
+      gap: 6,
       spinSize: 32
     };
   }
@@ -65,21 +65,26 @@ var show = function show(text, config) {
   var _a = config.type,
       type = _a === void 0 ? 'ball' : _a,
       _b = config.gap,
-      gap = _b === void 0 ? 12 : _b,
+      gap = _b === void 0 ? 6 : _b,
       _c = config.spinSize,
       spinSize = _c === void 0 ? 32 : _c,
       containerStyle = config.containerStyle;
-  var size = text ? 124 : 80;
+  var size = text ? 120 : 80;
   Toast.show({
-    content: /*#__PURE__*/React.createElement(StyledLoading, null, /*#__PURE__*/React.createElement(Space, {
+    content: /*#__PURE__*/React.createElement(StyledLoading, null, text ? /*#__PURE__*/React.createElement(Space, {
       direction: "vertical",
-      size: text ? gap : 0
+      size: gap
     }, /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, renderSpin(type, spinSize)), text)),
+    }, renderSpin(type, spinSize)), text) : /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: spinSize,
+        display: 'inline-flex'
+      }
+    }, renderSpin(type, spinSize))),
     duration: 24 * 60 * 60 * 1000,
     style: __assign({
       width: size,

@@ -44,8 +44,8 @@ const StyledLoader = styled.div<{ $duration: number }>`
 `;
 
 const SVGProps = {
-  width: '1.25em',
-  height: '1.25em',
+  width: '1em',
+  height: '1em',
   strokeWidth: 8,
   fill: 'none',
 };

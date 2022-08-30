@@ -9,8 +9,8 @@ var StyledLoader = styled.div(templateObject_2 || (templateObject_2 = __makeTemp
   return $duration;
 });
 var SVGProps = {
-  width: '1.25em',
-  height: '1.25em',
+  width: '1em',
+  height: '1em',
   strokeWidth: 8,
   fill: 'none'
 };

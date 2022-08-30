@@ -98,9 +98,10 @@ export default function App() {
           <Button
             onClick={() => {
               Loading.show('加载中...', {
-                spinSize: 50,
+                spinSize: 40,
                 type: 'clock',
-                containerStyle: { width: 140, height: 140, fontSize: 20 },
+                gap: 12,
+                containerStyle: { width: 130, height: 130, fontSize: 14, top: 220 },
               });
 
               setTimeout(() => {

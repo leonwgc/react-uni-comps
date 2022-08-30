@@ -7,7 +7,7 @@ declare type Config = {
     type?: 'ball' | 'spin' | 'round' | 'clock';
     /**
      * spin和内容间距
-     * @default 12
+     * @default 6
      */
     gap?: number;
     /**

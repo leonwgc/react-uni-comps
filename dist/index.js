@@ -2622,8 +2622,8 @@ var StyledLoader = /*#__PURE__*/styled__default['default'].div.withConfig({
   return $duration;
 });
 var SVGProps = {
-  width: '1.25em',
-  height: '1.25em',
+  width: '1em',
+  height: '1em',
   strokeWidth: 8,
   fill: 'none'
 };
@@ -9757,27 +9757,32 @@ var renderSpin = function renderSpin(type, size) {
 var show = function show(text) {
   var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     type: 'ball',
-    gap: 12,
+    gap: 6,
     spinSize: 32
   };
   var _config$type = config.type,
       type = _config$type === void 0 ? 'ball' : _config$type,
       _config$gap = config.gap,
-      gap = _config$gap === void 0 ? 12 : _config$gap,
+      gap = _config$gap === void 0 ? 6 : _config$gap,
       _config$spinSize = config.spinSize,
       spinSize = _config$spinSize === void 0 ? 32 : _config$spinSize,
       containerStyle = config.containerStyle;
-  var size = text ? 124 : 80;
+  var size = text ? 120 : 80;
   Toast.show({
-    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, /*#__PURE__*/React__default['default'].createElement(Space, {
+    content: /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, text ? /*#__PURE__*/React__default['default'].createElement(Space, {
       direction: "vertical",
-      size: text ? gap : 0
+      size: gap
     }, /*#__PURE__*/React__default['default'].createElement("span", {
       style: {
         fontSize: spinSize,
         display: 'inline-flex'
       }
-    }, renderSpin(type, spinSize)), text)),
+    }, renderSpin(type, spinSize)), text) : /*#__PURE__*/React__default['default'].createElement("span", {
+      style: {
+        fontSize: spinSize,
+        display: 'inline-flex'
+      }
+    }, renderSpin(type, spinSize))),
     duration: 24 * 60 * 60 * 1000,
     style: _objectSpread2({
       width: size,
