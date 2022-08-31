@@ -2233,7 +2233,9 @@ var _templateObject$1;
 
 var getThemeColorCss = function getThemeColorCss(prop) {
   var leftValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || primary);
+  return styled.css(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
+    return props.theme.color || primary;
+  }, prop, leftValue, primary);
 };
 /**
  *  获取主题色

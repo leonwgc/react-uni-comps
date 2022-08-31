@@ -10,7 +10,8 @@ import * as vars from './vars';
  */
 export const getThemeColorCss = (prop: string, leftValue = ''): any => {
   return css`
-    ${prop}:${leftValue} ${getThemeColor() || vars.primary};
+    ${prop}:${leftValue} ${(props) => props.theme.color || vars.primary};
+    ${prop}:${leftValue} var(--uc-color, ${vars.primary});
   `;
 };
 

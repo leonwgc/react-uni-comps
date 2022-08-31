@@ -14,7 +14,9 @@ export var getThemeColorCss = function getThemeColorCss(prop, leftValue) {
     leftValue = '';
   }
 
-  return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    ", ":", " ", ";\n  "], ["\n    ", ":", " ", ";\n  "])), prop, leftValue, getThemeColor() || vars.primary);
+  return css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "], ["\n    ", ":", " ", ";\n    ", ":", " var(--uc-color, ", ");\n  "])), prop, leftValue, function (props) {
+    return props.theme.color || vars.primary;
+  }, prop, leftValue, vars.primary);
 };
 /**
  *  获取主题色
