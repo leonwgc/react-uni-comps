@@ -108,7 +108,6 @@ export { default as useUpdateLayoutEffect } from './hooks/useUpdateLayoutEffect'
 export { default as useDebounce } from './hooks/useDebounce';
 export { default as useThrottle } from './hooks/useThrottle';
 export { default as useInViewport } from './hooks/useInViewport';
-export { default as useCallbackRef } from './hooks/useCallbackRef';
 export { default as useCountdown } from './hooks/useCountdown';
 export { default as useMount } from './hooks/useMount';
 export { default as useUnmount } from './hooks/useUnmount';
