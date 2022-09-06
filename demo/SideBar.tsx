@@ -1,55 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
-import Block from './common/DemoBlock';
-import { styled, SideBar, Icon, Space } from 'react-uni-comps';
+import { styled, SideBar, Waypoint } from 'react-uni-comps';
+
+const colors = [
+  '#005cff',
+  '#00bc70',
+  '#f5222d',
+  '#1890ff',
+  '#fa541b',
+  '#13c2c2',
+  '#2f54ec',
+  '#712fd1',
+];
 
 const StyledWrap = styled.div`
   display: flex;
 
   .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex: 1;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    .wrap {
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+
+      .item {
+        height: 100%;
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: #fff;
+      }
+    }
   }
 `;
 
 const items = [
-  { title: '选项一' },
-  {
-    title: (
-      <Space>
-        <Icon type="uc-icon-tips" /> 选项二
-      </Space>
-    ),
-  },
-  { title: '选项三', disabled: true },
-  { title: '选项4' },
-  { title: '选项5' },
-  { title: '选项6' },
+  { title: '菜单1' },
+  { title: '菜单2' },
+  { title: '菜单3' },
+  { title: '菜单4' },
+  { title: '菜单5' },
+  { title: '菜单6' },
 ];
 
 export default function App() {
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState<number>(0);
+  const itemRefs = useRef<HTMLElement[]>([]);
+  const wrapRef = useRef<HTMLElement>();
+
   return (
     <PageWrap>
-      <Block title="默认" padding={0}>
-        <StyledWrap>
-          <SideBar index={index} onChange={setIndex} items={items}></SideBar>
-          <div className="content">你选择了{items[index].title}</div>
-        </StyledWrap>
-      </Block>
-
-      <Block title="自定义" padding={0}>
-        <StyledWrap>
-          <SideBar
-            style={{ height: 200, width: 105 }}
-            onChange={setIndex}
-            defaultIndex={4}
-            items={items}
-          ></SideBar>
-        </StyledWrap>
-      </Block>
+      <StyledWrap>
+        <SideBar
+          index={index}
+          onChange={(v) => {
+            setIndex(v);
+            itemRefs.current[v].scrollIntoView(true);
+          }}
+          items={items}
+        ></SideBar>
+        <div className="content">
+          <div className="wrap" ref={wrapRef}>
+            {items.map((item, index) => (
+              <div
+                ref={(el) => (itemRefs.current[index] = el)}
+                key={index}
+                className="item"
+                style={{
+                  background: colors[index],
+                }}
+              >
+                <Waypoint onVisible={() => setIndex(index)}>内容{index + 1}</Waypoint>
+              </div>
+            ))}
+          </div>
+        </div>
+      </StyledWrap>
     </PageWrap>
   );
 }
