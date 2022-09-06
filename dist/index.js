@@ -9550,7 +9550,7 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Turntable.displayName = 'UC-Turntable';
 
-var _excluded$1j = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd"];
+var _excluded$1j = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd", "gap"];
 var getClassName$i = prefixClassName('uc-sudoku');
 var seq = [0, 1, 2, 5, 8, 7, 6, 3]; // turn sequence
 // key top-down,left-right ,value: prizeList seq
@@ -9565,10 +9565,10 @@ var map = {
   7: 5,
   8: 4
 };
-var StyledWrap$j = /*#__PURE__*/styled__default['default'].div.withConfig({
+var StyledWrap$j = /*#__PURE__*/styled__default['default'](Space).withConfig({
   displayName: "Sudoku__StyledWrap",
   componentId: "sc-1a4co3k-0"
-})(["width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:31%;margin-bottom:4px;margin-right:4px;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$i('item'), getClassName$i('prize'), getClassName$i('pointer'));
+})(["width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;.", "{color:#fff;background-color:#005cff;border-radius:8px;display:flex;align-items:center;justify-content:center;width:33%;&.active{background-size:100% 100%;background:rgba(0,0,0,0.1);color:#000;font-weight:bolder;}}.", "{font-size:14px;text-align:center;img{width:35px;}}img{max-width:100%;}.", "{cursor:pointer;-webkit-tap-highlight-color:transparent;}"], getClassName$i('item'), getClassName$i('prize'), getClassName$i('pointer'));
 /** 9宫格抽奖 */
 
 var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -9582,15 +9582,11 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       speed = _props$speed === void 0 ? 150 : _props$speed,
       onStart = props.onStart,
       onEnd = props.onEnd,
+      _props$gap = props.gap,
+      gap = _props$gap === void 0 ? 4 : _props$gap,
       rest = _objectWithoutProperties(props, _excluded$1j);
 
   var forceUpdate = useForceUpdate();
-
-  var _useState = React.useState(),
-      _useState2 = _slicedToArray(_useState, 2),
-      size = _useState2[0],
-      setSize = _useState2[1];
-
   var lock = React.useRef(false); // 转动到的商品的index
 
   var index = React.useRef(-1); // 转动次数
@@ -9600,17 +9596,20 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   var speedRef = React.useRef(speed);
   var roundRef = React.useRef(round);
   var timer = React.useRef(0);
+
+  var _useState = React.useState('33%'),
+      _useState2 = _slicedToArray(_useState, 2),
+      w = _useState2[0],
+      setW = _useState2[1];
+
   var wrapElRef = React.useRef();
   React.useImperativeHandle(ref, function () {
     return wrapElRef.current;
   });
   var resize = React.useCallback(function () {
     var wrapEl = wrapElRef.current;
-    var child = wrapEl.firstElementChild;
-
-    if (child) {
-      setSize(child.offsetWidth);
-    }
+    var w = Math.floor((wrapEl.offsetWidth - gap * 2) / 3);
+    setW(w);
   }, []);
   useMount(resize);
   useEventListener(function () {
@@ -9690,12 +9689,14 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$j, _extends({}, rest, {
     className: (getClassName$i(), className),
-    ref: wrapElRef
+    ref: wrapElRef,
+    size: gap
   }), [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (v) {
     return /*#__PURE__*/React__default['default'].createElement("div", {
       key: v,
       style: {
-        height: size
+        height: w,
+        width: w
       },
       className: clsx__default['default'](getClassName$i('item'), {
         active: v === seq[index.current]
@@ -9831,25 +9832,6 @@ var useDebounce = function useDebounce(fn) {
     }, timeout);
   }, fnDeps);
 };
-
-/**
- *  保存最新的值在ref中
- *
- * @deprecated
- *
- * @export
- * @template T
- * @param {T} value
- * @return {*}  {MutableRefObject<T>}
- */
-
-function useCallbackRef(value) {
-  var ref = React.useRef(value);
-  React.useEffect(function () {
-    ref.current = value;
-  }, [value]);
-  return ref;
-}
 
 /**
  * 获取验证码倒计时
@@ -10347,7 +10329,6 @@ exports.observe = observe;
 exports.throttle = throttle;
 exports.uniqArray = uniqArray;
 exports.unobserve = unobserve;
-exports.useCallbackRef = useCallbackRef;
 exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;

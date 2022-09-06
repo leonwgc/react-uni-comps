@@ -6,6 +6,7 @@ import { StringOrNumber, BaseProps } from './types';
 import useForceUpdate from './hooks/useForceUpdate';
 import useMount from './hooks/useMount';
 import useEventListener from './hooks/useEventListener';
+import Space from './Space';
 
 const getClassName = prefixClassName('uc-sudoku');
 
@@ -55,9 +56,14 @@ type Props = {
    * 转动结束,带上索引信息
    */
   onEnd?: (index: number) => void;
+  /**
+   * 间距
+   * @default 4
+   *  */
+  gap?: number;
 } & BaseProps;
 
-const StyledWrap = styled.div`
+const StyledWrap = styled(Space)`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -70,9 +76,7 @@ const StyledWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 31%;
-    margin-bottom: 4px;
-    margin-right: 4px;
+    width: 33%;
 
     &.active {
       background-size: 100% 100%;
@@ -111,11 +115,11 @@ const Sudoku = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     speed = 150,
     onStart,
     onEnd,
+    gap = 4,
     ...rest
   } = props;
 
   const forceUpdate = useForceUpdate();
-  const [size, setSize] = useState<number>();
 
   const lock = useRef(false);
 
@@ -132,17 +136,16 @@ const Sudoku = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const timer = useRef(0);
 
+  const [w, setW] = useState<StringOrNumber>('33%');
+
   const wrapElRef = useRef<HTMLDivElement>();
   useImperativeHandle(ref, () => wrapElRef.current);
 
   const resize = useCallback(() => {
     const wrapEl = wrapElRef.current;
+    const w = Math.floor((wrapEl.offsetWidth - gap * 2) / 3);
 
-    const child = wrapEl.firstElementChild as HTMLElement;
-
-    if (child) {
-      setSize(child.offsetWidth);
-    }
+    setW(w);
   }, []);
 
   useMount(resize);
@@ -217,12 +220,14 @@ const Sudoku = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }
 
   return (
-    <StyledWrap {...rest} className={(getClassName(), className)} ref={wrapElRef}>
+    <StyledWrap {...rest} className={(getClassName(), className)} ref={wrapElRef} size={gap}>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((v) => (
         <div
           key={v}
-          style={{ height: size }}
-          className={clsx(getClassName('item'), { active: v === seq[index.current] })}
+          style={{ height: w, width: w }}
+          className={clsx(getClassName('item'), {
+            active: v === seq[index.current],
+          })}
         >
           {v === 4 ? (
             <div className={getClassName('pointer')} onClick={start}>

@@ -32,5 +32,10 @@ declare const Sudoku: React.ForwardRefExoticComponent<{
      * 转动结束,带上索引信息
      */
     onEnd?: (index: number) => void;
+    /**
+     * 间距
+     * @default 4
+     *  */
+    gap?: number;
 } & BaseProps & React.RefAttributes<HTMLDivElement>>;
 export default Sudoku;
