@@ -8,7 +8,7 @@ import flex from './common/flex';
 const StyledBall = styled(Button)`
   position: fixed;
   right: 8px;
-  top: ${window.innerHeight / 2.5}px;
+  bottom: 40px;
   z-index: 1000;
 `;
 
@@ -54,6 +54,7 @@ const Routes = () => {
       </ThemeProvider>
       <StyledPopMenu
         trigger="click"
+        placement="left-top"
         content={
           <div className="list">
             {[
