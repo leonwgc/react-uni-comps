@@ -51,8 +51,8 @@ const StyledSlide = styled.div`
     .${getClassName('item')} {
       cursor: pointer;
       display: inline-block;
-      width: 8px;
-      height: 4px;
+      width: 6px;
+      height: 3px;
       background-color: #fff;
       opacity: 0.4;
 
@@ -71,8 +71,8 @@ const StyledSlide = styled.div`
 
       .${getClassName('item')} {
         display: block;
-        width: 4px;
-        height: 8px;
+        width: 3px;
+        height: 6px;
       }
     }
   }

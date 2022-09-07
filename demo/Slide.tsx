@@ -17,8 +17,8 @@ const StyledCard = styled.div`
 
 export default function App() {
   return (
-    <PageWrap style={{ padding: 0 }}>
-      <DemoBlock title="水平">
+    <PageWrap>
+      <DemoBlock title="水平" padding={0}>
         <Slide autoPlay direction="horizontal">
           {colors.map((item, index) => (
             <StyledCard style={{ background: item }}>{index + 1}</StyledCard>
@@ -26,7 +26,7 @@ export default function App() {
         </Slide>
       </DemoBlock>
 
-      <DemoBlock title="垂直">
+      <DemoBlock title="垂直" padding={0}>
         <Slide interval={1000} autoPlay direction="vertical">
           {colors.map((item, index) => (
             <StyledCard style={{ background: item }}>{index + 1}</StyledCard>
