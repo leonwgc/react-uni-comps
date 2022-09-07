@@ -12,9 +12,6 @@ export default function App() {
           <Button outlined>Outlined</Button>
           <Button type="primary">Primary</Button>
           <Button danger>Danger</Button>
-          <Button style={{ height: 50, width: 80, borderStyle: 'dashed', fontSize: 18 }}>
-            custom
-          </Button>
         </Space>
       </DemoBlock>
 
@@ -35,9 +32,6 @@ export default function App() {
           <Button loading>加载中</Button>
           <Button type="primary" loading>
             加载中
-          </Button>
-          <Button type="primary" danger loading>
-            Loading
           </Button>
         </Space>
       </DemoBlock>
@@ -75,10 +69,6 @@ export default function App() {
           </Button>
           <Button circle>
             <Icon type="uc-icon-guanbi" />
-          </Button>
-          <Button type="primary">Default Button</Button>
-          <Button type="primary" style={{ borderRadius: 20 }}>
-            Rounded Button
           </Button>
         </Space>
       </DemoBlock>
@@ -130,10 +120,6 @@ export default function App() {
 
           <Button type="primary" wait={2000}>
             2s点一次
-          </Button>
-
-          <Button wait icon={<Icon type="uc-icon-sousuo" />}>
-            1s点一次
           </Button>
         </Space>
       </DemoBlock>

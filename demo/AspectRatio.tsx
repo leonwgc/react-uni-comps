@@ -3,7 +3,7 @@ import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { AspectRatio } from 'react-uni-comps';
 
-const img = 'https://t7.baidu.com/it/u=165171033,838989231&fm=193&f=GIF';
+const img = 'https://t7.baidu.com/it/u=3440599750,1026114320&fm=193&f=GIF';
 
 export default function App() {
   return (
