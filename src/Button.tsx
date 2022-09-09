@@ -138,6 +138,7 @@ const StyledButton = styled.button`
     padding: unset;
     margin: unset;
     background: unset;
+    font-size: unset;
   }
 
   &.disabled,
