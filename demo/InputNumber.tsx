@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { InputNumber, Button, Space, Icon } from 'react-uni-comps';
+import { InputNumber } from 'react-uni-comps';
 
 export default function App() {
-  const [v, setV] = useState<string | number>(8);
   return (
     <PageWrap>
       <Block title="默认">
@@ -13,19 +12,6 @@ export default function App() {
 
       <Block title="一位小数">
         <InputNumber digits={1} defaultValue={1.2} />
-      </Block>
-
-      <Block title="禁用">
-        <InputNumber disabled defaultValue={12345} />
-      </Block>
-
-      <Block title="前后缀">
-        <InputNumber
-          prefix={<Icon type="uc-icon-gouwuche" />}
-          suffix={'美刀'}
-          defaultValue={10}
-          onChange={console.log}
-        />
       </Block>
 
       <Block title="最大最小值 2-16">

@@ -19,7 +19,7 @@ const placements = [
 ];
 
 export default function App() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const ref = useRef(0);
   const elRef = useRef();
@@ -37,6 +37,7 @@ export default function App() {
             content={<div style={{ padding: 20 }}>{placements[ref.current]}</div>}
           >
             <Button
+              type="primary"
               onClick={() => {
                 if (!visible) {
                   setVisible(true);

@@ -15,18 +15,27 @@ const StyledModal = styled(Modal)`
 `;
 
 export default function App() {
-  const [v, setV] = useState(true);
+  const [v, setV] = useState(false);
   const [visible, setVisible] = useState(false);
 
   return (
     <PageWrap>
-      <DemoBlock title="默认">
-        <Button onClick={() => setV(true)}>默认</Button>
+      <DemoBlock>
+        <Space>
+          <Button type="primary" onClick={() => setV(true)}>
+            默认
+          </Button>
+
+          <Button type="primary" onClick={() => setVisible(true)}>
+            自定义
+          </Button>
+        </Space>
 
         <Modal
           style={{ width: '75%' }}
           visible={v}
           onClose={() => setV(false)}
+          closable
           header="标题"
           footer={
             <Space>
@@ -37,12 +46,8 @@ export default function App() {
             </Space>
           }
         >
-          hello,world
+          这里是内容
         </Modal>
-      </DemoBlock>
-
-      <DemoBlock title="自定义">
-        <Button onClick={() => setVisible(true)}>自定义</Button>
 
         <StyledModal
           visible={visible}

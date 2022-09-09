@@ -5,17 +5,18 @@ import { Tooltip, Button, Space, AutoCenter, Cell, Switch } from 'react-uni-comp
 
 export default function App() {
   const [animate, setAnimate] = useState(true);
+
   return (
     <PageWrap>
       <Cell
         title="动画效果"
         content={<Switch checked={animate} onChange={(a) => setAnimate(a)}></Switch>}
       ></Cell>
-      <DemoBlock title="不同位置">
+      <DemoBlock>
         <AutoCenter>
           <Space>
             <Tooltip title="This's tooltip" animate={animate}>
-              <Button>默认</Button>
+              <Button type="primary">默认</Button>
             </Tooltip>
 
             <Tooltip
@@ -25,17 +26,13 @@ export default function App() {
               placement="right"
               title="This's tooltip"
             >
-              <Button>右侧</Button>
+              <Button type="primary">右侧</Button>
+            </Tooltip>
+
+            <Tooltip title="This's tooltip" style={{ background: 'red', fontSize: 12 }}>
+              <Button type="primary">自定义样式</Button>
             </Tooltip>
           </Space>
-        </AutoCenter>
-      </DemoBlock>
-
-      <DemoBlock title="样式">
-        <AutoCenter>
-          <Tooltip title="This's tooltip" style={{ background: 'red', fontSize: 12 }}>
-            <Button>自定义样式</Button>
-          </Tooltip>
         </AutoCenter>
       </DemoBlock>
     </PageWrap>

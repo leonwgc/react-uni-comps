@@ -10,6 +10,7 @@ import { Dispose, isMobile, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
+import { attachPropertiesToComponent } from './util';
 
 type Props = {
   /** 是否显示 */
@@ -132,7 +133,7 @@ const StyledAlertDialog = styled(Popup)`
   vertical-align: middle;
   text-align: initial;
   border-radius: 8px;
-  padding: 32px 32px 24px;
+  padding: 24px 24px 16px;
   box-sizing: border-box;
   white-space: normal;
   max-width: calc(100vw - 56px);
@@ -205,15 +206,8 @@ type StaticProps = {
   closable?: boolean;
 };
 
-type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
-  /**
-   *  AlertDialog静态调用
-   *
-   */ show?: (prop: StaticProps) => void;
-};
-
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
-const AlertDialog: AlertDialogType = forwardRef<HTMLDivElement, Props>((props, ref) => {
+const AlertDialog = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     visible = true,
     title,
@@ -332,7 +326,7 @@ AlertDialog.displayName = 'UC-AlertDialog';
 
 const transitionDuration = 240;
 
-AlertDialog.show = (props: StaticProps) => {
+const show = (props: StaticProps) => {
   const {
     title,
     content,
@@ -376,4 +370,6 @@ AlertDialog.show = (props: StaticProps) => {
   );
 };
 
-export default AlertDialog;
+export default attachPropertiesToComponent(AlertDialog, {
+  show,
+});

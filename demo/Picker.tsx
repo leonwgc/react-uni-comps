@@ -102,16 +102,21 @@ export default function App() {
     <PageWrap>
       <DemoBlock title="示例">
         <Space wrap>
-          <Button onClick={() => setVisible(1)}>1列</Button>
+          <Button type="primary" onClick={() => setVisible(1)}>
+            1列
+          </Button>
 
           <Button
+            type="primary"
             onClick={() => {
               setVisible(2);
             }}
           >
             级联2列
           </Button>
+
           <Button
+            type="primary"
             onClick={() => {
               setVisible(3);
             }}
@@ -120,6 +125,7 @@ export default function App() {
           </Button>
 
           <Button
+            type="primary"
             onClick={() => {
               setVisible(4);
             }}

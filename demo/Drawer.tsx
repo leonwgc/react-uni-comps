@@ -4,7 +4,7 @@ import DemoBlock from './common/DemoBlock';
 import { Button, Drawer } from 'react-uni-comps';
 
 export default function App() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const onClose = useCallback(() => {
     setVisible(false);
@@ -13,7 +13,9 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="抽屉">
-        <Button onClick={() => setVisible(true)}>打开抽屉</Button>
+        <Button type="primary" onClick={() => setVisible(true)}>
+          打开抽屉
+        </Button>
       </DemoBlock>
 
       <Drawer onClose={onClose} visible={visible} style={{ width: '70%' }}>

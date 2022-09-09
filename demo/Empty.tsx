@@ -10,10 +10,6 @@ const StyledEmpty1 = styled(Empty)`
   .image {
     width: 92px;
   }
-  .desc {
-    color: red;
-    font-size: 12px;
-  }
 `;
 
 const StyledEmpty2 = styled(Empty)`
@@ -42,9 +38,9 @@ export default function App() {
       <Block title="例3">
         <AutoCenter>
           <StyledEmpty2
-            image="https://t7.baidu.com/it/u=2797388301,556999201&fm=193&f=GIF"
-            desc="no data"
-            extra={<Button type="primary">go back</Button>}
+            image="https://t7.baidu.com/it/u=2808499218,4024510450&fm=193&f=GIF"
+            desc="暂无数据"
+            extra={<Button type="primary">返回首页</Button>}
           />
         </AutoCenter>
       </Block>

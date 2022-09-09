@@ -29,12 +29,24 @@ export default function App() {
     <PageWrap>
       <DemoBlock>
         <Space direction="vertical" size={24}>
-          <Button onClick={() => setVisible1(true)}>底部弹出</Button>
-          <Button onClick={() => setVisible2(true)}>左侧弹出</Button>
-          <Button onClick={() => setVisible3(true)}>右侧弹出</Button>
-          <Button onClick={() => setVisible4(true)}>上边弹出</Button>
-          <Button onClick={() => setVisible5(true)}>中间弹出</Button>
-          <Button onClick={() => setX((v) => !v)}>底部容器左侧滑出</Button>
+          <Button type="primary" onClick={() => setVisible1(true)}>
+            底部弹出
+          </Button>
+          <Button type="primary" onClick={() => setVisible2(true)}>
+            左侧弹出
+          </Button>
+          <Button type="primary" onClick={() => setVisible3(true)}>
+            右侧弹出
+          </Button>
+          <Button type="primary" onClick={() => setVisible4(true)}>
+            上边弹出
+          </Button>
+          <Button type="primary" onClick={() => setVisible5(true)}>
+            中间弹出
+          </Button>
+          <Button type="primary" onClick={() => setX((v) => !v)}>
+            底部容器左侧滑出
+          </Button>
         </Space>
       </DemoBlock>
 

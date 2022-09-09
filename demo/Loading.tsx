@@ -6,9 +6,10 @@ import { Button, Space, Loading } from 'react-uni-comps';
 export default function App() {
   return (
     <PageWrap>
-      <DemoBlock title="默认">
-        <Space>
+      <DemoBlock>
+        <Space wrap>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show();
 
@@ -19,12 +20,9 @@ export default function App() {
           >
             默认
           </Button>
-        </Space>
-      </DemoBlock>
 
-      <DemoBlock title="文本">
-        <Space>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show('努力提交中..');
 
@@ -33,14 +31,11 @@ export default function App() {
               }, 1000);
             }}
           >
-            文本
+            带文本
           </Button>
-        </Space>
-      </DemoBlock>
 
-      <DemoBlock title="spin类型">
-        <Space>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show('', {
                 type: 'spin',
@@ -53,12 +48,9 @@ export default function App() {
           >
             微信风格
           </Button>
-        </Space>
-      </DemoBlock>
 
-      <DemoBlock title="spin类型">
-        <Space>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show(null, {
                 type: 'round',
@@ -72,12 +64,9 @@ export default function App() {
           >
             半圆风格
           </Button>
-        </Space>
-      </DemoBlock>
 
-      <DemoBlock title="spin类型">
-        <Space>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show(null, {
                 type: 'clock',
@@ -90,18 +79,15 @@ export default function App() {
           >
             时钟/花瓣风格
           </Button>
-        </Space>
-      </DemoBlock>
 
-      <DemoBlock title="自定义样式">
-        <Space>
           <Button
+            type="primary"
             onClick={() => {
               Loading.show('加载中...', {
                 spinSize: 40,
                 type: 'clock',
                 gap: 12,
-                containerStyle: { width: 130, height: 130, fontSize: 14, top: 220 },
+                containerStyle: { width: 130, height: 130, fontSize: 14, top: 260 },
               });
 
               setTimeout(() => {

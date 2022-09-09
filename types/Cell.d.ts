@@ -1,7 +1,7 @@
 import React from 'react';
 export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
-    required?: boolean;
+    required?: boolean | string;
     /**
      * 老代码label
      * @deprecated
@@ -29,7 +29,7 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
     /** 是否显示红色*标记 */
-    required?: boolean;
+    required?: boolean | string;
     /**
      * 老代码label
      * @deprecated

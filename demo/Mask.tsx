@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import Block from './common/DemoBlock';
-import { Button, Mask } from 'react-uni-comps';
+import { Button, Mask, Space } from 'react-uni-comps';
 
 export default function App() {
   const [v, setV] = useState(false);
@@ -10,19 +10,23 @@ export default function App() {
 
   return (
     <PageWrap>
-      <Block title="默认">
-        <Button onClick={() => setV(true)}>默认</Button>
-        <Mask visible={v} onClick={() => setV(false)} />
-      </Block>
+      <Block>
+        <Space direction="vertical">
+          <Button type="primary" onClick={() => setV(true)}>
+            默认
+          </Button>
+          <Mask visible={v} onClick={() => setV(false)} />
 
-      <Block title="颜色">
-        <Button onClick={() => setV1(true)}>颜色</Button>
-        <Mask visible={v1} onClick={() => setV1(false)} style={{ background: 'red' }} />
-      </Block>
+          <Button type="primary" onClick={() => setV1(true)}>
+            颜色
+          </Button>
+          <Mask visible={v1} onClick={() => setV1(false)} style={{ background: 'red' }} />
 
-      <Block title="透明度和过度效果">
-        <Button onClick={() => setV2(true)}>透明度和过度效果</Button>
-        <Mask opacity={0.7} duration={100} visible={v2} onClick={() => setV2(false)} />
+          <Button type="primary" onClick={() => setV2(true)}>
+            透明度和过度效果
+          </Button>
+          <Mask opacity={0.7} duration={100} visible={v2} onClick={() => setV2(false)} />
+        </Space>
       </Block>
     </PageWrap>
   );

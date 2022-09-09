@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 export type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 是否显示红色*标记 */
-  required?: boolean;
+  required?: boolean | string;
   /**
    * 老代码label
    * @deprecated
@@ -69,7 +69,7 @@ const StyledCell = styled.div`
         color: #333;
 
         &.required::before {
-          content: '*';
+          content: attr(data-required);
           margin-right: 2px;
           color: ${vars.danger};
           vertical-align: middle;
@@ -128,6 +128,8 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const hasLabel = label || title;
   const hasContent = content || children;
 
+  const dataRequired = required ? (typeof required === 'boolean' ? '*' : required) : undefined;
+
   return (
     <StyledCell
       {...rest}
@@ -141,7 +143,12 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div className={clsx('cell-inner', { mobile: isMobile, pc: !isMobile })}>
           {hasLabel && (
             <div className={clsx('cell-label', { input: hasInput })}>
-              <span className={clsx('label', { required: required })}>{label || title}</span>
+              <span
+                data-required={dataRequired}
+                className={clsx('label', { required: !!required })}
+              >
+                {label || title}
+              </span>
               {description && <div className="description">{description}</div>}
             </div>
           )}

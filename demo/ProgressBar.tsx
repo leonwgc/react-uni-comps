@@ -21,25 +21,24 @@ export default function App() {
       <DemoBlock style={{ textAlign: 'center' }}>
         <Space>
           <Button
+            icon={<Icon type="uc-icon-jian2" />}
             circle
             onClick={() =>
               setV((v) => {
                 return v - 10 >= 0 ? v - 10 : 0;
               })
             }
-          >
-            <Icon type="uc-icon-jian2" />
-          </Button>
+          ></Button>
           <Button
+            type="primary"
+            icon={<Icon type="uc-icon-jia2" />}
             circle
             onClick={() =>
               setV((v) => {
                 return v + 10 <= 100 ? v + 10 : 100;
               })
             }
-          >
-            <Icon type="uc-icon-jia2" />
-          </Button>
+          ></Button>
         </Space>
       </DemoBlock>
 
@@ -49,13 +48,13 @@ export default function App() {
           percent={v}
           style={{
             margin: '24px 0',
-            height: 20,
+            height: 16,
             borderRadius: 10,
           }}
         />
         <ProgressBar
           percent={v}
-          height={20}
+          height={16}
           fillColor="#712fd1"
           style={{ borderRadius: 15, width: '80vw' }}
         />

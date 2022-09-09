@@ -3,33 +3,34 @@ import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { Slide, styled } from 'react-uni-comps';
 
-const colors = ['rgb(0, 188, 112)', 'rgb(24, 144, 255)', 'rgb(245, 34, 45)', 'rgb(113, 47, 209)'];
-
 const StyledCard = styled.div`
   height: 200px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: #fff;
+  background-size: 100%;
+  background-position: center;
 `;
+
+const images = [
+  'https://t7.baidu.com/it/u=1605309380,911023805&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=3444349230,194273721&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=3889655668,2711219959&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=2808499218,4024510450&fm=193&f=GIF',
+];
 
 export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="水平" padding={0}>
         <Slide autoPlay direction="horizontal">
-          {colors.map((item, index) => (
-            <StyledCard style={{ background: item }}>{index + 1}</StyledCard>
+          {images.map((item, index) => (
+            <StyledCard key={index} style={{ backgroundImage: `url(${item})` }}></StyledCard>
           ))}
         </Slide>
       </DemoBlock>
 
       <DemoBlock title="垂直" padding={0}>
         <Slide interval={1000} autoPlay direction="vertical">
-          {colors.map((item, index) => (
-            <StyledCard style={{ background: item }}>{index + 1}</StyledCard>
+          {images.map((item, index) => (
+            <StyledCard key={index} style={{ backgroundImage: `url(${item})` }}></StyledCard>
           ))}
         </Slide>
       </DemoBlock>

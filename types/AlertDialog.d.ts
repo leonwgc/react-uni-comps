@@ -57,12 +57,7 @@ declare type StaticProps = {
     /** 显示关闭按钮  */
     closable?: boolean;
 };
-declare type AlertDialogType = React.ForwardRefExoticComponent<Props> & {
-    /**
-     *  AlertDialog静态调用
-     *
-     */ show?: (prop: StaticProps) => void;
+declare const _default: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>> & {
+    show: (props: StaticProps) => void;
 };
-/** 移动端/pc端两种风格的 alert/confirm弹窗 */
-declare const AlertDialog: AlertDialogType;
-export default AlertDialog;
+export default _default;

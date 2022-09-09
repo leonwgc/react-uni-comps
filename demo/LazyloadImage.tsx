@@ -8,7 +8,7 @@ const LazyloadImage = () => {
 
   return (
     <PageWrap>
-      <DemoBlock title="图片懒加载">
+      <DemoBlock title="图片懒加载" padding={0}>
         {arr.map((item, k) => (
           <LazyLoadImage
             key={k}
@@ -16,8 +16,8 @@ const LazyloadImage = () => {
             height={200}
             src={
               k % 2 == 0
-                ? 'https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF'
-                : 'https://t7.baidu.com/it/u=2582370511,530426427&fm=193&f=GIF'
+                ? 'https://t7.baidu.com/it/u=1605309380,911023805&fm=193&f=GIF'
+                : 'https://t7.baidu.com/it/u=2808499218,4024510450&fm=193&f=GIF'
             }
           ></LazyLoadImage>
         ))}

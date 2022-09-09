@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
 import { ProgressCircle, Space } from 'react-uni-comps';
@@ -13,14 +13,7 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="尺寸">
-        <Space wrap>
-          <ProgressCircle percent={30} size={32}></ProgressCircle>
-          <ProgressCircle percent={30} size={64}></ProgressCircle>
-        </Space>
-      </DemoBlock>
-
-      <DemoBlock title="颜色">
+      <DemoBlock title="颜色和尺寸">
         <Space wrap>
           <ProgressCircle percent={30} size={32} color="red"></ProgressCircle>
           <ProgressCircle percent={30} size={64} color="green"></ProgressCircle>

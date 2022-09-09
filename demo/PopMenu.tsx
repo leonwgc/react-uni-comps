@@ -54,7 +54,7 @@ export default function App() {
               </div>
             }
           >
-            <StyledBtn>点击弹出菜单</StyledBtn>
+            <StyledBtn type="primary">显示菜单</StyledBtn>
           </StyledPopMenu>
         </AutoCenter>
       </DemoBlock>
