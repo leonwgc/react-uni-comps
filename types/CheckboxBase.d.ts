@@ -27,6 +27,8 @@ export declare type Props = {
     value?: string | number;
     /** 设置 indeterminate 状态，中间横线代替勾勾 */
     indeterminate?: boolean;
+    /** 自定义显示 */
+    render?: (checked: boolean, disabled: boolean) => React.ReactNode;
 } & BaseProps;
 /** Checkbox/Radiobox 的基础 */
 declare const CheckboxBase: React.ForwardRefExoticComponent<{
@@ -56,5 +58,7 @@ declare const CheckboxBase: React.ForwardRefExoticComponent<{
     value?: string | number;
     /** 设置 indeterminate 状态，中间横线代替勾勾 */
     indeterminate?: boolean;
+    /** 自定义显示 */
+    render?: (checked: boolean, disabled: boolean) => React.ReactNode;
 } & BaseProps & React.RefAttributes<any>>;
 export default CheckboxBase;

@@ -36,6 +36,8 @@ export type Props = {
   value?: string | number;
   /** 设置 indeterminate 状态，中间横线代替勾勾 */
   indeterminate?: boolean;
+  /** 自定义显示 */
+  render?: (checked: boolean, disabled: boolean) => React.ReactNode;
 } & BaseProps;
 
 const StyledButton = styled(Button)`
@@ -123,6 +125,7 @@ const CheckboxBase = React.forwardRef<any, Props>((props, ref) => {
     disabled,
     children,
     indeterminate,
+    render,
     ...rest
   } = props;
 
@@ -142,6 +145,14 @@ const CheckboxBase = React.forwardRef<any, Props>((props, ref) => {
       onChange?.(n);
     }
   };
+
+  if (typeof render === 'function') {
+    return (
+      <span {...rest} ref={ref} className={clsx('uc-checkbox-cust', className)} onClick={onClick}>
+        {render(c, disabled)}
+      </span>
+    );
+  }
 
   return button ? (
     <StyledButton

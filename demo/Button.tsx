@@ -39,18 +39,6 @@ export default function App() {
         </Space>
       </DemoBlock>
 
-      <DemoBlock title="幽灵按钮 (ghost)" background="#333">
-        <Space direction="vertical" style={{ width: '100%' }}>
-          <Button block ghost>
-            default
-          </Button>
-
-          <Button block ghost type="primary">
-            primary
-          </Button>
-        </Space>
-      </DemoBlock>
-
       <DemoBlock title="链接按钮 (as='a')">
         <Space wrap>
           <Button as="a">Anchor</Button>
@@ -78,6 +66,18 @@ export default function App() {
 
           <Button type="primary" wait={2000}>
             2s点一次
+          </Button>
+        </Space>
+      </DemoBlock>
+
+      <DemoBlock title="幽灵按钮 (ghost)" background="#333">
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Button block ghost>
+            default
+          </Button>
+
+          <Button block ghost type="primary">
+            primary
           </Button>
         </Space>
       </DemoBlock>
