@@ -2468,7 +2468,7 @@ var _excluded$9 = ["title", "required", "label", "description", "className", "co
 var StyledCell = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Cell__StyledCell",
   componentId: "sc-11yoqxc-0"
-})(["background-color:#fff;&.clickable{&:active{background-color:", ";}}&.label-padding{padding-left:12px;}.cell-inner{position:relative;display:flex;box-sizing:border-box;width:100%;padding:10px 12px 10px 0;overflow:hidden;font-size:14px;line-height:24px;&.pc{align-items:center;}.cell-label{box-sizing:border-box;text-align:left;flex:1;.label{color:#333;&.required::before{content:'*';margin-right:2px;color:", ";vertical-align:middle;}}.description{color:#999;margin-top:4px;line-height:18px;font-size:12px;}&.input{word-wrap:break-word;width:6.2em;flex:none;}}.cell-content{flex:1;position:relative;overflow:visible;color:#999;text-align:right;vertical-align:middle;word-wrap:break-word;&.input{display:flex;align-items:center;}}}"], activeBg, danger);
+})(["background-color:#fff;&.clickable{&:active{background-color:", ";}}&.label-padding{padding-left:12px;}.cell-inner{position:relative;display:flex;box-sizing:border-box;width:100%;padding:10px 12px 10px 0;overflow:hidden;font-size:14px;line-height:24px;&.pc{align-items:center;}.cell-label{box-sizing:border-box;text-align:left;flex:1;.label{color:#333;&.required::before{content:attr(data-required);margin-right:2px;color:", ";vertical-align:middle;}}.description{color:#999;margin-top:4px;line-height:18px;font-size:12px;}&.input{word-wrap:break-word;width:6.2em;flex:none;}}.cell-content{flex:1;position:relative;overflow:visible;color:#999;text-align:right;vertical-align:middle;word-wrap:break-word;&.input{display:flex;align-items:center;}}}"], activeBg, danger);
 /** 列表项，通常用于移动端 */
 
 var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2492,6 +2492,7 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
   var hasInput = !!children;
   var hasLabel = label || title;
   var hasContent = content || children;
+  var dataRequired = required ? typeof required === 'boolean' ? '*' : required : undefined;
   return /*#__PURE__*/React__default['default'].createElement(StyledCell, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-cell', className, {
@@ -2511,8 +2512,9 @@ var Cell = /*#__PURE__*/React__default['default'].forwardRef(function (props, re
       input: hasInput
     })
   }, /*#__PURE__*/React__default['default'].createElement("span", {
+    "data-required": dataRequired,
     className: clsx__default['default']('label', {
-      required: required
+      required: !!required
     })
   }, label || title), description && /*#__PURE__*/React__default['default'].createElement("div", {
     className: "description"
@@ -2703,7 +2705,7 @@ var _excluded$d = ["type", "disabled", "outlined", "block", "className", "childr
 var StyledButton = /*#__PURE__*/styled__default['default'].button.withConfig({
   displayName: "Button__StyledButton",
   componentId: "sc-15o16bj-0"
-})(["color:inherit;cursor:pointer;margin:0;display:inline-flex;box-sizing:border-box;outline:0;position:relative;align-items:center;user-select:none;justify-content:center;text-decoration:none;background-color:transparent;appearance:none;-webkit-tap-highlight-color:transparent;font-weight:400;white-space:nowrap;background-image:none;transition:all 0.3s ease;user-select:none;touch-action:manipulation;font-size:14px;border-radius:2px;border:1px solid transparent;padding:0px 16px;height:32px;&.default{background-color:#fff;border-color:", ";", "{opacity:0.8;}&.pc:hover,&.outlined{", " ", "}&.mobile:active{background-color:", ";}&.danger,&.danger:hover,&.danger:active{color:", ";border-color:", ";}}&.primary{", " ", " color:#fff;", "{opacity:0.8;}&.ghost,&.ghost:hover,&.ghost:active{background-color:transparent !important;", " ", " &.danger{color:", ";}}&.danger,&.danger:hover,&.danger:active{background-color:", ";border-color:", ";}}&.block{width:100%;}&.circle{min-width:32px;padding:0;border-radius:50%;}&.dashed{border-style:dashed;}&.anchor{border:none;", " height:unset;padding:unset;margin:unset;background:unset;}&.disabled,&.disabled:hover,&.disabled:active{opacity:0.6;cursor:not-allowed;pointer-events:none;}&.ghost,&.ghost:hover{background-color:transparent;border-color:", ";color:", ";}"], border, isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
+})(["color:inherit;cursor:pointer;margin:0;display:inline-flex;box-sizing:border-box;outline:0;position:relative;align-items:center;user-select:none;justify-content:center;text-decoration:none;background-color:transparent;appearance:none;-webkit-tap-highlight-color:transparent;font-weight:400;white-space:nowrap;background-image:none;transition:all 0.3s ease;user-select:none;touch-action:manipulation;font-size:14px;border-radius:2px;border:1px solid transparent;padding:0px 16px;height:32px;&.default{background-color:#fff;border-color:", ";", "{opacity:0.8;}&.pc:hover,&.outlined{", " ", "}&.mobile:active{background-color:", ";}&.danger,&.danger:hover,&.danger:active{color:", ";border-color:", ";}}&.primary{", " ", " color:#fff;", "{opacity:0.8;}&.ghost,&.ghost:hover,&.ghost:active{background-color:transparent !important;", " ", " &.danger{color:", ";}}&.danger,&.danger:hover,&.danger:active{background-color:", ";border-color:", ";}}&.block{width:100%;}&.circle{min-width:32px;padding:0;border-radius:50%;}&.dashed{border-style:dashed;}&.anchor{border:none;", " height:unset;padding:unset;margin:unset;background:unset;font-size:unset;}&.disabled,&.disabled:hover,&.disabled:active{opacity:0.6;cursor:not-allowed;pointer-events:none;}&.ghost,&.ghost:hover{background-color:transparent;border-color:", ";color:", ";}"], border, isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), activeBg, danger, danger, getThemeColorCss('background-color'), getThemeColorCss('border-color'), isMobile ? '&:active' : '&:hover', getThemeColorCss('border-color'), getThemeColorCss('color'), danger, danger, danger, getThemeColorCss('color'), border, border);
 /** 按钮 */
 
 var Button = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2802,7 +2804,7 @@ Icon.loadFromIconfontCN = function (scriptUrl) {
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
-var _excluded$f = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate"];
+var _excluded$f = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate", "render"];
 var StyledButton$1 = /*#__PURE__*/styled__default['default'](Button).withConfig({
   displayName: "CheckboxBase__StyledButton",
   componentId: "sc-1rcmrlp-0"
@@ -2810,7 +2812,7 @@ var StyledButton$1 = /*#__PURE__*/styled__default['default'](Button).withConfig(
 var StyledCheckboxBaseWrapper = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CheckboxBase__StyledCheckboxBaseWrapper",
   componentId: "sc-1rcmrlp-1"
-})(["display:inline-flex;align-items:center;cursor:pointer;user-select:none;vertical-align:middle;-webkit-tap-highlight-color:transparent;.text{margin-left:8px;}&.disabled{cursor:not-allowed;opacity:0.5;}&.pc{.checkbox:hover{", "}}&.radio{.checkbox{border-radius:50%;}}&.checked{.checkbox{", " ", "}}&.disabled{.checkbox{border-color:", ";}}.checkbox{display:inline-flex;align-items:center;justify-content:center;border:1px solid ", ";border-radius:2px;background:#fff;color:#fff;}"], getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
+})(["display:inline-flex;align-items:center;cursor:pointer;user-select:none;vertical-align:middle;-webkit-tap-highlight-color:transparent;white-space:nowrap;.text{margin-left:8px;}&.disabled{cursor:not-allowed;opacity:0.5;}&.pc{.checkbox:hover{", "}}&.radio{.checkbox{border-radius:50%;}}&.checked{.checkbox{", " ", "}}&.disabled{.checkbox{border-color:", ";}}.checkbox{display:inline-flex;align-items:center;justify-content:center;border:1px solid ", ";border-radius:2px;background:#fff;color:#fff;}"], getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2827,6 +2829,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       disabled = props.disabled,
       children = props.children,
       indeterminate = props.indeterminate,
+      render = props.render,
       rest = _objectWithoutProperties(props, _excluded$f);
 
   var _useState = React.useState(typeof checked === 'boolean' ? checked : defaultChecked),
@@ -2849,6 +2852,14 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       onChange === null || onChange === void 0 ? void 0 : onChange(n);
     }
   };
+
+  if (typeof render === 'function') {
+    return /*#__PURE__*/React__default['default'].createElement("span", _extends({}, rest, {
+      ref: ref,
+      className: clsx__default['default']('uc-checkbox-cust', className),
+      onClick: onClick
+    }), render(c, disabled));
+  }
 
   return button ? /*#__PURE__*/React__default['default'].createElement(StyledButton$1, _extends({}, rest, {
     ref: ref,
@@ -4333,7 +4344,7 @@ var _excluded$x = ["visible", "title", "content", "onConfirm", "onCancel", "conf
 var StyledAlertDialog = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "AlertDialog__StyledAlertDialog",
   componentId: "sc-1ifj2xy-0"
-})(["overflow:hidden;&.from{opacity:0;transform:translate(-50%,-50%) scale(0.5);&.pc{top:160px;transform:translate(-50%,0) scale(0.5);}}&.to{transform:translate(-50%,-50%) scale(1);&.pc{top:160px;transform:translate(-50%,0) scale(1);}opacity:1;}&.mobile{width:280px;padding:20px 0 0;.header{text-align:center;}.body{padding:16px;overflow-y:scroll;-webkit-overflow-scrolling:touch;&::-webkit-scrollbar{display:none;}}.footer{position:relative;display:flex;height:48px;padding:0;overflow:hidden;.confirm{", "}.uc-btn{height:48px;border:none;flex:1;}&:after{content:'';pointer-events:none;position:absolute;width:100%;height:100%;left:0;top:0;border-top:1px solid ", ";@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){width:200%;height:200%;transform:scale(0.5);transform-origin:0 0;}}}}box-shadow:0 2px 12px 0 rgb(0 0 0 / 10%);background-color:#fff;position:relative;display:inline-block;vertical-align:middle;text-align:initial;border-radius:8px;padding:32px 32px 24px;box-sizing:border-box;white-space:normal;max-width:calc(100vw - 56px);max-height:calc(100vh - 112px);width:420px;display:flex;flex-direction:column;.close{top:16px;right:16px;color:#999;position:absolute;display:inline-block;cursor:pointer;font-size:16px;&:hover{color:#666;}}.header{font-size:16px;line-height:20px;color:#333;box-sizing:border-box;font-weight:500;}.body{font-size:14px;line-height:20px;max-height:calc(100vh - 256px);padding:24px 0 32px;flex:1;overflow-y:scroll;-webkit-overflow-scrolling:touch;&::-webkit-scrollbar{display:none;}}.footer{text-align:right;.uc-btn{min-width:80px;}}"], getThemeColorCss('color'), border);
+})(["overflow:hidden;&.from{opacity:0;transform:translate(-50%,-50%) scale(0.5);&.pc{top:160px;transform:translate(-50%,0) scale(0.5);}}&.to{transform:translate(-50%,-50%) scale(1);&.pc{top:160px;transform:translate(-50%,0) scale(1);}opacity:1;}&.mobile{width:280px;padding:20px 0 0;.header{text-align:center;}.body{padding:16px;overflow-y:scroll;-webkit-overflow-scrolling:touch;&::-webkit-scrollbar{display:none;}}.footer{position:relative;display:flex;height:48px;padding:0;overflow:hidden;.confirm{", "}.uc-btn{height:48px;border:none;flex:1;}&:after{content:'';pointer-events:none;position:absolute;width:100%;height:100%;left:0;top:0;border-top:1px solid ", ";@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){width:200%;height:200%;transform:scale(0.5);transform-origin:0 0;}}}}box-shadow:0 2px 12px 0 rgb(0 0 0 / 10%);background-color:#fff;position:relative;display:inline-block;vertical-align:middle;text-align:initial;border-radius:8px;padding:24px 24px 16px;box-sizing:border-box;white-space:normal;max-width:calc(100vw - 56px);max-height:calc(100vh - 112px);width:420px;display:flex;flex-direction:column;.close{top:16px;right:16px;color:#999;position:absolute;display:inline-block;cursor:pointer;font-size:16px;&:hover{color:#666;}}.header{font-size:16px;line-height:20px;color:#333;box-sizing:border-box;font-weight:500;}.body{font-size:14px;line-height:20px;max-height:calc(100vh - 256px);padding:24px 0 32px;flex:1;overflow-y:scroll;-webkit-overflow-scrolling:touch;&::-webkit-scrollbar{display:none;}}.footer{text-align:right;.uc-btn{min-width:80px;}}"], getThemeColorCss('color'), border);
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
 var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -4438,7 +4449,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
 AlertDialog.displayName = 'UC-AlertDialog';
 var transitionDuration$1 = 240;
 
-AlertDialog.show = function (props) {
+var show = function show(props) {
   var title = props.title,
       content = props.content,
       _props$confirmText2 = props.confirmText,
@@ -4480,6 +4491,10 @@ AlertDialog.show = function (props) {
     }
   }))), container);
 };
+
+var AlertDialog$1 = attachPropertiesToComponent(AlertDialog, {
+  show: show
+});
 
 var _excluded$y = ["value", "length", "className", "mask", "autoFocus", "userVirtualInput", "onFinish", "onFocus", "onChange"];
 var StyledPasswordInput = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -9757,7 +9772,7 @@ var renderSpin = function renderSpin(type, size) {
  */
 
 
-var show = function show(text) {
+var show$1 = function show(text) {
   var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     type: 'ball',
     gap: 6,
@@ -9801,7 +9816,7 @@ var hide = function hide() {
 
 var Loading$1 = attachPropertiesToComponent(Loading, {
   /** 显示loading */
-  show: show,
+  show: show$1,
 
   /** 隐藏loading */
   hide: hide
@@ -10222,7 +10237,7 @@ Object.defineProperty(exports, 'useTranslation', {
 });
 exports.ActionSheet = ActionSheet;
 exports.Affix = Affix;
-exports.AlertDialog = AlertDialog;
+exports.AlertDialog = AlertDialog$1;
 exports.AnimationElement = AnimationElement;
 exports.AspectRatio = AspectRatio;
 exports.AutoCenter = AutoCenter;
