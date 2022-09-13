@@ -2366,20 +2366,20 @@ var Tabs = function Tabs(_ref2) {
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
       var itemEl = headerWrapEl.querySelector(".".concat(getClassName$1('header-item')));
 
-      if (itemEl) {
+      if (itemEl && typeof prevVal !== 'undefined') {
         if (_v > prevVal) {
           // right
           headerWrapEl.scroll({
-            left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
+            left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
             behavior: 'smooth'
           });
-        } else {
+        } else if (_v < prevVal) {
           // left
           headerWrapEl.scroll({
-            left: (_v - 2) * itemEl.offsetWidth,
+            left: (_v - 1) * itemEl.offsetWidth,
             behavior: 'smooth'
           });
-        }
+        } else ;
       } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
         headerWrapEl.scroll({
           left: 0,
@@ -2395,7 +2395,7 @@ var Tabs = function Tabs(_ref2) {
       var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item'); // scroll
 
       headerWrapEl.scroll({
-        left: (_v - 2) * itemEl.offsetWidth
+        left: _v * itemEl.offsetWidth
       });
     }
   });

@@ -191,19 +191,21 @@ const Tabs: React.FC<TabsProp> = ({
         `.${getClassName('header-item')}`
       ) as HTMLDivElement;
 
-      if (itemEl) {
+      if (itemEl && typeof prevVal !== 'undefined') {
         if (_v > prevVal) {
           // right
           headerWrapEl.scroll({
-            left: (_v + 3) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
+            left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
+            behavior: 'smooth',
+          });
+        } else if (_v < prevVal) {
+          // left
+          headerWrapEl.scroll({
+            left: (_v - 1) * itemEl.offsetWidth,
             behavior: 'smooth',
           });
         } else {
-          // left
-          headerWrapEl.scroll({
-            left: (_v - 2) * itemEl.offsetWidth,
-            behavior: 'smooth',
-          });
+          // ignored
         }
       } else if (
         itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth &&
@@ -224,7 +226,7 @@ const Tabs: React.FC<TabsProp> = ({
 
       // scroll
       headerWrapEl.scroll({
-        left: (_v - 2) * itemEl.offsetWidth,
+        left: _v * itemEl.offsetWidth,
       });
     }
   });

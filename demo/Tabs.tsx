@@ -103,7 +103,7 @@ export default function App() {
       </DemoBlock>
 
       <DemoBlock title="水平滚动" padding={0}>
-        <Tabs tabWidth={60} border={false}>
+        <Tabs tabWidth={60} border={false} value={8}>
           {scrollTabs.map((item, index) => (
             <Tabs.Tab title={item.title} key={index}></Tabs.Tab>
           ))}
