@@ -43,27 +43,29 @@ const StyledSlide = styled.div`
 
   .${getClassName('indicator')} {
     position: absolute;
-    bottom: 8px;
+    bottom: 6px;
     left: 50%;
     transform: translate3d(-50%, 0, 0);
-    line-height: 4px;
+    line-height: 6px;
 
     .${getClassName('item')} {
       cursor: pointer;
       display: inline-block;
       width: 6px;
-      height: 3px;
+      height: 6px;
       background-color: #fff;
-      opacity: 0.4;
+      transition: all 0.3s ease;
+      border-radius: 50%;
 
       &.active {
-        opacity: 1;
+        border-radius: 3px;
+        width: 14px;
       }
     }
 
     &.vertical {
       position: absolute;
-      right: 8px;
+      right: 6px;
       top: 50%;
       left: unset;
       bottom: unset;
@@ -71,8 +73,14 @@ const StyledSlide = styled.div`
 
       .${getClassName('item')} {
         display: block;
-        width: 3px;
+        width: 6px;
         height: 6px;
+        border-radius: 50%;
+
+        &.active {
+          border-radius: 3px;
+          height: 14px;
+        }
       }
     }
   }
@@ -293,8 +301,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     const { offsetWidth: wrapWidth, offsetHeight: wrapHeight } = containerRef.current;
 
     const fg = new Touch(el, {
-      onTouchStart: (e) => {
-        e.preventDefault();
+      onTouchStart: () => {
         el.style.transitionProperty = 'none';
         thisRef.current.isMoving = true;
         thisRef.current.lastX = thisRef.current.x;
