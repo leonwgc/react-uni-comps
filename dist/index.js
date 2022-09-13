@@ -6036,7 +6036,7 @@ var getClassName$9 = prefixClassName('uc-slide');
 var StyledSlide = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Slide__StyledSlide",
   componentId: "sc-ncbe2q-0"
-})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transition-property:transform;backface-visibility:hidden;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:8px;left:50%;transform:translate3d(-50%,0,0);line-height:4px;.", "{cursor:pointer;display:inline-block;width:6px;height:3px;background-color:#fff;opacity:0.4;&.active{opacity:1;}}&.vertical{position:absolute;right:8px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:3px;height:6px;}}}"], getClassName$9('wrap'), getClassName$9('page'), getClassName$9('indicator'), getClassName$9('item'), getClassName$9('item')); //#endregion
+})(["overflow:hidden;position:relative;.", "{position:relative;display:flex;flex-wrap:nowrap;touch-action:none;width:100%;transition-property:transform;backface-visibility:hidden;&.vertical{flex-direction:column;}}.", "{width:100%;flex-shrink:0;}.", "{position:absolute;bottom:6px;left:50%;transform:translate3d(-50%,0,0);line-height:6px;.", "{cursor:pointer;display:inline-block;width:6px;height:6px;background-color:#fff;transition:all 0.3s ease;border-radius:50%;&.active{border-radius:3px;width:14px;}}&.vertical{position:absolute;right:6px;top:50%;left:unset;bottom:unset;transform:translate3d(0,-50%,0);.", "{display:block;width:6px;height:6px;border-radius:50%;&.active{border-radius:3px;height:14px;}}}}"], getClassName$9('wrap'), getClassName$9('page'), getClassName$9('indicator'), getClassName$9('item'), getClassName$9('item')); //#endregion
 
 var getItems = function getItems(children, loop, height) {
   var items = [].concat(children),
@@ -6206,8 +6206,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
         wrapWidth = _containerRef$current2.offsetWidth,
         wrapHeight = _containerRef$current2.offsetHeight;
     var fg = new Touch__default['default'](el, {
-      onTouchStart: function onTouchStart(e) {
-        e.preventDefault();
+      onTouchStart: function onTouchStart() {
         el.style.transitionProperty = 'none';
         thisRef.current.isMoving = true;
         thisRef.current.lastX = thisRef.current.x;
