@@ -15,7 +15,6 @@ const StyledTabs = styled(Tabs)`
 
 const Tabs1 = styled(Tabs)`
   .uc-tabs-header-item {
-    width: unset;
     padding: 0 20px;
   }
 `;
@@ -40,12 +39,6 @@ const StyledContent = styled.div`
 const scrollTabs = Array.from(new Array(20), (v, i) => ({ title: '标题' + (i + 1) }));
 
 export default function App() {
-  const [tabTitles, setTabTitles] = useState<Array<{ title: string | number }>>([
-    { title: '标题' },
-  ]);
-  const maxCount = 4;
-  const [value, setValue] = useState(0);
-
   return (
     <PageWrap>
       <DemoBlock title="默认" padding={0}>

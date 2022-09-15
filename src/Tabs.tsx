@@ -77,7 +77,6 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
     padding: 0 12px;
     user-select: none;
     height: 100%;
