@@ -1,15 +1,14 @@
 //#region  top
 
-import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { throttle, prefixClassName } from './helper';
+import { prefixClassName } from './helper';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
-import useMount from './hooks/useMount';
 import type { StringOrNumber } from './types';
 
 const getClassName = prefixClassName('uc-tabs');
@@ -51,10 +50,7 @@ const StyledWrapper = styled.div`
   .${getClassName('header-wrap')} {
     display: flex;
     height: 44px;
-    box-sizing: border-box;
     position: relative;
-    margin: 0;
-    padding: 0;
     overflow-x: scroll;
     border-bottom: 1px solid ${vars.border};
     align-items: center;
@@ -81,14 +77,12 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    flex: none;
     width: 56px;
     padding: 0 12px;
     user-select: none;
     height: 100%;
-    box-sizing: border-box;
     cursor: pointer;
+    flex: none;
 
     &.active {
       ${getThemeColorCss('color')}
@@ -149,6 +143,8 @@ const Tabs: React.FC<TabsProp> = ({
   const underlineElRef = useRef<HTMLDivElement>();
   const contentWrapElRef = useRef<HTMLDivElement>();
   const headerWrapElRef = useRef<HTMLDivElement>();
+  const mountedRef = useRef(false);
+  const tabRef = useRef<HTMLElement[]>([]);
 
   const [_v, _setV] = useState(typeof value === 'undefined' ? defaultValue : value);
 
@@ -158,78 +154,54 @@ const Tabs: React.FC<TabsProp> = ({
     }
   }, [value]);
 
-  useLayoutEffect(() => {
-    const setUnderlineSize = throttle(() => {
-      const underlineEl = underlineElRef.current;
-      if (underline && underlineEl) {
-        const next = underlineEl.nextSibling as HTMLElement;
-        if (next) {
-          underlineEl.style.width = next.offsetWidth + 'px';
-        }
-      }
-    }, 34);
-
-    if (underline) {
-      window.addEventListener('resize', setUnderlineSize);
-    }
-
-    setUnderlineSize();
-
-    return () => {
-      if (underline) {
-        window.removeEventListener('resize', setUnderlineSize);
-      }
-    };
-  }, [underline]);
-
   const prevVal = usePrevious(_v);
+
+  useEffect(() => {
+    const underlineEl = underlineElRef.current;
+    if (underlineEl && underline) {
+      underlineEl.style.transform = `translateX(${tabRef.current[_v].offsetLeft}px)`;
+      underlineEl.style.width = tabRef.current[_v].offsetWidth + 'px';
+    }
+  }, [_v, underline]);
 
   useEffect(() => {
     const headerWrapEl = headerWrapElRef.current;
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      const itemEl = headerWrapEl.querySelector(
-        `.${getClassName('header-item')}`
-      ) as HTMLDivElement;
+      const count = React.Children.count(children);
+      const size = ~~(headerWrapEl.scrollWidth / count);
 
-      if (itemEl && typeof prevVal !== 'undefined') {
-        if (_v > prevVal) {
-          // right
-          headerWrapEl.scroll({
-            left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
-            behavior: 'smooth',
-          });
-        } else if (_v < prevVal) {
-          // left
-          headerWrapEl.scroll({
-            left: (_v - 1) * itemEl.offsetWidth,
-            behavior: 'smooth',
-          });
-        } else {
-          // ignored
-        }
-      } else if (
-        itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth &&
-        headerWrapEl.scrollLeft > 0
-      ) {
+      if (!mountedRef.current) {
+        mountedRef.current = true;
+
         headerWrapEl.scroll({
-          left: 0,
-          behavior: 'smooth',
+          left: (_v + 1) * size - headerWrapEl.offsetWidth,
         });
+      } else {
+        if (typeof prevVal !== 'undefined') {
+          if (_v > prevVal) {
+            // right
+            headerWrapEl.scroll({
+              left: (_v + 2) * size - headerWrapEl.offsetWidth,
+              behavior: 'smooth',
+            });
+          } else if (_v < prevVal) {
+            // left
+            headerWrapEl.scroll({
+              left: (_v - 1) * size,
+              behavior: 'smooth',
+            });
+          } else {
+            // ignored
+          }
+        } else if (size * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth',
+          });
+        }
       }
     }
   }, [_v, prevVal]);
-
-  useMount(() => {
-    const headerWrapEl = headerWrapElRef.current;
-    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      const itemEl = headerWrapEl.querySelector('.uc-tabs-header-item') as HTMLDivElement;
-
-      // scroll
-      headerWrapEl.scroll({
-        left: _v * itemEl.offsetWidth,
-      });
-    }
-  });
 
   if (React.Children.count(children) === 0) {
     return null;
@@ -245,7 +217,7 @@ const Tabs: React.FC<TabsProp> = ({
           <div
             ref={underlineElRef}
             className={clsx(getClassName('header-line'), getClassName('header-item'))}
-            style={{ transform: `translate3d(${_v * 100 + '%'}, 0, 0)`, width: tabWidth }}
+            style={{ width: tabWidth }}
           >
             <div
               className="line"
@@ -263,6 +235,7 @@ const Tabs: React.FC<TabsProp> = ({
                   active: index === _v,
                   disabled: disabled,
                 })}
+                ref={(e) => (tabRef.current[index] = e)}
                 style={{ width: tabWidth }}
                 onClick={() => {
                   if (!disabled && index !== _v) {

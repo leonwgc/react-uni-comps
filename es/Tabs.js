@@ -1,17 +1,16 @@
 //#region  top
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { throttle, prefixClassName } from './helper';
+import { prefixClassName } from './helper';
 import { attachPropertiesToComponent } from './util';
 import usePrevious from './hooks/usePrevious';
-import useMount from './hooks/useMount';
 var getClassName = prefixClassName('uc-tabs');
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 14px;\n    flex: none;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    box-sizing: border-box;\n    position: relative;\n    margin: 0;\n    padding: 0;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 14px;\n    flex: none;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    box-sizing: border-box;\n    cursor: pointer;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"])), getClassName('header-wrap'), vars.border, getClassName('content-wrap'), getClassName('extra'), getClassName('header-item'), getThemeColorCss('color'), vars.disabledText, getClassName('header-line'), getThemeColorCss('background-color'));
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    position: relative;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    cursor: pointer;\n    flex: none;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"], ["\n  -webkit-tap-highlight-color: transparent;\n\n  .", " {\n    display: flex;\n    height: 44px;\n    position: relative;\n    overflow-x: scroll;\n    border-bottom: 1px solid ", ";\n    align-items: center;\n    &::-webkit-scrollbar {\n      display: none;\n    }\n\n    &.no-border {\n      border-bottom: none;\n    }\n  }\n\n  .", " {\n    overflow: hidden;\n  }\n\n  .", " {\n  }\n\n  .", " {\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 56px;\n    padding: 0 12px;\n    user-select: none;\n    height: 100%;\n    cursor: pointer;\n    flex: none;\n\n    &.active {\n      ", "\n      font-weight: 500;\n    }\n    &.disabled {\n      cursor: not-allowed;\n      color: ", ";\n    }\n  }\n\n  .", " {\n    position: absolute;\n    left: 0;\n    top: 0;\n    pointer-events: none;\n    transition: transform 0.3s ease;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n\n    .line {\n      position: absolute;\n      bottom: 0;\n      height: 2px;\n      ", "\n    }\n  }\n"])), getClassName('header-wrap'), vars.border, getClassName('content-wrap'), getClassName('extra'), getClassName('header-item'), getThemeColorCss('color'), vars.disabledText, getClassName('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -47,6 +46,8 @@ var Tabs = function Tabs(_a) {
   var underlineElRef = useRef();
   var contentWrapElRef = useRef();
   var headerWrapElRef = useRef();
+  var mountedRef = useRef(false);
+  var tabRef = useRef([]);
 
   var _e = useState(typeof value === 'undefined' ? defaultValue : value),
       _v = _e[0],
@@ -57,71 +58,52 @@ var Tabs = function Tabs(_a) {
       _setV(value);
     }
   }, [value]);
-  useLayoutEffect(function () {
-    var setUnderlineSize = throttle(function () {
-      var underlineEl = underlineElRef.current;
-
-      if (underline && underlineEl) {
-        var next = underlineEl.nextSibling;
-
-        if (next) {
-          underlineEl.style.width = next.offsetWidth + 'px';
-        }
-      }
-    }, 34);
-
-    if (underline) {
-      window.addEventListener('resize', setUnderlineSize);
-    }
-
-    setUnderlineSize();
-    return function () {
-      if (underline) {
-        window.removeEventListener('resize', setUnderlineSize);
-      }
-    };
-  }, [underline]);
   var prevVal = usePrevious(_v);
+  useEffect(function () {
+    var underlineEl = underlineElRef.current;
+
+    if (underlineEl && underline) {
+      underlineEl.style.transform = "translateX(".concat(tabRef.current[_v].offsetLeft, "px)");
+      underlineEl.style.width = tabRef.current[_v].offsetWidth + 'px';
+    }
+  }, [_v, underline]);
   useEffect(function () {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector(".".concat(getClassName('header-item')));
+      var count = React.Children.count(children);
+      var size = ~~(headerWrapEl.scrollWidth / count);
 
-      if (itemEl && typeof prevVal !== 'undefined') {
-        if (_v > prevVal) {
-          // right
-          headerWrapEl.scroll({
-            left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
-            behavior: 'smooth'
-          });
-        } else if (_v < prevVal) {
-          // left
-          headerWrapEl.scroll({
-            left: (_v - 1) * itemEl.offsetWidth,
-            behavior: 'smooth'
-          });
-        } else {// ignored
-        }
-      } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+      if (!mountedRef.current) {
+        mountedRef.current = true;
         headerWrapEl.scroll({
-          left: 0,
-          behavior: 'smooth'
+          left: (_v + 1) * size - headerWrapEl.offsetWidth
         });
+      } else {
+        if (typeof prevVal !== 'undefined') {
+          if (_v > prevVal) {
+            // right
+            headerWrapEl.scroll({
+              left: (_v + 2) * size - headerWrapEl.offsetWidth,
+              behavior: 'smooth'
+            });
+          } else if (_v < prevVal) {
+            // left
+            headerWrapEl.scroll({
+              left: (_v - 1) * size,
+              behavior: 'smooth'
+            });
+          } else {// ignored
+          }
+        } else if (size * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
       }
     }
   }, [_v, prevVal]);
-  useMount(function () {
-    var headerWrapEl = headerWrapElRef.current;
-
-    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item'); // scroll
-
-      headerWrapEl.scroll({
-        left: _v * itemEl.offsetWidth
-      });
-    }
-  });
 
   if (React.Children.count(children) === 0) {
     return null;
@@ -138,7 +120,6 @@ var Tabs = function Tabs(_a) {
     ref: underlineElRef,
     className: clsx(getClassName('header-line'), getClassName('header-item')),
     style: {
-      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)"),
       width: tabWidth
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -158,6 +139,9 @@ var Tabs = function Tabs(_a) {
           active: index === _v,
           disabled: disabled_1
         }),
+        ref: function ref(e) {
+          return tabRef.current[index] = e;
+        },
         style: {
           width: tabWidth
         },

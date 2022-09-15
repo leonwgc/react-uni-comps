@@ -2288,7 +2288,7 @@ var getClassName$1 = prefixClassName('uc-tabs');
 var StyledWrapper$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Tabs__StyledWrapper",
   componentId: "sc-1ouhc8q-0"
-})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;box-sizing:border-box;position:relative;margin:0;padding:0;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;width:56px;padding:0 12px;user-select:none;height:100%;box-sizing:border-box;cursor:pointer;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;height:100%;display:flex;justify-content:center;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
+})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;position:relative;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;width:56px;padding:0 12px;user-select:none;height:100%;cursor:pointer;flex:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;height:100%;display:flex;justify-content:center;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -2324,6 +2324,8 @@ var Tabs = function Tabs(_ref2) {
   var underlineElRef = React.useRef();
   var contentWrapElRef = React.useRef();
   var headerWrapElRef = React.useRef();
+  var mountedRef = React.useRef(false);
+  var tabRef = React.useRef([]);
 
   var _useState = React.useState(typeof value === 'undefined' ? defaultValue : value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2335,70 +2337,51 @@ var Tabs = function Tabs(_ref2) {
       _setV(value);
     }
   }, [value]);
-  React.useLayoutEffect(function () {
-    var setUnderlineSize = throttle(function () {
-      var underlineEl = underlineElRef.current;
-
-      if (underline && underlineEl) {
-        var next = underlineEl.nextSibling;
-
-        if (next) {
-          underlineEl.style.width = next.offsetWidth + 'px';
-        }
-      }
-    }, 34);
-
-    if (underline) {
-      window.addEventListener('resize', setUnderlineSize);
-    }
-
-    setUnderlineSize();
-    return function () {
-      if (underline) {
-        window.removeEventListener('resize', setUnderlineSize);
-      }
-    };
-  }, [underline]);
   var prevVal = usePrevious(_v);
+  React.useEffect(function () {
+    var underlineEl = underlineElRef.current;
+
+    if (underlineEl && underline) {
+      underlineEl.style.transform = "translateX(".concat(tabRef.current[_v].offsetLeft, "px)");
+      underlineEl.style.width = tabRef.current[_v].offsetWidth + 'px';
+    }
+  }, [_v, underline]);
   React.useEffect(function () {
     var headerWrapEl = headerWrapElRef.current;
 
     if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector(".".concat(getClassName$1('header-item')));
+      var count = React__default['default'].Children.count(children);
+      var size = ~~(headerWrapEl.scrollWidth / count);
 
-      if (itemEl && typeof prevVal !== 'undefined') {
-        if (_v > prevVal) {
-          // right
-          headerWrapEl.scroll({
-            left: (_v + 2) * itemEl.offsetWidth - headerWrapEl.offsetWidth,
-            behavior: 'smooth'
-          });
-        } else if (_v < prevVal) {
-          // left
-          headerWrapEl.scroll({
-            left: (_v - 1) * itemEl.offsetWidth,
-            behavior: 'smooth'
-          });
-        } else ;
-      } else if (itemEl.offsetWidth * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+      if (!mountedRef.current) {
+        mountedRef.current = true;
         headerWrapEl.scroll({
-          left: 0,
-          behavior: 'smooth'
+          left: (_v + 1) * size - headerWrapEl.offsetWidth
         });
+      } else {
+        if (typeof prevVal !== 'undefined') {
+          if (_v > prevVal) {
+            // right
+            headerWrapEl.scroll({
+              left: (_v + 2) * size - headerWrapEl.offsetWidth,
+              behavior: 'smooth'
+            });
+          } else if (_v < prevVal) {
+            // left
+            headerWrapEl.scroll({
+              left: (_v - 1) * size,
+              behavior: 'smooth'
+            });
+          } else ;
+        } else if (size * (_v + 1) <= headerWrapEl.offsetWidth && headerWrapEl.scrollLeft > 0) {
+          headerWrapEl.scroll({
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
       }
     }
   }, [_v, prevVal]);
-  useMount(function () {
-    var headerWrapEl = headerWrapElRef.current;
-
-    if (headerWrapEl && headerWrapEl.scrollWidth > headerWrapEl.offsetWidth) {
-      var itemEl = headerWrapEl.querySelector('.uc-tabs-header-item'); // scroll
-
-      headerWrapEl.scroll({
-        left: _v * itemEl.offsetWidth
-      });
-    }
-  });
 
   if (React__default['default'].Children.count(children) === 0) {
     return null;
@@ -2415,7 +2398,6 @@ var Tabs = function Tabs(_ref2) {
     ref: underlineElRef,
     className: clsx__default['default'](getClassName$1('header-line'), getClassName$1('header-item')),
     style: {
-      transform: "translate3d(".concat(_v * 100 + '%', ", 0, 0)"),
       width: tabWidth
     }
   }, /*#__PURE__*/React__default['default'].createElement("div", {
@@ -2435,6 +2417,9 @@ var Tabs = function Tabs(_ref2) {
           active: index === _v,
           disabled: disabled
         }),
+        ref: function ref(e) {
+          return tabRef.current[index] = e;
+        },
         style: {
           width: tabWidth
         },
