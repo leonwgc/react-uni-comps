@@ -44,19 +44,19 @@ export default function App() {
       <DemoBlock title="默认" padding={0}>
         <Tabs>
           <Tabs.Tab title="标题1">
-            <StyledContent>content1</StyledContent>
+            <StyledContent>内容1</StyledContent>
           </Tabs.Tab>
           <Tabs.Tab title="标题2">
-            <StyledContent>content2</StyledContent>
+            <StyledContent>内容2</StyledContent>
           </Tabs.Tab>
           <Tabs.Tab title="标题3">
-            <StyledContent>content3</StyledContent>
+            <StyledContent>内容3</StyledContent>
           </Tabs.Tab>
         </Tabs>
       </DemoBlock>
 
       <DemoBlock title="下划线" padding={0}>
-        <Tabs underline={20}>
+        <Tabs underline={20} tabWidth={100}>
           <Tabs.Tab title="标题1"></Tabs.Tab>
           <Tabs.Tab title="标题2"></Tabs.Tab>
           <Tabs.Tab title="标题3"></Tabs.Tab>
