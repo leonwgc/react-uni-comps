@@ -2288,7 +2288,7 @@ var getClassName$1 = prefixClassName('uc-tabs');
 var StyledWrapper$1 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Tabs__StyledWrapper",
   componentId: "sc-1ouhc8q-0"
-})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;position:relative;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;width:56px;padding:0 12px;user-select:none;height:100%;cursor:pointer;flex:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;height:100%;display:flex;justify-content:center;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
+})(["-webkit-tap-highlight-color:transparent;.", "{display:flex;height:44px;position:relative;overflow-x:scroll;border-bottom:1px solid ", ";align-items:center;&::-webkit-scrollbar{display:none;}&.no-border{border-bottom:none;}}.", "{overflow:hidden;}.", "{}.", "{white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 12px;user-select:none;height:100%;cursor:pointer;flex:none;&.active{", " font-weight:500;}&.disabled{cursor:not-allowed;color:", ";}}.", "{position:absolute;left:0;top:0;pointer-events:none;transition:transform 0.3s ease;height:100%;display:flex;justify-content:center;.line{position:absolute;bottom:0;height:2px;", "}}"], getClassName$1('header-wrap'), border, getClassName$1('content-wrap'), getClassName$1('extra'), getClassName$1('header-item'), getThemeColorCss('color'), disabledText, getClassName$1('header-line'), getThemeColorCss('background-color'));
 /**
  *  选项卡项，放在Tabs里面
  *
@@ -6173,6 +6173,10 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
   useMount(function () {
     slideToPageIndex(0, false);
   });
+  useUpdateEffect(function () {
+    setItems(getItems(children, loop, height));
+    slideToPageIndex(0, false);
+  }, [children, loop, height]);
   React.useEffect(function () {
     if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       thisRef.current.timer = window.setInterval(function (p) {

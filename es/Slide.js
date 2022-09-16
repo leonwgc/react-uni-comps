@@ -163,6 +163,10 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useMount(function () {
     slideToPageIndex(0, false);
   });
+  useUpdateEffect(function () {
+    setItems(getItems(children, loop, height));
+    slideToPageIndex(0, false);
+  }, [children, loop, height]);
   useEffect(function () {
     if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       thisRef.current.timer = window.setInterval(function (p) {
