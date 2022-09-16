@@ -278,6 +278,11 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     slideToPageIndex(0, false);
   });
 
+  useUpdateEffect(() => {
+    setItems(getItems(children, loop, height));
+    slideToPageIndex(0, false);
+  }, [children, loop, height]);
+
   useEffect(() => {
     if (autoPlay && len > 1 && !thisRef.current.isMoving) {
       thisRef.current.timer = window.setInterval(
