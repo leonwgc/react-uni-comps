@@ -83,7 +83,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var count = items.length;
   var len = React.Children.count(children);
-  var childrenRef = useLatest(children);
 
   var _k = useState(0),
       pageIndex = _k[0],
@@ -94,6 +93,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var min = exp ? -1 : 0;
   var max = exp ? len : len - 1;
+  var pageIndexRef = useLatest(pageIndex);
   var propsRef = useLatest({
     exp: exp,
     ratio: ratio,
@@ -152,10 +152,6 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     };
   });
   useUpdateEffect(function () {
-    setItems(getItems(childrenRef.current, loop, height));
-    slideToPageIndex(0, false);
-  }, [loop, height]);
-  useUpdateEffect(function () {
     if (pageIndex >= 0 && pageIndex < len) {
       onPageChange === null || onPageChange === void 0 ? void 0 : onPageChange(pageIndex);
     }
@@ -164,21 +160,32 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
     slideToPageIndex(0, false);
   });
   useUpdateEffect(function () {
-    setItems(getItems(children, loop, height));
-    slideToPageIndex(0, false);
+    var items = getItems(children, loop, height);
+    setItems(items);
+    var count = React.Children.count(children);
+    propsRef.current.exp = items.length > count;
+    propsRef.current.count = count;
+
+    if (pageIndexRef.current >= count - 1) {
+      slideToPageIndex(count - 1);
+    } else if (pageIndexRef.current <= -1) {
+      slideToPageIndex(0);
+    }
   }, [children, loop, height]);
   useEffect(function () {
+    var len = React.Children.count(children);
+
     if (autoPlay && len > 1 && !thisRef.current.isMoving) {
-      thisRef.current.timer = window.setInterval(function (p) {
+      thisRef.current.timer = window.setInterval(function () {
         if (!thisRef.current.isMoving) {
-          slideToPageIndex(p + 1);
+          slideToPageIndex(pageIndexRef.current + 1);
         }
-      }, interval, pageIndex);
+      }, interval);
       return function () {
         window.clearInterval(thisRef.current.timer);
       };
     }
-  }, [autoPlay, interval, len, pageIndex]);
+  }, [autoPlay, interval, children]);
   useLayoutEffect(function () {
     var el = wrapElRef.current;
     var _a = containerRef.current,

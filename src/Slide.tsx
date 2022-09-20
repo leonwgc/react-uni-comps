@@ -205,13 +205,13 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
 
   const count = items.length;
   const len = React.Children.count(children);
-  const childrenRef = useLatest(children);
 
   const [pageIndex, setPageIndex] = useState<number>(0); // !loop:0~len-1, loop: -1~len
   const exp = count > len; // expanded
 
   const min = exp ? -1 : 0;
   const max = exp ? len : len - 1;
+  const pageIndexRef = useLatest(pageIndex);
 
   const propsRef = useLatest({
     exp,
@@ -264,11 +264,6 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   }));
 
   useUpdateEffect(() => {
-    setItems(getItems(childrenRef.current, loop, height));
-    slideToPageIndex(0, false);
-  }, [loop, height]);
-
-  useUpdateEffect(() => {
     if (pageIndex >= 0 && pageIndex < len) {
       onPageChange?.(pageIndex);
     }
@@ -279,27 +274,33 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
   });
 
   useUpdateEffect(() => {
-    setItems(getItems(children, loop, height));
-    slideToPageIndex(0, false);
+    const items = getItems(children, loop, height);
+    setItems(items);
+    const count = React.Children.count(children);
+    propsRef.current.exp = items.length > count;
+    propsRef.current.count = count;
+
+    if (pageIndexRef.current >= count - 1) {
+      slideToPageIndex(count - 1);
+    } else if (pageIndexRef.current <= -1) {
+      slideToPageIndex(0);
+    }
   }, [children, loop, height]);
 
   useEffect(() => {
+    const len = React.Children.count(children);
     if (autoPlay && len > 1 && !thisRef.current.isMoving) {
-      thisRef.current.timer = window.setInterval(
-        (p) => {
-          if (!thisRef.current.isMoving) {
-            slideToPageIndex(p + 1);
-          }
-        },
-        interval,
-        pageIndex
-      );
+      thisRef.current.timer = window.setInterval(() => {
+        if (!thisRef.current.isMoving) {
+          slideToPageIndex(pageIndexRef.current + 1);
+        }
+      }, interval);
 
       return () => {
         window.clearInterval(thisRef.current.timer);
       };
     }
-  }, [autoPlay, interval, len, pageIndex]);
+  }, [autoPlay, interval, children]);
 
   useLayoutEffect(() => {
     const el = wrapElRef.current;

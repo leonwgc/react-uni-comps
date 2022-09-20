@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Slide, styled } from 'react-uni-comps';
+import { Slide, styled, Button, Space, AutoCenter } from 'react-uni-comps';
 
 const StyledCard = styled.div`
   height: 200px;
@@ -17,22 +17,39 @@ const images = [
 ];
 
 export default function App() {
+  const [list, setList] = React.useState(images);
+
   return (
     <PageWrap>
-      <DemoBlock title="水平" padding={0}>
-        <Slide autoPlay direction="horizontal">
-          {images.map((item, index) => (
+      <DemoBlock title="" padding={0}>
+        <Slide autoPlay interval={2000}>
+          {list.map((item, index) => (
             <StyledCard key={index} style={{ backgroundImage: `url(${item})` }}></StyledCard>
           ))}
         </Slide>
-      </DemoBlock>
 
-      <DemoBlock title="垂直" padding={0}>
-        <Slide interval={1000} autoPlay direction="vertical">
-          {images.map((item, index) => (
-            <StyledCard key={index} style={{ backgroundImage: `url(${item})` }}></StyledCard>
-          ))}
-        </Slide>
+        <AutoCenter style={{ margin: '16px auto' }}>
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => {
+                setList(list.concat(images[0]));
+              }}
+            >
+              添加
+            </Button>
+
+            <Button
+              danger
+              onClick={() => {
+                list.pop();
+                setList([...list]);
+              }}
+            >
+              删除
+            </Button>
+          </Space>
+        </AutoCenter>
       </DemoBlock>
     </PageWrap>
   );
