@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Popup from './Popup';
 import Button from './Button';
-import * as vars from './vars';
 import clsx from 'clsx';
 import { prefixClassName } from './helper';
 import type { Props as PopupProps } from './Popup';
@@ -32,9 +31,13 @@ type Props = {
   cancelText?: React.ReactNode;
   /** 取消回调 */
   onCancel?: () => void;
+  /** 边框色
+   * @default #dcdcdc
+   */
+  borderColor?: string;
 } & Omit<PopupProps, 'position' | 'flip' | 'children'>;
 
-const StyledActionSheet = styled(Popup)`
+const StyledActionSheet = styled(Popup)<{ $border: string }>`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   overflow: hidden;
@@ -49,11 +52,11 @@ const StyledActionSheet = styled(Popup)`
     color: #999;
     font-size: 15px;
     padding: 18px 16px;
-    border-bottom: 1px solid ${vars.border};
+    border-bottom: 1px solid ${({ $border }) => $border};
   }
 
   .${getClassName('action-item')} {
-    border-top: 1px solid ${vars.border};
+    border-top: 1px solid ${({ $border }) => $border};
     background-color: #fff;
     width: 100%;
     padding: 14px;
@@ -72,7 +75,7 @@ const StyledActionSheet = styled(Popup)`
     }
 
     &.default.pc:hover {
-      border-color: ${vars.border};
+      border-color: ${({ $border }) => $border};
     }
 
     .${getClassName('action-item-description')} {
@@ -82,7 +85,7 @@ const StyledActionSheet = styled(Popup)`
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid ${vars.border};
+      border-bottom: 1px solid ${({ $border }) => $border};
     }
 
     &.cancel {
@@ -103,12 +106,14 @@ const ActionSheet: React.FC<Props> = (props) => {
     onClose,
     className,
     extra,
+    borderColor = '#dcdcdc',
     ...rest
   } = props;
 
   return (
     <StyledActionSheet
       {...rest}
+      $border={borderColor}
       className={clsx(getClassName(), className)}
       visible={visible}
       position="bottom"

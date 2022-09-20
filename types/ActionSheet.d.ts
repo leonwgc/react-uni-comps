@@ -21,6 +21,10 @@ declare type Props = {
     cancelText?: React.ReactNode;
     /** 取消回调 */
     onCancel?: () => void;
+    /** 边框色
+     * @default #dcdcdc
+     */
+    borderColor?: string;
 } & Omit<PopupProps, 'position' | 'flip' | 'children'>;
 /** 动作面板 */
 declare const ActionSheet: React.FC<Props>;
