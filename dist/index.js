@@ -4263,12 +4263,24 @@ var SafeArea = /*#__PURE__*/React__default['default'].forwardRef(function (props
 });
 SafeArea.displayName = 'UC-SafeArea';
 
-var _excluded$w = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra"];
+var _excluded$w = ["visible", "actions", "cancelText", "onCancel", "closeOnMaskClick", "onClose", "className", "extra", "borderColor"];
 var getClassName$6 = prefixClassName('uc-actionsheet');
 var StyledActionSheet = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "ActionSheet__StyledActionSheet",
   componentId: "sc-1wphsp-0"
-})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;background-color:#f5f5f5;user-select:none;.", "{background-color:#fff;display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.", "{border-top:1px solid ", ";background-color:#fff;width:100%;padding:14px;height:55px;text-align:center;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;color:#333;&.disabled{opacity:1;color:#999;}&.default.pc:hover{border-color:", ";}.", "{font-size:12px;margin-top:4px;color:#999;}&:not(:last-child){border-bottom:1px solid ", ";}&.cancel{margin-top:8px;border-bottom:none;}}"], getClassName$6('extra'), border, getClassName$6('action-item'), border, border, getClassName$6('action-item-description'), border);
+})(["border-top-left-radius:8px;border-top-right-radius:8px;overflow:hidden;width:100%;background-color:#f5f5f5;user-select:none;.", "{background-color:#fff;display:flex;justify-content:center;color:#999;font-size:15px;padding:18px 16px;border-bottom:1px solid ", ";}.", "{border-top:1px solid ", ";background-color:#fff;width:100%;padding:14px;height:55px;text-align:center;border:none;border-radius:0;display:flex;flex-direction:column;font-size:18px;color:#333;&.disabled{opacity:1;color:#999;}&.default.pc:hover{border-color:", ";}.", "{font-size:12px;margin-top:4px;color:#999;}&:not(:last-child){border-bottom:1px solid ", ";}&.cancel{margin-top:8px;border-bottom:none;}}"], getClassName$6('extra'), function (_ref) {
+  var $border = _ref.$border;
+  return $border;
+}, getClassName$6('action-item'), function (_ref2) {
+  var $border = _ref2.$border;
+  return $border;
+}, function (_ref3) {
+  var $border = _ref3.$border;
+  return $border;
+}, getClassName$6('action-item-description'), function (_ref4) {
+  var $border = _ref4.$border;
+  return $border;
+});
 /** 动作面板 */
 
 var ActionSheet = function ActionSheet(props) {
@@ -4283,9 +4295,12 @@ var ActionSheet = function ActionSheet(props) {
       onClose = props.onClose,
       className = props.className,
       extra = props.extra,
+      _props$borderColor = props.borderColor,
+      borderColor = _props$borderColor === void 0 ? '#dcdcdc' : _props$borderColor,
       rest = _objectWithoutProperties(props, _excluded$w);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledActionSheet, _extends({}, rest, {
+    $border: borderColor,
     className: clsx__default['default'](getClassName$6(), className),
     visible: visible,
     position: "bottom",
