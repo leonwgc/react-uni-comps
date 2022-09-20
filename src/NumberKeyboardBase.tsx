@@ -4,6 +4,9 @@ import clsx from 'clsx';
 import Button from './Button';
 import type { BaseProps, StringOrNumber } from './types';
 import SafeArea from './SafeArea';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-number-keyboard');
 
 type Props = {
   /**
@@ -26,28 +29,28 @@ const StyledNumberKeyboardBase = styled(SafeArea)`
   background-color: #f2f3f5;
   user-select: none;
 
-  .body {
+  .${getClassName('body')} {
     display: flex;
     padding: 6px 0 0 6px;
     height: 100%;
 
-    .keys {
+    .${getClassName('keys')} {
       display: flex;
       flex: 3;
       flex-wrap: wrap;
 
-      &.sidebar {
+      &.${getClassName('sidebar')} {
         display: flex;
         flex: 1;
         flex-direction: column;
         max-width: 33%;
 
-        .key {
+        .${getClassName('key')} {
           max-width: 100%;
         }
       }
 
-      .key {
+      .${getClassName('key')} {
         position: relative;
         flex: 1;
         flex-basis: 33%;
@@ -87,12 +90,12 @@ const NumberKeyboardBase = React.forwardRef<HTMLDivElement, Props>((props, ref) 
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
 
   return (
-    <StyledNumberKeyboardBase {...rest} ref={ref} className={clsx('uc-number-keyboard', className)}>
-      <div className={clsx('body')} style={{ height }}>
-        <div className="keys">
+    <StyledNumberKeyboardBase {...rest} ref={ref} className={clsx(getClassName(), className)}>
+      <div className={getClassName('body')} style={{ height }}>
+        <div className={getClassName('keys')}>
           {keys.map((key) => (
             <div
-              className={clsx('key', {
+              className={clsx(getClassName('key'), {
                 'zero': key === '0',
                 'custom-key': key === customKey,
                 'empty': key === '',
@@ -109,8 +112,8 @@ const NumberKeyboardBase = React.forwardRef<HTMLDivElement, Props>((props, ref) 
             </div>
           ))}
         </div>
-        <div className={clsx('sidebar', 'keys')}>
-          <div className={clsx('key')} key={'backspace'}>
+        <div className={clsx(getClassName('sidebar'), getClassName('keys'))}>
+          <div className={getClassName('key')} key={'backspace'}>
             <Styledkey
               onClick={() => {
                 onClick?.('backspace');
@@ -121,7 +124,7 @@ const NumberKeyboardBase = React.forwardRef<HTMLDivElement, Props>((props, ref) 
               </svg>
             </Styledkey>
           </div>
-          <div className={clsx('key')} key={'ok'}>
+          <div className={getClassName('key')} key={'ok'}>
             <Styledkey
               type="primary"
               onClick={() => {

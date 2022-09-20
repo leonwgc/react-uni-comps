@@ -5,7 +5,9 @@ import clsx from 'clsx';
 import NumberKeyboardBase from './NumberKeyboardBase';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
-var StyledPopup = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  height: 300px;\n"], ["\n  width: 100%;\n  height: 300px;\n"])));
+import { prefixClassName } from './helper';
+var getClassName = prefixClassName('uc-number-keyboard-picker');
+var StyledPopup = styled(Popup)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  background-color: transparent;\n"], ["\n  width: 100%;\n  background-color: transparent;\n"])));
 /** 数字键盘 */
 
 var NumberKeyboard = function NumberKeyboard(props) {
@@ -20,11 +22,14 @@ var NumberKeyboard = function NumberKeyboard(props) {
       onClose = props.onClose,
       onChange = props.onChange,
       className = props.className,
-      rest = __rest(props, ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className"]);
+      style = props.style,
+      _c = props.height,
+      height = _c === void 0 ? 260 : _c,
+      rest = __rest(props, ["visible", "okText", "closeOnMaskClick", "maxLength", "customKey", "onOk", "onClose", "onChange", "className", "style", "height"]);
 
-  var _c = useState(''),
-      value = _c[0],
-      setValue = _c[1];
+  var _d = useState(''),
+      value = _d[0],
+      setValue = _d[1];
 
   useUpdateEffect(function () {
     onChange === null || onChange === void 0 ? void 0 : onChange(value);
@@ -37,10 +42,14 @@ var NumberKeyboard = function NumberKeyboard(props) {
       backgroundColor: 'transparent'
     },
     position: "bottom",
-    className: clsx('uc-number-keyboard-picker', className)
+    style: __assign(__assign({}, style), {
+      height: height
+    }),
+    className: clsx(getClassName(), className)
   }), /*#__PURE__*/React.createElement(NumberKeyboardBase, {
     okText: okText,
     customKey: customKey,
+    height: height,
     onClick: function onClick(k) {
       if (k === 'ok') {
         onOk === null || onOk === void 0 ? void 0 : onOk(value);

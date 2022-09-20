@@ -5,6 +5,9 @@ import NumberKeyboardBase from './NumberKeyboardBase';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
 import type { BaseProps, StringOrNumber } from './types';
+import { prefixClassName } from './helper';
+
+const getClassName = prefixClassName('uc-number-keyboard-picker');
 
 type Props = {
   /** 是否弹出 */
@@ -73,7 +76,7 @@ const NumberKeyboard: React.FC<Props> = (props) => {
       maskStyle={{ backgroundColor: 'transparent' }}
       position="bottom"
       style={{ ...style, height }}
-      className={clsx('uc-number-keyboard-picker', className)}
+      className={clsx(getClassName(), className)}
     >
       <NumberKeyboardBase
         okText={okText}
