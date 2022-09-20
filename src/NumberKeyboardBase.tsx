@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Button from './Button';
-import type { BaseProps } from './types';
+import type { BaseProps, StringOrNumber } from './types';
+import SafeArea from './SafeArea';
 
 type Props = {
-  /** 
+  /**
    * 确定按钮文字
    * @default 确定
    *  */
@@ -13,21 +14,22 @@ type Props = {
   /** 自定义按钮 */
   customKey?: '.' | 'X' | '';
   onClick: (key: string) => void;
+  /**
+   * 高度
+   * @default 260
+   * */
+  height?: StringOrNumber;
 } & BaseProps;
 
-const StyledNumberKeyboardBase = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
+const StyledNumberKeyboardBase = styled(SafeArea)`
   width: 100%;
-  padding-bottom: 22px;
   background-color: #f2f3f5;
   user-select: none;
 
   .body {
     display: flex;
     padding: 6px 0 0 6px;
+    height: 100%;
 
     .keys {
       display: flex;
@@ -80,13 +82,13 @@ const Styledkey = styled(Button)`
 
 /** 数字键盘基础 */
 const NumberKeyboardBase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { onClick, okText = '确定', customKey = '', className, ...rest } = props;
+  const { onClick, okText = '确定', customKey = '', className, height = 260, ...rest } = props;
 
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', customKey];
 
   return (
     <StyledNumberKeyboardBase {...rest} ref={ref} className={clsx('uc-number-keyboard', className)}>
-      <div className={clsx('body')}>
+      <div className={clsx('body')} style={{ height }}>
         <div className="keys">
           {keys.map((key) => (
             <div

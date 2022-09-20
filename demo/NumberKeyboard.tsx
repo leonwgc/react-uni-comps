@@ -3,7 +3,7 @@ import PageWrap from './common/PageWrap';
 import { NumberKeyboard, Toast, PasswordInput } from 'react-uni-comps';
 
 export default function App() {
-  const [v, setV] = useState('');
+  const [v, setV] = useState<string>('');
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -23,14 +23,14 @@ export default function App() {
         }}
         mask={false}
         value={v}
-        onChange={setV}
+        onChange={(v) => setV(v)}
         onFocus={() => setVisible(true)}
       />
 
       <NumberKeyboard
         customKey="."
         onClose={() => setVisible(false)}
-        okText="Ok"
+        okText="确定"
         visible={visible}
         onChange={(value) => {
           Toast.show({ content: value, duration: 200 });

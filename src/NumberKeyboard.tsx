@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import NumberKeyboardBase from './NumberKeyboardBase';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Popup from './Popup';
-import type { BaseProps } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 
 type Props = {
   /** 是否弹出 */
@@ -30,11 +30,16 @@ type Props = {
    * @default true
    * */
   closeOnMaskClick?: boolean;
+  /**
+   * 高度
+   * @default 260
+   * */
+  height?: StringOrNumber;
 } & BaseProps;
 
 const StyledPopup = styled(Popup)`
   width: 100%;
-  height: 300px;
+  background-color: transparent;
 `;
 
 /** 数字键盘 */
@@ -49,6 +54,8 @@ const NumberKeyboard: React.FC<Props> = (props) => {
     onClose,
     onChange,
     className,
+    style,
+    height = 260,
     ...rest
   } = props;
   const [value, setValue] = useState('');
@@ -65,11 +72,13 @@ const NumberKeyboard: React.FC<Props> = (props) => {
       onClose={onClose}
       maskStyle={{ backgroundColor: 'transparent' }}
       position="bottom"
+      style={{ ...style, height }}
       className={clsx('uc-number-keyboard-picker', className)}
     >
       <NumberKeyboardBase
         okText={okText}
         customKey={customKey}
+        height={height}
         onClick={(k) => {
           if (k === 'ok') {
             onOk?.(value);

@@ -316,6 +316,10 @@ const routes = [
     component: lazy(() => import('./NumberKeyboard')),
   },
   {
+    path: '/NumberKeyboardBase',
+    component: lazy(() => import('./NumberKeyboardBase')),
+  },
+  {
     path: '/HairLineBox',
     component: lazy(() => import('./HairLineBox')),
   },

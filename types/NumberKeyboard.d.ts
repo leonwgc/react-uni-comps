@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BaseProps } from './types';
+import type { BaseProps, StringOrNumber } from './types';
 declare type Props = {
     /** 是否弹出 */
     visible: boolean;
@@ -23,6 +23,11 @@ declare type Props = {
      * @default true
      * */
     closeOnMaskClick?: boolean;
+    /**
+     * 高度
+     * @default 260
+     * */
+    height?: StringOrNumber;
 } & BaseProps;
 /** 数字键盘 */
 declare const NumberKeyboard: React.FC<Props>;
