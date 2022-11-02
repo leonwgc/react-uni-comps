@@ -9748,6 +9748,58 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Sudoku.displayName = 'UC-Sudoku';
 
+var _excluded$1k = ["x", "y", "className", "children"];
+var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "FloatingBubble__StyledWrap",
+  componentId: "sc-1y55mct-0"
+})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:240px;right:60px;display:flex;justify-content:center;align-items:center;", " color:#fff;font-size:24px;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:opacity 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
+/** 浮动气泡  */
+
+var FloatingBubble = function FloatingBubble(props) {
+  var _props$x = props.x,
+      x = _props$x === void 0 ? true : _props$x,
+      _props$y = props.y,
+      y = _props$y === void 0 ? true : _props$y,
+      className = props.className,
+      children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$1k);
+
+  var ref = /*#__PURE__*/React__default['default'].createRef();
+  var vRef = React.useRef({
+    x: 0,
+    y: 0
+  });
+  return /*#__PURE__*/React__default['default'].createElement(Touch.TouchElement, {
+    ref: ref,
+    onTouchStart: function onTouchStart() {
+      ref.current.style.opacity = '0.8';
+    },
+    onTouchEnd: function onTouchEnd() {
+      ref.current.style.opacity = '1';
+    },
+    onPressMove: function onPressMove(_ref) {
+      var deltaX = _ref.deltaX,
+          deltaY = _ref.deltaY;
+
+      if (x) {
+        vRef.current.x += deltaX;
+      }
+
+      if (y) {
+        vRef.current.y += deltaY;
+      }
+
+      if (x || y) {
+        ref.current.style.transform = "translate3d(".concat(vRef.current.x, "px,").concat(vRef.current.y, "px,0)");
+      }
+    }
+  }, /*#__PURE__*/React__default['default'].createElement(StyledWrap$k, _extends({
+    className: clsx__default['default']('uc-floating-bubble', className)
+  }, rest), children));
+};
+
+FloatingBubble.displayName = 'UC-FloatingBubble';
+
 var StyledLoading = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Loading__StyledLoading",
   componentId: "sc-li19rl-0"
@@ -10060,7 +10112,7 @@ var initI18n = function initI18n(options) {
   .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
-var _excluded$1k = ["children", "label", "name"],
+var _excluded$1l = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"];
 
 var FormItem = function FormItem(props) {
@@ -10070,7 +10122,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1k);
+      fieldProps = _objectWithoutProperties(props, _excluded$1l);
 
   var required = false;
 
@@ -10287,6 +10339,7 @@ exports.Drawer = Drawer;
 exports.Empty = Empty;
 exports.ErrorBoundary = ErrorBoundary;
 exports.FileInputTrigger = FileInputTrigger;
+exports.FloatingBubble = FloatingBubble;
 exports.Form = Form$1;
 exports.HairLineBox = HairLineBox;
 exports.Icon = Icon;

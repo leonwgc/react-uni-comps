@@ -90,6 +90,7 @@ export { default as ClockSpin } from './ClockSpin';
 export { default as Countdown } from './Countdown';
 export { default as Turntable } from './Turntable';
 export { default as Sudoku } from './Sudoku';
+export { default as FloatingBubble } from './FloatingBubble';
 
 /** only has static method */
 export { default as Loading } from './Loading';

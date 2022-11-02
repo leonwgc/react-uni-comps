@@ -439,6 +439,10 @@ module.exports = [
         name: 'BackTop',
         title: 'BackTop 回到顶部',
       },
+      {
+        name: 'FloatingBubble',
+        title: 'FloatingBubble 浮动气泡',
+      },
     ],
   },
 ];

@@ -1,6 +1,6 @@
 {
   "name": "react-uni-comps",
-  "version": "1.8.4",
+  "version": "1.8.5-beta1",
   "description": "react组件库, desktop & mobile react components via hooks",
   "homepage": "https://leonwgc.github.io/react-uni-comps/",
   "keywords": [
@@ -107,7 +107,7 @@
     "tslib": "^2.4.0",
     "w-popover": "1.1.8",
     "w-qrcode": "1.0.0",
-    "w-touch": "1.0.2",
+    "w-touch": "^1.1.0",
     "@types/sortablejs": "~1.13.0"
   },
   "sideEffects": [
