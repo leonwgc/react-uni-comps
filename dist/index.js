@@ -9752,7 +9752,7 @@ var _excluded$1k = ["x", "y", "className", "children"];
 var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FloatingBubble__StyledWrap",
   componentId: "sc-1y55mct-0"
-})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:240px;right:60px;display:flex;justify-content:center;align-items:center;", " color:#fff;font-size:24px;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:opacity 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
+})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:48px;right:24px;display:flex;justify-content:center;align-items:center;", " color:#fff;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:opacity 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
 /** 浮动气泡  */
 
 var FloatingBubble = function FloatingBubble(props) {
