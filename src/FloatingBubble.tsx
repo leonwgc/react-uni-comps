@@ -18,9 +18,9 @@ type Props = {
    */
   y?: boolean;
   /**
-   *  子元素
-   *
+   * 释放执行
    */
+  onRelease?: (el: HTMLElement) => void;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledWrap = styled.div`
@@ -28,8 +28,8 @@ const StyledWrap = styled.div`
   height: 48px;
   border-radius: 50%;
   position: fixed;
-  bottom: 48px;
-  right: 24px;
+  bottom: 24px;
+  left: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,13 +39,13 @@ const StyledWrap = styled.div`
   cursor: pointer;
   user-select: none;
   touch-action: none;
-  transition: opacity 0.15s ease;
+  transition: all 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 `;
 
 /** 浮动气泡  */
 const FloatingBubble: React.FC<Props> = (props) => {
-  const { x = true, y = true, className, children, ...rest } = props;
+  const { x = true, y = true, className, children, onRelease, ...rest } = props;
   const ref = React.createRef<HTMLElement>();
   const vRef = useRef({ x: 0, y: 0 });
 
@@ -54,17 +54,32 @@ const FloatingBubble: React.FC<Props> = (props) => {
       ref={ref}
       onTouchStart={() => {
         ref.current.style.opacity = '0.8';
+        ref.current.style.transitionDuration = '0s';
       }}
       onTouchEnd={() => {
         ref.current.style.opacity = '1';
+        ref.current.style.transitionDuration = '0.15s';
+
+        if (!x) {
+          vRef.current.x = 0;
+        }
+
+        if (!y) {
+          vRef.current.y = 0;
+        }
+
+        if (!x || !y) {
+          ref.current.style.transform = `translate3d(${vRef.current.x}px,${vRef.current.y}px,0)`;
+          setTimeout(() => {
+            onRelease?.(ref.current);
+          }, 150);
+        } else {
+          onRelease?.(ref.current);
+        }
       }}
       onPressMove={({ deltaX, deltaY }) => {
-        if (x) {
-          vRef.current.x += deltaX;
-        }
-        if (y) {
-          vRef.current.y += deltaY;
-        }
+        vRef.current.x += deltaX;
+        vRef.current.y += deltaY;
 
         if (x || y) {
           ref.current.style.transform = `translate3d(${vRef.current.x}px,${vRef.current.y}px,0)`;

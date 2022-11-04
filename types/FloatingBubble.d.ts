@@ -12,6 +12,10 @@ declare type Props = {
      * @default true
      */
     y?: boolean;
+    /**
+     * 释放执行
+     */
+    onRelease?: (el: HTMLElement) => void;
 } & React.HTMLAttributes<HTMLDivElement>;
 /** 浮动气泡  */
 declare const FloatingBubble: React.FC<Props>;
