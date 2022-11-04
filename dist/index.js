@@ -9748,11 +9748,11 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Sudoku.displayName = 'UC-Sudoku';
 
-var _excluded$1k = ["x", "y", "className", "children"];
+var _excluded$1k = ["x", "y", "className", "children", "onRelease"];
 var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FloatingBubble__StyledWrap",
   componentId: "sc-1y55mct-0"
-})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:48px;right:24px;display:flex;justify-content:center;align-items:center;", " color:#fff;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:opacity 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
+})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:24px;left:24px;display:flex;justify-content:center;align-items:center;", " color:#fff;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:all 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
 /** 浮动气泡  */
 
 var FloatingBubble = function FloatingBubble(props) {
@@ -9762,6 +9762,7 @@ var FloatingBubble = function FloatingBubble(props) {
       y = _props$y === void 0 ? true : _props$y,
       className = props.className,
       children = props.children,
+      onRelease = props.onRelease,
       rest = _objectWithoutProperties(props, _excluded$1k);
 
   var ref = /*#__PURE__*/React__default['default'].createRef();
@@ -9773,21 +9774,34 @@ var FloatingBubble = function FloatingBubble(props) {
     ref: ref,
     onTouchStart: function onTouchStart() {
       ref.current.style.opacity = '0.8';
+      ref.current.style.transitionDuration = '0s';
     },
     onTouchEnd: function onTouchEnd() {
       ref.current.style.opacity = '1';
+      ref.current.style.transitionDuration = '0.15s';
+
+      if (!x) {
+        vRef.current.x = 0;
+      }
+
+      if (!y) {
+        vRef.current.y = 0;
+      }
+
+      if (!x || !y) {
+        ref.current.style.transform = "translate3d(".concat(vRef.current.x, "px,").concat(vRef.current.y, "px,0)");
+        setTimeout(function () {
+          onRelease === null || onRelease === void 0 ? void 0 : onRelease(ref.current);
+        }, 150);
+      } else {
+        onRelease === null || onRelease === void 0 ? void 0 : onRelease(ref.current);
+      }
     },
     onPressMove: function onPressMove(_ref) {
       var deltaX = _ref.deltaX,
           deltaY = _ref.deltaY;
-
-      if (x) {
-        vRef.current.x += deltaX;
-      }
-
-      if (y) {
-        vRef.current.y += deltaY;
-      }
+      vRef.current.x += deltaX;
+      vRef.current.y += deltaY;
 
       if (x || y) {
         ref.current.style.transform = "translate3d(".concat(vRef.current.x, "px,").concat(vRef.current.y, "px,0)");
