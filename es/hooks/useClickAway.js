@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { getTargetElement } from '../helper';
 import useLatest from './useLatest';
+import useEventListener from './useEventListener';
 /**
  * 监听点击元素外部事件
  *
@@ -22,31 +23,24 @@ eventName) {
   }
 
   var onClickAwayRef = useLatest(onClickAway);
-  var eventNameRef = useLatest(eventName);
   var targetRef = useLatest(target);
-  useEffect(function () {
-    var eventName = eventNameRef.current;
+  var handler = React.useCallback(function (e) {
+    var _a;
 
-    var handler = function handler(e) {
+    var targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+
+    if (targets.some(function (targetItem) {
       var _a;
 
-      var targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+      var targetElement = getTargetElement(targetItem);
+      return !targetElement || ((_a = targetElement.contains) === null || _a === void 0 ? void 0 : _a.call(targetElement, e.target));
+    })) {
+      return;
+    }
 
-      if (targets.some(function (targetItem) {
-        var _a;
-
-        var targetElement = getTargetElement(targetItem);
-        return !targetElement || ((_a = targetElement.contains) === null || _a === void 0 ? void 0 : _a.call(targetElement, e.target));
-      })) {
-        return;
-      }
-
-      (_a = onClickAwayRef.current) === null || _a === void 0 ? void 0 : _a.call(onClickAwayRef, e);
-    };
-
-    document.addEventListener(eventName, handler);
-    return function () {
-      document.removeEventListener(eventName, handler);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+    (_a = onClickAwayRef.current) === null || _a === void 0 ? void 0 : _a.call(onClickAwayRef, e);
   }, []);
+  useEventListener(function () {
+    return document;
+  }, eventName, handler);
 }

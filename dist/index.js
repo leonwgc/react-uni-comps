@@ -4777,6 +4777,7 @@ NumberKeyboard.displayName = 'UC-NumberKeyboard';
  * @param {(e) => void} [onClickAway] 点击外部事件触发回调
  * @param {string} [eventName='click'] 监听事件类型
  */
+
 function useClickAway(
 /** 监听dom对象 */
 target,
@@ -4784,33 +4785,26 @@ target,
 onClickAway) {
   var eventName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'click';
   var onClickAwayRef = useLatest(onClickAway);
-  var eventNameRef = useLatest(eventName);
   var targetRef = useLatest(target);
-  React.useEffect(function () {
-    var eventName = eventNameRef.current;
+  var handler = React__default['default'].useCallback(function (e) {
+    var _onClickAwayRef$curre;
 
-    var handler = function handler(e) {
-      var _onClickAwayRef$curre;
+    var targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
 
-      var targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+    if (targets.some(function (targetItem) {
+      var _targetElement$contai;
 
-      if (targets.some(function (targetItem) {
-        var _targetElement$contai;
+      var targetElement = getTargetElement(targetItem);
+      return !targetElement || ((_targetElement$contai = targetElement.contains) === null || _targetElement$contai === void 0 ? void 0 : _targetElement$contai.call(targetElement, e.target));
+    })) {
+      return;
+    }
 
-        var targetElement = getTargetElement(targetItem);
-        return !targetElement || ((_targetElement$contai = targetElement.contains) === null || _targetElement$contai === void 0 ? void 0 : _targetElement$contai.call(targetElement, e.target));
-      })) {
-        return;
-      }
-
-      (_onClickAwayRef$curre = onClickAwayRef.current) === null || _onClickAwayRef$curre === void 0 ? void 0 : _onClickAwayRef$curre.call(onClickAwayRef, e);
-    };
-
-    document.addEventListener(eventName, handler);
-    return function () {
-      document.removeEventListener(eventName, handler);
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+    (_onClickAwayRef$curre = onClickAwayRef.current) === null || _onClickAwayRef$curre === void 0 ? void 0 : _onClickAwayRef$curre.call(onClickAwayRef, e);
   }, []);
+  useEventListener(function () {
+    return document;
+  }, eventName, handler);
 }
 
 var _excluded$B = ["left", "right", "onClose", "onOpen", "autoClose", "closeOnClickOutside", "className", "children"];
