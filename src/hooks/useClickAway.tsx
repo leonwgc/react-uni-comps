@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { getTargetElement } from '../helper';
 import useLatest from './useLatest';
 import type { TargetElementType } from '../types';
+import useEventListener from './useEventListener';
 
 /**
  * 监听点击元素外部事件
@@ -20,30 +21,21 @@ export default function useClickAway(
   eventName = 'click'
 ) {
   const onClickAwayRef = useLatest(onClickAway);
-  const eventNameRef = useLatest(eventName);
   const targetRef = useLatest(target);
 
-  useEffect(() => {
-    const eventName = eventNameRef.current;
-    const handler = (e) => {
-      const targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+  const handler = React.useCallback((e) => {
+    const targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
 
-      if (
-        targets.some((targetItem) => {
-          const targetElement = getTargetElement(targetItem);
-          return !targetElement || targetElement.contains?.(e.target);
-        })
-      ) {
-        return;
-      }
-      onClickAwayRef.current?.(e);
-    };
-
-    document.addEventListener(eventName, handler);
-
-    return () => {
-      document.removeEventListener(eventName, handler);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (
+      targets.some((targetItem) => {
+        const targetElement = getTargetElement(targetItem);
+        return !targetElement || targetElement.contains?.(e.target);
+      })
+    ) {
+      return;
+    }
+    onClickAwayRef.current?.(e);
   }, []);
+
+  useEventListener(() => document, eventName, handler);
 }
