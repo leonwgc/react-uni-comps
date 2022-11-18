@@ -9759,7 +9759,7 @@ var FloatingBubble = function FloatingBubble(props) {
       onRelease = props.onRelease,
       rest = _objectWithoutProperties(props, _excluded$1k);
 
-  var ref = /*#__PURE__*/React__default['default'].createRef();
+  var ref = React__default['default'].useRef();
   var vRef = React.useRef({
     x: 0,
     y: 0

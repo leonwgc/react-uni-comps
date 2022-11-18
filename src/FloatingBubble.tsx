@@ -46,7 +46,7 @@ const StyledWrap = styled.div`
 /** 浮动气泡  */
 const FloatingBubble: React.FC<Props> = (props) => {
   const { x = true, y = true, className, children, onRelease, ...rest } = props;
-  const ref = React.createRef<HTMLElement>();
+  const ref = React.useRef<HTMLElement>();
   const vRef = useRef({ x: 0, y: 0 });
 
   return (

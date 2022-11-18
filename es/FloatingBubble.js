@@ -17,7 +17,7 @@ var FloatingBubble = function FloatingBubble(props) {
       onRelease = props.onRelease,
       rest = __rest(props, ["x", "y", "className", "children", "onRelease"]);
 
-  var ref = /*#__PURE__*/React.createRef();
+  var ref = React.useRef();
   var vRef = useRef({
     x: 0,
     y: 0
