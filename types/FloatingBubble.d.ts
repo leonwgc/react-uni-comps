@@ -13,6 +13,10 @@ declare type Props = {
      */
     y?: boolean;
     /**
+     * 按下执行
+     */
+    onPress?: (el: HTMLElement) => void;
+    /**
      * 释放执行
      */
     onRelease?: (el: HTMLElement) => void;

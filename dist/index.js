@@ -9742,7 +9742,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Sudoku.displayName = 'UC-Sudoku';
 
-var _excluded$1k = ["x", "y", "className", "children", "onRelease"];
+var _excluded$1k = ["x", "y", "className", "children", "onRelease", "onPress"];
 var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FloatingBubble__StyledWrap",
   componentId: "sc-1y55mct-0"
@@ -9757,6 +9757,7 @@ var FloatingBubble = function FloatingBubble(props) {
       className = props.className,
       children = props.children,
       onRelease = props.onRelease,
+      onPress = props.onPress,
       rest = _objectWithoutProperties(props, _excluded$1k);
 
   var ref = React__default['default'].useRef();
@@ -9769,6 +9770,7 @@ var FloatingBubble = function FloatingBubble(props) {
     onTouchStart: function onTouchStart() {
       ref.current.style.opacity = '0.8';
       ref.current.style.transitionDuration = '0s';
+      onPress === null || onPress === void 0 ? void 0 : onPress(ref.current);
     },
     onTouchEnd: function onTouchEnd() {
       ref.current.style.opacity = '1';

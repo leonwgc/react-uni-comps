@@ -15,7 +15,8 @@ var FloatingBubble = function FloatingBubble(props) {
       className = props.className,
       children = props.children,
       onRelease = props.onRelease,
-      rest = __rest(props, ["x", "y", "className", "children", "onRelease"]);
+      onPress = props.onPress,
+      rest = __rest(props, ["x", "y", "className", "children", "onRelease", "onPress"]);
 
   var ref = React.useRef();
   var vRef = useRef({
@@ -27,6 +28,7 @@ var FloatingBubble = function FloatingBubble(props) {
     onTouchStart: function onTouchStart() {
       ref.current.style.opacity = '0.8';
       ref.current.style.transitionDuration = '0s';
+      onPress === null || onPress === void 0 ? void 0 : onPress(ref.current);
     },
     onTouchEnd: function onTouchEnd() {
       ref.current.style.opacity = '1';

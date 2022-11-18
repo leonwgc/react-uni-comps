@@ -18,6 +18,10 @@ type Props = {
    */
   y?: boolean;
   /**
+   * 按下执行
+   */
+  onPress?: (el: HTMLElement) => void;
+  /**
    * 释放执行
    */
   onRelease?: (el: HTMLElement) => void;
@@ -45,7 +49,7 @@ const StyledWrap = styled.div`
 
 /** 浮动气泡  */
 const FloatingBubble: React.FC<Props> = (props) => {
-  const { x = true, y = true, className, children, onRelease, ...rest } = props;
+  const { x = true, y = true, className, children, onRelease, onPress, ...rest } = props;
   const ref = React.useRef<HTMLElement>();
   const vRef = useRef({ x: 0, y: 0 });
 
@@ -55,6 +59,8 @@ const FloatingBubble: React.FC<Props> = (props) => {
       onTouchStart={() => {
         ref.current.style.opacity = '0.8';
         ref.current.style.transitionDuration = '0s';
+
+        onPress?.(ref.current);
       }}
       onTouchEnd={() => {
         ref.current.style.opacity = '1';
