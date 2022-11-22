@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { TouchElement, Toast, useMount, AutoCenter, getThemeColor } from 'react-uni-comps';
+import { TouchElement, Toast, useMount, AutoCenter } from 'react-uni-comps';
 
 type Position = {
   x: number;
@@ -20,7 +20,6 @@ const update = (el, transform, statusEl) => {
 export default function App() {
   const ref = useRef<Position>({ x: 0, y: 0, angle: 0, scale: 1 });
   const elRef = useRef<HTMLDivElement>();
-
   const statusElRef = useRef<HTMLDivElement>();
 
   useMount(() => update(elRef.current, ref.current, statusElRef.current));
@@ -78,9 +77,9 @@ export default function App() {
           >
             <div
               style={{
-                width: 120,
-                height: 120,
-                border: `1px solid ${getThemeColor()}`,
+                width: 80,
+                height: 80,
+                background: '#005cff',
                 position: 'relative',
               }}
             />
