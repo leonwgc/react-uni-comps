@@ -20,6 +20,15 @@ export default function All() {
       <Cell
         label={
           <Space>
+            <IconComponent /> FloatingBubble
+          </Space>
+        }
+        content={<IconArrow direction="right" />}
+        onClick={() => gotoPage('FloatingBubble')}
+      ></Cell>
+      <Cell
+        label={
+          <Space>
             <IconComponent /> ClockSpin
           </Space>
         }
