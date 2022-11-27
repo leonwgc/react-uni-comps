@@ -19,7 +19,7 @@
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "build": "father-build && tsc",
+    "build": "father build && tsc",
     "doc:dev": "dumi dev",
     "doc:build": "dumi build",
     "jest-preview": "jest-preview",
@@ -58,7 +58,7 @@
     "eslint": "^8.6.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "father-build": "^1.20.4",
+    "father": "^4.1.0",
     "husky": "^7.0.4",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
@@ -92,6 +92,7 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.4.2",
+    "@types/sortablejs": "~1.13.0",
     "clsx": "^1.1.1",
     "color": "^4.1.0",
     "i18next": "^21.6.16",
@@ -107,8 +108,7 @@
     "tslib": "^2.4.0",
     "w-popover": "1.1.8",
     "w-qrcode": "1.0.0",
-    "w-touch": "1.1.0",
-    "@types/sortablejs": "~1.13.0"
+    "w-touch": "1.1.0"
   },
   "sideEffects": [
     "*.less"
