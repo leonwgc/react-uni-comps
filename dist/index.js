@@ -5534,12 +5534,39 @@ var PickerView = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 PickerView.displayName = 'UC-PickerView';
 
 var _excluded$G = ["okText", "cancelText", "title", "onClose", "visible", "onOk", "onChange", "onWheelChange", "itemHeight", "labelRender", "className", "value", "data"];
+
 var StyledDrawer$1 = /*#__PURE__*/styled__default['default'](Drawer).withConfig({
   displayName: "Picker__StyledDrawer",
   componentId: "sc-1j9idoi-0"
-})([".header{display:flex;height:45px;align-items:center;justify-content:space-between;padding:0 16px;background-color:#f7f7f7;font-size:16px;touch-action:none;user-select:none;.ok-text{", "}.cancel-text{color:#999;}.title{color:#333;}}"], getThemeColorCss('color')); //#endregion
+})([".header{display:flex;height:45px;align-items:center;justify-content:space-between;padding:0 16px;background-color:#f7f7f7;font-size:16px;touch-action:none;user-select:none;.ok-text{", "}.cancel-text{color:#999;}.title{color:#333;}}"], getThemeColorCss('color'));
+
+var isSameArr = function isSameArr(ar1, ar2) {
+  if (ar1.length !== ar2.length) {
+    return false;
+  }
+
+  var _iterator = _createForOfIteratorHelper(ar1),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var item = _step.value;
+
+      if (!ar2.includes(item)) {
+        return false;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+}; //#endregion
 
 /** picker 下方弹出选择器 */
+
 
 var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
   var _props$okText = props.okText,
@@ -5580,6 +5607,12 @@ var Picker = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     setVal(value);
     (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 ? void 0 : _onChangeRef$current.call(onChangeRef, value); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  var prevValue = usePrevious(value);
+  useUpdateEffect(function () {
+    if (!isSameArr(value, prevValue)) {
+      onValueChange(value);
+    }
+  }, [value]);
   return /*#__PURE__*/React__default['default'].createElement(StyledDrawer$1, _extends({}, rest, {
     className: clsx__default['default']('uc-picker', className),
     position: "bottom",

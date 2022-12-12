@@ -6,9 +6,28 @@ import Drawer from './Drawer';
 import clsx from 'clsx';
 import PickerView from './PickerView';
 import useLatest from './hooks/useLatest';
-var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"])), getThemeColorCss('color')); //#endregion
+import useUpdateEffect from './hooks/useUpdateEffect';
+import usePrevious from './hooks/usePrevious';
+var StyledDrawer = styled(Drawer)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"], ["\n  .header {\n    display: flex;\n    height: 45px;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 16px;\n    background-color: #f7f7f7;\n    font-size: 16px;\n    touch-action: none;\n    user-select: none;\n\n    .ok-text {\n      ", "\n    }\n    .cancel-text {\n      color: #999;\n    }\n    .title {\n      color: #333;\n    }\n  }\n"])), getThemeColorCss('color'));
+
+var isSameArr = function isSameArr(ar1, ar2) {
+  if (ar1.length !== ar2.length) {
+    return false;
+  }
+
+  for (var _i = 0, ar1_1 = ar1; _i < ar1_1.length; _i++) {
+    var item = ar1_1[_i];
+
+    if (!ar2.includes(item)) {
+      return false;
+    }
+  }
+
+  return true;
+}; //#endregion
 
 /** picker 下方弹出选择器 */
+
 
 var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _a = props.okText,
@@ -48,6 +67,12 @@ var Picker = /*#__PURE__*/React.forwardRef(function (props, ref) {
     setVal(value);
     (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, value); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  var prevValue = usePrevious(value);
+  useUpdateEffect(function () {
+    if (!isSameArr(value, prevValue)) {
+      onValueChange(value);
+    }
+  }, [value]);
   return /*#__PURE__*/React.createElement(StyledDrawer, __assign({}, rest, {
     className: clsx('uc-picker', className),
     position: "bottom",

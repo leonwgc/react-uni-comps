@@ -6,7 +6,9 @@ import clsx from 'clsx';
 import PickerView from './PickerView';
 import useLatest from './hooks/useLatest';
 import type { StringOrNumber } from './types';
+import useUpdateEffect from './hooks/useUpdateEffect';
 import type { Props as PickerviewProps, PickerViewRefType } from './PickerView';
+import usePrevious from './hooks/usePrevious';
 
 //#region def
 
@@ -58,6 +60,20 @@ const StyledDrawer = styled(Drawer)`
   }
 `;
 
+const isSameArr = (ar1: StringOrNumber[], ar2: StringOrNumber[]) => {
+  if (ar1.length !== ar2.length) {
+    return false;
+  }
+
+  for (const item of ar1) {
+    if (!ar2.includes(item)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 //#endregion
 
 /** picker 下方弹出选择器 */
@@ -88,8 +104,16 @@ const Picker = React.forwardRef<PickerViewRefType, Props>((props, ref) => {
   const onValueChange = useCallback((value) => {
     setVal(value);
     onChangeRef.current?.(value);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const prevValue = usePrevious(value);
+
+  useUpdateEffect(() => {
+    if (!isSameArr(value, prevValue)) {
+      onValueChange(value);
+    }
+  }, [value]);
 
   return (
     <StyledDrawer
