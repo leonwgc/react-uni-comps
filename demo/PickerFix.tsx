@@ -32,7 +32,7 @@ export default function App() {
   }, [initValues]);
 
   useMount(() => {
-    setInitValues({ fgh: fghData[5].value, name: 'wgc' });
+    setInitValues({ fgh: '', name: 'wgc' });
     // setFgh('运营分工会');
   });
 
