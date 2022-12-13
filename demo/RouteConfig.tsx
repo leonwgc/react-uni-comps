@@ -7,6 +7,10 @@ const routes = [
     component: lazy(() => import('./All')),
   },
   {
+    path: '/PickerFix',
+    component: lazy(() => import('./PickerFix')),
+  },
+  {
     path: '/FloatingBubble',
     component: lazy(() => import('./FloatingBubble')),
   },

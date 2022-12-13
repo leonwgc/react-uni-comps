@@ -7,7 +7,8 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
-var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  flex: 1;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
+var Outer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  flex: 1;\n  height: 100%;\n"], ["\n  flex: 1;\n  height: 100%;\n"])));
+var StyledWrap = styled(animated.div)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
@@ -147,16 +148,18 @@ var Wheel = function Wheel(props) {
       return fg.destroy();
     };
   }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
-  return /*#__PURE__*/React.createElement(StyledWrap, __assign({
+  return /*#__PURE__*/React.createElement(Outer, __assign({
     ref: elRef
   }, rest, {
     className: clsx('uc-wheel', className),
-    style: __assign(__assign({}, style), {
+    style: style
+  }), /*#__PURE__*/React.createElement(StyledWrap, {
+    style: {
       transform: styles.y.to(function (v) {
         return "translate3d(0,".concat(v, "px,0)");
       })
-    })
-  }), data.map(function (item) {
+    }
+  }, data.map(function (item) {
     return /*#__PURE__*/React.createElement(Text, {
       className: "item",
       key: item.value,
@@ -164,9 +167,9 @@ var Wheel = function Wheel(props) {
         height: itemHeight
       }
     }, labelRender(item));
-  }));
+  })));
 };
 
 Wheel.displayName = 'UC-Wheel';
 export default Wheel;
-var templateObject_1;
+var templateObject_1, templateObject_2;

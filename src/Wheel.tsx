@@ -30,10 +30,14 @@ type Props = {
   labelRender?: (item: DataItem) => React.ReactNode;
 } & BaseProps;
 
+const Outer = styled.div`
+  flex: 1;
+  height: 100%;
+`;
+
 const StyledWrap = styled(animated.div)`
   transform: translate3d(0px, 105px, 0px);
   touch-action: none;
-  flex: 1;
   .item {
     display: flex;
     justify-content: center;
@@ -171,18 +175,15 @@ const Wheel: React.FC<Props> = (props) => {
   }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
 
   return (
-    <StyledWrap
-      ref={elRef}
-      {...rest}
-      className={clsx('uc-wheel', className)}
-      style={{ ...style, transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}
-    >
-      {data.map((item) => (
-        <Text className="item" key={item.value} style={{ height: itemHeight }}>
-          {labelRender(item)}
-        </Text>
-      ))}
-    </StyledWrap>
+    <Outer ref={elRef} {...rest} className={clsx('uc-wheel', className)} style={style}>
+      <StyledWrap style={{ transform: styles.y.to((v) => `translate3d(0,${v}px,0)`) }}>
+        {data.map((item) => (
+          <Text className="item" key={item.value} style={{ height: itemHeight }}>
+            {labelRender(item)}
+          </Text>
+        ))}
+      </StyledWrap>
+    </Outer>
   );
 };
 

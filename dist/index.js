@@ -5144,10 +5144,14 @@ var Drawer = function Drawer(props) {
 Drawer.displayName = 'UC-Drawer';
 
 var _excluded$E = ["onIndexChange", "itemHeight", "style", "data", "labelRender", "index", "className"];
+var Outer = /*#__PURE__*/styled__default['default'].div.withConfig({
+  displayName: "Wheel__Outer",
+  componentId: "sc-otlop6-0"
+})(["flex:1;height:100%;"]);
 var StyledWrap$5 = /*#__PURE__*/styled__default['default'](web.animated.div).withConfig({
   displayName: "Wheel__StyledWrap",
-  componentId: "sc-otlop6-0"
-})(["transform:translate3d(0px,105px,0px);touch-action:none;flex:1;.item{display:flex;justify-content:center;align-items:center;height:35px;font-size:18px;user-select:none;cursor:grab;}"]); // 惯性滑动
+  componentId: "sc-otlop6-1"
+})(["transform:translate3d(0px,105px,0px);touch-action:none;.item{display:flex;justify-content:center;align-items:center;height:35px;font-size:18px;user-select:none;cursor:grab;}"]); // 惯性滑动
 
 var MOMENTUM_LIMIT_TIME = 300;
 var MOMENTUM_LIMIT_DISTANCE = 15;
@@ -5286,16 +5290,18 @@ var Wheel = function Wheel(props) {
       return fg.destroy();
     };
   }, [api, getIndexByY, scrollToIndex, itemHeight, firstItemY, thisRef]);
-  return /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, _extends({
+  return /*#__PURE__*/React__default['default'].createElement(Outer, _extends({
     ref: elRef
   }, rest, {
     className: clsx__default['default']('uc-wheel', className),
-    style: _objectSpread2(_objectSpread2({}, style), {}, {
+    style: style
+  }), /*#__PURE__*/React__default['default'].createElement(StyledWrap$5, {
+    style: {
       transform: styles.y.to(function (v) {
         return "translate3d(0,".concat(v, "px,0)");
       })
-    })
-  }), data.map(function (item) {
+    }
+  }, data.map(function (item) {
     return /*#__PURE__*/React__default['default'].createElement(Text, {
       className: "item",
       key: item.value,
@@ -5303,7 +5309,7 @@ var Wheel = function Wheel(props) {
         height: itemHeight
       }
     }, labelRender(item));
-  }));
+  })));
 };
 
 Wheel.displayName = 'UC-Wheel';
