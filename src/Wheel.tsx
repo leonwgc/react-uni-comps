@@ -157,7 +157,7 @@ const Wheel: React.FC<Props> = (props) => {
         }, 300);
       },
       onPressMove: (e) => {
-        yRef.current += e.deltaY;
+        yRef.current += e.deltaY * 0.5; // slow down 
 
         const distance = e.deltaY;
         const duration = Date.now() - momentumRef.current.touchStartTime;
@@ -166,7 +166,7 @@ const Wheel: React.FC<Props> = (props) => {
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
           // momentum
           const speed = Math.abs(distance / duration);
-          yRef.current += (speed / 0.003) * (distance < 0 ? -1 : 1);
+          yRef.current += (speed / 0.006) * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
         }
       },
