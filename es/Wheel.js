@@ -128,7 +128,8 @@ var Wheel = function Wheel(props) {
         }, 300);
       },
       onPressMove: function onPressMove(e) {
-        yRef.current += e.deltaY;
+        yRef.current += e.deltaY * 0.5; // slow down 
+
         var distance = e.deltaY;
         var duration = Date.now() - momentumRef.current.touchStartTime;
         api.start({
@@ -139,7 +140,7 @@ var Wheel = function Wheel(props) {
         if (duration < MOMENTUM_LIMIT_TIME && Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE) {
           // momentum
           var speed = Math.abs(distance / duration);
-          yRef.current += speed / 0.003 * (distance < 0 ? -1 : 1);
+          yRef.current += speed / 0.006 * (distance < 0 ? -1 : 1);
           scrollToIndex(getIndexByY());
         }
       }
