@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Space, Cell, IconArrow, Icon } from 'react-uni-comps';
+import { Space, Cell, IconArrow, Icon, useBeforeUnload } from 'react-uni-comps';
 
 const demos = [
   'FloatingBubble',
@@ -101,6 +101,7 @@ const demos = [
 ];
 
 export default function All() {
+  useBeforeUnload('信息尚未保存');
   const history = useHistory();
   const gotoPage = useCallback((page) => {
     document.title = page;

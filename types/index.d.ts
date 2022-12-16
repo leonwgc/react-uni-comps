@@ -117,6 +117,8 @@ export { default as useClickAway } from './hooks/useClickAway';
 export { default as useTimeout } from './hooks/useTimeout';
 export { default as useInterval } from './hooks/useInterval';
 export { default as useEventListener } from './hooks/useEventListener';
+export { default as useLifecycles } from './hooks/useLifecycles';
+export { default as useBeforeUnload } from './hooks/useBeforeUnload';
 /** third-party libs */
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
 export { default as clsx } from 'clsx';
