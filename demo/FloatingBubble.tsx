@@ -6,7 +6,7 @@ export default function App() {
   return (
     <PageWrap>
       <FloatingBubble
-        style={{ fontSize: 20 }}
+        style={{ right: 30, bottom: 60, background: '#005cff', color: '#fff', fontSize: 22 }}
         onPress={() => {
           console.log('start');
         }}

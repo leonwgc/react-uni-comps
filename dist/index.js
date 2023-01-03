@@ -9786,7 +9786,7 @@ var _excluded$1k = ["x", "y", "className", "children", "onRelease", "onPress"];
 var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FloatingBubble__StyledWrap",
   componentId: "sc-1y55mct-0"
-})(["width:48px;height:48px;border-radius:50%;position:fixed;bottom:24px;left:24px;display:flex;justify-content:center;align-items:center;", " color:#fff;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:all 0.15s ease;-webkit-tap-highlight-color:transparent;"], getThemeColorCss('background'));
+})(["width:48px;height:48px;border-radius:50%;position:fixed;display:flex;justify-content:center;align-items:center;overflow:hidden;cursor:pointer;user-select:none;touch-action:none;transition:all 0.15s ease;-webkit-tap-highlight-color:transparent;"]);
 /** 浮动气泡  */
 
 var FloatingBubble = function FloatingBubble(props) {
@@ -10146,6 +10146,56 @@ function useTimeout(fn, delay) {
   }, [delay]);
 }
 
+/**
+ * 注册mount,unmount回调
+ *
+ * @param {*} mount
+ * @param {*} [unmount]
+ */
+
+var useLifecycles = function useLifecycles(mount, unmount) {
+  React.useEffect(function () {
+    if (mount) {
+      mount();
+    }
+
+    return function () {
+      if (unmount) {
+        unmount();
+      }
+    };
+  }, []);
+};
+
+/**
+ * 刷新或关闭浏览器执行
+ *
+ * @param {string} [message]
+ * @param {(boolean | (() => boolean))} [enabled=true]
+ */
+
+var useBeforeUnload = function useBeforeUnload(message) {
+  var enabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var handler = React.useCallback(function (event) {
+    var finalEnabled = typeof enabled === 'function' ? enabled() : true;
+
+    if (!finalEnabled) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (message) {
+      event.returnValue = message;
+    }
+
+    return message;
+  }, [enabled, message]);
+  useEventListener(function () {
+    return window;
+  }, 'beforeunload', handler);
+};
+
 var defaultInitOptions = {
   interpolation: {
     escapeValue: false // not needed for react!!
@@ -10471,6 +10521,7 @@ exports.observe = observe;
 exports.throttle = throttle;
 exports.uniqArray = uniqArray;
 exports.unobserve = unobserve;
+exports.useBeforeUnload = useBeforeUnload;
 exports.useClickAway = useClickAway;
 exports.useCountdown = useCountdown;
 exports.useDebounce = useDebounce;
@@ -10479,6 +10530,7 @@ exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useInterval = useInterval;
 exports.useLatest = useLatest;
+exports.useLifecycles = useLifecycles;
 exports.useList = useList;
 exports.useMount = useMount;
 exports.usePrevious = usePrevious;

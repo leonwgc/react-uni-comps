@@ -3,8 +3,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { TouchElement } from 'w-touch';
 import clsx from 'clsx';
-import { getThemeColorCss } from './themeHelper';
-var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  position: fixed;\n  bottom: 24px;\n  left: 24px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  ", "\n  color:#fff;\n  overflow: hidden;\n  cursor: pointer;\n  user-select: none;\n  touch-action: none;\n  transition: all 0.15s ease;\n  -webkit-tap-highlight-color: transparent;\n"], ["\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  position: fixed;\n  bottom: 24px;\n  left: 24px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  ", "\n  color:#fff;\n  overflow: hidden;\n  cursor: pointer;\n  user-select: none;\n  touch-action: none;\n  transition: all 0.15s ease;\n  -webkit-tap-highlight-color: transparent;\n"])), getThemeColorCss('background'));
+var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  cursor: pointer;\n  user-select: none;\n  touch-action: none;\n  transition: all 0.15s ease;\n  -webkit-tap-highlight-color: transparent;\n"], ["\n  width: 48px;\n  height: 48px;\n  border-radius: 50%;\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  cursor: pointer;\n  user-select: none;\n  touch-action: none;\n  transition: all 0.15s ease;\n  -webkit-tap-highlight-color: transparent;\n"])));
 /** 浮动气泡  */
 
 var FloatingBubble = function FloatingBubble(props) {

@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { TouchElement } from 'w-touch';
 import clsx from 'clsx';
-import { getThemeColorCss } from './themeHelper';
 
 type Props = {
   /**
@@ -32,13 +31,9 @@ const StyledWrap = styled.div`
   height: 48px;
   border-radius: 50%;
   position: fixed;
-  bottom: 24px;
-  left: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  ${getThemeColorCss('background')}
-  color:#fff;
   overflow: hidden;
   cursor: pointer;
   user-select: none;

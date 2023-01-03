@@ -1,6 +1,5 @@
 import React from 'react';
 import PageWrap from './common/PageWrap';
-import DemoBlock from './common/DemoBlock';
 import { BackTop, Icon, FloatingBubble } from 'react-uni-comps';
 
 const App = () => {
@@ -11,8 +10,10 @@ const App = () => {
       </div>
 
       <BackTop>
-        <FloatingBubble style={{ bottom: 45, right: 45, left: 'unset' }}>
-          <Icon type="uc-icon-xiangxia" style={{ transform: 'rotate(-180deg)', fontSize: 24 }} />
+        <FloatingBubble
+          style={{ bottom: 45, right: 45, background: '#005cff', color: '#fff', fontSize: 18 }}
+        >
+          <Icon type="uc-icon-xiangxia" style={{ transform: 'rotate(-180deg)' }} />
         </FloatingBubble>
       </BackTop>
     </PageWrap>
