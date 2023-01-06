@@ -162,7 +162,8 @@ function isElement(node) {
   return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
 }
 /**
- * get scroll parent of el, return root(default as window) if not found
+ *
+ * 获取最近的滚动父元素，如果没有，则返回root, root默认是window
  *
  * @export
  * @param {Element} el
