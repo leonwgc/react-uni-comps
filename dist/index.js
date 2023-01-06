@@ -2033,7 +2033,7 @@ function useInViewport(ref) {
 }
 
 /**
- * 使用前一个值
+ * 返回前一个值
  *
  * @export
  * @template T
