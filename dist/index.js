@@ -10393,6 +10393,12 @@ Object.defineProperty(exports, 'TouchElement', {
     return Touch.TouchElement;
   }
 });
+Object.defineProperty(exports, 'Sortable', {
+  enumerable: true,
+  get: function () {
+    return Sortable__default['default'];
+  }
+});
 Object.defineProperty(exports, 'nanoid', {
   enumerable: true,
   get: function () {

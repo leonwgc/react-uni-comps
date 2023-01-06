@@ -1,14 +1,14 @@
 ---
-title: BallSpin 宜员圆圈
+title: BallSpin 两线转圆圈
 order: 2
 mobile: true
 group:
-  title: 加载指示器
+  title: 加载指示
   order: 7
   path: loading
 ---
 
-# BallSpin 宜员圆圈
+# BallSpin 两线转圆圈
 
 <code src="../demo/BallSpin.tsx"></code>
 <API src="../src/BallSpin.tsx"></API>

@@ -1,14 +1,14 @@
 ---
-title: RoundSpin 半圆大小渐变
+title: RoundSpin 大小变化转圈
 order: 5
 mobile: true
 group:
-  title: 加载指示器
+  title: 加载指示
   order: 7
   path: loading
 ---
 
-# RoundSpin 半圆大小渐变
+# RoundSpin 大小变化转圈
 
 <code src="../demo/RoundSpin.tsx"></code>
 <API src="../src/RoundSpin.tsx"></API>

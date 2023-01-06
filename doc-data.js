@@ -345,7 +345,7 @@ module.exports = [
   },
 
   {
-    title: '加载指示器',
+    title: '加载指示',
     path: 'loading',
     comps: [
       {
@@ -354,15 +354,15 @@ module.exports = [
       },
       {
         name: 'ClockSpin',
-        title: 'ClockSpin 时钟风格',
+        title: 'ClockSpin 菊花风格',
       },
       {
         name: 'BallSpin',
-        title: 'BallSpin 宜员圆圈',
+        title: 'BallSpin 两线转圆圈',
       },
       {
         name: 'DotSpin',
-        title: 'DotSpin 宜员三点',
+        title: 'DotSpin 三点跳动',
       },
       {
         name: 'CircleSpin',
@@ -370,11 +370,11 @@ module.exports = [
       },
       {
         name: 'RoundSpin',
-        title: 'RoundSpin 半圆大小渐变',
+        title: 'RoundSpin 大小变化转圈',
       },
       {
         name: 'Loading',
-        title: 'Loading 弹层加载',
+        title: 'Loading 屏幕中间加载提示',
       },
       {
         name: 'Skeleton',
@@ -382,7 +382,7 @@ module.exports = [
       },
       {
         name: 'SkeletonElement',
-        title: 'SkeletonElement 骨架元素',
+        title: 'SkeletonElement 骨架屏元素',
       },
     ],
   },

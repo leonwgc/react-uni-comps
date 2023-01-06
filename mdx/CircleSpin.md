@@ -3,7 +3,7 @@ title: CircleSpin github圆圈
 order: 4
 mobile: true
 group:
-  title: 加载指示器
+  title: 加载指示
   order: 7
   path: loading
 ---

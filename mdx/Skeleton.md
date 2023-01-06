@@ -3,7 +3,7 @@ title: Skeleton 骨架屏
 order: 7
 mobile: true
 group:
-  title: 加载指示器
+  title: 加载指示
   order: 7
   path: loading
 ---

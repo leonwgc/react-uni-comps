@@ -60,6 +60,7 @@ export default function App() {
 
       <StyedButton
         block
+        type="primary"
         onClick={() => {
           setIndex((i) => {
             if (i + 1 <= 3) {

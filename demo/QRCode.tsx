@@ -21,7 +21,7 @@ export default function App() {
 
       <DemoBlock title="尺寸">
         <AutoCenter>
-          <QRCode text={text} size={180} onClick={changeText}></QRCode>
+          <QRCode text={text} size={160} onClick={changeText}></QRCode>
         </AutoCenter>
       </DemoBlock>
 
