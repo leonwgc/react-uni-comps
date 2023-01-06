@@ -61,4 +61,8 @@ import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
 
 // react-spring
 import { useSpring, animated, easings } from 'react-uni-comps';
+
+
+// sortablejs
+import { Sortable } from 'react-uni-comps';
 ```
