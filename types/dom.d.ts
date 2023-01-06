@@ -51,7 +51,8 @@ export declare const isTouch: boolean;
 export declare const isCssVarSupported: boolean;
 declare type ScrollElement = Element | Window;
 /**
- * get scroll parent of el, return root(default as window) if not found
+ *
+ * 获取最近的滚动父元素，如果没有，则返回root, root默认是window
  *
  * @export
  * @param {Element} el
