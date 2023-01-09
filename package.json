@@ -106,7 +106,7 @@
     "styled-components": "^5.3.3",
     "tslib": "^2.4.0",
     "w-popover": "1.1.8",
-    "w-qrcode": "1.0.0",
+    "w-qrcode": "~1.1.0",
     "w-touch": "1.1.0",
     "@types/sortablejs": "~1.13.0"
   },

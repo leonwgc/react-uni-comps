@@ -16237,10 +16237,10 @@ w-popover@1.1.8:
   resolved "https://registry.npmmirror.com/w-popover/-/w-popover-1.1.8.tgz#e0e0532ee65d9fbe9a3a036002b22b3468146dc2"
   integrity sha512-38ukt3RcY32Bj/wMd00XB3zdGA07Dkx/dSiYgQ4QUe22EW3RtnKB742ro7/q574Wqi/d8KKppDvDuVS0kjMiJw==
 
-w-qrcode@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/w-qrcode/-/w-qrcode-1.0.0.tgz#5e5fa9990d36400dc547e74994e4d29c7f4127f1"
-  integrity sha512-G9y9meJzcAbFfqO8XSj24FBrquq/ngpBbHtVHDVr9cxVdLV/J9nLdcwQzt5gTAtXvfWxEBqS1pz2WDGdF0wUGg==
+w-qrcode@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/w-qrcode/-/w-qrcode-1.1.0.tgz#1bf28f0187cca7d757428737bd60191c2c2ab812"
+  integrity sha512-jkXlIzqpd+KKkFiB7jED4xLjgPWwb3HiAmU0qO34d1AwsfPgELxdi0Pdnq3csYDL7gMx8N5STziCq4Dn5X+idg==
 
 w-touch@1.1.0:
   version "1.1.0"
