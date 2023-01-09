@@ -10314,13 +10314,23 @@ var Form$1 = attachPropertiesToComponent(Form, {
   Item: FormItem
 });
 
-Object.keys(reactTransitionGroup).forEach(function (k) {
-  if (k !== 'default') Object.defineProperty(exports, k, {
-    enumerable: true,
-    get: function () {
-      return reactTransitionGroup[k];
-    }
-  });
+Object.defineProperty(exports, 'CSSTransition', {
+  enumerable: true,
+  get: function () {
+    return reactTransitionGroup.CSSTransition;
+  }
+});
+Object.defineProperty(exports, 'Transition', {
+  enumerable: true,
+  get: function () {
+    return reactTransitionGroup.Transition;
+  }
+});
+Object.defineProperty(exports, 'TransitionGroup', {
+  enumerable: true,
+  get: function () {
+    return reactTransitionGroup.TransitionGroup;
+  }
 });
 Object.defineProperty(exports, 'createGlobalStyle', {
   enumerable: true,

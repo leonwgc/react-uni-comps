@@ -126,7 +126,7 @@ export { default as useBeforeUnload } from './hooks/useBeforeUnload';
 /** third-party libs */
 export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
 export { default as clsx } from 'clsx';
-export * from 'react-transition-group';
+export { CSSTransition, Transition, TransitionGroup } from 'react-transition-group';
 export { nanoid } from 'nanoid';
 export { useSpring, animated, easings } from '@react-spring/web';
 export { default as i18n, initI18n } from './initI18n';
