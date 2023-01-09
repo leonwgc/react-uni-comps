@@ -1,6 +1,6 @@
-#### [在线体验 (online demo)](https://leonwgc.github.io/react-uni-comps/base)
+#### [在线文档 (online demo)](https://leonwgc.github.io/react-uni-comps/base)
 
-### 安装 (Installation) 
+### 安装 (Installation)
 
 ```js
 npm install react-uni-comps --save
@@ -10,7 +10,7 @@ yarn add react-uni-comps
 ### 特点 (Features)
 
 1. 组件丰富，体积小，自动按需加载 (rich components, small and load on-demand)
-2. 支持pc和移动端，同一套组件，一致的开发体验 (supports both mobile & pc env)
+2. 支持 pc 和移动端，同一套组件，一致的开发体验 (supports both mobile & pc env)
 3. 纯 react-hooks 实现, 拥抱 react 未来 (written in react hooks)
 4. 样式采用 css-in-js (styles based on [styled-components](https://styled-components.com/), a css-in-js library)
 5. 方便定制 / 扩展 (easy to extend and customize)
@@ -23,17 +23,15 @@ yarn add react-uni-comps
 
 supports on-demand loading based on Tree Shaking, most build tools (such as webpack 4+ and rollup) support Tree Shaking.
 
-
 ### 主题色 (Theme)
 
 ```js
-<ThemeProvider color="#409eff">
-  {children}
-</ThemeProvider>
+<ThemeProvider color="#409eff">{children}</ThemeProvider>
 ```
 
 ### 样式 (Styles)
-styles are based on [styled-components](https://styled-components.com/) , a popular react css-in-js  lib
+
+styles are based on [styled-components](https://styled-components.com/) , a popular react css-in-js lib
 
 ```js
 import { Button, styled } from 'react-uni-comps';
@@ -62,7 +60,9 @@ import { CSSTransition, Transition, TransitionGroup } from 'react-uni-comps';
 // react-spring
 import { useSpring, animated, easings } from 'react-uni-comps';
 
-
 // sortablejs
 import { Sortable } from 'react-uni-comps';
+
+// nanoid
+import { nanoid } from 'react-uni-comps';
 ```
