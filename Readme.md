@@ -42,14 +42,14 @@ const StyledButton = styled(Button)`
   border-radius: 4px;
 `;
 
-<StyledButton>my style button</StyledButton>;
+<StyledButton>Customized Button</StyledButton>;
 ```
 
 ### 三方库 (3rd party libs)
 
 ```js
 // styled-components
-import { styled } from 'react-uni-comps';
+import { styled, css, keyframes, createGlobalStyle } from 'react-uni-comps';
 
 // clsx
 import { clsx } from 'react-uni-comps';
