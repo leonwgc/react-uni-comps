@@ -1,6 +1,6 @@
 {
   "name": "react-uni-comps",
-  "version": "1.8.6-beta4",
+  "version": "1.8.6-beta5",
   "description": "react组件库, desktop & mobile react components via hooks",
   "homepage": "https://leonwgc.github.io/react-uni-comps/",
   "keywords": [
@@ -96,7 +96,7 @@
     "color": "^4.1.0",
     "i18next": "^21.6.16",
     "intersection-observer": "^0.12.0",
-    "nanoid": "^4.0.0",
+    "nanoid": "^3.0.0",
     "rc-field-form": "^1.22.1",
     "react-i18next": "^11.16.7",
     "react-is": "^17.0.2",
