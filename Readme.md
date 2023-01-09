@@ -1,4 +1,4 @@
-#### [在线文档 (online demo)](https://leonwgc.github.io/react-uni-comps/base)
+#### [在线文档 (online docs)](https://leonwgc.github.io/react-uni-comps/base)
 
 ### 安装 (Installation)
 
@@ -9,13 +9,12 @@ yarn add react-uni-comps
 
 ### 特点 (Features)
 
-1. 组件丰富，体积小，自动按需加载 (rich components, small and load on-demand)
-2. 支持 pc 和移动端，同一套组件，一致的开发体验 (supports both mobile & pc env)
+1. 组件丰富，体积小，自动按需加载 (rich components, small size and load on-demand)
+2. 支持 pc 和移动端，同一套组件，一致的开发体验 (use in both mobile & pc environments)
 3. 纯 react-hooks 实现, 拥抱 react 未来 (written in react hooks)
 4. 样式采用 css-in-js (styles based on [styled-components](https://styled-components.com/), a css-in-js library)
-5. 方便定制 / 扩展 (easy to extend and customize)
-6. 使用 ts 编写，内置类型定义，开发智能提示 (written in [typescript](https://www.typescriptlang.org/) with predictable static types.)
-7. 重新导出了三方组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展 （reexport 3rd-party libs and inner functions, easy to extend and customize with the same tech stack ）
+5. 使用typescript编写，内置类型定义，开发智能提示 (written in [typescript](https://www.typescriptlang.org/) with predictable static types.)
+6. 重新导出了三方组件/库/自定义 hooks 等，方便基于同一套技术栈开发 / 扩展 （re-export 3rd-party libs, easy to extend and customize with the same tech stack ）
 
 ### 按需加载 (Load On Demand)
 
@@ -25,12 +24,17 @@ supports on-demand loading based on Tree Shaking, most build tools (such as webp
 
 ### 主题色 (Theme)
 
+使用ThemeProvider组件包裹根组件
+
 ```js
-<ThemeProvider color="#409eff">{children}</ThemeProvider>
+<ThemeProvider color="#409eff">
+  <App>
+</ThemeProvider>
 ```
 
 ### 样式 (Styles)
 
+样式基于[styled-components](https://styled-components.com/), 一个流行的css-in-js 库
 styles are based on [styled-components](https://styled-components.com/) , a popular react css-in-js lib
 
 ```js
