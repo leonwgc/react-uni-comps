@@ -120,7 +120,7 @@ export { default as useEventListener } from './hooks/useEventListener';
 export { default as useLifecycles } from './hooks/useLifecycles';
 export { default as useBeforeUnload } from './hooks/useBeforeUnload';
 /** third-party libs */
-export { default as styled, css, keyframes, useTheme, createGlobalStyle } from 'styled-components';
+export { default as styled, css, keyframes, useTheme, createGlobalStyle, ServerStyleSheet, StyleSheetManager, isStyledComponent, } from 'styled-components';
 export { default as clsx } from 'clsx';
 export { CSSTransition, Transition, TransitionGroup } from 'react-transition-group';
 export { nanoid } from 'nanoid';

@@ -10332,6 +10332,18 @@ Object.defineProperty(exports, 'TransitionGroup', {
     return reactTransitionGroup.TransitionGroup;
   }
 });
+Object.defineProperty(exports, 'ServerStyleSheet', {
+  enumerable: true,
+  get: function () {
+    return styled.ServerStyleSheet;
+  }
+});
+Object.defineProperty(exports, 'StyleSheetManager', {
+  enumerable: true,
+  get: function () {
+    return styled.StyleSheetManager;
+  }
+});
 Object.defineProperty(exports, 'createGlobalStyle', {
   enumerable: true,
   get: function () {
@@ -10342,6 +10354,12 @@ Object.defineProperty(exports, 'css', {
   enumerable: true,
   get: function () {
     return styled.css;
+  }
+});
+Object.defineProperty(exports, 'isStyledComponent', {
+  enumerable: true,
+  get: function () {
+    return styled.isStyledComponent;
   }
 });
 Object.defineProperty(exports, 'keyframes', {
