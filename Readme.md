@@ -10,7 +10,7 @@ yarn add react-uni-comps
 ### 特点 (Features)
 
 1. 组件丰富，体积小，自动按需加载 (rich components, small size and load on-demand)
-2. 支持 pc 和移动端，同一套组件，一致的开发体验 (use in both mobile & pc environments)
+2. 同时支持桌面和移动端，同一套组件，一致的开发体验 (support both desktop and mobile browser environments)
 3. 纯 react-hooks 实现, 拥抱 react 未来 (written in react hooks)
 4. 样式采用 css-in-js (styles based on [styled-components](https://styled-components.com/), a css-in-js library)
 5. 使用typescript编写，内置类型定义，开发智能提示 (written in [typescript](https://www.typescriptlang.org/) with predictable static types.)
@@ -24,7 +24,9 @@ supports on-demand loading based on Tree Shaking, most build tools (such as webp
 
 ### 主题色 (Theme)
 
-使用ThemeProvider组件包裹根组件
+使用ThemeProvider包裹根组件
+
+Use ThemeProvider to wrap your root component.
 
 ```js
 <ThemeProvider color="#409eff">
