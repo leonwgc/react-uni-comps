@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
+import { attachPropertiesToComponent } from './util';
 var StyledIcon = styled.span(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"], ["\n  display: inline-flex;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n"])));
 var SVGProps = {
   width: '1em',
@@ -30,11 +31,13 @@ Icon.displayName = 'UC-Icon';
  * @param {string} scriptUrl
  */
 
-Icon.loadFromIconfontCN = function (scriptUrl) {
+var loadFromIconfontCN = function loadFromIconfontCN(scriptUrl) {
   isBrowser && loadResource(scriptUrl);
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
-export default Icon;
+loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
+export default attachPropertiesToComponent(Icon, {
+  loadFromIconfontCN: loadFromIconfontCN
+});
 var templateObject_1;

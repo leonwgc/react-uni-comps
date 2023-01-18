@@ -11,7 +11,7 @@ export default function App() {
   return (
     <PageWrap>
       <Block>
-        <Space direction="vertical">
+        <Space>
           <Button type="primary" onClick={() => setV(true)}>
             默认
           </Button>

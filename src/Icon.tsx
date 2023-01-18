@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { loadResource, isBrowser } from './dom';
 import clsx from 'clsx';
+import { attachPropertiesToComponent } from './util';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 图标类型 */
@@ -28,14 +29,7 @@ const SVGProps = {
 };
 
 /** 图标 */
-const Icon: React.ForwardRefExoticComponent<Props> & {
-  /**
-   * 加载iconfont.cn图标
-   *
-   * @param {string} scriptUrl
-   */
-  loadFromIconfontCN?: (scriptUrl: string) => void;
-} = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
+const Icon = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
   const { type, className, ...rest } = props;
 
   return (
@@ -53,11 +47,11 @@ Icon.displayName = 'UC-Icon';
  *
  * @param {string} scriptUrl
  */
-Icon.loadFromIconfontCN = (scriptUrl: string): void => {
+const loadFromIconfontCN = (scriptUrl: string): void => {
   isBrowser && loadResource(scriptUrl);
 };
 
 // load ruc icons
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
+loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
 
-export default Icon;
+export default attachPropertiesToComponent(Icon, { loadFromIconfontCN });

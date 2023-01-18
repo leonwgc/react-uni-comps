@@ -2783,12 +2783,15 @@ Icon.displayName = 'UC-Icon';
  * @param {string} scriptUrl
  */
 
-Icon.loadFromIconfontCN = function (scriptUrl) {
+var loadFromIconfontCN = function loadFromIconfontCN(scriptUrl) {
   isBrowser && loadResource(scriptUrl);
 }; // load ruc icons
 
 
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
+loadFromIconfontCN('//at.alicdn.com/t/font_2887360_g3pt7gj02t.js');
+var Icon$1 = attachPropertiesToComponent(Icon, {
+  loadFromIconfontCN: loadFromIconfontCN
+});
 
 var _excluded$f = ["size", "className", "button", "onChange", "defaultChecked", "mode", "checked", "disabled", "children", "indeterminate", "render"];
 var StyledButton$1 = /*#__PURE__*/styled__default['default'](Button).withConfig({
@@ -2872,7 +2875,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
       height: size,
       fontSize: indeterminate ? size * 0.8 : size
     }
-  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }, /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: !indeterminate ? 'uc-icon-tick' : 'uc-icon-jian2'
   })), children && /*#__PURE__*/React__default['default'].createElement("span", {
     className: "text"
@@ -4019,7 +4022,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _props$delay = props.delay,
       delay = _props$delay === void 0 ? 2000 : _props$delay,
       _props$icon = props.icon,
-      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon, {
+      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-horn"
   }) : _props$icon,
       _props$speed = props.speed,
@@ -4089,7 +4092,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     ref: contentRef
   }, content)), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content-extra')
-  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
@@ -4387,7 +4390,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
     maskStyle: maskStyle,
     maskClass: maskClass,
     closeOnMaskClick: closeOnMaskClick
-  }), closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }), closable && /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
@@ -5094,7 +5097,7 @@ var Input = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
     className: clsx__default['default']('prefix', getClassName$a('prefix'))
   }, prefix), /*#__PURE__*/React__default['default'].createElement(isTextArea ? 'textarea' : 'input', elProps), clearable && typeof _onChange === 'function' && (value === null || value === void 0 ? void 0 : value.length) > 0 && /*#__PURE__*/React__default['default'].createElement("span", {
     className: clsx__default['default']('suffix', 'clear', getClassName$a('suffix'), getClassName$a('clear'))
-  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }, /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-clear",
     onClick: function onClick() {
       _onChange === null || _onChange === void 0 ? void 0 : _onChange('');
@@ -6067,7 +6070,7 @@ var NoticeList = /*#__PURE__*/React__default['default'].forwardRef(function (pro
     }, /*#__PURE__*/React__default['default'].createElement(Text, null, item.text));
   }))), (closeable || extra) && /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('content-extra')
-  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }, /*#__PURE__*/React__default['default'].createElement(Space, null, props.extra, props.closeable && /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-guanbi",
     style: {
       cursor: 'pointer'
@@ -6697,7 +6700,7 @@ var Avatar = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
     ref: ref,
     style: s,
     className: clsx__default['default']('uc-avatar', className, shape)
-  }), children || /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }), children || /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-avatar"
   }));
 });
@@ -6816,7 +6819,7 @@ var ImageViewer = /*#__PURE__*/React__default['default'].forwardRef(function (pr
   }, index + 1, " / ", urls.length)), /*#__PURE__*/React__default['default'].createElement("div", {
     className: "close",
     onClick: onClose
-  }, /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }, /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-guanbi"
   }))));
 });
@@ -6844,7 +6847,7 @@ var Modal = function Modal(props) {
     onClose: onClose,
     className: clsx__default['default']('uc-modal', className),
     position: 'center'
-  }), closable && /*#__PURE__*/React__default['default'].createElement(Icon, {
+  }), closable && /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-guanbi",
     className: "close",
     onClick: onClose
@@ -6993,7 +6996,7 @@ var PopConfirm = /*#__PURE__*/React__default['default'].forwardRef(function (pro
   var _props$placement = props.placement,
       placement = _props$placement === void 0 ? 'top' : _props$placement,
       _props$icon = props.icon,
-      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon, {
+      icon = _props$icon === void 0 ? /*#__PURE__*/React__default['default'].createElement(Icon$1, {
     type: "uc-icon-jinggao"
   }) : _props$icon,
       className = props.className,
@@ -8787,7 +8790,7 @@ var Stepper = function Stepper(props) {
     style: style,
     className: clsx__default['default']('uc-stepper', className)
   }), /*#__PURE__*/React__default['default'].createElement(Button, {
-    icon: /*#__PURE__*/React__default['default'].createElement(Icon, {
+    icon: /*#__PURE__*/React__default['default'].createElement(Icon$1, {
       type: "uc-icon-jian2"
     }),
     onClick: onMinus,
@@ -8806,7 +8809,7 @@ var Stepper = function Stepper(props) {
       setVal(limit(Number(val), min, max, digits));
     }
   })), /*#__PURE__*/React__default['default'].createElement(Button, {
-    icon: /*#__PURE__*/React__default['default'].createElement(Icon, {
+    icon: /*#__PURE__*/React__default['default'].createElement(Icon$1, {
       type: "uc-icon-jia2"
     }),
     onClick: onAdd,
@@ -8847,7 +8850,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
     style: style,
     className: clsx__default['default'](getClassName$d(), className)
   }, /*#__PURE__*/React__default['default'].createElement(Input, _extends({
-    prefix: /*#__PURE__*/React__default['default'].createElement(Icon, {
+    prefix: /*#__PURE__*/React__default['default'].createElement(Icon$1, {
       type: "uc-icon-sousuo"
     }),
     onFocus: function onFocus(e) {
@@ -10477,7 +10480,7 @@ exports.FileInputTrigger = FileInputTrigger;
 exports.FloatingBubble = FloatingBubble;
 exports.Form = Form$1;
 exports.HairLineBox = HairLineBox;
-exports.Icon = Icon;
+exports.Icon = Icon$1;
 exports.IconArrow = IconArrow;
 exports.ImageViewer = ImageViewer;
 exports.IndexList = IndexList;
