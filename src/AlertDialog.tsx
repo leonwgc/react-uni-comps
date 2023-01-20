@@ -6,7 +6,7 @@ import Divider from './Divider';
 import Space from './Space';
 import Icon from './Icon';
 import * as vars from './vars';
-import { Dispose, isMobile, renderElement, beforeDisposeGen } from './dom';
+import { Dispose, renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
@@ -49,6 +49,8 @@ type Props = {
   wait?: number | boolean;
   /** 关闭后卸载组件,默认true*/
   unmountOnExit?: boolean;
+  /** ios弹框风格  */
+  mobile?: boolean;
 };
 
 const StyledAlertDialog = styled(Popup)`
@@ -204,6 +206,8 @@ type StaticProps = {
   wait?: number | boolean;
   /** 显示关闭按钮  */
   closable?: boolean;
+  /** ios弹框风格  */
+  mobile?: boolean;
 };
 
 /** 移动端/pc端两种风格的 alert/confirm弹窗 */
@@ -225,6 +229,7 @@ const AlertDialog = forwardRef<HTMLDivElement, Props>((props, ref) => {
     onClose,
     className,
     wrapStyle,
+    mobile,
     wait,
     ...rest
   } = props;
@@ -233,7 +238,7 @@ const AlertDialog = forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledAlertDialog
       {...rest}
       ref={ref}
-      className={clsx('uc-alert-dialog', className, { mobile: isMobile })}
+      className={clsx('uc-alert-dialog', className, { mobile })}
       visible={visible}
       onClose={onClose}
       position="center"
@@ -247,7 +252,7 @@ const AlertDialog = forwardRef<HTMLDivElement, Props>((props, ref) => {
       {title && <div className={clsx('header')}>{title}</div>}
       <div className={clsx('body')}>{content}</div>
       <div className={clsx('footer')}>
-        {!isMobile ? (
+        {!mobile ? (
           <Space size={buttonSpace}>
             {cancelText ? (
               <Button
@@ -334,6 +339,7 @@ const show = (props: StaticProps) => {
     onConfirm,
     cancelText,
     onCancel,
+    mobile,
     wait,
     wrapStyle,
     ...rest
@@ -347,6 +353,7 @@ const show = (props: StaticProps) => {
     <TransitionElement duration={transitionDuration}>
       <AlertDialog
         {...rest}
+        mobile={mobile}
         title={title}
         content={content}
         visible

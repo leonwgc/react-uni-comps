@@ -4324,8 +4324,8 @@ var ActionSheet = function ActionSheet(props) {
 
 ActionSheet.displayName = 'UC-ActionSheet';
 
-var _excluded$x = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"],
-    _excluded2$1 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"];
+var _excluded$x = ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "mobile", "wait"],
+    _excluded2$1 = ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "mobile", "wait", "wrapStyle"];
 var StyledAlertDialog = /*#__PURE__*/styled__default['default'](Popup).withConfig({
   displayName: "AlertDialog__StyledAlertDialog",
   componentId: "sc-1ifj2xy-0"
@@ -4355,13 +4355,14 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
       onClose = props.onClose,
       className = props.className,
       wrapStyle = props.wrapStyle,
+      mobile = props.mobile,
       wait = props.wait,
       rest = _objectWithoutProperties(props, _excluded$x);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledAlertDialog, _extends({}, rest, {
     ref: ref,
     className: clsx__default['default']('uc-alert-dialog', className, {
-      mobile: isMobile
+      mobile: mobile
     }),
     visible: visible,
     onClose: onClose,
@@ -4381,7 +4382,7 @@ var AlertDialog = /*#__PURE__*/React.forwardRef(function (props, ref) {
     className: clsx__default['default']('body')
   }, content), /*#__PURE__*/React__default['default'].createElement("div", {
     className: clsx__default['default']('footer')
-  }, !isMobile ? /*#__PURE__*/React__default['default'].createElement(Space, {
+  }, !mobile ? /*#__PURE__*/React__default['default'].createElement(Space, {
     size: buttonSpace
   }, cancelText ? /*#__PURE__*/React__default['default'].createElement(Button, {
     onClick: function onClick() {
@@ -4442,6 +4443,7 @@ var show = function show(props) {
       _onConfirm = props.onConfirm,
       cancelText = props.cancelText,
       _onCancel = props.onCancel,
+      mobile = props.mobile,
       wait = props.wait,
       wrapStyle = props.wrapStyle,
       rest = _objectWithoutProperties(props, _excluded2$1);
@@ -4451,6 +4453,7 @@ var show = function show(props) {
   var dispose = renderElement( /*#__PURE__*/React__default['default'].createElement(TransitionElement, {
     duration: transitionDuration$1
   }, /*#__PURE__*/React__default['default'].createElement(AlertDialog, _extends({}, rest, {
+    mobile: mobile,
     title: title,
     content: content,
     visible: true,

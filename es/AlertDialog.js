@@ -7,7 +7,7 @@ import Divider from './Divider';
 import Space from './Space';
 import Icon from './Icon';
 import * as vars from './vars';
-import { isMobile, renderElement, beforeDisposeGen } from './dom';
+import { renderElement, beforeDisposeGen } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import TransitionElement from './TransitionElement';
 import clsx from 'clsx';
@@ -38,13 +38,14 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
       onClose = props.onClose,
       className = props.className,
       wrapStyle = props.wrapStyle,
+      mobile = props.mobile,
       wait = props.wait,
-      rest = __rest(props, ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "wait"]);
+      rest = __rest(props, ["visible", "title", "content", "onConfirm", "onCancel", "confirmText", "cancelText", "closeOnMaskClick", "buttonSpace", "closable", "mask", "maskStyle", "maskClass", "onClose", "className", "wrapStyle", "mobile", "wait"]);
 
   return /*#__PURE__*/React.createElement(StyledAlertDialog, __assign({}, rest, {
     ref: ref,
     className: clsx('uc-alert-dialog', className, {
-      mobile: isMobile
+      mobile: mobile
     }),
     visible: visible,
     onClose: onClose,
@@ -64,7 +65,7 @@ var AlertDialog = /*#__PURE__*/forwardRef(function (props, ref) {
     className: clsx('body')
   }, content), /*#__PURE__*/React.createElement("div", {
     className: clsx('footer')
-  }, !isMobile ? /*#__PURE__*/React.createElement(Space, {
+  }, !mobile ? /*#__PURE__*/React.createElement(Space, {
     size: buttonSpace
   }, cancelText ? /*#__PURE__*/React.createElement(Button, {
     onClick: function onClick() {
@@ -125,15 +126,17 @@ var show = function show(props) {
       _onConfirm = props.onConfirm,
       cancelText = props.cancelText,
       _onCancel = props.onCancel,
+      mobile = props.mobile,
       wait = props.wait,
       wrapStyle = props.wrapStyle,
-      rest = __rest(props, ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "wait", "wrapStyle"]);
+      rest = __rest(props, ["title", "content", "confirmText", "onConfirm", "cancelText", "onCancel", "mobile", "wait", "wrapStyle"]);
 
   var container = document.createElement('div');
   var beforeDispose = beforeDisposeGen(container, '.uc-popup', transitionDuration);
   var dispose = renderElement( /*#__PURE__*/React.createElement(TransitionElement, {
     duration: transitionDuration
   }, /*#__PURE__*/React.createElement(AlertDialog, __assign({}, rest, {
+    mobile: mobile,
     title: title,
     content: content,
     visible: true,

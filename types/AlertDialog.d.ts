@@ -36,6 +36,8 @@ declare type Props = {
     wait?: number | boolean;
     /** 关闭后卸载组件,默认true*/
     unmountOnExit?: boolean;
+    /** ios弹框风格  */
+    mobile?: boolean;
 };
 declare type StaticProps = {
     /** 标题 */
@@ -56,6 +58,8 @@ declare type StaticProps = {
     wait?: number | boolean;
     /** 显示关闭按钮  */
     closable?: boolean;
+    /** ios弹框风格  */
+    mobile?: boolean;
 };
 declare const _default: React.ForwardRefExoticComponent<Props & React.RefAttributes<HTMLDivElement>> & {
     show: (props: StaticProps) => void;
