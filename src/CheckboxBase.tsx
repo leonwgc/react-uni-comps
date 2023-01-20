@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import * as vars from './vars';
-import { isMobile } from './dom';
 import { getThemeColorCss } from './themeHelper';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import Button from './Button';
@@ -77,10 +76,8 @@ const StyledCheckboxBaseWrapper = styled.div`
     opacity: 0.5;
   }
 
-  &.pc {
-    .checkbox:hover {
-      ${getThemeColorCss('border', '1px solid')}
-    }
+  .checkbox:hover {
+    ${getThemeColorCss('border', '1px solid')}
   }
 
   &.radio {
@@ -176,8 +173,6 @@ const CheckboxBase = React.forwardRef<any, Props>((props, ref) => {
       className={clsx('uc-checkbox', mode, className, {
         disabled: disabled,
         checked: c || indeterminate,
-        mobile: isMobile,
-        pc: !isMobile,
       })}
       onClick={onClick}
     >
