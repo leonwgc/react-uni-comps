@@ -2782,7 +2782,7 @@ var StyledButton$1 = /*#__PURE__*/styled__default['default'](Button).withConfig(
 var StyledCheckboxBaseWrapper = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "CheckboxBase__StyledCheckboxBaseWrapper",
   componentId: "sc-1rcmrlp-1"
-})(["display:inline-flex;align-items:center;cursor:pointer;user-select:none;vertical-align:middle;-webkit-tap-highlight-color:transparent;white-space:nowrap;.text{margin-left:8px;}&.disabled{cursor:not-allowed;opacity:0.5;}&.pc{.checkbox:hover{", "}}&.radio{.checkbox{border-radius:50%;}}&.checked{.checkbox{", " ", "}}&.disabled{.checkbox{border-color:", ";}}.checkbox{display:inline-flex;align-items:center;justify-content:center;border:1px solid ", ";border-radius:2px;background:#fff;color:#fff;}"], getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
+})(["display:inline-flex;align-items:center;cursor:pointer;user-select:none;vertical-align:middle;-webkit-tap-highlight-color:transparent;white-space:nowrap;.text{margin-left:8px;}&.disabled{cursor:not-allowed;opacity:0.5;}.checkbox:hover{", "}&.radio{.checkbox{border-radius:50%;}}&.checked{.checkbox{", " ", "}}&.disabled{.checkbox{border-color:", ";}}.checkbox{display:inline-flex;align-items:center;justify-content:center;border:1px solid ", ";border-radius:2px;background:#fff;color:#fff;}"], getThemeColorCss('border', '1px solid'), getThemeColorCss('background-color'), getThemeColorCss('border', '1px solid'), border, border);
 /** Checkbox/Radiobox 的基础 */
 
 var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (props, ref) {
@@ -2844,9 +2844,7 @@ var CheckboxBase = /*#__PURE__*/React__default['default'].forwardRef(function (p
     ref: ref,
     className: clsx__default['default']('uc-checkbox', mode, className, {
       disabled: disabled,
-      checked: c || indeterminate,
-      mobile: isMobile,
-      pc: !isMobile
+      checked: c || indeterminate
     }),
     onClick: onClick
   }), /*#__PURE__*/React__default['default'].createElement("div", {
