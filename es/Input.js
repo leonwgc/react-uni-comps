@@ -1,7 +1,6 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
-import { isMobile } from './dom';
 import { getThemeColorCss, getThemeColor } from './themeHelper';
 import * as vars from './vars';
 import Icon from './Icon';
@@ -29,8 +28,9 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
       ime = props.ime,
       clearable = props.clearable,
       onClear = props.onClear,
+      mobile = props.mobile,
       onPressEnter = props.onPressEnter,
-      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "onPressEnter"]);
+      rest = __rest(props, ["className", "style", "prefix", "value", "onChange", "suffix", "autoHeight", "disabled", "readOnly", "rows", "ime", "clearable", "onClear", "mobile", "onPressEnter"]);
 
   var inputRef = useRef();
   var isImeModeRef = useRef(false);
@@ -116,8 +116,8 @@ var Input = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledInput, {
     style: style,
     className: clsx(getClassName(), className, {
-      'mobile': isMobile,
-      'pc': !isMobile,
+      'mobile': mobile,
+      'pc': !mobile,
       'focused': focused,
       'disabled': disabled,
       'read-only': readOnly

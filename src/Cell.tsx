@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
-import { isMobile } from './dom';
 import HairLineBox from './HairLineBox';
 import clsx from 'clsx';
 
@@ -21,29 +20,22 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
   content?: React.ReactNode;
   /**
    * 底部线条颜色,不要线条，设置为透明
-   * @default #eee
    *  */
   lineColor?: string;
   /** 通常放input/textarea等输入控件 */
   children?: React.ReactNode;
-  /**
-   * label左边是否加12px的padding
-   * @default true
-   */
-  withPaddingLeft?: boolean;
+  /** label样式 */
+  labelStyle?: React.CSSProperties;
 };
 
 const StyledCell = styled.div`
-  background-color: #fff;
+  background: #fff;
+  padding-left: 12px;
 
   &.clickable {
     &:active {
       background-color: ${vars.activeBg};
     }
-  }
-
-  &.label-padding {
-    padding-left: 12px;
   }
 
   .cell-inner {
@@ -53,12 +45,6 @@ const StyledCell = styled.div`
     width: 100%;
     padding: 10px 12px 10px 0;
     overflow: hidden;
-    font-size: 14px;
-    line-height: 24px;
-
-    &.pc {
-      align-items: center;
-    }
 
     .cell-label {
       box-sizing: border-box;
@@ -116,8 +102,8 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     className,
     content,
     lineColor = vars.border,
+    labelStyle,
     children,
-    withPaddingLeft = true,
     ...rest
   } = props;
   if (content && children) {
@@ -135,14 +121,13 @@ const Cell = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       {...rest}
       ref={ref}
       className={clsx('uc-cell', className, {
-        'clickable': typeof rest.onClick === 'function',
-        'label-padding': hasLabel && withPaddingLeft,
+        clickable: typeof rest.onClick === 'function',
       })}
     >
-      <HairLineBox color={lineColor} className="cell-line">
-        <div className={clsx('cell-inner', { mobile: isMobile, pc: !isMobile })}>
+      <HairLineBox color={lineColor}>
+        <div className={clsx('cell-inner')}>
           {hasLabel && (
-            <div className={clsx('cell-label', { input: hasInput })}>
+            <div className={clsx('cell-label', { input: hasInput })} style={labelStyle}>
               <span
                 data-required={dataRequired}
                 className={clsx('label', { required: !!required })}

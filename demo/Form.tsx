@@ -17,7 +17,14 @@ export default function App() {
   return (
     <PageWrap>
       <DemoBlock title="登录">
-        <Form onFinish={setResult} toastError ref={ref}>
+        <Form
+          onFinish={setResult}
+          toastError
+          ref={ref}
+          cellProps={{
+            labelStyle: { border: '1px dashed red' },
+          }}
+        >
           <Form.Item
             name="phone"
             rules={[

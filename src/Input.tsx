@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
-import { isMobile } from './dom';
 import { getThemeColorCss, getThemeColor } from './themeHelper';
 import * as vars from './vars';
 import Icon from './Icon';
@@ -35,6 +34,8 @@ export type Props = {
   onFocus?: (e: FocusEvent) => void;
   /** blur事件回调 */
   onBlur?: (e: FocusEvent) => void;
+  /** 无边框，适用移动端 */
+  mobile?: boolean | undefined;
   /**
    * textarea 是否高度自适应,受控模式生效
    * @default false
@@ -169,6 +170,7 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     ime,
     clearable,
     onClear,
+    mobile,
     onPressEnter,
     ...rest
   } = props;
@@ -246,8 +248,8 @@ const Input = React.forwardRef<RefType, Props>((props, ref) => {
     <StyledInput
       style={style}
       className={clsx(getClassName(), className, {
-        'mobile': isMobile,
-        'pc': !isMobile,
+        'mobile': mobile,
+        'pc': !mobile,
         'focused': focused,
         'disabled': disabled,
         'read-only': readOnly,

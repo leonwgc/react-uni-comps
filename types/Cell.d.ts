@@ -15,16 +15,12 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
     content?: React.ReactNode;
     /**
      * 底部线条颜色,不要线条，设置为透明
-     * @default #eee
      *  */
     lineColor?: string;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
-    /**
-     * label左边是否加12px的padding
-     * @default true
-     */
-    withPaddingLeft?: boolean;
+    /** label样式 */
+    labelStyle?: React.CSSProperties;
 };
 /** 列表项，通常用于移动端 */
 declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & {
@@ -43,15 +39,11 @@ declare const Cell: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDiv
     content?: React.ReactNode;
     /**
      * 底部线条颜色,不要线条，设置为透明
-     * @default #eee
      *  */
     lineColor?: string;
     /** 通常放input/textarea等输入控件 */
     children?: React.ReactNode;
-    /**
-     * label左边是否加12px的padding
-     * @default true
-     */
-    withPaddingLeft?: boolean;
+    /** label样式 */
+    labelStyle?: React.CSSProperties;
 } & React.RefAttributes<HTMLDivElement>>;
 export default Cell;

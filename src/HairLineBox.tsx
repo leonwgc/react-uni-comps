@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isMobile } from './dom';
 import clsx from 'clsx';
+import { border } from './vars';
 
 type Pos = 'top' | 'right' | 'bottom' | 'left' | 'all';
 
@@ -13,7 +13,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   position?: 'top' | 'right' | 'bottom' | 'left' | 'all';
   /**
    * 边的颜色
-   * @default #eee
+   * @default #d9d9d9
    */
   color?: string;
   /**
@@ -21,44 +21,30 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 0
    * */
   borderRadius?: number;
-  /**
-   * 只在移动端显示
-   * @default true
-   *  */
-  mobile?: boolean;
 };
 
 const StyledDiv = styled.div<{ position?: Pos; $color: string; borderRadius?: number }>`
   position: relative;
 
-  &.mobile {
-    &:after {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      border-radius: ${({ borderRadius }) => borderRadius}px;
-      ${({ position }) => `border${position === 'all' ? '' : '-' + position}`}: 1px solid ${({
-        $color,
-      }) => $color};
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        width: 200%;
-        height: 200%;
-        transform: scale(0.5);
-        transform-origin: 0 0;
-      }
-    }
-  }
-
-  &.pc {
+  &:after {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
     border-radius: ${({ borderRadius }) => borderRadius}px;
     ${({ position }) => `border${position === 'all' ? '' : '-' + position}`}: 1px solid ${({
       $color,
     }) => $color};
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+    }
   }
 `;
 
@@ -67,9 +53,8 @@ const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     position = 'bottom',
     borderRadius = 0,
-    color = '#eee',
+    color = border,
     className,
-    mobile = true,
     children,
     ...rest
   } = props;
@@ -78,10 +63,7 @@ const HairLineBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <StyledDiv
       {...rest}
       ref={ref}
-      className={clsx('uc-hairlinebox', className, {
-        mobile: isMobile,
-        pc: !isMobile && !mobile,
-      })}
+      className={clsx('uc-hairlinebox', className)}
       position={position}
       $color={color}
       borderRadius={borderRadius}

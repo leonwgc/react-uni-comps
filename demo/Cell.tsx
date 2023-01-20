@@ -21,11 +21,17 @@ export default function App() {
       <DemoBlock padding="0">
         <Cell label="name" content="leonwgc" />
         <Cell label="姓名" required>
-          <Input type="text" placeholder="请输入用户名" />
+          <Input type="text" placeholder="请输入用户名" mobile />
         </Cell>
 
-        <Cell label="输入框" required="#" description="自定义required">
+        <Cell
+          label="输入框"
+          required="#"
+          description="自定义required"
+          labelStyle={{ width: 90, border: '1px dashed red' }}
+        >
           <Input
+            mobile
             placeholder="输入框"
             value={v}
             onChange={setV}
@@ -33,7 +39,7 @@ export default function App() {
           />
         </Cell>
 
-        <Cell label="是否居中" content={<Switch />}></Cell>
+        <Cell label="是否居中" content={<Switch checkedText="开" unCheckedText="关" />}></Cell>
 
         <Cell
           label="多选"

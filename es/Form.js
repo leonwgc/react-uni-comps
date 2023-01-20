@@ -1,17 +1,20 @@
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-import { __assign, __rest } from "tslib";
+import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useContext } from 'react';
 import { Field, default as RcForm } from 'rc-field-form';
 import clsx from 'clsx';
 import Cell from './Cell';
 import Space from './Space';
 import Toast from './Toast';
-import { isMobile } from './dom';
 import { attachPropertiesToComponent } from './util';
+import styled from 'styled-components';
+var StyledCell = styled(Cell)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding-left: unset;\n  .cell-inner {\n    padding: 0;\n  }\n"], ["\n  padding-left: unset;\n  .cell-inner {\n    padding: 0;\n  }\n"])));
 
 var FormItem = function FormItem(props) {
-  var requiredMark = (useContext(FormContext) || {}).requiredMark;
+  var _a = useContext(FormContext) || {},
+      requiredMark = _a.requiredMark,
+      cellProps = _a.cellProps;
 
   var children = props.children,
       label = props.label,
@@ -34,12 +37,13 @@ var FormItem = function FormItem(props) {
     }
   }
 
-  return /*#__PURE__*/React.createElement(Cell, {
-    withPaddingLeft: false,
+  return /*#__PURE__*/React.createElement(StyledCell, __assign({
     label: label,
     "data-name": name,
     required: requiredMark && required
-  }, name ? /*#__PURE__*/React.createElement(Field, __assign({
+  }, cellProps, {
+    lineColor: "transparent"
+  }), name ? /*#__PURE__*/React.createElement(Field, __assign({
     name: name
   }, fieldProps), children) : /*#__PURE__*/React.isValidElement(children) ? /*#__PURE__*/React.cloneElement(children, fieldProps) : children);
 };
@@ -57,11 +61,10 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
       layout = _c === void 0 ? 'vertical' : _c,
       className = props.className,
       _onFinishFailed = props.onFinishFailed,
-      _d = props.toastError,
-      toastError = _d === void 0 ? isMobile : _d,
-      _e = props.scrollIntoErrorField,
-      scrollIntoErrorField = _e === void 0 ? isMobile : _e,
-      rest = __rest(props, ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField"]);
+      toastError = props.toastError,
+      scrollIntoErrorField = props.scrollIntoErrorField,
+      cellProps = props.cellProps,
+      rest = __rest(props, ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField", "cellProps"]);
 
   return /*#__PURE__*/React.createElement(RcForm, __assign({}, rest, {
     ref: ref,
@@ -87,7 +90,8 @@ var Form = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }), /*#__PURE__*/React.createElement(FormContext.Provider, {
     value: {
-      requiredMark: requiredMark
+      requiredMark: requiredMark,
+      cellProps: cellProps
     }
   }, /*#__PURE__*/React.createElement(Space, {
     direction: layout,
@@ -104,3 +108,4 @@ export default attachPropertiesToComponent(Form, {
   /** 表单项 */
   Item: FormItem
 });
+var templateObject_1;

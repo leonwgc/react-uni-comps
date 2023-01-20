@@ -8,7 +8,7 @@ declare const HairLineBox: React.ForwardRefExoticComponent<React.HTMLAttributes<
     position?: 'top' | 'right' | 'bottom' | 'left' | 'all';
     /**
      * 边的颜色
-     * @default #eee
+     * @default #d9d9d9
      */
     color?: string;
     /**
@@ -16,10 +16,5 @@ declare const HairLineBox: React.ForwardRefExoticComponent<React.HTMLAttributes<
      * @default 0
      * */
     borderRadius?: number;
-    /**
-     * 只在移动端显示
-     * @default true
-     *  */
-    mobile?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
 export default HairLineBox;
