@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Button, Toast, Icon, PopConfirm, Cell, Switch } from 'react-uni-comps';
+import { Button, Toast, PopConfirm, Cell, Switch } from 'react-uni-comps';
 
 export default function App() {
-  const ref = useRef<any>();
   const [animate, setAnimate] = useState(true);
 
   return (

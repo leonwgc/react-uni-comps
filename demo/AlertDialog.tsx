@@ -9,7 +9,7 @@ export default function App() {
     <PageWrap>
       <DemoBlock padding={0}>
         <Cell
-          title="移动端风格"
+          title="移动端iOS风格"
           content={<Switch checked={isMobile} onChange={setIsMoible}></Switch>}
         ></Cell>
 
