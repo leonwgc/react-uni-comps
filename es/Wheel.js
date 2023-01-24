@@ -1,5 +1,5 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import useLatest from './hooks/useLatest';
@@ -7,6 +7,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var Outer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  flex: 1;\n  height: 100%;\n"], ["\n  flex: 1;\n  height: 100%;\n"])));
 var StyledWrap = styled(animated.div)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"], ["\n  transform: translate3d(0px, 105px, 0px);\n  touch-action: none;\n  .item {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 35px;\n    font-size: 18px;\n    user-select: none;\n    cursor: grab;\n  }\n"]))); // 惯性滑动
 
@@ -96,7 +97,7 @@ var Wheel = function Wheel(props) {
   useEffect(function () {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch(el, {
       onTouchStart: function onTouchStart() {
@@ -128,7 +129,7 @@ var Wheel = function Wheel(props) {
         }, 300);
       },
       onPressMove: function onPressMove(e) {
-        yRef.current += e.deltaY * 0.5; // slow down 
+        yRef.current += e.deltaY * 0.5; // slow down
 
         var distance = e.deltaY;
         var duration = Date.now() - momentumRef.current.touchStartTime;

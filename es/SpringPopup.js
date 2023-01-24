@@ -1,5 +1,5 @@
 import { __assign, __makeTemplateObject } from "tslib";
-import React, { useRef, forwardRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Mask from './Mask';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { isMobile } from './dom';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var StyledWrapper = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: #fff;\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"], ["\n  background-color: #fff;\n  position: fixed;\n  z-index: 200;\n\n  // bottom\n  &.bottom {\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  // left\n  &.left {\n    left: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // right\n  &.right {\n    right: 0;\n    top: 0;\n    bottom: 0;\n  }\n\n  // top\n  &.top {\n    left: 0;\n    top: 0;\n    right: 0;\n  }\n\n  //center\n  &.center {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n\n    &.pc {\n      top: 160px;\n      transform: translate(-50%, 0);\n    }\n  }\n"])));
 /**
  *
@@ -65,7 +66,7 @@ var SpringPopup = /*#__PURE__*/forwardRef(function (props, ref) {
       setActive(visible);
     }
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (mask && visible && maskRef.current) {
       var wrapZIndex = window.getComputedStyle(popElRef.current, null).getPropertyValue('z-index');
 

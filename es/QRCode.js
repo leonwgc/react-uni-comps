@@ -1,8 +1,9 @@
 import { __assign, __rest } from "tslib";
-import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 /** 二维码 */
 
 var QRCode = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -22,7 +23,7 @@ var QRCode = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return domRef.current;
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     qrRef.current = new WQRCode(domRef.current, {
       text: text,
       width: size,

@@ -1,6 +1,7 @@
-import React, { useRef, useImperativeHandle, useCallback, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle, useCallback } from 'react';
 import clsx from 'clsx';
 import utils from './utils';
+import useIsomorphicLayoutEffect from '../hooks/useisomorphicLayoutEffect';
 
 function renderDate(date) {
   return date.getDate();
@@ -32,7 +33,7 @@ var CalendarMonthView = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var month = dateMonth.getMonth();
   var monthKey = "".concat(year, "-").concat(month);
   var mountedRef = useRef(false);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var _a, _b; // auto anchor to value date / now
 
 

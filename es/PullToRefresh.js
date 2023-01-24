@@ -1,5 +1,5 @@
 import { __assign, __awaiter, __generator, __makeTemplateObject, __rest } from "tslib";
-import React, { useRef, useImperativeHandle, useCallback, useLayoutEffect, useState } from 'react';
+import React, { useRef, useImperativeHandle, useCallback, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { animated, useSpring } from '@react-spring/web';
@@ -9,6 +9,7 @@ import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var StyledWrap = styled(animated.div)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"], ["\n  color: #999;\n  .head {\n    overflow: hidden;\n    position: relative;\n    .status-text {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"])));
 /** 下拉刷新 */
 
@@ -248,7 +249,7 @@ var PullToRefresh = /*#__PURE__*/React.forwardRef(function (props, ref) {
       height: headHeight
     }
   }, renderStatusText()));
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var wrapEl = wrapRef.current;
     var el = elRef.current;
     var y = 0;

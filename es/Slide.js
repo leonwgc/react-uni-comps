@@ -1,6 +1,6 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib"; //#region  imports & styles
 
-import React, { useState, useRef, useCallback, useLayoutEffect, useEffect, useImperativeHandle } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import Space from './Space';
 import useMount from './hooks/useMount';
 import { prefixClassName } from './helper';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var getClassName = prefixClassName('uc-slide');
 var StyledSlide = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  overflow: hidden;\n  position: relative;\n\n  .", " {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transition-property: transform;\n    backface-visibility: hidden;\n\n    &.vertical {\n      flex-direction: column;\n    }\n  }\n  .", " {\n    width: 100%;\n    flex-shrink: 0;\n  }\n\n  .", " {\n    position: absolute;\n    bottom: 6px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 6px;\n\n    .", " {\n      cursor: pointer;\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      background-color: #fff;\n      transition: all 0.3s ease;\n      border-radius: 50%;\n\n      &.active {\n        border-radius: 3px;\n        width: 14px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 6px;\n      top: 50%;\n      left: unset;\n      bottom: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .", " {\n        display: block;\n        width: 6px;\n        height: 6px;\n        border-radius: 50%;\n\n        &.active {\n          border-radius: 3px;\n          height: 14px;\n        }\n      }\n    }\n  }\n"], ["\n  overflow: hidden;\n  position: relative;\n\n  .", " {\n    position: relative;\n    display: flex;\n    flex-wrap: nowrap;\n    touch-action: none;\n    width: 100%;\n    transition-property: transform;\n    backface-visibility: hidden;\n\n    &.vertical {\n      flex-direction: column;\n    }\n  }\n  .", " {\n    width: 100%;\n    flex-shrink: 0;\n  }\n\n  .", " {\n    position: absolute;\n    bottom: 6px;\n    left: 50%;\n    transform: translate3d(-50%, 0, 0);\n    line-height: 6px;\n\n    .", " {\n      cursor: pointer;\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      background-color: #fff;\n      transition: all 0.3s ease;\n      border-radius: 50%;\n\n      &.active {\n        border-radius: 3px;\n        width: 14px;\n      }\n    }\n\n    &.vertical {\n      position: absolute;\n      right: 6px;\n      top: 50%;\n      left: unset;\n      bottom: unset;\n      transform: translate3d(0, -50%, 0);\n\n      .", " {\n        display: block;\n        width: 6px;\n        height: 6px;\n        border-radius: 50%;\n\n        &.active {\n          border-radius: 3px;\n          height: 14px;\n        }\n      }\n    }\n  }\n"])), getClassName('wrap'), getClassName('page'), getClassName('indicator'), getClassName('item'), getClassName('item'));
 
@@ -186,7 +187,7 @@ var Slide = /*#__PURE__*/React.forwardRef(function (props, ref) {
       };
     }
   }, [autoPlay, interval, children]);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = wrapElRef.current;
     var _a = containerRef.current,
         wrapWidth = _a.offsetWidth,

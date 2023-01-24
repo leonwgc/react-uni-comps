@@ -1,8 +1,9 @@
 import { __assign, __rest } from "tslib";
-import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 /** 路标,可见性发生变化执行回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
@@ -15,7 +16,7 @@ var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var vv = useLatest(onVisible);
   var vi = useLatest(onInVisible);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       var _a, _b;
 

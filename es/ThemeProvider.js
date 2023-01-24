@@ -1,7 +1,8 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 import useTheme from './hooks/useTheme';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 /**
  * @description 主题色设置
  * @param {Props} props
@@ -13,11 +14,11 @@ var ThemeProvider = function ThemeProvider(props) {
       color = _a === void 0 ? vars.primary : _a,
       children = props.children;
   var theme = useTheme();
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
     document.documentElement.setAttribute('data-theme-color', color);
   }, [color]);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     document.documentElement.setAttribute('data-theme-mode', theme);
   }, [theme]);
   return /*#__PURE__*/React.createElement(StyledProvider, {

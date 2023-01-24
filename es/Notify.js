@@ -1,7 +1,7 @@
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { forwardRef, useLayoutEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import { renderElement, isMobile, beforeDisposeGen } from './dom';
 import TransitionElement from './TransitionElement';
 import { boxShadow, animationNormal } from './vars';
 import Mask from './Mask';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var transitionDuration = animationNormal;
 var StyledNotify = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 600;\n  transition: all ", "ms ease-in-out;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate3d(0, -100%, 0);\n    opacity: 0;\n  }\n\n  &.to {\n    transform: none;\n    opacity: 1;\n  }\n\n  .content {\n    padding: 8px 12px;\n    height: 40px;\n    min-height: 40px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n\n  &.pc {\n    top: 16px;\n    .content {\n      box-shadow: ", ";\n      background-color: #fff;\n      border-radius: 2px;\n    }\n  }\n\n  &.mobile {\n    .content {\n      ", ";\n      color: #fff;\n      width: 100%;\n    }\n  }\n"], ["\n  position: fixed;\n  z-index: 600;\n  transition: all ", "ms ease-in-out;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n\n  &.from {\n    transform: translate3d(0, -100%, 0);\n    opacity: 0;\n  }\n\n  &.to {\n    transform: none;\n    opacity: 1;\n  }\n\n  .content {\n    padding: 8px 12px;\n    height: 40px;\n    min-height: 40px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n\n  &.pc {\n    top: 16px;\n    .content {\n      box-shadow: ", ";\n      background-color: #fff;\n      border-radius: 2px;\n    }\n  }\n\n  &.mobile {\n    .content {\n      ", ";\n      color: #fff;\n      width: 100%;\n    }\n  }\n"])), transitionDuration, boxShadow, getThemeColorCss('background-color'));
 var allNotifies = [];
@@ -24,7 +25,7 @@ var Notify = /*#__PURE__*/forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (!isMobile && elRef.current) {
       if (allNotifies.length > 0) {
         var lastElPos = allNotifies[allNotifies.length - 1];

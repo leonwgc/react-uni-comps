@@ -122,6 +122,7 @@ export { default as useInterval } from './hooks/useInterval';
 export { default as useEventListener } from './hooks/useEventListener';
 export { default as useLifecycles } from './hooks/useLifecycles';
 export { default as useBeforeUnload } from './hooks/useBeforeUnload';
+export { default as useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 
 /** third-party libs */
 export {

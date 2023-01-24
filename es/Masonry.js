@@ -1,10 +1,11 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useLayoutEffect, useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var StyledWrap = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n\n  .uc-masonry-col {\n    display: flex;\n    flex-direction: column;\n  }\n"], ["\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n\n  .uc-masonry-col {\n    display: flex;\n    flex-direction: column;\n  }\n"])));
 /** 瀑布流布局 */
 
@@ -27,7 +28,7 @@ var Masonry = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var colRef = useRef({
     colWidth: 'auto'
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var getColWidth = function getColWidth() {
       var wrapEl = wrapElRef.current;
 

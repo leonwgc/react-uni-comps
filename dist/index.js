@@ -1295,6 +1295,13 @@ var prefixClassName = function prefixClassName(prefix) {
   };
 };
 
+/**
+ * 同构 useLayoutEffect
+ *
+ */
+
+var useIsomorphicLayoutEffect = isBrowser ? React.useLayoutEffect : React.useEffect;
+
 var _excluded$1 = ["children", "visible", "onClose", "closeOnMaskClick", "mask", "maskStyle", "maskClass", "position", "duration", "flip", "mountContainer", "unmountOnExit", "style", "className"];
 var StyledWrapper = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Popup__StyledWrapper",
@@ -1386,7 +1393,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }, duration);
     }
   }, [duration]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (!isMobile && position === 'center' && flip) {
       if (visible) {
         setTransformOrigin(mousePosition);
@@ -1395,7 +1402,7 @@ var Popup = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }
   }, [visible, position, setTransformOrigin, flip]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (mask && visible && maskRef.current) {
       var wrapZIndex = window.getComputedStyle(wrapRef.current, null).getPropertyValue('z-index');
 
@@ -1682,7 +1689,6 @@ var unobserve = function unobserve(el) {
   }
 };
 
-/* eslint-disable react-hooks/exhaustive-deps */
 /**
  * 监视元素在文档视口的可见性，可见性变化时触发回调
  *
@@ -1693,7 +1699,7 @@ var unobserve = function unobserve(el) {
 
 var useVisibleObserve = function useVisibleObserve(elRef, onVisibleChange) {
   var unobserveWhenVisible = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       onVisibleChange(visible);
 
@@ -1858,7 +1864,7 @@ var LazyLoadElement = /*#__PURE__*/React__default['default'].forwardRef(function
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
         setReady(true);
@@ -1915,7 +1921,7 @@ var LazyLoadImage = /*#__PURE__*/React__default['default'].forwardRef(function (
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
         setReady(true);
@@ -3219,7 +3225,7 @@ var Waypoint = /*#__PURE__*/React__default['default'].forwardRef(function (props
 
   var vv = useLatest(onVisible);
   var vi = useLatest(onInVisible);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
         var _vv$current;
@@ -3588,11 +3594,11 @@ var ThemeProvider = function ThemeProvider(props) {
       color = _props$color === void 0 ? primary : _props$color,
       children = props.children;
   var theme = useTheme();
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     document.documentElement.style.setProperty('--uc-color', color);
     document.documentElement.setAttribute('data-theme-color', color);
   }, [color]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     document.documentElement.setAttribute('data-theme-mode', theme);
   }, [theme]);
   return /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
@@ -4026,7 +4032,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       visible = _useState4[0],
       setVisible = _useState4[1];
 
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var container = wrapRef.current;
     var text = contentRef.current;
     if (container.offsetWidth >= text.offsetWidth) return;
@@ -4038,7 +4044,7 @@ var NoticeBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       window.clearTimeout(timeout);
     };
   }, [delay, speed]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var container = wrapRef.current;
     var text = contentRef.current;
 
@@ -4860,7 +4866,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       setIsOpen(false);
     }
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
     thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
@@ -4875,7 +4881,7 @@ var SwipeAction = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       }
     }, item.text);
   }, []);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch__default['default'](el, {
       onPressMove: function onPressMove(e) {
@@ -5225,7 +5231,7 @@ var Wheel = function Wheel(props) {
   React.useEffect(function () {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch__default['default'](el, {
       onTouchStart: function onTouchStart() {
@@ -5257,7 +5263,7 @@ var Wheel = function Wheel(props) {
         }, 300);
       },
       onPressMove: function onPressMove(e) {
-        yRef.current += e.deltaY * 0.5; // slow down 
+        yRef.current += e.deltaY * 0.5; // slow down
 
         var distance = e.deltaY;
         var duration = Date.now() - momentumRef.current.touchStartTime;
@@ -5671,7 +5677,7 @@ var Steps = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       space = _useState2[0],
       setSpace = _useState2[1];
 
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var isHorizontal = direction === 'horizontal';
 
     var resizeHandler = function resizeHandler() {
@@ -5866,7 +5872,7 @@ var Signature = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       download: download
     };
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     // read size from container
     canvasRef.current.width = elRef.current.offsetWidth;
     canvasRef.current.height = elRef.current.offsetHeight;
@@ -6246,7 +6252,7 @@ var Slide = /*#__PURE__*/React__default['default'].forwardRef(function (props, r
       };
     }
   }, [autoPlay, interval, children]);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = wrapElRef.current;
     var _containerRef$current2 = containerRef.current,
         wrapWidth = _containerRef$current2.offsetWidth,
@@ -6543,7 +6549,7 @@ var Notify = /*#__PURE__*/React.forwardRef(function (props, ref) {
   React.useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (!isMobile && elRef.current) {
       if (allNotifies.length > 0) {
         var lastElPos = allNotifies[allNotifies.length - 1];
@@ -7213,7 +7219,7 @@ var CalendarMonthView = /*#__PURE__*/React__default['default'].forwardRef(functi
   var month = dateMonth.getMonth();
   var monthKey = "".concat(year, "-").concat(month);
   var mountedRef = React.useRef(false);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     // auto anchor to value date / now
     var target = value[0] || new Date();
     var key = "".concat(target.getFullYear(), "-").concat(target.getMonth());
@@ -7431,7 +7437,7 @@ Calendar.displayName = 'UC-Calendar';
 var useUpdateLayoutEffect = function useUpdateLayoutEffect(effect) {
   var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var isMounted = React.useRef(false);
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {
@@ -7596,7 +7602,7 @@ var QRCode = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
   React.useImperativeHandle(ref, function () {
     return domRef.current;
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     qrRef.current = new WQRCode__default['default'](domRef.current, {
       text: text,
       width: size,
@@ -8244,7 +8250,7 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
       height: headHeight
     }
   }, renderStatusText()));
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var wrapEl = wrapRef.current;
     var el = elRef.current;
     var y = 0;
@@ -8955,7 +8961,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
   var colRef = React.useRef({
     colWidth: 'auto'
   });
-  React.useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var getColWidth = function getColWidth() {
       var wrapEl = wrapElRef.current;
 
@@ -10183,6 +10189,13 @@ var useBeforeUnload = function useBeforeUnload(message) {
   }, 'beforeunload', handler);
 };
 
+/**
+ * 同构 useLayoutEffect
+ *
+ */
+
+var useIsomorphicLayoutEffect$1 = isBrowser ? React.useLayoutEffect : React.useEffect;
+
 var defaultInitOptions = {
   interpolation: {
     escapeValue: false // not needed for react!!
@@ -10556,6 +10569,7 @@ exports.useEventListener = useEventListener;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useInterval = useInterval;
+exports.useIsomorphicLayoutEffect = useIsomorphicLayoutEffect$1;
 exports.useLatest = useLatest;
 exports.useLifecycles = useLifecycles;
 exports.useList = useList;

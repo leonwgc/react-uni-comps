@@ -1,7 +1,8 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useRef, useState, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { observe, unobserve } from './defaultIntersectionObserver';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var StyledPlaceholder = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 
@@ -25,7 +26,7 @@ var LazyLoadImage = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useImperativeHandle(ref, function () {
     return elRef.current;
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     observe(elRef.current, function (visible) {
       if (visible) {
         setReady(true);

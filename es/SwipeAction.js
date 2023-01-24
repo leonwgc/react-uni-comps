@@ -1,5 +1,5 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
-import React, { useRef, useLayoutEffect, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import useClickAway from './hooks/useClickAway';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useLatest from './hooks/useLatest';
 import { prefixClassName } from './helper';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var getClassName = prefixClassName('uc-swipe-action');
 var StyledSwipeAction = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n  cursor: grab;\n  box-sizing: border-box;\n\n  .", " {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .", ", .", " {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .", " {\n      left: 0px;\n      transform: translate3d(-100%, 0, 0);\n    }\n    .", " {\n      right: 0px;\n      transform: translate3d(100%, 0, 0);\n    }\n    .", " {\n      width: 100%;\n      box-sizing: border-box;\n      position: relative;\n      height: 44px;\n      padding: 0 16px;\n      display: flex;\n      align-items: center;\n      background: #fff;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .", " {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"], ["\n  user-select: none;\n  position: relative;\n  display: block;\n  overflow: hidden;\n  cursor: grab;\n  box-sizing: border-box;\n\n  .", " {\n    transition: transform 0.3s ease-in-out;\n    overflow: visible;\n    display: flex;\n    flex-wrap: nowrap;\n\n    .", ", .", " {\n      position: absolute;\n      top: 0;\n      height: 100%;\n    }\n\n    .", " {\n      left: 0px;\n      transform: translate3d(-100%, 0, 0);\n    }\n    .", " {\n      right: 0px;\n      transform: translate3d(100%, 0, 0);\n    }\n    .", " {\n      width: 100%;\n      box-sizing: border-box;\n      position: relative;\n      height: 44px;\n      padding: 0 16px;\n      display: flex;\n      align-items: center;\n      background: #fff;\n      color: #666;\n      box-sizing: border-box;\n    }\n\n    .", " {\n      * {\n        pointer-events: none;\n      }\n    }\n  }\n"])), getClassName('wrap'), getClassName('left'), getClassName('right'), getClassName('left'), getClassName('right'), getClassName('middle'), getClassName('item'));
 var StyledButton = styled(Button)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"], ["\n  height: 100%;\n  border-radius: 0;\n  border: 0;\n  color: #fff;\n  font-size: 15px;\n"])));
@@ -66,7 +67,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       setIsOpen(false);
     }
   });
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
     thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
@@ -81,7 +82,7 @@ var SwipeAction = /*#__PURE__*/React.forwardRef(function (props, ref) {
       }
     }, item.text);
   }, []);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var el = elRef.current;
     var fg = new Touch(el, {
       onPressMove: function onPressMove(e) {

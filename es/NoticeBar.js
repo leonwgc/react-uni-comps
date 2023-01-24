@@ -1,9 +1,10 @@
 import { __assign, __makeTemplateObject, __rest } from "tslib";
 import clsx from 'clsx';
-import React, { useRef, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 var StyledNoticeBar = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"], ["\n  height: 30px;\n  font-size: 14px;\n  line-height: 30px;\n  padding: 0 12px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background-color: rgba(236, 146, 49, 0.1);\n  color: rgb(236, 146, 49);\n  overflow: hidden;\n\n  &.hide {\n    display: none;\n  }\n\n  .icon-part {\n    flex-shrink: 0;\n    margin-right: 8px;\n  }\n\n  .content-wrap {\n    flex: 1 1;\n    overflow: hidden;\n    height: 100%;\n    display: flex;\n    align-items: center;\n\n    .content-text {\n      transition-property: transform;\n      transition-timing-function: linear;\n      white-space: nowrap;\n      flex: 1;\n    }\n  }\n  .content-extra {\n    display: inline-block;\n    flex-shrink: 0;\n    margin-left: 12px;\n  }\n"])));
 /** 通告栏  */
 
@@ -35,7 +36,7 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       visible = _f[0],
       setVisible = _f[1];
 
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var container = wrapRef.current;
     var text = contentRef.current;
     if (container.offsetWidth >= text.offsetWidth) return;
@@ -47,7 +48,7 @@ var NoticeBar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       window.clearTimeout(timeout);
     };
   }, [delay, speed]);
-  useLayoutEffect(function () {
+  useIsomorphicLayoutEffect(function () {
     var container = wrapRef.current;
     var text = contentRef.current;
 
