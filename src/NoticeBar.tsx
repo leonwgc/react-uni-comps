@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import React, { useRef, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledNoticeBar = styled.div`
   height: 30px;
@@ -87,7 +88,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
   const [v, setV] = useState(0);
   const [visible, setVisible] = useState(true);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const container = wrapRef.current;
     const text = contentRef.current;
 
@@ -101,7 +102,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) =>
     };
   }, [delay, speed]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const container = wrapRef.current;
     const text = contentRef.current;
     if (container.offsetWidth >= text.offsetWidth || v === 0) {

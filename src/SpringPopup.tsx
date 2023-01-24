@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle, useLayoutEffect, useState } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Mask from './Mask';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import { isMobile } from './dom';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledWrapper = styled(animated.div)`
   background-color: #fff;
@@ -136,7 +137,7 @@ const SpringPopup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     },
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (mask && visible && maskRef.current) {
       const wrapZIndex = window
         .getComputedStyle(popElRef.current, null)

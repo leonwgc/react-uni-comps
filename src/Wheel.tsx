@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import useLatest from './hooks/useLatest';
@@ -7,6 +7,7 @@ import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
 import type { BaseProps } from './types';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 export type DataItem = {
   /** 数据显示 */
@@ -125,7 +126,7 @@ const Wheel: React.FC<Props> = (props) => {
     scrollToIndex(_index, false);
   }, [_index, scrollToIndex]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = elRef.current;
 
     const fg = new Touch(el, {
@@ -157,7 +158,7 @@ const Wheel: React.FC<Props> = (props) => {
         }, 300);
       },
       onPressMove: (e) => {
-        yRef.current += e.deltaY * 0.5; // slow down 
+        yRef.current += e.deltaY * 0.5; // slow down
 
         const distance = e.deltaY;
         const duration = Date.now() - momentumRef.current.touchStartTime;

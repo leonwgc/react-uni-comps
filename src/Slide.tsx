@@ -1,12 +1,5 @@
 //#region  imports & styles
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useLayoutEffect,
-  useEffect,
-  useImperativeHandle,
-} from 'react';
+import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import clsx from 'clsx';
@@ -16,6 +9,7 @@ import type { StringOrNumber } from './types';
 import useMount from './hooks/useMount';
 import { prefixClassName } from './helper';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const getClassName = prefixClassName('uc-slide');
 
@@ -302,7 +296,7 @@ const Slide = React.forwardRef<SlideRefType, Props>((props, ref) => {
     }
   }, [autoPlay, interval, children]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = wrapElRef.current;
     const { offsetWidth: wrapWidth, offsetHeight: wrapHeight } = containerRef.current;
 

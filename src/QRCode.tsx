@@ -1,7 +1,8 @@
-import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 生成二维码文本 */
@@ -45,7 +46,7 @@ const QRCode = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => domRef.current);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     qrRef.current = new WQRCode(domRef.current, {
       text: text,
       width: size,

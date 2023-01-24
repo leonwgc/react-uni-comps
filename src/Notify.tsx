@@ -1,4 +1,4 @@
-import React, { forwardRef, useLayoutEffect, useImperativeHandle, useRef, ReactNode } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, ReactNode } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import TransitionElement from './TransitionElement';
 import { boxShadow, animationNormal } from './vars';
 import Mask from './Mask';
 import type { BaseProps } from './types';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const transitionDuration = animationNormal;
 
@@ -86,7 +87,7 @@ const Notify: React.FC<Props> & {
 
   useImperativeHandle(ref, () => elRef.current);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isMobile && elRef.current) {
       if (allNotifies.length > 0) {
         const lastElPos = allNotifies[allNotifies.length - 1];

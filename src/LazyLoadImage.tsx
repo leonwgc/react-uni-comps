@@ -1,6 +1,7 @@
-import React, { useRef, useState, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { observe, unobserve } from './defaultIntersectionObserver';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledPlaceholder = styled.div`
   display: inline-flex;
@@ -18,7 +19,7 @@ const LazyLoadImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes
 
     useImperativeHandle(ref, () => elRef.current);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       observe(elRef.current, (visible) => {
         if (visible) {
           setReady(true);

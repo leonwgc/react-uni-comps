@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-  useCallback,
-  useLayoutEffect,
-} from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 import Mask from './Mask';
@@ -16,6 +10,7 @@ import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
 import { getTargetElement } from './helper';
 import type { TargetElementType } from './types';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -263,7 +258,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     [duration]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isMobile && position === 'center' && flip) {
       if (visible) {
         setTransformOrigin(mousePosition);
@@ -273,7 +268,7 @@ const Popup = forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   }, [visible, position, setTransformOrigin, flip]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (mask && visible && maskRef.current) {
       const wrapZIndex = window.getComputedStyle(wrapRef.current, null).getPropertyValue('z-index');
       if (wrapZIndex) {

@@ -1,8 +1,9 @@
-import React, { useRef, useLayoutEffect, useImperativeHandle, RefAttributes } from 'react';
+import React, { useRef, useImperativeHandle, RefAttributes } from 'react';
 import styled from 'styled-components';
 import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as vars from './vars';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 export type SigPadRef = {
   /** 获取图片dataURL字符串 */
@@ -53,7 +54,7 @@ const Signature = React.forwardRef<SigPadRef, Props>((props, ref) => {
     download,
   }));
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // read size from container
     canvasRef.current.width = elRef.current.offsetWidth;
     canvasRef.current.height = elRef.current.offsetHeight;

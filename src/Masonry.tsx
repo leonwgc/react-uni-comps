@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const Masonry = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     colWidth: 'auto',
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const getColWidth = () => {
       const wrapEl = wrapElRef.current;
       if (wrapEl) {

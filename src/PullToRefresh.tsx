@@ -1,11 +1,4 @@
-import React, {
-  useRef,
-  useImperativeHandle,
-  useCallback,
-  useLayoutEffect,
-  ReactNode,
-  useState,
-} from 'react';
+import React, { useRef, useImperativeHandle, useCallback, ReactNode, useState } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { animated, useSpring } from '@react-spring/web';
@@ -15,6 +8,7 @@ import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const StyledWrap = styled(animated.div)`
   color: #999;
@@ -175,7 +169,7 @@ const PullToRefresh = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     </animated.div>
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const wrapEl = wrapRef.current;
     const el = elRef.current;
     let y = 0;

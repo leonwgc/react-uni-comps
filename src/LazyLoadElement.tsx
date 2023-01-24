@@ -1,5 +1,6 @@
-import React, { useRef, useState, useLayoutEffect, useImperativeHandle } from 'react';
+import React, { useRef, useState, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 type Props = {
   /** 需要lazyload的元素 */
@@ -19,7 +20,7 @@ const LazyLoadElement = React.forwardRef<HTMLElement, Props>((props, ref) => {
 
   useImperativeHandle(ref, () => elRef.current);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     observe(elRef.current, (visible) => {
       if (visible) {
         setReady(true);

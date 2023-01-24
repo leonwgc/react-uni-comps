@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import * as vars from './vars';
 import clsx from 'clsx';
@@ -8,6 +8,7 @@ import useClickAway from './hooks/useClickAway';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useLatest from './hooks/useLatest';
 import { prefixClassName } from './helper';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 const getClassName = prefixClassName('uc-swipe-action');
 
@@ -144,7 +145,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     thisRef.current.el = elRef.current;
     thisRef.current.leftWidth = thisRef.current.leftEl.offsetWidth;
     thisRef.current.rightWidth = thisRef.current.rightEl.offsetWidth;
@@ -163,7 +164,7 @@ const SwipeAction = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     );
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = elRef.current;
     const fg = new Touch(el, {
       onPressMove: (e) => {

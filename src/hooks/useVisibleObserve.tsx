@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { RefObject, useLayoutEffect } from 'react';
+import { RefObject } from 'react';
 import { observe, unobserve } from '../defaultIntersectionObserver';
+import useIsomorphicLayoutEffect from './useisomorphicLayoutEffect';
 
 /**
  * 监视元素在文档视口的可见性，可见性变化时触发回调
@@ -14,7 +15,7 @@ const useVisibleObserve = (
   onVisibleChange: (visible: boolean) => void,
   unobserveWhenVisible = true
 ): void => {
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     observe(elRef.current, (visible) => {
       onVisibleChange(visible);
       if (unobserveWhenVisible && visible) {

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
+import useIsomorphicLayoutEffect from './useisomorphicLayoutEffect';
 /**
  *  执行同步更新effect
  *
@@ -9,7 +10,7 @@ import { useLayoutEffect, useRef } from 'react';
 const useUpdateLayoutEffect = (effect: () => void, deps: Array<unknown> = []): void => {
   const isMounted = useRef(false);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {

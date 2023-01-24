@@ -1,7 +1,8 @@
-import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 可见回调 */
@@ -18,7 +19,7 @@ const Waypoint = React.forwardRef<HTMLSpanElement, Props>((props, ref) => {
   const vv = useLatest(onVisible);
   const vi = useLatest(onInVisible);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     observe(elRef.current, (visible) => {
       if (visible) {
         vv.current?.(elRef.current);

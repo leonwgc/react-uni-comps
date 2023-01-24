@@ -1,8 +1,9 @@
-import React, { useLayoutEffect, useRef, useImperativeHandle, useState } from 'react';
+import React, { useRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import { throttle } from './helper';
 import clsx from 'clsx';
+import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
 
 export type Step = {
   /** 标题 */
@@ -209,7 +210,7 @@ const Steps = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useImperativeHandle(ref, () => domRef.current);
   const [space, setSpace] = useState(80);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const isHorizontal = direction === 'horizontal';
     const resizeHandler = () => {
       if (steps.length > 1) {
