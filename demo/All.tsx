@@ -101,7 +101,7 @@ const demos = [
 ];
 
 export default function All() {
-  useBeforeUnload('信息尚未保存');
+  // useBeforeUnload('信息尚未保存');
   const history = useHistory();
   const gotoPage = useCallback((page) => {
     document.title = page;

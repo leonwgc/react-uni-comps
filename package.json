@@ -90,6 +90,7 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.4.2",
+    "@types/sortablejs": "~1.13.0",
     "clsx": "^1.1.1",
     "color": "^4.1.0",
     "i18next": "^21.6.16",
@@ -105,8 +106,7 @@
     "tslib": "^2.4.0",
     "w-popover": "1.1.8",
     "w-qrcode": "~1.1.0",
-    "w-touch": "1.1.0",
-    "@types/sortablejs": "~1.13.0"
+    "w-touch": "1.1.0"
   },
   "sideEffects": [
     "*.less"
