@@ -3,7 +3,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 /** 二维码 */
 
 var QRCode = /*#__PURE__*/React.forwardRef(function (props, ref) {

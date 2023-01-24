@@ -10189,13 +10189,6 @@ var useBeforeUnload = function useBeforeUnload(message) {
   }, 'beforeunload', handler);
 };
 
-/**
- * 同构 useLayoutEffect
- *
- */
-
-var useIsomorphicLayoutEffect$1 = isBrowser ? React.useLayoutEffect : React.useEffect;
-
 var defaultInitOptions = {
   interpolation: {
     escapeValue: false // not needed for react!!
@@ -10569,7 +10562,7 @@ exports.useEventListener = useEventListener;
 exports.useForceUpdate = useForceUpdate;
 exports.useInViewport = useInViewport;
 exports.useInterval = useInterval;
-exports.useIsomorphicLayoutEffect = useIsomorphicLayoutEffect$1;
+exports.useIsomorphicLayoutEffect = useIsomorphicLayoutEffect;
 exports.useLatest = useLatest;
 exports.useLifecycles = useLifecycles;
 exports.useList = useList;

@@ -3,7 +3,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 /** 路标,可见性发生变化执行回调 */
 
 var Waypoint = /*#__PURE__*/React.forwardRef(function (props, ref) {

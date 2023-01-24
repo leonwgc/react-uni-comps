@@ -2,7 +2,7 @@ import { __assign, __makeTemplateObject, __rest } from "tslib";
 import React, { useRef, useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { observe, unobserve } from './defaultIntersectionObserver';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 var StyledPlaceholder = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"], ["\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n"])));
 /** 懒加载图片，当做img标签使用, 在视口才加载图片 */
 

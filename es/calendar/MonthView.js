@@ -1,7 +1,7 @@
 import React, { useRef, useImperativeHandle, useCallback } from 'react';
 import clsx from 'clsx';
 import utils from './utils';
-import useIsomorphicLayoutEffect from '../hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 function renderDate(date) {
   return date.getDate();

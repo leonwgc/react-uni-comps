@@ -1,7 +1,7 @@
 import { __assign, __rest } from "tslib";
 import React, { useRef, useState, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 /** 懒加载组件,在视口才渲染children,不在则显示占位元素 */
 
 var LazyLoadElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
