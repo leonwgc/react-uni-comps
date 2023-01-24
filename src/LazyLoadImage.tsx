@@ -1,7 +1,7 @@
 import React, { useRef, useState, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { observe, unobserve } from './defaultIntersectionObserver';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledPlaceholder = styled.div`
   display: inline-flex;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getThemeColorCss } from './themeHelper';
 import { throttle } from './helper';
 import clsx from 'clsx';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 export type Step = {
   /** 标题 */

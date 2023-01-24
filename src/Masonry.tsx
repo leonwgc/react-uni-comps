@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Space from './Space';
 import useForceUpdate from './hooks/useForceUpdate';
 import { throttle } from './helper';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledWrap = styled.div`
   display: flex;

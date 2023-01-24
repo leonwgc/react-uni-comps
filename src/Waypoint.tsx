@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
 import clsx from 'clsx';
 import useLatest from './hooks/useLatest';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {
   /** 可见回调 */

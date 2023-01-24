@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useSigPad from './hooks/useSigPad';
 import clsx from 'clsx';
 import * as vars from './vars';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 export type SigPadRef = {
   /** 获取图片dataURL字符串 */

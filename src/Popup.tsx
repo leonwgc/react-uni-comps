@@ -10,7 +10,7 @@ import useMount from './hooks/useMount';
 import useForceUpdate from './hooks/useForceUpdate';
 import { getTargetElement } from './helper';
 import type { TargetElementType } from './types';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledWrapper = styled.div`
   position: fixed;

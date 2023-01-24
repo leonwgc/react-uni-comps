@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { RefObject } from 'react';
 import { observe, unobserve } from '../defaultIntersectionObserver';
-import useIsomorphicLayoutEffect from './useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 /**
  * 监视元素在文档视口的可见性，可见性变化时触发回调

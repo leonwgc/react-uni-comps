@@ -2,7 +2,7 @@ import React from 'react';
 import * as vars from './vars';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 import useTheme from './hooks/useTheme';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 type Props = {
   /** 主题色 */

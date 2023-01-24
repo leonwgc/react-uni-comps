@@ -1,6 +1,6 @@
 import React, { useRef, useState, useImperativeHandle } from 'react';
 import { observe, unobserve } from './defaultIntersectionObserver';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 type Props = {
   /** 需要lazyload的元素 */

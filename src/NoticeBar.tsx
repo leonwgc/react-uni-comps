@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Space from './Space';
 import Icon from './Icon';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledNoticeBar = styled.div`
   height: 30px;

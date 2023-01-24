@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle } from 'react';
 import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 import clsx from 'clsx';
 import WQRCode from 'w-qrcode';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   /** 生成二维码文本 */

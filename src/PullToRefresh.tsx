@@ -8,7 +8,7 @@ import Space from './Space';
 import { sleep } from './helper';
 import Touch from 'w-touch';
 import useLatest from './hooks/useLatest';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledWrap = styled(animated.div)`
   color: #999;

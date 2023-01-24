@@ -9,7 +9,7 @@ import type { StringOrNumber } from './types';
 import useMount from './hooks/useMount';
 import { prefixClassName } from './helper';
 import useLatest from './hooks/useLatest';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const getClassName = prefixClassName('uc-slide');
 

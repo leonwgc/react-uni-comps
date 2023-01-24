@@ -7,7 +7,7 @@ import { useSpring, animated } from '@react-spring/web';
 import Text from './Text';
 import Touch from 'w-touch';
 import type { BaseProps } from './types';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 export type DataItem = {
   /** 数据显示 */

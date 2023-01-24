@@ -6,7 +6,7 @@ import { isMobile } from './dom';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const StyledWrapper = styled(animated.div)`
   background-color: #fff;

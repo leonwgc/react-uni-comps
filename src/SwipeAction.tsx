@@ -8,7 +8,7 @@ import useClickAway from './hooks/useClickAway';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import useLatest from './hooks/useLatest';
 import { prefixClassName } from './helper';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const getClassName = prefixClassName('uc-swipe-action');
 

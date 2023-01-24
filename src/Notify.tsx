@@ -7,7 +7,7 @@ import TransitionElement from './TransitionElement';
 import { boxShadow, animationNormal } from './vars';
 import Mask from './Mask';
 import type { BaseProps } from './types';
-import useIsomorphicLayoutEffect from './hooks/useisomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 
 const transitionDuration = animationNormal;
 
