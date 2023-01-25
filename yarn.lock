@@ -4576,9 +4576,9 @@ cheerio-select@^2.1.0:
     domhandler "^5.0.3"
     domutils "^3.0.1"
 
-cheerio@^1.0.0-rc.10:
+cheerio@^1.0.0-rc.12:
   version "1.0.0-rc.12"
-  resolved "https://registry.npmmirror.com/cheerio/-/cheerio-1.0.0-rc.12.tgz#788bf7466506b1c6bf5fae51d24a2c4d62e47683"
+  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.12.tgz#788bf7466506b1c6bf5fae51d24a2c4d62e47683"
   integrity sha512-VqR8m68vM46BNnuZ5NtnGBKIE/DfN0cRIzg9n40EIq9NOv90ayxLBXA8fXC5gquFRGJSTRqBq25Jt2ECLR431Q==
   dependencies:
     cheerio-select "^2.1.0"
@@ -10539,10 +10539,10 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.12.1"
     tiny-warning "^1.0.3"
 
-mini-css-extract-plugin@^2.5.3:
-  version "2.6.1"
-  resolved "https://registry.npmmirror.com/mini-css-extract-plugin/-/mini-css-extract-plugin-2.6.1.tgz#9a1251d15f2035c342d99a468ab9da7a0451b71e"
-  integrity sha512-wd+SD57/K6DiV7jIR34P+s3uckTRuQvx0tKPcvjFlrEylk6P4mQ2KSWk1hblj1Kxaqok7LogKOieygXqBczNlg==
+mini-css-extract-plugin@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-2.7.2.tgz#e049d3ea7d3e4e773aad585c6cb329ce0c7b72d7"
+  integrity sha512-EdlUizq13o0Pd+uCp+WO/JpkLvHRVGt97RqfeGhXqAcorYo1ypJSpkV+WDT0vY/kmh/p7wRdJNJtuyK540PXDw==
   dependencies:
     schema-utils "^4.0.0"
 
@@ -11276,10 +11276,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-packw@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/packw/-/packw-1.3.0.tgz#ec59706a83194cd3a5b7780d8d77ae9b90c2567d"
-  integrity sha512-hG62wfnpetWk2LGaKMcfVecx06t5RCR47VUSJeRBEDzmXX2ke0wM5EUFDH+bsn6iqr/dwGRInIaQGA4kKUWtSw==
+packw@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/packw/-/packw-2.0.0.tgz#771e99f1b6b07257b78520e60e33bcd40d324385"
+  integrity sha512-mpGgcZYaxscc8Rn0dC1Ng3TcI+DgNCTaGvz7wKIJ4cR52wAO141y90cUhMNke4SDblZoG4W0QPmf3EP1fKhoiA==
   dependencies:
     "@babel/cli" "^7.17.6"
     "@babel/core" "^7.17.5"
@@ -11305,7 +11305,7 @@ packw@1.3.0:
     babel-plugin-lodash "^3.3.4"
     babel-plugin-syntax-dynamic-import "^6.18.0"
     chalk "^4.1.2"
-    cheerio "^1.0.0-rc.10"
+    cheerio "^1.0.0-rc.12"
     clean-webpack-plugin "^3.0.0"
     commander "^8.3.0"
     core-js "3"
@@ -11319,7 +11319,7 @@ packw@1.3.0:
     import-local "^3.1.0"
     less "^3.13.0"
     less-loader "^10.2.0"
-    mini-css-extract-plugin "^2.5.3"
+    mini-css-extract-plugin "^2.7.2"
     postcss "^8.4.12"
     postcss-flexbugs-fixes "^5.0.2"
     postcss-loader "^6.2.1"
