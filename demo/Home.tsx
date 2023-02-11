@@ -1,38 +1,44 @@
-import React, { useRef } from 'react';
-import typer from 'typer-js';
+import React from 'react';
 import { styled, useMount } from 'react-uni-comps';
-import './Home.less';
+import particle from './libs/particle';
+import config from './libs/config';
 
 const StyledHome = styled.div`
-  background-color: #fff;
-  display: flex;
+  position: relative;
+  margin: -16px -194px -50px -318px;
   height: 100vh;
-  width: 100%;
-  padding-top: 160px;
-  justify-content: center;
-  font-size: 40px;
-  color: #005cff;
-  text-align: center;
 
-  .desc {
-    font-size: 20px;
-    color: #666;
+  .doc-title {
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate3d(-50%, -50%, 0);
+    font-size: 32px;
+    user-select: none;
+  }
+
+  #particle-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #005cff;
+    background-image: url('');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
   }
 `;
 
 export default function Home() {
-  const ref = useRef();
-
   useMount(() => {
-    typer(ref.current)
-      .line(`<span class='title'>&#9834; react-uni-comps</span>`)
-      .cursor(false)
-      .line(`<span class='desc'>在线文档</span>`);
+    particle('particle-effect', config);
   });
 
   return (
     <StyledHome>
-      <div ref={ref}></div>
+      <div id="particle-effect"></div>
+      <div className="doc-title">react-uni-comps online demos & docs</div>
     </StyledHome>
   );
 }

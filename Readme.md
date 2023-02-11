@@ -1,4 +1,4 @@
-#### [在线文档 (online docs)](https://leonwgc.github.io/react-uni-comps/base)
+#### [在线文档 (online docs)](https://leonwgc.github.io/react-uni-comps)
 
 ### 安装 (Installation)
 
