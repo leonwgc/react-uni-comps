@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { TouchElement } from 'w-touch';
+import TouchElement from './TouchElement';
 import clsx from 'clsx';
 
 type Props = {

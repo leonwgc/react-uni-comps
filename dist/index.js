@@ -8325,7 +8325,46 @@ var PullToRefresh = /*#__PURE__*/React__default['default'].forwardRef(function (
 });
 PullToRefresh.displayName = 'UC-PullToRefresh';
 
-var _excluded$12 = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
+var _excluded$12 = ["children"];
+
+var checkFailed = function checkFailed() {
+  throw new Error('TouchElement: 子元素必须是dom/forwardRef到dom的组件');
+};
+/** 给子元素添加手势操作 */
+
+
+var TouchElement = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var children = props.children,
+      rest = _objectWithoutProperties(props, _excluded$12);
+
+  var elRef = React.useRef(null);
+  React.useImperativeHandle(ref, function () {
+    return elRef.current;
+  });
+  React.useLayoutEffect(function () {
+    var el = elRef.current;
+
+    if (!(el instanceof Element)) {
+      checkFailed();
+    }
+
+    var fg = new Touch__default['default'](el, rest);
+    return function () {
+      fg.destroy();
+    };
+  }, []);
+
+  if (! /*#__PURE__*/React.isValidElement(children)) {
+    checkFailed();
+  }
+
+  return /*#__PURE__*/React.createElement(children.type, _extends({}, children.props, {
+    ref: elRef
+  }));
+});
+TouchElement.displayName = 'TouchElement';
+
+var _excluded$13 = ["currentPage", "pageCount", "visiblePageCount", "firstText", "lastText", "showFirstLastText", "showIfOnePage", "onPageChange", "className"];
 
 /**
  * get pages arr
@@ -8391,7 +8430,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       showIfOnePage = props.showIfOnePage,
       onPageChange = props.onPageChange,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$12);
+      rest = _objectWithoutProperties(props, _excluded$13);
 
   var domRef = React.useRef();
 
@@ -8479,7 +8518,7 @@ var Pagination = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 Pagination.displayName = 'UC-Pagination';
 
-var _excluded$13 = ["image", "desc", "className", "extra"];
+var _excluded$14 = ["image", "desc", "className", "extra"];
 var StyledWrap$c = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Result__StyledWrap",
   componentId: "sc-1xsmtez-0"
@@ -8491,7 +8530,7 @@ var Result = function Result(props) {
       desc = props.desc,
       className = props.className,
       extra = props.extra,
-      rest = _objectWithoutProperties(props, _excluded$13);
+      rest = _objectWithoutProperties(props, _excluded$14);
 
   var imgNode = typeof image === 'string' ? /*#__PURE__*/React__default['default'].createElement("img", {
     src: image,
@@ -8510,7 +8549,7 @@ var Result = function Result(props) {
 
 Result.displayName = 'UC-Result';
 
-var _excluded$14 = ["image", "desc", "className"];
+var _excluded$15 = ["image", "desc", "className"];
 var StyledResult = /*#__PURE__*/styled__default['default'](Result).withConfig({
   displayName: "Empty__StyledResult",
   componentId: "sc-1u07bdn-0"
@@ -8544,7 +8583,7 @@ var Empty = function Empty(props) {
       _props$desc = props.desc,
       desc = _props$desc === void 0 ? '暂无数据' : _props$desc,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$14);
+      rest = _objectWithoutProperties(props, _excluded$15);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledResult, _extends({}, rest, {
     className: clsx__default['default']('uc-empty', className),
@@ -8555,7 +8594,7 @@ var Empty = function Empty(props) {
 
 Empty.displayName = 'UC-Empty';
 
-var _excluded$15 = ["items", "index", "defaultIndex", "onChange", "className"];
+var _excluded$16 = ["items", "index", "defaultIndex", "onChange", "className"];
 var StyledWrapper$3 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SideBar__StyledWrapper",
   componentId: "sc-nyu3mo-0"
@@ -8573,7 +8612,7 @@ var SideBar = function SideBar(_ref) {
       defaultIndex = _ref$defaultIndex === void 0 ? 0 : _ref$defaultIndex,
       onChange = _ref.onChange,
       className = _ref.className,
-      rest = _objectWithoutProperties(_ref, _excluded$15);
+      rest = _objectWithoutProperties(_ref, _excluded$16);
 
   var _useState = React.useState(typeof index === 'undefined' ? defaultIndex : index),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8624,7 +8663,7 @@ var SideBar = function SideBar(_ref) {
   }));
 };
 
-var _excluded$16 = ["dataList", "dataRender", "onSort", "config", "className"];
+var _excluded$17 = ["dataList", "dataRender", "onSort", "config", "className"];
 var getClassName$c = prefixClassName('uc-sortable-list');
 var StyledWrapper$4 = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "SortableList__StyledWrapper",
@@ -8663,7 +8702,7 @@ var SortableList = function SortableList(props) {
       onSort = props.onSort,
       config = props.config,
       className = props.className,
-      rest = _objectWithoutProperties(props, _excluded$16);
+      rest = _objectWithoutProperties(props, _excluded$17);
 
   var wrapElRef = React.useRef();
   var keyedList = addKeyToList(dataList);
@@ -8711,7 +8750,7 @@ var SortableList = function SortableList(props) {
 
 SortableList.displayName = 'UC-SortableList';
 
-var _excluded$17 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
+var _excluded$18 = ["className", "style", "defaultValue", "value", "step", "min", "max", "disabled", "onChange", "digits"];
 //#region  style
 var StyledWrap$d = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Stepper__StyledWrap",
@@ -8748,7 +8787,7 @@ var Stepper = function Stepper(props) {
       disabled = props.disabled,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$17);
+      rest = _objectWithoutProperties(props, _excluded$18);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8808,7 +8847,7 @@ var Stepper = function Stepper(props) {
 
 Stepper.displayName = 'UC-Stepper';
 
-var _excluded$18 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
+var _excluded$19 = ["className", "style", "onChange", "cancelText", "onFocus", "onCancel", "onSearch"];
 var getClassName$d = prefixClassName('uc-search-bar');
 //#region  style
 var StyledWrap$e = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -8827,7 +8866,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       _onFocus = props.onFocus,
       onCancel = props.onCancel,
       onSearch = props.onSearch,
-      inputProps = _objectWithoutProperties(props, _excluded$18);
+      inputProps = _objectWithoutProperties(props, _excluded$19);
 
   var _useState = React.useState(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8859,7 +8898,7 @@ var SearchBar = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 SearchBar.displayName = 'UC-SearchBar';
 
-var _excluded$19 = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
+var _excluded$1a = ["className", "defaultValue", "value", "min", "max", "onChange", "digits"];
 
 //#region  style
 //#endregion
@@ -8890,7 +8929,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       max = props.max,
       onChange = props.onChange,
       digits = props.digits,
-      rest = _objectWithoutProperties(props, _excluded$19);
+      rest = _objectWithoutProperties(props, _excluded$1a);
 
   var _useState = React.useState(value || defaultValue),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8935,7 +8974,7 @@ var InputNumber = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 InputNumber.displayName = 'UC-InputNumber';
 
-var _excluded$1a = ["className", "children", "columnGap", "rowGap", "columnCount"];
+var _excluded$1b = ["className", "children", "columnGap", "rowGap", "columnCount"];
 var StyledWrap$f = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Masonry__StyledWrap",
   componentId: "sc-dzi4mt-0"
@@ -8951,7 +8990,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       rowGap = _props$rowGap === void 0 ? 10 : _props$rowGap,
       _props$columnCount = props.columnCount,
       columnCount = _props$columnCount === void 0 ? 2 : _props$columnCount,
-      rest = _objectWithoutProperties(props, _excluded$1a);
+      rest = _objectWithoutProperties(props, _excluded$1b);
 
   var wrapElRef = React.useRef();
   React.useImperativeHandle(ref, function () {
@@ -9019,7 +9058,7 @@ var Masonry = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 Masonry.displayName = 'UC-Masonry';
 
-var _excluded$1b = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
+var _excluded$1c = ["className", "showIndicator", "indicatorStyle", "indicatorClass", "fillColor", "children"];
 var getClassName$e = prefixClassName('uc-scroll-box');
 //#region  style
 var StyledWrap$g = /*#__PURE__*/styled__default['default'].div.withConfig({
@@ -9036,7 +9075,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       indicatorClass = props.indicatorClass,
       fillColor = props.fillColor,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$1b);
+      rest = _objectWithoutProperties(props, _excluded$1c);
 
   var bodyRef = React.useRef();
   var fillRef = React.useRef();
@@ -9088,7 +9127,7 @@ var ScrollBox = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 ScrollBox.displayName = 'UC-ScrollBox';
 
-var _excluded$1c = ["children", "className", "ratio"];
+var _excluded$1d = ["children", "className", "ratio"];
 var StyledWrap$h = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "AspectRatio__StyledWrap",
   componentId: "sc-1dp29mr-0"
@@ -9102,7 +9141,7 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
       className = props.className,
       _props$ratio = props.ratio,
       ratio = _props$ratio === void 0 ? 4 / 3 : _props$ratio,
-      rest = _objectWithoutProperties(props, _excluded$1c);
+      rest = _objectWithoutProperties(props, _excluded$1d);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledWrap$h, _extends({}, rest, {
     ref: ref,
@@ -9112,7 +9151,7 @@ var AspectRatio = /*#__PURE__*/React__default['default'].forwardRef(function (pr
 });
 AspectRatio.displayName = 'UC-AspectRatio';
 
-var _excluded$1d = ["className", "style", "size", "gap", "iteration", "color"];
+var _excluded$1e = ["className", "style", "size", "gap", "iteration", "color"];
 
 var _templateObject$4;
 var getClassName$f = prefixClassName('uc-dot-spin');
@@ -9149,7 +9188,7 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
       iteration = _props$iteration === void 0 ? 1 : _props$iteration,
       _props$color = props.color,
       color = _props$color === void 0 ? '#d9d9d9' : _props$color,
-      rest = _objectWithoutProperties(props, _excluded$1d);
+      rest = _objectWithoutProperties(props, _excluded$1e);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$1, _extends({}, rest, {
     ref: ref,
@@ -9171,7 +9210,7 @@ var DotSpin = /*#__PURE__*/React__default['default'].forwardRef(function (props,
 });
 DotSpin.displayName = 'UC-DotSpin';
 
-var _excluded$1e = ["className", "duration", "trackColor", "color", "size", "strokeWidth", "percent"];
+var _excluded$1f = ["className", "duration", "trackColor", "color", "size", "strokeWidth", "percent"];
 
 var _templateObject$5;
 var getClassName$g = prefixClassName('uc-circle-spin');
@@ -9205,7 +9244,7 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       strokeWidth = _props$strokeWidth === void 0 ? 8 : _props$strokeWidth,
       _props$percent = props.percent,
       percent = _props$percent === void 0 ? 25 : _props$percent,
-      rest = _objectWithoutProperties(props, _excluded$1e);
+      rest = _objectWithoutProperties(props, _excluded$1f);
 
   var elRef = React__default['default'].useRef();
   React__default['default'].useImperativeHandle(ref, function () {
@@ -9245,7 +9284,7 @@ var CircleSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
 });
 CircleSpin.displayName = 'UC-CircleSpin';
 
-var _excluded$1f = ["className", "style", "size", "color", "strokeWidth"];
+var _excluded$1g = ["className", "style", "size", "color", "strokeWidth"];
 
 var _templateObject$6, _templateObject2;
 var circle$1 = styled.keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\n    0% {\n        stroke-dasharray: 1,200;\n        stroke-dashoffset: 0\n    }\n\n    50% {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -40\n    }\n\n    to {\n        stroke-dasharray: 90,150;\n        stroke-dashoffset: -120\n    }\n"])));
@@ -9270,7 +9309,7 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       color = _props$color === void 0 ? 'currentColor' : _props$color,
       _props$strokeWidth = props.strokeWidth,
       strokeWidth = _props$strokeWidth === void 0 ? 3 : _props$strokeWidth,
-      rest = _objectWithoutProperties(props, _excluded$1f);
+      rest = _objectWithoutProperties(props, _excluded$1g);
 
   var elRef = React__default['default'].useRef();
   React__default['default'].useImperativeHandle(ref, function () {
@@ -9297,7 +9336,7 @@ var RoundSpin = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 RoundSpin.displayName = 'UC-RoundSpin';
 
-var _excluded$1g = ["className", "style", "size", "color"];
+var _excluded$1h = ["className", "style", "size", "color"];
 
 var _templateObject$7;
 var rotate$1 = styled.keyframes(_templateObject$7 || (_templateObject$7 = _taggedTemplateLiteral(["\n    0% {\n        transform: rotate(0)\n    }\n\n    to {\n        transform: rotate(360deg)\n    }\n"])));
@@ -9316,7 +9355,7 @@ var FlowerSpin = /*#__PURE__*/React__default['default'].forwardRef(function (pro
       size = _props$size === void 0 ? 30 : _props$size,
       _props$color = props.color,
       color = _props$color === void 0 ? 'currentColor' : _props$color,
-      rest = _objectWithoutProperties(props, _excluded$1g);
+      rest = _objectWithoutProperties(props, _excluded$1h);
 
   return /*#__PURE__*/React__default['default'].createElement(StyledLoader$4, _extends({
     style: _objectSpread2({
@@ -9359,7 +9398,7 @@ function useInterval(fn, delay) {
   }, [delay]);
 }
 
-var _excluded$1h = ["millisec", "value", "onFinish", "className", "children"];
+var _excluded$1i = ["millisec", "value", "onFinish", "className", "children"];
 var getClassName$i = prefixClassName('uc-countdown');
 
 var getCountdown = function getCountdown(value) {
@@ -9411,7 +9450,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       onFinish = props.onFinish,
       className = props.className,
       children = props.children,
-      rest = _objectWithoutProperties(props, _excluded$1h);
+      rest = _objectWithoutProperties(props, _excluded$1i);
 
   var _useState = React.useState(function () {
     return getCountdown(value);
@@ -9454,7 +9493,7 @@ var Countdown = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Countdown.displayName = 'Countdown';
 
-var _excluded$1i = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
+var _excluded$1j = ["className", "size", "prizeList", "round", "duration", "pointer", "borderColor", "onStart", "onEnd"];
 var getClassName$j = prefixClassName('uc-turntable');
 var StyledWrap$i = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "Turntable__StyledWrap",
@@ -9478,7 +9517,7 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
       borderColor = _props$borderColor === void 0 ? '#ff9800' : _props$borderColor,
       onStart = props.onStart,
       onEnd = props.onEnd,
-      rest = _objectWithoutProperties(props, _excluded$1i); // 用来锁定转盘，避免同时多次点击转动
+      rest = _objectWithoutProperties(props, _excluded$1j); // 用来锁定转盘，避免同时多次点击转动
 
 
   var lock = React.useRef(false); // 开始转动的角度
@@ -9616,7 +9655,7 @@ var Turntable = /*#__PURE__*/React__default['default'].forwardRef(function (prop
 });
 Turntable.displayName = 'UC-Turntable';
 
-var _excluded$1j = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd", "gap"];
+var _excluded$1k = ["className", "pointer", "prizeList", "round", "speed", "onStart", "onEnd", "gap"];
 var getClassName$k = prefixClassName('uc-sudoku');
 var seq = [0, 1, 2, 5, 8, 7, 6, 3]; // turn sequence
 // key top-down,left-right ,value: prizeList seq
@@ -9650,7 +9689,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
       onEnd = props.onEnd,
       _props$gap = props.gap,
       gap = _props$gap === void 0 ? 4 : _props$gap,
-      rest = _objectWithoutProperties(props, _excluded$1j);
+      rest = _objectWithoutProperties(props, _excluded$1k);
 
   var forceUpdate = useForceUpdate();
   var lock = React.useRef(false); // 转动到的商品的index
@@ -9775,7 +9814,7 @@ var Sudoku = /*#__PURE__*/React__default['default'].forwardRef(function (props, 
 });
 Sudoku.displayName = 'UC-Sudoku';
 
-var _excluded$1k = ["x", "y", "className", "children", "onRelease", "onPress"];
+var _excluded$1l = ["x", "y", "className", "children", "onRelease", "onPress"];
 var StyledWrap$k = /*#__PURE__*/styled__default['default'].div.withConfig({
   displayName: "FloatingBubble__StyledWrap",
   componentId: "sc-1y55mct-0"
@@ -9791,14 +9830,14 @@ var FloatingBubble = function FloatingBubble(props) {
       children = props.children,
       onRelease = props.onRelease,
       onPress = props.onPress,
-      rest = _objectWithoutProperties(props, _excluded$1k);
+      rest = _objectWithoutProperties(props, _excluded$1l);
 
   var ref = React__default['default'].useRef();
   var vRef = React.useRef({
     x: 0,
     y: 0
   });
-  return /*#__PURE__*/React__default['default'].createElement(Touch.TouchElement, {
+  return /*#__PURE__*/React__default['default'].createElement(TouchElement, {
     ref: ref,
     onTouchStart: function onTouchStart() {
       ref.current.style.opacity = '0.8';
@@ -10205,7 +10244,7 @@ var initI18n = function initI18n(options) {
   .init(_objectSpread2(_objectSpread2({}, defaultInitOptions), options));
 };
 
-var _excluded$1l = ["children", "label", "name"],
+var _excluded$1m = ["children", "label", "name"],
     _excluded2$3 = ["children", "gap", "requiredMark", "layout", "className", "onFinishFailed", "toastError", "scrollIntoErrorField", "cellProps"];
 var StyledCell$1 = /*#__PURE__*/styled__default['default'](Cell).withConfig({
   displayName: "Form__StyledCell",
@@ -10220,7 +10259,7 @@ var FormItem = function FormItem(props) {
   var children = props.children,
       label = props.label,
       name = props.name,
-      fieldProps = _objectWithoutProperties(props, _excluded$1l);
+      fieldProps = _objectWithoutProperties(props, _excluded$1m);
 
   var required = false;
 
@@ -10414,12 +10453,6 @@ Object.defineProperty(exports, 'Touch', {
     return Touch__default['default'];
   }
 });
-Object.defineProperty(exports, 'TouchElement', {
-  enumerable: true,
-  get: function () {
-    return Touch.TouchElement;
-  }
-});
 Object.defineProperty(exports, 'Sortable', {
   enumerable: true,
   get: function () {
@@ -10532,6 +10565,7 @@ exports.Text = Text;
 exports.ThemeProvider = ThemeProvider;
 exports.Toast = Toast;
 exports.Tooltip = Tooltip;
+exports.TouchElement = TouchElement;
 exports.TransitionElement = TransitionElement;
 exports.Turntable = Turntable;
 exports.WaitLoading = WaitLoading;

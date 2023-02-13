@@ -16277,10 +16277,10 @@ w-qrcode@~1.1.0:
   resolved "https://registry.yarnpkg.com/w-qrcode/-/w-qrcode-1.1.0.tgz#1bf28f0187cca7d757428737bd60191c2c2ab812"
   integrity sha512-jkXlIzqpd+KKkFiB7jED4xLjgPWwb3HiAmU0qO34d1AwsfPgELxdi0Pdnq3csYDL7gMx8N5STziCq4Dn5X+idg==
 
-w-touch@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmmirror.com/w-touch/-/w-touch-1.1.0.tgz#9a113c6013704ce1abc312b4fd2591115cc89ba1"
-  integrity sha512-m0aE7cAmp8LCxPhDaNOtJXCTFlV+/WE1ytEsPBN+TOGZWQyQRivufsSdFaddBDK6mlhSQT+neq0C/ghR9GtC0w==
+w-touch@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/w-touch/-/w-touch-2.0.0.tgz#9d8e2c479e56d6006cdbed52c49aeeee0d7bb764"
+  integrity sha512-PYnngF+KHzZRBFI6qsm5PHwVNO5Lx3dYDrvNv//Ei9fvnYlaOWr9sKAriD/crlshWee9ZPsyvDMA4UnoR1LUHw==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
