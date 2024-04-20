@@ -92,6 +92,7 @@ var PopMenu = /*#__PURE__*/React.forwardRef(function (props, ref) {
   return /*#__PURE__*/React.createElement(StyledPopover, __assign({}, popoverRest, {
     className: clsx('uc-popmenu', className),
     visible: visible,
+    transitionDuration: 350,
     onClose: onClose,
     placement: placement,
     closeOnClickOutside: closeOnClickOutside,

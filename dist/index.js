@@ -6944,6 +6944,7 @@ var PopMenu = /*#__PURE__*/React__default['default'].forwardRef(function (props,
   return /*#__PURE__*/React__default['default'].createElement(StyledPopover, _extends({}, popoverRest, {
     className: clsx__default['default']('uc-popmenu', className),
     visible: visible,
+    transitionDuration: 350,
     onClose: onClose,
     placement: placement,
     closeOnClickOutside: closeOnClickOutside,
