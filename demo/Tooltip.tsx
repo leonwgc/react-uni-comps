@@ -15,21 +15,19 @@ export default function App() {
       <DemoBlock>
         <AutoCenter>
           <Space>
-            <Tooltip title="This's tooltip" animate={animate}>
+            <Tooltip title="This's tooltip" transition={animate}>
               <Button type="primary">默认</Button>
             </Tooltip>
 
-            <Tooltip
-              animate={animate}
-              offset={{ x: -10, y: 15 }}
-              arrow={false}
-              placement="right"
-              title="This's tooltip"
-            >
-              <Button type="primary">右侧</Button>
+            <Tooltip transition={animate} placement="bottom" title="This's tooltip">
+              <Button type="primary">下方</Button>
             </Tooltip>
 
-            <Tooltip title="This's tooltip" style={{ background: 'red', fontSize: 12 }}>
+            <Tooltip
+              title="This's tooltip"
+              transition={animate}
+              style={{ background: 'red', fontSize: 12 }}
+            >
               <Button type="primary">自定义样式</Button>
             </Tooltip>
           </Space>

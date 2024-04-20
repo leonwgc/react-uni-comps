@@ -56,7 +56,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
    * 展开动画
    * @default true
    *  */
-  animate?: boolean;
+  transition?: boolean;
 };
 
 export interface PopMenuRefType {
@@ -138,6 +138,7 @@ const PopMenu = React.forwardRef<PopMenuRefType, Props>((props, ref) => {
       {...popoverRest}
       className={clsx('uc-popmenu', className)}
       visible={visible}
+      transitionDuration={350}
       onClose={onClose}
       placement={placement}
       closeOnClickOutside={closeOnClickOutside}

@@ -32,7 +32,7 @@ export default function App() {
   return (
     <PageWrap>
       <Cell
-        title="动画效果"
+        title="过渡动画效果"
         content={<Switch checked={animated} onChange={(c) => setAnimated(c)}></Switch>}
       ></Cell>
       <DemoBlock title="自定义菜单">
@@ -41,7 +41,7 @@ export default function App() {
             arrow={true}
             onVisibleChange={setV}
             placement="bottom"
-            animate={animated}
+            transition={animated}
             trigger="click"
             content={
               <div>

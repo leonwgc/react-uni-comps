@@ -47,7 +47,7 @@ export declare type Props = React.HTMLAttributes<HTMLDivElement> & {
      * 展开动画
      * @default true
      *  */
-    animate?: boolean;
+    transition?: boolean;
 };
 export interface PopMenuRefType {
     show: () => void;
@@ -107,6 +107,6 @@ declare const PopMenu: React.ForwardRefExoticComponent<React.HTMLAttributes<HTML
      * 展开动画
      * @default true
      *  */
-    animate?: boolean;
+    transition?: boolean;
 } & React.RefAttributes<PopMenuRefType>>;
 export default PopMenu;

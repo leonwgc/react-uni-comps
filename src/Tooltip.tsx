@@ -35,7 +35,7 @@ export type Props = {
    * 展开动画
    * @default true
    *  */
-  animate?: boolean;
+  transition?: boolean;
 } & BaseProps;
 
 /** 文字提示气泡框, 基于Popover */
