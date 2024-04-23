@@ -1,8 +1,15 @@
 import React, { useState, useRef } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { Popover, Button, Avatar, AutoCenter, useForceUpdate, Space, styled } from 'react-uni-comps';
-
+import {
+  Popover,
+  Button,
+  Avatar,
+  AutoCenter,
+  useForceUpdate,
+  Space,
+  styled,
+} from 'react-uni-comps';
 
 const StyledContent = styled.div`
   width: 100px;
@@ -63,44 +70,6 @@ export default function App() {
           </Popover>
         </AutoCenter>
       </DemoBlock>
-
-      <DemoBlock title="静态调用">
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => {
-              const p = placements[ref.current++] as any;
-
-              Popover.show({
-                style: { padding: 20, background: 'red', color: '#fff' },
-                anchor: elRef,
-                content: p,
-                placement: p,
-              });
-
-              if (ref.current > 11) {
-                ref.current = 0;
-              }
-            }}
-          >
-            静态调用
-          </Button>
-
-          <Button
-            onClick={() => {
-              Popover.hide();
-            }}
-          >
-            关闭
-          </Button>
-        </Space>
-
-        <AutoCenter style={{ marginTop: 100 }}>
-          <Avatar size={60} ref={elRef}>
-            W
-          </Avatar>
-        </AutoCenter>
-      </DemoBlock>
-    </PageWrap >
+    </PageWrap>
   );
 }

@@ -15,16 +15,16 @@ export default function App() {
       <DemoBlock>
         <AutoCenter>
           <Space>
-            <Tooltip title="This's tooltip" transition={animate}>
+            <Tooltip content="This's tooltip" transition={animate}>
               <Button type="primary">默认</Button>
             </Tooltip>
 
-            <Tooltip transition={animate} placement="bottom" title="This's tooltip">
+            <Tooltip transition={animate} placement="bottom" content="This's tooltip">
               <Button type="primary">下方</Button>
             </Tooltip>
 
             <Tooltip
-              title="This's tooltip"
+              content="This's tooltip"
               transition={animate}
               style={{ background: 'red', fontSize: 12 }}
             >

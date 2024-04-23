@@ -16267,10 +16267,10 @@ void-elements@3.1.0:
   resolved "https://registry.npmmirror.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
-w-popover@~2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/w-popover/-/w-popover-2.0.4.tgz#926f61dcaf7509c7212fa636357def7c4e92b51a"
-  integrity sha512-lMW722iJjz/52R9lWJCAkL2RekNt4rD6GvN7apzoQlBTscntggizuIrZDbhYK/Jeg+hk6msovr/2fWS3j/Se6Q==
+w-popover@~2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/w-popover/-/w-popover-2.0.7.tgz#7517e360f2259bba018f5ff613920a2f0d4d173c"
+  integrity sha512-o99iN3kY0oaIS0UdwE4/nptab67gLgJIHo+0QV/31mEl46SN43U2/urMGbRDDz1BCxm9prHd18nl4R7mwO3zxQ==
 
 w-qrcode@~1.1.0:
   version "1.1.0"

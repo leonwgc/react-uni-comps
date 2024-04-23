@@ -9,7 +9,7 @@ pack(true, {
     path: path.resolve(__dirname, 'output'),
   },
   devServer: {
-    port: 9100,
+    port: 9400,
   },
   resolve: {
     alias: {
