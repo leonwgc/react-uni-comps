@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageWrap from './common/PageWrap';
 import DemoBlock from './common/DemoBlock';
-import { RoundSpin } from 'react-uni-comps';
+import { RoundSpin, Switch } from 'react-uni-comps';
 
 export default function App() {
+  const [loading, setLoading] = useState(false);
   return (
     <PageWrap>
       <DemoBlock title="默认">
         <RoundSpin />
+      </DemoBlock>
+
+      <DemoBlock title="子元素Loading">
+        <p>
+          <Switch checked={loading} onChange={(v) => setLoading(v)} /> loading
+        </p>
+        <div>
+          <div>
+            <RoundSpin loading={loading}>
+              <div
+                style={{
+                  height: 100,
+                  background: '#00bc8d',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#fff',
+                  fontSize: 20,
+                  borderRadius: 6,
+                }}
+              >
+                hello,world
+              </div>
+            </RoundSpin>
+          </div>
+        </div>
       </DemoBlock>
 
       <DemoBlock title="大小">

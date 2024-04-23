@@ -19,6 +19,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 30
    */
   size?: StringOrNumber;
+  loading?: boolean;
 };
 
 const circle = keyframes`
@@ -66,18 +67,40 @@ const StyledLoader = styled.div`
   }
 `;
 
+const SpinWrap = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.5;
+  user-select: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 /** 圈圈 spin */
-const RoundSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { className, style, size = 30, color = 'currentColor', strokeWidth = 3, ...rest } = props;
-  const elRef = React.useRef();
+const RoundSpin = (props: Props) => {
+  const {
+    className,
+    style,
+    size = 30,
+    color = 'currentColor',
+    strokeWidth = 3,
+    children,
+    loading,
+    ...rest
+  } = props;
 
-  React.useImperativeHandle(ref, () => elRef.current);
+  const isNestedPattern = React.useMemo<boolean>(() => typeof children !== 'undefined', [children]);
 
-  return (
+  const spinElement = (
     <StyledLoader
       {...rest}
       style={{ fontSize: size, ...style }}
-      ref={elRef}
       className={clsx(className, 'uc-round-spin')}
     >
       <svg {...SVGProps} stroke={color} viewBox={`25 25 50 50`}>
@@ -85,7 +108,24 @@ const RoundSpin = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       </svg>
     </StyledLoader>
   );
-});
+
+  return !isNestedPattern ? (
+    spinElement
+  ) : loading ? (
+    <div
+      className={clsx(className, 'uc-round-spin--nested')}
+      style={{
+        position: 'relative',
+        ...style,
+      }}
+    >
+      <SpinWrap>{spinElement}</SpinWrap>
+      {children}
+    </div>
+  ) : (
+    children
+  );
+};
 
 RoundSpin.displayName = 'UC-RoundSpin';
 
