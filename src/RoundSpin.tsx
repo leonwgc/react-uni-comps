@@ -19,6 +19,9 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
    * @default 30
    */
   size?: StringOrNumber;
+  /**
+   * 配合子元素
+   */
   loading?: boolean;
 };
 
