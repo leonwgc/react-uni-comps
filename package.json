@@ -103,7 +103,7 @@
     "sortablejs": "^1.14.0",
     "styled-components": "^5.3.3",
     "tslib": "^2.4.0",
-    "w-popover": "~2.1.2",
+    "w-popover": "~2.1.4",
     "w-qrcode": "~1.1.0",
     "w-touch": "2.0.0"
   },
